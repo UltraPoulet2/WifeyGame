@@ -798,7 +798,6 @@ public class BattleScreen extends Screen {
         if(currentPhase == BattlePhase.ANIMATE_ENEMY_ACTION){
             drawEnemyDamage();
         }
-        System.out.println("well then");
     }
 
     private void drawBackground(){
