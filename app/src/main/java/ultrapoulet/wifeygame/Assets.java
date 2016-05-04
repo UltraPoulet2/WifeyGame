@@ -10,7 +10,9 @@ public class Assets {
     public static Image menu, buttonMenuNormal, buttonMenuSpecial, buttonMenuBoth;
     public static Image attackBox;
     public static Image charHolder;
-    public static Image testChar1, testChar2, testChar3, testChar4, testChar5, testChar6, testChar7;
+    public static Image TestYuno, TestRena, TestKtnh, TestAnna, TestSjgh, TestYndr, TestPeri;
+    public static Image TestLulu, TestTsmk, TestMnma, TestKsga, TestMria, TestSeny, TestRevy;
+    public static Image TestNoel, TestDkro, TestCmpa, TestCccc, TestDwrd, TestAnge, TestKyko;
     public static Image testBG, yunoBG;
     public static Image pHealthG, pHealthY, pHealthR;
     public static Image eHealthG, eHealthY, eHealthR;
