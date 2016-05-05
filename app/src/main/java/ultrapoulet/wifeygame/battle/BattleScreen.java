@@ -711,7 +711,7 @@ public class BattleScreen extends Screen {
                 break;
             case WAVE_END:
                 //Tally experience and gold
-                //Character end of wave bonuses
+                //WifeyCharacter end of wave bonuses
                 //If more enemies, go to WAVE_START
                 //If no more enemies, go to BATTLE_END
                 if (phaseEntered) {

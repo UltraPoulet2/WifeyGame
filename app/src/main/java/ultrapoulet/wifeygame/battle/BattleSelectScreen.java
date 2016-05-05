@@ -3,13 +3,16 @@ package ultrapoulet.wifeygame.battle;
 import android.graphics.Color;
 import android.graphics.Paint;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import ultrapoulet.androidgame.framework.Game;
 import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Input.TouchEvent;
 import ultrapoulet.androidgame.framework.Screen;
 import ultrapoulet.wifeygame.Assets;
+import ultrapoulet.wifeygame.WifeyCharacter;
 import ultrapoulet.wifeygame.battle.enemyai.BasicMagicEnemyAI;
 import ultrapoulet.wifeygame.battle.enemyai.BasicPhysicalEnemyAI;
 import ultrapoulet.wifeygame.battle.enemyai.OriginalBossAI;
@@ -22,32 +25,33 @@ public class BattleSelectScreen extends Screen {
     private float waitTime = 0;
 
     private BattleCharacter[] currentParty;
-    private BattleCharacter[] recruitedCharacters;
+    private Map<String, WifeyCharacter> recruitedCharacters;
+    //private BattleCharacter[] recruitedCharacters;
 
     public BattleSelectScreen(Game game){
         super(game);
-        recruitedCharacters = new BattleCharacter[21];
-        recruitedCharacters[0] = new BattleCharacter("Yuno", 3, 75, 50, Assets.TestYuno);
-        recruitedCharacters[1] = new BattleCharacter("Rena", 3, 50, 75, Assets.TestRena);
-        recruitedCharacters[2] = new BattleCharacter("Kotonoha", 3, 100, 25, Assets.TestKtnh);
-        recruitedCharacters[3] = new BattleCharacter("Anna", 3, 25, 100, Assets.TestAnna);
-        recruitedCharacters[4] = new BattleCharacter("Hitagi", 3, 60, 70, Assets.TestSjgh);
-        recruitedCharacters[5] = new BattleCharacter("Yandere-chan", 3, 70, 60, Assets.TestYndr);
-        recruitedCharacters[6] = new BattleCharacter("Peri", 3, 10, 200, Assets.TestPeri);
-        recruitedCharacters[7] = new BattleCharacter("Luluco", 3, 75, 50, Assets.TestLulu);
-        recruitedCharacters[8] = new BattleCharacter("Tsumiki", 3, 50, 75, Assets.TestTsmk);
-        recruitedCharacters[9] = new BattleCharacter("Menma", 3, 100, 25, Assets.TestMnma);
-        recruitedCharacters[10] = new BattleCharacter("Osaka", 3, 25, 100, Assets.TestKsga);
-        recruitedCharacters[11] = new BattleCharacter("Miria", 3, 60, 70, Assets.TestMria);
-        recruitedCharacters[12] = new BattleCharacter("Sen", 3, 70, 60, Assets.TestSeny);
-        recruitedCharacters[13] = new BattleCharacter("Revy", 3, 10, 200, Assets.TestRevy);
-        recruitedCharacters[14] = new BattleCharacter("Noel", 3, 75, 50, Assets.TestNoel);
-        recruitedCharacters[15] = new BattleCharacter("Dokuro", 3, 50, 75, Assets.TestDkro);
-        recruitedCharacters[16] = new BattleCharacter("Compa", 3, 100, 25, Assets.TestCmpa);
-        recruitedCharacters[17] = new BattleCharacter("CC", 3, 25, 100, Assets.TestCccc);
-        recruitedCharacters[18] = new BattleCharacter("Edward", 3, 60, 70, Assets.TestDwrd);
-        recruitedCharacters[19] = new BattleCharacter("Angelise", 3, 70, 60, Assets.TestAnge);
-        recruitedCharacters[20] = new BattleCharacter("Kyoko", 3, 10, 200, Assets.TestKyko);
+        recruitedCharacters = new HashMap<String, WifeyCharacter>();
+        recruitedCharacters.put("TEST-YUNO", new WifeyCharacter("TEST-YUNO", "Yuno", 75, 50, Assets.TestYuno));
+        recruitedCharacters.put("TEST-RENA", new WifeyCharacter("TEST-RENA", "Rena", 50, 75, Assets.TestRena));
+        recruitedCharacters.put("TEST-KTNH", new WifeyCharacter("TEST-KTNH", "Kotonoha", 100, 25, Assets.TestKtnh));
+        recruitedCharacters.put("TEST-ANNA", new WifeyCharacter("TEST-ANNA", "Anna", 25, 100, Assets.TestAnna));
+        recruitedCharacters.put("TEST-SJGH", new WifeyCharacter("TEST-SJGH", "Senjougahara", 60, 70, Assets.TestSjgh));
+        recruitedCharacters.put("TEST-YNDR", new WifeyCharacter("TEST-YNDR", "Yandere-chan", 70, 60, Assets.TestYndr));
+        recruitedCharacters.put("TEST-PERI", new WifeyCharacter("TEST-PERI", "Peri", 10 ,200, Assets.TestPeri));
+        recruitedCharacters.put("TEST-LULU", new WifeyCharacter("TEST-LULU", "Luluco", 75, 50, Assets.TestLulu));
+        recruitedCharacters.put("TEST-TSMK", new WifeyCharacter("TEST-TSMK", "Tsumiki", 50, 75, Assets.TestTsmk));
+        recruitedCharacters.put("TEST-MNMA", new WifeyCharacter("TEST-MNMA", "Menma", 100, 25, Assets.TestMnma));
+        recruitedCharacters.put("TEST-KSGA", new WifeyCharacter("TEST-KSGA", "Osaka", 25, 100, Assets.TestKsga));
+        recruitedCharacters.put("TEST-MRIA", new WifeyCharacter("TEST-MRIA", "Miria", 60, 70, Assets.TestMria));
+        recruitedCharacters.put("TEST-SENY", new WifeyCharacter("TEST-SENY", "Sen", 70, 60, Assets.TestSeny));
+        recruitedCharacters.put("TEST-REVY", new WifeyCharacter("TEST-REVY", "Revy", 10 ,200, Assets.TestRevy));
+        recruitedCharacters.put("TEST-NOEL", new WifeyCharacter("TEST-NOEL", "Noel", 75, 50, Assets.TestNoel));
+        recruitedCharacters.put("TEST-DKRO", new WifeyCharacter("TEST-DKRO", "Dokuro", 50, 75, Assets.TestDkro));
+        recruitedCharacters.put("TEST-CMPA", new WifeyCharacter("TEST-CMPA", "Compa", 100, 25, Assets.TestCmpa));
+        recruitedCharacters.put("TEST-CCCC", new WifeyCharacter("TEST-CCCC", "CC", 25, 100, Assets.TestCccc));
+        recruitedCharacters.put("TEST-DWRD", new WifeyCharacter("TEST-DWRD", "Edward", 60, 70, Assets.TestDwrd));
+        recruitedCharacters.put("TEST-ANGE", new WifeyCharacter("TEST-ANGE", "Angelise", 70, 60, Assets.TestAnge));
+        recruitedCharacters.put("TEST-KYKO", new WifeyCharacter("TEST-KYKO", "Kyoko", 10 ,200, Assets.TestKyko));
     }
 
     @Override
@@ -64,13 +68,13 @@ public class BattleSelectScreen extends Screen {
             }
             if(t.y >= 100 && t.y <= 200){
                 currentParty = new BattleCharacter[7];
-                currentParty[0] = recruitedCharacters[0];
-                currentParty[1] = recruitedCharacters[1];
-                currentParty[2] = recruitedCharacters[2];
-                currentParty[3] = recruitedCharacters[3];
-                currentParty[4] = recruitedCharacters[4];
-                currentParty[5] = recruitedCharacters[5];
-                currentParty[6] = recruitedCharacters[6];
+                currentParty[0] = recruitedCharacters.get("TEST-YUNO").getBattleCharacter();
+                currentParty[1] = recruitedCharacters.get("TEST-RENA").getBattleCharacter();
+                currentParty[2] = recruitedCharacters.get("TEST-KTNH").getBattleCharacter();
+                currentParty[3] = recruitedCharacters.get("TEST-ANNA").getBattleCharacter();
+                currentParty[4] = recruitedCharacters.get("TEST-SJGH").getBattleCharacter();
+                currentParty[5] = recruitedCharacters.get("TEST-YNDR").getBattleCharacter();
+                currentParty[6] = recruitedCharacters.get("TEST-PERI").getBattleCharacter();
 
                 Enemy[] enemies = new Enemy[3];
                 enemies[0] = new Enemy("Enemy 1", 10000, 50, 3, 35, 4, 0, 0, 0.0, 0.0, 0.0, 0.0, 0, 0, Assets.testEnemy, new BasicPhysicalEnemyAI());
@@ -106,13 +110,13 @@ public class BattleSelectScreen extends Screen {
 
             if(t.y >= 400 && t.y <= 500){
                 currentParty = new BattleCharacter[7];
-                currentParty[0] = recruitedCharacters[7];
-                currentParty[1] = recruitedCharacters[8];
-                currentParty[2] = recruitedCharacters[9];
-                currentParty[3] = recruitedCharacters[10];
-                currentParty[4] = recruitedCharacters[11];
-                currentParty[5] = recruitedCharacters[12];
-                currentParty[6] = recruitedCharacters[13];
+                currentParty[0] = recruitedCharacters.get("TEST-LULU").getBattleCharacter();
+                currentParty[1] = recruitedCharacters.get("TEST-TSMK").getBattleCharacter();
+                currentParty[2] = recruitedCharacters.get("TEST-MNMA").getBattleCharacter();
+                currentParty[3] = recruitedCharacters.get("TEST-KSGA").getBattleCharacter();
+                currentParty[4] = recruitedCharacters.get("TEST-MRIA").getBattleCharacter();
+                currentParty[5] = recruitedCharacters.get("TEST-SENY").getBattleCharacter();
+                currentParty[6] = recruitedCharacters.get("TEST-REVY").getBattleCharacter();
 
                 Enemy[] enemies = new Enemy[3];
                 enemies[0] = new Enemy("Enemy 1", 10000, 50, 3, 35, 4, 0, 0, 0.0, 0.0, 0.0, 0.0, 0, 0, Assets.testEnemy, new BasicPhysicalEnemyAI());
@@ -128,13 +132,13 @@ public class BattleSelectScreen extends Screen {
 
             if(t.y >= 550 && t.y <= 700){
                 currentParty = new BattleCharacter[7];
-                currentParty[0] = recruitedCharacters[14];
-                currentParty[1] = recruitedCharacters[15];
-                currentParty[2] = recruitedCharacters[16];
-                currentParty[3] = recruitedCharacters[17];
-                currentParty[4] = recruitedCharacters[18];
-                currentParty[5] = recruitedCharacters[19];
-                currentParty[6] = recruitedCharacters[20];
+                currentParty[0] = recruitedCharacters.get("TEST-NOEL").getBattleCharacter();
+                currentParty[1] = recruitedCharacters.get("TEST-DKRO").getBattleCharacter();
+                currentParty[2] = recruitedCharacters.get("TEST-CMPA").getBattleCharacter();
+                currentParty[3] = recruitedCharacters.get("TEST-CCCC").getBattleCharacter();
+                currentParty[4] = recruitedCharacters.get("TEST-DWRD").getBattleCharacter();
+                currentParty[5] = recruitedCharacters.get("TEST-ANGE").getBattleCharacter();
+                currentParty[6] = recruitedCharacters.get("TEST-KYKO").getBattleCharacter();
 
                 Enemy[] enemies = new Enemy[3];
                 enemies[0] = new Enemy("Enemy 1", 10000, 50, 3, 35, 4, 0, 0, 0.0, 0.0, 0.0, 0.0, 0, 0, Assets.testEnemy, new BasicPhysicalEnemyAI());
