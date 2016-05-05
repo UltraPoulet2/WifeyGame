@@ -64,6 +64,11 @@ public class BattleCharacter {
         this.currentHP = hp;
     }
 
+    public void battleStart(){
+        this.currentHP = this.maxHP;
+        this.isDefending = false;
+    }
+
     public void turnStart(){
         //Function for things that happen at start of turn
         this.isDefending = false;

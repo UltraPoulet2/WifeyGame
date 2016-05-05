@@ -21,8 +21,33 @@ public class BattleSelectScreen extends Screen {
 
     private float waitTime = 0;
 
+    private BattleCharacter[] currentParty;
+    private BattleCharacter[] recruitedCharacters;
+
     public BattleSelectScreen(Game game){
         super(game);
+        recruitedCharacters = new BattleCharacter[21];
+        recruitedCharacters[0] = new BattleCharacter("Yuno", 3, 75, 50, Assets.TestYuno);
+        recruitedCharacters[1] = new BattleCharacter("Rena", 3, 50, 75, Assets.TestRena);
+        recruitedCharacters[2] = new BattleCharacter("Kotonoha", 3, 100, 25, Assets.TestKtnh);
+        recruitedCharacters[3] = new BattleCharacter("Anna", 3, 25, 100, Assets.TestAnna);
+        recruitedCharacters[4] = new BattleCharacter("Hitagi", 3, 60, 70, Assets.TestSjgh);
+        recruitedCharacters[5] = new BattleCharacter("Yandere-chan", 3, 70, 60, Assets.TestYndr);
+        recruitedCharacters[6] = new BattleCharacter("Peri", 3, 10, 200, Assets.TestPeri);
+        recruitedCharacters[7] = new BattleCharacter("Luluco", 3, 75, 50, Assets.TestLulu);
+        recruitedCharacters[8] = new BattleCharacter("Tsumiki", 3, 50, 75, Assets.TestTsmk);
+        recruitedCharacters[9] = new BattleCharacter("Menma", 3, 100, 25, Assets.TestMnma);
+        recruitedCharacters[10] = new BattleCharacter("Osaka", 3, 25, 100, Assets.TestKsga);
+        recruitedCharacters[11] = new BattleCharacter("Miria", 3, 60, 70, Assets.TestMria);
+        recruitedCharacters[12] = new BattleCharacter("Sen", 3, 70, 60, Assets.TestSeny);
+        recruitedCharacters[13] = new BattleCharacter("Revy", 3, 10, 200, Assets.TestRevy);
+        recruitedCharacters[14] = new BattleCharacter("Noel", 3, 75, 50, Assets.TestNoel);
+        recruitedCharacters[15] = new BattleCharacter("Dokuro", 3, 50, 75, Assets.TestDkro);
+        recruitedCharacters[16] = new BattleCharacter("Compa", 3, 100, 25, Assets.TestCmpa);
+        recruitedCharacters[17] = new BattleCharacter("CC", 3, 25, 100, Assets.TestCccc);
+        recruitedCharacters[18] = new BattleCharacter("Edward", 3, 60, 70, Assets.TestDwrd);
+        recruitedCharacters[19] = new BattleCharacter("Angelise", 3, 70, 60, Assets.TestAnge);
+        recruitedCharacters[20] = new BattleCharacter("Kyoko", 3, 10, 200, Assets.TestKyko);
     }
 
     @Override
@@ -38,14 +63,14 @@ public class BattleSelectScreen extends Screen {
                 continue;
             }
             if(t.y >= 100 && t.y <= 200){
-                BattleCharacter[] party = new BattleCharacter[7];
-                party[0] = new BattleCharacter("Yuno", 3, 75, 50, Assets.TestYuno);
-                party[1] = new BattleCharacter("Rena", 3, 50, 75, Assets.TestRena);
-                party[2] = new BattleCharacter("Kotonoha", 3, 100, 25, Assets.TestKtnh);
-                party[3] = new BattleCharacter("Anna", 3, 25, 100, Assets.TestAnna);
-                party[4] = new BattleCharacter("Hitagi", 3, 60, 70, Assets.TestSjgh);
-                party[5] = new BattleCharacter("Yandere-chan", 3, 70, 60, Assets.TestYndr);
-                party[6] = new BattleCharacter("Peri", 3, 10, 200, Assets.TestPeri);
+                currentParty = new BattleCharacter[7];
+                currentParty[0] = recruitedCharacters[0];
+                currentParty[1] = recruitedCharacters[1];
+                currentParty[2] = recruitedCharacters[2];
+                currentParty[3] = recruitedCharacters[3];
+                currentParty[4] = recruitedCharacters[4];
+                currentParty[5] = recruitedCharacters[5];
+                currentParty[6] = recruitedCharacters[6];
 
                 Enemy[] enemies = new Enemy[3];
                 enemies[0] = new Enemy("Enemy 1", 10000, 50, 3, 35, 4, 0, 0, 0.0, 0.0, 0.0, 0.0, 0, 0, Assets.testEnemy, new BasicPhysicalEnemyAI());
@@ -53,41 +78,41 @@ public class BattleSelectScreen extends Screen {
                 enemies[2] = new Enemy("Enemy 3", 50000, 20, 4, 0, 0, 0, 0, 2.0, 0.0, 0.0, 1.5, 50, 3, Assets.testEnemy, new OriginalBossAI());
 
                 BattleScreen bs = new BattleScreen(game);
-                bs.setParty(party);
+                bs.setParty(currentParty);
                 bs.setEnemies(enemies);
                 bs.setBackground(Assets.testBG);
                 game.setScreen(bs);
             }
 
             if(t.y >= 250 && t.y <= 350){
-                BattleCharacter[] party = new BattleCharacter[7];
-                party[0] = new BattleCharacter("Yuno 1", 3, 75, 50, Assets.TestYuno);
-                party[1] = new BattleCharacter("Yuno 2", 3, 75, 50, Assets.TestYuno);
-                party[2] = new BattleCharacter("Yuno 3", 3, 75, 50, Assets.TestYuno);
-                party[3] = new BattleCharacter("Yuno 4", 3, 75, 50, Assets.TestYuno);
-                party[4] = new BattleCharacter("Yuno 5", 3, 75, 50, Assets.TestYuno);
-                party[5] = new BattleCharacter("Yuno 6", 3, 75, 50, Assets.TestYuno);
-                party[6] = new BattleCharacter("Yuno 7", 3, 75, 50, Assets.TestYuno);
+                currentParty = new BattleCharacter[7];
+                currentParty[0] = new BattleCharacter("Yuno 1", 3, 75, 50, Assets.TestYuno);
+                currentParty[1] = new BattleCharacter("Yuno 2", 3, 75, 50, Assets.TestYuno);
+                currentParty[2] = new BattleCharacter("Yuno 3", 3, 75, 50, Assets.TestYuno);
+                currentParty[3] = new BattleCharacter("Yuno 4", 3, 75, 50, Assets.TestYuno);
+                currentParty[4] = new BattleCharacter("Yuno 5", 3, 75, 50, Assets.TestYuno);
+                currentParty[5] = new BattleCharacter("Yuno 6", 3, 75, 50, Assets.TestYuno);
+                currentParty[6] = new BattleCharacter("Yuno 7", 3, 75, 50, Assets.TestYuno);
 
                 Enemy[] enemies = new Enemy[1];
                 enemies[0] = new Enemy("Enemy 1", 10000, 50, 3, 35, 4, 0, 0, 0.0, 0.0, 0.0, 0.0, 0, 0, Assets.testEnemy, new BasicPhysicalEnemyAI());
 
                 BattleScreen bs = new BattleScreen(game);
-                bs.setParty(party);
+                bs.setParty(currentParty);
                 bs.setEnemies(enemies);
                 bs.setBackground(Assets.yunoBG);
                 game.setScreen(bs);
             }
 
             if(t.y >= 400 && t.y <= 500){
-                BattleCharacter[] party = new BattleCharacter[7];
-                party[0] = new BattleCharacter("Luluco", 3, 75, 50, Assets.TestLulu);
-                party[1] = new BattleCharacter("Tsumiki", 3, 50, 75, Assets.TestTsmk);
-                party[2] = new BattleCharacter("Menma", 3, 100, 25, Assets.TestMnma);
-                party[3] = new BattleCharacter("Osaka", 3, 25, 100, Assets.TestKsga);
-                party[4] = new BattleCharacter("Miria", 3, 60, 70, Assets.TestMria);
-                party[5] = new BattleCharacter("Sen", 3, 70, 60, Assets.TestSeny);
-                party[6] = new BattleCharacter("Revy", 3, 10, 200, Assets.TestRevy);
+                currentParty = new BattleCharacter[7];
+                currentParty[0] = recruitedCharacters[7];
+                currentParty[1] = recruitedCharacters[8];
+                currentParty[2] = recruitedCharacters[9];
+                currentParty[3] = recruitedCharacters[10];
+                currentParty[4] = recruitedCharacters[11];
+                currentParty[5] = recruitedCharacters[12];
+                currentParty[6] = recruitedCharacters[13];
 
                 Enemy[] enemies = new Enemy[3];
                 enemies[0] = new Enemy("Enemy 1", 10000, 50, 3, 35, 4, 0, 0, 0.0, 0.0, 0.0, 0.0, 0, 0, Assets.testEnemy, new BasicPhysicalEnemyAI());
@@ -95,21 +120,21 @@ public class BattleSelectScreen extends Screen {
                 enemies[2] = new Enemy("Enemy 3", 50000, 20, 4, 0, 0, 0, 0, 2.0, 0.0, 0.0, 1.5, 50, 3, Assets.testEnemy, new OriginalBossAI());
 
                 BattleScreen bs = new BattleScreen(game);
-                bs.setParty(party);
+                bs.setParty(currentParty);
                 bs.setEnemies(enemies);
                 bs.setBackground(Assets.testBG);
                 game.setScreen(bs);
             }
 
             if(t.y >= 550 && t.y <= 700){
-                BattleCharacter[] party = new BattleCharacter[7];
-                party[0] = new BattleCharacter("Noel", 3, 75, 50, Assets.TestNoel);
-                party[1] = new BattleCharacter("Dokuro", 3, 50, 75, Assets.TestDkro);
-                party[2] = new BattleCharacter("Compa", 3, 100, 25, Assets.TestCmpa);
-                party[3] = new BattleCharacter("CC", 3, 25, 100, Assets.TestCccc);
-                party[4] = new BattleCharacter("Edward", 3, 60, 70, Assets.TestDwrd);
-                party[5] = new BattleCharacter("Angelise", 3, 70, 60, Assets.TestAnge);
-                party[6] = new BattleCharacter("Kyoko", 3, 10, 200, Assets.TestKyko);
+                currentParty = new BattleCharacter[7];
+                currentParty[0] = recruitedCharacters[14];
+                currentParty[1] = recruitedCharacters[15];
+                currentParty[2] = recruitedCharacters[16];
+                currentParty[3] = recruitedCharacters[17];
+                currentParty[4] = recruitedCharacters[18];
+                currentParty[5] = recruitedCharacters[19];
+                currentParty[6] = recruitedCharacters[20];
 
                 Enemy[] enemies = new Enemy[3];
                 enemies[0] = new Enemy("Enemy 1", 10000, 50, 3, 35, 4, 0, 0, 0.0, 0.0, 0.0, 0.0, 0, 0, Assets.testEnemy, new BasicPhysicalEnemyAI());
@@ -117,7 +142,7 @@ public class BattleSelectScreen extends Screen {
                 enemies[2] = new Enemy("Enemy 3", 50000, 20, 4, 0, 0, 0, 0, 2.0, 0.0, 0.0, 1.5, 50, 3, Assets.testEnemy, new OriginalBossAI());
 
                 BattleScreen bs = new BattleScreen(game);
-                bs.setParty(party);
+                bs.setParty(currentParty);
                 bs.setEnemies(enemies);
                 bs.setBackground(Assets.testBG);
                 game.setScreen(bs);

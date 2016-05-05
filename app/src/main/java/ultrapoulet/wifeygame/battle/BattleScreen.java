@@ -341,6 +341,9 @@ public class BattleScreen extends Screen {
                 if (phaseEntered) {
                     phaseTime = 0;
                     phaseEntered = false;
+                    for(int i = 0; i < party.length; i++){
+                        party[i].battleStart();
+                    }
                 } else {
                     phaseTime += deltaTime;
                     if (phaseTime >= OTHER_PHASE_WAIT) {

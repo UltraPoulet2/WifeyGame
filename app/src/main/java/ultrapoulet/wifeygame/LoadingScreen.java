@@ -87,10 +87,6 @@ public class LoadingScreen extends Screen {
             Assets.DamageHitsNumbers[i] = g.newImage("numbers/Damage" + i + ".png", ImageFormat.ARGB8888);
         }
 
-        System.out.println("Images loaded");
-
-        //BattleScreen bs = new BattleScreen(game);
-        //game.setScreen(bs);
         BattleSelectScreen bss = new BattleSelectScreen(game);
         game.setScreen(bss);
 
