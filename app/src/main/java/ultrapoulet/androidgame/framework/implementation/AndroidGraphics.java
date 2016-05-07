@@ -151,6 +151,15 @@ public class AndroidGraphics implements Graphics {
         canvas.drawBitmap(((AndroidImage) image).bitmap, srcRect, dstRect, null);
     }
 
+    public void drawPercentageImage(Image image, int posX, int posY, int percX, int percY){
+        int origWidth = image.getWidth();
+        int origHeight = image.getHeight();
+        int newWidth = image.getWidth()*percX/100;
+        int newHeight = image.getHeight()*percY/100;
+
+        drawScaledImage(image, posX, posY, newWidth, newHeight, 0, 0, origWidth, origHeight);
+    }
+
     @Override
     public int getWidth() {
         return frameBuffer.getWidth();

@@ -31,4 +31,26 @@ public class WifeyCharacter {
     public BattleCharacter getBattleCharacter(){
         return new BattleCharacter(name, 3, strength, magic, image);
     }
+
+    public String getName(){
+        return this.name;
+    }
+
+    public String getHashKey(){
+        return this.hashKey;
+    }
+
+    public Image getImage(){
+        return this.image;
+    }
+
+    public int compareName(WifeyCharacter other){
+        int result = this.getName().compareTo(other.getName());
+        if(result != 0){
+            return result;
+        }
+        else{
+            return this.getHashKey().compareTo(other.getHashKey());
+        }
+    }
 }

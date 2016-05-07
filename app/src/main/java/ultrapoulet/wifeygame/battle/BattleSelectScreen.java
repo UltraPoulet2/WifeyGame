@@ -67,6 +67,7 @@ public class BattleSelectScreen extends Screen {
                 continue;
             }
             if(t.y >= 100 && t.y <= 200){
+                /*
                 currentParty = new BattleCharacter[7];
                 currentParty[0] = recruitedCharacters.get("TEST-YUNO").getBattleCharacter();
                 currentParty[1] = recruitedCharacters.get("TEST-RENA").getBattleCharacter();
@@ -75,17 +76,36 @@ public class BattleSelectScreen extends Screen {
                 currentParty[4] = recruitedCharacters.get("TEST-SJGH").getBattleCharacter();
                 currentParty[5] = recruitedCharacters.get("TEST-YNDR").getBattleCharacter();
                 currentParty[6] = recruitedCharacters.get("TEST-PERI").getBattleCharacter();
+                */
+
+                WifeyCharacter[] party = new WifeyCharacter[7];
+                party[0] = recruitedCharacters.get("TEST-YUNO");
+                party[1] = recruitedCharacters.get("TEST-RENA");
+                party[2] = recruitedCharacters.get("TEST-KTNH");
+                party[3] = recruitedCharacters.get("TEST-ANNA");
+                party[4] = recruitedCharacters.get("TEST-SJGH");
+                party[5] = recruitedCharacters.get("TEST-YNDR");
+                party[6] = recruitedCharacters.get("TEST-PERI");
 
                 Enemy[] enemies = new Enemy[3];
                 enemies[0] = new Enemy("Enemy 1", 10000, 50, 3, 35, 4, 0, 0, 0.0, 0.0, 0.0, 0.0, 0, 0, Assets.testEnemy, new BasicPhysicalEnemyAI());
                 enemies[1] = new Enemy("Enemy 2", 20000, 0, 0, 0, 0, 50, 1000, 0.0, 0.0, 0.0, 0.0, 0, 0, Assets.testEnemy, new BasicMagicEnemyAI());
                 enemies[2] = new Enemy("Enemy 3", 50000, 20, 4, 0, 0, 0, 0, 2.0, 0.0, 0.0, 1.5, 50, 3, Assets.testEnemy, new OriginalBossAI());
 
+                PartySelectScreen pss = new PartySelectScreen(game);
+                pss.setCurrentParty(party);
+                WifeyCharacter[] allCharacters = new WifeyCharacter[recruitedCharacters.size()];
+                pss.setValidCharacters(recruitedCharacters.values().toArray(allCharacters));
+                System.out.println(allCharacters.length);
+                pss.setEnemies(enemies);
+                game.setScreen(pss);
+                /*
                 BattleScreen bs = new BattleScreen(game);
                 bs.setParty(currentParty);
                 bs.setEnemies(enemies);
                 bs.setBackground(Assets.testBG);
                 game.setScreen(bs);
+                */
             }
 
             if(t.y >= 250 && t.y <= 350){
