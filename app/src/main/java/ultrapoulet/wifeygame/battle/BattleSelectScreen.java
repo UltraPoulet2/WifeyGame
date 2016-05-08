@@ -98,6 +98,7 @@ public class BattleSelectScreen extends Screen {
                 pss.setValidCharacters(recruitedCharacters.values().toArray(allCharacters));
                 System.out.println(allCharacters.length);
                 pss.setEnemies(enemies);
+                pss.setPreviousScreen(this);
                 game.setScreen(pss);
                 /*
                 BattleScreen bs = new BattleScreen(game);
