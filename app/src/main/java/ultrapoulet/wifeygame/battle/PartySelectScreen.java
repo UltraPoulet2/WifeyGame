@@ -11,6 +11,7 @@ import java.util.List;
 
 import ultrapoulet.androidgame.framework.Game;
 import ultrapoulet.androidgame.framework.Graphics;
+import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.androidgame.framework.Input;
 import ultrapoulet.androidgame.framework.Screen;
 import ultrapoulet.wifeygame.Assets;
@@ -29,12 +30,26 @@ public class PartySelectScreen extends Screen {
 
     private Paint textPaint;
 
+    private Image background;
+
+    private int currentPage = 1;
+    private int maxPage;
+    private final static int PER_PAGE = 64;
+
+    private final static int PARTY_SCALE = 57;
+
+    private Image[] numbers;
+
     public PartySelectScreen(Game game){
         super(game);
         textPaint = new Paint();
         textPaint.setColor(Color.BLACK);
         textPaint.setTextAlign(Align.CENTER);
         textPaint.setTextSize(25);
+
+        background = Assets.PartySelectScreen;
+
+        numbers = Assets.HPNumbers;
     }
 
     public void setValidCharacters(WifeyCharacter[] inputCharacters){
@@ -50,6 +65,7 @@ public class PartySelectScreen extends Screen {
             }
         };
         Collections.sort(validCharacters, nameComp);
+        maxPage = (validCharacters.size() / 64) + 1;
     }
 
     public void setCurrentParty(WifeyCharacter[] inputParty){
@@ -75,10 +91,10 @@ public class PartySelectScreen extends Screen {
             if (t.type != Input.TouchEvent.TOUCH_UP) {
                 continue;
             }
-            if(t.x >= 100 && t.x <= 200 && t.y >= 1200 && t.y <= 1250){
+            if(t.x >= 45 && t.x <= 215 && t.y >= 1150 && t.y <= 1250){
                 backButton();
             }
-            if(t.x >= 600 && t.x <= 700 && t.y >= 1200 && t.y <= 1250){
+            if(t.x >= 585 && t.x <= 755 && t.y >= 1150 && t.y <= 1250){
                 BattleScreen bs = new BattleScreen(game);
                 BattleCharacter[] party = new BattleCharacter[currentParty.length];
                 for(int j = 0; j < party.length; j++){
@@ -96,19 +112,42 @@ public class PartySelectScreen extends Screen {
     public void paint(float deltaTime) {
         Graphics g = game.getGraphics();
         g.drawARGB(0xFF, 0x77, 0x77, 0x77);
-        for(int i = 0; i < currentParty.length; i++){
-            g.drawPercentageImage(currentParty[i].getImage(), 100 * i + 60, 200, 50, 50);
+        g.drawImage(background, 0, 0);
+
+        if(currentPage > 10){
+            g.drawImage(numbers[currentPage / 10], 215, 355);
         }
-        for(int i = 0; i < validCharacters.size(); i++){
-            g.drawPercentageImage(validCharacters.get(i).getImage(), 90 * (i % 8) + 40, 400 + 90 *(i / 8), 50, 50);
+        g.drawImage(numbers[currentPage % 10], 235, 355);
+
+        if(maxPage > 10){
+            g.drawImage(numbers[maxPage / 10], 265, 355);
+            g.drawImage(numbers[maxPage % 10], 285, 355);
+        }
+        else {
+            g.drawImage(numbers[maxPage % 10], 265, 355);
         }
 
-        //Temporary back button
-        g.drawRect(100, 1200, 100, 50, Color.DKGRAY);
-        g.drawString("Back", 150, 1235, textPaint);
-        //Temporary Battle Button
-        g.drawRect(600, 1200, 100, 50, Color.DKGRAY);
-        g.drawString("BATTLE!", 650, 1235, textPaint);
+        if(currentPage == 1){
+            g.drawImage(Assets.PrevPageDisable, 45, 338);
+        }
+        else{
+            g.drawImage(Assets.PrevPageEnable, 45, 338);
+        }
+
+        if(currentPage == maxPage){
+            g.drawImage(Assets.NextPageDisable, 315, 338);
+        }
+        else{
+            g.drawImage(Assets.NextPageEnable, 315, 338);
+        }
+
+        for(int i = 0; i < currentParty.length; i++){
+            g.drawPercentageImage(currentParty[i].getImage(), 100 * i + 60, 180, PARTY_SCALE, PARTY_SCALE);
+        }
+        for(int i = 0; i < validCharacters.size(); i++){
+            g.drawPercentageImage(validCharacters.get(i).getImage(), 90 * (i % 8) + 45, 400 + 90 *(i / 8), 50, 50);
+        }
+
 
     }
 

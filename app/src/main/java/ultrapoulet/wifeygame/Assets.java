@@ -27,4 +27,10 @@ public class Assets {
     public static Image[] HPHealNumbers;
     public static Image[] ComboHitsNumbers;
     public static Image[] DamageHitsNumbers;
+
+    //PartySelectScreen Stuff
+    public static Image PartySelectScreen;
+    public static Image AcceptEnable, AcceptDisable;
+    public static Image NextPageEnable, NextPageDisable;
+    public static Image PrevPageEnable, PrevPageDisable;
 }
