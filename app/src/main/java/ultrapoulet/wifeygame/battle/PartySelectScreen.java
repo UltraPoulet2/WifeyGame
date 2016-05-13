@@ -16,6 +16,7 @@ import ultrapoulet.androidgame.framework.Input;
 import ultrapoulet.androidgame.framework.Screen;
 import ultrapoulet.wifeygame.Assets;
 import ultrapoulet.wifeygame.WifeyCharacter;
+import ultrapoulet.wifeygame.gamestate.Party;
 
 /**
  * Created by John on 5/6/2016.
@@ -50,6 +51,11 @@ public class PartySelectScreen extends Screen {
         background = Assets.PartySelectScreen;
 
         numbers = Assets.HPNumbers;
+
+        currentParty = new WifeyCharacter[7];
+        for(int i = 0; i < currentParty.length; i++){
+            currentParty[i] = Party.getIndex(i);
+        }
     }
 
     public void setValidCharacters(WifeyCharacter[] inputCharacters){
@@ -100,6 +106,7 @@ public class PartySelectScreen extends Screen {
                 for(int j = 0; j < party.length; j++){
                     party[j] = currentParty[j].getBattleCharacter();
                 }
+                Party.setParty(currentParty);
                 bs.setParty(party);
                 bs.setEnemies(enemies);
                 bs.setBackground(Assets.testBG);
