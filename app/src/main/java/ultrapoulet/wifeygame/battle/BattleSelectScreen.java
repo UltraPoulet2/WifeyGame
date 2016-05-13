@@ -16,6 +16,7 @@ import ultrapoulet.wifeygame.WifeyCharacter;
 import ultrapoulet.wifeygame.battle.enemyai.BasicMagicEnemyAI;
 import ultrapoulet.wifeygame.battle.enemyai.BasicPhysicalEnemyAI;
 import ultrapoulet.wifeygame.battle.enemyai.OriginalBossAI;
+import ultrapoulet.wifeygame.gamestate.Party;
 
 /**
  * Created by John on 4/26/2016.
@@ -92,8 +93,8 @@ public class BattleSelectScreen extends Screen {
                 enemies[1] = new Enemy("Enemy 2", 20000, 0, 0, 0, 0, 50, 1000, 0.0, 0.0, 0.0, 0.0, 0, 0, Assets.testEnemy, new BasicMagicEnemyAI());
                 enemies[2] = new Enemy("Enemy 3", 50000, 20, 4, 0, 0, 0, 0, 2.0, 0.0, 0.0, 1.5, 50, 3, Assets.testEnemy, new OriginalBossAI());
 
+                Party.setParty(party);
                 PartySelectScreen pss = new PartySelectScreen(game);
-                pss.setCurrentParty(party);
                 WifeyCharacter[] allCharacters = new WifeyCharacter[recruitedCharacters.size()];
                 pss.setValidCharacters(recruitedCharacters.values().toArray(allCharacters));
                 System.out.println(allCharacters.length);
@@ -130,25 +131,28 @@ public class BattleSelectScreen extends Screen {
             }
 
             if(t.y >= 400 && t.y <= 500){
-                currentParty = new BattleCharacter[7];
-                currentParty[0] = recruitedCharacters.get("TEST-LULU").getBattleCharacter();
-                currentParty[1] = recruitedCharacters.get("TEST-TSMK").getBattleCharacter();
-                currentParty[2] = recruitedCharacters.get("TEST-MNMA").getBattleCharacter();
-                currentParty[3] = recruitedCharacters.get("TEST-KSGA").getBattleCharacter();
-                currentParty[4] = recruitedCharacters.get("TEST-MRIA").getBattleCharacter();
-                currentParty[5] = recruitedCharacters.get("TEST-SENY").getBattleCharacter();
-                currentParty[6] = recruitedCharacters.get("TEST-REVY").getBattleCharacter();
+                WifeyCharacter[] party = new WifeyCharacter[7];
+                party[0] = recruitedCharacters.get("TEST-LULU");
+                party[1] = recruitedCharacters.get("TEST-TSMK");
+                party[2] = recruitedCharacters.get("TEST-MNMA");
+                party[3] = recruitedCharacters.get("TEST-KSGA");
+                party[4] = recruitedCharacters.get("TEST-MRIA");
+                party[5] = recruitedCharacters.get("TEST-SENY");
+                party[6] = recruitedCharacters.get("TEST-REVY");
 
                 Enemy[] enemies = new Enemy[3];
                 enemies[0] = new Enemy("Enemy 1", 10000, 50, 3, 35, 4, 0, 0, 0.0, 0.0, 0.0, 0.0, 0, 0, Assets.testEnemy, new BasicPhysicalEnemyAI());
                 enemies[1] = new Enemy("Enemy 2", 20000, 0, 0, 0, 0, 50, 1000, 0.0, 0.0, 0.0, 0.0, 0, 0, Assets.testEnemy, new BasicMagicEnemyAI());
                 enemies[2] = new Enemy("Enemy 3", 50000, 20, 4, 0, 0, 0, 0, 2.0, 0.0, 0.0, 1.5, 50, 3, Assets.testEnemy, new OriginalBossAI());
 
-                BattleScreen bs = new BattleScreen(game);
-                bs.setParty(currentParty);
-                bs.setEnemies(enemies);
-                bs.setBackground(Assets.testBG);
-                game.setScreen(bs);
+                Party.setParty(party);
+                PartySelectScreen pss = new PartySelectScreen(game);
+                WifeyCharacter[] allCharacters = new WifeyCharacter[recruitedCharacters.size()];
+                pss.setValidCharacters(recruitedCharacters.values().toArray(allCharacters));
+                System.out.println(allCharacters.length);
+                pss.setEnemies(enemies);
+                pss.setPreviousScreen(this);
+                game.setScreen(pss);
             }
 
             if(t.y >= 550 && t.y <= 700){
