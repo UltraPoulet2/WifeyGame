@@ -6,6 +6,8 @@ import ultrapoulet.androidgame.framework.Graphics.ImageFormat;
 import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.androidgame.framework.Screen;
 import ultrapoulet.wifeygame.battle.BattleSelectScreen;
+import ultrapoulet.wifeygame.gamestate.Party;
+import ultrapoulet.wifeygame.gamestate.RecruitedCharacters;
 
 /**
  * Created by John on 3/12/2016.
@@ -95,9 +97,46 @@ public class LoadingScreen extends Screen {
         Assets.PrevPageEnable = g.newImage("buttons/PrevPageEnabled.png", ImageFormat.ARGB8888);
         Assets.PrevPageDisable = g.newImage("buttons/PrevPageDisabled.png", ImageFormat.ARGB8888);
 
+        createRecruits();
+        createParty();
+
         BattleSelectScreen bss = new BattleSelectScreen(game);
         game.setScreen(bss);
 
+    }
+
+    private void createRecruits(){
+        RecruitedCharacters.put("TEST-YUNO", new WifeyCharacter("TEST-YUNO", "Yuno", 75, 50, Assets.TestYuno));
+        RecruitedCharacters.put("TEST-RENA", new WifeyCharacter("TEST-RENA", "Rena", 50, 75, Assets.TestRena));
+        RecruitedCharacters.put("TEST-KTNH", new WifeyCharacter("TEST-KTNH", "Kotonoha", 100, 25, Assets.TestKtnh));
+        RecruitedCharacters.put("TEST-ANNA", new WifeyCharacter("TEST-ANNA", "Anna", 25, 100, Assets.TestAnna));
+        RecruitedCharacters.put("TEST-SJGH", new WifeyCharacter("TEST-SJGH", "Senjougahara", 60, 70, Assets.TestSjgh));
+        RecruitedCharacters.put("TEST-YNDR", new WifeyCharacter("TEST-YNDR", "Yandere-chan", 70, 60, Assets.TestYndr));
+        RecruitedCharacters.put("TEST-PERI", new WifeyCharacter("TEST-PERI", "Peri", 10 ,200, Assets.TestPeri));
+        RecruitedCharacters.put("TEST-LULU", new WifeyCharacter("TEST-LULU", "Luluco", 75, 50, Assets.TestLulu));
+        RecruitedCharacters.put("TEST-TSMK", new WifeyCharacter("TEST-TSMK", "Tsumiki", 50, 75, Assets.TestTsmk));
+        RecruitedCharacters.put("TEST-MNMA", new WifeyCharacter("TEST-MNMA", "Menma", 100, 25, Assets.TestMnma));
+        RecruitedCharacters.put("TEST-KSGA", new WifeyCharacter("TEST-KSGA", "Osaka", 25, 100, Assets.TestKsga));
+        RecruitedCharacters.put("TEST-MRIA", new WifeyCharacter("TEST-MRIA", "Miria", 60, 70, Assets.TestMria));
+        RecruitedCharacters.put("TEST-SENY", new WifeyCharacter("TEST-SENY", "Sen", 70, 60, Assets.TestSeny));
+        RecruitedCharacters.put("TEST-REVY", new WifeyCharacter("TEST-REVY", "Revy", 10 ,200, Assets.TestRevy));
+        RecruitedCharacters.put("TEST-NOEL", new WifeyCharacter("TEST-NOEL", "Noel", 75, 50, Assets.TestNoel));
+        RecruitedCharacters.put("TEST-DKRO", new WifeyCharacter("TEST-DKRO", "Dokuro", 50, 75, Assets.TestDkro));
+        RecruitedCharacters.put("TEST-CMPA", new WifeyCharacter("TEST-CMPA", "Compa", 100, 25, Assets.TestCmpa));
+        RecruitedCharacters.put("TEST-CCCC", new WifeyCharacter("TEST-CCCC", "CC", 25, 100, Assets.TestCccc));
+        RecruitedCharacters.put("TEST-DWRD", new WifeyCharacter("TEST-DWRD", "Edward", 60, 70, Assets.TestDwrd));
+        RecruitedCharacters.put("TEST-ANGE", new WifeyCharacter("TEST-ANGE", "Angelise", 70, 60, Assets.TestAnge));
+        RecruitedCharacters.put("TEST-KYKO", new WifeyCharacter("TEST-KYKO", "Kyoko", 10 ,200, Assets.TestKyko));
+    }
+
+    private void createParty(){
+        Party.setIndex(0, RecruitedCharacters.get("TEST-YUNO"));
+        Party.setIndex(1, RecruitedCharacters.get("TEST-RENA"));
+        Party.setIndex(2, RecruitedCharacters.get("TEST-KTNH"));
+        Party.setIndex(3, RecruitedCharacters.get("TEST-ANNA"));
+        Party.setIndex(4, RecruitedCharacters.get("TEST-SJGH"));
+        Party.setIndex(5, RecruitedCharacters.get("TEST-YNDR"));
+        Party.setIndex(6, RecruitedCharacters.get("TEST-PERI"));
     }
 
     @Override

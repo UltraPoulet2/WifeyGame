@@ -17,7 +17,7 @@ public class Party {
     }
 
     public static boolean inParty(WifeyCharacter inputChar){
-        //Returns -1 if not in party, index if it is
+        //Returns true if in party, false otherwise
         for(int i = 0; i < party.length; i++){
             if(party[i] == inputChar){
                 return true;
