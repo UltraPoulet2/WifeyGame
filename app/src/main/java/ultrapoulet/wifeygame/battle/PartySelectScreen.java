@@ -50,7 +50,8 @@ public class PartySelectScreen extends Screen {
     private boolean dragging = false;
     private int draggingX = 0;
     private int draggingY = 0;
-    private int draggingIndex = -1;
+    private int draggingRecruitIndex = -1;
+    private int draggingPartyIndex = -1;
 
     public PartySelectScreen(Game game){
         super(game);
@@ -103,7 +104,7 @@ public class PartySelectScreen extends Screen {
 
     //Gets the index of character in the full list
     //that is presently being touched
-    private int getDraggingIndex(int x, int y){
+    private int getRecruitIndex(int x, int y){
         for(int i = PER_PAGE * (currentPage - 1); i < PER_PAGE * currentPage && i < validCharacters.size(); i++){
             int xLeft = 45 + 90 * (i % 8);
             int xRight = 125 + 90 * (i % 8);
@@ -116,6 +117,7 @@ public class PartySelectScreen extends Screen {
         return -1;
     }
 
+    //Gets the index of the party member that is presently being touched
     private int getPartyIndex(int x, int y){
         for(int i = 0; i < 7; i++){
             int xLeft = 60 + 100 * i;
@@ -138,7 +140,10 @@ public class PartySelectScreen extends Screen {
                 touchDown = true;
                 dragging = false;
                 holdTime = 0;
-                draggingIndex = getDraggingIndex(t.x, t.y);
+                draggingX = t.x;
+                draggingY = t.y;
+                draggingRecruitIndex = getRecruitIndex(t.x, t.y);
+                draggingPartyIndex = getPartyIndex(t.x, t.y);
                 continue;
             }
             else if (t.type == TouchEvent.TOUCH_UP) {
@@ -148,47 +153,82 @@ public class PartySelectScreen extends Screen {
                     }
                     else if(t.x >= 585 && t.x <= 755 && t.y >= 1150 && t.y <= 1250){
                         BattleScreen bs = new BattleScreen(game);
-                        BattleCharacter[] party = new BattleCharacter[currentParty.length];
-                        for(int j = 0; j < party.length; j++){
-                            party[j] = currentParty[j].getBattleCharacter();
-                        }
                         Party.setParty(currentParty);
-                        bs.setParty(party);
+                        bs.setParty(Party.getBattleParty());
                         bs.setEnemies(enemies);
                         bs.setBackground(Assets.testBG);
                         game.setScreen(bs);
                     }
-                    else if(draggingIndex != -1){
-                        System.out.println("I would display info on: " + validCharacters.get(draggingIndex).getName());
+                    else if(draggingRecruitIndex != -1){
+                        System.out.println("I would display info on: " + validCharacters.get(draggingRecruitIndex).getName());
+                    }
+                    else if(draggingPartyIndex != -1 && currentParty[draggingPartyIndex] != null){
+                        System.out.println("I would display info on: " + currentParty[draggingPartyIndex].getName());
                     }
                 }
-                else if(dragging){
+                else if(dragging && draggingRecruitIndex != -1){
                     int partyIndex = getPartyIndex(t.x, t.y);
+                    while(partyIndex - 1 > 0 && currentParty[partyIndex - 1] == null){
+                        partyIndex--;
+                    }
                     if(partyIndex != -1){
-                        boolean inParty = false;
+                        int inPartyIndex = -1;
                         for(int j = 0; j < currentParty.length; j++){
-                            if(currentParty[j] == validCharacters.get(draggingIndex)){
-                                inParty = true;
+                            if(currentParty[j] == validCharacters.get(draggingRecruitIndex)){
+                                inPartyIndex = j;
                             }
                         }
                         //For now, if already in party, ignore
-                        if(inParty){
-                            System.out.println("Character already in party");
+                        if(inPartyIndex != -1 && inPartyIndex != partyIndex){
+                            WifeyCharacter temp = currentParty[inPartyIndex];
+                            currentParty[inPartyIndex] = currentParty[partyIndex];
+                            currentParty[partyIndex] = temp;
+                            if(currentParty[inPartyIndex] == null){
+                                for(int j = inPartyIndex; j + 1 < currentParty.length; j++){
+                                    currentParty[j] = currentParty[j + 1];
+                                }
+                                currentParty[6] = null;
+                            }
                         }
                         else{
-                            currentParty[partyIndex] = validCharacters.get(draggingIndex);
+                            currentParty[partyIndex] = validCharacters.get(draggingRecruitIndex);
                         }
                     }
+                }
+                else if(dragging && draggingPartyIndex != -1){
+                    int partyIndex = getPartyIndex(t.x, t.y);
+                    while(partyIndex - 1 > 0 && currentParty[partyIndex - 1] == null){
+                        partyIndex--;
+                    }
+                    if(partyIndex != -1 && partyIndex != draggingPartyIndex){
+                        WifeyCharacter temp = currentParty[draggingPartyIndex];
+                        currentParty[draggingPartyIndex] = currentParty[partyIndex];
+                        currentParty[partyIndex] = temp;
+                    }
+                    if(partyIndex == -1 || currentParty[draggingPartyIndex] == null){
+                        for(int j = draggingPartyIndex; j + 1 < currentParty.length; j++){
+                            currentParty[j] = currentParty[j + 1];
+                        }
+                        currentParty[6] = null;
+                    }
+
                 }
                 touchDown = false;
                 dragging = false;
                 holdTime = 0;
-                draggingIndex = -1;
+                draggingX = 0;
+                draggingY = 0;
+                draggingRecruitIndex = -1;
+                draggingPartyIndex = -1;
             }
             else if(t.type == TouchEvent.TOUCH_DRAGGED) {
-                if(!dragging && draggingIndex != -1 && getDraggingIndex(t.x, t.y) != draggingIndex){
+                if(!dragging && draggingRecruitIndex != -1 && getRecruitIndex(t.x, t.y) != draggingRecruitIndex){
                     holdTime = 0;
-                    draggingIndex = -1;
+                    draggingRecruitIndex = -1;
+                }
+                else if(!dragging && draggingPartyIndex != -1 && getPartyIndex(t.x, t.y) != draggingPartyIndex){
+                    holdTime = 0;
+                    draggingPartyIndex = -1;
                 }
                 else{
                     draggingX = t.x;
@@ -196,7 +236,7 @@ public class PartySelectScreen extends Screen {
                 }
             }
         }
-        if(game.getInput().isTouchDown(0) && draggingIndex != -1){
+        if(game.getInput().isTouchDown(0) && (draggingRecruitIndex != -1 || (draggingPartyIndex != -1 && currentParty[draggingPartyIndex] != null))){
             if (holdTime < DRAG_WAIT) {
                 holdTime += deltaTime;
             } else if (!dragging) {
@@ -208,7 +248,8 @@ public class PartySelectScreen extends Screen {
     @Override
     public void paint(float deltaTime) {
         Graphics g = game.getGraphics();
-        g.drawARGB(0xFF, 0x77, 0x77, 0x77);
+        //g.drawARGB(0xFF, 0x77, 0x77, 0x77);
+        g.clearScreen(0xFFFFFFFF);
         g.drawImage(background, 0, 0);
 
         if(currentPage > 10){
@@ -238,16 +279,21 @@ public class PartySelectScreen extends Screen {
             g.drawImage(Assets.NextPageEnable, 315, 338);
         }
 
-        for(int i = 0; i < currentParty.length; i++){
-            g.drawPercentageImage(currentParty[i].getImage(), 100 * i + 60, 180, PARTY_SCALE, PARTY_SCALE);
+        for(int i = 0; i < currentParty.length && currentParty[i] != null; i++){
+            if(!dragging || i != draggingPartyIndex) {
+                g.drawPercentageImage(currentParty[i].getImage(), 100 * i + 60, 180, PARTY_SCALE, PARTY_SCALE);
+            }
         }
         for(int i = 64 * (currentPage - 1); i < validCharacters.size(); i++){
-            if(!dragging || i != draggingIndex) {
+            if(!dragging || i != draggingRecruitIndex) {
                 g.drawPercentageImage(validCharacters.get(i).getImage(), 90 * (i % 8) + 45, 400 + 90 * (i / 8), 50, 50);
             }
         }
-        if(dragging){
-            g.drawPercentageImage(validCharacters.get(draggingIndex).getImage(), draggingX - 40, draggingY - 40, DRAGGING_SCALE, DRAGGING_SCALE);
+        if(dragging && draggingRecruitIndex != -1){
+            g.drawPercentageImage(validCharacters.get(draggingRecruitIndex).getImage(), draggingX - 60, draggingY - 60, DRAGGING_SCALE, DRAGGING_SCALE);
+        }
+        if(dragging && draggingPartyIndex != -1){
+            g.drawPercentageImage(currentParty[draggingPartyIndex].getImage(), draggingX - 60, draggingY - 60, DRAGGING_SCALE, DRAGGING_SCALE);
         }
 
 

@@ -14,6 +14,9 @@ public class Party {
         for(int i = 0; i < input.length; i++){
             party[i] = input[i];
         }
+        for(int i = input.length; i < 7; i++){
+            party[i] = null;
+        }
     }
 
     public static boolean inParty(WifeyCharacter inputChar){
@@ -33,6 +36,15 @@ public class Party {
         party[index] = inputChar;
     }
 
+    public static void swapIndex(int index1, int index2){
+        if(index1 == index2){
+            return;
+        }
+        WifeyCharacter temp = party[index2];
+        party[index2] = party[index1];
+        party[index1] = temp;
+    }
+
     public static WifeyCharacter getIndex(int index){
         return party[index];
     }
@@ -41,10 +53,10 @@ public class Party {
         if(index < 0 || index >= 7){
             return;
         }
-        party[index] = null;
         for(int i = index; i + 1 < 7; i++){
             party[i] = party[i+1];
         }
+        party[6] = null;
     }
 
     public static void clearParty(){
