@@ -316,6 +316,9 @@ public class PartySelectScreen extends Screen {
                 g.drawPercentageImage(currentParty[i].getImage(), 100 * i + 60, 180, PARTY_SCALE, PARTY_SCALE);
             }
         }
+        for(int i = maxPartySize; i < 7; i++){
+            g.drawImage(Assets.LockSelection, 100 * i + 60, 180);
+        }
         for(int i = 64 * (currentPage - 1); i < validCharacters.size(); i++){
             if(!dragging || i != draggingRecruitIndex) {
                 g.drawPercentageImage(validCharacters.get(i).getImage(), 90 * (i % 8) + 45, 400 + 90 * (i / 8), 50, 50);
