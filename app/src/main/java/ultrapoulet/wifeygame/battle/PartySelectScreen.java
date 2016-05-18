@@ -27,6 +27,8 @@ public class PartySelectScreen extends Screen {
 
     private List<WifeyCharacter> validCharacters;
     private WifeyCharacter[] currentParty;
+    private int maxPartySize = 7;
+    private int finalIndex = maxPartySize - 1;
     private Enemy[] enemies;
 
     private Screen previousScreen;
@@ -53,6 +55,16 @@ public class PartySelectScreen extends Screen {
     private int draggingRecruitIndex = -1;
     private int draggingPartyIndex = -1;
 
+    private enum ButtonPressed{
+        PREV_PAGE,
+        NEXT_PAGE,
+        SORT,
+        BACK,
+        ACCEPT
+    };
+
+    private ButtonPressed lastPressed = null;
+
     public PartySelectScreen(Game game){
         super(game);
         textPaint = new Paint();
@@ -64,7 +76,7 @@ public class PartySelectScreen extends Screen {
 
         numbers = Assets.HPNumbers;
 
-        currentParty = new WifeyCharacter[7];
+        currentParty = new WifeyCharacter[maxPartySize];
         for(int i = 0; i < currentParty.length; i++){
             currentParty[i] = Party.getIndex(i);
         }
@@ -89,7 +101,7 @@ public class PartySelectScreen extends Screen {
 
     public void setCurrentParty(WifeyCharacter[] inputParty){
         //For now, only 7.
-        this.currentParty = new WifeyCharacter[7];
+        this.currentParty = new WifeyCharacter[maxPartySize];
         //Maybe do validation here too
         this.currentParty = inputParty;
     }
@@ -119,7 +131,7 @@ public class PartySelectScreen extends Screen {
 
     //Gets the index of the party member that is presently being touched
     private int getPartyIndex(int x, int y){
-        for(int i = 0; i < 7; i++){
+        for(int i = 0; i < maxPartySize; i++){
             int xLeft = 60 + 100 * i;
             int xRight = 150 + 100 * i;
             int yTop = 180;
@@ -129,6 +141,25 @@ public class PartySelectScreen extends Screen {
             }
         }
         return -1;
+    }
+
+    private ButtonPressed getButtonPressed(int x, int y){
+        if(x >= 45 && x <= 215 && y >= 1150 && y <= 1250){
+            return ButtonPressed.BACK;
+        }
+        else if(x >= 585 && x <= 755 && y >= 1150 && y <= 1250) {
+            return ButtonPressed.ACCEPT;
+        }
+        else if(x >= 45 && x <= 215 && y >= 338 && y <= 388) {
+            return ButtonPressed.PREV_PAGE;
+        }
+        else if(x >= 315 && x <= 485 && y >= 338 && y <= 388) {
+            return ButtonPressed.NEXT_PAGE;
+        }
+        else if(x >= 585 && x <= 755 && y >= 348 && y <= 378) {
+            return ButtonPressed.SORT;
+        }
+        return null;
     }
 
     @Override
@@ -144,14 +175,15 @@ public class PartySelectScreen extends Screen {
                 draggingY = t.y;
                 draggingRecruitIndex = getRecruitIndex(t.x, t.y);
                 draggingPartyIndex = getPartyIndex(t.x, t.y);
+                lastPressed = getButtonPressed(t.x, t.y);
                 continue;
             }
             else if (t.type == TouchEvent.TOUCH_UP) {
                 if(!dragging){
-                    if(t.x >= 45 && t.x <= 215 && t.y >= 1150 && t.y <= 1250){
+                    if(lastPressed == ButtonPressed.BACK && getButtonPressed(t.x, t.y) == ButtonPressed.BACK){
                         backButton();
                     }
-                    else if(t.x >= 585 && t.x <= 755 && t.y >= 1150 && t.y <= 1250){
+                    else if(lastPressed == ButtonPressed.ACCEPT && getButtonPressed(t.x, t.y) == ButtonPressed.ACCEPT){
                         BattleScreen bs = new BattleScreen(game);
                         Party.setParty(currentParty);
                         bs.setParty(Party.getBattleParty());
@@ -184,10 +216,10 @@ public class PartySelectScreen extends Screen {
                             currentParty[inPartyIndex] = currentParty[partyIndex];
                             currentParty[partyIndex] = temp;
                             if(currentParty[inPartyIndex] == null){
-                                for(int j = inPartyIndex; j + 1 < currentParty.length; j++){
+                                for(int j = inPartyIndex; j + 1 < maxPartySize; j++){
                                     currentParty[j] = currentParty[j + 1];
                                 }
-                                currentParty[6] = null;
+                                currentParty[finalIndex] = null;
                             }
                         }
                         else{
@@ -206,10 +238,10 @@ public class PartySelectScreen extends Screen {
                         currentParty[partyIndex] = temp;
                     }
                     if(partyIndex == -1 || currentParty[draggingPartyIndex] == null){
-                        for(int j = draggingPartyIndex; j + 1 < currentParty.length; j++){
+                        for(int j = draggingPartyIndex; j + 1 < maxPartySize; j++){
                             currentParty[j] = currentParty[j + 1];
                         }
-                        currentParty[6] = null;
+                        currentParty[finalIndex] = null;
                     }
 
                 }
@@ -279,7 +311,7 @@ public class PartySelectScreen extends Screen {
             g.drawImage(Assets.NextPageEnable, 315, 338);
         }
 
-        for(int i = 0; i < currentParty.length && currentParty[i] != null; i++){
+        for(int i = 0; i < maxPartySize && currentParty[i] != null; i++){
             if(!dragging || i != draggingPartyIndex) {
                 g.drawPercentageImage(currentParty[i].getImage(), 100 * i + 60, 180, PARTY_SCALE, PARTY_SCALE);
             }
