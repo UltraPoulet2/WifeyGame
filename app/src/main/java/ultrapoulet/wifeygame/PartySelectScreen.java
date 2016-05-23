@@ -198,6 +198,12 @@ public class PartySelectScreen extends Screen {
                         bs.setBackground(Assets.testBG);
                         game.setScreen(bs);
                     }
+                    else if(lastPressed == ButtonPressed.PREV_PAGE && getButtonPressed(t.x, t.y) == ButtonPressed.PREV_PAGE && currentPage > 1) {
+                        currentPage--;
+                    }
+                    else if(lastPressed == ButtonPressed.NEXT_PAGE && getButtonPressed(t.x, t.y) == ButtonPressed.NEXT_PAGE && currentPage < maxPage){
+                        currentPage++;
+                    }
                     else if(draggingRecruitIndex != -1){
                         charInfo.setChar(validCharacters.get(draggingRecruitIndex));
                         game.setScreen(charInfo);
