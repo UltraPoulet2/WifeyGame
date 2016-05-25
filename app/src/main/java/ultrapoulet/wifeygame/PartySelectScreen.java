@@ -51,7 +51,7 @@ public class PartySelectScreen extends Screen {
     private Image[] numbers;
 
     private boolean touchDown = false;
-    private final static int DRAG_WAIT = 25;
+    private final static int DRAG_WAIT = 10;
     private float holdTime = 0;
     private boolean dragging = false;
     private int draggingX = 0;
@@ -127,8 +127,8 @@ public class PartySelectScreen extends Screen {
         for(int i = PER_PAGE * (currentPage - 1); i < PER_PAGE * currentPage && i < validCharacters.size(); i++){
             int xLeft = 45 + 90 * (i % 8);
             int xRight = 125 + 90 * (i % 8);
-            int yTop = 400 + 90 * (i / 8);
-            int yBot = 480 + 90 * (i / 8);
+            int yTop = 400 + 90 * ((i % PER_PAGE) / 8);
+            int yBot = 480 + 90 * ((i % PER_PAGE) / 8);
             if(x >= xLeft && x <= xRight && y >= yTop && y <= yBot){
                 return i;
             }
@@ -334,9 +334,11 @@ public class PartySelectScreen extends Screen {
         for(int i = maxPartySize; i < 7; i++){
             g.drawImage(Assets.LockSelection, 100 * i + 60, 180);
         }
-        for(int i = 64 * (currentPage - 1); i < validCharacters.size(); i++){
+        int minIndex = PER_PAGE * (currentPage - 1);
+        int maxIndex = PER_PAGE * currentPage;
+        for(int i = minIndex; i < validCharacters.size() && i < maxIndex; i++){
             if(!dragging || i != draggingRecruitIndex) {
-                g.drawPercentageImage(validCharacters.get(i).getImage(), 90 * (i % 8) + 45, 400 + 90 * (i / 8), 50, 50);
+                g.drawPercentageImage(validCharacters.get(i).getImage(), 90 * (i % 8) + 45, 400 + 90 * ((i % PER_PAGE) / 8), 50, 50);
             }
         }
         if(dragging && draggingRecruitIndex != -1){
