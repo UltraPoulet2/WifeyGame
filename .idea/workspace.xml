@@ -5,10 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e235d761-a903-4549-b84c-2921700595c4" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/generated/mockable-android-23.jar" afterPath="$PROJECT_DIR$/build/generated/mockable-android-23.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/assets/screens/CharacterInfoScreen.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/Assets.java" afterPath="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/Assets.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/CharacterInfoScreen.java" afterPath="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/CharacterInfoScreen.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/LoadingScreen.java" afterPath="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/LoadingScreen.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/PartySelectScreen.java" afterPath="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/PartySelectScreen.java" />
     </list>
     <ignored path="AndroidGame.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -46,19 +47,7 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="761" column="10" selection-start-line="761" selection-start-column="10" selection-end-line="761" selection-end-column="91" />
-              <folding>
-                <element signature="imports" expanded="false" />
-                <element signature="e#8350#8351#0" expanded="false" />
-                <element signature="e#8384#8385#0" expanded="false" />
-                <element signature="e#8430#8431#0" expanded="false" />
-                <element signature="e#8468#8469#0" expanded="false" />
-                <element signature="e#8518#8519#0" expanded="false" />
-                <element signature="e#8562#8563#0" expanded="false" />
-                <element signature="e#8953#8954#0" expanded="false" />
-                <element signature="e#9023#9024#0" expanded="false" />
-                <element signature="e#9433#9434#0" expanded="false" />
-                <element signature="e#9474#9475#0" expanded="false" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -67,7 +56,7 @@
         <entry file="file://$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/LoadingScreen.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="251" column="118" selection-start-line="251" selection-start-column="118" selection-end-line="251" selection-end-column="118" />
+              <caret line="80" column="103" selection-start-line="80" selection-start-column="103" selection-end-line="80" selection-end-column="103" />
               <folding />
             </state>
           </provider>
@@ -78,10 +67,7 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="22" column="48" selection-start-line="22" selection-start-column="48" selection-end-line="22" selection-end-column="48" />
-              <folding>
-                <element signature="e#867#868#0" expanded="false" />
-                <element signature="e#894#895#0" expanded="false" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -96,11 +82,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PartySelectScreen.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="WifeyCharacter.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/WifeyCharacter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="43" column="19" selection-start-line="43" selection-start-column="19" selection-end-line="43" selection-end-column="19" />
+              <folding>
+                <element signature="e#948#949#0" expanded="true" />
+                <element signature="e#981#982#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PartySelectScreen.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/PartySelectScreen.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6458333">
-              <caret line="53" column="43" selection-start-line="53" selection-start-column="43" selection-end-line="53" selection-end-column="43" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="172" column="40" selection-start-line="172" selection-start-column="40" selection-end-line="172" selection-end-column="40" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -112,18 +111,24 @@
         <entry file="file://$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/Assets.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="16" column="90" selection-start-line="16" selection-start-column="90" selection-end-line="16" selection-end-column="90" />
+              <caret line="50" column="29" selection-start-line="50" selection-start-column="29" selection-end-line="50" selection-end-column="29" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CharacterInfoScreen.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="CharacterInfoScreen.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/CharacterInfoScreen.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="20" column="32" selection-start-line="20" selection-start-column="32" selection-end-line="20" selection-end-column="32" />
-              <folding />
+            <state vertical-scroll-proportion="0.3246528">
+              <caret line="40" column="57" selection-start-line="40" selection-start-column="57" selection-end-line="40" selection-end-column="57" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#821#822#0" expanded="true" />
+                <element signature="e#860#861#0" expanded="true" />
+                <element signature="e#2226#2227#0" expanded="true" />
+                <element signature="e#2272#2273#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -133,40 +138,7 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="21" column="29" selection-start-line="21" selection-start-column="29" selection-end-line="21" selection-end-column="29" />
-              <folding>
-                <element signature="e#785#786#0" expanded="false" />
-                <element signature="e#817#818#0" expanded="false" />
-                <element signature="e#847#848#0" expanded="false" />
-                <element signature="e#882#883#0" expanded="false" />
-                <element signature="e#910#911#0" expanded="false" />
-                <element signature="e#943#944#0" expanded="false" />
-                <element signature="e#975#976#0" expanded="false" />
-                <element signature="e#1012#1013#0" expanded="false" />
-                <element signature="e#1043#1044#0" expanded="false" />
-                <element signature="e#1079#1080#0" expanded="false" />
-                <element signature="e#1107#1108#0" expanded="false" />
-                <element signature="e#1140#1141#0" expanded="false" />
-                <element signature="e#1170#1171#0" expanded="false" />
-                <element signature="e#1203#1204#0" expanded="false" />
-                <element signature="e#1265#1266#0" expanded="false" />
-                <element signature="e#1300#1301#0" expanded="false" />
-                <element signature="e#2746#2747#0" expanded="false" />
-                <element signature="e#2785#2786#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SingleTouchHandler.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/ultrapoulet/androidgame/framework/implementation/SingleTouchHandler.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="57" column="26" selection-start-line="57" selection-start-column="26" selection-end-line="57" selection-end-column="26" />
-              <folding>
-                <element signature="imports" expanded="false" />
-                <element signature="e#981#982#0" expanded="false" />
-                <element signature="e#1036#1037#0" expanded="false" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -176,10 +148,7 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="58" column="24" selection-start-line="58" selection-start-column="24" selection-end-line="58" selection-end-column="24" />
-              <folding>
-                <element signature="e#1284#1285#0" expanded="false" />
-                <element signature="e#1319#1320#0" expanded="false" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -1811,10 +1780,10 @@
         <option value="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/gamestate/Party.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/PartySelectScreen.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/BattleCharacter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/CharacterInfoScreen.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/PartySelectScreen.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/Assets.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/LoadingScreen.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/PartySelectScreen.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/CharacterInfoScreen.java" />
       </list>
     </option>
   </component>
@@ -1872,100 +1841,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="AndroidView">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AndroidGame" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Gradle Scripts" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidBuildScriptsGroupNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AndroidGame" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="PackagesPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AndroidGame" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AndroidGame" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ultrapoulet.androidgame" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AndroidGame" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ultrapoulet.androidgame" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="framework" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AndroidGame" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ultrapoulet.androidgame" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="framework" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="implementation" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -2254,12 +2129,106 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="characters" />
+              <option name="myItemId" value="screens" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AndroidGame" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AndroidGame" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ultrapoulet.androidgame" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AndroidGame" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ultrapoulet.androidgame" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="framework" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AndroidGame" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ultrapoulet.androidgame" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="framework" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="implementation" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+      <pane id="AndroidView">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AndroidGame" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Gradle Scripts" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidBuildScriptsGroupNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AndroidGame" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -2273,10 +2242,6 @@
     <property name="device.picker.selection" value="57641d6f" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\John\AndroidStudioProjects\AndroidGame\app\src\main\assets\numbers" />
-      <recent name="C:\Users\John\AndroidStudioProjects\AndroidGame\app\src\main\assets" />
-    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="ultrapoulet.wifeygame" />
       <recent name="ultrapoulet.androidgame.framework" />
@@ -2284,11 +2249,15 @@
       <recent name="ultrapoulet.androidgame" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\John\AndroidStudioProjects\AndroidGame\app\src\main\assets" />
       <recent name="C:\Users\John\AndroidStudioProjects\AndroidGame\app\src\main\assets\screens" />
+      <recent name="C:\Users\John\AndroidStudioProjects\AndroidGame\app\src\main\assets" />
       <recent name="C:\Users\John\AndroidStudioProjects\AndroidGame\app\src\main\assets\buttons" />
       <recent name="C:\Users\John\AndroidStudioProjects\AndroidGame\app\src\main\assets\characters" />
       <recent name="C:\Users\John\AndroidStudioProjects\AndroidGame\app\src\main\assets\numbers" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\John\AndroidStudioProjects\AndroidGame\app\src\main\assets\numbers" />
+      <recent name="C:\Users\John\AndroidStudioProjects\AndroidGame\app\src\main\assets" />
     </key>
   </component>
   <component name="RunManager" selected="Android Application.app">
@@ -2830,22 +2799,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/WifeyCharacter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="43" column="19" selection-start-line="43" selection-start-column="19" selection-end-line="43" selection-end-column="19" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#818#819#0" expanded="false" />
-            <element signature="e#850#851#0" expanded="false" />
-            <element signature="e#883#884#0" expanded="false" />
-            <element signature="e#918#919#0" expanded="false" />
-            <element signature="e#948#949#0" expanded="false" />
-            <element signature="e#981#982#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/ultrapoulet/androidgame/framework/implementation/AndroidFastRenderView.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.28960818">
@@ -2931,11 +2884,23 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="57" column="26" selection-start-line="57" selection-start-column="26" selection-end-line="57" selection-end-column="26" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#981#982#0" expanded="false" />
-            <element signature="e#1036#1037#0" expanded="false" />
-          </folding>
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/gamestate/Party.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="58" column="24" selection-start-line="58" selection-start-column="24" selection-end-line="58" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/BattleCharacter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="21" column="29" selection-start-line="21" selection-start-column="29" selection-end-line="21" selection-end-column="29" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -2947,68 +2912,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/BattleScreen.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/Assets.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="761" column="10" selection-start-line="761" selection-start-column="10" selection-end-line="761" selection-end-column="91" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#8350#8351#0" expanded="false" />
-            <element signature="e#8384#8385#0" expanded="false" />
-            <element signature="e#8430#8431#0" expanded="false" />
-            <element signature="e#8468#8469#0" expanded="false" />
-            <element signature="e#8518#8519#0" expanded="false" />
-            <element signature="e#8562#8563#0" expanded="false" />
-            <element signature="e#8953#8954#0" expanded="false" />
-            <element signature="e#9023#9024#0" expanded="false" />
-            <element signature="e#9433#9434#0" expanded="false" />
-            <element signature="e#9474#9475#0" expanded="false" />
-          </folding>
+          <caret line="50" column="29" selection-start-line="50" selection-start-column="29" selection-end-line="50" selection-end-column="29" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/gamestate/Party.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/LoadingScreen.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="58" column="24" selection-start-line="58" selection-start-column="24" selection-end-line="58" selection-end-column="24" />
-          <folding>
-            <element signature="e#1284#1285#0" expanded="false" />
-            <element signature="e#1319#1320#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/BattleCharacter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="21" column="29" selection-start-line="21" selection-start-column="29" selection-end-line="21" selection-end-column="29" />
-          <folding>
-            <element signature="e#785#786#0" expanded="false" />
-            <element signature="e#817#818#0" expanded="false" />
-            <element signature="e#847#848#0" expanded="false" />
-            <element signature="e#882#883#0" expanded="false" />
-            <element signature="e#910#911#0" expanded="false" />
-            <element signature="e#943#944#0" expanded="false" />
-            <element signature="e#975#976#0" expanded="false" />
-            <element signature="e#1012#1013#0" expanded="false" />
-            <element signature="e#1043#1044#0" expanded="false" />
-            <element signature="e#1079#1080#0" expanded="false" />
-            <element signature="e#1107#1108#0" expanded="false" />
-            <element signature="e#1140#1141#0" expanded="false" />
-            <element signature="e#1170#1171#0" expanded="false" />
-            <element signature="e#1203#1204#0" expanded="false" />
-            <element signature="e#1265#1266#0" expanded="false" />
-            <element signature="e#1300#1301#0" expanded="false" />
-            <element signature="e#2746#2747#0" expanded="false" />
-            <element signature="e#2785#2786#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/CharacterInfoScreen.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="20" column="32" selection-start-line="20" selection-start-column="32" selection-end-line="20" selection-end-column="32" />
+          <caret line="80" column="103" selection-start-line="80" selection-start-column="103" selection-end-line="80" selection-end-column="103" />
           <folding />
         </state>
       </provider>
@@ -3017,35 +2932,49 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="22" column="48" selection-start-line="22" selection-start-column="48" selection-end-line="22" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/WifeyCharacter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="43" column="19" selection-start-line="43" selection-start-column="19" selection-end-line="43" selection-end-column="19" />
           <folding>
-            <element signature="e#867#868#0" expanded="false" />
-            <element signature="e#894#895#0" expanded="false" />
+            <element signature="e#948#949#0" expanded="true" />
+            <element signature="e#981#982#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/Assets.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="16" column="90" selection-start-line="16" selection-start-column="90" selection-end-line="16" selection-end-column="90" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/LoadingScreen.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="251" column="118" selection-start-line="251" selection-start-column="118" selection-end-line="251" selection-end-column="118" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/PartySelectScreen.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6458333">
-          <caret line="53" column="43" selection-start-line="53" selection-start-column="43" selection-end-line="53" selection-end-column="43" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="172" column="40" selection-start-line="172" selection-start-column="40" selection-end-line="172" selection-end-column="40" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/BattleScreen.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="761" column="10" selection-start-line="761" selection-start-column="10" selection-end-line="761" selection-end-column="91" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/CharacterInfoScreen.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3246528">
+          <caret line="40" column="57" selection-start-line="40" selection-start-column="57" selection-end-line="40" selection-end-column="57" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#821#822#0" expanded="true" />
+            <element signature="e#860#861#0" expanded="true" />
+            <element signature="e#2226#2227#0" expanded="true" />
+            <element signature="e#2272#2273#0" expanded="true" />
           </folding>
         </state>
       </provider>

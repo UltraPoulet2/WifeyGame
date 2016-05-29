@@ -78,6 +78,8 @@ public class LoadingScreen extends Screen {
         Assets.PrevPageDisable = g.newImage("buttons/PrevPageDisabled.png", ImageFormat.ARGB8888);
         Assets.LockSelection = g.newImage("LockSelection.png", ImageFormat.ARGB8888);
 
+        Assets.CharacterInfoScreen = g.newImage("screens/CharacterInfoScreen.png", ImageFormat.RGB565);
+
         createCharacterImages();
         createRecruits();
         createParty();

@@ -46,4 +46,7 @@ public class Assets {
     public static Image NextPageEnable, NextPageDisable;
     public static Image PrevPageEnable, PrevPageDisable;
     public static Image LockSelection;
+
+    //CharacterInfoScreen Stuff
+    public static Image CharacterInfoScreen;
 }
