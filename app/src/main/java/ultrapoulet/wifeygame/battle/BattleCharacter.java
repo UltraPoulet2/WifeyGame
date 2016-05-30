@@ -23,12 +23,16 @@ public class BattleCharacter {
 
     public BattleCharacter(String name, int numHits, int strength, int magic, Image image){
         this.name = name;
-        this.maxHP = 10*strength;
+        this.maxHP = calculateHP(strength);
         this.currentHP = this.maxHP;
         this.numHits = numHits;
         this.strength = strength;
         this.magic = magic;
         this.image = image;
+    }
+
+    public static int calculateHP(int strength){
+        return 10 * strength;
     }
 
     public String getName(){

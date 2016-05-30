@@ -44,6 +44,18 @@ public class WifeyCharacter {
         return this.image;
     }
 
+    public int getHP(){
+        return BattleCharacter.calculateHP(this.strength);
+    }
+
+    public int getStrength(){
+        return this.strength;
+    }
+
+    public int getMagic(){
+        return this.magic;
+    }
+
     public int compareName(WifeyCharacter other){
         int result = this.getName().compareTo(other.getName());
         if(result != 0){
