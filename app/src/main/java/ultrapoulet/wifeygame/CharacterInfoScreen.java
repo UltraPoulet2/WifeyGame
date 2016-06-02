@@ -24,6 +24,11 @@ public class CharacterInfoScreen extends Screen {
     private static final int BG_X = 50;
     private static final int BG_Y = 75;
 
+    private static final int CLOSE_LEFT_X = BG_X + 600;
+    private static final int CLOSE_RIGHT_X = CLOSE_LEFT_X + 75;
+    private static final int CLOSE_TOP_Y = BG_Y + 10;
+    private static final int CLOSE_BOT_Y = CLOSE_TOP_Y + 75;
+
     private WifeyCharacter displayChar;
     private static final int CHAR_X = 30 + BG_X;
     private static final int CHAR_Y = 100 + BG_Y;
@@ -93,7 +98,7 @@ public class CharacterInfoScreen extends Screen {
     }
 
     private ButtonPressed getButtonPressed(int x, int y){
-        if(x >= 650 && x <= 725 && y >= 65 && y <= 140){
+        if(x >= CLOSE_LEFT_X && x <= CLOSE_RIGHT_X && y >= CLOSE_TOP_Y && y <= CLOSE_BOT_Y){
             return ButtonPressed.CLOSE;
         }
         return null;
