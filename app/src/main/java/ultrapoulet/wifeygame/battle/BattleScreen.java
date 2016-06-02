@@ -341,6 +341,9 @@ public class BattleScreen extends Screen {
                 if (phaseEntered) {
                     phaseTime = 0;
                     phaseEntered = false;
+                    for(int i = 0; i < party.length; i++){
+                        party[i].battleStart();
+                    }
                 } else {
                     phaseTime += deltaTime;
                     if (phaseTime >= OTHER_PHASE_WAIT) {
@@ -708,7 +711,7 @@ public class BattleScreen extends Screen {
                 break;
             case WAVE_END:
                 //Tally experience and gold
-                //Character end of wave bonuses
+                //WifeyCharacter end of wave bonuses
                 //If more enemies, go to WAVE_START
                 //If no more enemies, go to BATTLE_END
                 if (phaseEntered) {
