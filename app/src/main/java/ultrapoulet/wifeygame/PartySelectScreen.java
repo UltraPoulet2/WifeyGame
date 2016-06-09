@@ -390,7 +390,7 @@ public class PartySelectScreen extends Screen {
             if(!dragging || i != draggingRecruitIndex) {
                 g.drawPercentageImage(validCharacters.get(i).getImage(),
                         CHAR_IMAGE_OFFSET_X * (i % ROW_SIZE) + CHAR_IMAGE_BASE_LEFT_X,
-                        CHAR_IMAGE_BASE_TOP_Y + CHAR_IMAGE_BASE_LEFT_X * ((i % PER_PAGE) / COLUMN_SIZE),
+                        CHAR_IMAGE_BASE_TOP_Y + CHAR_IMAGE_OFFSET_Y * ((i % PER_PAGE) / COLUMN_SIZE),
                         HALF_SCALE, HALF_SCALE);
             }
         }

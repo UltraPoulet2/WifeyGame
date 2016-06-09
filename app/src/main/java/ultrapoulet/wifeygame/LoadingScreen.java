@@ -1,5 +1,14 @@
 package ultrapoulet.wifeygame;
 
+import android.content.res.AssetManager;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
 import ultrapoulet.androidgame.framework.Game;
 import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Graphics.ImageFormat;
@@ -8,6 +17,7 @@ import ultrapoulet.androidgame.framework.Screen;
 import ultrapoulet.wifeygame.battle.BattleSelectScreen;
 import ultrapoulet.wifeygame.gamestate.Party;
 import ultrapoulet.wifeygame.gamestate.RecruitedCharacters;
+import ultrapoulet.wifeygame.parsers.CharacterParser;
 
 /**
  * Created by John on 3/12/2016.
@@ -91,8 +101,6 @@ public class LoadingScreen extends Screen {
 
     private void createCharacterImages(){
         Graphics g = game.getGraphics();
-        Assets.TestAnge = g.newImage("characters/TEST-ANGE.png", ImageFormat.RGB565);
-        Assets.TestAngu = g.newImage("characters/TEST-ANGU.png", ImageFormat.RGB565);
         Assets.TestAnna = g.newImage("characters/TEST-ANNA.png", ImageFormat.RGB565);
         Assets.TestAsha = g.newImage("characters/TEST-ASHA.png", ImageFormat.RGB565);
         Assets.TestCccc = g.newImage("characters/TEST-CCCC.png", ImageFormat.RGB565);
@@ -173,8 +181,29 @@ public class LoadingScreen extends Screen {
     }
 
     private void createRecruits(){
-        RecruitedCharacters.put("TEST-ANGE", new WifeyCharacter("TEST-ANGE", "Angelise Ikaruga Misurugi", 70, 60, Assets.TestAnge));
-        RecruitedCharacters.put("TEST-ANGU", new WifeyCharacter("TEST-ANGU", "Ange Ushiromiya", 80, 10, Assets.TestAngu));
+        InputStream in = null;
+        try {
+            in = game.openConfig("config/characters.xml");
+            SAXParserFactory factory = SAXParserFactory.newInstance();
+            SAXParser saxParser = factory.newSAXParser();
+            CharacterParser charParser = new CharacterParser();
+            charParser.setGraphics(game.getGraphics());
+            saxParser.parse(in, charParser);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            //Do better error handling
+        }
+        finally{
+            if(in != null){
+                try {
+                    in.close();
+                }
+                catch(IOException e){
+                }
+            }
+        }
+
         RecruitedCharacters.put("TEST-ANNA", new WifeyCharacter("TEST-ANNA", "Anna Nishikinomiya", 120, 10, Assets.TestAnna));
         RecruitedCharacters.put("TEST-ASHA", new WifeyCharacter("TEST-ASHA", "Aisha Clanclan", 100, 25, Assets.TestAsha));
         RecruitedCharacters.put("TEST-CCCC", new WifeyCharacter("TEST-CCCC", "CC", 25, 100, Assets.TestCccc));

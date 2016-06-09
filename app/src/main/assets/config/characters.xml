@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<characters>
+    <character key="TEST-ANGE">
+        <name>Angelise Ikaruga Misurugi</name>
+        <strength>70</strength>
+        <magic>60</magic>
+    </character>
+    <character key="TEST-ANGU">
+        <name>Ange Ushiromiya</name>
+        <strength>80</strength>
+        <magic>10</magic>
+    </character>
+</characters>
