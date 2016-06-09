@@ -101,32 +101,6 @@ public class LoadingScreen extends Screen {
 
     private void createCharacterImages(){
         Graphics g = game.getGraphics();
-        Assets.TestAnna = g.newImage("characters/TEST-ANNA.png", ImageFormat.RGB565);
-        Assets.TestAsha = g.newImage("characters/TEST-ASHA.png", ImageFormat.RGB565);
-        Assets.TestCccc = g.newImage("characters/TEST-CCCC.png", ImageFormat.RGB565);
-        Assets.TestCgli = g.newImage("characters/TEST-CGLI.png", ImageFormat.RGB565);
-        Assets.TestClty = g.newImage("characters/TEST-CLTY.png", ImageFormat.RGB565);
-        Assets.TestCmpa = g.newImage("characters/TEST-CMPA.png", ImageFormat.RGB565);
-        Assets.TestCyan = g.newImage("characters/TEST-CYAN.png", ImageFormat.RGB565);
-        Assets.TestDkro = g.newImage("characters/TEST-DKRO.png", ImageFormat.RGB565);
-        Assets.TestDwrd = g.newImage("characters/TEST-DWRD.png", ImageFormat.RGB565);
-        Assets.TestEemi = g.newImage("characters/TEST-EEMI.png", ImageFormat.RGB565);
-        Assets.TestExcl = g.newImage("characters/TEST-EXCL.png", ImageFormat.RGB565);
-        Assets.TestGgou = g.newImage("characters/TEST-GGOU.png", ImageFormat.RGB565);
-        Assets.TestHaru = g.newImage("characters/TEST-HARU.png", ImageFormat.RGB565);
-        Assets.TestHime = g.newImage("characters/TEST-HIME.png", ImageFormat.RGB565);
-        Assets.TestHkse = g.newImage("characters/TEST-HKSE.png", ImageFormat.RGB565);
-        Assets.TestHmra = g.newImage("characters/TEST-HMRA.png", ImageFormat.RGB565);
-        Assets.TestHmri = g.newImage("characters/TEST-HMRI.png", ImageFormat.RGB565);
-        Assets.TestHolo = g.newImage("characters/TEST-HOLO.png", ImageFormat.RGB565);
-        Assets.TestHrhi = g.newImage("characters/TEST-HRHI.png", ImageFormat.RGB565);
-        Assets.TestIchk = g.newImage("characters/TEST-ICHK.png", ImageFormat.RGB565);
-        Assets.TestIroe = g.newImage("characters/TEST-IROE.png", ImageFormat.RGB565);
-        Assets.TestKarn = g.newImage("characters/TEST-KARN.png", ImageFormat.RGB565);
-        Assets.TestKdou = g.newImage("characters/TEST-KDOU.png", ImageFormat.RGB565);
-        Assets.TestKoko = g.newImage("characters/TEST-KOKO.png", ImageFormat.RGB565);
-        Assets.TestKrsu = g.newImage("characters/TEST-KRSU.png", ImageFormat.RGB565);
-        Assets.TestKsga = g.newImage("characters/TEST-KSGA.png", ImageFormat.RGB565);
         Assets.TestKtnh = g.newImage("characters/TEST-KTNH.png", ImageFormat.RGB565);
         Assets.TestKtru = g.newImage("characters/TEST-KTRU.png", ImageFormat.RGB565);
         Assets.TestKtys = g.newImage("characters/TEST-KTYS.png", ImageFormat.RGB565);
@@ -204,32 +178,6 @@ public class LoadingScreen extends Screen {
             }
         }
 
-        RecruitedCharacters.put("TEST-ANNA", new WifeyCharacter("TEST-ANNA", "Anna Nishikinomiya", 120, 10, Assets.TestAnna));
-        RecruitedCharacters.put("TEST-ASHA", new WifeyCharacter("TEST-ASHA", "Aisha Clanclan", 100, 25, Assets.TestAsha));
-        RecruitedCharacters.put("TEST-CCCC", new WifeyCharacter("TEST-CCCC", "CC", 25, 100, Assets.TestCccc));
-        RecruitedCharacters.put("TEST-CGLI", new WifeyCharacter("TEST-CGLI", "Cagali Yula Athha", 50, 75, Assets.TestCgli));
-        RecruitedCharacters.put("TEST-CLTY", new WifeyCharacter("TEST-CLTY", "Celty Struluson", 40, 90, Assets.TestClty));
-        RecruitedCharacters.put("TEST-CMPA", new WifeyCharacter("TEST-CMPA", "Compa", 25, 100, Assets.TestCmpa));
-        RecruitedCharacters.put("TEST-CYAN", new WifeyCharacter("TEST-CYAN", "Cyan Hijirikawa", 20, 110, Assets.TestCyan));
-        RecruitedCharacters.put("TEST-DKRO", new WifeyCharacter("TEST-DKRO", "Dokuro Mitsukai", 70, 90, Assets.TestDkro));
-        RecruitedCharacters.put("TEST-DWRD", new WifeyCharacter("TEST-DWRD", "Edward Wong Hau Pepelu Tivrusky IV", 60, 70, Assets.TestDwrd));
-        RecruitedCharacters.put("TEST-EEMI", new WifeyCharacter("TEST-EEMI", "Emi Yusa", 90, 60, Assets.TestEemi));
-        RecruitedCharacters.put("TEST-EXCL", new WifeyCharacter("TEST-EXCL", "Excel", 70, 60, Assets.TestExcl));
-        RecruitedCharacters.put("TEST-GGOU", new WifeyCharacter("TEST-GGOU", "Gou Matsuoka", 40, 40, Assets.TestGgou));
-        RecruitedCharacters.put("TEST-HARU", new WifeyCharacter("TEST-HARU", "Haruko Haruhara", 60, 70, Assets.TestHaru));
-        RecruitedCharacters.put("TEST-HIME", new WifeyCharacter("TEST-HIME", "Hime Arikawa", 30, 30, Assets.TestHime));
-        RecruitedCharacters.put("TEST-HKSE", new WifeyCharacter("TEST-HKSE", "Hakase Shinonome", 20, 60, Assets.TestHkse));
-        RecruitedCharacters.put("TEST-HMRA", new WifeyCharacter("TEST-HMRA", "Homura Akemi", 40, 120, Assets.TestHmra));
-        RecruitedCharacters.put("TEST-HMRI", new WifeyCharacter("TEST-HMRI", "Himari Takakura", 30, 50, Assets.TestHmri));
-        RecruitedCharacters.put("TEST-HOLO", new WifeyCharacter("TEST-HOLO", "Holo", 70, 60, Assets.TestHolo));
-        RecruitedCharacters.put("TEST-HRHI", new WifeyCharacter("TEST-HRHI", "Haruhi Fujioka", 50, 30, Assets.TestHrhi));
-        RecruitedCharacters.put("TEST-ICHK", new WifeyCharacter("TEST-ICHK", "Ichika Mizuhara", 70, 30, Assets.TestIchk));
-        RecruitedCharacters.put("TEST-IROE", new WifeyCharacter("TEST-IROE", "Iroe Genma", 80, 20, Assets.TestIroe));
-        RecruitedCharacters.put("TEST-KARN", new WifeyCharacter("TEST-KARN", "Karen Kujou", 60, 40, Assets.TestKarn));
-        RecruitedCharacters.put("TEST-KDOU", new WifeyCharacter("TEST-KDOU", "Mirei Kudou", 50, 100, Assets.TestKdou));
-        RecruitedCharacters.put("TEST-KOKO", new WifeyCharacter("TEST-KOKO", "Kouko Kaga", 40, 40, Assets.TestKoko));
-        RecruitedCharacters.put("TEST-KRSU", new WifeyCharacter("TEST-KRSU", "Kurisu Makise", 40, 50, Assets.TestKrsu));
-        RecruitedCharacters.put("TEST-KSGA", new WifeyCharacter("TEST-KSGA", "Ayumu Kasuga", 20, 20, Assets.TestKsga));
         RecruitedCharacters.put("TEST-KTNH", new WifeyCharacter("TEST-KTNH", "Kotonoha Katsura", 70, 25, Assets.TestKtnh));
         RecruitedCharacters.put("TEST-KTRU", new WifeyCharacter("TEST-KTRU", "Koutarou Araki", 30, 70, Assets.TestKtru));
         RecruitedCharacters.put("TEST-KTYS", new WifeyCharacter("TEST-KTYS", "Katyusha", 60, 30, Assets.TestKtys));

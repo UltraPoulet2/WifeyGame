@@ -10,4 +10,134 @@
         <strength>80</strength>
         <magic>10</magic>
     </character>
+    <character key="TEST-ANNA">
+        <name>Anna Nishikinomiya</name>
+        <strength>120</strength>
+        <magic>10</magic>
+    </character>
+    <character key="TEST-ASHA">
+        <name>Aisha Clanclan</name>
+        <strength>100</strength>
+        <magic>25</magic>
+    </character>
+    <character key="TEST-CCCC">
+        <name>CC</name>
+        <strength>25</strength>
+        <magic>100</magic>
+    </character>
+    <character key="TEST-CGLI">
+        <name>Cagali Yula Atha</name>
+        <strength>50</strength>
+        <magic>75</magic>
+    </character>
+    <character key="TEST-CLTY">
+        <name>Celty Struluson</name>
+        <strength>40</strength>
+        <magic>90</magic>
+    </character>
+    <character key="TEST-CMPA">
+        <name>Compa</name>
+        <strength>25</strength>
+        <magic>100</magic>
+    </character>
+    <character key="TEST-CYAN">
+        <name>Cyan Hijirikawa</name>
+        <strength>20</strength>
+        <magic>110</magic>
+    </character>
+    <character key="TEST-DKRO">
+        <name>Dokuro Mitsukai</name>
+        <strength>70</strength>
+        <magic>90</magic>
+    </character>
+    <character key="TEST-DWRD">
+        <name>Edward Wong Hau Pepelu Tivursky IV</name>
+        <strength>60</strength>
+        <magic>70</magic>
+    </character>
+    <character key="TEST-EEMI">
+        <name>Emi Yusa</name>
+        <strength>90</strength>
+        <magic>60</magic>
+    </character>
+    <character key="TEST-EXCL">
+        <name>Excel</name>
+        <strength>70</strength>
+        <magic>60</magic>
+    </character>
+    <character key="TEST-GGOU">
+        <name>Gou Matsuoka</name>
+        <strength>40</strength>
+        <magic>40</magic>
+    </character>
+    <character key="TEST-HARU">
+        <name>Haruko Haruhara</name>
+        <strength>60</strength>
+        <magic>70</magic>
+    </character>
+    <character key="TEST-HIME">
+        <name>Hime Arikawa</name>
+        <strength>30</strength>
+        <magic>30</magic>
+    </character>
+    <character key="TEST-HKSE">
+        <name>Hakase Shinonome</name>
+        <strength>20</strength>
+        <magic>60</magic>
+    </character>
+    <character key="TEST-HMRA">
+        <name>Homura Akemi</name>
+        <strength>40</strength>
+        <magic>120</magic>
+    </character>
+    <character key="TEST-HMRI">
+        <name>Himari Takakura</name>
+        <strength>30</strength>
+        <magic>50</magic>
+    </character>
+    <character key="TEST-HOLO">
+        <name>Holo</name>
+        <strength>70</strength>
+        <magic>60</magic>
+    </character>
+    <character key="TEST-HRHI">
+        <name>Haruhi Fujioka</name>
+        <strength>50</strength>
+        <magic>30</magic>
+    </character>
+    <character key="TEST-ICHK">
+        <name>Ichika Mizuhara</name>
+        <strength>70</strength>
+        <magic>30</magic>
+    </character>
+    <character key="TEST-IROE">
+        <name>Iroe Genma</name>
+        <strength>80</strength>
+        <magic>20</magic>
+    </character>
+    <character key="TEST-KARN">
+        <name>Karen Kujou</name>
+        <strength>60</strength>
+        <magic>40</magic>
+    </character>
+    <character key="TEST-KDOU">
+        <name>Mirei Kudou</name>
+        <strength>50</strength>
+        <magic>100</magic>
+    </character>
+    <character key="TEST-KOKO">
+        <name>Kouko Kaga</name>
+        <strength>40</strength>
+        <magic>40</magic>
+    </character>
+    <character key="TEST-KRSU">
+        <name>Kurisu Makise</name>
+        <strength>40</strength>
+        <magic>50</magic>
+    </character>
+    <character key="TEST-KSGA">
+        <name>Ayumu Kasuga</name>
+        <strength>20</strength>
+        <magic>20</magic>
+    </character>
 </characters>
