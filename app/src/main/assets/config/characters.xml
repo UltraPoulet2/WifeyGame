@@ -140,4 +140,154 @@
         <strength>20</strength>
         <magic>20</magic>
     </character>
+    <character key="TEST-KTNH">
+        <name>Kotonoha Katsura</name>
+        <strength>70</strength>
+        <magic>25</magic>
+    </character>
+    <character key="TEST-KTRU">
+        <name>Koutarou Araki</name>
+        <strength>30</strength>
+        <magic>70</magic>
+    </character>
+    <character key="TEST-KTYS">
+        <name>Katyusha</name>
+        <strength>60</strength>
+        <magic>30</magic>
+    </character>
+    <character key="TEST-KYKO">
+        <name>Kyoko Kirigiri</name>
+        <strength>50</strength>
+        <magic>90</magic>
+    </character>
+    <character key="TEST-LULU">
+        <name>Luluco</name>
+        <strength>70</strength>
+        <magic>70</magic>
+    </character>
+    <character key="TEST-MAKI">
+        <name>Natsuo Maki</name>
+        <strength>40</strength>
+        <magic>40</magic>
+    </character>
+    <character key="TEST-MAKO">
+        <name>Mako Mankanshoku</name>
+        <strength>60</strength>
+        <magic>20</magic>
+    </character>
+    <character key="TEST-MARI">
+        <name>Maria Naruse</name>
+        <strength>60</strength>
+        <magic>100</magic>
+    </character>
+    <character key="TEST-MDKA">
+        <name>Medaka Kurokami</name>
+        <strength>200</strength>
+        <magic>20</magic>
+    </character>
+    <character key="TEST-MDRI">
+        <name>Midori Kasugano</name>
+        <strength>30</strength>
+        <magic>50</magic>
+    </character>
+    <character key="TEST-MEGU">
+        <name>Megumi Sakura</name>
+        <strength>40</strength>
+        <magic>70</magic>
+    </character>
+    <character key="TEST-MIIA">
+        <name>Miia</name>
+        <strength>100</strength>
+        <magic>30</magic>
+    </character>
+    <character key="TEST-MKRU">
+        <name>Mikuru Asahina</name>
+        <strength>40</strength>
+        <magic>70</magic>
+    </character>
+    <character key="TEST-MKSA">
+        <name>Mikasa Ackerman</name>
+        <strength>140</strength>
+        <magic>20</magic>
+    </character>
+    <character key="TEST-MMKA">
+        <name>Momoka Sonokawa</name>
+        <strength>70</strength>
+        <magic>40</magic>
+    </character>
+    <character key="TEST-MNMA">
+        <name>Meiko Honma</name>
+        <strength>40</strength>
+        <magic>60</magic>
+    </character>
+    <character key="TEST-MRIA">
+        <name>Miria Harvent</name>
+        <strength>60</strength>
+        <magic>30</magic>
+    </character>
+    <character key="TEST-MSKI">
+        <name>Misaki Nakahara</name>
+        <strength>30</strength>
+        <magic>40</magic>
+    </character>
+    <character key="TEST-MSZU">
+        <name>Misuzu Natsukawa</name>
+        <strength>60</strength>
+        <magic>30</magic>
+    </character>
+    <character key="TEST-NIAT">
+        <name>Nia Teppelin</name>
+        <strength>60</strength>
+        <magic>80</magic>
+    </character>
+    <character key="TEST-NNKO">
+        <name>Nanako Yamamoto</name>
+        <strength>30</strength>
+        <magic>50</magic>
+    </character>
+    <character key="TEST-NOEL">
+        <name>Noel Vermillion</name>
+        <strength>80</strength>
+        <magic>90</magic>
+    </character>
+    <character key="TEST-NYRK">
+        <name>Nyaruko</name>
+        <strength>90</strength>
+        <magic>60</magic>
+    </character>
+    <character key="TEST-PERI">
+        <name>Peri</name>
+        <strength>90</strength>
+        <magic>20</magic>
+    </character>
+    <character key="TEST-RAMU">
+        <name>Raimu Kawasaki</name>
+        <strength>80</strength>
+        <magic>40</magic>
+    </character>
+    <character key="TEST-RENA">
+        <name>Rena Ryuuguu</name>
+        <strength>70</strength>
+        <magic>50</magic>
+    </character>
+    <character key="TEST-REVY">
+        <name>Revy</name>
+        <strength>100</strength>
+        <magic>20</magic>
+    </character>
+    <character key="TEST-RIKO">
+        <name>Riko Aida</name>
+        <strength>40</strength>
+        <magic>50</magic>
+    </character>
+    <character key="TEST-RTSK">
+        <name>Ritsuko Kunihiro</name>
+        <strength>40</strength>
+        <magic>60</magic>
+    </character>
+    <character key="TEST-RUKO">
+        <name>Ruuko Kominato</name>
+        <strength>30</strength>
+        <magic>70</magic>
+    </character>
 </characters>
