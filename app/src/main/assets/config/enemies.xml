@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<enemies>
+    <enemy key="TEST-ENMY">
+        <name>Enemy 1</name>
+        <ai>BasicPhysicalEnemyAI</ai>
+        <maxHP>10000</maxHP>
+        <powerDamage>50</powerDamage>
+        <powerHits>3</powerHits>
+        <comboDamage>35</comboDamage>
+        <comboHits>4</comboHits>
+        <magicDamage>0</magicDamage>
+        <powerUp>0.0</powerUp>
+        <powerDown>0.0</powerDown>
+        <defend>0.0</defend>
+        <weaken>0.0</weaken>
+        <specialDamage>0</specialDamage>
+        <specialHits>0</specialHits>
+    </enemy>
+</enemies>
