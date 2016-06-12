@@ -290,4 +290,109 @@
         <strength>30</strength>
         <magic>70</magic>
     </character>
+    <character key="TEST-SAKA">
+        <name>Saika Totsuka</name>
+        <strength>60</strength>
+        <magic>40</magic>
+    </character>
+    <character key="TEST-SAYA">
+        <name>Saya Sasamiya</name>
+        <strength>80</strength>
+        <magic>90</magic>
+    </character>
+    <character key="TEST-SENY">
+        <name>Sen Yarizuri</name>
+        <strength>90</strength>
+        <magic>30</magic>
+    </character>
+    <character key="TEST-SJGH">
+        <name>Hitagi Senjougahara</name>
+        <strength>70</strength>
+        <magic>40</magic>
+    </character>
+    <character key="TEST-SMZU">
+        <name>Kyoko Shimizu</name>
+        <strength>40</strength>
+        <magic>40</magic>
+    </character>
+    <character key="TEST-SNSH">
+        <name>Sonoshee McLaren</name>
+        <strength>80</strength>
+        <magic>30</magic>
+    </character>
+    <character key="TEST-STPH">
+        <name>Stephanie Dola</name>
+        <strength>40</strength>
+        <magic>60</magic>
+    </character>
+    <character key="TEST-SUZU">
+        <name>Suzu Hagimura</name>
+        <strength>30</strength>
+        <magic>60</magic>
+    </character>
+    <character key="TEST-TESA">
+        <name>Teletha Testarossa</name>
+        <strength>40</strength>
+        <magic>80</magic>
+    </character>
+    <character key="TEST-TNRI">
+        <name>Tenri Ayukawa</name>
+        <strength>40</strength>
+        <magic>70</magic>
+    </character>
+    <character key="TEST-TSMK">
+        <name>Tsumiki Miniwa</name>
+        <strength>40</strength>
+        <magic>40</magic>
+    </character>
+    <character key="TEST-TTSM">
+        <name>Tatsumaki</name>
+        <strength>40</strength>
+        <magic>130</magic>
+    </character>
+    <character key="TEST-WNRY">
+        <name>Winry Rockbell</name>
+        <strength>50</strength>
+        <magic>50</magic>
+    </character>
+    <character key="TEST-YASN">
+        <name>Yassan</name>
+        <strength>40</strength>
+        <magic>50</magic>
+    </character>
+    <character key="TEST-YKKO">
+        <name>Yukiko Amagi</name>
+        <strength>60</strength>
+        <magic>100</magic>
+    </character>
+    <character key="TEST-YNDR">
+        <name>Yandere-chan</name>
+        <strength>70</strength>
+        <magic>60</magic>
+    </character>
+    <character key="TEST-YRKA">
+        <name>Yurika Misumaru</name>
+        <strength>40</strength>
+        <magic>40</magic>
+    </character>
+    <character key="TEST-YSHI">
+        <name>Yoshino</name>
+        <strength>50</strength>
+        <magic>80</magic>
+    </character>
+    <character key="TEST-YUNA">
+        <name>Yuuna Yuuki</name>
+        <strength>80</strength>
+        <magic>70</magic>
+    </character>
+    <character key="TEST-YUNO">
+        <name>Yuno Gasai</name>
+        <strength>70</strength>
+        <magic>70</magic>
+    </character>
+    <character key="TEST-YURA">
+        <name>Yura Yamato</name>
+        <strength>40</strength>
+        <magic>40</magic>
+    </character>
 </characters>

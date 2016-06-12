@@ -90,38 +90,12 @@ public class LoadingScreen extends Screen {
 
         Assets.CharacterInfoScreen = g.newImage("screens/CharacterInfoScreen.png", ImageFormat.RGB565);
 
-        createCharacterImages();
         createRecruits();
         createParty();
 
         BattleSelectScreen bss = new BattleSelectScreen(game);
         game.setScreen(bss);
 
-    }
-
-    private void createCharacterImages(){
-        Graphics g = game.getGraphics();
-        Assets.TestSaka = g.newImage("characters/TEST-SAKA.png", ImageFormat.RGB565);
-        Assets.TestSaya = g.newImage("characters/TEST-SAYA.png", ImageFormat.RGB565);
-        Assets.TestSeny = g.newImage("characters/TEST-SENY.png", ImageFormat.RGB565);
-        Assets.TestSjgh = g.newImage("characters/TEST-SJGH.png", ImageFormat.RGB565);
-        Assets.TestSmzu = g.newImage("characters/TEST-SMZU.png", ImageFormat.RGB565);
-        Assets.TestSnsh = g.newImage("characters/TEST-SNSH.png", ImageFormat.RGB565);
-        Assets.TestStph = g.newImage("characters/TEST-STPH.png", ImageFormat.RGB565);
-        Assets.TestSuzu = g.newImage("characters/TEST-SUZU.png", ImageFormat.RGB565);
-        Assets.TestTesa = g.newImage("characters/TEST-TESA.png", ImageFormat.RGB565);
-        Assets.TestTnri = g.newImage("characters/TEST-TNRI.png", ImageFormat.RGB565);
-        Assets.TestTsmk = g.newImage("characters/TEST-TSMK.png", ImageFormat.RGB565);
-        Assets.TestTtsm = g.newImage("characters/TEST-TTSM.png", ImageFormat.RGB565);
-        Assets.TestWnry = g.newImage("characters/TEST-WNRY.png", ImageFormat.RGB565);
-        Assets.TestYasn = g.newImage("characters/TEST-YASN.png", ImageFormat.RGB565);
-        Assets.TestYkko = g.newImage("characters/TEST-YKKO.png", ImageFormat.RGB565);
-        Assets.TestYndr = g.newImage("characters/TEST-YNDR.png", ImageFormat.RGB565);
-        Assets.TestYrka = g.newImage("characters/TEST-YRKA.png", ImageFormat.RGB565);
-        Assets.TestYshi = g.newImage("characters/TEST-YSHI.png", ImageFormat.RGB565);
-        Assets.TestYuna = g.newImage("characters/TEST-YUNA.png", ImageFormat.RGB565);
-        Assets.TestYuno = g.newImage("characters/TEST-YUNO.png", ImageFormat.RGB565);
-        Assets.TestYura = g.newImage("characters/TEST-YURA.png", ImageFormat.RGB565);
     }
 
     private void createRecruits(){
@@ -147,28 +121,6 @@ public class LoadingScreen extends Screen {
                 }
             }
         }
-
-        RecruitedCharacters.put("TEST-SAKA", new WifeyCharacter("TEST-SAKA", "Saika Totsuka", 60, 40, Assets.TestSaka));
-        RecruitedCharacters.put("TEST-SAYA", new WifeyCharacter("TEST-SAYA", "Saya Sasamiya", 80, 90, Assets.TestSaya));
-        RecruitedCharacters.put("TEST-SENY", new WifeyCharacter("TEST-SENY", "Sen Yarizuri", 90, 30, Assets.TestSeny));
-        RecruitedCharacters.put("TEST-SJGH", new WifeyCharacter("TEST-SJGH", "Hitagi Senjougahara", 70, 40, Assets.TestSjgh));
-        RecruitedCharacters.put("TEST-SMZU", new WifeyCharacter("TEST-SMZU", "Kyoko Shimizu", 40, 40, Assets.TestSmzu));
-        RecruitedCharacters.put("TEST-SNSH", new WifeyCharacter("TEST-SNSH", "Sonoshee McLaren", 80, 30, Assets.TestSnsh));
-        RecruitedCharacters.put("TEST-STPH", new WifeyCharacter("TEST-STPH", "Stephanie Dola", 40, 60, Assets.TestStph));
-        RecruitedCharacters.put("TEST-SUZU", new WifeyCharacter("TEST-SUZU", "Suzu Hagimura", 30, 60, Assets.TestSuzu));
-        RecruitedCharacters.put("TEST-TESA", new WifeyCharacter("TEST-TESA", "Teletha Testarossa", 40, 80, Assets.TestTesa));
-        RecruitedCharacters.put("TEST-TNRI", new WifeyCharacter("TEST-TNRI", "Tenri Ayukawa", 40, 70, Assets.TestTnri));
-        RecruitedCharacters.put("TEST-TSMK", new WifeyCharacter("TEST-TSMK", "Tsumiki Miniwa", 40, 40, Assets.TestTsmk));
-        RecruitedCharacters.put("TEST-TTSM", new WifeyCharacter("TEST-TTSM", "Tatsumaki", 40, 130, Assets.TestTtsm));
-        RecruitedCharacters.put("TEST-WNRY", new WifeyCharacter("TEST-WNRY", "Winry Rockbell", 50, 50, Assets.TestWnry));
-        RecruitedCharacters.put("TEST-YASN", new WifeyCharacter("TEST-YASN", "Yassan", 40, 50, Assets.TestYasn));
-        RecruitedCharacters.put("TEST-YKKO", new WifeyCharacter("TEST-YYKO", "Yukiko Amagi", 60, 100, Assets.TestYkko));
-        RecruitedCharacters.put("TEST-YNDR", new WifeyCharacter("TEST-YNDR", "Yandere-chan", 70, 60, Assets.TestYndr));
-        RecruitedCharacters.put("TEST-YRKA", new WifeyCharacter("TEST-YRKA", "Yurika Misumaru", 40, 40, Assets.TestYrka));
-        RecruitedCharacters.put("TEST-YSHI", new WifeyCharacter("TEST-YSHI", "Yoshino", 50, 80, Assets.TestYshi));
-        RecruitedCharacters.put("TEST-YUNA", new WifeyCharacter("TEST-YUNA", "Yuuna Yuuki", 80, 70, Assets.TestYuna));
-        RecruitedCharacters.put("TEST-YUNO", new WifeyCharacter("TEST-YUNO", "Yuno Gasai", 70, 70, Assets.TestYuno));
-        RecruitedCharacters.put("TEST-YURA", new WifeyCharacter("TEST-YURA", "Yura Yamato", 40, 40, Assets.TestYura));
     }
 
     private void createParty(){
