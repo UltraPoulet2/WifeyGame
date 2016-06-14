@@ -15,8 +15,11 @@ public class BasicPhysicalEnemyAI extends EnemyAI {
             selectedAction = EnemyAction.COMBO_ATTACK;
         }
         else{
-            System.out.println("HELP! HELP! I'm lost!");
         }
+    }
+
+    public void reset(){
+        //Do nothing
     }
 
 }

@@ -15,6 +15,11 @@ import ultrapoulet.androidgame.framework.Graphics.ImageFormat;
 import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.androidgame.framework.Screen;
 import ultrapoulet.wifeygame.battle.BattleSelectScreen;
+import ultrapoulet.wifeygame.battle.Enemy;
+import ultrapoulet.wifeygame.battle.enemyai.BasicMagicEnemyAI;
+import ultrapoulet.wifeygame.battle.enemyai.BasicPhysicalEnemyAI;
+import ultrapoulet.wifeygame.battle.enemyai.OriginalBossAI;
+import ultrapoulet.wifeygame.gamestate.Enemies;
 import ultrapoulet.wifeygame.gamestate.Party;
 import ultrapoulet.wifeygame.gamestate.RecruitedCharacters;
 import ultrapoulet.wifeygame.parsers.CharacterParser;
@@ -92,6 +97,7 @@ public class LoadingScreen extends Screen {
 
         createRecruits();
         createParty();
+        createEnemies();
 
         BattleSelectScreen bss = new BattleSelectScreen(game);
         game.setScreen(bss);
@@ -131,6 +137,12 @@ public class LoadingScreen extends Screen {
         Party.setIndex(4, RecruitedCharacters.get("TEST-SJGH"));
         Party.setIndex(5, RecruitedCharacters.get("TEST-YNDR"));
         Party.setIndex(6, RecruitedCharacters.get("TEST-PERI"));
+    }
+
+    private void createEnemies(){
+        Enemies.put("TEST-NME1", new Enemy("Enemy 1", 10000, 50, 3, 35, 4, 0, 0, 0.0, 0.0, 0.0, 0.0, 0, 0, Assets.testEnemy, new BasicPhysicalEnemyAI()));
+        Enemies.put("TEST-NME2", new Enemy("Enemy 2", 20000, 0, 0, 0, 0, 50, 1000, 0.0, 0.0, 0.0, 0.0, 0, 0, Assets.testEnemy, new BasicMagicEnemyAI()));
+        Enemies.put("TEST-NME3", new Enemy("Enemy 3", 50000, 20, 4, 0, 0, 0, 0, 2.0, 0.0, 0.0, 1.5, 50, 3, Assets.testEnemy, new OriginalBossAI()));
     }
 
     @Override

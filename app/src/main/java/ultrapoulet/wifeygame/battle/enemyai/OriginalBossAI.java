@@ -31,4 +31,8 @@ public class OriginalBossAI extends EnemyAI {
         }
         phase = (phase + 1) % 7;
     }
+
+    public void reset(){
+        phase = 0;
+    }
 }

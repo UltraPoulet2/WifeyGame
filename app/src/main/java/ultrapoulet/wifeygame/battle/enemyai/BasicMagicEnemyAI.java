@@ -24,4 +24,8 @@ public class BasicMagicEnemyAI extends EnemyAI{
             }
         }
     }
+
+    public void reset(){
+        healUsed = false;
+    }
 }

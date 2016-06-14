@@ -142,6 +142,11 @@ public class Enemy {
 
     public Image getImage() { return this.image; }
 
+    public void battleStart(){
+        this.currentHP = this.maxHP;
+        ai.reset();
+    }
+
     //This call will likely change to get information about current state of battle
     //Might not need to though
     public void determineAction(){

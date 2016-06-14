@@ -26,4 +26,6 @@ public abstract class EnemyAI {
     public EnemyAction getAction(){
         return selectedAction;
     }
+
+    public abstract void reset();
 }

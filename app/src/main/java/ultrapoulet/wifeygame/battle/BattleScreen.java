@@ -344,6 +344,9 @@ public class BattleScreen extends Screen {
                     for(int i = 0; i < party.length; i++){
                         party[i].battleStart();
                     }
+                    for(int i = 0; i < enemies.length; i++){
+                        enemies[i].battleStart();
+                    }
                 } else {
                     phaseTime += deltaTime;
                     if (phaseTime >= OTHER_PHASE_WAIT) {
