@@ -28,4 +28,18 @@ public abstract class EnemyAI {
     }
 
     public abstract void reset();
+
+    public static EnemyAI getAI(String name){
+        if(name.equalsIgnoreCase("BasicMagicEnemyAI")){
+            return new BasicMagicEnemyAI();
+        }
+        else if(name.equalsIgnoreCase("BasicPhysicalEnemyAI")){
+            return new BasicPhysicalEnemyAI();
+        }
+        else if(name.equalsIgnoreCase("OriginalBossAI")){
+            return new OriginalBossAI();
+        }
+
+        return null;
+    }
 }
