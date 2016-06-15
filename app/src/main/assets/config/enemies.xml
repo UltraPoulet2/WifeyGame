@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <enemies>
-    <enemy key="TEST-ENMY">
+    <enemy key="TEST-NME1">
         <name>Enemy 1</name>
         <ai>BasicPhysicalEnemyAI</ai>
         <maxHP>10000</maxHP>
@@ -9,6 +9,7 @@
         <comboDamage>35</comboDamage>
         <comboHits>4</comboHits>
         <magicDamage>0</magicDamage>
+        <healAmount>0</healAmount>
         <powerUp>0.0</powerUp>
         <powerDown>0.0</powerDown>
         <defend>0.0</defend>
