@@ -42,8 +42,7 @@ public class BattleSelectScreen extends Screen {
                 continue;
             }
             if(t.y >= 100 && t.y <= 200){
-                //Enemy[] enemies = new Enemy[3];
-                Enemy[] enemies = new Enemy[1];
+                Enemy[] enemies = new Enemy[3];
                 enemies[0] = Enemies.get("TEST-NME1");
                 enemies[1] = Enemies.get("TEST-NME2");
                 enemies[2] = Enemies.get("TEST-NME3");
