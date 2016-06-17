@@ -23,6 +23,7 @@ import ultrapoulet.wifeygame.gamestate.Enemies;
 import ultrapoulet.wifeygame.gamestate.Party;
 import ultrapoulet.wifeygame.gamestate.RecruitedCharacters;
 import ultrapoulet.wifeygame.parsers.CharacterParser;
+import ultrapoulet.wifeygame.parsers.EnemyParser;
 
 /**
  * Created by John on 3/12/2016.
@@ -140,9 +141,28 @@ public class LoadingScreen extends Screen {
     }
 
     private void createEnemies(){
-        Enemies.put("TEST-NME1", new Enemy("Enemy 1", 10000, 50, 3, 35, 4, 0, 0, 0.0, 0.0, 0.0, 0.0, 0, 0, Assets.testEnemy, new BasicPhysicalEnemyAI()));
-        Enemies.put("TEST-NME2", new Enemy("Enemy 2", 20000, 0, 0, 0, 0, 50, 1000, 0.0, 0.0, 0.0, 0.0, 0, 0, Assets.testEnemy, new BasicMagicEnemyAI()));
-        Enemies.put("TEST-NME3", new Enemy("Enemy 3", 50000, 20, 4, 0, 0, 0, 0, 2.0, 0.0, 0.0, 1.5, 50, 3, Assets.testEnemy, new OriginalBossAI()));
+        InputStream in = null;
+        try {
+            in = game.openConfig("config/enemies.xml");
+            SAXParserFactory factory = SAXParserFactory.newInstance();
+            SAXParser saxParser = factory.newSAXParser();
+            EnemyParser enemyParser = new EnemyParser();
+            enemyParser.setGraphics(game.getGraphics());
+            saxParser.parse(in, enemyParser);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            //Do better error handling
+        }
+        finally{
+            if(in != null){
+                try {
+                    in.close();
+                }
+                catch(IOException e){
+                }
+            }
+        }
     }
 
     @Override
