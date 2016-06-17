@@ -21,6 +21,8 @@ public class CharacterParser extends DefaultHandler{
     private boolean bStrength;
     private boolean bMagic;
 
+    private boolean error;
+
     private WifeyCharacter charBuilder;
     private String charKey;
     private String charName;
@@ -38,8 +40,14 @@ public class CharacterParser extends DefaultHandler{
                              String qName,
                              Attributes attributes) throws SAXException {
         if (qName.equalsIgnoreCase("character")) {
+            resetValues();
             charKey = attributes.getValue("key");
-            charImage = g.newImage("characters/" + charKey + ".png", ImageFormat.RGB565);
+            if(charKey != null) {
+                charImage = g.newImage("characters/" + charKey + ".png", ImageFormat.RGB565);
+            }
+            else{
+                System.out.println("CharacterParser:startElement(): Error parsing character key");
+            }
         }
         else if(qName.equalsIgnoreCase("name")){
             bName = true;
@@ -50,6 +58,12 @@ public class CharacterParser extends DefaultHandler{
         else if(qName.equalsIgnoreCase("magic")){
             bMagic = true;
         }
+        else if(qName.equalsIgnoreCase("characters")){
+            //Do nothing.
+        }
+        else{
+            System.out.println("CharacterParser:startElement(): Invalid qName: " + qName + " for key " + charKey);
+        }
 
     }
 
@@ -57,12 +71,16 @@ public class CharacterParser extends DefaultHandler{
     public void endElement(String uri,
                            String localName,
                            String qName) throws SAXException {
-        if(qName.equalsIgnoreCase("character")){
-            charBuilder = new WifeyCharacter(charKey, charName, charStrength, charMagic, charImage);
-            //This will change
-            RecruitedCharacters.put(charKey, charBuilder);
+        if (qName.equalsIgnoreCase("character")) {
+            if(validate()) {
+                charBuilder = new WifeyCharacter(charKey, charName, charStrength, charMagic, charImage);
+                //This will change
+                RecruitedCharacters.put(charKey, charBuilder);
+            }
+            else{
+                System.out.println("CharacterParser:endElement(): Error parsing for key: " + charKey);
+            }
         }
-
     }
 
     @Override
@@ -70,18 +88,44 @@ public class CharacterParser extends DefaultHandler{
                            int start,
                            int length) throws SAXException {
         String temp = new String(ch, start, length);
-        if(bName){
-            charName = temp;
-            bName = false;
+        try {
+            if (bName) {
+                charName = temp;
+                bName = false;
+            } else if (bStrength) {
+                charStrength = Integer.parseInt(temp);
+                bStrength = false;
+            } else if (bMagic) {
+                charMagic = Integer.parseInt(temp);
+                bMagic = false;
+            }
         }
-        else if(bStrength){
-            charStrength = Integer.parseInt(temp);
-            bStrength = false;
+        catch(NumberFormatException e){
+            System.out.println("CharacterParser:characters(): NumberFormatException for key: " + charKey);
+            error = true;
         }
-        else if(bMagic){
-            charMagic = Integer.parseInt(temp);
-            bMagic = false;
-        }
+    }
 
+    private boolean validate(){
+        if(charName.length() == 0){
+            return false;
+        }
+        if(charStrength <= 0){
+            return false;
+        }
+        if(charMagic <= 0){
+            return false;
+        }
+        if(error == true){
+            return false;
+        }
+        return true;
+    }
+
+    private void resetValues(){
+        error = false;
+        charName = "";
+        charStrength = 0;
+        charMagic = 0;
     }
 }

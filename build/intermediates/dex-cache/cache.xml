@@ -12,14 +12,14 @@
         jar="C:\Users\John\AndroidStudioProjects\AndroidGame\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
         jumboMode="true"
         revision="23.0.2"
-        sha1="f3cf12f02a80bfa1a60f1e2e0464bcfcf81c0e15">
+        sha1="0dd475c595457d7e6bb93a29aa38474b425cbfd0">
         <dex dex="C:\Users\John\AndroidStudioProjects\AndroidGame\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_72a3efa028a70fd7ca6565ef887e7d9550475bef\classes.dex" />
     </item>
     <item
         jar="C:\Users\John\AndroidStudioProjects\AndroidGame\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
         jumboMode="true"
         revision="23.0.2"
-        sha1="0d752d07ba2f2bcb54def974b1914d45051400bd">
+        sha1="859086ec4b9c83787ccbd081703a0954048215df">
         <dex dex="C:\Users\John\AndroidStudioProjects\AndroidGame\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_a8d841daddc4461addabe7eaeabfe524fda5dcc6\classes.dex" />
     </item>
     <item

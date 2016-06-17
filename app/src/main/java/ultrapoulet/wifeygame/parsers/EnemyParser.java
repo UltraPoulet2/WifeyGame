@@ -34,6 +34,8 @@ public class EnemyParser extends DefaultHandler{
     private boolean bSpecialDamage = false;
     private boolean bSpecialHits = false;
 
+    private boolean error = false;
+
     private Enemy enemyBuilder;
     private String enemyKey;
     private Image enemyImage;
@@ -112,6 +114,13 @@ public class EnemyParser extends DefaultHandler{
         else if(qName.equalsIgnoreCase("specialHits")){
             bSpecialHits = true;
         }
+        else if(qName.equalsIgnoreCase("enemies")){
+            //Do nothing
+        }
+        else{
+            System.out.println("EnemyParser:startElement(): Invalid qName: " + qName + " for key: " + enemyKey);
+            error = true;
+        }
     }
 
     @Override
@@ -119,65 +128,57 @@ public class EnemyParser extends DefaultHandler{
                            int start,
                            int length) throws SAXException {
         String temp = new String(ch, start, length);
-        if(bName){
-            enemyName = temp;
-            bName = false;
+        try {
+            if (bName) {
+                enemyName = temp;
+                bName = false;
+            } else if (bAi) {
+                enemyAI = EnemyAI.getAI(temp);
+                bAi = false;
+            } else if (bMaxHp) {
+                enemyHP = Integer.parseInt(temp);
+                bMaxHp = false;
+            } else if (bPowerDamage) {
+                enemyPowerDamage = Integer.parseInt(temp);
+                bPowerDamage = false;
+            } else if (bPowerHits) {
+                enemyPowerHits = Integer.parseInt(temp);
+                bPowerHits = false;
+            } else if (bComboDamage) {
+                enemyComboDamage = Integer.parseInt(temp);
+                bComboDamage = false;
+            } else if (bComboHits) {
+                enemyComboHits = Integer.parseInt(temp);
+                bComboHits = false;
+            } else if (bMagicDamage) {
+                enemyMagicDamage = Integer.parseInt(temp);
+                bMagicDamage = false;
+            } else if (bHealAmount) {
+                enemyHealAmount = Integer.parseInt(temp);
+                bHealAmount = false;
+            } else if (bPowerUp) {
+                enemyPowerUp = Double.parseDouble(temp);
+                bPowerUp = false;
+            } else if (bPowerDown) {
+                enemyPowerDown = Double.parseDouble(temp);
+                bPowerDown = false;
+            } else if (bDefend) {
+                enemyDefend = Double.parseDouble(temp);
+                bDefend = false;
+            } else if (bWeaken) {
+                enemyWeaken = Double.parseDouble(temp);
+                bWeaken = false;
+            } else if (bSpecialDamage) {
+                enemySpecialDamage = Integer.parseInt(temp);
+                bSpecialDamage = false;
+            } else if (bSpecialHits) {
+                enemySpecialHits = Integer.parseInt(temp);
+                bSpecialHits = false;
+            }
         }
-        else if(bAi){
-            enemyAI = EnemyAI.getAI(temp);
-            bAi = false;
-        }
-        else if(bMaxHp){
-            enemyHP = Integer.parseInt(temp);
-            bMaxHp = false;
-        }
-        else if(bPowerDamage){
-            enemyPowerDamage = Integer.parseInt(temp);
-            bPowerDamage = false;
-        }
-        else if(bPowerHits){
-            enemyPowerHits = Integer.parseInt(temp);
-            bPowerHits = false;
-        }
-        else if(bComboDamage){
-            enemyComboDamage = Integer.parseInt(temp);
-            bComboDamage = false;
-        }
-        else if(bComboHits){
-            enemyComboHits = Integer.parseInt(temp);
-            bComboHits = false;
-        }
-        else if(bMagicDamage){
-            enemyMagicDamage = Integer.parseInt(temp);
-            bMagicDamage = false;
-        }
-        else if(bHealAmount){
-            enemyHealAmount = Integer.parseInt(temp);
-            bHealAmount = false;
-        }
-        else if(bPowerUp){
-            enemyPowerUp = Double.parseDouble(temp);
-            bPowerUp = false;
-        }
-        else if(bPowerDown){
-            enemyPowerDown = Double.parseDouble(temp);
-            bPowerDown = false;
-        }
-        else if(bDefend){
-            enemyDefend = Double.parseDouble(temp);
-            bDefend = false;
-        }
-        else if(bWeaken){
-            enemyWeaken = Double.parseDouble(temp);
-            bWeaken = false;
-        }
-        else if(bSpecialDamage){
-            enemySpecialDamage = Integer.parseInt(temp);
-            bSpecialDamage = false;
-        }
-        else if(bSpecialHits){
-            enemySpecialHits = Integer.parseInt(temp);
-            bSpecialHits = false;
+        catch(NumberFormatException e){
+            System.out.println("EnemyParser:characters(): NumberFormatException for key: " + enemyKey);
+            error = true;
         }
 
     }
@@ -207,6 +208,9 @@ public class EnemyParser extends DefaultHandler{
                         enemyAI);
                 Enemies.put(enemyKey, enemyBuilder);
             }
+            else{
+                System.out.println("EnemyParser:endElement(): Error parsing: " + enemyKey);
+            }
         }
     }
 
@@ -227,6 +231,7 @@ public class EnemyParser extends DefaultHandler{
         enemyWeaken = 0.0;
         enemySpecialDamage = 0;
         enemySpecialHits = 0;
+        error = false;
     }
 
     private boolean validate(){
@@ -240,6 +245,9 @@ public class EnemyParser extends DefaultHandler{
             return false;
         }
         if(enemyHP == 0){
+            return false;
+        }
+        if(error == true){
             return false;
         }
         return true;
