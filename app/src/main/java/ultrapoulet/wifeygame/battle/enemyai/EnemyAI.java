@@ -40,6 +40,7 @@ public abstract class EnemyAI {
             return new OriginalBossAI();
         }
 
+        System.out.println("EnemyAI:getAI(): No AI found for: " + name);
         return null;
     }
 }

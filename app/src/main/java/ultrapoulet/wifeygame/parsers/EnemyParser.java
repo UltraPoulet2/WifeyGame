@@ -67,7 +67,13 @@ public class EnemyParser extends DefaultHandler{
         if(qName.equalsIgnoreCase("enemy")){
             resetValues();
             enemyKey = attributes.getValue("key");
-            enemyImage = g.newImage("TemplateEnemy.png", ImageFormat.ARGB8888);
+            if(enemyKey != null) {
+                enemyImage = g.newImage("TemplateEnemy.png", ImageFormat.ARGB8888);
+            }
+            else{
+                System.out.println("EnemyParser:startElement(): Error parsing enemy key");
+            }
+
         }
         else if(qName.equalsIgnoreCase("name")){
             bName = true;
@@ -179,6 +185,19 @@ public class EnemyParser extends DefaultHandler{
         catch(NumberFormatException e){
             System.out.println("EnemyParser:characters(): NumberFormatException for key: " + enemyKey);
             error = true;
+            bMaxHp = false;
+            bPowerDamage = false;
+            bPowerHits = false;
+            bComboDamage = false;
+            bComboHits = false;
+            bMagicDamage = false;
+            bHealAmount = false;
+            bPowerUp = false;
+            bPowerDown = false;
+            bDefend = false;
+            bWeaken = false;
+            bSpecialDamage = false;
+            bSpecialHits = false;
         }
 
     }

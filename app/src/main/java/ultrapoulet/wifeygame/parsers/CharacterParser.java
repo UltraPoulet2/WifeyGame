@@ -30,6 +30,8 @@ public class CharacterParser extends DefaultHandler{
     private int charMagic;
     private Image charImage;
 
+    private int charNumber = 0;
+
     public void setGraphics(Graphics g){
         this.g = g;
     }
@@ -46,8 +48,9 @@ public class CharacterParser extends DefaultHandler{
                 charImage = g.newImage("characters/" + charKey + ".png", ImageFormat.RGB565);
             }
             else{
-                System.out.println("CharacterParser:startElement(): Error parsing character key");
+                System.out.println("CharacterParser:startElement(): Error parsing character key #" + charNumber);
             }
+            charNumber++;
         }
         else if(qName.equalsIgnoreCase("name")){
             bName = true;
@@ -76,6 +79,7 @@ public class CharacterParser extends DefaultHandler{
                 charBuilder = new WifeyCharacter(charKey, charName, charStrength, charMagic, charImage);
                 //This will change
                 RecruitedCharacters.put(charKey, charBuilder);
+                System.out.println("CharacterParser:endElement(): Adding character: " + charKey);
             }
             else{
                 System.out.println("CharacterParser:endElement(): Error parsing for key: " + charKey);
@@ -103,6 +107,8 @@ public class CharacterParser extends DefaultHandler{
         catch(NumberFormatException e){
             System.out.println("CharacterParser:characters(): NumberFormatException for key: " + charKey);
             error = true;
+            bStrength = false;
+            bMagic = false;
         }
     }
 
