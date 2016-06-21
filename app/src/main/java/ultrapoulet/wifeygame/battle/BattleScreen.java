@@ -24,6 +24,7 @@ import ultrapoulet.wifeygame.battle.enemyai.OriginalBossAI;
 public class BattleScreen extends Screen {
 
     public BattleCharacter[] party;
+    public BattleInfo battleInfo;
     public Enemy[] enemies;
 
     public int partyIndex = 0;
@@ -255,8 +256,10 @@ public class BattleScreen extends Screen {
         this.party = party;
     }
 
-    public void setEnemies(Enemy[] enemies){
-        this.enemies = enemies;
+
+    public void setBattleInfo(BattleInfo info){
+        this.battleInfo = info;
+        this.enemies = battleInfo.getEnemies();
     }
 
     public void setBackground(Image background){

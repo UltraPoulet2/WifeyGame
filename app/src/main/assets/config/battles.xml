@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<battles>
+    <battle key="TEST-BATL">
+        <name>Test Battle</name>
+        <enemies>
+            <enemy>TEST-NME1</enemy>
+            <enemy>TEST-NME2</enemy>
+            <enemy>TEST-NME3</enemy>
+        </enemies>
+    </battle>
+</battles>

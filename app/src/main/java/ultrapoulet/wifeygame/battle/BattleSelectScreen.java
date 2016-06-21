@@ -46,7 +46,7 @@ public class BattleSelectScreen extends Screen {
                 BattleInfo testInfo = Battles.get("TEST-BATL");
 
                 PartySelectScreen pss = new PartySelectScreen(game);
-                pss.setEnemies(testInfo.getEnemies());
+                pss.setBattleInfo(testInfo);
                 pss.setPreviousScreen(this);
                 game.setScreen(pss);
             }
@@ -63,7 +63,6 @@ public class BattleSelectScreen extends Screen {
         paint.setTextSize(50);
         g.drawString("Select Battle", 400, 70, paint);
         g.drawRect(100, 100, 600, 100, Color.DKGRAY);
-        //g.drawString("Initial Battle 1", 400, 170, paint);
         BattleInfo testInfo = Battles.get("TEST-BATL");
         g.drawString(testInfo.getName(), 400, 170, paint);
     }

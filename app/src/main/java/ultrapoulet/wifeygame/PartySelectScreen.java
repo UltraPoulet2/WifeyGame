@@ -17,6 +17,7 @@ import ultrapoulet.androidgame.framework.Input.TouchEvent;
 import ultrapoulet.androidgame.framework.Screen;
 import ultrapoulet.wifeygame.Assets;
 import ultrapoulet.wifeygame.WifeyCharacter;
+import ultrapoulet.wifeygame.battle.BattleInfo;
 import ultrapoulet.wifeygame.battle.BattleScreen;
 import ultrapoulet.wifeygame.battle.Enemy;
 import ultrapoulet.wifeygame.gamestate.Party;
@@ -31,7 +32,8 @@ public class PartySelectScreen extends Screen {
     private WifeyCharacter[] currentParty;
     private int maxPartySize = 7;
     private int finalIndex = maxPartySize - 1;
-    private Enemy[] enemies;
+    //private Enemy[] enemies;
+    private BattleInfo battleInfo;
 
     private Screen previousScreen;
 
@@ -164,8 +166,12 @@ public class PartySelectScreen extends Screen {
         this.currentParty = inputParty;
     }
 
-    public void setEnemies(Enemy[] enemies){
+    /*public void setEnemies(Enemy[] enemies){
         this.enemies = enemies;
+    }*/
+
+    public void setBattleInfo(BattleInfo info){
+        this.battleInfo = info;
     }
 
     public void setPreviousScreen(Screen previousScreen){
@@ -245,7 +251,7 @@ public class PartySelectScreen extends Screen {
                         BattleScreen bs = new BattleScreen(game);
                         Party.setParty(currentParty);
                         bs.setParty(Party.getBattleParty());
-                        bs.setEnemies(enemies);
+                        bs.setBattleInfo(battleInfo);
                         bs.setBackground(Assets.testBG);
                         game.setScreen(bs);
                     }
