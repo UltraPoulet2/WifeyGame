@@ -16,6 +16,7 @@ import ultrapoulet.wifeygame.WifeyCharacter;
 import ultrapoulet.wifeygame.battle.enemyai.BasicMagicEnemyAI;
 import ultrapoulet.wifeygame.battle.enemyai.BasicPhysicalEnemyAI;
 import ultrapoulet.wifeygame.battle.enemyai.OriginalBossAI;
+import ultrapoulet.wifeygame.gamestate.Battles;
 import ultrapoulet.wifeygame.gamestate.Enemies;
 
 /**
@@ -42,13 +43,10 @@ public class BattleSelectScreen extends Screen {
                 continue;
             }
             if(t.y >= 100 && t.y <= 200){
-                Enemy[] enemies = new Enemy[3];
-                enemies[0] = Enemies.get("TEST-NME1");
-                enemies[1] = Enemies.get("TEST-NME2");
-                enemies[2] = Enemies.get("TEST-NME3");
+                BattleInfo testInfo = Battles.get("TEST-BATL");
 
                 PartySelectScreen pss = new PartySelectScreen(game);
-                pss.setEnemies(enemies);
+                pss.setEnemies(testInfo.getEnemies());
                 pss.setPreviousScreen(this);
                 game.setScreen(pss);
             }
@@ -65,7 +63,9 @@ public class BattleSelectScreen extends Screen {
         paint.setTextSize(50);
         g.drawString("Select Battle", 400, 70, paint);
         g.drawRect(100, 100, 600, 100, Color.DKGRAY);
-        g.drawString("Initial Battle 1", 400, 170, paint);
+        //g.drawString("Initial Battle 1", 400, 170, paint);
+        BattleInfo testInfo = Battles.get("TEST-BATL");
+        g.drawString(testInfo.getName(), 400, 170, paint);
     }
 
     @Override

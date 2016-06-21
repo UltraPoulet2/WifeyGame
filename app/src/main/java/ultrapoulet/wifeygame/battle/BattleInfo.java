@@ -34,6 +34,12 @@ public class BattleInfo {
         }
     }
 
+    public Enemy[] getEnemies(){
+        Enemy[] temp = new Enemy[enemyList.size()];
+        enemyList.toArray(temp);
+        return temp;
+    }
+
     //Future things
     /*
     public void addRestriction(Restriction r) {

@@ -14,11 +14,13 @@ import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Graphics.ImageFormat;
 import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.androidgame.framework.Screen;
+import ultrapoulet.wifeygame.battle.BattleInfo;
 import ultrapoulet.wifeygame.battle.BattleSelectScreen;
 import ultrapoulet.wifeygame.battle.Enemy;
 import ultrapoulet.wifeygame.battle.enemyai.BasicMagicEnemyAI;
 import ultrapoulet.wifeygame.battle.enemyai.BasicPhysicalEnemyAI;
 import ultrapoulet.wifeygame.battle.enemyai.OriginalBossAI;
+import ultrapoulet.wifeygame.gamestate.Battles;
 import ultrapoulet.wifeygame.gamestate.Enemies;
 import ultrapoulet.wifeygame.gamestate.Party;
 import ultrapoulet.wifeygame.gamestate.RecruitedCharacters;
@@ -99,6 +101,7 @@ public class LoadingScreen extends Screen {
         createRecruits();
         createParty();
         createEnemies();
+        createBattles();
 
         BattleSelectScreen bss = new BattleSelectScreen(game);
         game.setScreen(bss);
@@ -163,6 +166,15 @@ public class LoadingScreen extends Screen {
                 }
             }
         }
+    }
+
+    private void createBattles(){
+        BattleInfo testBattle = new BattleInfo();
+        testBattle.setName("Test Battle");
+        testBattle.addEnemy(Enemies.get("TEST-NME1"));
+        testBattle.addEnemy(Enemies.get("TEST-NME2"));
+        testBattle.addEnemy(Enemies.get("TEST-NME3"));
+        Battles.put("TEST-BATL", testBattle);
     }
 
     @Override
