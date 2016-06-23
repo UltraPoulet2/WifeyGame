@@ -24,6 +24,7 @@ import ultrapoulet.wifeygame.gamestate.Battles;
 import ultrapoulet.wifeygame.gamestate.Enemies;
 import ultrapoulet.wifeygame.gamestate.Party;
 import ultrapoulet.wifeygame.gamestate.RecruitedCharacters;
+import ultrapoulet.wifeygame.parsers.BattleParser;
 import ultrapoulet.wifeygame.parsers.CharacterParser;
 import ultrapoulet.wifeygame.parsers.EnemyParser;
 
@@ -169,12 +170,35 @@ public class LoadingScreen extends Screen {
     }
 
     private void createBattles(){
+        InputStream in = null;
+        try {
+            in = game.openConfig("config/battles.xml");
+            SAXParserFactory factory = SAXParserFactory.newInstance();
+            SAXParser saxParser = factory.newSAXParser();
+            BattleParser battleParser = new BattleParser();
+            saxParser.parse(in, battleParser);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            //Do better error handling
+        }
+        finally{
+            if(in != null){
+                try {
+                    in.close();
+                }
+                catch(IOException e){
+                }
+            }
+        }
+        /*
         BattleInfo testBattle = new BattleInfo();
         testBattle.setName("Test Battle");
         testBattle.addEnemy(Enemies.get("TEST-NME1"));
         testBattle.addEnemy(Enemies.get("TEST-NME2"));
         testBattle.addEnemy(Enemies.get("TEST-NME3"));
         Battles.put("TEST-BATL", testBattle);
+        */
     }
 
     @Override
