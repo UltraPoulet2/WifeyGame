@@ -20,6 +20,9 @@ public class WifeyCharacter {
 
     private Image image;
 
+
+    //We're getting rid of this call
+    /*
     public WifeyCharacter(String hashKey, String name, int strength, int magic, Image image){
         this.hashKey = hashKey;
         this.name = name;
@@ -27,6 +30,7 @@ public class WifeyCharacter {
         this.magic = magic;
         this.image = image;
     }
+    */
 
     public BattleCharacter getBattleCharacter(){
         return new BattleCharacter(name, 3, strength, magic, image);
@@ -54,6 +58,26 @@ public class WifeyCharacter {
 
     public int getMagic(){
         return this.magic;
+    }
+
+    public void setHashKey(String hashKey){
+        this.hashKey = hashKey;
+    }
+
+    public void setName(String name){
+        this.name = name;
+    }
+
+    public void setImage(Image image){
+        this.image = image;
+    }
+
+    public void setStrength(int strength){
+        this.strength = strength;
+    }
+
+    public void setMagic(int magic){
+        this.magic = magic;
     }
 
     public int compareName(WifeyCharacter other){

@@ -25,10 +25,6 @@ public class CharacterParser extends DefaultHandler{
 
     private WifeyCharacter charBuilder;
     private String charKey;
-    private String charName;
-    private int charStrength;
-    private int charMagic;
-    private Image charImage;
 
     private int charNumber = 0;
 
@@ -42,10 +38,11 @@ public class CharacterParser extends DefaultHandler{
                              String qName,
                              Attributes attributes) throws SAXException {
         if (qName.equalsIgnoreCase("character")) {
-            resetValues();
+            error = false;
             charKey = attributes.getValue("key");
             if(charKey != null) {
-                charImage = g.newImage("characters/" + charKey + ".png", ImageFormat.RGB565);
+                charBuilder = new WifeyCharacter();
+                charBuilder.setImage(g.newImage("characters/" + charKey + ".png", ImageFormat.RGB565));
             }
             else{
                 System.out.println("CharacterParser:startElement(): Error parsing character key #" + charNumber);
@@ -76,7 +73,7 @@ public class CharacterParser extends DefaultHandler{
                            String qName) throws SAXException {
         if (qName.equalsIgnoreCase("character")) {
             if(validate()) {
-                charBuilder = new WifeyCharacter(charKey, charName, charStrength, charMagic, charImage);
+                //charBuilder = new WifeyCharacter(charKey, charName, charStrength, charMagic, charImage);
                 //This will change
                 RecruitedCharacters.put(charKey, charBuilder);
                 System.out.println("CharacterParser:endElement(): Adding character: " + charKey);
@@ -94,13 +91,13 @@ public class CharacterParser extends DefaultHandler{
         String temp = new String(ch, start, length);
         try {
             if (bName) {
-                charName = temp;
+                charBuilder.setName(temp);
                 bName = false;
             } else if (bStrength) {
-                charStrength = Integer.parseInt(temp);
+                charBuilder.setStrength(Integer.parseInt(temp));
                 bStrength = false;
             } else if (bMagic) {
-                charMagic = Integer.parseInt(temp);
+                charBuilder.setMagic(Integer.parseInt(temp));
                 bMagic = false;
             }
         }
@@ -113,25 +110,18 @@ public class CharacterParser extends DefaultHandler{
     }
 
     private boolean validate(){
-        if(charName.length() == 0){
+        if(charBuilder.getName().length() == 0){
             return false;
         }
-        if(charStrength <= 0){
+        if(charBuilder.getStrength() <= 0){
             return false;
         }
-        if(charMagic <= 0){
+        if(charBuilder.getMagic() <= 0){
             return false;
         }
         if(error == true){
             return false;
         }
         return true;
-    }
-
-    private void resetValues(){
-        error = false;
-        charName = "";
-        charStrength = 0;
-        charMagic = 0;
     }
 }
