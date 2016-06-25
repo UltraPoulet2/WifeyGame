@@ -68,7 +68,7 @@ public class EnemyParser extends DefaultHandler{
             resetValues();
             enemyKey = attributes.getValue("key");
             if(enemyKey != null) {
-                enemyImage = g.newImage("TemplateEnemy.png", ImageFormat.ARGB8888);
+                enemyImage = g.newImage("enemies/" + enemyKey + ".png", ImageFormat.RGB565);
             }
             else{
                 System.out.println("EnemyParser:startElement(): Error parsing enemy key");

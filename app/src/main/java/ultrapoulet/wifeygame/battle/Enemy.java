@@ -32,8 +32,6 @@ public class Enemy {
     private double weakenPercentage;
     private int specialDamage;
     private int specialHits;
-    private int damage;
-    private int numHits = 3;
 
     //private EnemySkills[] skills;
 
@@ -116,7 +114,6 @@ public class Enemy {
 
     public int getCurrentHP(){ return this.currentHP ;}
 
-    //public int getNumHits(){return this.numHits;}
     public int getNumHits(){
         switch(getAction()){
             case POWER_ATTACK:
@@ -159,12 +156,6 @@ public class Enemy {
 
     public String getActionString() {
         return actionStrings.get(ai.getAction());
-    }
-
-    public int AttackDamage(){
-        //There will be attack modifiers in the future
-        int baseDamage = this.damage + (int) ((this.damage / 10) * Math.random());
-        return (int) (baseDamage * totalRoundMultiplier);
     }
 
     public int PowerAttackDamage(){
