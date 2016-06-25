@@ -12,6 +12,7 @@ import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.androidgame.framework.Input;
 import ultrapoulet.androidgame.framework.Input.TouchEvent;
 import ultrapoulet.androidgame.framework.Screen;
+import ultrapoulet.wifeygame.character.WifeyCharacter;
 
 /**
  * Created by John on 5/19/2016.

@@ -2,8 +2,6 @@ package ultrapoulet.wifeygame.battle;
 
 import java.util.ArrayList;
 
-import ultrapoulet.wifeygame.WifeyCharacter;
-
 /**
  * Created by John on 6/19/2016.
  */

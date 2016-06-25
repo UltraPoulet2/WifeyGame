@@ -3,7 +3,7 @@ package ultrapoulet.wifeygame.gamestate;
 import java.util.HashMap;
 import java.util.Map;
 
-import ultrapoulet.wifeygame.WifeyCharacter;
+import ultrapoulet.wifeygame.character.WifeyCharacter;
 
 /**
  * Created by John on 5/15/2016.

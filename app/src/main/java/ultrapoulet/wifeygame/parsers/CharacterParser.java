@@ -6,8 +6,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Graphics.ImageFormat;
-import ultrapoulet.androidgame.framework.Image;
-import ultrapoulet.wifeygame.WifeyCharacter;
+import ultrapoulet.wifeygame.character.WifeyCharacter;
 import ultrapoulet.wifeygame.gamestate.RecruitedCharacters;
 
 /**
@@ -57,6 +56,9 @@ public class CharacterParser extends DefaultHandler{
         }
         else if(qName.equalsIgnoreCase("magic")){
             bMagic = true;
+        }
+        else if(qName.equalsIgnoreCase("weapon")){
+            //Do nothing for now.
         }
         else if(qName.equalsIgnoreCase("characters")){
             //Do nothing.
