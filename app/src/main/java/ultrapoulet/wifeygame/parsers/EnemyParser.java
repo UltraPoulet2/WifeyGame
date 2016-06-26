@@ -72,6 +72,7 @@ public class EnemyParser extends DefaultHandler{
             }
             else{
                 System.out.println("EnemyParser:startElement(): Error parsing enemy key");
+                error = true;
             }
 
         }

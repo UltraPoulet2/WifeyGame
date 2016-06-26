@@ -16,7 +16,7 @@ public class WifeyCharacter {
     private int experience;
     private int level;
 
-    //Variable for weaponType
+    private Weapon weapon;
 
     private Image image;
 
@@ -33,7 +33,7 @@ public class WifeyCharacter {
     */
 
     public BattleCharacter getBattleCharacter(){
-        return new BattleCharacter(name, 3, strength, magic, image);
+        return new BattleCharacter(name, weapon, strength, magic, image);
     }
 
     public String getName(){
@@ -60,6 +60,8 @@ public class WifeyCharacter {
         return this.magic;
     }
 
+    public Weapon getWeapon() { return this.weapon; }
+
     public void setHashKey(String hashKey){
         this.hashKey = hashKey;
     }
@@ -79,6 +81,8 @@ public class WifeyCharacter {
     public void setMagic(int magic){
         this.magic = magic;
     }
+
+    public void setWeapon(Weapon weapon) { this.weapon = weapon; }
 
     public int compareName(WifeyCharacter other){
         int result = this.getName().compareTo(other.getName());

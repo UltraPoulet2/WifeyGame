@@ -6,6 +6,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Graphics.ImageFormat;
+import ultrapoulet.wifeygame.character.Weapon;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
 import ultrapoulet.wifeygame.gamestate.RecruitedCharacters;
 
@@ -19,6 +20,7 @@ public class CharacterParser extends DefaultHandler{
     private boolean bName;
     private boolean bStrength;
     private boolean bMagic;
+    private boolean bWeapon;
 
     private boolean error;
 
@@ -42,9 +44,11 @@ public class CharacterParser extends DefaultHandler{
             if(charKey != null) {
                 charBuilder = new WifeyCharacter();
                 charBuilder.setImage(g.newImage("characters/" + charKey + ".png", ImageFormat.RGB565));
+                charBuilder.setHashKey(charKey);
             }
             else{
                 System.out.println("CharacterParser:startElement(): Error parsing character key #" + charNumber);
+                error = true;
             }
             charNumber++;
         }
@@ -58,7 +62,7 @@ public class CharacterParser extends DefaultHandler{
             bMagic = true;
         }
         else if(qName.equalsIgnoreCase("weapon")){
-            //Do nothing for now.
+            bWeapon = true;
         }
         else if(qName.equalsIgnoreCase("characters")){
             //Do nothing.
@@ -102,6 +106,10 @@ public class CharacterParser extends DefaultHandler{
                 charBuilder.setMagic(Integer.parseInt(temp));
                 bMagic = false;
             }
+            else if (bWeapon) {
+                charBuilder.setWeapon(Weapon.getWeapon(temp));
+                bWeapon = false;
+            }
         }
         catch(NumberFormatException e){
             System.out.println("CharacterParser:characters(): NumberFormatException for key: " + charKey);
@@ -119,6 +127,9 @@ public class CharacterParser extends DefaultHandler{
             return false;
         }
         if(charBuilder.getMagic() <= 0){
+            return false;
+        }
+        if(charBuilder.getWeapon() == null){
             return false;
         }
         if(error == true){

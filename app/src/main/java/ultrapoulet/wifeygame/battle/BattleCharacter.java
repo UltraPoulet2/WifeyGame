@@ -1,6 +1,7 @@
 package ultrapoulet.wifeygame.battle;
 
 import ultrapoulet.androidgame.framework.Image;
+import ultrapoulet.wifeygame.character.Weapon;
 
 /**
  * Created by John on 3/5/2016.
@@ -11,6 +12,7 @@ public class BattleCharacter {
     private int maxHP;
     private int currentHP;
     private int numHits;
+    private Weapon weapon;
     //private Skills[] skills;
     private int strength;
     private int magic;
@@ -21,11 +23,12 @@ public class BattleCharacter {
 
     //Section for skill flags
 
-    public BattleCharacter(String name, int numHits, int strength, int magic, Image image){
+    public BattleCharacter(String name, Weapon weapon, int strength, int magic, Image image){
         this.name = name;
         this.maxHP = calculateHP(strength);
         this.currentHP = this.maxHP;
-        this.numHits = numHits;
+        this.weapon = weapon;
+        this.numHits = weapon.getNumHits();
         this.strength = strength;
         this.magic = magic;
         this.image = image;
@@ -38,6 +41,8 @@ public class BattleCharacter {
     public String getName(){
         return this.name;
     }
+
+    public Weapon getWeapon() { return this.weapon; }
 
     public int getNumHits(){
         return this.numHits;
