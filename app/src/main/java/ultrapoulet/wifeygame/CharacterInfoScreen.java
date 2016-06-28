@@ -12,6 +12,7 @@ import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.androidgame.framework.Input;
 import ultrapoulet.androidgame.framework.Input.TouchEvent;
 import ultrapoulet.androidgame.framework.Screen;
+import ultrapoulet.wifeygame.character.Weapon;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
 
 /**
@@ -36,10 +37,10 @@ public class CharacterInfoScreen extends Screen {
     private static final int DOUBLE_SCALE = 200;
 
     private Paint namePaint;
-    private int fontSize;
+    private int nameFontSize;
     private int nameY;
     private static final int MAX_NAME_FONT = 40;
-    private static final int MAX_NAME_SIZE = 246;
+    private static final int MAX_NAME_SIZE = 240;
     private static final int NAME_X = 402 + BG_X;
     private static final int MAX_NAME_Y = 155 + BG_Y;
 
@@ -54,6 +55,20 @@ public class CharacterInfoScreen extends Screen {
     private static final int STR_X = 85 + HP_X;
     private static final int MAG_X = 85 + STR_X;
     private static final int STAT_Y = 322 + BG_Y;
+
+    private Paint weaponPaint;
+    private int weaponFontSize;
+    private int weaponY;
+    private static final int MAX_WEAPON_FONT = 34;
+    private static final int MAX_WEAPON_SIZE = 140;
+    private static final int WEAPON_X = 525 + BG_X;
+    private static final int MAX_WEAPON_Y = 407 + BG_Y;
+
+    //These will be removed when hits images are added
+    private Paint hitsPaint;
+    private static final int HITS_SIZE = 34;
+    private static final int HITS_X = 100 + WEAPON_X;
+    private static final int HITS_Y = 407 + BG_Y;
 
     private enum ButtonPressed{
         CLOSE
@@ -81,6 +96,15 @@ public class CharacterInfoScreen extends Screen {
         statPaint.setTextAlign(Align.CENTER);
         statPaint.setColor(Color.BLACK);
         statPaint.setTextSize(STAT_SIZE);
+
+        weaponPaint = new Paint();
+        weaponPaint.setTextAlign(Align.CENTER);
+        weaponPaint.setColor(Color.BLACK);
+
+        hitsPaint = new Paint();
+        hitsPaint.setTextAlign(Align.CENTER);
+        hitsPaint.setColor(Color.BLACK);
+        hitsPaint.setTextSize(HITS_SIZE);
     }
 
     public void setPreviousScreen(Screen screen){
@@ -89,13 +113,24 @@ public class CharacterInfoScreen extends Screen {
 
     public void setChar(WifeyCharacter input){
         displayChar = input;
-        fontSize = MAX_NAME_FONT;
-        namePaint.setTextSize(fontSize);
+        nameFontSize = MAX_NAME_FONT;
+        namePaint.setTextSize(nameFontSize);
         while(namePaint.measureText(displayChar.getName()) > MAX_NAME_SIZE){
-            fontSize--;
-            namePaint.setTextSize(fontSize);
+            nameFontSize--;
+            namePaint.setTextSize(nameFontSize);
         }
-        nameY = MAX_NAME_Y - ((MAX_NAME_FONT - fontSize) / 2);
+        nameY = MAX_NAME_Y - ((MAX_NAME_FONT - nameFontSize) / 2);
+
+        //Using weapon type as name for now
+        String weaponName = displayChar.getWeapon().getWeaponType();
+        weaponFontSize = MAX_WEAPON_FONT;
+        weaponPaint.setTextSize(weaponFontSize);
+        while(weaponPaint.measureText(weaponName) > MAX_WEAPON_SIZE){
+            weaponFontSize--;
+            weaponPaint.setTextSize(weaponFontSize);
+        }
+        weaponY = MAX_WEAPON_Y - ((MAX_WEAPON_FONT - weaponFontSize) / 2);
+        System.out.println(weaponY + " " + weaponFontSize);
     }
 
     private ButtonPressed getButtonPressed(int x, int y){
@@ -142,8 +177,12 @@ public class CharacterInfoScreen extends Screen {
         g.drawString(String.valueOf(displayChar.getMagic()), MAG_X, STAT_Y, statPaint);
 
         //Draw image for weapon category
+
+        Weapon charWeapon = displayChar.getWeapon();
         //Draw string for weapon name
+        g.drawString(charWeapon.getWeaponType(), WEAPON_X, weaponY, weaponPaint);
         //Draw image for number hits
+        g.drawString(String.valueOf(charWeapon.getNumHits()), HITS_X, HITS_Y, hitsPaint);
     }
 
     @Override
