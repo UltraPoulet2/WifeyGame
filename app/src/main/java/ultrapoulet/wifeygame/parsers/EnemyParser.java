@@ -9,6 +9,7 @@ import ultrapoulet.androidgame.framework.Graphics.ImageFormat;
 import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.wifeygame.battle.BattleEnemy;
 import ultrapoulet.wifeygame.battle.enemyai.EnemyAI;
+import ultrapoulet.wifeygame.character.EnemyCharacter;
 import ultrapoulet.wifeygame.gamestate.Enemies;
 
 /**
@@ -36,24 +37,8 @@ public class EnemyParser extends DefaultHandler{
 
     private boolean error = false;
 
-    private BattleEnemy battleEnemyBuilder;
+    private EnemyCharacter enemyBuilder;
     private String enemyKey;
-    private Image enemyImage;
-    private String enemyName;
-    private EnemyAI enemyAI;
-    private int enemyHP;
-    private int enemyPowerDamage;
-    private int enemyPowerHits;
-    private int enemyComboDamage;
-    private int enemyComboHits;
-    private int enemyMagicDamage;
-    private int enemyHealAmount;
-    private double enemyPowerUp;
-    private double enemyPowerDown;
-    private double enemyDefend;
-    private double enemyWeaken;
-    private int enemySpecialDamage;
-    private int enemySpecialHits;
 
     public void setGraphics(Graphics g){
         this.g = g;
@@ -65,10 +50,11 @@ public class EnemyParser extends DefaultHandler{
                              String qName,
                              Attributes attributes) throws SAXException{
         if(qName.equalsIgnoreCase("enemy")){
-            resetValues();
+            error = false;
             enemyKey = attributes.getValue("key");
             if(enemyKey != null) {
-                enemyImage = g.newImage("enemies/" + enemyKey + ".png", ImageFormat.RGB565);
+                enemyBuilder = new EnemyCharacter();
+                enemyBuilder.setImage(g.newImage("enemies/" + enemyKey + ".png", ImageFormat.RGB565));
             }
             else{
                 System.out.println("EnemyParser:startElement(): Error parsing enemy key");
@@ -137,49 +123,49 @@ public class EnemyParser extends DefaultHandler{
         String temp = new String(ch, start, length);
         try {
             if (bName) {
-                enemyName = temp;
+                enemyBuilder.setName(temp);
                 bName = false;
             } else if (bAi) {
-                enemyAI = EnemyAI.getAI(temp);
+                enemyBuilder.setAI(temp);
                 bAi = false;
             } else if (bMaxHp) {
-                enemyHP = Integer.parseInt(temp);
+                enemyBuilder.setMaxHP(Integer.parseInt(temp));
                 bMaxHp = false;
             } else if (bPowerDamage) {
-                enemyPowerDamage = Integer.parseInt(temp);
+                enemyBuilder.setPowerDamage(Integer.parseInt(temp));
                 bPowerDamage = false;
             } else if (bPowerHits) {
-                enemyPowerHits = Integer.parseInt(temp);
+                enemyBuilder.setPowerHits(Integer.parseInt(temp));
                 bPowerHits = false;
             } else if (bComboDamage) {
-                enemyComboDamage = Integer.parseInt(temp);
+                enemyBuilder.setComboDamage(Integer.parseInt(temp));
                 bComboDamage = false;
             } else if (bComboHits) {
-                enemyComboHits = Integer.parseInt(temp);
+                enemyBuilder.setComboHits(Integer.parseInt(temp));
                 bComboHits = false;
             } else if (bMagicDamage) {
-                enemyMagicDamage = Integer.parseInt(temp);
+                enemyBuilder.setMagicDamage(Integer.parseInt(temp));
                 bMagicDamage = false;
             } else if (bHealAmount) {
-                enemyHealAmount = Integer.parseInt(temp);
+                enemyBuilder.setHealAmount(Integer.parseInt(temp));
                 bHealAmount = false;
             } else if (bPowerUp) {
-                enemyPowerUp = Double.parseDouble(temp);
+                enemyBuilder.setPowerUpPercentage(Double.parseDouble(temp));
                 bPowerUp = false;
             } else if (bPowerDown) {
-                enemyPowerDown = Double.parseDouble(temp);
+                enemyBuilder.setPowerDownPercentage(Double.parseDouble(temp));
                 bPowerDown = false;
             } else if (bDefend) {
-                enemyDefend = Double.parseDouble(temp);
+                enemyBuilder.setDefendPercentage(Double.parseDouble(temp));
                 bDefend = false;
             } else if (bWeaken) {
-                enemyWeaken = Double.parseDouble(temp);
+                enemyBuilder.setWeakenPercentage(Double.parseDouble(temp));
                 bWeaken = false;
             } else if (bSpecialDamage) {
-                enemySpecialDamage = Integer.parseInt(temp);
+                enemyBuilder.setSpecialDamage(Integer.parseInt(temp));
                 bSpecialDamage = false;
             } else if (bSpecialHits) {
-                enemySpecialHits = Integer.parseInt(temp);
+                enemyBuilder.setSpecialHits(Integer.parseInt(temp));
                 bSpecialHits = false;
             }
         }
@@ -209,24 +195,7 @@ public class EnemyParser extends DefaultHandler{
                            String qName) throws SAXException {
         if(qName.equalsIgnoreCase("enemy")){
             if(validate()){
-                battleEnemyBuilder = new BattleEnemy(
-                        enemyName,
-                        enemyHP,
-                        enemyPowerDamage,
-                        enemyPowerHits,
-                        enemyComboDamage,
-                        enemyComboHits,
-                        enemyMagicDamage,
-                        enemyHealAmount,
-                        enemyPowerUp,
-                        enemyPowerDown,
-                        enemyDefend,
-                        enemyWeaken,
-                        enemySpecialDamage,
-                        enemySpecialHits,
-                        enemyImage,
-                        enemyAI);
-                Enemies.put(enemyKey, battleEnemyBuilder);
+                Enemies.put(enemyKey, enemyBuilder);
             }
             else{
                 System.out.println("EnemyParser:endElement(): Error parsing: " + enemyKey);
@@ -234,42 +203,10 @@ public class EnemyParser extends DefaultHandler{
         }
     }
 
-    private void resetValues(){
-        enemyName = "";
-        enemyImage = null;
-        enemyAI = null;
-        enemyHP = 0;
-        enemyPowerDamage = 0;
-        enemyPowerHits = 0;
-        enemyComboDamage = 0;
-        enemyComboHits = 0;
-        enemyMagicDamage = 0;
-        enemyHealAmount = 0;
-        enemyPowerUp = 0.0;
-        enemyPowerDown = 0.0;
-        enemyDefend = 0.0;
-        enemyWeaken = 0.0;
-        enemySpecialDamage = 0;
-        enemySpecialHits = 0;
-        error = false;
-    }
-
     private boolean validate(){
-        if(enemyName.length() == 0){
-            return false;
-        }
-        if(enemyImage == null){
-            return false;
-        }
-        if(enemyAI == null){
-            return false;
-        }
-        if(enemyHP == 0){
-            return false;
-        }
         if(error == true){
             return false;
         }
-        return true;
+        return enemyBuilder.validate();
     }
 }

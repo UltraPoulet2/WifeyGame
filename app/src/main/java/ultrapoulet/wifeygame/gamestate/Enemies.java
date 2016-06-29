@@ -3,19 +3,19 @@ package ultrapoulet.wifeygame.gamestate;
 import java.util.HashMap;
 import java.util.Map;
 
-import ultrapoulet.wifeygame.battle.BattleEnemy;
+import ultrapoulet.wifeygame.character.EnemyCharacter;
 
 /**
  * Created by John on 6/13/2016.
  */
 public class Enemies {
-    private static Map<String, BattleEnemy> enemies = new HashMap<>();
+    private static Map<String, EnemyCharacter> enemies = new HashMap<>();
 
-    public static void put(String key, BattleEnemy battleEnemy){
-        enemies.put(key, battleEnemy);
+    public static void put(String key, EnemyCharacter enemy){
+        enemies.put(key, enemy);
     }
 
-    public static BattleEnemy get(String key){
+    public static EnemyCharacter get(String key){
         return enemies.get(key);
     }
 }

@@ -29,7 +29,8 @@ public class EnemyCharacter {
 
     private Image image;
 
-    private EnemyAI ai;
+    //private EnemyAI ai;
+    private String ai;
 
     public String getName(){
         return this.name;
@@ -151,8 +152,10 @@ public class EnemyCharacter {
         this.image = image;
     }
 
-    public void setAI(EnemyAI ai){
-        this.ai = ai;
+    public void setAI(String ai){
+        if(EnemyAI.getAI(ai) != null) {
+            this.ai = ai;
+        }
     }
 
     public BattleEnemy getBattleEnemy(){
@@ -172,6 +175,22 @@ public class EnemyCharacter {
                 specialDamage,
                 specialHits,
                 image,
-                ai);
+                EnemyAI.getAI(ai));
+    }
+
+    public boolean validate(){
+        if(name == null || name.length() == 0){
+            return false;
+        }
+        if(image == null){
+            return false;
+        }
+        if(ai == null || ai.length() == 0){
+            return false;
+        }
+        if(maxHP == 0){
+            return false;
+        }
+        return true;
     }
 }

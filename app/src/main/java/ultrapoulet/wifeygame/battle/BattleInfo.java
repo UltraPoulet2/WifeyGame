@@ -2,13 +2,15 @@ package ultrapoulet.wifeygame.battle;
 
 import java.util.ArrayList;
 
+import ultrapoulet.wifeygame.character.EnemyCharacter;
+
 /**
  * Created by John on 6/19/2016.
  */
 public class BattleInfo {
 
     private String battleName;
-    private ArrayList<BattleEnemy> battleEnemyList = new ArrayList<>();
+    private ArrayList<EnemyCharacter> enemyList = new ArrayList<>();
     //private ArrayList<Restriction> restrictionList = new ArrayList<>();
 
     public void setName(String name){
@@ -19,22 +21,31 @@ public class BattleInfo {
         return battleName;
     }
 
-    public void addEnemy(BattleEnemy battleEnemy){
-        battleEnemyList.add(battleEnemy);
+    public void addEnemy(EnemyCharacter enemy){
+        enemyList.add(enemy);
     }
 
-    public BattleEnemy getEnemy(int index){
-        if(index >= 0 && index < battleEnemyList.size()){
-            return battleEnemyList.get(index);
+    public EnemyCharacter getEnemy(int index){
+        if(index >= 0 && index < enemyList.size()){
+            return enemyList.get(index);
         }
         else{
             return null;
         }
     }
 
-    public BattleEnemy[] getEnemies(){
-        BattleEnemy[] temp = new BattleEnemy[battleEnemyList.size()];
-        battleEnemyList.toArray(temp);
+    //I'm not sure if this will be needed
+    public EnemyCharacter[] getCharacterEnemies(){
+        EnemyCharacter[] temp = new EnemyCharacter[enemyList.size()];
+        enemyList.toArray(temp);
+        return temp;
+    }
+
+    public BattleEnemy[] getBattleEnemies(){
+        BattleEnemy[] temp = new BattleEnemy[enemyList.size()];
+        for(int i = 0; i < enemyList.size(); i++){
+            temp[i] = enemyList.get(i).getBattleEnemy();
+        }
         return temp;
     }
 

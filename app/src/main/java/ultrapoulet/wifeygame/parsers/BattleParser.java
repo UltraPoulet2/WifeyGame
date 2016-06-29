@@ -6,6 +6,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import ultrapoulet.wifeygame.battle.BattleEnemy;
 import ultrapoulet.wifeygame.battle.BattleInfo;
+import ultrapoulet.wifeygame.character.EnemyCharacter;
 import ultrapoulet.wifeygame.gamestate.Battles;
 import ultrapoulet.wifeygame.gamestate.Enemies;
 
@@ -74,7 +75,7 @@ public class BattleParser extends DefaultHandler {
             bName = false;
         }
         else if(bEnemy){
-            BattleEnemy tempEn = Enemies.get(temp);
+            EnemyCharacter tempEn = Enemies.get(temp);
             if(tempEn == null){
                 System.out.println("BattleParser:characters(): BattleEnemy not found: " + temp);
                 error = true;
@@ -99,7 +100,7 @@ public class BattleParser extends DefaultHandler {
         if(battleBuilder.getName().length() == 0){
             return false;
         }
-        if(battleBuilder.getEnemies().length == 0){
+        if(battleBuilder.getCharacterEnemies().length == 0){
             return false;
         }
 
