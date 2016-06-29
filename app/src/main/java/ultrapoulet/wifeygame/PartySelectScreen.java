@@ -30,7 +30,7 @@ public class PartySelectScreen extends Screen {
     private WifeyCharacter[] currentParty;
     private int maxPartySize = 7;
     private int finalIndex = maxPartySize - 1;
-    //private Enemy[] enemies;
+    //private BattleEnemy[] enemies;
     private BattleInfo battleInfo;
 
     private Screen previousScreen;
@@ -164,7 +164,7 @@ public class PartySelectScreen extends Screen {
         this.currentParty = inputParty;
     }
 
-    /*public void setEnemies(Enemy[] enemies){
+    /*public void setEnemies(BattleEnemy[] enemies){
         this.enemies = enemies;
     }*/
 

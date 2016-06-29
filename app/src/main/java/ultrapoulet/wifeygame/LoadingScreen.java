@@ -1,8 +1,5 @@
 package ultrapoulet.wifeygame;
 
-import android.content.res.AssetManager;
-
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -14,14 +11,7 @@ import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Graphics.ImageFormat;
 import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.androidgame.framework.Screen;
-import ultrapoulet.wifeygame.battle.BattleInfo;
 import ultrapoulet.wifeygame.battle.BattleSelectScreen;
-import ultrapoulet.wifeygame.battle.Enemy;
-import ultrapoulet.wifeygame.battle.enemyai.BasicMagicEnemyAI;
-import ultrapoulet.wifeygame.battle.enemyai.BasicPhysicalEnemyAI;
-import ultrapoulet.wifeygame.battle.enemyai.OriginalBossAI;
-import ultrapoulet.wifeygame.gamestate.Battles;
-import ultrapoulet.wifeygame.gamestate.Enemies;
 import ultrapoulet.wifeygame.gamestate.Party;
 import ultrapoulet.wifeygame.gamestate.RecruitedCharacters;
 import ultrapoulet.wifeygame.parsers.BattleParser;

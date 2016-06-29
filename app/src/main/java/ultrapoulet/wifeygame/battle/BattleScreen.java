@@ -13,10 +13,7 @@ import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.androidgame.framework.Input.TouchEvent;
 import ultrapoulet.androidgame.framework.Screen;
 import ultrapoulet.wifeygame.Assets;
-import ultrapoulet.wifeygame.battle.enemyai.BasicMagicEnemyAI;
-import ultrapoulet.wifeygame.battle.enemyai.BasicPhysicalEnemyAI;
 import ultrapoulet.wifeygame.battle.enemyai.EnemyAI.EnemyAction;
-import ultrapoulet.wifeygame.battle.enemyai.OriginalBossAI;
 
 /**
  * Created by John on 3/5/2016.
@@ -25,7 +22,7 @@ public class BattleScreen extends Screen {
 
     public BattleCharacter[] party;
     public BattleInfo battleInfo;
-    public Enemy[] enemies;
+    public BattleEnemy[] enemies;
 
     public int partyIndex = 0;
     public int enemyIndex = 0;

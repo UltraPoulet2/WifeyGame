@@ -7,7 +7,7 @@ import org.xml.sax.helpers.DefaultHandler;
 import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Graphics.ImageFormat;
 import ultrapoulet.androidgame.framework.Image;
-import ultrapoulet.wifeygame.battle.Enemy;
+import ultrapoulet.wifeygame.battle.BattleEnemy;
 import ultrapoulet.wifeygame.battle.enemyai.EnemyAI;
 import ultrapoulet.wifeygame.gamestate.Enemies;
 
@@ -36,7 +36,7 @@ public class EnemyParser extends DefaultHandler{
 
     private boolean error = false;
 
-    private Enemy enemyBuilder;
+    private BattleEnemy battleEnemyBuilder;
     private String enemyKey;
     private Image enemyImage;
     private String enemyName;
@@ -209,7 +209,7 @@ public class EnemyParser extends DefaultHandler{
                            String qName) throws SAXException {
         if(qName.equalsIgnoreCase("enemy")){
             if(validate()){
-                enemyBuilder = new Enemy(
+                battleEnemyBuilder = new BattleEnemy(
                         enemyName,
                         enemyHP,
                         enemyPowerDamage,
@@ -226,7 +226,7 @@ public class EnemyParser extends DefaultHandler{
                         enemySpecialHits,
                         enemyImage,
                         enemyAI);
-                Enemies.put(enemyKey, enemyBuilder);
+                Enemies.put(enemyKey, battleEnemyBuilder);
             }
             else{
                 System.out.println("EnemyParser:endElement(): Error parsing: " + enemyKey);

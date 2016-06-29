@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class BattleInfo {
 
     private String battleName;
-    private ArrayList<Enemy> enemyList = new ArrayList<>();
+    private ArrayList<BattleEnemy> battleEnemyList = new ArrayList<>();
     //private ArrayList<Restriction> restrictionList = new ArrayList<>();
 
     public void setName(String name){
@@ -19,22 +19,22 @@ public class BattleInfo {
         return battleName;
     }
 
-    public void addEnemy(Enemy enemy){
-        enemyList.add(enemy);
+    public void addEnemy(BattleEnemy battleEnemy){
+        battleEnemyList.add(battleEnemy);
     }
 
-    public Enemy getEnemy(int index){
-        if(index >= 0 && index < enemyList.size()){
-            return enemyList.get(index);
+    public BattleEnemy getEnemy(int index){
+        if(index >= 0 && index < battleEnemyList.size()){
+            return battleEnemyList.get(index);
         }
         else{
             return null;
         }
     }
 
-    public Enemy[] getEnemies(){
-        Enemy[] temp = new Enemy[enemyList.size()];
-        enemyList.toArray(temp);
+    public BattleEnemy[] getEnemies(){
+        BattleEnemy[] temp = new BattleEnemy[battleEnemyList.size()];
+        battleEnemyList.toArray(temp);
         return temp;
     }
 
