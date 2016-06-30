@@ -26,4 +26,21 @@ public abstract class EnemyAI {
     public EnemyAction getAction(){
         return selectedAction;
     }
+
+    public abstract void reset();
+
+    public static EnemyAI getAI(String name){
+        if(name.equalsIgnoreCase("BasicMagicEnemyAI")){
+            return new BasicMagicEnemyAI();
+        }
+        else if(name.equalsIgnoreCase("BasicPhysicalEnemyAI")){
+            return new BasicPhysicalEnemyAI();
+        }
+        else if(name.equalsIgnoreCase("OriginalBossAI")){
+            return new OriginalBossAI();
+        }
+
+        System.out.println("EnemyAI:getAI(): No AI found for: " + name);
+        return null;
+    }
 }

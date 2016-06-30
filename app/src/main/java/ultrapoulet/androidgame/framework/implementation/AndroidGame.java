@@ -12,6 +12,9 @@ import android.os.PowerManager.WakeLock;
 import android.view.Window;
 import android.view.WindowManager;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 import ultrapoulet.androidgame.framework.Audio;
 import ultrapoulet.androidgame.framework.FileIO;
 import ultrapoulet.androidgame.framework.Game;
@@ -118,5 +121,17 @@ public abstract class AndroidGame extends Activity implements Game {
 
     public Screen getCurrentScreen() {
         return screen;
+    }
+
+    public InputStream openConfig(String filename){
+        InputStream in = null;
+        try{
+            in = getAssets().open(filename);
+            return in;
+        }
+        catch (IOException e) {
+            throw new RuntimeException("Couldn't load config from asset '"
+                    + filename + "'");
+        }
     }
 }

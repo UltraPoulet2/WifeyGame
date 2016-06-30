@@ -15,10 +15,9 @@ import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.androidgame.framework.Input;
 import ultrapoulet.androidgame.framework.Input.TouchEvent;
 import ultrapoulet.androidgame.framework.Screen;
-import ultrapoulet.wifeygame.Assets;
-import ultrapoulet.wifeygame.WifeyCharacter;
+import ultrapoulet.wifeygame.character.WifeyCharacter;
+import ultrapoulet.wifeygame.battle.BattleInfo;
 import ultrapoulet.wifeygame.battle.BattleScreen;
-import ultrapoulet.wifeygame.battle.Enemy;
 import ultrapoulet.wifeygame.gamestate.Party;
 import ultrapoulet.wifeygame.gamestate.RecruitedCharacters;
 
@@ -31,7 +30,7 @@ public class PartySelectScreen extends Screen {
     private WifeyCharacter[] currentParty;
     private int maxPartySize = 7;
     private int finalIndex = maxPartySize - 1;
-    private Enemy[] enemies;
+    private BattleInfo battleInfo;
 
     private Screen previousScreen;
 
@@ -142,7 +141,7 @@ public class PartySelectScreen extends Screen {
     }
 
     public void setValidCharacters(WifeyCharacter[] inputCharacters){
-        validCharacters = new ArrayList<WifeyCharacter>();
+        validCharacters = new ArrayList<>();
         for(int i = 0; i < inputCharacters.length; i++){
             //Do a check to make sure the character is valid for this battle
             validCharacters.add(inputCharacters[i]);
@@ -164,8 +163,8 @@ public class PartySelectScreen extends Screen {
         this.currentParty = inputParty;
     }
 
-    public void setEnemies(Enemy[] enemies){
-        this.enemies = enemies;
+    public void setBattleInfo(BattleInfo info){
+        this.battleInfo = info;
     }
 
     public void setPreviousScreen(Screen previousScreen){
@@ -245,7 +244,7 @@ public class PartySelectScreen extends Screen {
                         BattleScreen bs = new BattleScreen(game);
                         Party.setParty(currentParty);
                         bs.setParty(Party.getBattleParty());
-                        bs.setEnemies(enemies);
+                        bs.setBattleInfo(battleInfo);
                         bs.setBackground(Assets.testBG);
                         game.setScreen(bs);
                     }
@@ -390,7 +389,7 @@ public class PartySelectScreen extends Screen {
             if(!dragging || i != draggingRecruitIndex) {
                 g.drawPercentageImage(validCharacters.get(i).getImage(),
                         CHAR_IMAGE_OFFSET_X * (i % ROW_SIZE) + CHAR_IMAGE_BASE_LEFT_X,
-                        CHAR_IMAGE_BASE_TOP_Y + CHAR_IMAGE_BASE_LEFT_X * ((i % PER_PAGE) / COLUMN_SIZE),
+                        CHAR_IMAGE_BASE_TOP_Y + CHAR_IMAGE_OFFSET_Y * ((i % PER_PAGE) / COLUMN_SIZE),
                         HALF_SCALE, HALF_SCALE);
             }
         }

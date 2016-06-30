@@ -1,6 +1,6 @@
 package ultrapoulet.wifeygame.gamestate;
 
-import ultrapoulet.wifeygame.WifeyCharacter;
+import ultrapoulet.wifeygame.character.WifeyCharacter;
 import ultrapoulet.wifeygame.battle.BattleCharacter;
 
 /**

@@ -13,10 +13,7 @@ import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.androidgame.framework.Input.TouchEvent;
 import ultrapoulet.androidgame.framework.Screen;
 import ultrapoulet.wifeygame.Assets;
-import ultrapoulet.wifeygame.battle.enemyai.BasicMagicEnemyAI;
-import ultrapoulet.wifeygame.battle.enemyai.BasicPhysicalEnemyAI;
 import ultrapoulet.wifeygame.battle.enemyai.EnemyAI.EnemyAction;
-import ultrapoulet.wifeygame.battle.enemyai.OriginalBossAI;
 
 /**
  * Created by John on 3/5/2016.
@@ -24,7 +21,8 @@ import ultrapoulet.wifeygame.battle.enemyai.OriginalBossAI;
 public class BattleScreen extends Screen {
 
     public BattleCharacter[] party;
-    public Enemy[] enemies;
+    public BattleInfo battleInfo;
+    public BattleEnemy[] enemies;
 
     public int partyIndex = 0;
     public int enemyIndex = 0;
@@ -43,7 +41,6 @@ public class BattleScreen extends Screen {
     private Paint textPaint;
 
     private static Image charHolder;
-    private static Image pHealthG, pHealthY, pHealthR;
     private static Image[] KOImages;
 
     private static Image enemyHolder;
@@ -117,7 +114,7 @@ public class BattleScreen extends Screen {
     private int partyDamage[] = new int[7];
     private ButtonPressed commandSelected;
 
-    private static enum ButtonPressed{
+    private enum ButtonPressed{
         POWER_ATTACK,
         COMBO_ATTACK,
         MAGIC_ATTACK,
@@ -159,9 +156,6 @@ public class BattleScreen extends Screen {
         buttonMenuNormal = Assets.buttonMenuNormal;
         buttonMenuSpecial = Assets.buttonMenuSpecial;
         charHolder = Assets.charHolder;
-        pHealthG = Assets.pHealthG;
-        pHealthY = Assets.pHealthY;
-        pHealthR = Assets.pHealthR;
         enemyHolder = Assets.enemyHolder;
         specialBar = Assets.specialBar;
         specialBarBase = Assets.specialBarBase;
@@ -173,7 +167,7 @@ public class BattleScreen extends Screen {
     }
 
     public void createButtonMap(){
-        buttonMap = new HashMap<ButtonPressed, ButtonCoordinate>();
+        buttonMap = new HashMap<>();
         ButtonCoordinate temp;
 
         //POWER_ATTACK
@@ -234,7 +228,7 @@ public class BattleScreen extends Screen {
     }
 
     public void createButtonNames(){
-        buttonNames = new HashMap<ButtonPressed, String>();
+        buttonNames = new HashMap<>();
         buttonNames.put(ButtonPressed.POWER_ATTACK, "Power Attack");
         buttonNames.put(ButtonPressed.COMBO_ATTACK, "Combo Attack");
         buttonNames.put(ButtonPressed.MAGIC_ATTACK, "Magic Attack");
@@ -255,8 +249,10 @@ public class BattleScreen extends Screen {
         this.party = party;
     }
 
-    public void setEnemies(Enemy[] enemies){
-        this.enemies = enemies;
+
+    public void setBattleInfo(BattleInfo info){
+        this.battleInfo = info;
+        this.enemies = battleInfo.getBattleEnemies();
     }
 
     public void setBackground(Image background){
@@ -343,6 +339,9 @@ public class BattleScreen extends Screen {
                     phaseEntered = false;
                     for(int i = 0; i < party.length; i++){
                         party[i].battleStart();
+                    }
+                    for(int i = 0; i < enemies.length; i++){
+                        enemies[i].battleStart();
                     }
                 } else {
                     phaseTime += deltaTime;
@@ -738,11 +737,6 @@ public class BattleScreen extends Screen {
                 //If win, do stuff
                 //If loss, give other stuff, i dunno
                 if (phaseEntered) {
-                    if (isGameOver()) {
-                        System.out.println("You lost...");
-                    } else {
-                        System.out.println("You won");
-                    }
                     phaseEntered = false;
 
                     //Temporary go back to Select

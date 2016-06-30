@@ -1,5 +1,7 @@
 package ultrapoulet.androidgame.framework;
 
+import java.io.InputStream;
+
 /**
  * Created by John on 1/8/2016.
  */
@@ -18,4 +20,6 @@ public interface Game {
     public Screen getCurrentScreen();
 
     public Screen getInitScreen();
+
+    public InputStream openConfig(String filename);
 }

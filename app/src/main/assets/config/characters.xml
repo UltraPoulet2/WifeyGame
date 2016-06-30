@@ -1,0 +1,477 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<characters>
+    <character key="TEST-ANGE">
+        <name>Angelise Ikaruga Misurugi</name>
+        <strength>70</strength>
+        <magic>60</magic>
+        <weapon>MECHA</weapon>
+    </character>
+    <character key="TEST-ANGU">
+        <name>Ange Ushiromiya</name>
+        <strength>80</strength>
+        <magic>10</magic>
+        <weapon>BOOK</weapon>
+    </character>
+    <character key="TEST-ANNA">
+        <name>Anna Nishikinomiya</name>
+        <strength>120</strength>
+        <magic>10</magic>
+        <weapon>FISTS</weapon>
+    </character>
+    <character key="TEST-ASHA">
+        <name>Aisha Clanclan</name>
+        <strength>100</strength>
+        <magic>25</magic>
+        <weapon>FISTS</weapon>
+    </character>
+    <character key="TEST-CCCC">
+        <name>CC</name>
+        <strength>25</strength>
+        <magic>100</magic>
+        <weapon>MECHA</weapon>
+    </character>
+    <character key="TEST-CGLI">
+        <name>Cagali Yula Atha</name>
+        <strength>50</strength>
+        <magic>75</magic>
+        <weapon>MECHA</weapon>
+    </character>
+    <character key="TEST-CLTY">
+        <name>Celty Struluson</name>
+        <strength>40</strength>
+        <magic>90</magic>
+        <weapon>SCYTHE</weapon>
+    </character>
+    <character key="TEST-CMPA">
+        <name>Compa</name>
+        <strength>25</strength>
+        <magic>100</magic>
+        <weapon>MEDICINE</weapon>
+    </character>
+    <character key="TEST-CYAN">
+        <name>Cyan Hijirikawa</name>
+        <strength>20</strength>
+        <magic>110</magic>
+        <weapon>INSTRUMENT</weapon>
+    </character>
+    <character key="TEST-DKRO">
+        <name>Dokuro Mitsukai</name>
+        <strength>70</strength>
+        <magic>90</magic>
+        <weapon>CLUB</weapon>
+    </character>
+    <character key="TEST-DWRD">
+        <name>Edward Wong Hau Pepelu Tivursky IV</name>
+        <strength>60</strength>
+        <magic>70</magic>
+        <weapon>COMPUTER</weapon>
+    </character>
+    <character key="TEST-EEMI">
+        <name>Emi Yusa</name>
+        <strength>90</strength>
+        <magic>60</magic>
+        <weapon>SWORD</weapon>
+    </character>
+    <character key="TEST-EXCL">
+        <name>Excel</name>
+        <strength>70</strength>
+        <magic>60</magic>
+        <weapon>GUN</weapon>
+    </character>
+    <character key="TEST-GGOU">
+        <name>Gou Matsuoka</name>
+        <strength>40</strength>
+        <magic>40</magic>
+        <weapon>FISTS</weapon>
+    </character>
+    <character key="TEST-HARU">
+        <name>Haruko Haruhara</name>
+        <strength>60</strength>
+        <magic>70</magic>
+        <weapon>INSTRUMENT</weapon>
+    </character>
+    <character key="TEST-HIME">
+        <name>Hime Arikawa</name>
+        <strength>30</strength>
+        <magic>30</magic>
+        <weapon>FISTS</weapon>
+    </character>
+    <character key="TEST-HKSE">
+        <name>Hakase Shinonome</name>
+        <strength>20</strength>
+        <magic>60</magic>
+        <weapon>FOOD</weapon>
+    </character>
+    <character key="TEST-HMRA">
+        <name>Homura Akemi</name>
+        <strength>40</strength>
+        <magic>120</magic>
+        <weapon>GUN</weapon>
+    </character>
+    <character key="TEST-HMRI">
+        <name>Himari Takakura</name>
+        <strength>30</strength>
+        <magic>50</magic>
+        <weapon>ANIMAL</weapon>
+    </character>
+    <character key="TEST-HOLO">
+        <name>Holo</name>
+        <strength>70</strength>
+        <magic>60</magic>
+        <weapon>CLAW</weapon>
+    </character>
+    <character key="TEST-HRHI">
+        <name>Haruhi Fujioka</name>
+        <strength>50</strength>
+        <magic>30</magic>
+        <weapon>FISTS</weapon>
+    </character>
+    <character key="TEST-ICHK">
+        <name>Ichika Mizuhara</name>
+        <strength>70</strength>
+        <magic>30</magic>
+        <weapon>FISTS</weapon>
+    </character>
+    <character key="TEST-IROE">
+        <name>Iroe Genma</name>
+        <strength>80</strength>
+        <magic>20</magic>
+        <weapon>TOY</weapon>
+    </character>
+    <character key="TEST-KARN">
+        <name>Karen Kujou</name>
+        <strength>60</strength>
+        <magic>40</magic>
+        <weapon>FOOD</weapon>
+    </character>
+    <character key="TEST-KDOU">
+        <name>Mirei Kudou</name>
+        <strength>50</strength>
+        <magic>100</magic>
+        <weapon>MAGIC</weapon>
+    </character>
+    <character key="TEST-KOKO">
+        <name>Kouko Kaga</name>
+        <strength>40</strength>
+        <magic>40</magic>
+        <weapon>PLANT</weapon>
+    </character>
+    <character key="TEST-KRSU">
+        <name>Kurisu Makise</name>
+        <strength>40</strength>
+        <magic>50</magic>
+        <weapon>COMPUTER</weapon>
+    </character>
+    <character key="TEST-KSGA">
+        <name>Ayumu Kasuga</name>
+        <strength>20</strength>
+        <magic>20</magic>
+        <weapon>FOOD</weapon>
+    </character>
+    <character key="TEST-KTNH">
+        <name>Kotonoha Katsura</name>
+        <strength>70</strength>
+        <magic>25</magic>
+        <weapon>KNIFE</weapon>
+    </character>
+    <character key="TEST-KTRU">
+        <name>Koutarou Araki</name>
+        <strength>30</strength>
+        <magic>70</magic>
+        <weapon>MAGIC</weapon>
+    </character>
+    <character key="TEST-KTYS">
+        <name>Katyusha</name>
+        <strength>60</strength>
+        <magic>30</magic>
+        <weapon>TANK</weapon>
+    </character>
+    <character key="TEST-KYKO">
+        <name>Kyoko Kirigiri</name>
+        <strength>50</strength>
+        <magic>90</magic>
+        <weapon>FISTS</weapon>
+    </character>
+    <character key="TEST-LULU">
+        <name>Luluco</name>
+        <strength>70</strength>
+        <magic>70</magic>
+        <weapon>GUN</weapon>
+    </character>
+    <character key="TEST-MAKI">
+        <name>Natsuo Maki</name>
+        <strength>40</strength>
+        <magic>40</magic>
+        <weapon>PLUSH</weapon>
+    </character>
+    <character key="TEST-MAKO">
+        <name>Mako Mankanshoku</name>
+        <strength>60</strength>
+        <magic>20</magic>
+        <weapon>FISTS</weapon>
+    </character>
+    <character key="TEST-MARI">
+        <name>Maria Naruse</name>
+        <strength>60</strength>
+        <magic>100</magic>
+        <weapon>MAGIC</weapon>
+    </character>
+    <character key="TEST-MDKA">
+        <name>Medaka Kurokami</name>
+        <strength>200</strength>
+        <magic>20</magic>
+        <weapon>FISTS</weapon>
+    </character>
+    <character key="TEST-MDRI">
+        <name>Midori Kasugano</name>
+        <strength>30</strength>
+        <magic>50</magic>
+        <weapon>COOKING</weapon>
+    </character>
+    <character key="TEST-MEGU">
+        <name>Megumi Sakura</name>
+        <strength>40</strength>
+        <magic>70</magic>
+        <weapon>BOOK</weapon>
+    </character>
+    <character key="TEST-MIIA">
+        <name>Miia</name>
+        <strength>100</strength>
+        <magic>30</magic>
+        <weapon>TAIL</weapon>
+    </character>
+    <character key="TEST-MKRU">
+        <name>Mikuru Asahina</name>
+        <strength>40</strength>
+        <magic>70</magic>
+        <weapon>LASER</weapon>
+    </character>
+    <character key="TEST-MKSA">
+        <name>Mikasa Ackerman</name>
+        <strength>140</strength>
+        <magic>20</magic>
+        <weapon>SWORD</weapon>
+    </character>
+    <character key="TEST-MMKA">
+        <name>Momoka Sonokawa</name>
+        <strength>70</strength>
+        <magic>40</magic>
+        <weapon>AIRSOFT</weapon>
+    </character>
+    <character key="TEST-MNMA">
+        <name>Meiko Honma</name>
+        <strength>40</strength>
+        <magic>60</magic>
+        <weapon>PLANT</weapon>
+    </character>
+    <character key="TEST-MRIA">
+        <name>Miria Harvent</name>
+        <strength>60</strength>
+        <magic>30</magic>
+        <weapon>CLUB</weapon>
+    </character>
+    <character key="TEST-MSKI">
+        <name>Misaki Nakahara</name>
+        <strength>30</strength>
+        <magic>40</magic>
+        <weapon>BOOK</weapon>
+    </character>
+    <character key="TEST-MSZU">
+        <name>Misuzu Natsukawa</name>
+        <strength>60</strength>
+        <magic>30</magic>
+        <weapon>BOOK</weapon>
+    </character>
+    <character key="TEST-NIAT">
+        <name>Nia Teppelin</name>
+        <strength>60</strength>
+        <magic>80</magic>
+        <weapon>COOKING</weapon>
+    </character>
+    <character key="TEST-NNKO">
+        <name>Nanako Yamamoto</name>
+        <strength>30</strength>
+        <magic>50</magic>
+        <weapon>TOY</weapon>
+    </character>
+    <character key="TEST-NOEL">
+        <name>Noel Vermillion</name>
+        <strength>80</strength>
+        <magic>90</magic>
+        <weapon>GUN</weapon>
+    </character>
+    <character key="TEST-NYRK">
+        <name>Nyaruko</name>
+        <strength>90</strength>
+        <magic>60</magic>
+        <weapon>TOOL</weapon>
+    </character>
+    <character key="TEST-PERI">
+        <name>Peri</name>
+        <strength>90</strength>
+        <magic>20</magic>
+        <weapon>SWORD</weapon>
+    </character>
+    <character key="TEST-RAMU">
+        <name>Raimu Kawasaki</name>
+        <strength>80</strength>
+        <magic>40</magic>
+        <weapon>VEHICLE</weapon>
+    </character>
+    <character key="TEST-RENA">
+        <name>Rena Ryuuguu</name>
+        <strength>70</strength>
+        <magic>50</magic>
+        <weapon>KNIFE</weapon>
+    </character>
+    <character key="TEST-REVY">
+        <name>Revy</name>
+        <strength>100</strength>
+        <magic>20</magic>
+        <weapon>GUN</weapon>
+    </character>
+    <character key="TEST-RIKO">
+        <name>Riko Aida</name>
+        <strength>40</strength>
+        <magic>50</magic>
+        <weapon>COOKING</weapon>
+    </character>
+    <character key="TEST-RTSK">
+        <name>Ritsuko Kunihiro</name>
+        <strength>40</strength>
+        <magic>60</magic>
+        <weapon>MEDICINE</weapon>
+    </character>
+    <character key="TEST-RUKO">
+        <name>Ruuko Kominato</name>
+        <strength>30</strength>
+        <magic>70</magic>
+        <weapon>CARD</weapon>
+    </character>
+    <character key="TEST-SAKA">
+        <name>Saika Totsuka</name>
+        <strength>60</strength>
+        <magic>40</magic>
+        <weapon>SPORT</weapon>
+    </character>
+    <character key="TEST-SAYA">
+        <name>Saya Sasamiya</name>
+        <strength>80</strength>
+        <magic>90</magic>
+        <weapon>GUN</weapon>
+    </character>
+    <character key="TEST-SENY">
+        <name>Sen Yarizuri</name>
+        <strength>90</strength>
+        <magic>30</magic>
+        <weapon>FISTS</weapon>
+    </character>
+    <character key="TEST-SJGH">
+        <name>Hitagi Senjougahara</name>
+        <strength>70</strength>
+        <magic>40</magic>
+        <weapon>TOOL</weapon>
+    </character>
+    <character key="TEST-SMZU">
+        <name>Kyoko Shimizu</name>
+        <strength>40</strength>
+        <magic>40</magic>
+        <weapon>SPORT</weapon>
+    </character>
+    <character key="TEST-SNSH">
+        <name>Sonoshee McLaren</name>
+        <strength>80</strength>
+        <magic>30</magic>
+        <weapon>VEHICLE</weapon>
+    </character>
+    <character key="TEST-STPH">
+        <name>Stephanie Dola</name>
+        <strength>40</strength>
+        <magic>60</magic>
+        <weapon>CARD</weapon>
+    </character>
+    <character key="TEST-SUZU">
+        <name>Suzu Hagimura</name>
+        <strength>30</strength>
+        <magic>60</magic>
+        <weapon>FISTS</weapon>
+    </character>
+    <character key="TEST-TESA">
+        <name>Teletha Testarossa</name>
+        <strength>40</strength>
+        <magic>80</magic>
+        <weapon>MECHA</weapon>
+    </character>
+    <character key="TEST-TNRI">
+        <name>Tenri Ayukawa</name>
+        <strength>40</strength>
+        <magic>70</magic>
+        <weapon>MAGIC</weapon>
+    </character>
+    <character key="TEST-TSMK">
+        <name>Tsumiki Miniwa</name>
+        <strength>40</strength>
+        <magic>40</magic>
+        <weapon>CLAW</weapon>
+    </character>
+    <character key="TEST-TTSM">
+        <name>Tatsumaki</name>
+        <strength>40</strength>
+        <magic>130</magic>
+        <weapon>MAGIC</weapon>
+    </character>
+    <character key="TEST-WNRY">
+        <name>Winry Rockbell</name>
+        <strength>50</strength>
+        <magic>50</magic>
+        <weapon>TOOL</weapon>
+    </character>
+    <character key="TEST-YASN">
+        <name>Yassan</name>
+        <strength>40</strength>
+        <magic>50</magic>
+        <weapon>BOOK</weapon>
+    </character>
+    <character key="TEST-YKKO">
+        <name>Yukiko Amagi</name>
+        <strength>60</strength>
+        <magic>100</magic>
+        <weapon>FAN</weapon>
+    </character>
+    <character key="TEST-YNDR">
+        <name>Yandere-chan</name>
+        <strength>70</strength>
+        <magic>60</magic>
+        <weapon>KNIFE</weapon>
+    </character>
+    <character key="TEST-YRKA">
+        <name>Yurika Misumaru</name>
+        <strength>40</strength>
+        <magic>40</magic>
+        <weapon>FISTS</weapon>
+    </character>
+    <character key="TEST-YSHI">
+        <name>Yoshino</name>
+        <strength>50</strength>
+        <magic>80</magic>
+        <weapon>MAGIC</weapon>
+    </character>
+    <character key="TEST-YUNA">
+        <name>Yuuna Yuuki</name>
+        <strength>80</strength>
+        <magic>70</magic>
+        <weapon>FISTS</weapon>
+    </character>
+    <character key="TEST-YUNO">
+        <name>Yuno Gasai</name>
+        <strength>70</strength>
+        <magic>70</magic>
+        <weapon>KNIFE</weapon>
+    </character>
+    <character key="TEST-YURA">
+        <name>Yura Yamato</name>
+        <strength>40</strength>
+        <magic>40</magic>
+        <weapon>AIRSOFT</weapon>
+    </character>
+</characters>
