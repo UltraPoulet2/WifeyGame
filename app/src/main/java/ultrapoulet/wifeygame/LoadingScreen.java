@@ -181,14 +181,6 @@ public class LoadingScreen extends Screen {
                 }
             }
         }
-        /*
-        BattleInfo testBattle = new BattleInfo();
-        testBattle.setName("Test Battle");
-        testBattle.addEnemy(Enemies.get("TEST-NME1"));
-        testBattle.addEnemy(Enemies.get("TEST-NME2"));
-        testBattle.addEnemy(Enemies.get("TEST-NME3"));
-        Battles.put("TEST-BATL", testBattle);
-        */
     }
 
     @Override

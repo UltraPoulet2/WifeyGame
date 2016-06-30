@@ -30,7 +30,6 @@ public class PartySelectScreen extends Screen {
     private WifeyCharacter[] currentParty;
     private int maxPartySize = 7;
     private int finalIndex = maxPartySize - 1;
-    //private BattleEnemy[] enemies;
     private BattleInfo battleInfo;
 
     private Screen previousScreen;
@@ -142,7 +141,7 @@ public class PartySelectScreen extends Screen {
     }
 
     public void setValidCharacters(WifeyCharacter[] inputCharacters){
-        validCharacters = new ArrayList<WifeyCharacter>();
+        validCharacters = new ArrayList<>();
         for(int i = 0; i < inputCharacters.length; i++){
             //Do a check to make sure the character is valid for this battle
             validCharacters.add(inputCharacters[i]);
@@ -163,10 +162,6 @@ public class PartySelectScreen extends Screen {
         //Maybe do validation here too
         this.currentParty = inputParty;
     }
-
-    /*public void setEnemies(BattleEnemy[] enemies){
-        this.enemies = enemies;
-    }*/
 
     public void setBattleInfo(BattleInfo info){
         this.battleInfo = info;

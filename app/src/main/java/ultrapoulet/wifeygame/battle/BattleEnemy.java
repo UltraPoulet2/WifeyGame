@@ -92,7 +92,7 @@ public class BattleEnemy {
         this.image = image;
         this.ai = ai;
 
-        actionStrings = new HashMap<EnemyAction, String>();
+        actionStrings = new HashMap<>();
         actionStrings.put(EnemyAction.POWER_ATTACK, "Power Attack");
         actionStrings.put(EnemyAction.COMBO_ATTACK, "Combo Attack");
         actionStrings.put(EnemyAction.MAGIC_ATTACK, "Magic Attack");

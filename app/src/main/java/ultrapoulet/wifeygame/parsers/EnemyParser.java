@@ -6,9 +6,6 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Graphics.ImageFormat;
-import ultrapoulet.androidgame.framework.Image;
-import ultrapoulet.wifeygame.battle.BattleEnemy;
-import ultrapoulet.wifeygame.battle.enemyai.EnemyAI;
 import ultrapoulet.wifeygame.character.EnemyCharacter;
 import ultrapoulet.wifeygame.gamestate.Enemies;
 

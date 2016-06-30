@@ -79,8 +79,6 @@ public class CharacterParser extends DefaultHandler{
                            String qName) throws SAXException {
         if (qName.equalsIgnoreCase("character")) {
             if(validate()) {
-                //charBuilder = new WifeyCharacter(charKey, charName, charStrength, charMagic, charImage);
-                //This will change
                 RecruitedCharacters.put(charKey, charBuilder);
                 System.out.println("CharacterParser:endElement(): Adding character: " + charKey);
             }

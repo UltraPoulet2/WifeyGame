@@ -4,22 +4,18 @@ import android.graphics.Color;
 import android.graphics.Paint;
 
 import java.util.List;
-import java.util.Map;
 
 import ultrapoulet.androidgame.framework.Game;
 import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Input.TouchEvent;
 import ultrapoulet.androidgame.framework.Screen;
 import ultrapoulet.wifeygame.PartySelectScreen;
-import ultrapoulet.wifeygame.character.WifeyCharacter;
 import ultrapoulet.wifeygame.gamestate.Battles;
 
 /**
  * Created by John on 4/26/2016.
  */
 public class BattleSelectScreen extends Screen {
-
-    private Map<String, WifeyCharacter> recruitedCharacters;
 
     public BattleSelectScreen(Game game){
         super(game);

@@ -41,7 +41,6 @@ public class BattleScreen extends Screen {
     private Paint textPaint;
 
     private static Image charHolder;
-    private static Image pHealthG, pHealthY, pHealthR;
     private static Image[] KOImages;
 
     private static Image enemyHolder;
@@ -115,7 +114,7 @@ public class BattleScreen extends Screen {
     private int partyDamage[] = new int[7];
     private ButtonPressed commandSelected;
 
-    private static enum ButtonPressed{
+    private enum ButtonPressed{
         POWER_ATTACK,
         COMBO_ATTACK,
         MAGIC_ATTACK,
@@ -157,9 +156,6 @@ public class BattleScreen extends Screen {
         buttonMenuNormal = Assets.buttonMenuNormal;
         buttonMenuSpecial = Assets.buttonMenuSpecial;
         charHolder = Assets.charHolder;
-        pHealthG = Assets.pHealthG;
-        pHealthY = Assets.pHealthY;
-        pHealthR = Assets.pHealthR;
         enemyHolder = Assets.enemyHolder;
         specialBar = Assets.specialBar;
         specialBarBase = Assets.specialBarBase;
@@ -171,7 +167,7 @@ public class BattleScreen extends Screen {
     }
 
     public void createButtonMap(){
-        buttonMap = new HashMap<ButtonPressed, ButtonCoordinate>();
+        buttonMap = new HashMap<>();
         ButtonCoordinate temp;
 
         //POWER_ATTACK
@@ -232,7 +228,7 @@ public class BattleScreen extends Screen {
     }
 
     public void createButtonNames(){
-        buttonNames = new HashMap<ButtonPressed, String>();
+        buttonNames = new HashMap<>();
         buttonNames.put(ButtonPressed.POWER_ATTACK, "Power Attack");
         buttonNames.put(ButtonPressed.COMBO_ATTACK, "Combo Attack");
         buttonNames.put(ButtonPressed.MAGIC_ATTACK, "Magic Attack");
@@ -741,11 +737,6 @@ public class BattleScreen extends Screen {
                 //If win, do stuff
                 //If loss, give other stuff, i dunno
                 if (phaseEntered) {
-                    if (isGameOver()) {
-                        System.out.println("You lost...");
-                    } else {
-                        System.out.println("You won");
-                    }
                     phaseEntered = false;
 
                     //Temporary go back to Select
