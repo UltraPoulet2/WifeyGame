@@ -32,7 +32,7 @@ public class BattleScreen extends Screen {
     private static final int MAX_HITS = SPECIAL_HITS * 5;
 
     private double enemyMultiplier = 1.00;
-    private final double roundMultiplier = 1.02;
+    private final double roundMultiplier = 1.025;
 
     private static Image background, buttonMenuNormal, buttonMenuSpecial;
 
