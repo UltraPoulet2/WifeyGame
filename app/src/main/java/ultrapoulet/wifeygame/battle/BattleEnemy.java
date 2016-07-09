@@ -40,9 +40,6 @@ public class BattleEnemy {
 
     private Image image;
 
-    private double totalRoundMultiplier = 1.00;
-    private static final double roundMultiplier = 1.05;
-
     private int defendTurns = 0;
     private int weakenTurns = 0;
     private int powerUpTurns = 0;
@@ -167,7 +164,7 @@ public class BattleEnemy {
         if(powerDownActive){
             baseDamage = (int) (baseDamage * powerDownPercentage);
         }
-        return (int) (baseDamage * totalRoundMultiplier);
+        return baseDamage;
     }
 
     public int ComboAttackDamage(){
@@ -179,7 +176,7 @@ public class BattleEnemy {
         if(powerDownActive){
             baseDamage = (int) (baseDamage * powerDownPercentage);
         }
-        return (int) (baseDamage * totalRoundMultiplier);
+        return baseDamage;
     }
 
     public int MagicAttackDamage(){
@@ -191,13 +188,13 @@ public class BattleEnemy {
         if(powerDownActive){
             baseDamage = (int) (baseDamage * powerDownPercentage);
         }
-        return (int) (baseDamage * totalRoundMultiplier);
+        return baseDamage;
     }
 
     public int HealAmount(){
         //Returns the amount that will be healed
         int baseHeal = this.healAmount + (int) ((this.healAmount / 10) * Math.random());
-        return (int) (baseHeal * totalRoundMultiplier);
+        return baseHeal;
     }
 
     public int SpecialAttackDamage(){
@@ -209,7 +206,7 @@ public class BattleEnemy {
         if(powerDownActive){
             baseDamage = (int) (baseDamage * powerDownPercentage);
         }
-        return (int) (baseDamage * totalRoundMultiplier);
+        return baseDamage;
     }
 
     public int takePhysicalDamage(int damage){
@@ -307,7 +304,7 @@ public class BattleEnemy {
     }
 
     public void endRound(){
-        totalRoundMultiplier *= roundMultiplier;
+        //totalRoundMultiplier *= roundMultiplier;
 
         if(powerUpActive){
             powerUpTurns++;

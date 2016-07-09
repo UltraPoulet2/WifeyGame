@@ -31,6 +31,9 @@ public class BattleScreen extends Screen {
     private static final int SPECIAL_HITS = 60;
     private static final int MAX_HITS = SPECIAL_HITS * 5;
 
+    private double enemyMultiplier = 1.00;
+    private final double roundMultiplier = 1.02;
+
     private static Image background, buttonMenuNormal, buttonMenuSpecial;
 
     private static Image specialBar, specialBarBase, specialBarTop;
@@ -573,7 +576,7 @@ public class BattleScreen extends Screen {
                     switch(action){
                         case POWER_ATTACK:
                             charIndex = chooseRandomChar();
-                            baseDamage = enemies[enemyIndex].PowerAttackDamage();
+                            baseDamage = (int) (enemies[enemyIndex].PowerAttackDamage() * enemyMultiplier);
                             displayDamage = party[charIndex].takePhysicalDamage(baseDamage);
                             for(int i = 0; i < party.length; i++){
                                 if(i != charIndex){
@@ -587,7 +590,7 @@ public class BattleScreen extends Screen {
                             break;
                         case COMBO_ATTACK:
                             charIndex = chooseRandomChar();
-                            baseDamage = enemies[enemyIndex].ComboAttackDamage();
+                            baseDamage = (int) (enemies[enemyIndex].ComboAttackDamage() * enemyMultiplier);
                             displayDamage = party[charIndex].takePhysicalDamage(baseDamage);
                             for(int i = 0; i < party.length; i++){
                                 if(i != charIndex){
@@ -602,7 +605,7 @@ public class BattleScreen extends Screen {
                         case MAGIC_ATTACK:
                             for(int i = 0; i < party.length; i++){
                                 if(party[i].getCurrentHP() > 0){
-                                    baseDamage = enemies[enemyIndex].MagicAttackDamage();
+                                    baseDamage = (int) (enemies[enemyIndex].MagicAttackDamage() * enemyMultiplier);
                                     partyDamage[i] = party[i].takeMagicalDamage(baseDamage);
                                 }
                                 else{
@@ -612,7 +615,7 @@ public class BattleScreen extends Screen {
                             hitsPerformed++;
                             break;
                         case HEALING_MAGIC:
-                            baseDamage = enemies[enemyIndex].HealAmount();
+                            baseDamage = (int) (enemies[enemyIndex].HealAmount() * enemyMultiplier);
                             enemyDamage = baseDamage;
                             enemies[enemyIndex].healDamage(enemyDamage);
                             hitsPerformed++;
@@ -620,7 +623,7 @@ public class BattleScreen extends Screen {
                         case SPECIAL_ATTACK:
                             for(int i = 0; i < party.length; i++){
                                 if(party[i].getCurrentHP() > 0){
-                                    baseDamage = enemies[enemyIndex].SpecialAttackDamage();
+                                    baseDamage = (int) (enemies[enemyIndex].SpecialAttackDamage() * enemyMultiplier);
                                     partyDamage[i] = party[i].takeSpecialDamage(baseDamage);
                                 }
                                 else{
@@ -700,6 +703,7 @@ public class BattleScreen extends Screen {
                     phaseTime = 0;
                     phaseEntered = false;
                     enemies[enemyIndex].endRound();
+                    enemyMultiplier = enemyMultiplier * roundMultiplier;
                 } else {
                     phaseTime += deltaTime;
                     if (phaseTime >= WAIT_PHASE_WAIT) {
