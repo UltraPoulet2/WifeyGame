@@ -11,16 +11,20 @@ import ultrapoulet.wifeygame.battle.BattleEnemy;
 public class SkillList {
 
     private ArrayList<AbsSkill> skills;
-    private BattleCharacter owner;
 
-    public SkillList(BattleCharacter owner){
-        this.owner = owner;
+    public SkillList(){
         skills = new ArrayList<>();
     }
 
     public void addSkill(AbsSkill newSkill){
         if(newSkill != null && !isDuplicate(newSkill)){
             skills.add(newSkill);
+        }
+    }
+
+    public void setOwner(BattleCharacter owner){
+        for(int i = 0; i < skills.size(); i++){
+            skills.get(i).setOwner(owner);
         }
     }
 
@@ -179,5 +183,12 @@ public class SkillList {
             }
         }
         return false;
+    }
+
+    public void endBattle(){
+        //We remove the owner of the skill to free memory
+        for(int i = 0; i < skills.size(); i++){
+            skills.get(i).endBattle();
+        }
     }
 }

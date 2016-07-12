@@ -13,9 +13,7 @@ public class AbsSkill {
     private String skillName;
     private String description;
 
-    public AbsSkill(BattleCharacter owner){
-        this.owner = owner;
-    }
+    public void setOwner(BattleCharacter owner){ this.owner = owner; }
 
     public String getSkillName(){
         return skillName;
@@ -108,6 +106,11 @@ public class AbsSkill {
 
     public void onDamageReceived(int damage){
         //Do things when damage is received
+    }
+
+    //Remove the skill owner at end of battle to garbage collect
+    public void endBattle(){
+        this.owner = null;
     }
 
 }

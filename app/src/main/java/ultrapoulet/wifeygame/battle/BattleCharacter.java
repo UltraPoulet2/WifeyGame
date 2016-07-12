@@ -2,6 +2,7 @@ package ultrapoulet.wifeygame.battle;
 
 import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.wifeygame.character.Weapon;
+import ultrapoulet.wifeygame.skills.SkillList;
 
 /**
  * Created by John on 3/5/2016.
@@ -13,7 +14,7 @@ public class BattleCharacter {
     private int currentHP;
     private int numHits;
     private Weapon weapon;
-    //private Skills[] skills;
+    private SkillList skills;
     private int strength;
     private int magic;
 
@@ -23,7 +24,7 @@ public class BattleCharacter {
 
     //Section for skill flags
 
-    public BattleCharacter(String name, Weapon weapon, int strength, int magic, Image image){
+    public BattleCharacter(String name, Weapon weapon, int strength, int magic, Image image, SkillList skills){
         this.name = name;
         this.maxHP = calculateHP(strength);
         this.currentHP = this.maxHP;
@@ -32,6 +33,8 @@ public class BattleCharacter {
         this.strength = strength;
         this.magic = magic;
         this.image = image;
+        this.skills = skills;
+        skills.setOwner(this);
     }
 
     public static int calculateHP(int strength){
@@ -86,19 +89,25 @@ public class BattleCharacter {
     public int PowerAttackDamage(){
         int baseDamage = this.strength * 5;
         //Do checks on skills to determine bonus damage
+        //int modDamage = (int) (baseDamage * skills.physicalDamagePercentage(enemy));
         int modDamage = baseDamage + (int) ((baseDamage / 10) * Math.random());
         return modDamage;
     }
 
     public int ComboAttackDamage(){
         int powerDamage = PowerAttackDamage();
-        int divider = (90 - 4*(numHits - 2)) / numHits;
+        int totalHits = this.numHits + this.skills.getBonusHits();
+        if(totalHits > 10){
+            totalHits =  10;
+        }
+        int divider = (90 - 4*(totalHits - 2)) / totalHits;
         return (powerDamage * divider) / 100;
     }
 
     public int MagicAttackDamage(){
         int baseDamage = this.magic * 5;
         //Do checks on skills to determine bonus damage
+        //int modDamage = (int) (baseDamage * skills.magicalDamagePercentage(enemy));
         int modDamage = baseDamage + (int) ((baseDamage / 10) * Math.random());
         return modDamage;
     }
@@ -106,6 +115,7 @@ public class BattleCharacter {
     public int HealAmount(){
         int baseHeal = this.magic * 2;
         //Do checks on skills to determine bonus healing
+        //int modHeal = (int) (baseHeal * skills.healPercentage(member);
         int modHeal = baseHeal + (int) ((baseHeal / 10) * Math.random());
         return baseHeal;
     }
@@ -113,6 +123,7 @@ public class BattleCharacter {
     public int SpecialDamage(){
         int baseDamage = this.strength * 4 + this.magic * 4;
         //Do checks on skills to determine bonus damage
+        //int modDamage = (int) (baseDamage * skills.specialDamagePercentage(enemy));
         int modDamage = baseDamage + (int) ((baseDamage / 10) * Math.random());
         return modDamage;
 
@@ -126,6 +137,8 @@ public class BattleCharacter {
         //Check skills for anything to reduce damage taken
         int displayDamage = damage;
         if(this.isDefending){ displayDamage = displayDamage/2; }
+        //displayDamage = (int) (displayDamage * skills.receivePhysicalAttackPercentage(enemy));
+        //skills.onDamageReceived(displayDamage);
         this.currentHP = this.currentHP - displayDamage;
         if(this.currentHP <= 0){
             this.currentHP = 0;
@@ -138,6 +151,8 @@ public class BattleCharacter {
         //Check skills for anything to reduce damage taken
         int displayDamage = damage;
         if(this.isDefending){ displayDamage = displayDamage/2; }
+        //displayDamage = (int) (displayDamage * skills.receiveMagicalAttackPercentage(enemy));
+        //skills.onDamageReceived(displayDamage);
         this.currentHP = this.currentHP - displayDamage;
         if(this.currentHP <= 0){
             this.currentHP = 0;
@@ -150,6 +165,8 @@ public class BattleCharacter {
         //Check skills for anything to reduce damage taken
         int displayDamage = damage;
         if(this.isDefending){ displayDamage = displayDamage/2; }
+        //displayDamage = (int) (displayDamage * skills.receiveSpecialAttackPercentage(enemy));
+        //skills.onDamageReceived(displayDamage);
         this.currentHP = this.currentHP - displayDamage;
         if(this.currentHP <= 0){
             this.currentHP = 0;
@@ -162,6 +179,7 @@ public class BattleCharacter {
         //Check skills for anything to increase healing
         int displayHeal = heal;
         this.currentHP = this.currentHP + displayHeal;
+        //displayHeal = (int) (displayHeal * skills.receiveHealPercentage(healer);
         if(this.currentHP > this.maxHP){
             displayHeal = displayHeal - (this.currentHP - this.maxHP);
             this.currentHP = this.maxHP;
