@@ -45,6 +45,12 @@ public class AbsSkill {
         return 0.0;
     }
 
+    public int getBonusHits(){
+        //If the skill increases the number of combo hits, return it
+        //These will be capped to 10 at most
+        return 0;
+    }
+
     public double magicalAttackPercentage(BattleEnemy enemy){
         //The amount to increase magical damage.
         //Some skills might need to see the state of the BattleEnemy, so it is included
