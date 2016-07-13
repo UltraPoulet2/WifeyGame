@@ -10,7 +10,7 @@ import ultrapoulet.wifeygame.battle.enemyai.EnemyAI.EnemyAction;
 /**
  * Created by John on 3/5/2016.
  */
-public class BattleEnemy {
+public class BattleEnemy implements BattleCharacter{
 
     private static final int POWERUPTURNS = 3;
     private static final int POWERDOWNTURNS = 3;

@@ -1,7 +1,7 @@
 package ultrapoulet.wifeygame.character;
 
 import ultrapoulet.androidgame.framework.Image;
-import ultrapoulet.wifeygame.battle.BattleCharacter;
+import ultrapoulet.wifeygame.battle.BattleWifey;
 import ultrapoulet.wifeygame.skills.AbsSkill;
 import ultrapoulet.wifeygame.skills.SkillList;
 
@@ -27,8 +27,8 @@ public class WifeyCharacter {
         skills = new SkillList();
     }
 
-    public BattleCharacter getBattleCharacter(){
-        return new BattleCharacter(name, weapon, strength, magic, image, skills);
+    public BattleWifey getBattleCharacter(){
+        return new BattleWifey(name, weapon, strength, magic, image, skills);
     }
 
     public String getName(){
@@ -44,7 +44,7 @@ public class WifeyCharacter {
     }
 
     public int getHP(){
-        return BattleCharacter.calculateHP(this.strength);
+        return BattleWifey.calculateHP(this.strength);
     }
 
     public int getStrength(){

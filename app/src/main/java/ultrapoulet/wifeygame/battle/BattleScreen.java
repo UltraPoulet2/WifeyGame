@@ -20,7 +20,7 @@ import ultrapoulet.wifeygame.battle.enemyai.EnemyAI.EnemyAction;
  */
 public class BattleScreen extends Screen {
 
-    public BattleCharacter[] party;
+    public BattleWifey[] party;
     public BattleInfo battleInfo;
     public BattleEnemy[] enemies;
 
@@ -248,7 +248,7 @@ public class BattleScreen extends Screen {
         textPaint.setTextSize(50);
     }
 
-    public void setParty(BattleCharacter[] party){
+    public void setParty(BattleWifey[] party){
         this.party = party;
     }
 
@@ -484,7 +484,7 @@ public class BattleScreen extends Screen {
                             }
                             break;
                         case SPECIAL_ATTACK:
-                            baseDamage = party[partyIndex].SpecialDamage();
+                            baseDamage = party[partyIndex].SpecialAttackDamage();
                             displayDamage = enemies[enemyIndex].takeSpecialDamage(baseDamage);
                             enemyDamage = displayDamage;
                             incrementHits();

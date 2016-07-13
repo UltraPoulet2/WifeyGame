@@ -1,7 +1,6 @@
 package ultrapoulet.wifeygame.skills;
 
 import ultrapoulet.wifeygame.battle.BattleCharacter;
-import ultrapoulet.wifeygame.battle.BattleEnemy;
 
 /**
  * Created by John on 7/10/2016.
@@ -35,7 +34,7 @@ public class AbsSkill {
         //Do anything that needs to be done at the start of a round
     }
 
-    public double physicalAttackPercentage(BattleEnemy enemy){
+    public double physicalAttackPercentage(BattleCharacter enemy){
         //The amount to increase physical damage.
         //Some skill might need to see the state of the BattleEnemy, so it is included
         //Returned multiplier is additive. It will start at 1.0, and add/subtract values from
@@ -49,7 +48,7 @@ public class AbsSkill {
         return 0;
     }
 
-    public double magicalAttackPercentage(BattleEnemy enemy){
+    public double magicalAttackPercentage(BattleCharacter enemy){
         //The amount to increase magical damage.
         //Some skills might need to see the state of the BattleEnemy, so it is included
         //Returned multiplier is additive. It will start at 1.0, and add/subtract values
@@ -57,7 +56,7 @@ public class AbsSkill {
         return 0.0;
     }
 
-    public double specialAttackPercentage(BattleEnemy enemy){
+    public double specialAttackPercentage(BattleCharacter enemy){
         //The amount to increase special damage.
         //Some skills might need to see the state of the BattleEnemy, so it is included
         //Returned multiplier is additive. It will start at 1.0, and add/subtract values
@@ -71,19 +70,19 @@ public class AbsSkill {
         return 0.0;
     }
 
-    public double receivePhysicalAttackPercentage(BattleEnemy enemy){
+    public double receivePhysicalAttackPercentage(BattleCharacter enemy){
         //The amount to decrease physical damage.
         //This will be capped, so as not to hit 0 or below
         return 0.0;
     }
 
-    public double receiveMagicalAttackPercentage(BattleEnemy enemy){
+    public double receiveMagicalAttackPercentage(BattleCharacter enemy){
         //The amount to decrease magical damage.
         //This will be capped, so as not to hit 0 or below
         return 0.0;
     }
 
-    public double receiveSpecialAttackPercentage(BattleEnemy enemy){
+    public double receiveSpecialAttackPercentage(BattleCharacter enemy){
         //The amount to decrease special damage.
         //This will be capped, so as not to hit 0 or below
         return 0.0;
@@ -100,7 +99,7 @@ public class AbsSkill {
         //Examples: Heal, increase counter, etc
     }
 
-    public void onEnemyDefeat(BattleEnemy enemy){
+    public void onEnemyDefeat(BattleCharacter enemy){
         //Do things for when an enemy is defeated
     }
 

@@ -1,7 +1,7 @@
 package ultrapoulet.wifeygame.gamestate;
 
 import ultrapoulet.wifeygame.character.WifeyCharacter;
-import ultrapoulet.wifeygame.battle.BattleCharacter;
+import ultrapoulet.wifeygame.battle.BattleWifey;
 
 /**
  * Created by John on 5/13/2016.
@@ -73,8 +73,8 @@ public class Party {
         return size;
     }
 
-    public static BattleCharacter[] getBattleParty(){
-        BattleCharacter[] battleParty = new BattleCharacter[partySize()];
+    public static BattleWifey[] getBattleParty(){
+        BattleWifey[] battleParty = new BattleWifey[partySize()];
         for(int i = 0; i < battleParty.length; i++){
             battleParty[i] = party[i].getBattleCharacter();
         }
