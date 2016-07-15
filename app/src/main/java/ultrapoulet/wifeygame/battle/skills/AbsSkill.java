@@ -1,4 +1,4 @@
-package ultrapoulet.wifeygame.skills;
+package ultrapoulet.wifeygame.battle.skills;
 
 import ultrapoulet.wifeygame.battle.BattleCharacter;
 
@@ -11,6 +11,8 @@ public class AbsSkill {
     private BattleCharacter owner;
     private String skillName;
     private String description;
+
+    public AbsSkill(BattleCharacter owner){ this.owner = owner; }
 
     public void setOwner(BattleCharacter owner){ this.owner = owner; }
 

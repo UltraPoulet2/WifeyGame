@@ -1,8 +1,11 @@
 package ultrapoulet.wifeygame.battle;
 
+import java.util.ArrayList;
+
 import ultrapoulet.androidgame.framework.Image;
+import ultrapoulet.wifeygame.character.SkillsEnum;
 import ultrapoulet.wifeygame.character.Weapon;
-import ultrapoulet.wifeygame.skills.SkillList;
+import ultrapoulet.wifeygame.battle.skills.SkillList;
 
 /**
  * Created by John on 3/5/2016.
@@ -24,7 +27,7 @@ public class BattleWifey implements BattleCharacter{
 
     //Section for skill flags
 
-    public BattleWifey(String name, Weapon weapon, int strength, int magic, Image image, SkillList skills){
+    public BattleWifey(String name, Weapon weapon, int strength, int magic, Image image, ArrayList<SkillsEnum> skills){
         this.name = name;
         this.maxHP = calculateHP(strength);
         this.currentHP = this.maxHP;
@@ -33,8 +36,7 @@ public class BattleWifey implements BattleCharacter{
         this.strength = strength;
         this.magic = magic;
         this.image = image;
-        this.skills = skills;
-        skills.setOwner(this);
+        this.skills = new SkillList(skills, this);
     }
 
     public static int calculateHP(int strength){

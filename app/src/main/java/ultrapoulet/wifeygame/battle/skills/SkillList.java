@@ -1,8 +1,9 @@
-package ultrapoulet.wifeygame.skills;
+package ultrapoulet.wifeygame.battle.skills;
 
 import java.util.ArrayList;
 
 import ultrapoulet.wifeygame.battle.BattleCharacter;
+import ultrapoulet.wifeygame.character.SkillsEnum;
 
 /**
  * Created by John on 7/11/2016.
@@ -11,8 +12,11 @@ public class SkillList {
 
     private ArrayList<AbsSkill> skills;
 
-    public SkillList(){
+    public SkillList(ArrayList<SkillsEnum> inSkills, BattleCharacter owner){
         skills = new ArrayList<>();
+        for(int i = 0; i < inSkills.size(); i++){
+            addSkill(inSkills.get(i).getBattleSkill(owner));
+        }
     }
 
     public void addSkill(AbsSkill newSkill){

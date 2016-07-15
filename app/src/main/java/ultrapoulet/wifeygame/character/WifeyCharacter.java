@@ -1,9 +1,11 @@
 package ultrapoulet.wifeygame.character;
 
+import java.util.ArrayList;
+
 import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.wifeygame.battle.BattleWifey;
-import ultrapoulet.wifeygame.skills.AbsSkill;
-import ultrapoulet.wifeygame.skills.SkillList;
+import ultrapoulet.wifeygame.battle.skills.AbsSkill;
+import ultrapoulet.wifeygame.battle.skills.SkillList;
 
 /**
  * Created by John on 5/5/2016.
@@ -14,7 +16,8 @@ public class WifeyCharacter {
     private String hashKey;
     private int strength;
     private int magic;
-    private SkillList skills;
+    //private SkillList skills;
+    private ArrayList<SkillsEnum> skills;
 
     private int experience;
     private int level;
@@ -24,7 +27,7 @@ public class WifeyCharacter {
     private Image image;
 
     public WifeyCharacter(){
-        skills = new SkillList();
+        skills = new ArrayList<>();
     }
 
     public BattleWifey getBattleCharacter(){
@@ -57,7 +60,7 @@ public class WifeyCharacter {
 
     public Weapon getWeapon() { return this.weapon; }
 
-    public SkillList getSkills() { return this.skills; }
+    public ArrayList<SkillsEnum> getSkills() { return this.skills; }
 
     public void setHashKey(String hashKey){
         this.hashKey = hashKey;
@@ -81,7 +84,7 @@ public class WifeyCharacter {
 
     public void setWeapon(Weapon weapon) { this.weapon = weapon; }
 
-    public void addSkill(AbsSkill skill){ this.skills.addSkill(skill);}
+    public void addSkill(SkillsEnum skill){ this.skills.add(skill);}
 
     public int compareName(WifeyCharacter other){
         int result = this.getName().compareTo(other.getName());

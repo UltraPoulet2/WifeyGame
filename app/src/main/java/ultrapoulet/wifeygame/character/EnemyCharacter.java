@@ -1,5 +1,7 @@
 package ultrapoulet.wifeygame.character;
 
+import java.util.ArrayList;
+
 import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.wifeygame.battle.BattleEnemy;
 import ultrapoulet.wifeygame.battle.enemyai.EnemyAI;
@@ -23,6 +25,8 @@ public class EnemyCharacter {
     private double weakenPercentage;
     private int specialDamage;
     private int specialHits;
+
+    private ArrayList<SkillsEnum> skills;
 
     private int gold;
     private int experience;
@@ -88,6 +92,8 @@ public class EnemyCharacter {
         return this.specialHits;
     }
 
+    public ArrayList<SkillsEnum> getSkills(){ return this.skills; }
+
     public Image getImage() {
         return this.image;
     }
@@ -123,6 +129,8 @@ public class EnemyCharacter {
     public void setHealAmount(int healAmount){
         this.healAmount = healAmount;
     }
+
+    public void addSkill(SkillsEnum skill){ this.skills.add(skill); }
 
     public void setPowerUpPercentage(double powerUpPercentage){
         this.powerUpPercentage = powerUpPercentage;
@@ -176,6 +184,7 @@ public class EnemyCharacter {
                 specialHits,
                 image,
                 EnemyAI.getAI(ai));
+        //Add skills argument later
     }
 
     public boolean validate(){

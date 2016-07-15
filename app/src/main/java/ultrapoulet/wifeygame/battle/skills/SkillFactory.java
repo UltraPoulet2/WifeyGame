@@ -1,4 +1,4 @@
-package ultrapoulet.wifeygame.skills;
+package ultrapoulet.wifeygame.battle.skills;
 
 /**
  * Created by John on 7/12/2016.
