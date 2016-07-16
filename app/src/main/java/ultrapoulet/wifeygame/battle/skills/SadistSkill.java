@@ -7,7 +7,7 @@ import ultrapoulet.wifeygame.battle.BattleCharacter;
  */
 public class SadistSkill extends AbsSkill {
 
-    private final double hitMultiplier = 0.01;
+    private final double hitMultiplier = 0.05;
     private int numHits = 0;
 
     public SadistSkill(BattleCharacter owner){ super(owner); }

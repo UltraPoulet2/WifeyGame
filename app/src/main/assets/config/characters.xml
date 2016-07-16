@@ -257,6 +257,9 @@
         <strength>70</strength>
         <magic>40</magic>
         <weapon>AIRSOFT</weapon>
+        <skills>
+            <skill>SADIST</skill>
+        </skills>
     </character>
     <character key="TEST-MNMA">
         <name>Meiko Honma</name>

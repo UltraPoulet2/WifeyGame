@@ -209,6 +209,10 @@ public class BattleEnemy implements BattleCharacter{
         return baseDamage;
     }
 
+    public void onDamageDealt(int damage){}
+
+    public void onEnemyDefeat(BattleCharacter enemy){}
+
     public int takePhysicalDamage(int damage){
         //Damage modifiers
         int displayDamage = damage;

@@ -88,16 +88,23 @@ public class BattleWifey implements BattleCharacter{
         this.isDefending = false;
     }
 
-    public int PowerAttackDamage(){
+    //Temp functions
+    public int PowerAttackDamage(){return 0;}
+    public int ComboAttackDamage(){return 0;}
+    public int MagicAttackDamage(){return 0;}
+    public int SpecialAttackDamage(){return 0;}
+
+    public int PowerAttackDamage(BattleCharacter enemy){
         int baseDamage = this.strength * 5;
         //Do checks on skills to determine bonus damage
-        //int modDamage = (int) (baseDamage * skills.physicalDamagePercentage(enemy));
-        int modDamage = baseDamage + (int) ((baseDamage / 10) * Math.random());
+        int modDamage = (int) (baseDamage * skills.physicalAttackPercentage(enemy));
+        System.out.println("Increasing damage by: " + skills.physicalAttackPercentage(enemy));
+        modDamage = modDamage + (int) ((modDamage / 10) * Math.random());
         return modDamage;
     }
 
-    public int ComboAttackDamage(){
-        int powerDamage = PowerAttackDamage();
+    public int ComboAttackDamage(BattleCharacter enemy){
+        int powerDamage = PowerAttackDamage(enemy);
         int totalHits = this.numHits + this.skills.getBonusHits();
         if(totalHits > 10){
             totalHits =  10;
@@ -106,11 +113,11 @@ public class BattleWifey implements BattleCharacter{
         return (powerDamage * divider) / 100;
     }
 
-    public int MagicAttackDamage(){
+    public int MagicAttackDamage(BattleCharacter enemy){
         int baseDamage = this.magic * 5;
         //Do checks on skills to determine bonus damage
-        //int modDamage = (int) (baseDamage * skills.magicalDamagePercentage(enemy));
-        int modDamage = baseDamage + (int) ((baseDamage / 10) * Math.random());
+        int modDamage = (int) (baseDamage * skills.magicalAttackPercentage(enemy));
+        modDamage = modDamage + (int) ((modDamage / 10) * Math.random());
         return modDamage;
     }
 
@@ -122,13 +129,21 @@ public class BattleWifey implements BattleCharacter{
         return baseHeal;
     }
 
-    public int SpecialAttackDamage(){
+    public int SpecialAttackDamage(BattleCharacter enemy){
         int baseDamage = this.strength * 4 + this.magic * 4;
         //Do checks on skills to determine bonus damage
-        //int modDamage = (int) (baseDamage * skills.specialDamagePercentage(enemy));
-        int modDamage = baseDamage + (int) ((baseDamage / 10) * Math.random());
+        int modDamage = (int) (baseDamage * skills.specialAttackPercentage(enemy));
+        modDamage = modDamage + (int) ((modDamage / 10) * Math.random());
         return modDamage;
 
+    }
+
+    public void onDamageDealt(int damage){
+        skills.onDamageDealt(damage);
+    }
+
+    public void onEnemyDefeat(BattleCharacter enemy){
+        skills.onEnemyDefeat(enemy);
     }
 
     public void Defend(){

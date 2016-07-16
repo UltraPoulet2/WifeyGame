@@ -447,26 +447,29 @@ public class BattleScreen extends Screen {
                     int displayDamage;
                     switch (commandSelected) {
                         case POWER_ATTACK:
-                            baseDamage = party[partyIndex].PowerAttackDamage();
+                            baseDamage = party[partyIndex].PowerAttackDamage(enemies[enemyIndex]);
                             displayDamage = enemies[enemyIndex].takePhysicalDamage(baseDamage);
                             enemyDamage = displayDamage;
+                            party[partyIndex].onDamageDealt(displayDamage);
                             incrementHits();
                             comboHolder++;
                             damageHolder += enemyDamage;
                             break;
                         case COMBO_ATTACK:
-                            baseDamage = party[partyIndex].ComboAttackDamage();
+                            baseDamage = party[partyIndex].ComboAttackDamage(enemies[enemyIndex]);
                             displayDamage = enemies[enemyIndex].takePhysicalDamage(baseDamage);
                             enemyDamage = displayDamage;
+                            party[partyIndex].onDamageDealt(displayDamage);
                             incrementHits();
                             hitsPerformed++;
                             comboHolder++;
                             damageHolder += enemyDamage;
                             break;
                         case MAGIC_ATTACK:
-                            baseDamage = party[partyIndex].MagicAttackDamage();
+                            baseDamage = party[partyIndex].MagicAttackDamage(enemies[enemyIndex]);
                             displayDamage = enemies[enemyIndex].takeMagicalDamage(baseDamage);
                             enemyDamage = displayDamage;
+                            party[partyIndex].onDamageDealt(displayDamage);
                             incrementHits();
                             comboHolder++;
                             damageHolder += enemyDamage;
@@ -484,9 +487,10 @@ public class BattleScreen extends Screen {
                             }
                             break;
                         case SPECIAL_ATTACK:
-                            baseDamage = party[partyIndex].SpecialAttackDamage();
+                            baseDamage = party[partyIndex].SpecialAttackDamage(enemies[enemyIndex]);
                             displayDamage = enemies[enemyIndex].takeSpecialDamage(baseDamage);
                             enemyDamage = displayDamage;
+                            party[partyIndex].onDamageDealt(displayDamage);
                             incrementHits();
                             comboHolder++;
                             damageHolder += enemyDamage;
@@ -730,6 +734,7 @@ public class BattleScreen extends Screen {
                             currentPhase = BattlePhase.BATTLE_END;
                             phaseEntered = true;
                         } else {
+                            party[partyIndex].onEnemyDefeat(enemies[enemyIndex]);
                             currentPhase = BattlePhase.WAVE_START;
                             phaseEntered = true;
                         }

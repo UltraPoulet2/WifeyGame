@@ -32,7 +32,7 @@ public class SkillsEnum {
             return new SadistSkill(owner);
         }
         else{
-            return new AbsSkill(owner);
+            return null;
         }
     }
 

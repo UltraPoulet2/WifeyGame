@@ -84,7 +84,11 @@ public class WifeyCharacter {
 
     public void setWeapon(Weapon weapon) { this.weapon = weapon; }
 
-    public void addSkill(SkillsEnum skill){ this.skills.add(skill);}
+    public void addSkill(SkillsEnum skill) {
+        if (!this.skills.contains(skill)) {
+            this.skills.add(skill);
+        }
+    }
 
     public int compareName(WifeyCharacter other){
         int result = this.getName().compareTo(other.getName());

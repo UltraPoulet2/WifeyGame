@@ -12,8 +12,10 @@ public interface BattleCharacter {
     public int MagicAttackDamage();
     public int HealAmount();
     public int SpecialAttackDamage();
+    public void onDamageDealt(int damage);
     public int takePhysicalDamage(int damage);
     public int takeMagicalDamage(int damage);
     public int takeSpecialDamage(int damage);
     public int healDamage(int heal);
+    public void onEnemyDefeat(BattleCharacter enemy);
 }
