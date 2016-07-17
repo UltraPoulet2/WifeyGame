@@ -88,12 +88,6 @@ public class BattleWifey implements BattleCharacter{
         this.isDefending = false;
     }
 
-    //Temp functions
-    public int PowerAttackDamage(){return 0;}
-    public int ComboAttackDamage(){return 0;}
-    public int MagicAttackDamage(){return 0;}
-    public int SpecialAttackDamage(){return 0;}
-
     public int PowerAttackDamage(BattleCharacter enemy){
         int baseDamage = this.strength * 5;
         //Do checks on skills to determine bonus damage

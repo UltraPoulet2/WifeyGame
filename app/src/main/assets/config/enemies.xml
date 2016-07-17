@@ -22,9 +22,12 @@
         <maxHP>50000</maxHP>
         <powerDamage>20</powerDamage>
         <powerHits>4</powerHits>
-        <powerUp>2.0</powerUp>
+        <powerUp>1.0</powerUp>
         <weaken>1.5</weaken>
         <specialDamage>50</specialDamage>
         <specialHits>3</specialHits>
+        <skills>
+            <skill>SADIST</skill>
+        </skills>
     </enemy>
 </enemies>

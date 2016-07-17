@@ -36,6 +36,8 @@ public class EnemyCharacter {
     //private EnemyAI ai;
     private String ai;
 
+    public EnemyCharacter() { skills = new ArrayList<>(); }
+
     public String getName(){
         return this.name;
     }
@@ -182,6 +184,7 @@ public class EnemyCharacter {
                 weakenPercentage,
                 specialDamage,
                 specialHits,
+                skills,
                 image,
                 EnemyAI.getAI(ai));
         //Add skills argument later
