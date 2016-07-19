@@ -6,6 +6,7 @@ import ultrapoulet.wifeygame.battle.BattleCharacter;
 import ultrapoulet.wifeygame.battle.skills.AbsSkill;
 import ultrapoulet.wifeygame.battle.skills.MasochistSkill;
 import ultrapoulet.wifeygame.battle.skills.SadistSkill;
+import ultrapoulet.wifeygame.battle.skills.TsundereSkill;
 
 /**
  * Created by John on 7/14/2016.
@@ -29,14 +30,15 @@ public class SkillsEnum {
     }
 
     public AbsSkill getBattleSkill(BattleCharacter owner){
-        if(this.skillName.equals("Sadist")){
-            return new SadistSkill(owner);
-        }
-        if(this.skillName.equals("Masochist")){
-            return new MasochistSkill(owner);
-        }
-        else{
-            return null;
+        switch(this.skillName){
+            case "Sadist":
+                return new SadistSkill(owner);
+            case "Masochist":
+                return new MasochistSkill(owner);
+            case "Tsundere":
+                return new TsundereSkill(owner);
+            default:
+                return null;
         }
     }
 
@@ -53,5 +55,6 @@ public class SkillsEnum {
         skillsList = new HashMap<>();
         skillsList.put("SADIST", new SkillsEnum("Sadist", "Description"));
         skillsList.put("MASOCHIST", new SkillsEnum("Masochist", "Description"));
+        skillsList.put("TSUNDERE", new SkillsEnum("Tsundere", "Description"));
     }
 }

@@ -31,10 +31,10 @@ public class SkillList {
         }
     }
 
-    public void startBattle(){
+    public void startBattle(BattleCharacter[] party){
         //Do anything that needs to be done at the start of a battle
         for(int i = 0; i < skills.size(); i++){
-            skills.get(i).startBattle();
+            skills.get(i).startBattle(party);
         }
     }
 

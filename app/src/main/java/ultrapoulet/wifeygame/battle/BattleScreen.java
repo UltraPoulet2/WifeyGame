@@ -32,7 +32,7 @@ public class BattleScreen extends Screen {
     private static final int MAX_HITS = SPECIAL_HITS * 5;
 
     private double enemyMultiplier = 1.00;
-    private final double roundMultiplier = 1.025;
+    private final double roundMultiplier = 0.025;
 
     private static Image background, buttonMenuNormal, buttonMenuSpecial;
 
@@ -341,10 +341,10 @@ public class BattleScreen extends Screen {
                     phaseTime = 0;
                     phaseEntered = false;
                     for(int i = 0; i < party.length; i++){
-                        party[i].battleStart();
+                        party[i].startBattle(party);
                     }
                     for(int i = 0; i < enemies.length; i++){
-                        enemies[i].battleStart();
+                        enemies[i].startBattle(enemies);
                     }
                 } else {
                     phaseTime += deltaTime;
@@ -740,7 +740,7 @@ public class BattleScreen extends Screen {
                     phaseTime = 0;
                     phaseEntered = false;
                     enemies[enemyIndex].endRound();
-                    enemyMultiplier = enemyMultiplier * roundMultiplier;
+                    enemyMultiplier += roundMultiplier;
                 } else {
                     phaseTime += deltaTime;
                     if (phaseTime >= WAIT_PHASE_WAIT) {

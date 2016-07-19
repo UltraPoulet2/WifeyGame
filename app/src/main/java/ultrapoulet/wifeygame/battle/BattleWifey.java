@@ -78,9 +78,10 @@ public class BattleWifey implements BattleCharacter{
         this.currentHP = hp;
     }
 
-    public void battleStart(){
+    public void startBattle(BattleCharacter[] party){
         this.currentHP = this.maxHP;
         this.isDefending = false;
+        this.skills.startBattle(party);
     }
 
     public void turnStart(){
@@ -120,7 +121,7 @@ public class BattleWifey implements BattleCharacter{
         //Do checks on skills to determine bonus healing
         //int modHeal = (int) (baseHeal * skills.healPercentage(member);
         int modHeal = baseHeal + (int) ((baseHeal / 10) * Math.random());
-        return baseHeal;
+        return modHeal;
     }
 
     public int SpecialAttackDamage(BattleCharacter enemy){

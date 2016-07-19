@@ -24,7 +24,7 @@ public class AbsSkill {
         return description;
     }
 
-    public void startBattle(){
+    public void startBattle(BattleCharacter[] party){
         //Do anything that needs to be done at the start of a battle
     }
 

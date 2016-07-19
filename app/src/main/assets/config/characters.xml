@@ -71,6 +71,9 @@
         <strength>90</strength>
         <magic>60</magic>
         <weapon>SWORD</weapon>
+        <skills>
+            <skill>TSUNDERE</skill>
+        </skills>
     </character>
     <character key="TEST-EXCL">
         <name>Excel</name>
@@ -161,6 +164,9 @@
         <strength>40</strength>
         <magic>50</magic>
         <weapon>COMPUTER</weapon>
+        <skills>
+            <skill>TSUNDERE</skill>
+        </skills>
     </character>
     <character key="TEST-KSGA">
         <name>Ayumu Kasuga</name>
@@ -416,6 +422,9 @@
         <strength>40</strength>
         <magic>40</magic>
         <weapon>CLAW</weapon>
+        <skills>
+            <skill>TSUNDERE</skill>
+        </skills>
     </character>
     <character key="TEST-TTSM">
         <name>Tatsumaki</name>
@@ -533,6 +542,9 @@
         <strength>180</strength>
         <magic>60</magic>
         <weapon>SWORD</weapon>
+        <skills>
+            <skill>TSUNDERE</skill>
+        </skills>
     </character>
     <character key="TEST-AKTS">
         <name>Akatsuki</name>

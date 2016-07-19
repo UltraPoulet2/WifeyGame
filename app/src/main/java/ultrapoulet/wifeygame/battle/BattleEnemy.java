@@ -140,9 +140,10 @@ public class BattleEnemy implements BattleCharacter{
 
     public Image getImage() { return this.image; }
 
-    public void battleStart(){
+    public void startBattle(BattleCharacter[] party){
         this.currentHP = this.maxHP;
         ai.reset();
+        this.skills.startBattle(party);
     }
 
     //This call will likely change to get information about current state of battle
