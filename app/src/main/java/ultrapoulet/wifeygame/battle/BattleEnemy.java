@@ -285,9 +285,10 @@ public class BattleEnemy implements BattleCharacter{
         return displayDamage;
     }
 
-    public int healDamage(int heal){
+    public int healDamage(int heal, BattleCharacter healer){
         //Heal modifiers
         int displayHeal = heal;
+        displayHeal = (int) (displayHeal * skills.receiveHealPercentage(healer));
         this.currentHP = this.currentHP + displayHeal;
         if(this.currentHP > this.maxHP){
             this.currentHP = this.maxHP;

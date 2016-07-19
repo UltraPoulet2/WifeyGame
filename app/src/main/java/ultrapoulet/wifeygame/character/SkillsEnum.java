@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import ultrapoulet.wifeygame.battle.BattleCharacter;
 import ultrapoulet.wifeygame.battle.skills.AbsSkill;
+import ultrapoulet.wifeygame.battle.skills.MasochistSkill;
 import ultrapoulet.wifeygame.battle.skills.SadistSkill;
 
 /**
@@ -31,6 +32,9 @@ public class SkillsEnum {
         if(this.skillName.equals("Sadist")){
             return new SadistSkill(owner);
         }
+        if(this.skillName.equals("Masochist")){
+            return new MasochistSkill(owner);
+        }
         else{
             return null;
         }
@@ -48,5 +52,6 @@ public class SkillsEnum {
     private static void createSkillList(){
         skillsList = new HashMap<>();
         skillsList.put("SADIST", new SkillsEnum("Sadist", "Description"));
+        skillsList.put("MASOCHIST", new SkillsEnum("Masochist", "Description"));
     }
 }

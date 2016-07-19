@@ -500,6 +500,9 @@
         <strength>180</strength>
         <magic>20</magic>
         <weapon>AIRSOFT</weapon>
+        <skills>
+            <skill>MASOCHIST</skill>
+        </skills>
     </character>
     <character key="TEST-KRKO">
         <name>Kiruko Tachiarai</name>

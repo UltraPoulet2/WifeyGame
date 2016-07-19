@@ -186,11 +186,13 @@ public class BattleWifey implements BattleCharacter{
     }
 
 
-    public int healDamage(int heal){
+    public int healDamage(int heal, BattleCharacter healer){
         //Check skills for anything to increase healing
         int displayHeal = heal;
+        displayHeal = (int) (displayHeal * skills.receiveHealPercentage(healer));
         this.currentHP = this.currentHP + displayHeal;
         //displayHeal = (int) (displayHeal * skills.receiveHealPercentage(healer);
+        System.out.println("Heal multiplied by: " + skills.receiveHealPercentage(healer));
         if(this.currentHP > this.maxHP){
             displayHeal = displayHeal - (this.currentHP - this.maxHP);
             this.currentHP = this.maxHP;

@@ -8,9 +8,9 @@ import ultrapoulet.wifeygame.battle.BattleCharacter;
 public class AbsSkill {
 
     //The owner of the skill
-    private BattleCharacter owner;
-    private String skillName;
-    private String description;
+    protected BattleCharacter owner;
+    protected String skillName;
+    protected String description;
 
     public AbsSkill(BattleCharacter owner){ this.owner = owner; }
 
