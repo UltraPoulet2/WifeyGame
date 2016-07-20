@@ -238,15 +238,19 @@ public class BattleEnemy implements BattleCharacter{
         skills.onEnemyDefeat(enemy);
     }
 
-    public int takePhysicalDamage(int damage){
+    public int takePhysicalDamage(int damage, BattleCharacter enemy){
         //Damage modifiers
         int displayDamage = damage;
+        double multiplier = skills.receivePhysicalAttackPercentage(enemy);
         if(defendActive){
-            displayDamage = (int) (displayDamage * defendPercentage);
+            multiplier -= defendPercentage;
         }
         if(weakenActive){
-            displayDamage = (int) (displayDamage * weakenPercentage);
+            multiplier += weakenPercentage;
         }
+        displayDamage = (int) (displayDamage * multiplier);
+        skills.onDamageReceived(displayDamage);
+        System.out.println("Enemy's multiplying damage taken by: " + multiplier);
         this.currentHP = this.currentHP - displayDamage;
         if(this.currentHP <= 0){
             this.currentHP = 0;
@@ -254,15 +258,19 @@ public class BattleEnemy implements BattleCharacter{
         return displayDamage;
     }
 
-    public int takeMagicalDamage(int damage){
+    public int takeMagicalDamage(int damage, BattleCharacter enemy){
         //Damage modifiers
         int displayDamage = damage;
+        double multiplier = skills.receiveMagicalAttackPercentage(enemy);
         if(defendActive){
-            displayDamage = (int) (displayDamage * defendPercentage);
+            multiplier -= defendPercentage;
         }
         if(weakenActive){
-            displayDamage = (int) (displayDamage * weakenPercentage);
+            multiplier += weakenPercentage;
         }
+        displayDamage = (int) (displayDamage * multiplier);
+        skills.onDamageReceived(displayDamage);
+        System.out.println("Enemy's multiplying damage taken by: " + multiplier);
         this.currentHP = this.currentHP - displayDamage;
         if(this.currentHP <= 0){
             this.currentHP = 0;
@@ -270,15 +278,19 @@ public class BattleEnemy implements BattleCharacter{
         return displayDamage;
     }
 
-    public int takeSpecialDamage(int damage){
+    public int takeSpecialDamage(int damage, BattleCharacter enemy){
         //Damage modifiers
         int displayDamage = damage;
+        double multiplier = skills.receiveSpecialAttackPercentage(enemy);
         if(defendActive){
-            displayDamage = (int) (displayDamage * defendPercentage);
+            multiplier -= defendPercentage;
         }
         if(weakenActive){
-            displayDamage = (int) (displayDamage * weakenPercentage);
+            multiplier += weakenPercentage;
         }
+        displayDamage = (int) (displayDamage * multiplier);
+        skills.onDamageReceived(displayDamage);
+        System.out.println("Enemy's multiplying damage taken by: " + multiplier);
         this.currentHP = this.currentHP - displayDamage;
         if(this.currentHP <= 0){
             this.currentHP = 0;

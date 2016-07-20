@@ -23,7 +23,7 @@
         <powerDamage>20</powerDamage>
         <powerHits>4</powerHits>
         <powerUp>1.0</powerUp>
-        <weaken>1.5</weaken>
+        <weaken>0.5</weaken>
         <specialDamage>50</specialDamage>
         <specialHits>3</specialHits>
         <skills>
