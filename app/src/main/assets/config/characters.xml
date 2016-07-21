@@ -536,6 +536,9 @@
         <strength>50</strength>
         <magic>120</magic>
         <weapon>FISTS</weapon>
+        <skills>
+            <skill>MEDIUM</skill>
+        </skills>
     </character>
     <character key="TEST-FUJI">
         <name>Chihiro Fujisaki</name>

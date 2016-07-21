@@ -73,6 +73,10 @@ public class BattleWifey implements BattleCharacter{
         return this.image;
     }
 
+    public boolean hasSkill(Class skillClass){
+        return skills.hasSkill(skillClass);
+    }
+
     //For testing only
     public void setCurrentHP(int hp){
         this.currentHP = hp;
@@ -112,6 +116,7 @@ public class BattleWifey implements BattleCharacter{
         int baseDamage = this.magic * 5;
         //Do checks on skills to determine bonus damage
         int modDamage = (int) (baseDamage * skills.magicalAttackPercentage(enemy));
+        System.out.println("Multiplying damage by: " + skills.magicalAttackPercentage(enemy));
         modDamage = modDamage + (int) ((modDamage / 10) * Math.random());
         return modDamage;
     }

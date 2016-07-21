@@ -20,7 +20,7 @@ public class SkillList {
     }
 
     public void addSkill(AbsSkill newSkill){
-        if(newSkill != null && !isDuplicate(newSkill)){
+        if(newSkill != null && !hasSkill(newSkill.getClass())){
             skills.add(newSkill);
         }
     }
@@ -179,9 +179,9 @@ public class SkillList {
         }
     }
 
-    public boolean isDuplicate(AbsSkill newSkill){
+    public boolean hasSkill(Class skillClass){
         for(int i = 0; i < skills.size(); i++){
-            if(skills.get(i).getClass() == newSkill.getClass()){
+            if(skills.get(i).getClass() == skillClass){
                 return true;
             }
         }

@@ -8,6 +8,9 @@
         <powerHits>3</powerHits>
         <comboDamage>35</comboDamage>
         <comboHits>4</comboHits>
+        <skills>
+            <skill>GHOST</skill>
+        </skills>
     </enemy>
     <enemy key="TEST-NME2">
         <name>Enemy 2</name>

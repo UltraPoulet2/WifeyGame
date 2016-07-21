@@ -113,7 +113,11 @@ public class BattleEnemy implements BattleCharacter{
         return this.maxHP;
     }
 
-    public int getCurrentHP(){ return this.currentHP ;}
+    public int getCurrentHP(){ return this.currentHP; }
+
+    public boolean hasSkill(Class skillClass){
+        return skills.hasSkill(skillClass);
+    }
 
     public int getNumHits(){
         switch(getAction()){
