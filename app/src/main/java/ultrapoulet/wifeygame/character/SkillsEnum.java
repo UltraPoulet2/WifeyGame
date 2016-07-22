@@ -7,6 +7,7 @@ import ultrapoulet.wifeygame.battle.skills.AbsSkill;
 import ultrapoulet.wifeygame.battle.skills.GhostSkill;
 import ultrapoulet.wifeygame.battle.skills.MasochistSkill;
 import ultrapoulet.wifeygame.battle.skills.MediumSkill;
+import ultrapoulet.wifeygame.battle.skills.RobotSkill;
 import ultrapoulet.wifeygame.battle.skills.SadistSkill;
 import ultrapoulet.wifeygame.battle.skills.TsundereSkill;
 
@@ -43,6 +44,8 @@ public class SkillsEnum {
                 return new GhostSkill(owner);
             case "Medium":
                 return new MediumSkill(owner);
+            case "Robot":
+                return new RobotSkill(owner);
             default:
                 return null;
         }
@@ -64,5 +67,6 @@ public class SkillsEnum {
         skillsList.put("TSUNDERE", new SkillsEnum("Tsundere", "Description"));
         skillsList.put("GHOST", new SkillsEnum("Ghost", "Description"));
         skillsList.put("MEDIUM", new SkillsEnum("Medium", "Description"));
+        skillsList.put("ROBOT", new SkillsEnum("Robot", "Description"));
     }
 }

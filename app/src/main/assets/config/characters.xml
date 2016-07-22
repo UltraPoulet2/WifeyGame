@@ -497,6 +497,9 @@
         <strength>180</strength>
         <magic>60</magic>
         <weapon>GUN</weapon>
+        <skills>
+            <skill>ROBOT</skill>
+        </skills>
     </character>
     <character key="TEST-NINA">
         <name>Nina</name>
