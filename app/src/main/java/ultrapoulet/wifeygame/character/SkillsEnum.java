@@ -62,11 +62,11 @@ public class SkillsEnum {
 
     private static void createSkillList(){
         skillsList = new HashMap<>();
-        skillsList.put("SADIST", new SkillsEnum("Sadist", "Description"));
-        skillsList.put("MASOCHIST", new SkillsEnum("Masochist", "Description"));
-        skillsList.put("TSUNDERE", new SkillsEnum("Tsundere", "Description"));
-        skillsList.put("GHOST", new SkillsEnum("Ghost", "Description"));
-        skillsList.put("MEDIUM", new SkillsEnum("Medium", "Description"));
-        skillsList.put("ROBOT", new SkillsEnum("Robot", "Description"));
+        skillsList.put("SADIST", new SkillsEnum("Sadist", "Sadist description"));
+        skillsList.put("MASOCHIST", new SkillsEnum("Masochist", "Masochist description"));
+        skillsList.put("TSUNDERE", new SkillsEnum("Tsundere", "Tsundere description"));
+        skillsList.put("GHOST", new SkillsEnum("Ghost", "Ghost description"));
+        skillsList.put("MEDIUM", new SkillsEnum("Medium", "Medium description"));
+        skillsList.put("ROBOT", new SkillsEnum("Robot", "Robot description"));
     }
 }

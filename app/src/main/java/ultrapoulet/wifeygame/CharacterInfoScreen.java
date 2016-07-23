@@ -12,6 +12,7 @@ import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.androidgame.framework.Input;
 import ultrapoulet.androidgame.framework.Input.TouchEvent;
 import ultrapoulet.androidgame.framework.Screen;
+import ultrapoulet.wifeygame.character.SkillsEnum;
 import ultrapoulet.wifeygame.character.Weapon;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
 
@@ -70,6 +71,15 @@ public class CharacterInfoScreen extends Screen {
     private static final int HITS_X = 100 + WEAPON_X;
     private static final int HITS_Y = 407 + BG_Y;
 
+    private int skillsPage;
+    private Paint skillsPaint;
+    private static final int SKILLS_SIZE = 40;
+    private static final int SKILLS_PER_PAGE = 14;
+    private static final int SKILLS_LEFT_X = 32 + BG_X;
+    private static final int SKILLS_RIGHT_X = SKILLS_LEFT_X + 280;
+    private static final int SKILLS_BASE_Y = 495 + BG_Y;
+    private static final int SKILLS_OFFSET_Y = 55;
+
     private enum ButtonPressed{
         CLOSE
         //Fill with skill buttons later
@@ -105,6 +115,11 @@ public class CharacterInfoScreen extends Screen {
         hitsPaint.setTextAlign(Align.CENTER);
         hitsPaint.setColor(Color.BLACK);
         hitsPaint.setTextSize(HITS_SIZE);
+
+        skillsPaint = new Paint();
+        skillsPaint.setTextAlign(Align.LEFT);
+        skillsPaint.setColor(Color.BLACK);
+        skillsPaint.setTextSize(SKILLS_SIZE);
     }
 
     public void setPreviousScreen(Screen screen){
@@ -183,6 +198,20 @@ public class CharacterInfoScreen extends Screen {
         g.drawString(charWeapon.getWeaponType(), WEAPON_X, weaponY, weaponPaint);
         //Draw image for number hits
         g.drawString(String.valueOf(charWeapon.getNumHits()), HITS_X, HITS_Y, hitsPaint);
+
+        //List out names for the skills
+        for(int i = SKILLS_PER_PAGE * skillsPage; i < 14 * skillsPage + SKILLS_PER_PAGE && i < displayChar.getSkills().size(); i++){
+            SkillsEnum skill = displayChar.getSkills().get(i);
+            int xOffset;
+            int yOffset = SKILLS_BASE_Y + ((i % SKILLS_PER_PAGE) / 2) * SKILLS_OFFSET_Y;
+            if(i % 2 == 0) {
+                xOffset = SKILLS_LEFT_X;
+            }
+            else{
+                xOffset = SKILLS_RIGHT_X;
+            }
+            g.drawString(skill.getSkillName(), xOffset, yOffset, skillsPaint);
+        }
     }
 
     @Override
