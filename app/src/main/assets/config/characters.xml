@@ -41,6 +41,9 @@
         <strength>40</strength>
         <magic>90</magic>
         <weapon>SCYTHE</weapon>
+        <skills>
+            <skill>DULLAHAN</skill>
+        </skills>
     </character>
     <character key="TEST-CMPA">
         <name>Compa</name>

@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import ultrapoulet.wifeygame.battle.BattleCharacter;
 import ultrapoulet.wifeygame.battle.skills.AbsSkill;
+import ultrapoulet.wifeygame.battle.skills.DullahanSkill;
 import ultrapoulet.wifeygame.battle.skills.GhostSkill;
 import ultrapoulet.wifeygame.battle.skills.MasochistSkill;
 import ultrapoulet.wifeygame.battle.skills.MediumSkill;
@@ -46,6 +47,8 @@ public class SkillsEnum {
                 return new MediumSkill(owner);
             case "Robot":
                 return new RobotSkill(owner);
+            case "Dullahan":
+                return new DullahanSkill(owner);
             default:
                 return null;
         }
@@ -68,5 +71,6 @@ public class SkillsEnum {
         skillsList.put("GHOST", new SkillsEnum("Ghost", "Ghost description"));
         skillsList.put("MEDIUM", new SkillsEnum("Medium", "Medium description"));
         skillsList.put("ROBOT", new SkillsEnum("Robot", "Robot description"));
+        skillsList.put("DULLAHAN", new SkillsEnum("Dullahan", "Dullahan description"));
     }
 }
