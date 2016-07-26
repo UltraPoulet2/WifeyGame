@@ -77,7 +77,6 @@ public class BattleWifey implements BattleCharacter{
         return skills.hasSkill(skillClass);
     }
 
-    //For testing only
     public void setCurrentHP(int hp){
         this.currentHP = hp;
     }
@@ -155,9 +154,9 @@ public class BattleWifey implements BattleCharacter{
         int displayDamage = damage;
         if(this.isDefending){ displayDamage = displayDamage/2; }
         displayDamage = (int) (displayDamage * skills.receivePhysicalAttackPercentage(enemy));
-        skills.onDamageReceived(displayDamage);
         System.out.println("Multiplying damage taken by: " + skills.receivePhysicalAttackPercentage(enemy));
         this.currentHP = this.currentHP - displayDamage;
+        skills.onDamageReceived(displayDamage);
         if(this.currentHP <= 0){
             this.currentHP = 0;
         }
@@ -170,9 +169,9 @@ public class BattleWifey implements BattleCharacter{
         int displayDamage = damage;
         if(this.isDefending){ displayDamage = displayDamage/2; }
         displayDamage = (int) (displayDamage * skills.receiveMagicalAttackPercentage(enemy));
-        skills.onDamageReceived(displayDamage);
         System.out.println("Multiplying damage taken by: " + skills.receiveMagicalAttackPercentage(enemy));
         this.currentHP = this.currentHP - displayDamage;
+        skills.onDamageReceived(displayDamage);
         if(this.currentHP <= 0){
             this.currentHP = 0;
         }
@@ -185,9 +184,9 @@ public class BattleWifey implements BattleCharacter{
         int displayDamage = damage;
         if(this.isDefending){ displayDamage = displayDamage/2; }
         displayDamage = (int) (displayDamage * skills.receiveSpecialAttackPercentage(enemy));
-        skills.onDamageReceived(displayDamage);
         System.out.println("Multiplying damage taken by: " + skills.receiveSpecialAttackPercentage(enemy));
         this.currentHP = this.currentHP - displayDamage;
+        skills.onDamageReceived(displayDamage);
         if(this.currentHP <= 0){
             this.currentHP = 0;
         }

@@ -615,7 +615,7 @@ public class BattleScreen extends Screen {
                                 enemies[enemyIndex].onDamageDealt(displayDamage);
                             }
                             if(party[charIndex].getCurrentHP() == 0){
-                                enemies[enemyIndex].onEnemyDefeat(party[partyIndex]);
+                                enemies[enemyIndex].onEnemyDefeat(party[charIndex]);
                             }
                             break;
                         case MAGIC_ATTACK:

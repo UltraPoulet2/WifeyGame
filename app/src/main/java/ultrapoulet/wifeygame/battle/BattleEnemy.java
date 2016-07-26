@@ -115,6 +115,8 @@ public class BattleEnemy implements BattleCharacter{
 
     public int getCurrentHP(){ return this.currentHP; }
 
+    public void setCurrentHP(int hp){ if(hp < maxHP) {this.currentHP = hp;} }
+
     public boolean hasSkill(Class skillClass){
         return skills.hasSkill(skillClass);
     }
@@ -253,9 +255,9 @@ public class BattleEnemy implements BattleCharacter{
             multiplier += weakenPercentage;
         }
         displayDamage = (int) (displayDamage * multiplier);
-        skills.onDamageReceived(displayDamage);
         System.out.println("Enemy's multiplying damage taken by: " + multiplier);
         this.currentHP = this.currentHP - displayDamage;
+        skills.onDamageReceived(displayDamage);
         if(this.currentHP <= 0){
             this.currentHP = 0;
         }
@@ -273,9 +275,9 @@ public class BattleEnemy implements BattleCharacter{
             multiplier += weakenPercentage;
         }
         displayDamage = (int) (displayDamage * multiplier);
-        skills.onDamageReceived(displayDamage);
         System.out.println("Enemy's multiplying damage taken by: " + multiplier);
         this.currentHP = this.currentHP - displayDamage;
+        skills.onDamageReceived(displayDamage);
         if(this.currentHP <= 0){
             this.currentHP = 0;
         }
@@ -293,9 +295,9 @@ public class BattleEnemy implements BattleCharacter{
             multiplier += weakenPercentage;
         }
         displayDamage = (int) (displayDamage * multiplier);
-        skills.onDamageReceived(displayDamage);
         System.out.println("Enemy's multiplying damage taken by: " + multiplier);
         this.currentHP = this.currentHP - displayDamage;
+        skills.onDamageReceived(displayDamage);
         if(this.currentHP <= 0){
             this.currentHP = 0;
         }

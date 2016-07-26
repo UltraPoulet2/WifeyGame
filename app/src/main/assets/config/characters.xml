@@ -5,6 +5,9 @@
         <strength>70</strength>
         <magic>60</magic>
         <weapon>MECHA</weapon>
+        <skills>
+            <skill>PROTAGONIST</skill>
+        </skills>
     </character>
     <character key="TEST-ANGU">
         <name>Ange Ushiromiya</name>
@@ -206,6 +209,9 @@
         <strength>70</strength>
         <magic>70</magic>
         <weapon>GUN</weapon>
+        <skills>
+            <skill>PROTAGONIST</skill>
+        </skills>
     </character>
     <character key="TEST-MAKI">
         <name>Natsuo Maki</name>
@@ -230,6 +236,9 @@
         <strength>200</strength>
         <magic>20</magic>
         <weapon>FISTS</weapon>
+        <skills>
+            <skill>PROTAGONIST</skill>
+        </skills>
     </character>
     <character key="TEST-MDRI">
         <name>Midori Kasugano</name>
@@ -482,6 +491,9 @@
         <strength>80</strength>
         <magic>70</magic>
         <weapon>FISTS</weapon>
+        <skills>
+            <skill>PROTAGONIST</skill>
+        </skills>
     </character>
     <character key="TEST-YUNO">
         <name>Yuno Gasai</name>
@@ -502,6 +514,7 @@
         <weapon>GUN</weapon>
         <skills>
             <skill>ROBOT</skill>
+            <skill>PROTAGONIST</skill>
         </skills>
     </character>
     <character key="TEST-NINA">

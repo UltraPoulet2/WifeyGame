@@ -6,6 +6,7 @@ package ultrapoulet.wifeygame.battle;
 public interface BattleCharacter {
     public int getCurrentHP();
     public int getMaxHP();
+    public void setCurrentHP(int hp);
     public boolean hasSkill(Class skillClass);
     public void startBattle(BattleCharacter[] party);
     public int PowerAttackDamage(BattleCharacter enemy);
