@@ -197,6 +197,9 @@
         <strength>60</strength>
         <magic>30</magic>
         <weapon>TANK</weapon>
+        <skills>
+            <skill>PRAVDA</skill>
+        </skills>
     </character>
     <character key="TEST-KYKO">
         <name>Kyoko Kirigiri</name>
@@ -579,5 +582,14 @@
         <strength>110</strength>
         <magic>50</magic>
         <weapon>SWORD</weapon>
+    </character>
+    <character key="TEST-NONA">
+        <name>Nonna</name>
+        <strength>80</strength>
+        <magic>30</magic>
+        <weapon>TANK</weapon>
+        <skills>
+            <skill>PRAVDA</skill>
+        </skills>
     </character>
 </characters>
