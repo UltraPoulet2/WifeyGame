@@ -7,7 +7,12 @@ import ultrapoulet.wifeygame.battle.BattleCharacter;
  */
 public class PravdaSkill extends AbsSkill {
 
-    public PravdaSkill(BattleCharacter owner) { super(owner); }
+    private boolean isPresident;
+
+    public PravdaSkill(BattleCharacter owner, boolean president) {
+        super(owner);
+        this.isPresident = president;
+    }
 
     private double multiplier = 0;
 
@@ -17,6 +22,9 @@ public class PravdaSkill extends AbsSkill {
             if(party[i] != owner && party[i].hasSkill(PravdaSkill.class)){
                 multiplier += 1.0;
             }
+        }
+        if(isPresident){
+            multiplier *= 2;
         }
     }
 

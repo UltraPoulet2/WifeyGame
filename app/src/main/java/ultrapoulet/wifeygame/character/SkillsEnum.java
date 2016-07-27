@@ -53,8 +53,10 @@ public class SkillsEnum {
                 return new DullahanSkill(owner);
             case "Protagonist":
                 return new ProtagonistSkill(owner);
+            case "Pravda President":
+                return new PravdaSkill(owner, true);
             case "Pravda":
-                return new PravdaSkill(owner);
+                return new PravdaSkill(owner, false);
             default:
                 return null;
         }
@@ -79,6 +81,7 @@ public class SkillsEnum {
         skillsList.put("ROBOT", new SkillsEnum("Robot", "Robot description"));
         skillsList.put("DULLAHAN", new SkillsEnum("Dullahan", "Dullahan description"));
         skillsList.put("PROTAGONIST", new SkillsEnum("Protagonist", "Protagonist description"));
+        skillsList.put("PRAVDAPRES", new SkillsEnum("Pravda President", "Pravda President description"));
         skillsList.put("PRAVDA", new SkillsEnum("Pravda", "Pravda Description"));
     }
 }
