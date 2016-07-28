@@ -16,7 +16,7 @@ public class ProtagonistSkill extends AbsSkill {
         if(owner.getCurrentHP() <= 0 && !revived){
             System.out.println("SAVING");
             owner.setCurrentHP(0);
-            owner.healDamage(owner.HealAmount(), owner);
+            owner.healDamage(owner.HealAmount(owner), owner);
             revived = true;
         }
     }

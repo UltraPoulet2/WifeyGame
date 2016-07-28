@@ -12,7 +12,7 @@ public interface BattleCharacter {
     public int PowerAttackDamage(BattleCharacter enemy);
     public int ComboAttackDamage(BattleCharacter enemy);
     public int MagicAttackDamage(BattleCharacter enemy);
-    public int HealAmount();
+    public int HealAmount(BattleCharacter target);
     public int SpecialAttackDamage(BattleCharacter enemy);
     public void onDamageDealt(int damage);
     public int takePhysicalDamage(int damage, BattleCharacter enemy);

@@ -413,6 +413,9 @@
         <strength>80</strength>
         <magic>30</magic>
         <weapon>VEHICLE</weapon>
+        <skills>
+            <skill>MECHANIC</skill>
+        </skills>
     </character>
     <character key="TEST-STPH">
         <name>Stephanie Dola</name>
@@ -458,6 +461,9 @@
         <strength>50</strength>
         <magic>50</magic>
         <weapon>TOOL</weapon>
+        <skills>
+            <skill>MECHANIC</skill>
+        </skills>
     </character>
     <character key="TEST-YASN">
         <name>Yassan</name>

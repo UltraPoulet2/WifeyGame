@@ -477,7 +477,7 @@ public class BattleScreen extends Screen {
                         case HEALING_MAGIC:
                             for (int j = 0; j < party.length; j++) {
                                 if (party[j].getCurrentHP() > 0) {
-                                    baseDamage = party[partyIndex].HealAmount();
+                                    baseDamage = party[partyIndex].HealAmount(party[j]);
                                     displayDamage = party[j].healDamage(baseDamage, party[partyIndex]);
                                     partyDamage[j] = displayDamage;
                                 }
@@ -642,9 +642,8 @@ public class BattleScreen extends Screen {
                             }
                             break;
                         case HEALING_MAGIC:
-                            baseDamage = (int) (enemies[enemyIndex].HealAmount() * enemyMultiplier);
-                            enemyDamage = baseDamage;
-                            enemies[enemyIndex].healDamage(enemyDamage, enemies[enemyIndex]);
+                            baseDamage = (int) (enemies[enemyIndex].HealAmount(enemies[enemyIndex]) * enemyMultiplier);
+                            enemyDamage = enemies[enemyIndex].healDamage(baseDamage, enemies[enemyIndex]);
                             hitsPerformed++;
                             break;
                         case SPECIAL_ATTACK:

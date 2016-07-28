@@ -120,11 +120,11 @@ public class BattleWifey implements BattleCharacter{
         return modDamage;
     }
 
-    public int HealAmount(){
+    public int HealAmount(BattleCharacter target){
         int baseHeal = this.magic * 2;
         //Do checks on skills to determine bonus healing
-        //int modHeal = (int) (baseHeal * skills.healPercentage(member);
-        int modHeal = baseHeal + (int) ((baseHeal / 10) * Math.random());
+        int modHeal = (int) (baseHeal * skills.healPercentage(target));
+        modHeal = modHeal + (int) ((modHeal / 10) * Math.random());
         return modHeal;
     }
 
@@ -199,7 +199,6 @@ public class BattleWifey implements BattleCharacter{
         int displayHeal = heal;
         displayHeal = (int) (displayHeal * skills.receiveHealPercentage(healer));
         this.currentHP = this.currentHP + displayHeal;
-        //displayHeal = (int) (displayHeal * skills.receiveHealPercentage(healer);
         System.out.println("Heal multiplied by: " + skills.receiveHealPercentage(healer));
         if(this.currentHP > this.maxHP){
             displayHeal = displayHeal - (this.currentHP - this.maxHP);

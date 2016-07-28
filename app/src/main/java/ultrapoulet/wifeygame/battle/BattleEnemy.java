@@ -214,10 +214,11 @@ public class BattleEnemy implements BattleCharacter{
         return modDamage;
     }
 
-    public int HealAmount(){
+    public int HealAmount(BattleCharacter target){
         //Returns the amount that will be healed
-        int baseHeal = this.healAmount + (int) ((this.healAmount / 10) * Math.random());
-        return baseHeal;
+        int baseHeal = (int) (this.healAmount * skills.healPercentage(target));
+        int modHeal = baseHeal + (int) ((baseHeal / 10) * Math.random());
+        return modHeal;
     }
 
     public int SpecialAttackDamage(BattleCharacter enemy){

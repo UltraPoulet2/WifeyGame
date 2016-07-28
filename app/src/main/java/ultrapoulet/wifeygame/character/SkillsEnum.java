@@ -7,6 +7,7 @@ import ultrapoulet.wifeygame.battle.skills.AbsSkill;
 import ultrapoulet.wifeygame.battle.skills.DullahanSkill;
 import ultrapoulet.wifeygame.battle.skills.GhostSkill;
 import ultrapoulet.wifeygame.battle.skills.MasochistSkill;
+import ultrapoulet.wifeygame.battle.skills.MechanicSkill;
 import ultrapoulet.wifeygame.battle.skills.MediumSkill;
 import ultrapoulet.wifeygame.battle.skills.PravdaSkill;
 import ultrapoulet.wifeygame.battle.skills.ProtagonistSkill;
@@ -57,6 +58,8 @@ public class SkillsEnum {
                 return new PravdaSkill(owner, true);
             case "Pravda":
                 return new PravdaSkill(owner, false);
+            case "Mechanic":
+                return new MechanicSkill(owner);
             default:
                 return null;
         }
@@ -83,5 +86,6 @@ public class SkillsEnum {
         skillsList.put("PROTAGONIST", new SkillsEnum("Protagonist", "Protagonist description"));
         skillsList.put("PRAVDAPRES", new SkillsEnum("Pravda President", "Pravda President description"));
         skillsList.put("PRAVDA", new SkillsEnum("Pravda", "Pravda Description"));
+        skillsList.put("MECHANIC", new SkillsEnum("Mechanic", "Mechanic Description"));
     }
 }
