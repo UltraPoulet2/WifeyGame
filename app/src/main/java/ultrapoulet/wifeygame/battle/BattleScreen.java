@@ -372,6 +372,10 @@ public class BattleScreen extends Screen {
                 //Do things for Start of Round
                 if (phaseEntered) {
                     firstPartyIndex();
+                    for(int i = 0; i < party.length; i++){
+                        party[i].startRound();
+                    }
+                    enemies[enemyIndex].startRound();
                     comboHolder = 0;
                     damageHolder = 0;
                     phaseTime = 0;
@@ -554,7 +558,7 @@ public class BattleScreen extends Screen {
                         partyDamage[i] = 0;
                     }
                     enemyDamage = 0;
-                    enemies[enemyIndex].startRound();
+                    enemies[enemyIndex].startTurn();
                     enemies[enemyIndex].determineAction();
                 } else {
                     phaseTime += deltaTime;

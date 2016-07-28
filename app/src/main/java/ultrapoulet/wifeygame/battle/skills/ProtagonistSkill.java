@@ -14,7 +14,6 @@ public class ProtagonistSkill extends AbsSkill {
     @Override
     public void onDamageReceived(int damage) {
         if(owner.getCurrentHP() <= 0 && !revived){
-            System.out.println("SAVING");
             owner.setCurrentHP(0);
             owner.healDamage(owner.HealAmount(owner), owner);
             revived = true;

@@ -87,6 +87,10 @@ public class BattleWifey implements BattleCharacter{
         this.skills.startBattle(party);
     }
 
+    public void startRound(){
+        skills.startRound();
+    }
+
     public void turnStart(){
         //Function for things that happen at start of turn
         this.isDefending = false;
@@ -124,6 +128,7 @@ public class BattleWifey implements BattleCharacter{
         int baseHeal = this.magic * 2;
         //Do checks on skills to determine bonus healing
         int modHeal = (int) (baseHeal * skills.healPercentage(target));
+        System.out.println("Base heal multiplied by: " + skills.healPercentage(target));
         modHeal = modHeal + (int) ((modHeal / 10) * Math.random());
         return modHeal;
     }

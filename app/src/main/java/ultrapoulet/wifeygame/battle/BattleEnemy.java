@@ -336,6 +336,10 @@ public class BattleEnemy implements BattleCharacter{
     }
 
     public void startRound(){
+        skills.startRound();
+    }
+
+    public void startTurn(){
         if(defendActive){
             defendTurns++;
             if(defendTurns > DEFENDTURNS){
