@@ -335,6 +335,10 @@ public class BattleEnemy implements BattleCharacter{
         powerDownTurns = 0;
     }
 
+    public void startWave(){
+        skills.startWave();
+    }
+
     public void startRound(){
         skills.startRound();
     }

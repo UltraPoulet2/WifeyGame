@@ -12,6 +12,7 @@ import ultrapoulet.wifeygame.battle.skills.MediumSkill;
 import ultrapoulet.wifeygame.battle.skills.NurseSkill;
 import ultrapoulet.wifeygame.battle.skills.PravdaSkill;
 import ultrapoulet.wifeygame.battle.skills.ProtagonistSkill;
+import ultrapoulet.wifeygame.battle.skills.RacerSkill;
 import ultrapoulet.wifeygame.battle.skills.RobotSkill;
 import ultrapoulet.wifeygame.battle.skills.SadistSkill;
 import ultrapoulet.wifeygame.battle.skills.SlugabedSkill;
@@ -66,6 +67,8 @@ public class SkillsEnum {
                 return new NurseSkill(owner);
             case "Slugabed":
                 return new SlugabedSkill(owner);
+            case "Racer":
+                return new RacerSkill(owner);
             default:
                 return null;
         }
@@ -95,5 +98,6 @@ public class SkillsEnum {
         skillsList.put("MECHANIC", new SkillsEnum("Mechanic", "Mechanic description"));
         skillsList.put("NURSE", new SkillsEnum("Nurse", "Nurse description"));
         skillsList.put("SLUGABED", new SkillsEnum("Slugabed", "Slugabed description"));
+        skillsList.put("RACER", new SkillsEnum("Racer", "Racer description"));
     }
 }

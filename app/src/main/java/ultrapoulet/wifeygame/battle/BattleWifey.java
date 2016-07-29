@@ -87,6 +87,8 @@ public class BattleWifey implements BattleCharacter{
         this.skills.startBattle(party);
     }
 
+    public void startWave() { skills.startWave(); }
+
     public void startRound(){
         skills.startRound();
     }

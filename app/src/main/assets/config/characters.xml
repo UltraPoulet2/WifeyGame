@@ -353,6 +353,9 @@
         <strength>80</strength>
         <magic>40</magic>
         <weapon>VEHICLE</weapon>
+        <skills>
+            <skill>RACER</skill>
+        </skills>
     </character>
     <character key="TEST-RENA">
         <name>Rena Ryuuguu</name>

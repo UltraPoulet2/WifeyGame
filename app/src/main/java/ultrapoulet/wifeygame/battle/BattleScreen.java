@@ -360,6 +360,12 @@ public class BattleScreen extends Screen {
                 //Do anything necessary for Start of Wave
                 if (phaseEntered) {
                     firstPartyIndex();
+                    for(int i = 0; i < party.length; i++){
+                        if(party[i].getCurrentHP() != 0){
+                            party[i].startWave();
+                        }
+                    }
+                    enemies[enemyIndex].startWave();
                     phaseTime = 0;
                     phaseEntered = false;
                 } else {
