@@ -21,4 +21,5 @@ public interface BattleCharacter {
     public int healDamage(int heal, BattleCharacter healer);
     public void onEnemyDefeat(BattleCharacter enemy);
     public void startRound();
+    public void endRound();
 }

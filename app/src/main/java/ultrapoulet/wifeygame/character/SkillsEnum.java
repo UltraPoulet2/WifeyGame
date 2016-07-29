@@ -14,6 +14,7 @@ import ultrapoulet.wifeygame.battle.skills.PravdaSkill;
 import ultrapoulet.wifeygame.battle.skills.ProtagonistSkill;
 import ultrapoulet.wifeygame.battle.skills.RobotSkill;
 import ultrapoulet.wifeygame.battle.skills.SadistSkill;
+import ultrapoulet.wifeygame.battle.skills.SlugabedSkill;
 import ultrapoulet.wifeygame.battle.skills.TsundereSkill;
 
 /**
@@ -63,6 +64,8 @@ public class SkillsEnum {
                 return new MechanicSkill(owner);
             case "Nurse":
                 return new NurseSkill(owner);
+            case "Slugabed":
+                return new SlugabedSkill(owner);
             default:
                 return null;
         }
@@ -88,8 +91,9 @@ public class SkillsEnum {
         skillsList.put("DULLAHAN", new SkillsEnum("Dullahan", "Dullahan description"));
         skillsList.put("PROTAGONIST", new SkillsEnum("Protagonist", "Protagonist description"));
         skillsList.put("PRAVDAPRES", new SkillsEnum("Pravda President", "Pravda President description"));
-        skillsList.put("PRAVDA", new SkillsEnum("Pravda", "Pravda Description"));
-        skillsList.put("MECHANIC", new SkillsEnum("Mechanic", "Mechanic Description"));
-        skillsList.put("NURSE", new SkillsEnum("Nurse", "Nurse Description"));
+        skillsList.put("PRAVDA", new SkillsEnum("Pravda", "Pravda description"));
+        skillsList.put("MECHANIC", new SkillsEnum("Mechanic", "Mechanic description"));
+        skillsList.put("NURSE", new SkillsEnum("Nurse", "Nurse description"));
+        skillsList.put("SLUGABED", new SkillsEnum("Slugabed", "Slugabed description"));
     }
 }

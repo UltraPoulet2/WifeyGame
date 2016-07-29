@@ -91,6 +91,8 @@ public class BattleWifey implements BattleCharacter{
         skills.startRound();
     }
 
+    public void endRound() { skills.endRound(); }
+
     public void turnStart(){
         //Function for things that happen at start of turn
         this.isDefending = false;

@@ -357,7 +357,7 @@ public class BattleEnemy implements BattleCharacter{
     }
 
     public void endRound(){
-        //totalRoundMultiplier *= roundMultiplier;
+        skills.endRound();
 
         if(powerUpActive){
             powerUpTurns++;

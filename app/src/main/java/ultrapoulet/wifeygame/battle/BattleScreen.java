@@ -341,7 +341,9 @@ public class BattleScreen extends Screen {
                     phaseTime = 0;
                     phaseEntered = false;
                     for(int i = 0; i < party.length; i++){
-                        party[i].startBattle(party);
+                        if(party[i].getCurrentHP() != 0) {
+                            party[i].startBattle(party);
+                        }
                     }
                     for(int i = 0; i < enemies.length; i++){
                         enemies[i].startBattle(enemies);
@@ -373,7 +375,9 @@ public class BattleScreen extends Screen {
                 if (phaseEntered) {
                     firstPartyIndex();
                     for(int i = 0; i < party.length; i++){
-                        party[i].startRound();
+                        if(party[i].getCurrentHP() != 0) {
+                            party[i].startRound();
+                        }
                     }
                     enemies[enemyIndex].startRound();
                     comboHolder = 0;
@@ -742,6 +746,11 @@ public class BattleScreen extends Screen {
                 if (phaseEntered) {
                     phaseTime = 0;
                     phaseEntered = false;
+                    for(int i = 0; i < party.length; i++){
+                        if(party[i].getCurrentHP() != 0){
+                            party[i].endRound();
+                        }
+                    }
                     enemies[enemyIndex].endRound();
                     enemyMultiplier += roundMultiplier;
                 } else {

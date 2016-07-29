@@ -182,6 +182,9 @@
         <strength>20</strength>
         <magic>20</magic>
         <weapon>FOOD</weapon>
+        <skills>
+            <skill>SLUGABED</skill>
+        </skills>
     </character>
     <character key="TEST-KTNH">
         <name>Kotonoha Katsura</name>
@@ -558,6 +561,9 @@
         <strength>40</strength>
         <magic>80</magic>
         <weapon>PLUSH</weapon>
+        <skills>
+            <skill>SLUGABED</skill>
+        </skills>
     </character>
     <character key="TEST-SNBU">
         <name>Shinobu Oshino</name>

@@ -52,6 +52,13 @@ public class SkillList {
         }
     }
 
+    public void endRound() {
+        //Do anything that needs to be done at the end of a round
+        for(int i = 0; i < skills.size(); i++){
+            skills.get(i).endRound();
+        }
+    }
+
     public double physicalAttackPercentage(BattleCharacter enemy){
         //The amount to increase physical damage.
         //Some skill might need to see the state of the BattleEnemy, so it is included
