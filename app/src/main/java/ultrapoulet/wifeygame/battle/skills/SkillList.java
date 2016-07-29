@@ -55,11 +55,11 @@ public class SkillList {
     public double physicalAttackPercentage(BattleCharacter enemy){
         //The amount to increase physical damage.
         //Some skill might need to see the state of the BattleEnemy, so it is included
-        //Returned multiplier is additive. It will start at 1.0, and add/subtract values from
+        //Returned multiplier is additive. It will start at 1.0, and multiply values from
         //all skills
         double multiplier = 1.0;
         for(int i = 0; i < skills.size(); i++){
-            multiplier += skills.get(i).physicalAttackPercentage(enemy);
+            multiplier *= skills.get(i).physicalAttackPercentage(enemy);
         }
         return multiplier;
     }
@@ -77,11 +77,11 @@ public class SkillList {
     public double magicalAttackPercentage(BattleCharacter enemy){
         //The amount to increase magical damage.
         //Some skills might need to see the state of the BattleEnemy, so it is included
-        //Returned multiplier is additive. It will start at 1.0, and add/subtract values
+        //Returned multiplier is additive. It will start at 1.0, and multiply values
         //from all skills
         double multiplier = 1.0;
         for(int i = 0; i < skills.size(); i++){
-            multiplier += skills.get(i).magicalAttackPercentage(enemy);
+            multiplier *= skills.get(i).magicalAttackPercentage(enemy);
         }
         return multiplier;
     }
@@ -89,11 +89,11 @@ public class SkillList {
     public double specialAttackPercentage(BattleCharacter enemy){
         //The amount to increase special damage.
         //Some skills might need to see the state of the BattleEnemy, so it is included
-        //Returned multiplier is additive. It will start at 1.0, and add/subtract values
+        //Returned multiplier is additive. It will start at 1.0, and multiply values
         //from all skills
         double multiplier = 1.0;
         for(int i = 0; i < skills.size(); i++){
-            multiplier += skills.get(i).specialAttackPercentage(enemy);
+            multiplier *= skills.get(i).specialAttackPercentage(enemy);
         }
         return multiplier;
     }
@@ -103,7 +103,7 @@ public class SkillList {
         //Returned multiplier is additive.
         double multiplier = 1.0;
         for(int i = 0; i < skills.size(); i++){
-            multiplier += skills.get(i).healPercentage(partyMember);
+            multiplier *= skills.get(i).healPercentage(partyMember);
         }
         return multiplier;
     }
@@ -113,7 +113,7 @@ public class SkillList {
         //This will be capped, so as not to hit 0 or below
         double multiplier = 1.0;
         for(int i = 0; i < skills.size(); i++){
-            multiplier -= skills.get(i).receivePhysicalAttackPercentage(enemy);
+            multiplier *= skills.get(i).receivePhysicalAttackPercentage(enemy);
         }
         if(multiplier <= 0.10){
             multiplier = 0.10;
@@ -126,7 +126,7 @@ public class SkillList {
         //This will be capped, so as not to hit 0 or below
         double multiplier = 1.0;
         for(int i = 0; i < skills.size(); i++){
-            multiplier -= skills.get(i).receiveMagicalAttackPercentage(enemy);
+            multiplier *= skills.get(i).receiveMagicalAttackPercentage(enemy);
         }
         if(multiplier <= 0.10){
             multiplier = 0.10;
@@ -139,7 +139,7 @@ public class SkillList {
         //This will be capped, so as not to hit 0 or below
         double multiplier = 1.0;
         for(int i = 0; i < skills.size(); i++){
-            multiplier -= skills.get(i).receiveSpecialAttackPercentage(enemy);
+            multiplier *= skills.get(i).receiveSpecialAttackPercentage(enemy);
         }
         if(multiplier <= 0.10){
             multiplier = 0.10;
@@ -149,10 +149,10 @@ public class SkillList {
 
     public double receiveHealPercentage(BattleCharacter partyMember){
         //The amount to increase healing from a party member
-        //Returned multiplier is additive
+        //Returned multiplier is multiplicative
         double multiplier = 1.0;
         for(int i = 0; i < skills.size(); i++){
-            multiplier += skills.get(i).receiveHealPercentage(partyMember);
+            multiplier *= skills.get(i).receiveHealPercentage(partyMember);
         }
         return multiplier;
     }

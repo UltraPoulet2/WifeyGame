@@ -8,15 +8,15 @@ import ultrapoulet.wifeygame.battle.BattleCharacter;
 public class TsundereSkill extends AbsSkill {
 
     private double bonusDamage;
-    private double maxMultiplier = 5.0;
+    private double maxMultiplier = 4.0;
 
     public TsundereSkill(BattleCharacter owner){ super(owner); }
 
     @Override
     public void startBattle(BattleCharacter[] party) {
-        bonusDamage = maxMultiplier - ((party.length - 1) * 1.25);
-        if(bonusDamage < 0.0){
-            bonusDamage = 0.0;
+        bonusDamage = maxMultiplier - (party.length - 1);
+        if(bonusDamage < 1.0){
+            bonusDamage = 1.0;
         }
     }
 

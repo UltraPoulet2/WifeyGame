@@ -14,17 +14,17 @@ public class PravdaSkill extends AbsSkill {
         this.isPresident = president;
     }
 
-    private double multiplier = 0;
+    private double multiplier = 1.0;
 
     @Override
     public void startBattle(BattleCharacter[] party){
         for(int i = 0; i < party.length; i++){
             if(party[i] != owner && party[i].hasSkill(PravdaSkill.class)){
                 multiplier += 1.0;
+                if(isPresident){
+                    multiplier += 1.0;
+                }
             }
-        }
-        if(isPresident){
-            multiplier *= 2;
         }
     }
 

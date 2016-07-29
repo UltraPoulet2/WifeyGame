@@ -13,11 +13,10 @@ public class DullahanSkill extends AbsSkill {
     public double physicalAttackPercentage(BattleCharacter enemy) {
         double enemyPercent = (enemy.getCurrentHP() * 1.0 / enemy.getMaxHP());
         if (enemyPercent >= 0.75) {
-            return -0.5;
+            return 0.5;
         }
         else {
-            return (1.25 - enemyPercent) * 4;
-
+            return 0.5 + ((0.75 - enemyPercent) * 4);
         }
     }
 
@@ -25,11 +24,10 @@ public class DullahanSkill extends AbsSkill {
     public double magicalAttackPercentage(BattleCharacter enemy) {
         double enemyPercent = (enemy.getCurrentHP() * 1.0 / enemy.getMaxHP());
         if (enemyPercent >= 0.75) {
-            return -0.5;
+            return 0.5;
         }
         else {
-            return (1.25 - enemyPercent) * 4;
-
+            return 0.5 + ((0.75 - enemyPercent) * 4);
         }
     }
 
@@ -37,11 +35,10 @@ public class DullahanSkill extends AbsSkill {
     public double specialAttackPercentage(BattleCharacter enemy) {
         double enemyPercent = (enemy.getCurrentHP() * 1.0 / enemy.getMaxHP());
         if (enemyPercent >= 0.75) {
-            return -0.5;
+            return 0.5;
         }
         else {
-            return (1.25 - enemyPercent) * 4;
-
+            return 0.5 + ((0.75 - enemyPercent) * 4);
         }
     }
 }

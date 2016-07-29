@@ -11,7 +11,7 @@ public class NurseSkill extends AbsSkill {
 
     @Override
     public double healPercentage(BattleCharacter partyMember) {
-        return 1.0;
+        return 2.0;
     }
 
     @Override

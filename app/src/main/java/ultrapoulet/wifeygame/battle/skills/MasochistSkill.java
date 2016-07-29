@@ -7,28 +7,28 @@ import ultrapoulet.wifeygame.battle.BattleCharacter;
  */
 public class MasochistSkill extends AbsSkill {
 
-    public double maxMultiplier = 4.00;
+    public double damageMultiplier = 4.00;
 
     public MasochistSkill(BattleCharacter owner){ super(owner); }
 
     @Override
     public double physicalAttackPercentage(BattleCharacter enemy) {
-        return (maxMultiplier * (owner.getMaxHP() - owner.getCurrentHP()))/(owner.getMaxHP());
+        return 1.0 + (damageMultiplier * (owner.getMaxHP() - owner.getCurrentHP()))/(owner.getMaxHP());
     }
 
     @Override
     public double magicalAttackPercentage(BattleCharacter enemy) {
-        return (maxMultiplier * (owner.getMaxHP() - owner.getCurrentHP()))/(owner.getMaxHP());
+        return 1.0 + (damageMultiplier * (owner.getMaxHP() - owner.getCurrentHP()))/(owner.getMaxHP());
     }
 
     @Override
     public double specialAttackPercentage(BattleCharacter enemy) {
-        return (maxMultiplier * (owner.getMaxHP() - owner.getCurrentHP()))/(owner.getMaxHP());
+        return 1.0 + (damageMultiplier * (owner.getMaxHP() - owner.getCurrentHP()))/(owner.getMaxHP());
     }
 
     @Override
     public double receiveHealPercentage(BattleCharacter partyMember) {
         //Lose 50% of heal
-        return -0.5;
+        return 0.5;
     }
 }

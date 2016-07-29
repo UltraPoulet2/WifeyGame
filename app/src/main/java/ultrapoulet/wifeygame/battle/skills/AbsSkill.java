@@ -39,9 +39,9 @@ public class AbsSkill {
     public double physicalAttackPercentage(BattleCharacter enemy){
         //The amount to increase physical damage.
         //Some skill might need to see the state of the BattleEnemy, so it is included
-        //Returned multiplier is additive. It will start at 1.0, and add/subtract values from
+        //Returned multiplier is additive. It will start at 1.0, and multiply values from
         //all skills
-        return 0.0;
+        return 1.0;
     }
 
     public int getBonusHits(){
@@ -53,47 +53,47 @@ public class AbsSkill {
     public double magicalAttackPercentage(BattleCharacter enemy){
         //The amount to increase magical damage.
         //Some skills might need to see the state of the BattleEnemy, so it is included
-        //Returned multiplier is additive. It will start at 1.0, and add/subtract values
+        //Returned multiplier is additive. It will start at 1.0, and multiply values
         //from all skills
-        return 0.0;
+        return 1.0;
     }
 
     public double specialAttackPercentage(BattleCharacter enemy){
         //The amount to increase special damage.
         //Some skills might need to see the state of the BattleEnemy, so it is included
-        //Returned multiplier is additive. It will start at 1.0, and add/subtract values
+        //Returned multiplier is additive. It will start at 1.0, and multiply values
         //from all skills
-        return 0.0;
+        return 1.0;
     }
 
     public double healPercentage(BattleCharacter partyMember){
         //The amount to increase healing to a party member
-        //Returned multiplier is additive.
-        return 0.0;
+        //Returned multiplier is multiplicative.
+        return 1.0;
     }
 
     public double receivePhysicalAttackPercentage(BattleCharacter enemy){
         //The amount to decrease physical damage.
         //This will be capped, so as not to hit 0 or below
-        return 0.0;
+        return 1.0;
     }
 
     public double receiveMagicalAttackPercentage(BattleCharacter enemy){
         //The amount to decrease magical damage.
         //This will be capped, so as not to hit 0 or below
-        return 0.0;
+        return 1.0;
     }
 
     public double receiveSpecialAttackPercentage(BattleCharacter enemy){
         //The amount to decrease special damage.
         //This will be capped, so as not to hit 0 or below
-        return 0.0;
+        return 1.0;
     }
 
     public double receiveHealPercentage(BattleCharacter partyMember){
         //The amount to increase healing from a party member
         //Returned multiplier is additive
-        return 0.0;
+        return 1.0;
     }
 
     public void onDamageDealt(int damage){

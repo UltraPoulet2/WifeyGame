@@ -14,17 +14,17 @@ public class SadistSkill extends AbsSkill {
 
     @Override
     public double physicalAttackPercentage(BattleCharacter enemy){
-        return hitMultiplier * numHits;
+        return 1.0 + hitMultiplier * numHits;
     }
 
     @Override
     public double magicalAttackPercentage(BattleCharacter enemy) {
-        return hitMultiplier * numHits;
+        return 1.0 + hitMultiplier * numHits;
     }
 
     @Override
     public double specialAttackPercentage(BattleCharacter enemy) {
-        return hitMultiplier * numHits;
+        return 1.0 + hitMultiplier * numHits;
     }
 
     @Override
