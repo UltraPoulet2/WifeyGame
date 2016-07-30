@@ -118,10 +118,11 @@ public class SkillList {
     public double receivePhysicalAttackPercentage(BattleCharacter enemy){
         //The amount to decrease physical damage.
         //This will be capped, so as not to hit 0 or below
-        double multiplier = 1.0;
+        double resistance = 0.0;
         for(int i = 0; i < skills.size(); i++){
-            multiplier *= skills.get(i).receivePhysicalAttackPercentage(enemy);
+            resistance += skills.get(i).receivePhysicalAttackPercentage(enemy) * (1.0 - resistance);
         }
+        double multiplier = 1.0 - resistance;
         if(multiplier <= 0.10){
             multiplier = 0.10;
         }
@@ -131,10 +132,11 @@ public class SkillList {
     public double receiveMagicalAttackPercentage(BattleCharacter enemy){
         //The amount to decrease magical damage.
         //This will be capped, so as not to hit 0 or below
-        double multiplier = 1.0;
+        double resistance = 0.0;
         for(int i = 0; i < skills.size(); i++){
-            multiplier *= skills.get(i).receiveMagicalAttackPercentage(enemy);
+            resistance += skills.get(i).receiveMagicalAttackPercentage(enemy) * (1.0 - resistance);
         }
+        double multiplier = 1.0 - resistance;
         if(multiplier <= 0.10){
             multiplier = 0.10;
         }
@@ -144,10 +146,11 @@ public class SkillList {
     public double receiveSpecialAttackPercentage(BattleCharacter enemy){
         //The amount to decrease special damage.
         //This will be capped, so as not to hit 0 or below
-        double multiplier = 1.0;
+        double resistance = 0.0;
         for(int i = 0; i < skills.size(); i++){
-            multiplier *= skills.get(i).receiveSpecialAttackPercentage(enemy);
+            resistance += skills.get(i).receiveSpecialAttackPercentage(enemy) * (1.0 - resistance);
         }
+        double multiplier = 1.0 - resistance;
         if(multiplier <= 0.10){
             multiplier = 0.10;
         }
