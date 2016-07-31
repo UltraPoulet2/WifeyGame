@@ -50,7 +50,7 @@ public class BattleWifey implements BattleCharacter{
     public Weapon getWeapon() { return this.weapon; }
 
     public int getNumHits(){
-        return this.numHits;
+        return this.numHits + this.skills.getBonusHits();
     }
 
     public int getMaxHP(){
@@ -138,7 +138,7 @@ public class BattleWifey implements BattleCharacter{
     }
 
     public int SpecialAttackDamage(BattleCharacter enemy){
-        int baseDamage = this.strength * 4 + this.magic * 4;
+        int baseDamage = this.strength * 10 + this.magic * 10;
         //Do checks on skills to determine bonus damage
         int modDamage = (int) (baseDamage * skills.specialAttackPercentage(enemy));
         modDamage = modDamage + (int) ((modDamage / 10) * Math.random());

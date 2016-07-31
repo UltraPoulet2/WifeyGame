@@ -78,7 +78,7 @@ public class SkillList {
         for(int i = 0; i < skills.size(); i++){
             hits += skills.get(i).getBonusHits();
         }
-        return 0;
+        return hits;
     }
 
     public double magicalAttackPercentage(BattleCharacter enemy){

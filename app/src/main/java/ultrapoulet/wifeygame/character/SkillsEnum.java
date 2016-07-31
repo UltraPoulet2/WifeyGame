@@ -4,9 +4,12 @@ import java.util.HashMap;
 
 import ultrapoulet.wifeygame.battle.BattleCharacter;
 import ultrapoulet.wifeygame.battle.skills.AbsSkill;
+import ultrapoulet.wifeygame.battle.skills.ChuuniSkill;
 import ultrapoulet.wifeygame.battle.skills.DullahanSkill;
 import ultrapoulet.wifeygame.battle.skills.GhostSkill;
+import ultrapoulet.wifeygame.battle.skills.HyperSkill;
 import ultrapoulet.wifeygame.battle.skills.KillerSkill;
+import ultrapoulet.wifeygame.battle.skills.MaidSkill;
 import ultrapoulet.wifeygame.battle.skills.MasochistSkill;
 import ultrapoulet.wifeygame.battle.skills.MechanicSkill;
 import ultrapoulet.wifeygame.battle.skills.MediumSkill;
@@ -72,6 +75,12 @@ public class SkillsEnum {
                 return new RacerSkill(owner);
             case "Killer":
                 return new KillerSkill(owner);
+            case "Chuunibyou":
+                return new ChuuniSkill(owner);
+            case "Maid":
+                return new MaidSkill(owner);
+            case "Hyper":
+                return new HyperSkill(owner);
             default:
                 System.out.println("SkillsEnum:getBattleSkill(): Skill not implemented: " + this.skillName);
                 return new AbsSkill(owner);
@@ -104,6 +113,9 @@ public class SkillsEnum {
         skillsList.put("SLUGABED", new SkillsEnum("Slugabed", "Slugabed description"));
         skillsList.put("RACER", new SkillsEnum("Racer", "Racer description"));
         skillsList.put("KILLER", new SkillsEnum("Killer", "Killer description"));
+        skillsList.put("CHUUNI", new SkillsEnum("Chuunibyou", "Chuunibyou description"));
+        skillsList.put("MAID", new SkillsEnum("Maid", "Maid description"));
+        skillsList.put("HYPER", new SkillsEnum("Hyper", "Hyper description"));
 
         //Skills that need to be implemented
         skillsList.put("ROYALTY", new SkillsEnum("Royalty", "Royalty description"));
@@ -117,7 +129,6 @@ public class SkillsEnum {
         skillsList.put("ANGEL", new SkillsEnum("Angel", "Angel description"));
         skillsList.put("COOK", new SkillsEnum("Cook", "Cook description"));
         skillsList.put("MUSICIAN", new SkillsEnum("Musician", "Musician description"));
-        skillsList.put("HYPER", new SkillsEnum("Hyper", "Hyper description"));
         skillsList.put("SPORTSMANAGER", new SkillsEnum("Sports Manager", "Sports Manager description"));
         skillsList.put("TRAP", new SkillsEnum("Trap", "Trap description"));
         skillsList.put("SCIENTIST", new SkillsEnum("Scientist", "Scientist description"));
@@ -146,11 +157,9 @@ public class SkillsEnum {
         skillsList.put("KUUDERE", new SkillsEnum("Kuudere", "Kuudere description"));
         skillsList.put("CAPTAIN", new SkillsEnum("Captain", "Captain description"));
         skillsList.put("WRITER", new SkillsEnum("Writer", "Writer description"));
-        skillsList.put("CHUUNI", new SkillsEnum("Chuunibyou", "Chuunibyou description"));
         skillsList.put("PERSONA", new SkillsEnum("Persona", "Persona description"));
         skillsList.put("SPIRIT", new SkillsEnum("Spirit", "Spirit description"));
         skillsList.put("FUJOSHI", new SkillsEnum("Fujoshi", "Fujoshi description"));
-        skillsList.put("MAID", new SkillsEnum("Maid", "Maid description"));
         skillsList.put("VAMPIRE", new SkillsEnum("Vampire", "Vampire description"));
         skillsList.put("PROGRAMMER", new SkillsEnum("Programmer", "Programmer description"));
         skillsList.put("NINJA", new SkillsEnum("Ninja", "Ninja description"));

@@ -79,19 +79,19 @@ public class AbsSkill {
     public double receivePhysicalAttackPercentage(BattleCharacter enemy){
         //The amount to decrease physical damage.
         //This will be capped, so as not to hit 0 or below
-        return 1.0;
+        return 0.0;
     }
 
     public double receiveMagicalAttackPercentage(BattleCharacter enemy){
         //The amount to decrease magical damage.
         //This will be capped, so as not to hit 0 or below
-        return 1.0;
+        return 0.0;
     }
 
     public double receiveSpecialAttackPercentage(BattleCharacter enemy){
         //The amount to decrease special damage.
         //This will be capped, so as not to hit 0 or below
-        return 1.0;
+        return 0.0;
     }
 
     public double receiveHealPercentage(BattleCharacter partyMember){
