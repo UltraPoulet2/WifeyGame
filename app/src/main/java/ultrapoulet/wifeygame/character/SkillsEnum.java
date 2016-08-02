@@ -23,6 +23,7 @@ import ultrapoulet.wifeygame.battle.skills.SadistSkill;
 import ultrapoulet.wifeygame.battle.skills.SlugabedSkill;
 import ultrapoulet.wifeygame.battle.skills.TimeTravelerSkill;
 import ultrapoulet.wifeygame.battle.skills.TsundereSkill;
+import ultrapoulet.wifeygame.battle.skills.VampireSkill;
 import ultrapoulet.wifeygame.battle.skills.WitchSkill;
 
 /**
@@ -90,6 +91,8 @@ public class SkillsEnum {
                 return new MagicalGirlSkill(owner);
             case "Time Traveler":
                 return new TimeTravelerSkill(owner);
+            case "Vampire":
+                return new VampireSkill(owner);
             default:
                 System.out.println("SkillsEnum:getBattleSkill(): Skill not implemented: " + this.skillName);
                 return new AbsSkill(owner);
@@ -128,6 +131,7 @@ public class SkillsEnum {
         skillsList.put("WITCH", new SkillsEnum("Witch", "Witch description"));
         skillsList.put("MAGICALGIRL", new SkillsEnum("Magical Girl", "Magical Girl description"));
         skillsList.put("TIMETRAVELER", new SkillsEnum("Time Traveler", "Time Traveler description"));
+        skillsList.put("VAMPIRE", new SkillsEnum("Vampire", "Vampire description"));
 
         //Skills that need to be implemented
         skillsList.put("ROYALTY", new SkillsEnum("Royalty", "Royalty description"));
@@ -169,7 +173,6 @@ public class SkillsEnum {
         skillsList.put("PERSONA", new SkillsEnum("Persona", "Persona description"));
         skillsList.put("SPIRIT", new SkillsEnum("Spirit", "Spirit description"));
         skillsList.put("FUJOSHI", new SkillsEnum("Fujoshi", "Fujoshi description"));
-        skillsList.put("VAMPIRE", new SkillsEnum("Vampire", "Vampire description"));
         skillsList.put("PROGRAMMER", new SkillsEnum("Programmer", "Programmer description"));
         skillsList.put("NINJA", new SkillsEnum("Ninja", "Ninja description"));
     }

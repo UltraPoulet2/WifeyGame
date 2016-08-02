@@ -634,6 +634,7 @@
         <weapon>SWORD</weapon>
         <skills>
             <skill>TIMETRAVELER</skill>
+            <skill>VAMPIRE</skill>
         </skills>
     </character>
     <character key="TEST-MAYA">
