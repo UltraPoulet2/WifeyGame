@@ -21,6 +21,7 @@ import ultrapoulet.wifeygame.battle.skills.RacerSkill;
 import ultrapoulet.wifeygame.battle.skills.RobotSkill;
 import ultrapoulet.wifeygame.battle.skills.SadistSkill;
 import ultrapoulet.wifeygame.battle.skills.SlugabedSkill;
+import ultrapoulet.wifeygame.battle.skills.TimeTravelerSkill;
 import ultrapoulet.wifeygame.battle.skills.TsundereSkill;
 import ultrapoulet.wifeygame.battle.skills.WitchSkill;
 
@@ -87,6 +88,8 @@ public class SkillsEnum {
                 return new WitchSkill(owner);
             case "Magical Girl":
                 return new MagicalGirlSkill(owner);
+            case "Time Traveler":
+                return new TimeTravelerSkill(owner);
             default:
                 System.out.println("SkillsEnum:getBattleSkill(): Skill not implemented: " + this.skillName);
                 return new AbsSkill(owner);
@@ -124,6 +127,7 @@ public class SkillsEnum {
         skillsList.put("HYPER", new SkillsEnum("Hyper", "Hyper description"));
         skillsList.put("WITCH", new SkillsEnum("Witch", "Witch description"));
         skillsList.put("MAGICALGIRL", new SkillsEnum("Magical Girl", "Magical Girl description"));
+        skillsList.put("TIMETRAVELER", new SkillsEnum("Time Traveler", "Time Traveler description"));
 
         //Skills that need to be implemented
         skillsList.put("ROYALTY", new SkillsEnum("Royalty", "Royalty description"));
@@ -139,7 +143,6 @@ public class SkillsEnum {
         skillsList.put("SPORTSMANAGER", new SkillsEnum("Sports Manager", "Sports Manager description"));
         skillsList.put("TRAP", new SkillsEnum("Trap", "Trap description"));
         skillsList.put("SCIENTIST", new SkillsEnum("Scientist", "Scientist description"));
-        skillsList.put("TIMETRAVELER", new SkillsEnum("Time Traveler", "Time Traveler description"));
         skillsList.put("GODDESS", new SkillsEnum("Goddess", "Goddess description"));
         skillsList.put("FOODIE", new SkillsEnum("Foodie", "Foodie description"));
         skillsList.put("BIRDBRAIN", new SkillsEnum("Birdbrain", "Birdbrain description")); //Extra damage to bookworms

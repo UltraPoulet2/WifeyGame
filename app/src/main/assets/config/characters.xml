@@ -133,6 +133,7 @@
         <weapon>GUN</weapon>
         <skills>
             <skill>MAGICALGIRL</skill>
+            <skill>TIMETRAVELER</skill>
         </skills>
     </character>
     <character key="TEST-HMRI">
@@ -193,6 +194,7 @@
         <weapon>COMPUTER</weapon>
         <skills>
             <skill>TSUNDERE</skill>
+            <skill>TIMETRAVELER</skill>
         </skills>
     </character>
     <character key="TEST-KSGA">
@@ -301,6 +303,7 @@
         <weapon>LASER</weapon>
         <skills>
             <skill>MAGICALGIRL</skill>
+            <skill>TIMETRAVELER</skill>
         </skills>
     </character>
     <character key="TEST-MKSA">
@@ -572,6 +575,7 @@
         <weapon>KNIFE</weapon>
         <skills>
             <skill>KILLER</skill>
+            <skill>TIMETRAVELER</skill>
         </skills>
     </character>
     <character key="TEST-YURA">
@@ -628,6 +632,9 @@
         <strength>100</strength>
         <magic>80</magic>
         <weapon>SWORD</weapon>
+        <skills>
+            <skill>TIMETRAVELER</skill>
+        </skills>
     </character>
     <character key="TEST-MAYA">
         <name>Maya Fey</name>
