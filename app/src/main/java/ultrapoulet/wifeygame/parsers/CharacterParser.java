@@ -120,6 +120,7 @@ public class CharacterParser extends DefaultHandler{
                 SkillsEnum skill = SkillsEnum.getSkill(temp);
                 if(skill == null){
                     System.out.println("CharacterParser:characters(): Could not find skill: " + temp);
+                    System.out.println(ch);
                     error = true;
                 }
                 else{

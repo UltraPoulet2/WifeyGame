@@ -12,8 +12,11 @@
     <character key="TEST-ANGU">
         <name>Ange Ushiromiya</name>
         <strength>80</strength>
-        <magic>10</magic>
+        <magic>50</magic>
         <weapon>BOOK</weapon>
+        <skills>
+            <skill>WITCH</skill>
+        </skills>
     </character>
     <character key="TEST-ANNA">
         <name>Anna Nishikinomiya</name>
@@ -128,6 +131,9 @@
         <strength>40</strength>
         <magic>120</magic>
         <weapon>GUN</weapon>
+        <skills>
+            <skill>MAGICALGIRL</skill>
+        </skills>
     </character>
     <character key="TEST-HMRI">
         <name>Himari Takakura</name>
@@ -293,6 +299,9 @@
         <strength>40</strength>
         <magic>70</magic>
         <weapon>LASER</weapon>
+        <skills>
+            <skill>MAGICALGIRL</skill>
+        </skills>
     </character>
     <character key="TEST-MKSA">
         <name>Mikasa Ackerman</name>
@@ -359,6 +368,9 @@
         <strength>90</strength>
         <magic>60</magic>
         <weapon>TOOL</weapon>
+        <skills>
+            <skill>MAGICALGIRL</skill>
+        </skills>
     </character>
     <character key="TEST-PERI">
         <name>Peri</name>
@@ -494,6 +506,9 @@
         <strength>40</strength>
         <magic>130</magic>
         <weapon>MAGIC</weapon>
+        <skills>
+            <skill>MAGICALGIRL</skill>
+        </skills>
     </character>
     <character key="TEST-WNRY">
         <name>Winry Rockbell</name>
@@ -547,6 +562,7 @@
         <weapon>FISTS</weapon>
         <skills>
             <skill>PROTAGONIST</skill>
+            <skill>MAGICALGIRL</skill>
         </skills>
     </character>
     <character key="TEST-YUNO">
