@@ -104,6 +104,9 @@
         <strength>40</strength>
         <magic>40</magic>
         <weapon>FISTS</weapon>
+        <skills>
+            <skill>SPORTSMANAGER</skill>
+        </skills>
     </character>
     <character key="TEST-HARU">
         <name>Haruko Haruhara</name>
@@ -319,6 +322,7 @@
         <weapon>AIRSOFT</weapon>
         <skills>
             <skill>SADIST</skill>
+            <skill>SURVIVAL</skill>
         </skills>
     </character>
     <character key="TEST-MNMA">
@@ -416,6 +420,9 @@
         <strength>40</strength>
         <magic>50</magic>
         <weapon>COOKING</weapon>
+        <skills>
+            <skill>SPORTSMANAGER</skill>
+        </skills>
     </character>
     <character key="TEST-RTSK">
         <name>Ritsuko Kunihiro</name>
@@ -437,6 +444,9 @@
         <strength>60</strength>
         <magic>40</magic>
         <weapon>SPORT</weapon>
+        <skills>
+            <skill>ATHLETE</skill>
+        </skills>
     </character>
     <character key="TEST-SAYA">
         <name>Saya Sasamiya</name>
@@ -455,12 +465,18 @@
         <strength>70</strength>
         <magic>40</magic>
         <weapon>TOOL</weapon>
+        <skills>
+            <skill>ATHLETE</skill>
+        </skills>
     </character>
     <character key="TEST-SMZU">
         <name>Kyoko Shimizu</name>
         <strength>40</strength>
         <magic>40</magic>
         <weapon>SPORT</weapon>
+        <skills>
+            <skill>SPORTSMANAGER</skill>
+        </skills>
     </character>
     <character key="TEST-SNSH">
         <name>Sonoshee McLaren</name>
@@ -616,6 +632,7 @@
         <weapon>AIRSOFT</weapon>
         <skills>
             <skill>MASOCHIST</skill>
+            <skill>SURVIVAL</skill>
         </skills>
     </character>
     <character key="TEST-KRKO">

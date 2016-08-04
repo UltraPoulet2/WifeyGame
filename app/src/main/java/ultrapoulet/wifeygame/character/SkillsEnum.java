@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import ultrapoulet.wifeygame.battle.BattleCharacter;
 import ultrapoulet.wifeygame.battle.skills.AbsSkill;
+import ultrapoulet.wifeygame.battle.skills.AthleteSkill;
 import ultrapoulet.wifeygame.battle.skills.ChuuniSkill;
 import ultrapoulet.wifeygame.battle.skills.DullahanSkill;
 import ultrapoulet.wifeygame.battle.skills.GhostSkill;
@@ -21,6 +22,8 @@ import ultrapoulet.wifeygame.battle.skills.RacerSkill;
 import ultrapoulet.wifeygame.battle.skills.RobotSkill;
 import ultrapoulet.wifeygame.battle.skills.SadistSkill;
 import ultrapoulet.wifeygame.battle.skills.SlugabedSkill;
+import ultrapoulet.wifeygame.battle.skills.SportsManagerSkill;
+import ultrapoulet.wifeygame.battle.skills.SurvivalSkill;
 import ultrapoulet.wifeygame.battle.skills.TimeTravelerSkill;
 import ultrapoulet.wifeygame.battle.skills.TsundereSkill;
 import ultrapoulet.wifeygame.battle.skills.VampireSkill;
@@ -93,6 +96,14 @@ public class SkillsEnum {
                 return new TimeTravelerSkill(owner);
             case "Vampire":
                 return new VampireSkill(owner);
+            case "Survival Game Club President":
+                return new SurvivalSkill(owner, true);
+            case "Survival Game Club":
+                return new SurvivalSkill(owner, false);
+            case "Athlete":
+                return new AthleteSkill(owner);
+            case "Sports Manager":
+                return new SportsManagerSkill(owner);
             default:
                 System.out.println("SkillsEnum:getBattleSkill(): Skill not implemented: " + this.skillName);
                 return new AbsSkill(owner);
@@ -132,6 +143,10 @@ public class SkillsEnum {
         skillsList.put("MAGICALGIRL", new SkillsEnum("Magical Girl", "Magical Girl description"));
         skillsList.put("TIMETRAVELER", new SkillsEnum("Time Traveler", "Time Traveler description"));
         skillsList.put("VAMPIRE", new SkillsEnum("Vampire", "Vampire description"));
+        skillsList.put("SURVIVALPRES", new SkillsEnum("Survival Game Club President", "Survival Game Club President description"));
+        skillsList.put("SURVIVAL", new SkillsEnum("Survival Game Club", "Survival Game Club description"));
+        skillsList.put("ATHLETE", new SkillsEnum("Athlete", "Athlete description"));
+        skillsList.put("SPORTSMANAGER", new SkillsEnum("Sports Manager", "Sports Manager description"));
 
         //Skills that need to be implemented
         skillsList.put("ROYALTY", new SkillsEnum("Royalty", "Royalty description"));
@@ -144,7 +159,6 @@ public class SkillsEnum {
         skillsList.put("ANGEL", new SkillsEnum("Angel", "Angel description"));
         skillsList.put("COOK", new SkillsEnum("Cook", "Cook description"));
         skillsList.put("MUSICIAN", new SkillsEnum("Musician", "Musician description"));
-        skillsList.put("SPORTSMANAGER", new SkillsEnum("Sports Manager", "Sports Manager description"));
         skillsList.put("TRAP", new SkillsEnum("Trap", "Trap description"));
         skillsList.put("SCIENTIST", new SkillsEnum("Scientist", "Scientist description"));
         skillsList.put("GODDESS", new SkillsEnum("Goddess", "Goddess description"));
@@ -159,14 +173,11 @@ public class SkillsEnum {
         skillsList.put("TEACHER", new SkillsEnum("Teacher", "Teacher description"));
         skillsList.put("MONSTER", new SkillsEnum("Monster", "Monster description"));
         skillsList.put("MILITARY", new SkillsEnum("Military", "Military description"));
-        skillsList.put("SURVIVALPRES", new SkillsEnum("Survival Game Club President", "Survival Game Club President description"));
-        skillsList.put("SURVIVAL", new SkillsEnum("Survival Game Club", "Survival Game Club description"));
         skillsList.put("CRIMINAL", new SkillsEnum("Criminal", "Criminal description"));
         skillsList.put("BOOKWORM", new SkillsEnum("Bookworm", "Bookworm description"));
-        skillsList.put("POLICE", new SkillsEnum("Police", "Police description"));
+        skillsList.put("POLICE", new SkillsEnum("Police", "Police description")); //Increase damage to criminals
         skillsList.put("LOVECRAFT", new SkillsEnum("Lovecraft", "Lovecraft description"));
         skillsList.put("SELECTOR", new SkillsEnum("Selector", "Selector description"));
-        skillsList.put("ATHLETE", new SkillsEnum("Athlete", "Athlete description"));
         skillsList.put("KUUDERE", new SkillsEnum("Kuudere", "Kuudere description"));
         skillsList.put("CAPTAIN", new SkillsEnum("Captain", "Captain description"));
         skillsList.put("WRITER", new SkillsEnum("Writer", "Writer description"));
