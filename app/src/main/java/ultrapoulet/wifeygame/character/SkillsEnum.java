@@ -15,6 +15,7 @@ import ultrapoulet.wifeygame.battle.skills.MaidSkill;
 import ultrapoulet.wifeygame.battle.skills.MasochistSkill;
 import ultrapoulet.wifeygame.battle.skills.MechanicSkill;
 import ultrapoulet.wifeygame.battle.skills.MediumSkill;
+import ultrapoulet.wifeygame.battle.skills.MusicianSkill;
 import ultrapoulet.wifeygame.battle.skills.NurseSkill;
 import ultrapoulet.wifeygame.battle.skills.PravdaSkill;
 import ultrapoulet.wifeygame.battle.skills.ProtagonistSkill;
@@ -104,6 +105,8 @@ public class SkillsEnum {
                 return new AthleteSkill(owner);
             case "Sports Manager":
                 return new SportsManagerSkill(owner);
+            case "Musician":
+                return new MusicianSkill(owner);
             default:
                 System.out.println("SkillsEnum:getBattleSkill(): Skill not implemented: " + this.skillName);
                 return new AbsSkill(owner);
@@ -147,6 +150,7 @@ public class SkillsEnum {
         skillsList.put("SURVIVAL", new SkillsEnum("Survival Game Club", "Survival Game Club description"));
         skillsList.put("ATHLETE", new SkillsEnum("Athlete", "Athlete description"));
         skillsList.put("SPORTSMANAGER", new SkillsEnum("Sports Manager", "Sports Manager description"));
+        skillsList.put("MUSICIAN", new SkillsEnum("Musician", "Musician description"));
 
         //Skills that need to be implemented
         skillsList.put("ROYALTY", new SkillsEnum("Royalty", "Royalty description"));
@@ -158,7 +162,6 @@ public class SkillsEnum {
         skillsList.put("BIKER", new SkillsEnum("Biker", "Biker description"));
         skillsList.put("ANGEL", new SkillsEnum("Angel", "Angel description"));
         skillsList.put("COOK", new SkillsEnum("Cook", "Cook description"));
-        skillsList.put("MUSICIAN", new SkillsEnum("Musician", "Musician description"));
         skillsList.put("TRAP", new SkillsEnum("Trap", "Trap description"));
         skillsList.put("SCIENTIST", new SkillsEnum("Scientist", "Scientist description"));
         skillsList.put("GODDESS", new SkillsEnum("Goddess", "Goddess description"));

@@ -65,6 +65,9 @@
         <strength>20</strength>
         <magic>110</magic>
         <weapon>INSTRUMENT</weapon>
+        <skills>
+            <skill>MUSICIAN</skill>
+        </skills>
     </character>
     <character key="TEST-DKRO">
         <name>Dokuro Mitsukai</name>
