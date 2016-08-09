@@ -80,10 +80,55 @@ public class CharacterInfoScreen extends Screen {
     private static final int SKILLS_BASE_Y = 495 + BG_Y;
     private static final int SKILLS_OFFSET_Y = 55;
 
+    private static final int SKILLS_BUTTON_LEFT_X = 30 + BG_X;
+    private static final int SKILLS_BUTTON_OFFSET_X = 280;
+    private static final int SKILLS_BUTTON_RIGHT_X = SKILLS_BUTTON_LEFT_X + SKILLS_BUTTON_OFFSET_X;
+    private static final int SKILLS_BUTTON_TOP_Y = 455 + BG_Y;
+    private static final int SKILLS_BUTTON_OFFSET_Y = 55;
+    private static final int SKILLS_BUTTON_BOTTOM_BASE = SKILLS_BUTTON_TOP_Y + SKILLS_OFFSET_Y;
+
+    private int currentPage = 0;
+    private int displayText = -1;
+
     private enum ButtonPressed{
-        CLOSE
+        CLOSE,
+        SKILLS0,
+        SKILLS1,
+        SKILLS2,
+        SKILLS3,
+        SKILLS4,
+        SKILLS5,
+        SKILLS6,
+        SKILLS7,
+        SKILLS8,
+        SKILLS9,
+        SKILLS10,
+        SKILLS11,
+        SKILLS12,
+        SKILLS13,
+        SKILLS14,
+        SKILLS15
         //Fill with skill buttons later
     }
+
+    private ButtonPressed[] SkillButtons = {
+            ButtonPressed.SKILLS0,
+            ButtonPressed.SKILLS1,
+            ButtonPressed.SKILLS2,
+            ButtonPressed.SKILLS3,
+            ButtonPressed.SKILLS4,
+            ButtonPressed.SKILLS5,
+            ButtonPressed.SKILLS6,
+            ButtonPressed.SKILLS7,
+            ButtonPressed.SKILLS8,
+            ButtonPressed.SKILLS9,
+            ButtonPressed.SKILLS10,
+            ButtonPressed.SKILLS11,
+            ButtonPressed.SKILLS12,
+            ButtonPressed.SKILLS13,
+            ButtonPressed.SKILLS14,
+            ButtonPressed.SKILLS15
+    };
 
     public CharacterInfoScreen(Game game) {
         super(game);
@@ -152,6 +197,14 @@ public class CharacterInfoScreen extends Screen {
         if(x >= CLOSE_LEFT_X && x <= CLOSE_RIGHT_X && y >= CLOSE_TOP_Y && y <= CLOSE_BOT_Y){
             return ButtonPressed.CLOSE;
         }
+        for(int i = 0; i < SKILLS_PER_PAGE; i++){
+            int baseX = SKILLS_BUTTON_LEFT_X + (SKILLS_BUTTON_OFFSET_X * (i % 2));
+            int baseY = SKILLS_BUTTON_TOP_Y + (SKILLS_BUTTON_OFFSET_Y * (i / 2));
+            if(x >= baseX && x <= baseX + SKILLS_BUTTON_OFFSET_X &&
+                y >= baseY && y <= baseY + SKILLS_BUTTON_OFFSET_Y){
+                return SkillButtons[i];
+            }
+        }
         return null;
     }
 
@@ -165,10 +218,44 @@ public class CharacterInfoScreen extends Screen {
                 if(press == null){
                     continue;
                 }
-
+                int skillNum = 0;
                 switch (press) {
                     case CLOSE:
                         backButton();
+                        break;
+                    case SKILLS15:
+                        skillNum++;
+                    case SKILLS14:
+                        skillNum++;
+                    case SKILLS13:
+                        skillNum++;
+                    case SKILLS12:
+                        skillNum++;
+                    case SKILLS11:
+                        skillNum++;
+                    case SKILLS10:
+                        skillNum++;
+                    case SKILLS9:
+                        skillNum++;
+                    case SKILLS8:
+                        skillNum++;
+                    case SKILLS7:
+                        skillNum++;
+                    case SKILLS6:
+                        skillNum++;
+                    case SKILLS5:
+                        skillNum++;
+                    case SKILLS4:
+                        skillNum++;
+                    case SKILLS3:
+                        skillNum++;
+                    case SKILLS2:
+                        skillNum++;
+                    case SKILLS1:
+                        skillNum++;
+                    case SKILLS0:
+                        displayText = (displayText == skillNum) ? -1 : skillNum + SKILLS_PER_PAGE * currentPage;
+                        System.out.println(displayText);
                         break;
                     default:
                         break;
@@ -211,6 +298,10 @@ public class CharacterInfoScreen extends Screen {
                 xOffset = SKILLS_RIGHT_X;
             }
             g.drawString(skill.getSkillName(), xOffset, yOffset, skillsPaint);
+        }
+
+        if(displayText != -1){
+            //Display skill info
         }
     }
 
