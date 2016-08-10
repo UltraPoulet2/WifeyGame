@@ -11,6 +11,9 @@ import android.graphics.Paint.Style;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
+import android.text.Layout;
+import android.text.StaticLayout;
+import android.text.TextPaint;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -111,6 +114,16 @@ public class AndroidGraphics implements Graphics {
     @Override
     public void drawString(String text, int x, int y, Paint paint){
         canvas.drawText(text, x, y, paint);
+    }
+
+    @Override
+    public void drawMultiLineString(String text, int x, int y, int width, TextPaint paint){
+        StaticLayout textLayout = new StaticLayout(
+                text, paint, width, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
+        canvas.save();
+        canvas.translate(x,y);
+        textLayout.draw(canvas);
+        canvas.restore();
     }
 
     @Override

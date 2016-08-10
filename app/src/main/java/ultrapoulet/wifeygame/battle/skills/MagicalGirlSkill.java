@@ -9,7 +9,7 @@ public class MagicalGirlSkill extends AbsSkill {
 
     public MagicalGirlSkill(BattleCharacter owner){ super(owner); }
 
-    private double baseMultiplier = 2.0;
+    private double baseMultiplier = 1.5;
     private double perGirl = 0.25;
 
     private double multiplier;

@@ -9,7 +9,7 @@ public class AthleteSkill extends AbsSkill {
 
     public AthleteSkill(BattleCharacter owner){ super(owner); }
 
-    private double multiplier = 1.0;
+    private double multiplier = 1.5;
     private double perGirl = 0.5;
     private double manager = 1.0;
 

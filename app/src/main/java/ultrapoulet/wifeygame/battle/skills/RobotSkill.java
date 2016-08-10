@@ -11,11 +11,11 @@ public class RobotSkill extends AbsSkill {
 
     @Override
     public double receivePhysicalAttackPercentage(BattleCharacter enemy) {
-        return 1.2;
+        return 0.2;
     }
 
     @Override
     public double receiveMagicalAttackPercentage(BattleCharacter enemy) {
-        return 0.8;
+        return -0.2;
     }
 }

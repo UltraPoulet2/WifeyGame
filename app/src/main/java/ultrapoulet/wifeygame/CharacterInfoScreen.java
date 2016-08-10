@@ -3,6 +3,9 @@ package ultrapoulet.wifeygame;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
+import android.text.Layout;
+import android.text.StaticLayout;
+import android.text.TextPaint;
 
 import java.util.List;
 
@@ -76,7 +79,7 @@ public class CharacterInfoScreen extends Screen {
     private static final int SKILLS_SIZE = 40;
     private static final int SKILLS_PER_PAGE = 14;
     private static final int SKILLS_LEFT_X = 32 + BG_X;
-    private static final int SKILLS_RIGHT_X = SKILLS_LEFT_X + 280;
+    private static final int SKILLS_RIGHT_X = SKILLS_LEFT_X + 285;
     private static final int SKILLS_BASE_Y = 495 + BG_Y;
     private static final int SKILLS_OFFSET_Y = 55;
 
@@ -86,6 +89,12 @@ public class CharacterInfoScreen extends Screen {
     private static final int SKILLS_BUTTON_TOP_Y = 455 + BG_Y;
     private static final int SKILLS_BUTTON_OFFSET_Y = 55;
     private static final int SKILLS_BUTTON_BOTTOM_BASE = SKILLS_BUTTON_TOP_Y + SKILLS_OFFSET_Y;
+
+    private static final int SKILLS_DESC_X = 32 + BG_X;
+    private static final int SKILLS_DESC_Y = 872 + BG_Y;
+    private static final int SKILLS_DESC_SIZE = 30;
+    private static final int SKILLS_DESC_WIDTH = 616;
+    private TextPaint descPaint;
 
     private int currentPage = 0;
     private int displayText = -1;
@@ -165,6 +174,11 @@ public class CharacterInfoScreen extends Screen {
         skillsPaint.setTextAlign(Align.LEFT);
         skillsPaint.setColor(Color.BLACK);
         skillsPaint.setTextSize(SKILLS_SIZE);
+
+        descPaint = new TextPaint();
+        descPaint.setTextAlign(Align.LEFT);
+        descPaint.setColor(Color.BLACK);
+        descPaint.setTextSize(SKILLS_DESC_SIZE);
     }
 
     public void setPreviousScreen(Screen screen){
@@ -190,7 +204,8 @@ public class CharacterInfoScreen extends Screen {
             weaponPaint.setTextSize(weaponFontSize);
         }
         weaponY = MAX_WEAPON_Y - ((MAX_WEAPON_FONT - weaponFontSize) / 2);
-        System.out.println(weaponY + " " + weaponFontSize);
+
+        displayText = -1;
     }
 
     private ButtonPressed getButtonPressed(int x, int y){
@@ -300,8 +315,9 @@ public class CharacterInfoScreen extends Screen {
             g.drawString(skill.getSkillName(), xOffset, yOffset, skillsPaint);
         }
 
-        if(displayText != -1){
-            //Display skill info
+        if(displayText != -1 && displayChar.getSkills().size() > displayText){
+            String desc = displayChar.getSkills().get(displayText).getSkillDesc();
+            g.drawMultiLineString(desc, SKILLS_DESC_X, SKILLS_DESC_Y, SKILLS_DESC_WIDTH, descPaint);
         }
     }
 
