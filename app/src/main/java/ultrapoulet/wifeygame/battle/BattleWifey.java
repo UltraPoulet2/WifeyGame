@@ -50,7 +50,11 @@ public class BattleWifey implements BattleCharacter{
     public Weapon getWeapon() { return this.weapon; }
 
     public int getNumHits(){
-        return this.numHits + this.skills.getBonusHits();
+        int temp = this.numHits + this.skills.getBonusHits();
+        if(temp > 10){
+            return 10;
+        }
+        return temp;
     }
 
     public int getMaxHP(){

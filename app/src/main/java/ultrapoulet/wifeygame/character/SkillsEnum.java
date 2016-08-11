@@ -5,7 +5,9 @@ import java.util.HashMap;
 import ultrapoulet.wifeygame.battle.BattleCharacter;
 import ultrapoulet.wifeygame.battle.skills.AbsSkill;
 import ultrapoulet.wifeygame.battle.skills.AthleteSkill;
+import ultrapoulet.wifeygame.battle.skills.BikerSkill;
 import ultrapoulet.wifeygame.battle.skills.ChuuniSkill;
+import ultrapoulet.wifeygame.battle.skills.DetectiveSkill;
 import ultrapoulet.wifeygame.battle.skills.DullahanSkill;
 import ultrapoulet.wifeygame.battle.skills.GhostSkill;
 import ultrapoulet.wifeygame.battle.skills.HyperSkill;
@@ -65,6 +67,8 @@ public class SkillsEnum {
                 return new MediumSkill(owner);
             case "Robot":
                 return new RobotSkill(owner);
+            case "Detective":
+                return new DetectiveSkill(owner);
             case "Dullahan":
                 return new DullahanSkill(owner);
             case "Protagonist":
@@ -103,6 +107,8 @@ public class SkillsEnum {
                 return new SurvivalSkill(owner, false);
             case "Athlete":
                 return new AthleteSkill(owner);
+            case "Biker":
+                return new BikerSkill(owner);
             case "Sports Manager":
                 return new SportsManagerSkill(owner);
             case "Musician":
@@ -125,7 +131,9 @@ public class SkillsEnum {
     private static void createSkillList(){
         skillsList = new HashMap<>();
         skillsList.put("ATHLETE", new SkillsEnum("Athlete", "Increases physical damage by 50%. Increases physical damage by 50% for each other Athlete wifey."));
+        skillsList.put("BIKER", new SkillsEnum("Biker", "Each other Biker wifey increases combo hits by 1."));
         skillsList.put("CHUUNI", new SkillsEnum("Chuunibyou", "Increases special attack damage by 400%."));
+        skillsList.put("DETECTIVE", new SkillsEnum("Detective", "Decreases damage by 50% at the start of a wave. Damage increases by 50% for each turn the wave lasts."));
         skillsList.put("DULLAHAN", new SkillsEnum("Dullahan", "Damage reduced by 25%. Each percentage point below 75% the enemy's health is increases damage by 4%."));
         skillsList.put("GHOST", new SkillsEnum("Ghost", "Physical damage taken reduced by 50%."));
         skillsList.put("HYPER", new SkillsEnum("Hyper", "Increases the number of combo attack hits by 1."));
@@ -159,7 +167,6 @@ public class SkillsEnum {
         skillsList.put("STUCOPRES", new SkillsEnum("Student Council President", "Student Council President description"));
         skillsList.put("STUCO", new SkillsEnum("Student Council", "Student Council description"));
         skillsList.put("ANIMAL", new SkillsEnum("Animal Girl", "Animal description"));
-        skillsList.put("BIKER", new SkillsEnum("Biker", "Biker description"));
         skillsList.put("ANGEL", new SkillsEnum("Angel", "Angel description"));
         skillsList.put("COOK", new SkillsEnum("Cook", "Cook description"));
         skillsList.put("TRAP", new SkillsEnum("Trap", "Trap description"));
@@ -169,7 +176,6 @@ public class SkillsEnum {
         skillsList.put("BIRDBRAIN", new SkillsEnum("Birdbrain", "Birdbrain description")); //Extra damage to bookworms
         skillsList.put("CLUMSY", new SkillsEnum("Clumsy", "Clumsy description"));
         skillsList.put("GAMER", new SkillsEnum("Gamer", "Gamer description"));
-        skillsList.put("DETECTIVE", new SkillsEnum("Detective", "Detective description"));
         skillsList.put("MARTIALARTSPRES", new SkillsEnum("Martial Arts Club President", "Martial Arts Club President description"));
         skillsList.put("MARTIALARTS", new SkillsEnum("Martial Artist", "Martial Artist description"));
         skillsList.put("DEMON", new SkillsEnum("Demon", "Demon description"));

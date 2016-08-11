@@ -49,6 +49,7 @@
         <weapon>SCYTHE</weapon>
         <skills>
             <skill>DULLAHAN</skill>
+            <skill>BIKER</skill>
         </skills>
     </character>
     <character key="TEST-CMPA">
@@ -241,6 +242,9 @@
         <strength>50</strength>
         <magic>90</magic>
         <weapon>FISTS</weapon>
+        <skills>
+            <skill>DETECTIVE</skill>
+        </skills>
     </character>
     <character key="TEST-LULU">
         <name>Luluco</name>
@@ -398,6 +402,7 @@
         <weapon>VEHICLE</weapon>
         <skills>
             <skill>RACER</skill>
+            <skill>BIKER</skill>
         </skills>
     </character>
     <character key="TEST-RENA">
