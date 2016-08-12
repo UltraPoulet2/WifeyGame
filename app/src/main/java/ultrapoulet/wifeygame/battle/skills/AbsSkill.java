@@ -28,6 +28,10 @@ public class AbsSkill {
         //Do anything that needs to be done at the start of a battle
     }
 
+    public void receiveBonus(double multiplier, Class givingSkill){
+        //Do anything that needs to be done for receiving a bonus from another class.
+    }
+
     public void startWave(){
         //Do anything that needs to be done at the start of a wave
     }

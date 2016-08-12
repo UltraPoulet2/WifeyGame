@@ -11,19 +11,23 @@ public class AthleteSkill extends AbsSkill {
 
     private double multiplier = 1.5;
     private double perGirl = 0.5;
-    private double manager = 1.0;
+
+    private boolean managerFound = false;
 
     @Override
     public void startBattle(BattleCharacter[] party) {
-        boolean managerFound = false;
         for(int i = 0; i < party.length; i++){
             if(party[i] != owner && party[i].hasSkill(AthleteSkill.class)){
                 multiplier += perGirl;
             }
-            if(party[i] != owner && !managerFound && party[i].hasSkill(SportsManagerSkill.class)){
-                multiplier += manager;
-                managerFound = true;
-            }
+        }
+    }
+
+    @Override
+    public void receiveBonus(double multiplier, Class givingSkill){
+        if(givingSkill == SportsManagerSkill.class && !managerFound){
+            this.multiplier += multiplier;
+            managerFound = true;
         }
     }
 

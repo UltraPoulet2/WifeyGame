@@ -121,6 +121,10 @@ public class BattleEnemy implements BattleCharacter{
         return skills.hasSkill(skillClass);
     }
 
+    public void giveSkillBonus(double multiplier, Class givingSkill, Class receivingSkill){
+        skills.giveSkillBonus(multiplier, givingSkill, receivingSkill);
+    }
+
     public int getNumHits(){
         switch(getAction()){
             case POWER_ATTACK:

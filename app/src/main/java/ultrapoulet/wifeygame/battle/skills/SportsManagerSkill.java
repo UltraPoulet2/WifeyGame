@@ -17,6 +17,7 @@ public class SportsManagerSkill extends AbsSkill {
         for(int i = 0; i < party.length; i++){
             if(party[i] != owner && party[i].hasSkill(AthleteSkill.class)){
                 multiplier += perGirl;
+                party[i].giveSkillBonus(1.0, SportsManagerSkill.class, AthleteSkill.class);
             }
         }
     }

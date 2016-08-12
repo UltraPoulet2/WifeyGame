@@ -81,6 +81,10 @@ public class BattleWifey implements BattleCharacter{
         return skills.hasSkill(skillClass);
     }
 
+    public void giveSkillBonus(double multiplier, Class givingSkill, Class receivingSkill){
+        skills.giveSkillBonus(multiplier, givingSkill, receivingSkill);
+    }
+
     public void setCurrentHP(int hp){
         this.currentHP = hp;
     }

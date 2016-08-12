@@ -25,6 +25,19 @@ public class SkillList {
         }
     }
 
+    public void giveSkillBonus(double multiplier, Class givingSkill, Class receivingSkill){
+        if(!AbsSkill.class.isAssignableFrom(givingSkill) || !AbsSkill.class.isAssignableFrom(receivingSkill)){
+            System.out.println("SkillList:giveSkillBonus: input " + givingSkill + " and/or " + receivingSkill + " are not AbsSkills");
+            return;
+        }
+        for(int i = 0; i < skills.size(); i++){
+            if(skills.get(i).getClass() == receivingSkill){
+                skills.get(i).receiveBonus(multiplier, givingSkill);
+            }
+        }
+
+    }
+
     public void setOwner(BattleCharacter owner){
         for(int i = 0; i < skills.size(); i++){
             skills.get(i).setOwner(owner);
