@@ -20,6 +20,7 @@ import ultrapoulet.wifeygame.battle.skills.MediumSkill;
 import ultrapoulet.wifeygame.battle.skills.MusicianSkill;
 import ultrapoulet.wifeygame.battle.skills.NurseSkill;
 import ultrapoulet.wifeygame.battle.skills.PravdaSkill;
+import ultrapoulet.wifeygame.battle.skills.ProgrammerSkill;
 import ultrapoulet.wifeygame.battle.skills.ProtagonistSkill;
 import ultrapoulet.wifeygame.battle.skills.RacerSkill;
 import ultrapoulet.wifeygame.battle.skills.RobotSkill;
@@ -71,6 +72,8 @@ public class SkillsEnum {
                 return new DetectiveSkill(owner);
             case "Dullahan":
                 return new DullahanSkill(owner);
+            case "Programmer":
+                return new ProgrammerSkill(owner);
             case "Protagonist":
                 return new ProtagonistSkill(owner);
             case "Pravda President":
@@ -147,6 +150,7 @@ public class SkillsEnum {
         skillsList.put("NURSE", new SkillsEnum("Nurse", "Increases healing by 100%. Gains health at the start of every round."));
         skillsList.put("PRAVDA", new SkillsEnum("Pravda", "Increases damage by 100% for each other Pravda wifey."));
         skillsList.put("PRAVDAPRES", new SkillsEnum("Pravda President", "Increases damage by 200% for each other Pravda wifey."));
+        skillsList.put("PROGRAMMER", new SkillsEnum("Programmer", "Increases damage by 75% each time this wifey attacks a robot. Resets at the start of the round."));
         skillsList.put("PROTAGONIST", new SkillsEnum("Protagonist", "When this wifey suffers lethal damage the first time, prevent the death and heal."));
         skillsList.put("RACER", new SkillsEnum("Racer", "Increases damage by 300% at the start of a wave. Damage decreases by 50% for each turn the wave lasts, to a minimum of 50% damage dealt."));
         skillsList.put("ROBOT", new SkillsEnum("Robot", "Decreases physical damage taken by 20%. Increases magical damage taken by 20%."));
@@ -193,7 +197,6 @@ public class SkillsEnum {
         skillsList.put("PERSONA", new SkillsEnum("Persona", "Persona description"));
         skillsList.put("SPIRIT", new SkillsEnum("Spirit", "Spirit description"));
         skillsList.put("FUJOSHI", new SkillsEnum("Fujoshi", "Fujoshi description"));
-        skillsList.put("PROGRAMMER", new SkillsEnum("Programmer", "Programmer description"));
         skillsList.put("NINJA", new SkillsEnum("Ninja", "Ninja description"));
     }
 }

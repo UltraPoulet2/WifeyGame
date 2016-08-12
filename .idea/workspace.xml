@@ -9,12 +9,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e235d761-a903-4549-b84c-2921700595c4" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/skills/BikerSkill.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/skills/DetectiveSkill.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/skills/ProgrammerSkill.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/config/characters.xml" afterPath="$PROJECT_DIR$/app/src/main/assets/config/characters.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/BattleWifey.java" afterPath="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/BattleWifey.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/skills/DetectiveSkill.java" afterPath="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/skills/DetectiveSkill.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/character/SkillsEnum.java" afterPath="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/character/SkillsEnum.java" />
     </list>
     <ignored path="AndroidGame.iws" />
@@ -64,9 +63,24 @@
       <file leaf-file-name="SkillsEnum.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/character/SkillsEnum.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-10.724138">
-              <caret line="110" column="45" selection-start-line="110" selection-start-column="45" selection-end-line="110" selection-end-column="45" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="75" column="50" selection-start-line="75" selection-start-column="50" selection-end-line="75" selection-end-column="50" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ProgrammerSkill.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/skills/ProgrammerSkill.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="56" column="35" selection-start-line="56" selection-start-column="35" selection-end-line="56" selection-end-column="35" />
+              <folding>
+                <element signature="e#413#414#0" expanded="true" />
+                <element signature="e#443#444#0" expanded="true" />
+                <element signature="e#488#489#0" expanded="true" />
+                <element signature="e#525#526#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -98,18 +112,10 @@
         <entry file="file://$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/skills/DetectiveSkill.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="16" column="25" selection-start-line="16" selection-start-column="25" selection-end-line="16" selection-end-column="25" />
+              <caret line="40" column="9" selection-start-line="40" selection-start-column="9" selection-end-line="40" selection-end-column="9" />
               <folding>
-                <element signature="e#407#408#0" expanded="true" />
-                <element signature="e#451#452#0" expanded="true" />
-                <element signature="e#534#535#0" expanded="true" />
-                <element signature="e#567#568#0" expanded="true" />
-                <element signature="e#649#650#0" expanded="true" />
-                <element signature="e#682#683#0" expanded="true" />
-                <element signature="e#764#765#0" expanded="true" />
-                <element signature="e#797#798#0" expanded="true" />
-                <element signature="e#841#842#0" expanded="true" />
-                <element signature="e#878#879#0" expanded="true" />
+                <element signature="e#447#448#0" expanded="true" />
+                <element signature="e#491#492#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -148,21 +154,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AndroidGraphics.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/ultrapoulet/androidgame/framework/implementation/AndroidGraphics.java">
+      <file leaf-file-name="characters.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/assets/config/characters.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="108" column="47" selection-start-line="108" selection-start-column="47" selection-end-line="108" selection-end-column="47" />
+            <state vertical-scroll-proportion="-3.9636364">
+              <caret line="85" column="37" selection-start-line="85" selection-start-column="37" selection-end-line="85" selection-end-column="37" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="characters.xml" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/assets/config/characters.xml">
+      <file leaf-file-name="enemies.xml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/assets/config/enemies.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.48658317">
-              <caret line="404" column="24" selection-start-line="404" selection-start-column="24" selection-end-line="404" selection-end-column="24" />
+            <state vertical-scroll-proportion="0.33452594">
+              <caret line="11" column="32" selection-start-line="11" selection-start-column="32" selection-end-line="11" selection-end-column="32" />
               <folding />
             </state>
           </provider>
@@ -1748,7 +1754,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/BattleInfo.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/parsers/BattleParser.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/PartySelectScreen.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/skills/SkillFactory.java" />
@@ -1759,7 +1764,6 @@
         <option value="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/character/EnemyCharacter.java" />
         <option value="$PROJECT_DIR$/app/src/main/assets/config/battles.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/skills/GhostSkill.java" />
-        <option value="$PROJECT_DIR$/app/src/main/assets/config/enemies.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/skills/PravdaClass.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/skills/MechanicSkill.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/skills/ProtagonistSkill.java" />
@@ -1794,11 +1798,13 @@
         <option value="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/skills/MagicalGirlSkill.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/skills/RobotSkill.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/CharacterInfoScreen.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/skills/DetectiveSkill.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/skills/BikerSkill.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/BattleWifey.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/character/SkillsEnum.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/skills/DetectiveSkill.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/skills/ProgrammerSkill.java" />
         <option value="$PROJECT_DIR$/app/src/main/assets/config/characters.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/character/SkillsEnum.java" />
+        <option value="$PROJECT_DIR$/app/src/main/assets/config/enemies.xml" />
       </list>
     </option>
   </component>
@@ -1810,7 +1816,7 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1912" />
+    <option name="x" value="-8" />
     <option name="y" value="-8" />
     <option name="width" value="1936" />
     <option name="height" value="1056" />
@@ -1856,76 +1862,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="PackagesPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AndroidGame" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AndroidGame" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ultrapoulet.androidgame" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AndroidGame" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ultrapoulet.androidgame" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="framework" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AndroidGame" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ultrapoulet.androidgame" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="framework" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="implementation" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -2338,6 +2274,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
       <pane id="AndroidView">
         <subPane>
           <PATH>
@@ -2358,6 +2295,75 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="app" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="Scratches" />
+      <pane id="PackagesPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AndroidGame" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AndroidGame" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ultrapoulet.androidgame" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AndroidGame" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ultrapoulet.androidgame" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="framework" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AndroidGame" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ultrapoulet.androidgame" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="framework" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="implementation" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -2678,8 +2684,8 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1912" y="-8" width="1936" height="1056" extended-state="7" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -2734,13 +2740,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/colors.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.39605734">
@@ -2809,14 +2808,6 @@
             <element signature="e#169#170#0" expanded="false" />
             <element signature="e#196#197#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/assets/config/enemies.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="11" column="24" selection-start-line="11" selection-start-column="24" selection-end-line="11" selection-end-column="24" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3115,25 +3106,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/skills/DetectiveSkill.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="16" column="25" selection-start-line="16" selection-start-column="25" selection-end-line="16" selection-end-column="25" />
-          <folding>
-            <element signature="e#407#408#0" expanded="true" />
-            <element signature="e#451#452#0" expanded="true" />
-            <element signature="e#534#535#0" expanded="true" />
-            <element signature="e#567#568#0" expanded="true" />
-            <element signature="e#649#650#0" expanded="true" />
-            <element signature="e#682#683#0" expanded="true" />
-            <element signature="e#764#765#0" expanded="true" />
-            <element signature="e#797#798#0" expanded="true" />
-            <element signature="e#841#842#0" expanded="true" />
-            <element signature="e#878#879#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/character/Weapon.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -3177,18 +3149,50 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/character/SkillsEnum.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/skills/DetectiveSkill.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.724138">
-          <caret line="110" column="45" selection-start-line="110" selection-start-column="45" selection-end-line="110" selection-end-column="45" />
-          <folding />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="40" column="9" selection-start-line="40" selection-start-column="9" selection-end-line="40" selection-end-column="9" />
+          <folding>
+            <element signature="e#447#448#0" expanded="true" />
+            <element signature="e#491#492#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/skills/ProgrammerSkill.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="56" column="35" selection-start-line="56" selection-start-column="35" selection-end-line="56" selection-end-column="35" />
+          <folding>
+            <element signature="e#413#414#0" expanded="true" />
+            <element signature="e#443#444#0" expanded="true" />
+            <element signature="e#488#489#0" expanded="true" />
+            <element signature="e#525#526#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/assets/config/characters.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.48658317">
-          <caret line="404" column="24" selection-start-line="404" selection-start-column="24" selection-end-line="404" selection-end-column="24" />
+        <state vertical-scroll-proportion="-3.9636364">
+          <caret line="85" column="37" selection-start-line="85" selection-start-column="37" selection-end-line="85" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/character/SkillsEnum.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="75" column="50" selection-start-line="75" selection-start-column="50" selection-end-line="75" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/assets/config/enemies.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33452594">
+          <caret line="11" column="32" selection-start-line="11" selection-start-column="32" selection-end-line="11" selection-end-column="32" />
           <folding />
         </state>
       </provider>

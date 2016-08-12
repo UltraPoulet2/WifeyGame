@@ -9,6 +9,7 @@ public class DetectiveSkill extends AbsSkill {
 
     private double startMultiplier = 0.5;
     private double perTurn = 0.5;
+    private double maxMultiplier = 5.0;
     private double multiplier;
 
     public DetectiveSkill(BattleCharacter owner) { super(owner); }
@@ -35,6 +36,8 @@ public class DetectiveSkill extends AbsSkill {
 
     @Override
     public void endRound() {
-        multiplier += perTurn;
+        if(multiplier < maxMultiplier) {
+            multiplier += perTurn;
+        }
     }
 }

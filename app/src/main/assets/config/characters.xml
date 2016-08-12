@@ -83,6 +83,7 @@
         <weapon>COMPUTER</weapon>
         <skills>
             <skill>HYPER</skill>
+            <skill>PROGRAMMER</skill>
         </skills>
     </character>
     <character key="TEST-EEMI">
@@ -676,6 +677,9 @@
         <strength>40</strength>
         <magic>70</magic>
         <weapon>COMPUTER</weapon>
+        <skills>
+            <skill>PROGRAMMER</skill>
+        </skills>
     </character>
     <character key="TEST-NORE">
         <name>Noire</name>
