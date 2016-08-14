@@ -127,6 +127,9 @@
         <strength>30</strength>
         <magic>30</magic>
         <weapon>FISTS</weapon>
+        <skills>
+            <skill>TRAP</skill>
+        </skills>
     </character>
     <character key="TEST-HKSE">
         <name>Hakase Shinonome</name>
@@ -228,6 +231,9 @@
         <strength>30</strength>
         <magic>70</magic>
         <weapon>MAGIC</weapon>
+        <skills>
+            <skill>TRAP</skill>
+        </skills>
     </character>
     <character key="TEST-KTYS">
         <name>Katyusha</name>
@@ -455,6 +461,7 @@
         <weapon>SPORT</weapon>
         <skills>
             <skill>ATHLETE</skill>
+            <skill>TRAP</skill>
         </skills>
     </character>
     <character key="TEST-SAYA">
@@ -608,6 +615,9 @@
         <strength>40</strength>
         <magic>40</magic>
         <weapon>AIRSOFT</weapon>
+        <skills>
+            <skill>SURVIVAL</skill>
+        </skills>
     </character>
     <character key="TEST-AGIS">
         <name>Aigis</name>
@@ -624,6 +634,9 @@
         <strength>90</strength>
         <magic>40</magic>
         <weapon>SWORD</weapon>
+        <skills>
+            <skill>FUJOSHI</skill>
+        </skills>
     </character>
     <character key="TEST-MOMO">
         <name>Momoka Oginome</name>

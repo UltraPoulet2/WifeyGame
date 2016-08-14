@@ -9,6 +9,7 @@ import ultrapoulet.wifeygame.battle.skills.BikerSkill;
 import ultrapoulet.wifeygame.battle.skills.ChuuniSkill;
 import ultrapoulet.wifeygame.battle.skills.DetectiveSkill;
 import ultrapoulet.wifeygame.battle.skills.DullahanSkill;
+import ultrapoulet.wifeygame.battle.skills.FujoshiSkill;
 import ultrapoulet.wifeygame.battle.skills.GhostSkill;
 import ultrapoulet.wifeygame.battle.skills.HyperSkill;
 import ultrapoulet.wifeygame.battle.skills.KillerSkill;
@@ -29,6 +30,7 @@ import ultrapoulet.wifeygame.battle.skills.SlugabedSkill;
 import ultrapoulet.wifeygame.battle.skills.SportsManagerSkill;
 import ultrapoulet.wifeygame.battle.skills.SurvivalSkill;
 import ultrapoulet.wifeygame.battle.skills.TimeTravelerSkill;
+import ultrapoulet.wifeygame.battle.skills.TrapSkill;
 import ultrapoulet.wifeygame.battle.skills.TsundereSkill;
 import ultrapoulet.wifeygame.battle.skills.VampireSkill;
 import ultrapoulet.wifeygame.battle.skills.WitchSkill;
@@ -60,8 +62,12 @@ public class SkillsEnum {
                 return new SadistSkill(owner);
             case "Masochist":
                 return new MasochistSkill(owner);
+            case "Trap":
+                return new TrapSkill(owner);
             case "Tsundere":
                 return new TsundereSkill(owner);
+            case "Fujoshi":
+                return new FujoshiSkill(owner);
             case "Ghost":
                 return new GhostSkill(owner);
             case "Medium":
@@ -138,6 +144,7 @@ public class SkillsEnum {
         skillsList.put("CHUUNI", new SkillsEnum("Chuunibyou", "Increases special attack damage by 400%."));
         skillsList.put("DETECTIVE", new SkillsEnum("Detective", "Decreases damage by 50% at the start of a wave. Damage increases by 50% for each turn the wave lasts."));
         skillsList.put("DULLAHAN", new SkillsEnum("Dullahan", "Damage reduced by 25%. Each percentage point below 75% the enemy's health is increases damage by 4%."));
+        skillsList.put("FUJOSHI", new SkillsEnum("Fujoshi", "Damage increased by 33% for each Trap wifey in party. Damage increased by a bonus 100% if there are more than two Trap wifeys."));
         skillsList.put("GHOST", new SkillsEnum("Ghost", "Physical damage taken reduced by 50%."));
         skillsList.put("HYPER", new SkillsEnum("Hyper", "Increases the number of combo attack hits by 1."));
         skillsList.put("KILLER", new SkillsEnum("Killer", "Defeating an enemy with this wifey increases damage by 100% for the rest of the battle."));
@@ -160,6 +167,7 @@ public class SkillsEnum {
         skillsList.put("SURVIVAL", new SkillsEnum("Survival Game Club", "Decreases physical, magical, and special damage taken by 1% each turn."));
         skillsList.put("SURVIVALPRES", new SkillsEnum("Survival Game Club President", "Decreases physical, magical, and special damage taken by 2% each turn."));
         skillsList.put("TIMETRAVELER", new SkillsEnum("Time Traveler", "When this wifey suffers lethal damage the first time, prevent the death and set health to the wifey's health at the start of the round."));
+        skillsList.put("TRAP", new SkillsEnum("Trap", "TBD"));
         skillsList.put("TSUNDERE", new SkillsEnum("Tsundere", "Increases damage by 100% if there are only 4 party members, 200% if there are only 3, 300% if there are only 2, and 400% if this is the only wifey."));
         skillsList.put("VAMPIRE", new SkillsEnum("Vampire", "Dealing damage increases health by 10% of the damage dealt."));
         skillsList.put("WITCH", new SkillsEnum("Witch", "Increases magical damage by 20% each time a magical attack is used."));
@@ -173,7 +181,6 @@ public class SkillsEnum {
         skillsList.put("ANIMAL", new SkillsEnum("Animal Girl", "Animal description"));
         skillsList.put("ANGEL", new SkillsEnum("Angel", "Angel description"));
         skillsList.put("COOK", new SkillsEnum("Cook", "Cook description"));
-        skillsList.put("TRAP", new SkillsEnum("Trap", "Trap description"));
         skillsList.put("SCIENTIST", new SkillsEnum("Scientist", "Scientist description"));
         skillsList.put("GODDESS", new SkillsEnum("Goddess", "Goddess description"));
         skillsList.put("FOODIE", new SkillsEnum("Foodie", "Foodie description"));
@@ -196,7 +203,7 @@ public class SkillsEnum {
         skillsList.put("WRITER", new SkillsEnum("Writer", "Writer description"));
         skillsList.put("PERSONA", new SkillsEnum("Persona", "Persona description"));
         skillsList.put("SPIRIT", new SkillsEnum("Spirit", "Spirit description"));
-        skillsList.put("FUJOSHI", new SkillsEnum("Fujoshi", "Fujoshi description"));
         skillsList.put("NINJA", new SkillsEnum("Ninja", "Ninja description"));
+        skillsList.put("MAGICIAN", new SkillsEnum("Magician", "Magician description"));
     }
 }
