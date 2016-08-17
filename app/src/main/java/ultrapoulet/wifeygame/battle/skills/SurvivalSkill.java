@@ -10,9 +10,12 @@ public class SurvivalSkill extends AbsSkill {
     public SurvivalSkill(BattleCharacter owner, boolean pres){
         super(owner);
         this.isPresident = pres;
+        this.skillName = "Sabagebu";
         if(pres){
             perTurn = 0.02;
+            this.skillName += " President";
         }
+        this.description = "Desc";
     }
 
     private boolean isPresident;

@@ -7,7 +7,11 @@ import ultrapoulet.wifeygame.battle.BattleCharacter;
  */
 public class AthleteSkill extends AbsSkill {
 
-    public AthleteSkill(BattleCharacter owner){ super(owner); }
+    public AthleteSkill(BattleCharacter owner) {
+        super(owner);
+        this.skillName = "Athlete";
+        this.description = "Desc";
+    }
 
     private double multiplier = 1.5;
     private double perGirl = 0.5;

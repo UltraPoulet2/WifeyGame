@@ -7,7 +7,11 @@ import ultrapoulet.wifeygame.battle.BattleCharacter;
  */
 public class VampireSkill extends AbsSkill {
 
-    public VampireSkill(BattleCharacter owner){ super(owner); }
+    public VampireSkill(BattleCharacter owner){
+        super(owner);
+        this.skillName = "Vampire";
+        this.description = "Desc";
+    }
 
     @Override
     public void onDamageDealt(int damage) {

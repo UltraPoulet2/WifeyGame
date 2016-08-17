@@ -7,7 +7,11 @@ import ultrapoulet.wifeygame.battle.BattleCharacter;
  */
 public class TrapSkill extends AbsSkill {
 
-    public TrapSkill(BattleCharacter owner){ super(owner); }
+    public TrapSkill(BattleCharacter owner){
+        super(owner);
+        this.skillName = "Trap";
+        this.description = "Desc";
+    }
 
     //Add details later.
 }

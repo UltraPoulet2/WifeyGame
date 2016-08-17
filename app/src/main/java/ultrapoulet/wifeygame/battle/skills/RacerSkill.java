@@ -7,7 +7,11 @@ import ultrapoulet.wifeygame.battle.BattleCharacter;
  */
 public class RacerSkill extends AbsSkill {
 
-    public RacerSkill(BattleCharacter owner){ super(owner); }
+    public RacerSkill(BattleCharacter owner){
+        super(owner);
+        this.skillName = "Racer";
+        this.description = "Desc";
+    }
 
     private double startMultiplier = 4.0;
     private double perTurn = 0.5;

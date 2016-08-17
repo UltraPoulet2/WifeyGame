@@ -17,7 +17,7 @@ public class AbsSkill {
     public void setOwner(BattleCharacter owner){ this.owner = owner; }
 
     public String getSkillName(){
-        return skillName;
+        return this.skillName;
     }
 
     public String getDescription(){

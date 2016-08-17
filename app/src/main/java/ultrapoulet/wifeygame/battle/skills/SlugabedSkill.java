@@ -7,7 +7,11 @@ import ultrapoulet.wifeygame.battle.BattleCharacter;
  */
 public class SlugabedSkill extends AbsSkill {
 
-    public SlugabedSkill(BattleCharacter owner) { super(owner); }
+    public SlugabedSkill(BattleCharacter owner) {
+        super(owner);
+        this.skillName = "Slugabed";
+        this.description = "Desc";
+    }
 
     private double currentMultiplier = 6.0;
     private double minMultiplier = 0.25;

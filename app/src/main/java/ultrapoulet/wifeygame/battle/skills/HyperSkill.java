@@ -7,7 +7,11 @@ import ultrapoulet.wifeygame.battle.BattleCharacter;
  */
 public class HyperSkill extends AbsSkill {
 
-    public HyperSkill(BattleCharacter owner){ super(owner); }
+    public HyperSkill(BattleCharacter owner) {
+        super(owner);
+        this.skillName = "Hyper";
+        this.description = "Desc";
+    }
 
     @Override
     public int getBonusHits() {

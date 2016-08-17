@@ -7,7 +7,11 @@ import ultrapoulet.wifeygame.battle.BattleCharacter;
  */
 public class GhostSkill extends AbsSkill {
 
-    public GhostSkill(BattleCharacter owner) { super(owner); }
+    public GhostSkill(BattleCharacter owner) {
+        super(owner);
+        this.skillName = "Ghost";
+        this.description = "Desc";
+    }
 
     @Override
     public double receivePhysicalAttackPercentage(BattleCharacter enemy) {

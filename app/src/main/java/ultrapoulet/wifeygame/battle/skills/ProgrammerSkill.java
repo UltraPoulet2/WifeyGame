@@ -7,7 +7,11 @@ import ultrapoulet.wifeygame.battle.BattleCharacter;
  */
 public class ProgrammerSkill extends AbsSkill {
 
-    public ProgrammerSkill(BattleCharacter owner) { super(owner); }
+    public ProgrammerSkill(BattleCharacter owner) {
+        super(owner);
+        this.skillName = "Programmer";
+        this.description = "Desc";
+    }
 
     private double multiplier;
     private double perRound = 0.75;

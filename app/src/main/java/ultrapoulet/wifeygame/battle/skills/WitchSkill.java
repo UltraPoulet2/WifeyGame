@@ -11,7 +11,11 @@ public class WitchSkill extends AbsSkill {
     private int numUses = 0;
     private boolean magicCurrentTurn = false;
 
-    public WitchSkill(BattleCharacter owner){ super(owner); }
+    public WitchSkill(BattleCharacter owner){
+        super(owner);
+        this.skillName = "Witch";
+        this.description = "Desc";
+    }
 
     @Override
     public double magicalAttackPercentage(BattleCharacter enemy) {

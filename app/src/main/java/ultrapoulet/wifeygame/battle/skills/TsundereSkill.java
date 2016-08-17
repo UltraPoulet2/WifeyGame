@@ -10,7 +10,11 @@ public class TsundereSkill extends AbsSkill {
     private double bonusDamage;
     private double maxMultiplier = 4.0;
 
-    public TsundereSkill(BattleCharacter owner){ super(owner); }
+    public TsundereSkill(BattleCharacter owner){
+        super(owner);
+        this.skillName = "Tsundere";
+        this.description = "Desc";
+    }
 
     @Override
     public void startBattle(BattleCharacter[] party) {

@@ -77,6 +77,8 @@ public class BattleWifey implements BattleCharacter{
         return this.image;
     }
 
+    public SkillList getSkills() { return this.skills; }
+
     public boolean hasSkill(Class skillClass){
         return skills.hasSkill(skillClass);
     }

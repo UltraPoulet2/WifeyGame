@@ -7,7 +7,11 @@ import ultrapoulet.wifeygame.battle.BattleCharacter;
  */
 public class RobotSkill extends AbsSkill {
 
-    public RobotSkill(BattleCharacter owner) { super(owner); }
+    public RobotSkill(BattleCharacter owner) {
+        super(owner);
+        this.skillName = "Robot";
+        this.description = "Desc";
+    }
 
     @Override
     public double receivePhysicalAttackPercentage(BattleCharacter enemy) {

@@ -7,7 +7,11 @@ import ultrapoulet.wifeygame.battle.BattleCharacter;
  */
 public class NurseSkill extends AbsSkill {
 
-    public NurseSkill(BattleCharacter owner) { super(owner); }
+    public NurseSkill(BattleCharacter owner) {
+        super(owner);
+        this.skillName = "Nurse";
+        this.description = "Desc";
+    }
 
     @Override
     public double healPercentage(BattleCharacter partyMember) {

@@ -9,7 +9,11 @@ public class MasochistSkill extends AbsSkill {
 
     public double damageMultiplier = 4.00;
 
-    public MasochistSkill(BattleCharacter owner){ super(owner); }
+    public MasochistSkill(BattleCharacter owner){
+        super(owner);
+        this.skillName = "Masochist";
+        this.description = "Desc";
+    }
 
     @Override
     public double physicalAttackPercentage(BattleCharacter enemy) {

@@ -7,7 +7,11 @@ import ultrapoulet.wifeygame.battle.BattleCharacter;
  */
 public class MaidSkill extends AbsSkill {
 
-    public MaidSkill(BattleCharacter owner) { super(owner); }
+    public MaidSkill(BattleCharacter owner) {
+        super(owner);
+        this.skillName = "Maid";
+        this.description = "Desc";
+    }
 
     private boolean healLastTurn = false;
     private boolean healCurrentTurn = false;

@@ -7,7 +7,11 @@ import ultrapoulet.wifeygame.battle.BattleCharacter;
  */
 public class KillerSkill extends AbsSkill {
 
-    public KillerSkill(BattleCharacter owner){ super(owner); }
+    public KillerSkill(BattleCharacter owner){
+        super(owner);
+        this.skillName = "Killer";
+        this.description = "Desc";
+    }
 
     private double multiplier = 1.0;
 

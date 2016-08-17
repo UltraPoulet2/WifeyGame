@@ -7,7 +7,11 @@ import ultrapoulet.wifeygame.battle.BattleCharacter;
  */
 public class BikerSkill extends AbsSkill {
 
-    public BikerSkill(BattleCharacter owner) { super(owner); }
+    public BikerSkill(BattleCharacter owner) {
+        super(owner);
+        this.skillName = "Biker";
+        this.description = "Desc";
+    }
 
     private int extraHits = 0;
 

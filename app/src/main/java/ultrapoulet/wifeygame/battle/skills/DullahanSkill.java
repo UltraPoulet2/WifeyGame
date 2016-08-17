@@ -7,7 +7,11 @@ import ultrapoulet.wifeygame.battle.BattleCharacter;
  */
 public class DullahanSkill extends AbsSkill {
 
-    public DullahanSkill(BattleCharacter owner){ super(owner); }
+    public DullahanSkill(BattleCharacter owner){
+        super(owner);
+        this.skillName = "Dullahan";
+        this.description = "Desc";
+    }
 
     @Override
     public double physicalAttackPercentage(BattleCharacter enemy) {

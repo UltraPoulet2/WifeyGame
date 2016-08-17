@@ -7,7 +7,11 @@ import ultrapoulet.wifeygame.battle.BattleCharacter;
  */
 public class ChuuniSkill extends AbsSkill {
 
-    public ChuuniSkill(BattleCharacter owner){ super(owner); }
+    public ChuuniSkill(BattleCharacter owner){
+        super(owner);
+        this.skillName = "Chuunibyou";
+        this.description = "Desc";
+    }
 
     @Override
     public double specialAttackPercentage(BattleCharacter enemy) {

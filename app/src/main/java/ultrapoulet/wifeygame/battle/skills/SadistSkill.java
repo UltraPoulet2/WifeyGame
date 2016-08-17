@@ -10,7 +10,11 @@ public class SadistSkill extends AbsSkill {
     private final double hitMultiplier = 0.05;
     private int numHits = 0;
 
-    public SadistSkill(BattleCharacter owner){ super(owner); }
+    public SadistSkill(BattleCharacter owner){
+        super(owner);
+        this.skillName = "Sadist";
+        this.description = "Desc";
+    }
 
     @Override
     public double physicalAttackPercentage(BattleCharacter enemy){

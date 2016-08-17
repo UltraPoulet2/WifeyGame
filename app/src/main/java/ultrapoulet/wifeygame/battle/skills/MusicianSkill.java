@@ -7,7 +7,11 @@ import ultrapoulet.wifeygame.battle.BattleCharacter;
  */
 public class MusicianSkill extends AbsSkill{
 
-    public MusicianSkill(BattleCharacter owner) { super(owner); }
+    public MusicianSkill(BattleCharacter owner) {
+        super(owner);
+        this.skillName = "Musician";
+        this.description = "Desc";
+    }
 
     private int attackNum;
     private double multiplier = 4.0;

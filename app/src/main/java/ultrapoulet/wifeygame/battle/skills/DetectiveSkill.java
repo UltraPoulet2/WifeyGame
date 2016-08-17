@@ -12,7 +12,11 @@ public class DetectiveSkill extends AbsSkill {
     private double maxMultiplier = 5.0;
     private double multiplier;
 
-    public DetectiveSkill(BattleCharacter owner) { super(owner); }
+    public DetectiveSkill(BattleCharacter owner) {
+        super(owner);
+        this.skillName = "Detective";
+        this.description = "Desc";
+    }
 
     @Override
     public void startWave() {

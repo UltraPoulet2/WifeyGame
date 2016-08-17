@@ -7,7 +7,11 @@ import ultrapoulet.wifeygame.battle.BattleCharacter;
  */
 public class MediumSkill extends AbsSkill {
 
-    public MediumSkill(BattleCharacter owner) { super(owner); }
+    public MediumSkill(BattleCharacter owner) {
+        super(owner);
+        this.skillName = "Medium";
+        this.description = "Desc";
+    }
 
     @Override
     public double magicalAttackPercentage(BattleCharacter enemy){

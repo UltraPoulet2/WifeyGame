@@ -7,7 +7,11 @@ import ultrapoulet.wifeygame.battle.BattleCharacter;
  */
 public class MechanicSkill extends AbsSkill {
 
-    public MechanicSkill(BattleCharacter owner) {super(owner);}
+    public MechanicSkill(BattleCharacter owner) {
+        super(owner);
+        this.skillName = "Mechanic";
+        this.description = "Desc";
+    }
 
     @Override
     public double healPercentage(BattleCharacter partyMember) {

@@ -7,7 +7,11 @@ import ultrapoulet.wifeygame.battle.BattleCharacter;
  */
 public class TimeTravelerSkill extends AbsSkill {
 
-    public TimeTravelerSkill(BattleCharacter owner){ super(owner); }
+    public TimeTravelerSkill(BattleCharacter owner){
+        super(owner);
+        this.skillName = "Time Traveler";
+        this.description = "Desc";
+    }
 
     private boolean revived = false;
     private int roundHealth;

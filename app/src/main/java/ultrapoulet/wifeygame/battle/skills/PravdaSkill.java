@@ -12,6 +12,11 @@ public class PravdaSkill extends AbsSkill {
     public PravdaSkill(BattleCharacter owner, boolean president) {
         super(owner);
         this.isPresident = president;
+        this.skillName = "Pravda";
+        if(this.isPresident){
+            this.skillName += " President";
+        }
+        this.description = "Desc";
     }
 
     private double multiplier = 1.0;

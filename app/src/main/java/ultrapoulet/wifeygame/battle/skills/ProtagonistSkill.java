@@ -9,7 +9,11 @@ public class ProtagonistSkill extends AbsSkill {
 
     boolean revived = false;
 
-    public ProtagonistSkill(BattleCharacter owner) { super(owner); }
+    public ProtagonistSkill(BattleCharacter owner) {
+        super(owner);
+        this.skillName = "Protagonist";
+        this.description = "Desc";
+    }
 
     @Override
     public void onDamageReceived(int damage) {

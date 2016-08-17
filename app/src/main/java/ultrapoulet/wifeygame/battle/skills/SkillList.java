@@ -35,7 +35,14 @@ public class SkillList {
                 skills.get(i).receiveBonus(multiplier, givingSkill);
             }
         }
+    }
 
+    public AbsSkill get(int index){
+        return skills.get(index);
+    }
+
+    public int size(){
+        return skills.size();
     }
 
     public void setOwner(BattleCharacter owner){

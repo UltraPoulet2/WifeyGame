@@ -13,6 +13,7 @@ import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.androidgame.framework.Input.TouchEvent;
 import ultrapoulet.androidgame.framework.Screen;
 import ultrapoulet.wifeygame.Assets;
+import ultrapoulet.wifeygame.BattleCharacterInfoScreen;
 import ultrapoulet.wifeygame.battle.enemyai.EnemyAI.EnemyAction;
 
 /**
@@ -120,6 +121,8 @@ public class BattleScreen extends Screen {
     private int partyDamage[] = new int[7];
     private ButtonPressed commandSelected;
 
+    private BattleCharacterInfoScreen charInfo;
+
     private enum ButtonPressed{
         POWER_ATTACK,
         COMBO_ATTACK,
@@ -170,6 +173,9 @@ public class BattleScreen extends Screen {
         createButtonMap();
         createButtonNames();
         createPaint();
+
+        charInfo = new BattleCharacterInfoScreen(game);
+        charInfo.setPreviousScreen(this);
     }
 
     public void createButtonMap(){
@@ -460,6 +466,9 @@ public class BattleScreen extends Screen {
                         int charPressed = getCharacterPressed(touchEvents.get(i));
                         if(charPressed != -1){
                             System.out.println("Pressed character: " + party[charPressed].getName());
+                            charInfo.setChar(party[charPressed]);
+                            game.setScreen(charInfo);
+                            continue;
                         }
                         if (command == null) {
                             continue;

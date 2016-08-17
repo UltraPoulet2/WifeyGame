@@ -7,7 +7,11 @@ import ultrapoulet.wifeygame.battle.BattleCharacter;
  */
 public class FujoshiSkill extends AbsSkill {
 
-    public FujoshiSkill(BattleCharacter owner){ super(owner); }
+    public FujoshiSkill(BattleCharacter owner){
+        super(owner);
+        this.skillName = "Fujoshi";
+        this.description = "Desc";
+    }
 
     private double multiplier = 1.0;
     private double perTrap = 1.0/3.0;
