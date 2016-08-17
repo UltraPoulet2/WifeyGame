@@ -88,6 +88,7 @@ public class LoadingScreen extends Screen {
         Assets.LockSelection = g.newImage("LockSelection.png", ImageFormat.ARGB8888);
 
         Assets.CharacterInfoScreen = g.newImage("screens/CharacterInfoScreen.png", ImageFormat.RGB565);
+        Assets.BattleCharacterInfoScreen = g.newImage("screens/BattleCharacterInfoScreen.png", ImageFormat.RGB565);
 
         createRecruits();
         createParty();

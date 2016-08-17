@@ -23,7 +23,7 @@ public class FujoshiSkill extends AbsSkill {
         }
         multiplier += count * perTrap;
         if(count >= 2){
-            multiplier += 1.0;
+            multiplier += twoTrapBonus;
         }
     }
 

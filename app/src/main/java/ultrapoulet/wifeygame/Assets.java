@@ -35,4 +35,5 @@ public class Assets {
 
     //CharacterInfoScreen Stuff
     public static Image CharacterInfoScreen;
+    public static Image BattleCharacterInfoScreen;
 }

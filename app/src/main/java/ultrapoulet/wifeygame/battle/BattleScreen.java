@@ -73,6 +73,9 @@ public class BattleScreen extends Screen {
     private static final int CHAR_IMAGE_LARGE_Y = 660;
     private static final int CHAR_HEALTH_LARGE_Y = 840;
 
+    private static final int CHAR_IMAGE_SMALL_SIZE = 80;
+    private static final int CHAR_IMAGE_LARGE_SIZE = 160;
+
     private static final int ENEMY_HEALTH_HOLDER_X = 195;
     private static final int ENEMY_HEALTH_HOLDER_Y = 508;
     private static final int ENEMY_HEALTH_BAR_X = 200;
@@ -272,6 +275,41 @@ public class BattleScreen extends Screen {
         return null;
     }
 
+    public int getCharacterPressed(TouchEvent touch){
+        int i = 0;
+        int x = touch.x;
+        int y = touch.y;
+        for( ; i < partyIndex && i < party.length; i++ ){
+            int leftX = CHAR_HOLDER_X_DISTANCE * i + CHAR_INTERIOR_SMALL_X;
+            int rightX = leftX + CHAR_IMAGE_SMALL_SIZE;
+            int topY = CHAR_IMAGE_SMALL_Y;
+            int botY = topY + CHAR_IMAGE_SMALL_SIZE;
+            if(leftX <= x && rightX >= x && topY <= y && botY >= y){
+                return i;
+            }
+        }
+        if(i == partyIndex && i < party.length){
+            int leftX = CHAR_HOLDER_X_DISTANCE * i + CHAR_INTERIOR_LARGE_X;
+            int rightX = leftX + CHAR_IMAGE_LARGE_SIZE;
+            int topY = CHAR_IMAGE_LARGE_Y;
+            int botY = topY + CHAR_IMAGE_LARGE_SIZE;
+            if(leftX <= x && rightX >= x && topY <= y && botY >= y){
+                return i;
+            }
+            i++;
+        }
+        for( ; i < party.length; i++ ){
+            int leftX = CHAR_HOLDER_X_DISTANCE * (i + 1);
+            int rightX = leftX + CHAR_IMAGE_SMALL_SIZE;
+            int topY = CHAR_IMAGE_SMALL_Y;
+            int botY = topY + CHAR_IMAGE_SMALL_SIZE;
+            if(leftX <= x && rightX >= x && topY <= y && botY >= y){
+                return i;
+            }
+        }
+        return -1;
+    }
+
     private void incrementHits(){
         numHits = (numHits < MAX_HITS) ? numHits + 1 : numHits;
     }
@@ -419,6 +457,10 @@ public class BattleScreen extends Screen {
                             continue;
                         }
                         ButtonPressed command = getButtonPressed(touchEvents.get(i));
+                        int charPressed = getCharacterPressed(touchEvents.get(i));
+                        if(charPressed != -1){
+                            System.out.println("Pressed character: " + party[charPressed].getName());
+                        }
                         if (command == null) {
                             continue;
                         }
