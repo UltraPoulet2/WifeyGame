@@ -46,10 +46,15 @@ public class BattleCharacterInfoScreen extends Screen {
     private static final int NAME_X = 402 + BG_X;
     private static final int MAX_NAME_Y = 155 + BG_Y;
 
+    private static final int HEALTH_BAR_X = 400 + BG_X;
+    private static final int HEALTH_BAR_Y = 200 + BG_Y;
+    private static final double HEALTH_BAR_SCALE_X = 156.25;
+    private static final int HEALTH_BAR_SCALE_Y = 250;
+
     private Paint levelPaint;
     private static final int LEVEL_SIZE = 34;
-    private static final int LEVEL_X = 425 + BG_X;
-    private static final int LEVEL_Y = 237 + BG_Y;
+    private static final int LEVEL_X = 400 + BG_X;
+    private static final int LEVEL_Y = 200 + BG_Y;
 
     private Paint statPaint;
     private static final int STAT_SIZE = 34;
@@ -277,6 +282,19 @@ public class BattleCharacterInfoScreen extends Screen {
         }
     }
 
+    private Image getPlayerHealthBar(int currentHealth, int maxHealth){
+        Double percent = (100.0 * currentHealth)/maxHealth;
+        if(percent >= 50.0){
+            return Assets.pHealthG;
+        }
+        else if(percent >= 25.0){
+            return Assets.pHealthY;
+        }
+        else{
+            return Assets.pHealthR;
+        }
+    }
+
     @Override
     public void paint(float deltaTime) {
         Graphics g= game.getGraphics();
@@ -298,6 +316,10 @@ public class BattleCharacterInfoScreen extends Screen {
             }
             g.drawString(skill.getSkillName(), xOffset, yOffset, skillsPaint);
         }
+        Image healthBar = getPlayerHealthBar(displayChar.getCurrentHP(), displayChar.getMaxHP());
+        double perHealth = 1.0 * displayChar.getCurrentHP() / displayChar.getMaxHP();
+        int healthSize = (int) (HEALTH_BAR_SCALE_X * perHealth);
+        g.drawPercentageImage(healthBar, HEALTH_BAR_X, HEALTH_BAR_Y, healthSize, HEALTH_BAR_SCALE_Y);
 
         if(displayText != -1 && displayChar.getSkills().size() > displayText){
             String desc = displayChar.getSkills().get(displayText).getDescription();
