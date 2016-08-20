@@ -466,7 +466,7 @@ public class BattleScreen extends Screen {
                         int charPressed = getCharacterPressed(touchEvents.get(i));
                         if(charPressed != -1){
                             System.out.println("Pressed character: " + party[charPressed].getName());
-                            charInfo.setChar(party[charPressed]);
+                            charInfo.setChars(party[charPressed], enemies[enemyIndex]);
                             game.setScreen(charInfo);
                             continue;
                         }

@@ -13,30 +13,43 @@ public class SlugabedSkill extends AbsSkill {
         this.description = "Desc";
     }
 
-    private double currentMultiplier = 6.0;
+    private double multiplier = 6.0;
     private double minMultiplier = 0.25;
     private double perTurn = 0.25;
 
     @Override
     public double physicalAttackPercentage(BattleCharacter enemy) {
-        return currentMultiplier;
+        return multiplier;
     }
 
     @Override
     public double magicalAttackPercentage(BattleCharacter enemy) {
-        return currentMultiplier;
+        return multiplier;
     }
 
     @Override
     public double specialAttackPercentage(BattleCharacter enemy) {
-        return currentMultiplier;
+        return multiplier;
     }
 
     @Override
     public void endRound(){
-        currentMultiplier -= perTurn;
-        if(currentMultiplier < minMultiplier){
-            currentMultiplier = minMultiplier;
+        multiplier -= perTurn;
+        if(multiplier < minMultiplier){
+            multiplier = minMultiplier;
         }
+    }
+
+    @Override
+    public double[] getMultipliers(BattleCharacter enemy) {
+        double multipliers[] = new double[6];
+        multipliers[PHYS_ATK] = multiplier;
+        multipliers[MAG_ATK] = multiplier;
+        multipliers[SPEC_ATK] = multiplier;
+        multipliers[PHYS_DEF] = 0.0;
+        multipliers[MAG_DEF] = 0.0;
+        multipliers[SPEC_DEF] = 0.0;
+
+        return multipliers;
     }
 }

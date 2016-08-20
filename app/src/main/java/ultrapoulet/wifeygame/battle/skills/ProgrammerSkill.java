@@ -61,4 +61,19 @@ public class ProgrammerSkill extends AbsSkill {
             multiplier += perRound;
         }
     }
+
+    @Override
+    public double[] getMultipliers(BattleCharacter enemy) {
+        double mult = enemy.hasSkill(RobotSkill.class) ? multiplier : 1.0;
+
+        double multipliers[] = new double[6];
+        multipliers[PHYS_ATK] = mult;
+        multipliers[MAG_ATK] = mult;
+        multipliers[SPEC_ATK] = mult;
+        multipliers[PHYS_DEF] = 0.0;
+        multipliers[MAG_DEF] = 0.0;
+        multipliers[SPEC_DEF] = 0.0;
+
+        return multipliers;
+    }
 }

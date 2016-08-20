@@ -12,6 +12,13 @@ public class AbsSkill {
     protected String skillName;
     protected String description;
 
+    protected int PHYS_ATK = 0;
+    protected int MAG_ATK = 1;
+    protected int SPEC_ATK = 2;
+    protected int PHYS_DEF = 3;
+    protected int MAG_DEF = 4;
+    protected int SPEC_DEF = 5;
+
     public AbsSkill(BattleCharacter owner){ this.owner = owner; }
 
     public void setOwner(BattleCharacter owner){ this.owner = owner; }
@@ -120,6 +127,17 @@ public class AbsSkill {
     //Remove the skill owner at end of battle to garbage collect
     public void endBattle(){
         this.owner = null;
+    }
+
+    public double[] getMultipliers(BattleCharacter enemy){
+        double[] multipliers = new double[6];
+        for(int i = 0; i < 3; i++){
+            multipliers[i] = 1.0;
+        }
+        for(int i = 3; i < 6; i++){
+            multipliers[i] = 0.0;
+        }
+        return multipliers;
     }
 
 }

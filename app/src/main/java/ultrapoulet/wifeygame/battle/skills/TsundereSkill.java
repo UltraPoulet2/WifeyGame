@@ -7,7 +7,7 @@ import ultrapoulet.wifeygame.battle.BattleCharacter;
  */
 public class TsundereSkill extends AbsSkill {
 
-    private double bonusDamage;
+    private double multiplier;
     private double maxMultiplier = 4.0;
 
     public TsundereSkill(BattleCharacter owner){
@@ -18,24 +18,38 @@ public class TsundereSkill extends AbsSkill {
 
     @Override
     public void startBattle(BattleCharacter[] party) {
-        bonusDamage = maxMultiplier - (party.length - 1);
-        if(bonusDamage < 1.0){
-            bonusDamage = 1.0;
+        multiplier = maxMultiplier - (party.length - 1);
+        if(multiplier < 1.0){
+            multiplier = 1.0;
         }
     }
 
     @Override
     public double physicalAttackPercentage(BattleCharacter enemy) {
-        return bonusDamage;
+        return multiplier;
     }
 
     @Override
     public double magicalAttackPercentage(BattleCharacter enemy){
-        return bonusDamage;
+        return multiplier;
     }
 
     @Override
     public double specialAttackPercentage(BattleCharacter enemy) {
-        return bonusDamage;
+        return multiplier;
+    }
+
+
+    @Override
+    public double[] getMultipliers(BattleCharacter enemy) {
+        double multipliers[] = new double[6];
+        multipliers[PHYS_ATK] = multiplier;
+        multipliers[MAG_ATK] = multiplier;
+        multipliers[SPEC_ATK] = multiplier;
+        multipliers[PHYS_DEF] = 0.0;
+        multipliers[MAG_DEF] = 0.0;
+        multipliers[SPEC_DEF] = 0.0;
+
+        return multipliers;
     }
 }

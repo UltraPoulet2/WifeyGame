@@ -224,4 +224,30 @@ public class SkillList {
             skills.get(i).endBattle();
         }
     }
+
+    public double[] getMultipliers(BattleCharacter enemy){
+        double multipliers[] = new double[6];
+        for(int i = 0; i < 3; i++){
+            multipliers[i] = 1.0;
+        }
+        for(int i = 3; i < 6; i++){
+            multipliers[i] = 0.0;
+        }
+        for(int i = 0; i < skills.size(); i++){
+            double skillMult[] = skills.get(i).getMultipliers(enemy);
+            for(int j = 0; j < 3; j++){
+                multipliers[j] *= skillMult[j];
+            }
+            for(int j = 3; j < 6; j++){
+                multipliers[j] += skillMult[j] * (1.0 - multipliers[j]);
+            }
+        }
+        for(int j = 3; j < 6; j++){
+            multipliers[j] = 1.0 - multipliers[j];
+            if(multipliers[j] <= 0.10){
+                multipliers[j] = 0.10;
+            }
+        }
+        return multipliers;
+    }
 }

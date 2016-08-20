@@ -11,6 +11,7 @@ import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.androidgame.framework.Input;
 import ultrapoulet.androidgame.framework.Screen;
+import ultrapoulet.wifeygame.battle.BattleEnemy;
 import ultrapoulet.wifeygame.battle.BattleWifey;
 import ultrapoulet.wifeygame.battle.skills.AbsSkill;
 import ultrapoulet.wifeygame.character.SkillsEnum;
@@ -38,6 +39,8 @@ public class BattleCharacterInfoScreen extends Screen {
     private static final int CHAR_Y = 100 + BG_Y;
     private static final int DOUBLE_SCALE = 200;
 
+    private double[] multipliers;
+
     private Paint namePaint;
     private int nameFontSize;
     private int nameY;
@@ -56,26 +59,13 @@ public class BattleCharacterInfoScreen extends Screen {
     private static final int LEVEL_X = 400 + BG_X;
     private static final int LEVEL_Y = 200 + BG_Y;
 
-    private Paint statPaint;
+    private Paint multPaint;
     private static final int STAT_SIZE = 34;
-    private static final int HP_X = 440 + BG_X;
-    private static final int STR_X = 85 + HP_X;
-    private static final int MAG_X = 85 + STR_X;
-    private static final int STAT_Y = 322 + BG_Y;
-
-    private Paint weaponPaint;
-    private int weaponFontSize;
-    private int weaponY;
-    private static final int MAX_WEAPON_FONT = 34;
-    private static final int MAX_WEAPON_SIZE = 140;
-    private static final int WEAPON_X = 525 + BG_X;
-    private static final int MAX_WEAPON_Y = 407 + BG_Y;
-
-    //These will be removed when hits images are added
-    private Paint hitsPaint;
-    private static final int HITS_SIZE = 34;
-    private static final int HITS_X = 100 + WEAPON_X;
-    private static final int HITS_Y = 407 + BG_Y;
+    private static final int PHYS_X = 440 + BG_X;
+    private static final int MAG_X = 85 + PHYS_X;
+    private static final int SPEC_X = 85 + MAG_X;
+    private static final int ATK_Y = 322 + BG_Y;
+    private static final int DEF_Y = 85 + ATK_Y;
 
     private int skillsPage;
     private Paint skillsPaint;
@@ -154,24 +144,10 @@ public class BattleCharacterInfoScreen extends Screen {
         namePaint.setTextAlign(Paint.Align.LEFT);
         namePaint.setColor(Color.BLACK);
 
-        levelPaint = new Paint();
-        levelPaint.setTextAlign(Paint.Align.CENTER);
-        levelPaint.setColor(Color.BLACK);
-        levelPaint.setTextSize(LEVEL_SIZE);
-
-        statPaint = new Paint();
-        statPaint.setTextAlign(Paint.Align.CENTER);
-        statPaint.setColor(Color.BLACK);
-        statPaint.setTextSize(STAT_SIZE);
-
-        weaponPaint = new Paint();
-        weaponPaint.setTextAlign(Paint.Align.CENTER);
-        weaponPaint.setColor(Color.BLACK);
-
-        hitsPaint = new Paint();
-        hitsPaint.setTextAlign(Paint.Align.CENTER);
-        hitsPaint.setColor(Color.BLACK);
-        hitsPaint.setTextSize(HITS_SIZE);
+        multPaint = new Paint();
+        multPaint.setTextAlign(Paint.Align.CENTER);
+        multPaint.setColor(Color.BLACK);
+        multPaint.setTextSize(STAT_SIZE);
 
         skillsPaint = new Paint();
         skillsPaint.setTextAlign(Paint.Align.LEFT);
@@ -188,7 +164,7 @@ public class BattleCharacterInfoScreen extends Screen {
         previousScreen = screen;
     }
 
-    public void setChar(BattleWifey input){
+    public void setChars(BattleWifey input, BattleEnemy enemy){
         displayChar = input;
         nameFontSize = MAX_NAME_FONT;
         namePaint.setTextSize(nameFontSize);
@@ -198,17 +174,9 @@ public class BattleCharacterInfoScreen extends Screen {
         }
         nameY = MAX_NAME_Y - ((MAX_NAME_FONT - nameFontSize) / 2);
 
-        //Using weapon type as name for now
-        String weaponName = displayChar.getWeapon().getWeaponType();
-        weaponFontSize = MAX_WEAPON_FONT;
-        weaponPaint.setTextSize(weaponFontSize);
-        while(weaponPaint.measureText(weaponName) > MAX_WEAPON_SIZE){
-            weaponFontSize--;
-            weaponPaint.setTextSize(weaponFontSize);
-        }
-        weaponY = MAX_WEAPON_Y - ((MAX_WEAPON_FONT - weaponFontSize) / 2);
-
         displayText = -1;
+
+        multipliers = displayChar.getMultipliers(enemy);
     }
 
     private ButtonPressed getButtonPressed(int x, int y){
@@ -320,6 +288,13 @@ public class BattleCharacterInfoScreen extends Screen {
         double perHealth = 1.0 * displayChar.getCurrentHP() / displayChar.getMaxHP();
         int healthSize = (int) (HEALTH_BAR_SCALE_X * perHealth);
         g.drawPercentageImage(healthBar, HEALTH_BAR_X, HEALTH_BAR_Y, healthSize, HEALTH_BAR_SCALE_Y);
+
+        g.drawString(multipliers[0] + "x", PHYS_X, ATK_Y, multPaint);
+        g.drawString(multipliers[1] + "x", MAG_X, ATK_Y, multPaint);
+        g.drawString(multipliers[2] + "x", SPEC_X, ATK_Y, multPaint);
+        g.drawString(multipliers[3] + "x", PHYS_X, DEF_Y, multPaint);
+        g.drawString(multipliers[4] + "x", MAG_X, DEF_Y, multPaint);
+        g.drawString(multipliers[5] + "x", SPEC_X, DEF_Y, multPaint);
 
         if(displayText != -1 && displayChar.getSkills().size() > displayText){
             String desc = displayChar.getSkills().get(displayText).getDescription();

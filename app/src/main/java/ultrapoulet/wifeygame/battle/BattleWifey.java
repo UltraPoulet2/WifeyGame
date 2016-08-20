@@ -225,4 +225,8 @@ public class BattleWifey implements BattleCharacter{
         }
         return displayHeal;
     }
+
+    public double[] getMultipliers(BattleEnemy enemy){
+        return skills.getMultipliers(enemy);
+    }
 }

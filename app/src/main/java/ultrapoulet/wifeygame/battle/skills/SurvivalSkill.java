@@ -42,4 +42,18 @@ public class SurvivalSkill extends AbsSkill {
         double damagePercent = 1 - defense;
         defense += damagePercent * perTurn;
     }
+
+
+    @Override
+    public double[] getMultipliers(BattleCharacter enemy) {
+        double multipliers[] = new double[6];
+        multipliers[PHYS_ATK] = 1.0;
+        multipliers[MAG_ATK] = 1.0;
+        multipliers[SPEC_ATK] = 1.0;
+        multipliers[PHYS_DEF] = defense;
+        multipliers[MAG_DEF] = defense;
+        multipliers[SPEC_DEF] = defense;
+
+        return multipliers;
+    }
 }
