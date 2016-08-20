@@ -289,17 +289,29 @@ public class BattleCharacterInfoScreen extends Screen {
         int healthSize = (int) (HEALTH_BAR_SCALE_X * perHealth);
         g.drawPercentageImage(healthBar, HEALTH_BAR_X, HEALTH_BAR_Y, healthSize, HEALTH_BAR_SCALE_Y);
 
-        g.drawString(multipliers[0] + "x", PHYS_X, ATK_Y, multPaint);
-        g.drawString(multipliers[1] + "x", MAG_X, ATK_Y, multPaint);
-        g.drawString(multipliers[2] + "x", SPEC_X, ATK_Y, multPaint);
-        g.drawString(multipliers[3] + "x", PHYS_X, DEF_Y, multPaint);
-        g.drawString(multipliers[4] + "x", MAG_X, DEF_Y, multPaint);
-        g.drawString(multipliers[5] + "x", SPEC_X, DEF_Y, multPaint);
+        g.drawString(format(multipliers[0]) + "x", PHYS_X, ATK_Y, multPaint);
+        g.drawString(format(multipliers[1]) + "x", MAG_X, ATK_Y, multPaint);
+        g.drawString(format(multipliers[2]) + "x", SPEC_X, ATK_Y, multPaint);
+        g.drawString(format(multipliers[3]) + "x", PHYS_X, DEF_Y, multPaint);
+        g.drawString(format(multipliers[4]) + "x", MAG_X, DEF_Y, multPaint);
+        g.drawString(format(multipliers[5]) + "x", SPEC_X, DEF_Y, multPaint);
 
         if(displayText != -1 && displayChar.getSkills().size() > displayText){
             String desc = displayChar.getSkills().get(displayText).getDescription();
             //String desc = "PLACEHOLDER";
             g.drawMultiLineString(desc, SKILLS_DESC_X, SKILLS_DESC_Y, SKILLS_DESC_WIDTH, descPaint);
+        }
+    }
+
+    private String format(double number){
+        if(number >= 100.0){
+            return String.format("%1$.0f", number);
+        }
+        else if(number >= 10.0){
+            return String.format("%1$.1f", number);
+        }
+        else{
+            return String.format("%1$.2f", number);
         }
     }
 

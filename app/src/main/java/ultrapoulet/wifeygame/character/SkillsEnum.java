@@ -110,9 +110,9 @@ public class SkillsEnum {
                 return new TimeTravelerSkill(owner);
             case "Vampire":
                 return new VampireSkill(owner);
-            case "Survival Game Club President":
+            case "Sabagebu President":
                 return new SurvivalSkill(owner, true);
-            case "Survival Game Club":
+            case "Sabagebu":
                 return new SurvivalSkill(owner, false);
             case "Athlete":
                 return new AthleteSkill(owner);
@@ -164,8 +164,8 @@ public class SkillsEnum {
         skillsList.put("SADIST", new SkillsEnum("Sadist", "Increases damage by 5% for each hit. The number of hits resets to 0 if an enemy is defeated by this wifey."));
         skillsList.put("SLUGABED", new SkillsEnum("Slugabed", "Increases damage by 500%. Reduces damage by 25% for each turn, to a minimum of 25% damage dealt."));
         skillsList.put("SPORTSMANAGER", new SkillsEnum("Sports Manager", "Increases physical damage by 5% for each Athlete wifey. Increases the physical damage of each Athlete wifey by 100%. This does not stack."));
-        skillsList.put("SURVIVAL", new SkillsEnum("Survival Game Club", "Decreases physical, magical, and special damage taken by 1% each turn."));
-        skillsList.put("SURVIVALPRES", new SkillsEnum("Survival Game Club President", "Decreases physical, magical, and special damage taken by 2% each turn."));
+        skillsList.put("SURVIVAL", new SkillsEnum("Sabagebu", "Decreases physical, magical, and special damage taken by 1% each turn."));
+        skillsList.put("SURVIVALPRES", new SkillsEnum("Sabagebu President", "Decreases physical, magical, and special damage taken by 2% each turn."));
         skillsList.put("TIMETRAVELER", new SkillsEnum("Time Traveler", "When this wifey suffers lethal damage the first time, prevent the death and set health to the wifey's health at the start of the round."));
         skillsList.put("TRAP", new SkillsEnum("Trap", "TBD"));
         skillsList.put("TSUNDERE", new SkillsEnum("Tsundere", "Increases damage by 100% if there are only 4 party members, 200% if there are only 3, 300% if there are only 2, and 400% if this is the only wifey."));
