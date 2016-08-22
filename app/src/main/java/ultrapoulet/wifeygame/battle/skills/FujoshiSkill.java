@@ -10,7 +10,6 @@ public class FujoshiSkill extends AbsSkill {
     public FujoshiSkill(BattleCharacter owner){
         super(owner);
         this.skillName = "Fujoshi";
-        this.description = "Desc";
     }
 
     private double multiplier = 1.0;
@@ -58,5 +57,13 @@ public class FujoshiSkill extends AbsSkill {
         multipliers[SPEC_DEF] = 0.0;
 
         return multipliers;
+    }
+
+    @Override
+    public String getDescription(BattleCharacter enemy) {
+        StringBuilder desc = new StringBuilder();
+        desc.append("Attack Multiplier: " + String.format("%1$.2f", multiplier) + "\n\n");
+        desc.append("Increases damage dealt multiplier by 0.33x for each Trap wifey in the party. Damage increased by a bonus 1.0x if there are more than two Trap wifeys.");
+        return desc.toString();
     }
 }

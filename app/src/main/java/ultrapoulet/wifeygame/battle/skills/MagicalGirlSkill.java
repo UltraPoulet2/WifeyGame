@@ -10,7 +10,6 @@ public class MagicalGirlSkill extends AbsSkill {
     public MagicalGirlSkill(BattleCharacter owner){
         super(owner);
         this.skillName = "Magical Girl";
-        this.description = "Desc";
     }
 
     private double baseMultiplier = 1.5;
@@ -55,5 +54,15 @@ public class MagicalGirlSkill extends AbsSkill {
         multipliers[SPEC_DEF] = 0.0;
 
         return multipliers;
+    }
+
+    @Override
+    public String getDescription(BattleCharacter enemy) {
+        StringBuilder desc = new StringBuilder();
+        desc.append("Magic Attack Multiplier: " + multiplier + "\n");
+        desc.append("Special Attack Multiplier: " + multiplier + "\n");
+        desc.append("Healing Multiplier: " + multiplier + "\n\n");
+        desc.append("Multiplies magical damage dealt, healing, and special attack damage dealt by 1.5x. Multiplier increases by 0.25x for each other Magical Girl wifey in the party.");
+        return desc.toString();
     }
 }

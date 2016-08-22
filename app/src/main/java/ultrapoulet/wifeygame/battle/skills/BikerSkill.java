@@ -10,7 +10,6 @@ public class BikerSkill extends AbsSkill {
     public BikerSkill(BattleCharacter owner) {
         super(owner);
         this.skillName = "Biker";
-        this.description = "Desc";
     }
 
     private int extraHits = 0;
@@ -27,5 +26,13 @@ public class BikerSkill extends AbsSkill {
     @Override
     public int getBonusHits() {
         return extraHits;
+    }
+
+    @Override
+    public String getDescription(BattleCharacter enemy) {
+        StringBuilder desc = new StringBuilder();
+        desc.append("Bonus Combo Hits: " + extraHits + "\n\n");
+        desc.append("Increases combo hits by 1 for each other Biker wifey in the party.");
+        return desc.toString();
     }
 }

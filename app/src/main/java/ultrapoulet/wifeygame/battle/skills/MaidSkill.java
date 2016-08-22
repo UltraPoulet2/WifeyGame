@@ -10,7 +10,6 @@ public class MaidSkill extends AbsSkill {
     public MaidSkill(BattleCharacter owner) {
         super(owner);
         this.skillName = "Maid";
-        this.description = "Desc";
     }
 
     private boolean healLastTurn = false;
@@ -72,5 +71,14 @@ public class MaidSkill extends AbsSkill {
         multipliers[SPEC_DEF] = 0.0;
 
         return multipliers;
+    }
+
+    @Override
+    public String getDescription(BattleCharacter enemy) {
+        StringBuilder desc = new StringBuilder();
+        desc.append("Attack Multiplier: ");
+        desc.append(healLastTurn ? "2.0x\n\n" : "1.0x\n\n");
+        desc.append("Multiplies damage dealt by 2.0x if this wifey healed the previous turn.");
+        return desc.toString();
     }
 }

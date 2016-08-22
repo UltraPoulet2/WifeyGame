@@ -10,7 +10,6 @@ public class KillerSkill extends AbsSkill {
     public KillerSkill(BattleCharacter owner){
         super(owner);
         this.skillName = "Killer";
-        this.description = "Desc";
     }
 
     private double multiplier = 1.0;
@@ -47,5 +46,13 @@ public class KillerSkill extends AbsSkill {
         multipliers[SPEC_DEF] = 0.0;
 
         return multipliers;
+    }
+
+    @Override
+    public String getDescription(BattleCharacter enemy) {
+        StringBuilder desc = new StringBuilder();
+        desc.append("Attack Multiplier: " + multiplier + "\n\n");
+        desc.append("Defeating an enemy with this wifey increases damage dealt multiplier by 1.0x for the rest of the battle.");
+        return desc.toString();
     }
 }

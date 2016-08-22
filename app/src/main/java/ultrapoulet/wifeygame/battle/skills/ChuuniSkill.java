@@ -10,7 +10,6 @@ public class ChuuniSkill extends AbsSkill {
     public ChuuniSkill(BattleCharacter owner){
         super(owner);
         this.skillName = "Chuunibyou";
-        this.description = "Desc";
     }
 
     @Override
@@ -29,5 +28,13 @@ public class ChuuniSkill extends AbsSkill {
         multipliers[SPEC_DEF] = 0.0;
 
         return multipliers;
+    }
+
+    @Override
+    public String getDescription(BattleCharacter enemy){
+        StringBuilder desc = new StringBuilder();
+        desc.append("Special Attack Multiplier: 5.0x\n\n");
+        desc.append("Multiplies special attack damage dealt by 5.0x.");
+        return desc.toString();
     }
 }

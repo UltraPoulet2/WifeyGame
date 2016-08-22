@@ -10,11 +10,18 @@ public class HyperSkill extends AbsSkill {
     public HyperSkill(BattleCharacter owner) {
         super(owner);
         this.skillName = "Hyper";
-        this.description = "Desc";
     }
 
     @Override
     public int getBonusHits() {
         return 1;
+    }
+
+    @Override
+    public String getDescription(BattleCharacter enemy) {
+        StringBuilder desc = new StringBuilder();
+        desc.append("Bonus Combo Hits: 1\n\n");
+        desc.append("Increases combo hits by 1.");
+        return desc.toString();
     }
 }

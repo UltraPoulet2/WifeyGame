@@ -10,7 +10,6 @@ public class MechanicSkill extends AbsSkill {
     public MechanicSkill(BattleCharacter owner) {
         super(owner);
         this.skillName = "Mechanic";
-        this.description = "Desc";
     }
 
     @Override
@@ -22,5 +21,10 @@ public class MechanicSkill extends AbsSkill {
         else{
             return 0.0;
         }
+    }
+
+    @Override
+    public String getDescription(BattleCharacter enemy) {
+        return "Fully heals Robot wifeys.";
     }
 }

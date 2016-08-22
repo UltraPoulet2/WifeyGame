@@ -16,7 +16,6 @@ public class PravdaSkill extends AbsSkill {
         if(this.isPresident){
             this.skillName += " President";
         }
-        this.description = "Desc";
     }
 
     private double multiplier = 1.0;
@@ -59,5 +58,15 @@ public class PravdaSkill extends AbsSkill {
         multipliers[SPEC_DEF] = 0.0;
 
         return multipliers;
+    }
+
+    @Override
+    public String getDescription(BattleCharacter enemy) {
+        StringBuilder desc = new StringBuilder();
+        desc.append("Attack Multiplier: " + multiplier + "x\n\n");
+        desc.append("Increases damage dealt multiplier by ");
+        desc.append(this.isPresident ? "2.0x" : "1.0x");
+        desc.append(" for each other Pravda wifey.");
+        return desc.toString();
     }
 }

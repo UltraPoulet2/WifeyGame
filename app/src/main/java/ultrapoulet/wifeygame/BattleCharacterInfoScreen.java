@@ -39,6 +39,8 @@ public class BattleCharacterInfoScreen extends Screen {
     private static final int CHAR_Y = 100 + BG_Y;
     private static final int DOUBLE_SCALE = 200;
 
+    private BattleEnemy displayEnemy;
+
     private double[] multipliers;
 
     private Paint namePaint;
@@ -85,7 +87,7 @@ public class BattleCharacterInfoScreen extends Screen {
 
     private static final int SKILLS_DESC_X = 32 + BG_X;
     private static final int SKILLS_DESC_Y = 872 + BG_Y;
-    private static final int SKILLS_DESC_SIZE = 30;
+    private static final int SKILLS_DESC_SIZE = 25;
     private static final int SKILLS_DESC_WIDTH = 616;
     private TextPaint descPaint;
 
@@ -166,6 +168,7 @@ public class BattleCharacterInfoScreen extends Screen {
 
     public void setChars(BattleWifey input, BattleEnemy enemy){
         displayChar = input;
+        displayEnemy = enemy;
         nameFontSize = MAX_NAME_FONT;
         namePaint.setTextSize(nameFontSize);
         while(namePaint.measureText(displayChar.getName()) > MAX_NAME_SIZE){
@@ -241,7 +244,6 @@ public class BattleCharacterInfoScreen extends Screen {
                         skillNum++;
                     case SKILLS0:
                         displayText = (displayText == skillNum) ? -1 : skillNum + SKILLS_PER_PAGE * currentPage;
-                        System.out.println(displayText);
                         break;
                     default:
                         break;
@@ -297,8 +299,7 @@ public class BattleCharacterInfoScreen extends Screen {
         g.drawString(format(multipliers[5]) + "x", SPEC_X, DEF_Y, multPaint);
 
         if(displayText != -1 && displayChar.getSkills().size() > displayText){
-            String desc = displayChar.getSkills().get(displayText).getDescription();
-            //String desc = "PLACEHOLDER";
+            String desc = displayChar.getSkills().get(displayText).getDescription(displayEnemy);
             g.drawMultiLineString(desc, SKILLS_DESC_X, SKILLS_DESC_Y, SKILLS_DESC_WIDTH, descPaint);
         }
     }

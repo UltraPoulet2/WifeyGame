@@ -10,7 +10,6 @@ public class MusicianSkill extends AbsSkill{
     public MusicianSkill(BattleCharacter owner) {
         super(owner);
         this.skillName = "Musician";
-        this.description = "Desc";
     }
 
     private int attackNum;
@@ -58,5 +57,15 @@ public class MusicianSkill extends AbsSkill{
         multipliers[SPEC_DEF] = 0.0;
 
         return multipliers;
+    }
+
+    @Override
+    public String getDescription(BattleCharacter enemy) {
+        StringBuilder desc = new StringBuilder();
+        double mult = (attackNum == 7) ? multiplier : 1.0;
+        desc.append("Attack Multiplier: " + mult + "x\n");
+        desc.append("Hit Counter: " + attackNum + "\n\n");
+        desc.append("Multiplies damage dealt by 4.0x every eighth hit.");
+        return desc.toString();
     }
 }

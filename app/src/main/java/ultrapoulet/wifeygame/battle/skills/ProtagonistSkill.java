@@ -12,7 +12,6 @@ public class ProtagonistSkill extends AbsSkill {
     public ProtagonistSkill(BattleCharacter owner) {
         super(owner);
         this.skillName = "Protagonist";
-        this.description = "Desc";
     }
 
     @Override
@@ -22,5 +21,14 @@ public class ProtagonistSkill extends AbsSkill {
             owner.healDamage(owner.HealAmount(owner), owner);
             revived = true;
         }
+    }
+
+    @Override
+    public String getDescription(BattleCharacter enemy) {
+        StringBuilder desc = new StringBuilder();
+        desc.append("Lethal Damage Prevented: ");
+        desc.append(this.revived ? "Yes\n\n" : "No\n\n");
+        desc.append("When this wifey suffers lethal damage the first time, prevent the death and heal self.");
+        return desc.toString();
     }
 }

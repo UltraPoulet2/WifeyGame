@@ -10,7 +10,6 @@ public class GhostSkill extends AbsSkill {
     public GhostSkill(BattleCharacter owner) {
         super(owner);
         this.skillName = "Ghost";
-        this.description = "Desc";
     }
 
     @Override
@@ -30,5 +29,13 @@ public class GhostSkill extends AbsSkill {
         multipliers[SPEC_DEF] = 0.0;
 
         return multipliers;
+    }
+
+    @Override
+    public String getDescription(BattleCharacter enemy) {
+        StringBuilder desc = new StringBuilder();
+        desc.append("Physical Defense Multiplier: 0.5x\n\n");
+        desc.append("Multiplies physical attack damage taken by 0.5x");
+        return desc.toString();
     }
 }

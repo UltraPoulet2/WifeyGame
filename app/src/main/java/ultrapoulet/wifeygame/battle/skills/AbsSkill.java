@@ -27,8 +27,8 @@ public class AbsSkill {
         return this.skillName;
     }
 
-    public String getDescription(){
-        return description;
+    public String getDescription(BattleCharacter enemy){
+        return "";
     }
 
     public void startBattle(BattleCharacter[] party){

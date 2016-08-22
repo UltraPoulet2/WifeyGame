@@ -10,7 +10,6 @@ public class ProgrammerSkill extends AbsSkill {
     public ProgrammerSkill(BattleCharacter owner) {
         super(owner);
         this.skillName = "Programmer";
-        this.description = "Desc";
     }
 
     private double multiplier;
@@ -75,5 +74,14 @@ public class ProgrammerSkill extends AbsSkill {
         multipliers[SPEC_DEF] = 0.0;
 
         return multipliers;
+    }
+
+    @Override
+    public String getDescription(BattleCharacter enemy) {
+        StringBuilder desc = new StringBuilder();
+        double mult = enemy.hasSkill(RobotSkill.class) ? multiplier : 1.0;
+        desc.append("Attack Multiplier: " + mult + "x\n\n");
+        desc.append("Increases damage dealt multiplier by 0.75x each time this wifey attacks a Robot. Resets at the start of the round.");
+        return desc.toString();
     }
 }

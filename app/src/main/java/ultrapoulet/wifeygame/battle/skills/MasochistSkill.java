@@ -12,7 +12,6 @@ public class MasochistSkill extends AbsSkill {
     public MasochistSkill(BattleCharacter owner){
         super(owner);
         this.skillName = "Masochist";
-        this.description = "Desc";
     }
 
     @Override
@@ -54,5 +53,13 @@ public class MasochistSkill extends AbsSkill {
         multipliers[SPEC_DEF] = 0.0;
 
         return multipliers;
+    }
+
+    @Override
+    public String getDescription(BattleCharacter enemy) {
+        StringBuilder desc = new StringBuilder();
+        desc.append("Attack Multiplier: " + String.format("%1$.2f", getMult()) + "x\n\n");
+        desc.append("Multiplies damage dealt up to 4.0x the lower this wifey's health is. Healing received multiplied by 0.5x.");
+        return desc.toString();
     }
 }
