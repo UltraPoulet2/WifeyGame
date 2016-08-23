@@ -13,22 +13,21 @@ public class SadistSkill extends AbsSkill {
     public SadistSkill(BattleCharacter owner){
         super(owner);
         this.skillName = "Sadist";
-        this.description = "Desc";
     }
 
     @Override
     public double physicalAttackPercentage(BattleCharacter enemy){
-        return 1.0 + hitMultiplier * numHits;
+        return getMult();
     }
 
     @Override
     public double magicalAttackPercentage(BattleCharacter enemy) {
-        return 1.0 + hitMultiplier * numHits;
+        return getMult();
     }
 
     @Override
     public double specialAttackPercentage(BattleCharacter enemy) {
-        return 1.0 + hitMultiplier * numHits;
+        return getMult();
     }
 
     @Override
@@ -42,13 +41,18 @@ public class SadistSkill extends AbsSkill {
     public void onEnemyDefeat(BattleCharacter enemy) {
         numHits = 0;
     }
+
+    private double getMult(){
+        return 1.0 + hitMultiplier * numHits;
+    }
+
     @Override
     public double[] getMultipliers(BattleCharacter enemy) {
 
         double multipliers[] = new double[6];
-        multipliers[PHYS_ATK] = 1.0 + hitMultiplier * numHits;
-        multipliers[MAG_ATK] = 1.0 + hitMultiplier * numHits;
-        multipliers[SPEC_ATK] = 1.0 + hitMultiplier * numHits;
+        multipliers[PHYS_ATK] = getMult();
+        multipliers[MAG_ATK] = getMult();
+        multipliers[SPEC_ATK] = getMult();
         multipliers[PHYS_DEF] = 0.0;
         multipliers[MAG_DEF] = 0.0;
         multipliers[SPEC_DEF] = 0.0;
@@ -56,4 +60,11 @@ public class SadistSkill extends AbsSkill {
         return multipliers;
     }
 
+    @Override
+    public String getDescription(BattleCharacter enemy) {
+        StringBuilder desc = new StringBuilder();
+        desc.append("Attack Multiplier: " + getMult() + "x\n\n");
+        desc.append("Increases damage dealt multiplier by 0.05x for each hit. The number of hits resets to 0 if an enemy is defeated by this wifey.");
+        return desc.toString();
+    }
 }

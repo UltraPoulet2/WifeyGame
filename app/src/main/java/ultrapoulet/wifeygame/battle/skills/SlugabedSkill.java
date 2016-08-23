@@ -10,7 +10,6 @@ public class SlugabedSkill extends AbsSkill {
     public SlugabedSkill(BattleCharacter owner) {
         super(owner);
         this.skillName = "Slugabed";
-        this.description = "Desc";
     }
 
     private double multiplier = 6.0;
@@ -51,5 +50,13 @@ public class SlugabedSkill extends AbsSkill {
         multipliers[SPEC_DEF] = 0.0;
 
         return multipliers;
+    }
+
+    @Override
+    public String getDescription(BattleCharacter enemy) {
+        StringBuilder desc = new StringBuilder();
+        desc.append("Attack Multiplier: " + multiplier + "x\n\n");
+        desc.append("Multiplies damage dealt by 6.0x. Reduces multiplier by 0.25x for each turn, to a minimum of 0.25x.");
+        return desc.toString();
     }
 }

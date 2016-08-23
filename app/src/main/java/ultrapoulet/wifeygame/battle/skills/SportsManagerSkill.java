@@ -10,7 +10,6 @@ public class SportsManagerSkill extends AbsSkill {
     public SportsManagerSkill(BattleCharacter owner){
         super(owner);
         this.skillName = "Sports Manager";
-        this.description = "Desc";
     }
 
     private double multiplier = 1.0;
@@ -43,5 +42,13 @@ public class SportsManagerSkill extends AbsSkill {
         multipliers[SPEC_DEF] = 0.0;
 
         return multipliers;
+    }
+
+    @Override
+    public String getDescription(BattleCharacter enemy) {
+        StringBuilder desc = new StringBuilder();
+        desc.append("Physical Attack Multiplier: " + multiplier + "x\n\n");
+        desc.append("Increases physical damage dealt multiplier by 0.05x for each Athlete wifey. Increases the physical damage multiplier of each Athlete wifey by 1.0x. This does not stack.");
+        return desc.toString();
     }
 }

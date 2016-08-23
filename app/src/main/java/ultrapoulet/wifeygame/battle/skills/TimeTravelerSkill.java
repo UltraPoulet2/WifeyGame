@@ -10,7 +10,6 @@ public class TimeTravelerSkill extends AbsSkill {
     public TimeTravelerSkill(BattleCharacter owner){
         super(owner);
         this.skillName = "Time Traveler";
-        this.description = "Desc";
     }
 
     private boolean revived = false;
@@ -27,5 +26,14 @@ public class TimeTravelerSkill extends AbsSkill {
             owner.setCurrentHP(roundHealth);
             revived = true;
         }
+    }
+
+    @Override
+    public String getDescription(BattleCharacter enemy) {
+        StringBuilder desc = new StringBuilder();
+        desc.append("Lethal Damage Prevented: ");
+        desc.append(this.revived ? "Yes\n\n" : "No\n\n");
+        desc.append("When this wifey suffers lethal damage the first time, prevent the death and set health to the wifey's health at the start of the round.");
+        return desc.toString();
     }
 }

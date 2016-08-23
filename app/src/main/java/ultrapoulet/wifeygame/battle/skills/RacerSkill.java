@@ -10,7 +10,6 @@ public class RacerSkill extends AbsSkill {
     public RacerSkill(BattleCharacter owner){
         super(owner);
         this.skillName = "Racer";
-        this.description = "Desc";
     }
 
     private double startMultiplier = 4.0;
@@ -57,5 +56,13 @@ public class RacerSkill extends AbsSkill {
         multipliers[SPEC_DEF] = 0.0;
 
         return multipliers;
+    }
+
+    @Override
+    public String getDescription(BattleCharacter enemy) {
+        StringBuilder desc = new StringBuilder();
+        desc.append("Attack Multiplier: " + multiplier + "\n\n");
+        desc.append("Multiplies damage dealt by 4.0x at the start of a wave. Multiplier decreases by 0.5x for each turn the wave lasts, to a minimum of 0.5x.");
+        return desc.toString();
     }
 }

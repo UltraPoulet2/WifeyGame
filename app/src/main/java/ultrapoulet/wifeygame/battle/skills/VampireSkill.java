@@ -10,12 +10,16 @@ public class VampireSkill extends AbsSkill {
     public VampireSkill(BattleCharacter owner){
         super(owner);
         this.skillName = "Vampire";
-        this.description = "Desc";
     }
 
     @Override
     public void onDamageDealt(int damage) {
         int healing = damage / 10;
         owner.healDamage(healing, owner);
+    }
+
+    @Override
+    public String getDescription(BattleCharacter enemy) {
+        return "Dealing damage heals self by 10% of the damage dealt.";
     }
 }

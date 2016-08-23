@@ -14,4 +14,10 @@ public class TrapSkill extends AbsSkill {
     }
 
     //Add details later.
+
+
+    @Override
+    public String getDescription(BattleCharacter enemy) {
+        return "TBD";
+    }
 }

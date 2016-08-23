@@ -14,13 +14,12 @@ public class WitchSkill extends AbsSkill {
     public WitchSkill(BattleCharacter owner){
         super(owner);
         this.skillName = "Witch";
-        this.description = "Desc";
     }
 
     @Override
     public double magicalAttackPercentage(BattleCharacter enemy) {
         magicCurrentTurn = true;
-        return 1.0 + increase * numUses;
+        return getMult();
     }
 
     @Override
@@ -40,12 +39,24 @@ public class WitchSkill extends AbsSkill {
     public double[] getMultipliers(BattleCharacter enemy) {
         double multipliers[] = new double[6];
         multipliers[PHYS_ATK] = 1.0;
-        multipliers[MAG_ATK] = 1.0 + increase * numUses;
+        multipliers[MAG_ATK] = getMult();
         multipliers[SPEC_ATK] = 1.0;
         multipliers[PHYS_DEF] = 0.0;
         multipliers[MAG_DEF] = 0.0;
         multipliers[SPEC_DEF] = 0.0;
 
         return multipliers;
+    }
+
+    private double getMult(){
+        return 1.0 + increase * numUses;
+    }
+
+    @Override
+    public String getDescription(BattleCharacter enemy) {
+        StringBuilder desc = new StringBuilder();
+        desc.append("Magical Attack Multiplier: " + getMult() + "x\n\n");
+        desc.append("Increases magical damage dealt multiplier by 0.2x each time a magical attack is used.");
+        return desc.toString();
     }
 }

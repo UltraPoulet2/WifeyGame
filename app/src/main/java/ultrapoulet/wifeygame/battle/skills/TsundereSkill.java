@@ -13,7 +13,6 @@ public class TsundereSkill extends AbsSkill {
     public TsundereSkill(BattleCharacter owner){
         super(owner);
         this.skillName = "Tsundere";
-        this.description = "Desc";
     }
 
     @Override
@@ -51,5 +50,13 @@ public class TsundereSkill extends AbsSkill {
         multipliers[SPEC_DEF] = 0.0;
 
         return multipliers;
+    }
+
+    @Override
+    public String getDescription(BattleCharacter enemy) {
+        StringBuilder desc = new StringBuilder();
+        desc.append("Damage Multiplier: " + multiplier + "x\n\n");
+        desc.append("Multiplies damage dealt by 2.0x if there are only 3 party members, 3.0x if there are only 2, 4.0x if this is the only wifey.");
+        return desc.toString();
     }
 }

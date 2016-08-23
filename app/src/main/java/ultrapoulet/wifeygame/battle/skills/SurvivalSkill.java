@@ -15,7 +15,6 @@ public class SurvivalSkill extends AbsSkill {
             perTurn = 0.02;
             this.skillName += " President";
         }
-        this.description = "Desc";
     }
 
     private boolean isPresident;
@@ -55,5 +54,13 @@ public class SurvivalSkill extends AbsSkill {
         multipliers[SPEC_DEF] = defense;
 
         return multipliers;
+    }
+
+    @Override
+    public String getDescription(BattleCharacter enemy) {
+        StringBuilder desc = new StringBuilder();
+        desc.append("Defense Multiplier: " +  String.format("%1$.2f", defense) + "x\n\n");
+        desc.append("Decreases physical, magical, and special damage taken multiplier by " + perTurn + "x each turn.");
+        return desc.toString();
     }
 }
