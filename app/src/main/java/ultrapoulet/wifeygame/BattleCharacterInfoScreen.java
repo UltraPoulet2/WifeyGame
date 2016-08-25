@@ -56,10 +56,10 @@ public class BattleCharacterInfoScreen extends Screen {
     private static final double HEALTH_BAR_SCALE_X = 156.25;
     private static final int HEALTH_BAR_SCALE_Y = 250;
 
-    private Paint levelPaint;
-    private static final int LEVEL_SIZE = 34;
-    private static final int LEVEL_X = 400 + BG_X;
-    private static final int LEVEL_Y = 200 + BG_Y;
+    private static final int HEALTH_START_X = HEALTH_BAR_X + 53;
+    private static final int HEALTH_START_Y = HEALTH_BAR_Y + 5;
+    private static final int HEALTH_OFFSET_X = 16;
+    private static final int SLASH = 10;
 
     private Paint multPaint;
     private static final int STAT_SIZE = 34;
@@ -290,6 +290,30 @@ public class BattleCharacterInfoScreen extends Screen {
         double perHealth = 1.0 * displayChar.getCurrentHP() / displayChar.getMaxHP();
         int healthSize = (int) (HEALTH_BAR_SCALE_X * perHealth);
         g.drawPercentageImage(healthBar, HEALTH_BAR_X, HEALTH_BAR_Y, healthSize, HEALTH_BAR_SCALE_Y);
+
+        boolean healthStart = false;
+        int divisor = 1000;
+        for(int i = 0; i < 4; i++){
+            int numberPart = (displayChar.getCurrentHP() / divisor % 10);
+            healthStart = healthStart || (numberPart > 0);
+            if(healthStart){
+                g.drawImage(Assets.HPNumbers[numberPart], HEALTH_START_X + HEALTH_OFFSET_X * i, HEALTH_START_Y);
+            }
+            divisor = divisor / 10;
+        }
+        g.drawImage(Assets.HPNumbers[SLASH], HEALTH_START_X + HEALTH_OFFSET_X * 4, HEALTH_START_Y);
+        int i = 5;
+        divisor = 1000;
+        healthStart = false;
+        while(divisor > 0){
+            int numberPart = (displayChar.getMaxHP() / divisor % 10);
+            healthStart = healthStart || (numberPart > 0);
+            if(healthStart){
+                g.drawImage(Assets.HPNumbers[numberPart], HEALTH_START_X + HEALTH_OFFSET_X * i, HEALTH_START_Y);
+                i++;
+            }
+            divisor = divisor / 10;
+        }
 
         g.drawString(format(multipliers[0]) + "x", PHYS_X, ATK_Y, multPaint);
         g.drawString(format(multipliers[1]) + "x", MAG_X, ATK_Y, multPaint);

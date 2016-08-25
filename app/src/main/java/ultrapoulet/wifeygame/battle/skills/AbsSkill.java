@@ -10,7 +10,6 @@ public class AbsSkill {
     //The owner of the skill
     protected BattleCharacter owner;
     protected String skillName;
-    protected String description;
 
     protected int PHYS_ATK = 0;
     protected int MAG_ATK = 1;

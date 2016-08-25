@@ -165,9 +165,9 @@ public class SkillsEnum {
         skillsList.put("SLUGABED", new SkillsEnum("Slugabed", "Multiplies damage dealt by 6.0x. Reduces multiplier by 0.25x for each turn, to a minimum of 0.25x."));
         skillsList.put("SPORTSMANAGER", new SkillsEnum("Sports Manager", "Increases physical damage dealt multiplier by 0.05x for each Athlete wifey. Increases the physical damage multiplier of each Athlete wifey by 1.0x. This does not stack."));
         skillsList.put("SURVIVAL", new SkillsEnum("Sabagebu", "Decreases physical, magical, and special damage taken multiplier by 0.01x each turn."));
-        skillsList.put("SURVIVALPRES", new SkillsEnum("Sabagebu President", "Decreases physical, magical, and special damage taken by 0.02x each turn."));
+        skillsList.put("SURVIVALPRES", new SkillsEnum("Sabagebu President", "Decreases physical, magical, and special damage taken multiplier by 0.02x each turn."));
         skillsList.put("TIMETRAVELER", new SkillsEnum("Time Traveler", "When this wifey suffers lethal damage the first time, prevent the death and set health to the wifey's health at the start of the round."));
-        skillsList.put("TRAP", new SkillsEnum("Trap", "TBD"));
+        skillsList.put("TRAP", new SkillsEnum("Trap", "Multiplies physical, magical, and special damage taken by 0.15x."));
         skillsList.put("TSUNDERE", new SkillsEnum("Tsundere", "Multiplies damage dealt by 2.0x if there are only 3 party members, 3.0x if there are only 2, 4.0x if this is the only wifey."));
         skillsList.put("VAMPIRE", new SkillsEnum("Vampire", "Dealing damage heals self by 10% of the damage dealt."));
         skillsList.put("WITCH", new SkillsEnum("Witch", "Increases magical damage dealt multiplier by 0.2x each time a magical attack is used."));
