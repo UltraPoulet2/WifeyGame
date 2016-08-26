@@ -8,4 +8,14 @@
             <enemy>TEST-NME3</enemy>
         </enemies>
     </battle>
+    <battle key="TEST-BTWO">
+        <name>Small Party</name>
+        <partySize>4</partySize>
+        <enemies>
+            <enemy>TEST-NME2</enemy>
+            <enemy>TEST-NME2</enemy>
+            <enemy>TEST-NME2</enemy>
+            <enemy>TEST-NME2</enemy>
+        </enemies>
+    </battle>
 </battles>

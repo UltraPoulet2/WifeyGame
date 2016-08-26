@@ -41,6 +41,14 @@ public class BattleSelectScreen extends Screen {
                 pss.setPreviousScreen(this);
                 game.setScreen(pss);
             }
+            if(t.y >= 250 && t.y <= 350){
+                BattleInfo testInfo = Battles.get("TEST-BTWO");
+
+                PartySelectScreen pss = new PartySelectScreen(game);
+                pss.setBattleInfo(testInfo);
+                pss.setPreviousScreen(this);
+                game.setScreen(pss);
+            }
         }
     }
 
@@ -56,6 +64,10 @@ public class BattleSelectScreen extends Screen {
         g.drawRect(100, 100, 600, 100, Color.DKGRAY);
         BattleInfo testInfo = Battles.get("TEST-BATL");
         g.drawString(testInfo.getName(), 400, 170, paint);
+
+        g.drawRect(100,250, 600, 100, Color.DKGRAY);
+        BattleInfo test2 = Battles.get("TEST-BTWO");
+        g.drawString(test2.getName(), 400, 320, paint);
     }
 
     @Override
