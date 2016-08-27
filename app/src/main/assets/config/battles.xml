@@ -18,4 +18,19 @@
             <enemy>TEST-NME2</enemy>
         </enemies>
     </battle>
+    <battle key="TEST-PHYS">
+        <name>Athletes Test</name>
+        <enemies>
+            <enemy>TEST-NME5</enemy>
+            <enemy>TEST-NME4</enemy>
+            <enemy>TEST-NME4</enemy>
+        </enemies>
+    </battle>
+    <battle key="TEST-MAGI">
+        <name>Magic Test</name>
+        <enemies>
+            <enemy>TEST-NME6</enemy>
+            <enemy>TEST-NME6</enemy>
+        </enemies>
+    </battle>
 </battles>

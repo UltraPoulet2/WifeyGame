@@ -33,17 +33,20 @@ public class BattleSelectScreen extends Screen {
             if(t.x < 100 || t.x > 700){
                 continue;
             }
+            BattleInfo testInfo = null;
             if(t.y >= 100 && t.y <= 200){
-                BattleInfo testInfo = Battles.get("TEST-BATL");
-
-                PartySelectScreen pss = new PartySelectScreen(game);
-                pss.setBattleInfo(testInfo);
-                pss.setPreviousScreen(this);
-                game.setScreen(pss);
+                testInfo = Battles.get("TEST-BATL");
             }
             if(t.y >= 250 && t.y <= 350){
-                BattleInfo testInfo = Battles.get("TEST-BTWO");
-
+                testInfo = Battles.get("TEST-BTWO");
+            }
+            if(t.y >= 400 && t.y <= 500){
+                testInfo = Battles.get("TEST-PHYS");
+            }
+            if(t.y >= 550 && t.y <= 650){
+                testInfo = Battles.get("TEST-MAGI");
+            }
+            if(testInfo != null){
                 PartySelectScreen pss = new PartySelectScreen(game);
                 pss.setBattleInfo(testInfo);
                 pss.setPreviousScreen(this);
@@ -65,9 +68,17 @@ public class BattleSelectScreen extends Screen {
         BattleInfo testInfo = Battles.get("TEST-BATL");
         g.drawString(testInfo.getName(), 400, 170, paint);
 
-        g.drawRect(100,250, 600, 100, Color.DKGRAY);
+        g.drawRect(100, 250, 600, 100, Color.DKGRAY);
         BattleInfo test2 = Battles.get("TEST-BTWO");
         g.drawString(test2.getName(), 400, 320, paint);
+
+        g.drawRect(100, 400, 600, 100, Color.DKGRAY);
+        BattleInfo test3 = Battles.get("TEST-PHYS");
+        g.drawString(test3.getName(), 400, 470, paint);
+
+        g.drawRect(100, 550, 600, 100, Color.DKGRAY);
+        BattleInfo test4 = Battles.get("TEST-MAGI");
+        g.drawString(test4.getName(), 400, 620, paint);
     }
 
     @Override

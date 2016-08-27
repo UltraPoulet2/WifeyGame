@@ -126,13 +126,17 @@ public class BattleEnemy implements BattleCharacter{
     }
 
     public int getNumHits(){
+        int hits;
         switch(getAction()){
             case POWER_ATTACK:
-                return powerHits;
+                hits = powerHits + this.skills.getBonusHits();
+                return (hits < 10) ? hits : 10;
             case COMBO_ATTACK:
-                return comboHits;
+                hits = comboHits + this.skills.getBonusHits();
+                return (hits < 10) ? hits: 10;
             case SPECIAL_ATTACK:
-                return specialHits;
+                hits = specialHits + this.skills.getBonusHits();
+                return (hits < 10) ? hits : 10;
             default:
                 //Just do 1 for now
                 return 1;
@@ -221,6 +225,7 @@ public class BattleEnemy implements BattleCharacter{
     public int HealAmount(BattleCharacter target){
         //Returns the amount that will be healed
         int baseHeal = (int) (this.healAmount * skills.healPercentage(target));
+        System.out.println("Enemy's multiplying heal by: " + skills.healPercentage(target));
         int modHeal = baseHeal + (int) ((baseHeal / 10) * Math.random());
         return modHeal;
     }
@@ -313,6 +318,7 @@ public class BattleEnemy implements BattleCharacter{
         //Heal modifiers
         int displayHeal = heal;
         displayHeal = (int) (displayHeal * skills.receiveHealPercentage(healer));
+        System.out.println("Enemy's multiplying heal received by: " + skills.receiveHealPercentage(healer));
         this.currentHP = this.currentHP + displayHeal;
         if(this.currentHP > this.maxHP){
             this.currentHP = this.maxHP;
