@@ -85,10 +85,8 @@ public class CharacterInfoScreen extends Screen {
 
     private static final int SKILLS_BUTTON_LEFT_X = 30 + BG_X;
     private static final int SKILLS_BUTTON_OFFSET_X = 280;
-    private static final int SKILLS_BUTTON_RIGHT_X = SKILLS_BUTTON_LEFT_X + SKILLS_BUTTON_OFFSET_X;
     private static final int SKILLS_BUTTON_TOP_Y = 455 + BG_Y;
     private static final int SKILLS_BUTTON_OFFSET_Y = 55;
-    private static final int SKILLS_BUTTON_BOTTOM_BASE = SKILLS_BUTTON_TOP_Y + SKILLS_OFFSET_Y;
 
     private static final int SKILLS_DESC_X = 32 + BG_X;
     private static final int SKILLS_DESC_Y = 872 + BG_Y;
@@ -270,7 +268,6 @@ public class CharacterInfoScreen extends Screen {
                         skillNum++;
                     case SKILLS0:
                         displayText = (displayText == skillNum) ? -1 : skillNum + SKILLS_PER_PAGE * currentPage;
-                        System.out.println(displayText);
                         break;
                     default:
                         break;

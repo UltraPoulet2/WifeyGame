@@ -1,18 +1,21 @@
-package ultrapoulet.wifeygame.battle.skills;
+package ultrapoulet.wifeygame.battle.skills.implementations;
 
 import ultrapoulet.wifeygame.battle.BattleCharacter;
+import ultrapoulet.wifeygame.battle.skills.AbsSkill;
 
 /**
- * Created by John on 7/30/2016.
+ * Created by John on 7/29/2016.
  */
-public class KillerSkill extends AbsSkill {
+public class SlugabedSkill extends AbsSkill {
 
-    public KillerSkill(BattleCharacter owner){
+    public SlugabedSkill(BattleCharacter owner) {
         super(owner);
-        this.skillName = "Killer";
+        this.skillName = "Slugabed";
     }
 
-    private double multiplier = 1.0;
+    private double multiplier = 6.0;
+    private double minMultiplier = 0.25;
+    private double perTurn = 0.25;
 
     @Override
     public double physicalAttackPercentage(BattleCharacter enemy) {
@@ -30,10 +33,12 @@ public class KillerSkill extends AbsSkill {
     }
 
     @Override
-    public void onEnemyDefeat(BattleCharacter enemy) {
-        multiplier += 1.0;
+    public void endRound(){
+        multiplier -= perTurn;
+        if(multiplier < minMultiplier){
+            multiplier = minMultiplier;
+        }
     }
-
 
     @Override
     public double[] getMultipliers(BattleCharacter enemy) {
@@ -51,8 +56,8 @@ public class KillerSkill extends AbsSkill {
     @Override
     public String getDescription(BattleCharacter enemy) {
         StringBuilder desc = new StringBuilder();
-        desc.append("Attack Multiplier: " + multiplier + "\n\n");
-        desc.append("Defeating an enemy with this wifey increases damage dealt multiplier by 1.0x for the rest of the battle.");
+        desc.append("Attack Multiplier: " + multiplier + "x\n\n");
+        desc.append("Multiplies damage dealt by 6.0x. Reduces multiplier by 0.25x for each turn, to a minimum of 0.25x.");
         return desc.toString();
     }
 }

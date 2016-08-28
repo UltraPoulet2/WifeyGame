@@ -1,6 +1,7 @@
-package ultrapoulet.wifeygame.battle.skills;
+package ultrapoulet.wifeygame.battle.skills.implementations;
 
 import ultrapoulet.wifeygame.battle.BattleCharacter;
+import ultrapoulet.wifeygame.battle.skills.AbsSkill;
 
 /**
  * Created by John on 7/26/2016.

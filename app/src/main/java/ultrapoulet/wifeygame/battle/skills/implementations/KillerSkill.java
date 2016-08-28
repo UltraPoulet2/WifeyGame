@@ -1,26 +1,19 @@
-package ultrapoulet.wifeygame.battle.skills;
+package ultrapoulet.wifeygame.battle.skills.implementations;
 
 import ultrapoulet.wifeygame.battle.BattleCharacter;
+import ultrapoulet.wifeygame.battle.skills.AbsSkill;
 
 /**
- * Created by John on 7/29/2016.
+ * Created by John on 7/30/2016.
  */
-public class RacerSkill extends AbsSkill {
+public class KillerSkill extends AbsSkill {
 
-    public RacerSkill(BattleCharacter owner){
+    public KillerSkill(BattleCharacter owner){
         super(owner);
-        this.skillName = "Racer";
+        this.skillName = "Killer";
     }
 
-    private double startMultiplier = 4.0;
-    private double perTurn = 0.5;
-    private double minMultiplier = 0.5;
-    private double multiplier;
-
-    @Override
-    public void startWave() {
-        multiplier = startMultiplier;
-    }
+    private double multiplier = 1.0;
 
     @Override
     public double physicalAttackPercentage(BattleCharacter enemy) {
@@ -38,12 +31,10 @@ public class RacerSkill extends AbsSkill {
     }
 
     @Override
-    public void endRound(){
-        multiplier -= perTurn;
-        if(multiplier < minMultiplier){
-            multiplier = minMultiplier;
-        }
+    public void onEnemyDefeat(BattleCharacter enemy) {
+        multiplier += 1.0;
     }
+
 
     @Override
     public double[] getMultipliers(BattleCharacter enemy) {
@@ -62,7 +53,7 @@ public class RacerSkill extends AbsSkill {
     public String getDescription(BattleCharacter enemy) {
         StringBuilder desc = new StringBuilder();
         desc.append("Attack Multiplier: " + multiplier + "\n\n");
-        desc.append("Multiplies damage dealt by 4.0x at the start of a wave. Multiplier decreases by 0.5x for each turn the wave lasts, to a minimum of 0.5x.");
+        desc.append("Defeating an enemy with this wifey increases damage dealt multiplier by 1.0x for the rest of the battle.");
         return desc.toString();
     }
 }

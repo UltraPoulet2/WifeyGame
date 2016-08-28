@@ -1,11 +1,12 @@
-package ultrapoulet.wifeygame.battle.skills;
+package ultrapoulet.wifeygame.battle.skills.implementations;
 
 import ultrapoulet.wifeygame.battle.BattleCharacter;
+import ultrapoulet.wifeygame.battle.skills.AbsSkill;
 
 /**
  * Created by John on 8/4/2016.
  */
-public class MusicianSkill extends AbsSkill{
+public class MusicianSkill extends AbsSkill {
 
     public MusicianSkill(BattleCharacter owner) {
         super(owner);

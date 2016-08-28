@@ -114,7 +114,7 @@ public class BattleWifey implements BattleCharacter{
         int baseDamage = this.strength * 5;
         //Do checks on skills to determine bonus damage
         int modDamage = (int) (baseDamage * skills.physicalAttackPercentage(enemy));
-        System.out.println("Increasing damage by: " + skills.physicalAttackPercentage(enemy));
+        System.out.println("Multiplying damage by: " + skills.physicalAttackPercentage(enemy));
         modDamage = modDamage + (int) ((modDamage / 10) * Math.random());
         return modDamage;
     }
@@ -151,6 +151,7 @@ public class BattleWifey implements BattleCharacter{
         int baseDamage = this.strength * 10 + this.magic * 10;
         //Do checks on skills to determine bonus damage
         int modDamage = (int) (baseDamage * skills.specialAttackPercentage(enemy));
+        System.out.println("Multiplying damage by: " + skills.specialAttackPercentage(enemy));
         modDamage = modDamage + (int) ((modDamage / 10) * Math.random());
         return modDamage;
 

@@ -465,7 +465,6 @@ public class BattleScreen extends Screen {
                         ButtonPressed command = getButtonPressed(touchEvents.get(i));
                         int charPressed = getCharacterPressed(touchEvents.get(i));
                         if(charPressed != -1){
-                            System.out.println("Pressed character: " + party[charPressed].getName());
                             charInfo.setChars(party[charPressed], enemies[enemyIndex]);
                             game.setScreen(charInfo);
                             continue;
@@ -830,7 +829,6 @@ public class BattleScreen extends Screen {
                     phaseTime += deltaTime;
                     if (phaseTime >= WAIT_PHASE_WAIT) {
                         enemyIndex++;
-                        System.out.println(enemyIndex);
                         if (enemyIndex == enemies.length) {
                             enemyIndex--;
                             currentPhase = BattlePhase.BATTLE_END;

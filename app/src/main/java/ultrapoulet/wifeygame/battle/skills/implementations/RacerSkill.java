@@ -1,20 +1,27 @@
-package ultrapoulet.wifeygame.battle.skills;
+package ultrapoulet.wifeygame.battle.skills.implementations;
 
 import ultrapoulet.wifeygame.battle.BattleCharacter;
+import ultrapoulet.wifeygame.battle.skills.AbsSkill;
 
 /**
  * Created by John on 7/29/2016.
  */
-public class SlugabedSkill extends AbsSkill {
+public class RacerSkill extends AbsSkill {
 
-    public SlugabedSkill(BattleCharacter owner) {
+    public RacerSkill(BattleCharacter owner){
         super(owner);
-        this.skillName = "Slugabed";
+        this.skillName = "Racer";
     }
 
-    private double multiplier = 6.0;
-    private double minMultiplier = 0.25;
-    private double perTurn = 0.25;
+    private double startMultiplier = 4.0;
+    private double perTurn = 0.5;
+    private double minMultiplier = 0.5;
+    private double multiplier;
+
+    @Override
+    public void startWave() {
+        multiplier = startMultiplier;
+    }
 
     @Override
     public double physicalAttackPercentage(BattleCharacter enemy) {
@@ -55,8 +62,8 @@ public class SlugabedSkill extends AbsSkill {
     @Override
     public String getDescription(BattleCharacter enemy) {
         StringBuilder desc = new StringBuilder();
-        desc.append("Attack Multiplier: " + multiplier + "x\n\n");
-        desc.append("Multiplies damage dealt by 6.0x. Reduces multiplier by 0.25x for each turn, to a minimum of 0.25x.");
+        desc.append("Attack Multiplier: " + multiplier + "\n\n");
+        desc.append("Multiplies damage dealt by 4.0x at the start of a wave. Multiplier decreases by 0.5x for each turn the wave lasts, to a minimum of 0.5x.");
         return desc.toString();
     }
 }

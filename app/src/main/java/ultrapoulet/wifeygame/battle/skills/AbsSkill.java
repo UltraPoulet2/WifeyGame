@@ -53,7 +53,7 @@ public class AbsSkill {
     public double physicalAttackPercentage(BattleCharacter enemy){
         //The amount to increase physical damage.
         //Some skill might need to see the state of the BattleEnemy, so it is included
-        //Returned multiplier is additive. It will start at 1.0, and multiply values from
+        //Returned multiplier is multiplicative. It will start at 1.0, and multiply values from
         //all skills
         return 1.0;
     }
@@ -67,7 +67,7 @@ public class AbsSkill {
     public double magicalAttackPercentage(BattleCharacter enemy){
         //The amount to increase magical damage.
         //Some skills might need to see the state of the BattleEnemy, so it is included
-        //Returned multiplier is additive. It will start at 1.0, and multiply values
+        //Returned multiplier is multiplicative. It will start at 1.0, and multiply values
         //from all skills
         return 1.0;
     }
@@ -75,7 +75,7 @@ public class AbsSkill {
     public double specialAttackPercentage(BattleCharacter enemy){
         //The amount to increase special damage.
         //Some skills might need to see the state of the BattleEnemy, so it is included
-        //Returned multiplier is additive. It will start at 1.0, and multiply values
+        //Returned multiplier is multiplicative. It will start at 1.0, and multiply values
         //from all skills
         return 1.0;
     }

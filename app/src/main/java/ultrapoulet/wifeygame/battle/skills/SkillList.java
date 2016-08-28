@@ -82,7 +82,7 @@ public class SkillList {
     public double physicalAttackPercentage(BattleCharacter enemy){
         //The amount to increase physical damage.
         //Some skill might need to see the state of the BattleEnemy, so it is included
-        //Returned multiplier is additive. It will start at 1.0, and multiply values from
+        //Returned multiplier is multiplicative. It will start at 1.0, and multiply values from
         //all skills
         double multiplier = 1.0;
         for(int i = 0; i < skills.size(); i++){
@@ -104,7 +104,7 @@ public class SkillList {
     public double magicalAttackPercentage(BattleCharacter enemy){
         //The amount to increase magical damage.
         //Some skills might need to see the state of the BattleEnemy, so it is included
-        //Returned multiplier is additive. It will start at 1.0, and multiply values
+        //Returned multiplier is multiplicative. It will start at 1.0, and multiply values
         //from all skills
         double multiplier = 1.0;
         for(int i = 0; i < skills.size(); i++){
@@ -116,7 +116,7 @@ public class SkillList {
     public double specialAttackPercentage(BattleCharacter enemy){
         //The amount to increase special damage.
         //Some skills might need to see the state of the BattleEnemy, so it is included
-        //Returned multiplier is additive. It will start at 1.0, and multiply values
+        //Returned multiplier is multiplicative. It will start at 1.0, and multiply values
         //from all skills
         double multiplier = 1.0;
         for(int i = 0; i < skills.size(); i++){
@@ -127,7 +127,7 @@ public class SkillList {
 
     public double healPercentage(BattleCharacter partyMember){
         //The amount to increase healing to a party member
-        //Returned multiplier is additive.
+        //Returned multiplier is multiplicative.
         double multiplier = 1.0;
         for(int i = 0; i < skills.size(); i++){
             multiplier *= skills.get(i).healPercentage(partyMember);
@@ -216,13 +216,6 @@ public class SkillList {
             }
         }
         return false;
-    }
-
-    public void endBattle(){
-        //We remove the owner of the skill to free memory
-        for(int i = 0; i < skills.size(); i++){
-            skills.get(i).endBattle();
-        }
     }
 
     public double[] getMultipliers(BattleCharacter enemy){

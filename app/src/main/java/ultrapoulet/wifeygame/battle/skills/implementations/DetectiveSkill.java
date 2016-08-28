@@ -1,33 +1,26 @@
-package ultrapoulet.wifeygame.battle.skills;
+package ultrapoulet.wifeygame.battle.skills.implementations;
 
 import ultrapoulet.wifeygame.battle.BattleCharacter;
+import ultrapoulet.wifeygame.battle.skills.AbsSkill;
 
 /**
- * Created by John on 8/13/2016.
+ * Created by John on 8/10/2016.
  */
-public class FujoshiSkill extends AbsSkill {
+public class DetectiveSkill extends AbsSkill {
 
-    public FujoshiSkill(BattleCharacter owner){
+    private double startMultiplier = 0.5;
+    private double perTurn = 0.25;
+    private double maxMultiplier = 5.0;
+    private double multiplier;
+
+    public DetectiveSkill(BattleCharacter owner) {
         super(owner);
-        this.skillName = "Fujoshi";
+        this.skillName = "Detective";
     }
 
-    private double multiplier = 1.0;
-    private double perTrap = 1.0/3.0;
-    private double twoTrapBonus = 1.0;
-
     @Override
-    public void startBattle(BattleCharacter[] party) {
-        int count = 0;
-        for(int i = 0; i < party.length; i++){
-            if(party[i] != owner && party[i].hasSkill(TrapSkill.class)){
-                count++;
-            }
-        }
-        multiplier += count * perTrap;
-        if(count >= 2){
-            multiplier += twoTrapBonus;
-        }
+    public void startWave() {
+        multiplier = startMultiplier;
     }
 
     @Override
@@ -45,6 +38,12 @@ public class FujoshiSkill extends AbsSkill {
         return multiplier;
     }
 
+    @Override
+    public void endRound() {
+        if(multiplier < maxMultiplier) {
+            multiplier += perTurn;
+        }
+    }
 
     @Override
     public double[] getMultipliers(BattleCharacter enemy) {
@@ -62,8 +61,8 @@ public class FujoshiSkill extends AbsSkill {
     @Override
     public String getDescription(BattleCharacter enemy) {
         StringBuilder desc = new StringBuilder();
-        desc.append("Attack Multiplier: " + String.format("%1$.2f", multiplier) + "\n\n");
-        desc.append("Increases damage dealt multiplier by 0.33x for each Trap wifey in the party. Damage increased by a bonus 1.0x if there are more than two Trap wifeys.");
+        desc.append("Attack Multiplier: " + multiplier + "\n\n");
+        desc.append("Multiplies damage dealt by 0.5x at the start of a wave. Multiplier increases by 0.25x at the end of each turn, up to a maximum of 5.0x.");
         return desc.toString();
     }
 }
