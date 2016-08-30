@@ -36,6 +36,7 @@ public class Weapon {
         weaponList = new HashMap<>();
         weaponList.put("AIRSOFT", new Weapon("Airsoft", 6));
         weaponList.put("ANIMAL", new Weapon("Animal", 5));
+        weaponList.put("BALL", new Weapon("Ball", 3));
         weaponList.put("BOOK", new Weapon("Book", 2));
         weaponList.put("CARD", new Weapon("Card", 3));
         weaponList.put("CLAW", new Weapon("Claw", 3));

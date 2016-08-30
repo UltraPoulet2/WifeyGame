@@ -243,12 +243,14 @@ public class PartySelectScreen extends Screen {
                         backButton();
                     }
                     else if(lastPressed == ButtonPressed.ACCEPT && getButtonPressed(t.x, t.y) == ButtonPressed.ACCEPT){
-                        BattleScreen bs = new BattleScreen(game);
-                        Party.setParty(currentParty);
-                        bs.setParty(Party.getBattleParty());
-                        bs.setBattleInfo(battleInfo);
-                        bs.setBackground(Assets.testBG);
-                        game.setScreen(bs);
+                        if(currentParty[0] != null) {
+                            BattleScreen bs = new BattleScreen(game);
+                            Party.setParty(currentParty);
+                            bs.setParty(Party.getBattleParty());
+                            bs.setBattleInfo(battleInfo);
+                            bs.setBackground(Assets.testBG);
+                            game.setScreen(bs);
+                        }
                     }
                     else if(lastPressed == ButtonPressed.PREV_PAGE && getButtonPressed(t.x, t.y) == ButtonPressed.PREV_PAGE && currentPage > 1) {
                         currentPage--;

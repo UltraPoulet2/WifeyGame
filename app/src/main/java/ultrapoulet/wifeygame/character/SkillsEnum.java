@@ -24,6 +24,7 @@ import ultrapoulet.wifeygame.battle.skills.implementations.PravdaSkill;
 import ultrapoulet.wifeygame.battle.skills.implementations.ProgrammerSkill;
 import ultrapoulet.wifeygame.battle.skills.implementations.ProtagonistSkill;
 import ultrapoulet.wifeygame.battle.skills.implementations.RacerSkill;
+import ultrapoulet.wifeygame.battle.skills.implementations.RemSkill;
 import ultrapoulet.wifeygame.battle.skills.implementations.RobotSkill;
 import ultrapoulet.wifeygame.battle.skills.implementations.SadistSkill;
 import ultrapoulet.wifeygame.battle.skills.implementations.SlugabedSkill;
@@ -122,6 +123,8 @@ public class SkillsEnum {
                 return new SportsManagerSkill(owner);
             case "Musician":
                 return new MusicianSkill(owner);
+            case "Rem":
+                return new RemSkill(owner);
             default:
                 System.out.println("SkillsEnum:getBattleSkill(): Skill not implemented: " + this.skillName);
                 return new AbsSkill(owner);
@@ -171,6 +174,8 @@ public class SkillsEnum {
         skillsList.put("TSUNDERE", new SkillsEnum("Tsundere", "Multiplies damage dealt by 2.0x if there are only 3 party members, 3.0x if there are only 2, 4.0x if this is the only wifey."));
         skillsList.put("VAMPIRE", new SkillsEnum("Vampire", "Dealing damage heals self by 10% of the damage dealt."));
         skillsList.put("WITCH", new SkillsEnum("Witch", "Increases magical damage dealt multiplier by 0.2x each time a magical attack is used."));
+
+        skillsList.put("REM", new SkillsEnum("Rem", "Rem gets a special skill because she is Rem. Multiplies damage dealt and healing by 2.0x.")); //This skill will be removed.
 
         //Skills that need to be implemented
         skillsList.put("ROYALTY", new SkillsEnum("Royalty", "Royalty description"));

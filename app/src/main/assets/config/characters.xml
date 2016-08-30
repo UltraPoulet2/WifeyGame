@@ -718,4 +718,14 @@
             <skill>PRAVDA</skill>
         </skills>
     </character>
+    <character key="TEST-RREM">
+        <name>Rem</name>
+        <strength>90</strength>
+        <magic>110</magic>
+        <weapon>BALL</weapon>
+        <skills>
+            <skill>MAID</skill>
+            <skill>REM</skill>
+        </skills>
+    </character>
 </characters>

@@ -24,4 +24,9 @@ public class RecruitedCharacters {
         WifeyCharacter[] chars = new WifeyCharacter[recruits.size()];
         return recruits.values().toArray(chars);
     }
+
+    //For temporary purposes
+    public static void remove(String key){
+        recruits.remove(key);
+    }
 }

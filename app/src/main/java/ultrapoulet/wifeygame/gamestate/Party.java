@@ -49,6 +49,15 @@ public class Party {
         return party[index];
     }
 
+    public static int getWifeyIndex(WifeyCharacter input){
+        for(int i = 0; i < 7 && party[i] != null; i++){
+            if(party[i] == input){
+                return i;
+            }
+        }
+        return -1;
+    }
+
     public static void removeIndex(int index){
         if(index < 0 || index >= 7){
             return;
