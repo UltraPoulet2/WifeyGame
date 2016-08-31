@@ -14,9 +14,6 @@ import ultrapoulet.androidgame.framework.Screen;
 import ultrapoulet.wifeygame.battle.BattleEnemy;
 import ultrapoulet.wifeygame.battle.BattleWifey;
 import ultrapoulet.wifeygame.battle.skills.AbsSkill;
-import ultrapoulet.wifeygame.character.SkillsEnum;
-import ultrapoulet.wifeygame.character.Weapon;
-import ultrapoulet.wifeygame.character.WifeyCharacter;
 
 /**
  * Created by John on 8/17/2016.
@@ -110,7 +107,6 @@ public class BattleCharacterInfoScreen extends Screen {
         SKILLS13,
         SKILLS14,
         SKILLS15
-        //Fill with skill buttons later
     }
 
     private ButtonPressed[] SkillButtons = {

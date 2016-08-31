@@ -138,7 +138,6 @@ public class BattleEnemy implements BattleCharacter{
                 hits = specialHits + this.skills.getBonusHits();
                 return (hits < 10) ? hits : 10;
             default:
-                //Just do 1 for now
                 return 1;
         }
 

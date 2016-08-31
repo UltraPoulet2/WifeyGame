@@ -59,70 +59,70 @@ public class SkillsEnum {
 
     public AbsSkill getBattleSkill(BattleCharacter owner){
         switch(this.skillName){
-            case "Sadist":
-                return new SadistSkill(owner);
-            case "Masochist":
-                return new MasochistSkill(owner);
-            case "Trap":
-                return new TrapSkill(owner);
-            case "Tsundere":
-                return new TsundereSkill(owner);
-            case "Fujoshi":
-                return new FujoshiSkill(owner);
-            case "Ghost":
-                return new GhostSkill(owner);
-            case "Medium":
-                return new MediumSkill(owner);
-            case "Robot":
-                return new RobotSkill(owner);
-            case "Detective":
-                return new DetectiveSkill(owner);
-            case "Dullahan":
-                return new DullahanSkill(owner);
-            case "Programmer":
-                return new ProgrammerSkill(owner);
-            case "Protagonist":
-                return new ProtagonistSkill(owner);
-            case "Pravda President":
-                return new PravdaSkill(owner, true);
-            case "Pravda":
-                return new PravdaSkill(owner, false);
-            case "Mechanic":
-                return new MechanicSkill(owner);
-            case "Nurse":
-                return new NurseSkill(owner);
-            case "Slugabed":
-                return new SlugabedSkill(owner);
-            case "Racer":
-                return new RacerSkill(owner);
-            case "Killer":
-                return new KillerSkill(owner);
-            case "Chuunibyou":
-                return new ChuuniSkill(owner);
-            case "Maid":
-                return new MaidSkill(owner);
-            case "Hyper":
-                return new HyperSkill(owner);
-            case "Witch":
-                return new WitchSkill(owner);
-            case "Magical Girl":
-                return new MagicalGirlSkill(owner);
-            case "Time Traveler":
-                return new TimeTravelerSkill(owner);
-            case "Vampire":
-                return new VampireSkill(owner);
-            case "Sabagebu President":
-                return new SurvivalSkill(owner, true);
-            case "Sabagebu":
-                return new SurvivalSkill(owner, false);
             case "Athlete":
                 return new AthleteSkill(owner);
             case "Biker":
                 return new BikerSkill(owner);
-            case "Sports Manager":
-                return new SportsManagerSkill(owner);
+            case "Chuunibyou":
+                return new ChuuniSkill(owner);
+            case "Detective":
+                return new DetectiveSkill(owner);
+            case "Dullahan":
+                return new DullahanSkill(owner);
+            case "Fujoshi":
+                return new FujoshiSkill(owner);
+            case "Ghost":
+                return new GhostSkill(owner);
+            case "Hyper":
+                return new HyperSkill(owner);
+            case "Killer":
+                return new KillerSkill(owner);
+            case "Magical Girl":
+                return new MagicalGirlSkill(owner);
+            case "Maid":
+                return new MaidSkill(owner);
+            case "Masochist":
+                return new MasochistSkill(owner);
+            case "Mechanic":
+                return new MechanicSkill(owner);
+            case "Medium":
+                return new MediumSkill(owner);
             case "Musician":
                 return new MusicianSkill(owner);
+            case "Nurse":
+                return new NurseSkill(owner);
+            case "Pravda":
+                return new PravdaSkill(owner, false);
+            case "Pravda President":
+                return new PravdaSkill(owner, true);
+            case "Programmer":
+                return new ProgrammerSkill(owner);
+            case "Protagonist":
+                return new ProtagonistSkill(owner);
+            case "Racer":
+                return new RacerSkill(owner);
+            case "Robot":
+                return new RobotSkill(owner);
+            case "Sabagebu":
+                return new SurvivalSkill(owner, false);
+            case "Sabagebu President":
+                return new SurvivalSkill(owner, true);
+            case "Sadist":
+                return new SadistSkill(owner);
+            case "Slugabed":
+                return new SlugabedSkill(owner);
+            case "Sports Manager":
+                return new SportsManagerSkill(owner);
+            case "Time Traveler":
+                return new TimeTravelerSkill(owner);
+            case "Trap":
+                return new TrapSkill(owner);
+            case "Tsundere":
+                return new TsundereSkill(owner);
+            case "Vampire":
+                return new VampireSkill(owner);
+            case "Witch":
+                return new WitchSkill(owner);
             case "Rem":
                 return new RemSkill(owner);
             default:

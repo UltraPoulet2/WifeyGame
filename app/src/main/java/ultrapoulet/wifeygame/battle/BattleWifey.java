@@ -25,8 +25,6 @@ public class BattleWifey implements BattleCharacter{
 
     private boolean isDefending = false;
 
-    //Section for skill flags
-
     public BattleWifey(String name, Weapon weapon, int strength, int magic, Image image, ArrayList<SkillsEnum> skills){
         this.name = name;
         this.maxHP = calculateHP(strength);
