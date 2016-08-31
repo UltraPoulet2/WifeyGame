@@ -5,12 +5,18 @@
         <strength>70</strength>
         <magic>60</magic>
         <weapon>MECHA</weapon>
+        <skills>
+            <skill>PROTAGONIST</skill>
+        </skills>
     </character>
     <character key="TEST-ANGU">
         <name>Ange Ushiromiya</name>
         <strength>80</strength>
-        <magic>10</magic>
+        <magic>50</magic>
         <weapon>BOOK</weapon>
+        <skills>
+            <skill>WITCH</skill>
+        </skills>
     </character>
     <character key="TEST-ANNA">
         <name>Anna Nishikinomiya</name>
@@ -41,18 +47,28 @@
         <strength>40</strength>
         <magic>90</magic>
         <weapon>SCYTHE</weapon>
+        <skills>
+            <skill>DULLAHAN</skill>
+            <skill>BIKER</skill>
+        </skills>
     </character>
     <character key="TEST-CMPA">
         <name>Compa</name>
         <strength>25</strength>
         <magic>100</magic>
         <weapon>MEDICINE</weapon>
+        <skills>
+            <skill>NURSE</skill>
+        </skills>
     </character>
     <character key="TEST-CYAN">
         <name>Cyan Hijirikawa</name>
         <strength>20</strength>
         <magic>110</magic>
         <weapon>INSTRUMENT</weapon>
+        <skills>
+            <skill>MUSICIAN</skill>
+        </skills>
     </character>
     <character key="TEST-DKRO">
         <name>Dokuro Mitsukai</name>
@@ -65,36 +81,55 @@
         <strength>60</strength>
         <magic>70</magic>
         <weapon>COMPUTER</weapon>
+        <skills>
+            <skill>HYPER</skill>
+            <skill>PROGRAMMER</skill>
+        </skills>
     </character>
     <character key="TEST-EEMI">
         <name>Emi Yusa</name>
         <strength>90</strength>
         <magic>60</magic>
         <weapon>SWORD</weapon>
+        <skills>
+            <skill>TSUNDERE</skill>
+        </skills>
     </character>
     <character key="TEST-EXCL">
         <name>Excel</name>
         <strength>70</strength>
         <magic>60</magic>
         <weapon>GUN</weapon>
+        <skills>
+            <skill>HYPER</skill>
+        </skills>
     </character>
     <character key="TEST-GGOU">
         <name>Gou Matsuoka</name>
         <strength>40</strength>
         <magic>40</magic>
         <weapon>FISTS</weapon>
+        <skills>
+            <skill>SPORTSMANAGER</skill>
+        </skills>
     </character>
     <character key="TEST-HARU">
         <name>Haruko Haruhara</name>
         <strength>60</strength>
         <magic>70</magic>
         <weapon>INSTRUMENT</weapon>
+        <skills>
+            <skill>HYPER</skill>
+        </skills>
     </character>
     <character key="TEST-HIME">
         <name>Hime Arikawa</name>
         <strength>30</strength>
         <magic>30</magic>
         <weapon>FISTS</weapon>
+        <skills>
+            <skill>TRAP</skill>
+        </skills>
     </character>
     <character key="TEST-HKSE">
         <name>Hakase Shinonome</name>
@@ -107,6 +142,10 @@
         <strength>40</strength>
         <magic>120</magic>
         <weapon>GUN</weapon>
+        <skills>
+            <skill>MAGICALGIRL</skill>
+            <skill>TIMETRAVELER</skill>
+        </skills>
     </character>
     <character key="TEST-HMRI">
         <name>Himari Takakura</name>
@@ -143,6 +182,9 @@
         <strength>60</strength>
         <magic>40</magic>
         <weapon>FOOD</weapon>
+        <skills>
+            <skill>HYPER</skill>
+        </skills>
     </character>
     <character key="TEST-KDOU">
         <name>Mirei Kudou</name>
@@ -161,42 +203,64 @@
         <strength>40</strength>
         <magic>50</magic>
         <weapon>COMPUTER</weapon>
+        <skills>
+            <skill>TSUNDERE</skill>
+            <skill>TIMETRAVELER</skill>
+        </skills>
     </character>
     <character key="TEST-KSGA">
         <name>Ayumu Kasuga</name>
         <strength>20</strength>
         <magic>20</magic>
         <weapon>FOOD</weapon>
+        <skills>
+            <skill>SLUGABED</skill>
+        </skills>
     </character>
     <character key="TEST-KTNH">
         <name>Kotonoha Katsura</name>
         <strength>70</strength>
         <magic>25</magic>
         <weapon>KNIFE</weapon>
+        <skills>
+            <skill>KILLER</skill>
+        </skills>
     </character>
     <character key="TEST-KTRU">
         <name>Koutarou Araki</name>
         <strength>30</strength>
         <magic>70</magic>
         <weapon>MAGIC</weapon>
+        <skills>
+            <skill>TRAP</skill>
+        </skills>
     </character>
     <character key="TEST-KTYS">
         <name>Katyusha</name>
         <strength>60</strength>
         <magic>30</magic>
         <weapon>TANK</weapon>
+        <skills>
+            <skill>PRAVDAPRES</skill>
+        </skills>
     </character>
     <character key="TEST-KYKO">
         <name>Kyoko Kirigiri</name>
         <strength>50</strength>
         <magic>90</magic>
         <weapon>FISTS</weapon>
+        <skills>
+            <skill>DETECTIVE</skill>
+        </skills>
     </character>
     <character key="TEST-LULU">
         <name>Luluco</name>
         <strength>70</strength>
         <magic>70</magic>
         <weapon>GUN</weapon>
+        <skills>
+            <skill>PROTAGONIST</skill>
+        </skills>
     </character>
     <character key="TEST-MAKI">
         <name>Natsuo Maki</name>
@@ -209,6 +273,9 @@
         <strength>60</strength>
         <magic>20</magic>
         <weapon>FISTS</weapon>
+        <skills>
+            <skill>HYPER</skill>
+        </skills>
     </character>
     <character key="TEST-MARI">
         <name>Maria Naruse</name>
@@ -221,6 +288,9 @@
         <strength>200</strength>
         <magic>20</magic>
         <weapon>FISTS</weapon>
+        <skills>
+            <skill>PROTAGONIST</skill>
+        </skills>
     </character>
     <character key="TEST-MDRI">
         <name>Midori Kasugano</name>
@@ -233,6 +303,9 @@
         <strength>40</strength>
         <magic>70</magic>
         <weapon>BOOK</weapon>
+        <skills>
+            <skill>GHOST</skill>
+        </skills>
     </character>
     <character key="TEST-MIIA">
         <name>Miia</name>
@@ -245,6 +318,10 @@
         <strength>40</strength>
         <magic>70</magic>
         <weapon>LASER</weapon>
+        <skills>
+            <skill>MAGICALGIRL</skill>
+            <skill>TIMETRAVELER</skill>
+        </skills>
     </character>
     <character key="TEST-MKSA">
         <name>Mikasa Ackerman</name>
@@ -257,12 +334,19 @@
         <strength>70</strength>
         <magic>40</magic>
         <weapon>AIRSOFT</weapon>
+        <skills>
+            <skill>SADIST</skill>
+            <skill>SURVIVAL</skill>
+        </skills>
     </character>
     <character key="TEST-MNMA">
         <name>Meiko Honma</name>
         <strength>40</strength>
         <magic>60</magic>
         <weapon>PLANT</weapon>
+        <skills>
+            <skill>GHOST</skill>
+        </skills>
     </character>
     <character key="TEST-MRIA">
         <name>Miria Harvent</name>
@@ -305,42 +389,64 @@
         <strength>90</strength>
         <magic>60</magic>
         <weapon>TOOL</weapon>
+        <skills>
+            <skill>MAGICALGIRL</skill>
+        </skills>
     </character>
     <character key="TEST-PERI">
         <name>Peri</name>
         <strength>90</strength>
         <magic>20</magic>
         <weapon>SWORD</weapon>
+        <skills>
+            <skill>KILLER</skill>
+        </skills>
     </character>
     <character key="TEST-RAMU">
         <name>Raimu Kawasaki</name>
         <strength>80</strength>
         <magic>40</magic>
         <weapon>VEHICLE</weapon>
+        <skills>
+            <skill>RACER</skill>
+            <skill>BIKER</skill>
+        </skills>
     </character>
     <character key="TEST-RENA">
         <name>Rena Ryuuguu</name>
         <strength>70</strength>
         <magic>50</magic>
         <weapon>KNIFE</weapon>
+        <skills>
+            <skill>KILLER</skill>
+        </skills>
     </character>
     <character key="TEST-REVY">
         <name>Revy</name>
         <strength>100</strength>
         <magic>20</magic>
         <weapon>GUN</weapon>
+        <skills>
+            <skill>KILLER</skill>
+        </skills>
     </character>
     <character key="TEST-RIKO">
         <name>Riko Aida</name>
         <strength>40</strength>
         <magic>50</magic>
         <weapon>COOKING</weapon>
+        <skills>
+            <skill>SPORTSMANAGER</skill>
+        </skills>
     </character>
     <character key="TEST-RTSK">
         <name>Ritsuko Kunihiro</name>
         <strength>40</strength>
         <magic>60</magic>
         <weapon>MEDICINE</weapon>
+        <skills>
+            <skill>NURSE</skill>
+        </skills>
     </character>
     <character key="TEST-RUKO">
         <name>Ruuko Kominato</name>
@@ -353,6 +459,10 @@
         <strength>60</strength>
         <magic>40</magic>
         <weapon>SPORT</weapon>
+        <skills>
+            <skill>ATHLETE</skill>
+            <skill>TRAP</skill>
+        </skills>
     </character>
     <character key="TEST-SAYA">
         <name>Saya Sasamiya</name>
@@ -371,18 +481,27 @@
         <strength>70</strength>
         <magic>40</magic>
         <weapon>TOOL</weapon>
+        <skills>
+            <skill>ATHLETE</skill>
+        </skills>
     </character>
     <character key="TEST-SMZU">
         <name>Kyoko Shimizu</name>
         <strength>40</strength>
         <magic>40</magic>
         <weapon>SPORT</weapon>
+        <skills>
+            <skill>SPORTSMANAGER</skill>
+        </skills>
     </character>
     <character key="TEST-SNSH">
         <name>Sonoshee McLaren</name>
         <strength>80</strength>
         <magic>30</magic>
         <weapon>VEHICLE</weapon>
+        <skills>
+            <skill>MECHANIC</skill>
+        </skills>
     </character>
     <character key="TEST-STPH">
         <name>Stephanie Dola</name>
@@ -413,24 +532,36 @@
         <strength>40</strength>
         <magic>40</magic>
         <weapon>CLAW</weapon>
+        <skills>
+            <skill>TSUNDERE</skill>
+        </skills>
     </character>
     <character key="TEST-TTSM">
         <name>Tatsumaki</name>
         <strength>40</strength>
         <magic>130</magic>
         <weapon>MAGIC</weapon>
+        <skills>
+            <skill>MAGICALGIRL</skill>
+        </skills>
     </character>
     <character key="TEST-WNRY">
         <name>Winry Rockbell</name>
         <strength>50</strength>
         <magic>50</magic>
         <weapon>TOOL</weapon>
+        <skills>
+            <skill>MECHANIC</skill>
+        </skills>
     </character>
     <character key="TEST-YASN">
         <name>Yassan</name>
         <strength>40</strength>
         <magic>50</magic>
         <weapon>BOOK</weapon>
+        <skills>
+            <skill>CHUUNI</skill>
+        </skills>
     </character>
     <character key="TEST-YKKO">
         <name>Yukiko Amagi</name>
@@ -443,6 +574,9 @@
         <strength>70</strength>
         <magic>60</magic>
         <weapon>KNIFE</weapon>
+        <skills>
+            <skill>KILLER</skill>
+        </skills>
     </character>
     <character key="TEST-YRKA">
         <name>Yurika Misumaru</name>
@@ -461,17 +595,137 @@
         <strength>80</strength>
         <magic>70</magic>
         <weapon>FISTS</weapon>
+        <skills>
+            <skill>PROTAGONIST</skill>
+            <skill>MAGICALGIRL</skill>
+        </skills>
     </character>
     <character key="TEST-YUNO">
         <name>Yuno Gasai</name>
         <strength>70</strength>
         <magic>70</magic>
         <weapon>KNIFE</weapon>
+        <skills>
+            <skill>KILLER</skill>
+            <skill>TIMETRAVELER</skill>
+        </skills>
     </character>
     <character key="TEST-YURA">
         <name>Yura Yamato</name>
         <strength>40</strength>
         <magic>40</magic>
         <weapon>AIRSOFT</weapon>
+        <skills>
+            <skill>SURVIVAL</skill>
+        </skills>
+    </character>
+    <character key="TEST-AGIS">
+        <name>Aigis</name>
+        <strength>180</strength>
+        <magic>60</magic>
+        <weapon>GUN</weapon>
+        <skills>
+            <skill>ROBOT</skill>
+            <skill>PROTAGONIST</skill>
+        </skills>
+    </character>
+    <character key="TEST-NINA">
+        <name>Nina</name>
+        <strength>90</strength>
+        <magic>40</magic>
+        <weapon>SWORD</weapon>
+        <skills>
+            <skill>FUJOSHI</skill>
+        </skills>
+    </character>
+    <character key="TEST-MOMO">
+        <name>Momoka Oginome</name>
+        <strength>60</strength>
+        <magic>90</magic>
+        <weapon>COOKING</weapon>
+        <skills>
+            <skill>MAID</skill>
+        </skills>
+    </character>
+    <character key="TEST-URRA">
+        <name>Urara Kasugano</name>
+        <strength>180</strength>
+        <magic>20</magic>
+        <weapon>AIRSOFT</weapon>
+        <skills>
+            <skill>MASOCHIST</skill>
+            <skill>SURVIVAL</skill>
+        </skills>
+    </character>
+    <character key="TEST-KRKO">
+        <name>Kiruko Tachiarai</name>
+        <strength>40</strength>
+        <magic>80</magic>
+        <weapon>PLUSH</weapon>
+        <skills>
+            <skill>SLUGABED</skill>
+        </skills>
+    </character>
+    <character key="TEST-SNBU">
+        <name>Shinobu Oshino</name>
+        <strength>100</strength>
+        <magic>80</magic>
+        <weapon>SWORD</weapon>
+        <skills>
+            <skill>TIMETRAVELER</skill>
+            <skill>VAMPIRE</skill>
+        </skills>
+    </character>
+    <character key="TEST-MAYA">
+        <name>Maya Fey</name>
+        <strength>50</strength>
+        <magic>120</magic>
+        <weapon>FISTS</weapon>
+        <skills>
+            <skill>MEDIUM</skill>
+        </skills>
+    </character>
+    <character key="TEST-FUJI">
+        <name>Chihiro Fujisaki</name>
+        <strength>40</strength>
+        <magic>70</magic>
+        <weapon>COMPUTER</weapon>
+        <skills>
+            <skill>PROGRAMMER</skill>
+        </skills>
+    </character>
+    <character key="TEST-NORE">
+        <name>Noire</name>
+        <strength>180</strength>
+        <magic>60</magic>
+        <weapon>SWORD</weapon>
+        <skills>
+            <skill>TSUNDERE</skill>
+        </skills>
+    </character>
+    <character key="TEST-AKTS">
+        <name>Akatsuki</name>
+        <strength>110</strength>
+        <magic>50</magic>
+        <weapon>SWORD</weapon>
+    </character>
+    <character key="TEST-NONA">
+        <name>Nonna</name>
+        <strength>80</strength>
+        <magic>30</magic>
+        <weapon>TANK</weapon>
+        <skills>
+            <skill>PRAVDA</skill>
+        </skills>
+    </character>
+    <character key="TEST-RREM">
+        <name>Rem</name>
+        <strength>90</strength>
+        <magic>110</magic>
+        <weapon>BALL</weapon>
+        <skills>
+            <skill>MAID</skill>
+            <skill>REM</skill>
+        </skills>
     </character>
 </characters>

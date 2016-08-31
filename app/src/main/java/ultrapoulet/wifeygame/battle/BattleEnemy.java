@@ -1,16 +1,19 @@
 package ultrapoulet.wifeygame.battle;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.wifeygame.battle.enemyai.EnemyAI;
 import ultrapoulet.wifeygame.battle.enemyai.EnemyAI.EnemyAction;
+import ultrapoulet.wifeygame.battle.skills.SkillList;
+import ultrapoulet.wifeygame.character.SkillsEnum;
 
 /**
  * Created by John on 3/5/2016.
  */
-public class BattleEnemy {
+public class BattleEnemy implements BattleCharacter{
 
     private static final int POWERUPTURNS = 3;
     private static final int POWERDOWNTURNS = 3;
@@ -32,16 +35,12 @@ public class BattleEnemy {
     private double weakenPercentage;
     private int specialDamage;
     private int specialHits;
-
-    //private EnemySkills[] skills;
+    private SkillList skills;
 
     private int gold;
     private int experience;
 
     private Image image;
-
-    private double totalRoundMultiplier = 1.00;
-    private static final double roundMultiplier = 1.05;
 
     private int defendTurns = 0;
     private int weakenTurns = 0;
@@ -72,6 +71,7 @@ public class BattleEnemy {
             double weakenPercentage,
             int specialDamage,
             int specialHits,
+            ArrayList<SkillsEnum> skills,
             Image image,
             EnemyAI ai){
         this.name = name;
@@ -89,6 +89,7 @@ public class BattleEnemy {
         this.weakenPercentage = weakenPercentage;
         this.specialDamage = specialDamage;
         this.specialHits = specialHits;
+        this.skills = new SkillList(skills, this);
         this.image = image;
         this.ai = ai;
 
@@ -112,18 +113,31 @@ public class BattleEnemy {
         return this.maxHP;
     }
 
-    public int getCurrentHP(){ return this.currentHP ;}
+    public int getCurrentHP(){ return this.currentHP; }
+
+    public void setCurrentHP(int hp){ if(hp < maxHP) {this.currentHP = hp;} }
+
+    public boolean hasSkill(Class skillClass){
+        return skills.hasSkill(skillClass);
+    }
+
+    public void giveSkillBonus(double multiplier, Class givingSkill, Class receivingSkill){
+        skills.giveSkillBonus(multiplier, givingSkill, receivingSkill);
+    }
 
     public int getNumHits(){
+        int hits;
         switch(getAction()){
             case POWER_ATTACK:
-                return powerHits;
+                hits = powerHits + this.skills.getBonusHits();
+                return (hits < 10) ? hits : 10;
             case COMBO_ATTACK:
-                return comboHits;
+                hits = comboHits + this.skills.getBonusHits();
+                return (hits < 10) ? hits: 10;
             case SPECIAL_ATTACK:
-                return specialHits;
+                hits = specialHits + this.skills.getBonusHits();
+                return (hits < 10) ? hits : 10;
             default:
-                //Just do 1 for now
                 return 1;
         }
 
@@ -139,9 +153,10 @@ public class BattleEnemy {
 
     public Image getImage() { return this.image; }
 
-    public void battleStart(){
+    public void startBattle(BattleCharacter[] party){
         this.currentHP = this.maxHP;
         ai.reset();
+        this.skills.startBattle(party);
     }
 
     //This call will likely change to get information about current state of battle
@@ -158,111 +173,151 @@ public class BattleEnemy {
         return actionStrings.get(ai.getAction());
     }
 
-    public int PowerAttackDamage(){
+    public int PowerAttackDamage(BattleCharacter enemy){
         //Returns the damage that will be dealt for a Power Attack
-        int baseDamage = this.powerDamage + (int) ((this.powerDamage / 10) * Math.random());
+        int baseDamage = this.powerDamage;
+        double multiplier = skills.physicalAttackPercentage(enemy);
         if(powerUpActive){
-            baseDamage = (int) (baseDamage * powerUpPercentage);
+            multiplier += powerUpPercentage;
         }
         if(powerDownActive){
-            baseDamage = (int) (baseDamage * powerDownPercentage);
+            multiplier -= powerDownPercentage;
         }
-        return (int) (baseDamage * totalRoundMultiplier);
+        System.out.println("Enemy's multiplying damage by: " + multiplier);
+        int modDamage = (int) (baseDamage * multiplier);
+        modDamage = modDamage + (int) ((modDamage / 10) * Math.random());
+        return modDamage;
     }
 
-    public int ComboAttackDamage(){
+    public int ComboAttackDamage(BattleCharacter enemy){
         //Returns the damage that will be dealt for a Combo Attack
-        int baseDamage = this.comboDamage + (int) ((this.comboDamage / 10) * Math.random());
+        int baseDamage = this.comboDamage;
+        double multiplier = skills.physicalAttackPercentage(enemy);
         if(powerUpActive){
-            baseDamage = (int) (baseDamage * powerUpPercentage);
+            multiplier += powerUpPercentage;
         }
         if(powerDownActive){
-            baseDamage = (int) (baseDamage * powerDownPercentage);
+            multiplier -= powerDownPercentage;
         }
-        return (int) (baseDamage * totalRoundMultiplier);
+        System.out.println("Enemy's multiplying damage by: " + multiplier);
+        int modDamage = (int) (baseDamage * multiplier);
+        modDamage = modDamage + (int) ((modDamage / 10) * Math.random());
+        return modDamage;
     }
 
-    public int MagicAttackDamage(){
+    public int MagicAttackDamage(BattleCharacter enemy){
         //Returns the damage that will be dealt for a Magic Attack
-        int baseDamage = this.magicDamage + (int) ((this.magicDamage / 10) * Math.random());
+        int baseDamage = this.magicDamage;
+        double multiplier = skills.magicalAttackPercentage(enemy);
         if(powerUpActive){
-            baseDamage = (int) (baseDamage * powerUpPercentage);
+            multiplier += powerUpPercentage;
         }
         if(powerDownActive){
-            baseDamage = (int) (baseDamage * powerDownPercentage);
+            multiplier -= powerDownPercentage;
         }
-        return (int) (baseDamage * totalRoundMultiplier);
+        System.out.println("Enemy's multiplying damage by: " + multiplier);
+        int modDamage = (int) (baseDamage * multiplier);
+        modDamage = modDamage + (int) ((modDamage / 10) * Math.random());
+        return modDamage;
     }
 
-    public int HealAmount(){
+    public int HealAmount(BattleCharacter target){
         //Returns the amount that will be healed
-        int baseHeal = this.healAmount + (int) ((this.healAmount / 10) * Math.random());
-        return (int) (baseHeal * totalRoundMultiplier);
+        int baseHeal = (int) (this.healAmount * skills.healPercentage(target));
+        System.out.println("Enemy's multiplying heal by: " + skills.healPercentage(target));
+        int modHeal = baseHeal + (int) ((baseHeal / 10) * Math.random());
+        return modHeal;
     }
 
-    public int SpecialAttackDamage(){
+    public int SpecialAttackDamage(BattleCharacter enemy){
         //Returns the amount that will be dealt for a Special Attack
-        int baseDamage = this.specialDamage + (int) ((this.specialDamage / 10) * Math.random());
+        int baseDamage = this.specialDamage;
+        double multiplier = skills.specialAttackPercentage(enemy);
         if(powerUpActive){
-            baseDamage = (int) (baseDamage * powerUpPercentage);
+            multiplier += powerUpPercentage;
         }
         if(powerDownActive){
-            baseDamage = (int) (baseDamage * powerDownPercentage);
+            multiplier -= powerDownPercentage;
         }
-        return (int) (baseDamage * totalRoundMultiplier);
+        System.out.println("Enemy's multiplying damage by: " + multiplier);
+        int modDamage = (int) (baseDamage * multiplier);
+        modDamage = modDamage + (int) ((modDamage / 10) * Math.random());
+        return modDamage;
     }
 
-    public int takePhysicalDamage(int damage){
+    public void onDamageDealt(int damage){
+        skills.onDamageDealt(damage);
+    }
+
+    public void onEnemyDefeat(BattleCharacter enemy){
+        skills.onEnemyDefeat(enemy);
+    }
+
+    public int takePhysicalDamage(int damage, BattleCharacter enemy){
         //Damage modifiers
         int displayDamage = damage;
+        double multiplier = skills.receivePhysicalAttackPercentage(enemy);
         if(defendActive){
-            displayDamage = (int) (displayDamage * defendPercentage);
+            multiplier -= defendPercentage;
         }
         if(weakenActive){
-            displayDamage = (int) (displayDamage * weakenPercentage);
+            multiplier += weakenPercentage;
         }
+        displayDamage = (int) (displayDamage * multiplier);
+        System.out.println("Enemy's multiplying damage taken by: " + multiplier);
         this.currentHP = this.currentHP - displayDamage;
+        skills.onDamageReceived(displayDamage);
         if(this.currentHP <= 0){
             this.currentHP = 0;
         }
         return displayDamage;
     }
 
-    public int takeMagicalDamage(int damage){
+    public int takeMagicalDamage(int damage, BattleCharacter enemy){
         //Damage modifiers
         int displayDamage = damage;
+        double multiplier = skills.receiveMagicalAttackPercentage(enemy);
         if(defendActive){
-            displayDamage = (int) (displayDamage * defendPercentage);
+            multiplier -= defendPercentage;
         }
         if(weakenActive){
-            displayDamage = (int) (displayDamage * weakenPercentage);
+            multiplier += weakenPercentage;
         }
+        displayDamage = (int) (displayDamage * multiplier);
+        System.out.println("Enemy's multiplying damage taken by: " + multiplier);
         this.currentHP = this.currentHP - displayDamage;
+        skills.onDamageReceived(displayDamage);
         if(this.currentHP <= 0){
             this.currentHP = 0;
         }
         return displayDamage;
     }
 
-    public int takeSpecialDamage(int damage){
+    public int takeSpecialDamage(int damage, BattleCharacter enemy){
         //Damage modifiers
         int displayDamage = damage;
+        double multiplier = skills.receiveSpecialAttackPercentage(enemy);
         if(defendActive){
-            displayDamage = (int) (displayDamage * defendPercentage);
+            multiplier -= defendPercentage;
         }
         if(weakenActive){
-            displayDamage = (int) (displayDamage * weakenPercentage);
+            multiplier += weakenPercentage;
         }
+        displayDamage = (int) (displayDamage * multiplier);
+        System.out.println("Enemy's multiplying damage taken by: " + multiplier);
         this.currentHP = this.currentHP - displayDamage;
+        skills.onDamageReceived(displayDamage);
         if(this.currentHP <= 0){
             this.currentHP = 0;
         }
         return displayDamage;
     }
 
-    public int healDamage(int heal){
+    public int healDamage(int heal, BattleCharacter healer){
         //Heal modifiers
         int displayHeal = heal;
+        displayHeal = (int) (displayHeal * skills.receiveHealPercentage(healer));
+        System.out.println("Enemy's multiplying heal received by: " + skills.receiveHealPercentage(healer));
         this.currentHP = this.currentHP + displayHeal;
         if(this.currentHP > this.maxHP){
             this.currentHP = this.maxHP;
@@ -289,7 +344,15 @@ public class BattleEnemy {
         powerDownTurns = 0;
     }
 
+    public void startWave(){
+        skills.startWave();
+    }
+
     public void startRound(){
+        skills.startRound();
+    }
+
+    public void startTurn(){
         if(defendActive){
             defendTurns++;
             if(defendTurns > DEFENDTURNS){
@@ -307,7 +370,7 @@ public class BattleEnemy {
     }
 
     public void endRound(){
-        totalRoundMultiplier *= roundMultiplier;
+        skills.endRound();
 
         if(powerUpActive){
             powerUpTurns++;

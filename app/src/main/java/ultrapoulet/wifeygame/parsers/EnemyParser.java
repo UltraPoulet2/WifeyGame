@@ -7,6 +7,7 @@ import org.xml.sax.helpers.DefaultHandler;
 import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Graphics.ImageFormat;
 import ultrapoulet.wifeygame.character.EnemyCharacter;
+import ultrapoulet.wifeygame.character.SkillsEnum;
 import ultrapoulet.wifeygame.gamestate.Enemies;
 
 /**
@@ -31,6 +32,7 @@ public class EnemyParser extends DefaultHandler{
     private boolean bWeaken = false;
     private boolean bSpecialDamage = false;
     private boolean bSpecialHits = false;
+    private boolean bSkill = false;
 
     private boolean error = false;
 
@@ -107,6 +109,12 @@ public class EnemyParser extends DefaultHandler{
         else if(qName.equalsIgnoreCase("enemies")){
             //Do nothing
         }
+        else if(qName.equalsIgnoreCase("skills")){
+            //Do nothing
+        }
+        else if(qName.equalsIgnoreCase("skill")){
+            bSkill = true;
+        }
         else{
             System.out.println("EnemyParser:startElement(): Invalid qName: " + qName + " for key: " + enemyKey);
             error = true;
@@ -164,7 +172,19 @@ public class EnemyParser extends DefaultHandler{
             } else if (bSpecialHits) {
                 enemyBuilder.setSpecialHits(Integer.parseInt(temp));
                 bSpecialHits = false;
+            } else if (bSkill) {
+                SkillsEnum skill = SkillsEnum.getSkill(temp);
+                if(skill == null){
+                    System.out.println("EnemyParser:characters(): Could not find skill: " + temp);
+                    error = true;
+                }
+                else{
+                    System.out.println("EnemyParser:characters(): Adding skill: " + temp);
+                    enemyBuilder.addSkill(skill);
+                }
+                bSkill = false;
             }
+
         }
         catch(NumberFormatException e){
             System.out.println("EnemyParser:characters(): NumberFormatException for key: " + enemyKey);

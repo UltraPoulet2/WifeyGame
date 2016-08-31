@@ -8,6 +8,9 @@
         <powerHits>3</powerHits>
         <comboDamage>35</comboDamage>
         <comboHits>4</comboHits>
+        <skills>
+            <skill>GHOST</skill>
+        </skills>
     </enemy>
     <enemy key="TEST-NME2">
         <name>Enemy 2</name>
@@ -22,9 +25,51 @@
         <maxHP>50000</maxHP>
         <powerDamage>20</powerDamage>
         <powerHits>4</powerHits>
-        <powerUp>2.0</powerUp>
-        <weaken>1.5</weaken>
+        <powerUp>1.0</powerUp>
+        <weaken>0.5</weaken>
         <specialDamage>50</specialDamage>
         <specialHits>3</specialHits>
+        <skills>
+            <skill>SADIST</skill>
+        </skills>
+    </enemy>
+    <enemy key="TEST-NME4">
+        <name>Enemy 4</name>
+        <ai>BasicPhysicalEnemyAI</ai>
+        <maxHP>10000</maxHP>
+        <powerDamage>20</powerDamage>
+        <powerHits>4</powerHits>
+        <comboDamage>10</comboDamage>
+        <comboHits>6</comboHits>
+        <skills>
+            <skill>ATHLETE</skill>
+            <skill>RACER</skill>
+            <skill>BIKER</skill>
+        </skills>
+    </enemy>
+    <enemy key="TEST-NME5">
+        <name>Enemy 5</name>
+        <ai>BasicPhysicalEnemyAI</ai>
+        <maxHP>8000</maxHP>
+        <powerDamage>30</powerDamage>
+        <powerHits>3</powerHits>
+        <comboDamage>20</comboDamage>
+        <comboHits>5</comboHits>
+        <skills>
+            <skill>SPORTSMANAGER</skill>
+        </skills>
+    </enemy>
+    <enemy key="TEST-NME6">
+        <name>Enemy 6</name>
+        <ai>BasicMagicEnemyAI</ai>
+        <maxHP>8000</maxHP>
+        <magicDamage>10</magicDamage>
+        <healAmount>1500</healAmount>
+        <skills>
+            <skill>MAGICALGIRL</skill>
+            <skill>TIMETRAVELER</skill>
+            <skill>MASOCHIST</skill>
+            <skill>SADIST</skill>
+        </skills>
     </enemy>
 </enemies>

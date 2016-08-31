@@ -5,6 +5,7 @@ package ultrapoulet.androidgame.framework;
  */
 
 import android.graphics.Paint;
+import android.text.TextPaint;
 
 public interface Graphics {
     public static enum ImageFormat {
@@ -29,6 +30,8 @@ public interface Graphics {
     public void drawPercentageImage(Image image, int posX, int posY, int percX, int percY);
 
     public void drawString(String text, int x, int y, Paint paint);
+
+    public void drawMultiLineString(String text, int x, int y, int width, TextPaint paint);
 
     public int getWidth();
 

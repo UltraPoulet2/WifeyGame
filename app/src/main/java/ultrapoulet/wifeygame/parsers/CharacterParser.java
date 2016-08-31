@@ -6,6 +6,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Graphics.ImageFormat;
+import ultrapoulet.wifeygame.character.SkillsEnum;
 import ultrapoulet.wifeygame.character.Weapon;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
 import ultrapoulet.wifeygame.gamestate.RecruitedCharacters;
@@ -21,6 +22,7 @@ public class CharacterParser extends DefaultHandler{
     private boolean bStrength;
     private boolean bMagic;
     private boolean bWeapon;
+    private boolean bSkill;
 
     private boolean error;
 
@@ -67,6 +69,12 @@ public class CharacterParser extends DefaultHandler{
         else if(qName.equalsIgnoreCase("characters")){
             //Do nothing.
         }
+        else if(qName.equalsIgnoreCase("skills")){
+            //Do nothing.
+        }
+        else if(qName.equalsIgnoreCase("skill")){
+            bSkill = true;
+        }
         else{
             System.out.println("CharacterParser:startElement(): Invalid qName: " + qName + " for key " + charKey);
         }
@@ -107,6 +115,18 @@ public class CharacterParser extends DefaultHandler{
             else if (bWeapon) {
                 charBuilder.setWeapon(Weapon.getWeapon(temp));
                 bWeapon = false;
+            }
+            else if(bSkill){
+                SkillsEnum skill = SkillsEnum.getSkill(temp);
+                if(skill == null){
+                    System.out.println("CharacterParser:characters(): Could not find skill: " + temp);
+                    error = true;
+                }
+                else{
+                    System.out.println("CharacterParser:characters(): Adding skill: " + temp);
+                    charBuilder.addSkill(skill);
+                }
+                bSkill = false;
             }
         }
         catch(NumberFormatException e){

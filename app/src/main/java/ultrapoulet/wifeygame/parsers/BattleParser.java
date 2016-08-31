@@ -16,6 +16,7 @@ public class BattleParser extends DefaultHandler {
 
     private boolean bName = false;
     private boolean bEnemy = false;
+    private boolean bPartySize = false;
 
     private boolean error = false;
 
@@ -43,6 +44,9 @@ public class BattleParser extends DefaultHandler {
         }
         else if(qName.equalsIgnoreCase("enemy")){
             bEnemy = true;
+        }
+        else if(qName.equalsIgnoreCase("partysize")){
+            bPartySize = true;
         }
         else{
             System.out.println("BattleParser:startElement(): Invalid qName: " + qName + " for key " + battleKey);
@@ -84,6 +88,17 @@ public class BattleParser extends DefaultHandler {
             }
             bEnemy = false;
         }
+        else if(bPartySize){
+            try{
+                battleBuilder.setPartyMax(Integer.parseInt(temp));
+                bPartySize = false;
+            }
+            catch(NumberFormatException e){
+                System.out.println("BattleParser:characters(): NumberFormatException for key: " + battleKey);
+                error = true;
+                bPartySize = false;
+            }
+        }
     }
 
     private void resetValues(){
@@ -100,6 +115,9 @@ public class BattleParser extends DefaultHandler {
             return false;
         }
         if(battleBuilder.getCharacterEnemies().length == 0){
+            return false;
+        }
+        if(battleBuilder.getPartyMax() <= 0 || battleBuilder.getPartyMax() > 7){
             return false;
         }
 

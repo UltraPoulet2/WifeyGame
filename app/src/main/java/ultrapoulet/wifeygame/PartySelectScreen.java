@@ -28,8 +28,8 @@ public class PartySelectScreen extends Screen {
 
     private List<WifeyCharacter> validCharacters;
     private WifeyCharacter[] currentParty;
-    private int maxPartySize = 7;
-    private int finalIndex = maxPartySize - 1;
+    private int maxPartySize;
+    private int finalIndex;
     private BattleInfo battleInfo;
 
     private Screen previousScreen;
@@ -130,12 +130,6 @@ public class PartySelectScreen extends Screen {
 
         numbers = Assets.HPNumbers;
 
-        currentParty = new WifeyCharacter[maxPartySize];
-        for(int i = 0; i < currentParty.length; i++){
-            currentParty[i] = Party.getIndex(i);
-        }
-        setValidCharacters(RecruitedCharacters.getArray());
-
         charInfo = new CharacterInfoScreen(game);
         charInfo.setPreviousScreen(this);
     }
@@ -165,6 +159,14 @@ public class PartySelectScreen extends Screen {
 
     public void setBattleInfo(BattleInfo info){
         this.battleInfo = info;
+
+        maxPartySize = battleInfo.getPartyMax();
+        finalIndex = maxPartySize - 1;
+        currentParty = new WifeyCharacter[maxPartySize];
+        for(int i = 0; i < currentParty.length; i++){
+            currentParty[i] = Party.getIndex(i);
+        }
+        setValidCharacters(RecruitedCharacters.getArray());
     }
 
     public void setPreviousScreen(Screen previousScreen){
@@ -241,12 +243,14 @@ public class PartySelectScreen extends Screen {
                         backButton();
                     }
                     else if(lastPressed == ButtonPressed.ACCEPT && getButtonPressed(t.x, t.y) == ButtonPressed.ACCEPT){
-                        BattleScreen bs = new BattleScreen(game);
-                        Party.setParty(currentParty);
-                        bs.setParty(Party.getBattleParty());
-                        bs.setBattleInfo(battleInfo);
-                        bs.setBackground(Assets.testBG);
-                        game.setScreen(bs);
+                        if(currentParty[0] != null) {
+                            BattleScreen bs = new BattleScreen(game);
+                            Party.setParty(currentParty);
+                            bs.setParty(Party.getBattleParty());
+                            bs.setBattleInfo(battleInfo);
+                            bs.setBackground(Assets.testBG);
+                            game.setScreen(bs);
+                        }
                     }
                     else if(lastPressed == ButtonPressed.PREV_PAGE && getButtonPressed(t.x, t.y) == ButtonPressed.PREV_PAGE && currentPage > 1) {
                         currentPage--;

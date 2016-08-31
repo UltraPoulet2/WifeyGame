@@ -13,6 +13,7 @@ import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.androidgame.framework.Input.TouchEvent;
 import ultrapoulet.androidgame.framework.Screen;
 import ultrapoulet.wifeygame.Assets;
+import ultrapoulet.wifeygame.BattleCharacterInfoScreen;
 import ultrapoulet.wifeygame.battle.enemyai.EnemyAI.EnemyAction;
 
 /**
@@ -20,7 +21,7 @@ import ultrapoulet.wifeygame.battle.enemyai.EnemyAI.EnemyAction;
  */
 public class BattleScreen extends Screen {
 
-    public BattleCharacter[] party;
+    public BattleWifey[] party;
     public BattleInfo battleInfo;
     public BattleEnemy[] enemies;
 
@@ -30,6 +31,9 @@ public class BattleScreen extends Screen {
     private int numHits = 0;
     private static final int SPECIAL_HITS = 60;
     private static final int MAX_HITS = SPECIAL_HITS * 5;
+
+    private double enemyMultiplier = 1.00;
+    private final double roundMultiplier = 0.025;
 
     private static Image background, buttonMenuNormal, buttonMenuSpecial;
 
@@ -69,6 +73,9 @@ public class BattleScreen extends Screen {
     private static final int CHAR_INTERIOR_LARGE_X = 20;
     private static final int CHAR_IMAGE_LARGE_Y = 660;
     private static final int CHAR_HEALTH_LARGE_Y = 840;
+
+    private static final int CHAR_IMAGE_SMALL_SIZE = 80;
+    private static final int CHAR_IMAGE_LARGE_SIZE = 160;
 
     private static final int ENEMY_HEALTH_HOLDER_X = 195;
     private static final int ENEMY_HEALTH_HOLDER_Y = 508;
@@ -113,6 +120,8 @@ public class BattleScreen extends Screen {
     private int enemyDamage;
     private int partyDamage[] = new int[7];
     private ButtonPressed commandSelected;
+
+    private BattleCharacterInfoScreen charInfo;
 
     private enum ButtonPressed{
         POWER_ATTACK,
@@ -164,6 +173,9 @@ public class BattleScreen extends Screen {
         createButtonMap();
         createButtonNames();
         createPaint();
+
+        charInfo = new BattleCharacterInfoScreen(game);
+        charInfo.setPreviousScreen(this);
     }
 
     public void createButtonMap(){
@@ -245,7 +257,7 @@ public class BattleScreen extends Screen {
         textPaint.setTextSize(50);
     }
 
-    public void setParty(BattleCharacter[] party){
+    public void setParty(BattleWifey[] party){
         this.party = party;
     }
 
@@ -267,6 +279,41 @@ public class BattleScreen extends Screen {
             }
         }
         return null;
+    }
+
+    public int getCharacterPressed(TouchEvent touch){
+        int i = 0;
+        int x = touch.x;
+        int y = touch.y;
+        for( ; i < partyIndex && i < party.length; i++ ){
+            int leftX = CHAR_HOLDER_X_DISTANCE * i + CHAR_INTERIOR_SMALL_X;
+            int rightX = leftX + CHAR_IMAGE_SMALL_SIZE;
+            int topY = CHAR_IMAGE_SMALL_Y;
+            int botY = topY + CHAR_IMAGE_SMALL_SIZE;
+            if(leftX <= x && rightX >= x && topY <= y && botY >= y){
+                return i;
+            }
+        }
+        if(i == partyIndex && i < party.length){
+            int leftX = CHAR_HOLDER_X_DISTANCE * i + CHAR_INTERIOR_LARGE_X;
+            int rightX = leftX + CHAR_IMAGE_LARGE_SIZE;
+            int topY = CHAR_IMAGE_LARGE_Y;
+            int botY = topY + CHAR_IMAGE_LARGE_SIZE;
+            if(leftX <= x && rightX >= x && topY <= y && botY >= y){
+                return i;
+            }
+            i++;
+        }
+        for( ; i < party.length; i++ ){
+            int leftX = CHAR_HOLDER_X_DISTANCE * (i + 1);
+            int rightX = leftX + CHAR_IMAGE_SMALL_SIZE;
+            int topY = CHAR_IMAGE_SMALL_Y;
+            int botY = topY + CHAR_IMAGE_SMALL_SIZE;
+            if(leftX <= x && rightX >= x && topY <= y && botY >= y){
+                return i;
+            }
+        }
+        return -1;
     }
 
     private void incrementHits(){
@@ -338,10 +385,12 @@ public class BattleScreen extends Screen {
                     phaseTime = 0;
                     phaseEntered = false;
                     for(int i = 0; i < party.length; i++){
-                        party[i].battleStart();
+                        if(party[i].getCurrentHP() != 0) {
+                            party[i].startBattle(party);
+                        }
                     }
                     for(int i = 0; i < enemies.length; i++){
-                        enemies[i].battleStart();
+                        enemies[i].startBattle(enemies);
                     }
                 } else {
                     phaseTime += deltaTime;
@@ -355,6 +404,12 @@ public class BattleScreen extends Screen {
                 //Do anything necessary for Start of Wave
                 if (phaseEntered) {
                     firstPartyIndex();
+                    for(int i = 0; i < party.length; i++){
+                        if(party[i].getCurrentHP() != 0){
+                            party[i].startWave();
+                        }
+                    }
+                    enemies[enemyIndex].startWave();
                     phaseTime = 0;
                     phaseEntered = false;
                 } else {
@@ -369,6 +424,12 @@ public class BattleScreen extends Screen {
                 //Do things for Start of Round
                 if (phaseEntered) {
                     firstPartyIndex();
+                    for(int i = 0; i < party.length; i++){
+                        if(party[i].getCurrentHP() != 0) {
+                            party[i].startRound();
+                        }
+                    }
+                    enemies[enemyIndex].startRound();
                     comboHolder = 0;
                     damageHolder = 0;
                     phaseTime = 0;
@@ -402,6 +463,12 @@ public class BattleScreen extends Screen {
                             continue;
                         }
                         ButtonPressed command = getButtonPressed(touchEvents.get(i));
+                        int charPressed = getCharacterPressed(touchEvents.get(i));
+                        if(charPressed != -1){
+                            charInfo.setChars(party[charPressed], enemies[enemyIndex]);
+                            game.setScreen(charInfo);
+                            continue;
+                        }
                         if (command == null) {
                             continue;
                         }
@@ -444,35 +511,38 @@ public class BattleScreen extends Screen {
                     int displayDamage;
                     switch (commandSelected) {
                         case POWER_ATTACK:
-                            baseDamage = party[partyIndex].PowerAttackDamage();
-                            displayDamage = enemies[enemyIndex].takePhysicalDamage(baseDamage);
+                            baseDamage = party[partyIndex].PowerAttackDamage(enemies[enemyIndex]);
+                            displayDamage = enemies[enemyIndex].takePhysicalDamage(baseDamage, party[partyIndex]);
                             enemyDamage = displayDamage;
+                            party[partyIndex].onDamageDealt(displayDamage);
                             incrementHits();
                             comboHolder++;
                             damageHolder += enemyDamage;
                             break;
                         case COMBO_ATTACK:
-                            baseDamage = party[partyIndex].ComboAttackDamage();
-                            displayDamage = enemies[enemyIndex].takePhysicalDamage(baseDamage);
+                            baseDamage = party[partyIndex].ComboAttackDamage(enemies[enemyIndex]);
+                            displayDamage = enemies[enemyIndex].takePhysicalDamage(baseDamage, party[partyIndex]);
                             enemyDamage = displayDamage;
+                            party[partyIndex].onDamageDealt(displayDamage);
                             incrementHits();
                             hitsPerformed++;
                             comboHolder++;
                             damageHolder += enemyDamage;
                             break;
                         case MAGIC_ATTACK:
-                            baseDamage = party[partyIndex].MagicAttackDamage();
-                            displayDamage = enemies[enemyIndex].takeMagicalDamage(baseDamage);
+                            baseDamage = party[partyIndex].MagicAttackDamage(enemies[enemyIndex]);
+                            displayDamage = enemies[enemyIndex].takeMagicalDamage(baseDamage, party[partyIndex]);
                             enemyDamage = displayDamage;
+                            party[partyIndex].onDamageDealt(displayDamage);
                             incrementHits();
                             comboHolder++;
                             damageHolder += enemyDamage;
                             break;
                         case HEALING_MAGIC:
-                            baseDamage = party[partyIndex].HealAmount();
                             for (int j = 0; j < party.length; j++) {
                                 if (party[j].getCurrentHP() > 0) {
-                                    displayDamage = party[j].healDamage(baseDamage);
+                                    baseDamage = party[partyIndex].HealAmount(party[j]);
+                                    displayDamage = party[j].healDamage(baseDamage, party[partyIndex]);
                                     partyDamage[j] = displayDamage;
                                 }
                                 else{
@@ -481,9 +551,10 @@ public class BattleScreen extends Screen {
                             }
                             break;
                         case SPECIAL_ATTACK:
-                            baseDamage = party[partyIndex].SpecialDamage();
-                            displayDamage = enemies[enemyIndex].takeSpecialDamage(baseDamage);
+                            baseDamage = party[partyIndex].SpecialAttackDamage(enemies[enemyIndex]);
+                            displayDamage = enemies[enemyIndex].takeSpecialDamage(baseDamage, party[partyIndex]);
                             enemyDamage = displayDamage;
+                            party[partyIndex].onDamageDealt(displayDamage);
                             incrementHits();
                             comboHolder++;
                             damageHolder += enemyDamage;
@@ -547,7 +618,7 @@ public class BattleScreen extends Screen {
                         partyDamage[i] = 0;
                     }
                     enemyDamage = 0;
-                    enemies[enemyIndex].startRound();
+                    enemies[enemyIndex].startTurn();
                     enemies[enemyIndex].determineAction();
                 } else {
                     phaseTime += deltaTime;
@@ -573,61 +644,93 @@ public class BattleScreen extends Screen {
                     switch(action){
                         case POWER_ATTACK:
                             charIndex = chooseRandomChar();
-                            baseDamage = enemies[enemyIndex].PowerAttackDamage();
-                            displayDamage = party[charIndex].takePhysicalDamage(baseDamage);
+                            baseDamage = (int) (enemies[enemyIndex].PowerAttackDamage(party[charIndex]) * enemyMultiplier);
+                            displayDamage = party[charIndex].takePhysicalDamage(baseDamage, enemies[enemyIndex]);
                             for(int i = 0; i < party.length; i++){
-                                if(i != charIndex){
-                                    partyDamage[i] = 0;
+                                if(i == charIndex){
+                                    partyDamage[i] = displayDamage;
                                 }
                                 else{
-                                    partyDamage[i] = displayDamage;
+                                    partyDamage[i] = 0;
                                 }
                             }
                             hitsPerformed++;
+                            if(displayDamage > 0) {
+                                enemies[enemyIndex].onDamageDealt(displayDamage);
+                            }
+                            if(party[charIndex].getCurrentHP() == 0){
+                                enemies[enemyIndex].onEnemyDefeat(party[charIndex]);
+                            }
                             break;
                         case COMBO_ATTACK:
                             charIndex = chooseRandomChar();
-                            baseDamage = enemies[enemyIndex].ComboAttackDamage();
-                            displayDamage = party[charIndex].takePhysicalDamage(baseDamage);
+                            baseDamage = (int) (enemies[enemyIndex].ComboAttackDamage(party[charIndex]) * enemyMultiplier);
+                            displayDamage = party[charIndex].takePhysicalDamage(baseDamage, enemies[enemyIndex]);
                             for(int i = 0; i < party.length; i++){
-                                if(i != charIndex){
-                                    partyDamage[i] = 0;
+                                if(i == charIndex){
+                                    partyDamage[i] = displayDamage;
                                 }
                                 else{
-                                    partyDamage[i] = displayDamage;
+                                    partyDamage[i] = 0;
                                 }
                             }
                             hitsPerformed++;
+                            if(displayDamage > 0) {
+                                enemies[enemyIndex].onDamageDealt(displayDamage);
+                            }
+                            if(party[charIndex].getCurrentHP() == 0){
+                                enemies[enemyIndex].onEnemyDefeat(party[charIndex]);
+                            }
                             break;
                         case MAGIC_ATTACK:
                             for(int i = 0; i < party.length; i++){
                                 if(party[i].getCurrentHP() > 0){
-                                    baseDamage = enemies[enemyIndex].MagicAttackDamage();
-                                    partyDamage[i] = party[i].takeMagicalDamage(baseDamage);
+                                    baseDamage = (int) (enemies[enemyIndex].MagicAttackDamage(party[i]) * enemyMultiplier);
+                                    displayDamage = party[i].takeMagicalDamage(baseDamage, enemies[enemyIndex]);
+                                    partyDamage[i] = displayDamage;
                                 }
                                 else{
                                     partyDamage[i] = 0;
                                 }
                             }
                             hitsPerformed++;
+                            for(int i = 0; i < party.length; i++){
+                                if(partyDamage[i] > 0){
+                                    enemies[enemyIndex].onDamageDealt(partyDamage[i]);
+                                }
+                            }
+                            for(int i = 0; i < party.length; i++){
+                                if(partyDamage[i] > 0 && party[i].getCurrentHP() == 0){
+                                    enemies[enemyIndex].onEnemyDefeat(party[i]);
+                                }
+                            }
                             break;
                         case HEALING_MAGIC:
-                            baseDamage = enemies[enemyIndex].HealAmount();
-                            enemyDamage = baseDamage;
-                            enemies[enemyIndex].healDamage(enemyDamage);
+                            baseDamage = (int) (enemies[enemyIndex].HealAmount(enemies[enemyIndex]) * enemyMultiplier);
+                            enemyDamage = enemies[enemyIndex].healDamage(baseDamage, enemies[enemyIndex]);
                             hitsPerformed++;
                             break;
                         case SPECIAL_ATTACK:
                             for(int i = 0; i < party.length; i++){
                                 if(party[i].getCurrentHP() > 0){
-                                    baseDamage = enemies[enemyIndex].SpecialAttackDamage();
-                                    partyDamage[i] = party[i].takeSpecialDamage(baseDamage);
+                                    baseDamage = (int) (enemies[enemyIndex].SpecialAttackDamage(party[i]) * enemyMultiplier);
+                                    partyDamage[i] = party[i].takeSpecialDamage(baseDamage, enemies[enemyIndex]);
                                 }
                                 else{
                                     partyDamage[i] = 0;
                                 }
                             }
                             hitsPerformed++;
+                            for(int i = 0; i < party.length; i++){
+                                if(partyDamage[i] > 0){
+                                    enemies[enemyIndex].onDamageDealt(partyDamage[i]);
+                                }
+                            }
+                            for(int i = 0; i < party.length; i++){
+                                if(partyDamage[i] > 0 && party[i].getCurrentHP() == 0){
+                                    enemies[enemyIndex].onEnemyDefeat(party[i]);
+                                }
+                            }
                             break;
                         case POWER_UP:
                             enemies[enemyIndex].powerUp();
@@ -699,7 +802,13 @@ public class BattleScreen extends Screen {
                 if (phaseEntered) {
                     phaseTime = 0;
                     phaseEntered = false;
+                    for(int i = 0; i < party.length; i++){
+                        if(party[i].getCurrentHP() != 0){
+                            party[i].endRound();
+                        }
+                    }
                     enemies[enemyIndex].endRound();
+                    enemyMultiplier += roundMultiplier;
                 } else {
                     phaseTime += deltaTime;
                     if (phaseTime >= WAIT_PHASE_WAIT) {
@@ -720,12 +829,12 @@ public class BattleScreen extends Screen {
                     phaseTime += deltaTime;
                     if (phaseTime >= WAIT_PHASE_WAIT) {
                         enemyIndex++;
-                        System.out.println(enemyIndex);
                         if (enemyIndex == enemies.length) {
                             enemyIndex--;
                             currentPhase = BattlePhase.BATTLE_END;
                             phaseEntered = true;
                         } else {
+                            party[partyIndex].onEnemyDefeat(enemies[enemyIndex]);
                             currentPhase = BattlePhase.WAVE_START;
                             phaseEntered = true;
                         }
