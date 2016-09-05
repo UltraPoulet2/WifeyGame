@@ -13,16 +13,13 @@ import ultrapoulet.wifeygame.character.SkillsEnum;
 /**
  * Created by John on 3/5/2016.
  */
-public class BattleEnemy implements BattleCharacter{
+public class BattleEnemy extends BattleCharacter{
 
     private static final int POWERUPTURNS = 3;
     private static final int POWERDOWNTURNS = 3;
     private static final int DEFENDTURNS = 3;
     private static final int WEAKENTURNS = 3;
 
-    private String name;
-    private int maxHP;
-    private int currentHP;
     private int powerDamage;
     private int powerHits;
     private int comboDamage;
@@ -35,7 +32,6 @@ public class BattleEnemy implements BattleCharacter{
     private double weakenPercentage;
     private int specialDamage;
     private int specialHits;
-    private SkillList skills;
 
     private int gold;
     private int experience;
@@ -105,24 +101,6 @@ public class BattleEnemy implements BattleCharacter{
         actionStrings.put(EnemyAction.SPECIAL_ATTACK, "Special Attack");
         actionStrings.put(EnemyAction.TRANSFORM, "Transformation");
         actionStrings.put(EnemyAction.WAIT, "Wait");
-    }
-
-    public String getName(){ return this.name; }
-
-    public int getMaxHP(){
-        return this.maxHP;
-    }
-
-    public int getCurrentHP(){ return this.currentHP; }
-
-    public void setCurrentHP(int hp){ if(hp < maxHP) {this.currentHP = hp;} }
-
-    public boolean hasSkill(Class skillClass){
-        return skills.hasSkill(skillClass);
-    }
-
-    public void giveSkillBonus(double multiplier, Class givingSkill, Class receivingSkill){
-        skills.giveSkillBonus(multiplier, givingSkill, receivingSkill);
     }
 
     public int getNumHits(){
@@ -245,14 +223,6 @@ public class BattleEnemy implements BattleCharacter{
         return modDamage;
     }
 
-    public void onDamageDealt(int damage){
-        skills.onDamageDealt(damage);
-    }
-
-    public void onEnemyDefeat(BattleCharacter enemy){
-        skills.onEnemyDefeat(enemy);
-    }
-
     public int takePhysicalDamage(int damage, BattleCharacter enemy){
         //Damage modifiers
         int displayDamage = damage;
@@ -342,14 +312,6 @@ public class BattleEnemy implements BattleCharacter{
     public void powerDown(){
         powerDownActive = true;
         powerDownTurns = 0;
-    }
-
-    public void startWave(){
-        skills.startWave();
-    }
-
-    public void startRound(){
-        skills.startRound();
     }
 
     public void startTurn(){

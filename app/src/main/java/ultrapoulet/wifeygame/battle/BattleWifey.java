@@ -10,14 +10,10 @@ import ultrapoulet.wifeygame.battle.skills.SkillList;
 /**
  * Created by John on 3/5/2016.
  */
-public class BattleWifey implements BattleCharacter{
+public class BattleWifey extends BattleCharacter{
 
-    private String name;
-    private int maxHP;
-    private int currentHP;
     private int numHits;
     private Weapon weapon;
-    private SkillList skills;
     private int strength;
     private int magic;
 
@@ -41,10 +37,6 @@ public class BattleWifey implements BattleCharacter{
         return 10 * strength;
     }
 
-    public String getName(){
-        return this.name;
-    }
-
     public Weapon getWeapon() { return this.weapon; }
 
     public int getNumHits(){
@@ -53,14 +45,6 @@ public class BattleWifey implements BattleCharacter{
             return 10;
         }
         return temp;
-    }
-
-    public int getMaxHP(){
-        return this.maxHP;
-    }
-
-    public int getCurrentHP(){
-        return this.currentHP;
     }
 
     public int getStrength(){
@@ -77,28 +61,10 @@ public class BattleWifey implements BattleCharacter{
 
     public SkillList getSkills() { return this.skills; }
 
-    public boolean hasSkill(Class skillClass){
-        return skills.hasSkill(skillClass);
-    }
-
-    public void giveSkillBonus(double multiplier, Class givingSkill, Class receivingSkill){
-        skills.giveSkillBonus(multiplier, givingSkill, receivingSkill);
-    }
-
-    public void setCurrentHP(int hp){
-        this.currentHP = hp;
-    }
-
     public void startBattle(BattleCharacter[] party){
         this.currentHP = this.maxHP;
         this.isDefending = false;
         this.skills.startBattle(party);
-    }
-
-    public void startWave() { skills.startWave(); }
-
-    public void startRound(){
-        skills.startRound();
     }
 
     public void endRound() { skills.endRound(); }
@@ -153,14 +119,6 @@ public class BattleWifey implements BattleCharacter{
         modDamage = modDamage + (int) ((modDamage / 10) * Math.random());
         return modDamage;
 
-    }
-
-    public void onDamageDealt(int damage){
-        skills.onDamageDealt(damage);
-    }
-
-    public void onEnemyDefeat(BattleCharacter enemy){
-        skills.onEnemyDefeat(enemy);
     }
 
     public void Defend(){
