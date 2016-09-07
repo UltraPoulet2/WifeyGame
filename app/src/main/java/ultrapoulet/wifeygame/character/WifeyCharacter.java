@@ -16,13 +16,16 @@ public class WifeyCharacter {
     private String hashKey;
     private int strength;
     private int magic;
-    //private SkillList skills;
     private ArrayList<SkillsEnum> skills;
 
     private int experience;
     private int level;
 
     private Weapon weapon;
+
+    private Element attackElement;
+    private Element strongElement;
+    private Element weakElement;
 
     private Image image;
 
@@ -60,6 +63,12 @@ public class WifeyCharacter {
 
     public Weapon getWeapon() { return this.weapon; }
 
+    public Element getAttackElement() { return this.attackElement; }
+
+    public Element getStrongElement() { return this.strongElement; }
+
+    public Element getWeakElement() { return this.weakElement; }
+
     public ArrayList<SkillsEnum> getSkills() { return this.skills; }
 
     public void setHashKey(String hashKey){
@@ -83,6 +92,12 @@ public class WifeyCharacter {
     }
 
     public void setWeapon(Weapon weapon) { this.weapon = weapon; }
+
+    public void setAttackElement(Element element){ this.attackElement = element; }
+
+    public void setStrongElement(Element element) { this.strongElement = element; }
+
+    public void setWeakElement(Element element) { this.weakElement = element; }
 
     public void addSkill(SkillsEnum skill) {
         if (!this.skills.contains(skill)) {

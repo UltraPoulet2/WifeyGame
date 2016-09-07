@@ -26,6 +26,10 @@ public class EnemyCharacter {
     private int specialDamage;
     private int specialHits;
 
+    private Element attackElement;
+    private Element strongElement;
+    private Element weakElement;
+
     private ArrayList<SkillsEnum> skills;
 
     private int gold;
@@ -100,6 +104,13 @@ public class EnemyCharacter {
         return this.image;
     }
 
+    public Element getAttackElement() { return this.attackElement; }
+
+    public Element getStrongElement() { return this.strongElement; }
+
+    public Element getWeakElement() { return this.weakElement; }
+
+
     public void setName(String name){
         this.name = name;
     }
@@ -162,6 +173,12 @@ public class EnemyCharacter {
         this.image = image;
     }
 
+    public void setAttackElement(Element element){ this.attackElement = element; }
+
+    public void setStrongElement(Element element) { this.strongElement = element; }
+
+    public void setWeakElement(Element element) { this.weakElement = element; }
+
     public void setAI(String ai){
         if(EnemyAI.getAI(ai) != null) {
             this.ai = ai;
@@ -187,7 +204,6 @@ public class EnemyCharacter {
                 skills,
                 image,
                 EnemyAI.getAI(ai));
-        //Add skills argument later
     }
 
     public boolean validate(){

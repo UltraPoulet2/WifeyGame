@@ -1,6 +1,7 @@
 package ultrapoulet.wifeygame.battle;
 
 import ultrapoulet.wifeygame.battle.skills.SkillList;
+import ultrapoulet.wifeygame.character.Element;
 
 /**
  * Created by John on 7/13/2016.
@@ -10,6 +11,10 @@ public abstract class BattleCharacter {
     protected int maxHP;
     protected int currentHP;
     protected SkillList skills;
+
+    protected Element attackElement;
+    protected Element strongElement;
+    protected Element weakElement;
 
     public String getName(){ return this.name; }
 
@@ -32,6 +37,18 @@ public abstract class BattleCharacter {
 
     public void giveSkillBonus(double multiplier, Class givingSkill, Class receivingSkill){
         skills.giveSkillBonus(multiplier, givingSkill, receivingSkill);
+    }
+
+    public Element getAttackElement(){
+        return this.attackElement;
+    }
+
+    public Element getStrongElement(){
+        return this.strongElement;
+    }
+
+    public Element getWeakElement(){
+        return this.weakElement;
     }
 
     public abstract void startBattle(BattleCharacter[] party);
@@ -57,6 +74,6 @@ public abstract class BattleCharacter {
     public void startWave() { skills.startWave(); }
 
     public void startRound(){ skills.startRound(); }
-    
+
     public abstract void endRound();
 }
