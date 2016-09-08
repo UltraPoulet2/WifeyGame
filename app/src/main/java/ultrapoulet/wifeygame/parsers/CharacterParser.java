@@ -6,6 +6,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Graphics.ImageFormat;
+import ultrapoulet.wifeygame.character.Element;
 import ultrapoulet.wifeygame.character.SkillsEnum;
 import ultrapoulet.wifeygame.character.Weapon;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
@@ -23,6 +24,10 @@ public class CharacterParser extends DefaultHandler{
     private boolean bMagic;
     private boolean bWeapon;
     private boolean bSkill;
+
+    private boolean bAtkElement;
+    private boolean bStgElement;
+    private boolean bWkElement;
 
     private boolean error;
 
@@ -74,6 +79,18 @@ public class CharacterParser extends DefaultHandler{
         }
         else if(qName.equalsIgnoreCase("skill")){
             bSkill = true;
+        }
+        else if(qName.equalsIgnoreCase("elements")){
+            //Do nothing.
+        }
+        else if(qName.equalsIgnoreCase("atkElement")){
+            bAtkElement = true;
+        }
+        else if(qName.equalsIgnoreCase("stgElement")){
+            bStgElement = true;
+        }
+        else if(qName.equalsIgnoreCase("wkElement")){
+            bWkElement = true;
         }
         else{
             System.out.println("CharacterParser:startElement(): Invalid qName: " + qName + " for key " + charKey);
@@ -128,6 +145,39 @@ public class CharacterParser extends DefaultHandler{
                 }
                 bSkill = false;
             }
+            else if(bAtkElement){
+                Element elm = Element.getElement(temp);
+                if(elm == null){
+                    System.out.println("CharacterParser:characters(): Could not find element: " + temp);
+                    error = true;
+                }
+                else{
+                    charBuilder.setAttackElement(elm);
+                }
+                bAtkElement = false;
+            }
+            else if(bStgElement){
+                Element elm = Element.getElement(temp);
+                if(elm == null){
+                    System.out.println("CharacterParser:characters(): Could not find element: " + temp);
+                    error = true;
+                }
+                else{
+                    charBuilder.setStrongElement(elm);
+                }
+                bStgElement = false;
+            }
+            else if(bWkElement){
+                Element elm = Element.getElement(temp);
+                if(elm == null){
+                    System.out.println("CharacterParser:characters(): Could not find element: " + temp);
+                    error = true;
+                }
+                else{
+                    charBuilder.setWeakElement(elm);
+                }
+                bWkElement = false;
+            }
         }
         catch(NumberFormatException e){
             System.out.println("CharacterParser:characters(): NumberFormatException for key: " + charKey);
@@ -150,6 +200,11 @@ public class CharacterParser extends DefaultHandler{
         if(charBuilder.getWeapon() == null){
             return false;
         }
+        /* For now, remove this check
+        if(charBuilder.getAttackElement() == null || charBuilder.getStrongElement() == null | charBuilder.getWeakElement() == null){
+            return false;
+        }
+        */
         if(error == true){
             return false;
         }

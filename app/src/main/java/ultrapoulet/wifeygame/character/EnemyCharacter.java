@@ -219,6 +219,11 @@ public class EnemyCharacter {
         if(maxHP == 0){
             return false;
         }
+        /* Comment out for now
+        if(attackElement == null || strongElement == null | weakElement == null){
+            return false;
+        }
+        */
         return true;
     }
 }

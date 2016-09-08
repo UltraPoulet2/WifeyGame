@@ -6,6 +6,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Graphics.ImageFormat;
+import ultrapoulet.wifeygame.character.Element;
 import ultrapoulet.wifeygame.character.EnemyCharacter;
 import ultrapoulet.wifeygame.character.SkillsEnum;
 import ultrapoulet.wifeygame.gamestate.Enemies;
@@ -33,6 +34,10 @@ public class EnemyParser extends DefaultHandler{
     private boolean bSpecialDamage = false;
     private boolean bSpecialHits = false;
     private boolean bSkill = false;
+
+    private boolean bAtkElement;
+    private boolean bStgElement;
+    private boolean bWkElement;
 
     private boolean error = false;
 
@@ -115,6 +120,18 @@ public class EnemyParser extends DefaultHandler{
         else if(qName.equalsIgnoreCase("skill")){
             bSkill = true;
         }
+        else if(qName.equalsIgnoreCase("elements")){
+            //Do nothing.
+        }
+        else if(qName.equalsIgnoreCase("atkElement")){
+            bAtkElement = true;
+        }
+        else if(qName.equalsIgnoreCase("stgElement")){
+            bStgElement = true;
+        }
+        else if(qName.equalsIgnoreCase("wkElement")){
+            bWkElement = true;
+        }
         else{
             System.out.println("EnemyParser:startElement(): Invalid qName: " + qName + " for key: " + enemyKey);
             error = true;
@@ -183,6 +200,39 @@ public class EnemyParser extends DefaultHandler{
                     enemyBuilder.addSkill(skill);
                 }
                 bSkill = false;
+            }
+            else if(bAtkElement){
+                Element elm = Element.getElement(temp);
+                if(elm == null){
+                    System.out.println("EnemyParser:characters(): Could not find element: " + temp);
+                    error = true;
+                }
+                else{
+                    enemyBuilder.setAttackElement(elm);
+                }
+                bAtkElement = false;
+            }
+            else if(bStgElement){
+                Element elm = Element.getElement(temp);
+                if(elm == null){
+                    System.out.println("EnemyParser:characters(): Could not find element: " + temp);
+                    error = true;
+                }
+                else{
+                    enemyBuilder.setStrongElement(elm);
+                }
+                bStgElement = false;
+            }
+            else if(bWkElement){
+                Element elm = Element.getElement(temp);
+                if(elm == null){
+                    System.out.println("EnemyParser:characters(): Could not find element: " + temp);
+                    error = true;
+                }
+                else{
+                    enemyBuilder.setWeakElement(elm);
+                }
+                bWkElement = false;
             }
 
         }

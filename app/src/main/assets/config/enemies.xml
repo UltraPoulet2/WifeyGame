@@ -11,6 +11,11 @@
         <skills>
             <skill>GHOST</skill>
         </skills>
+        <elements>
+            <atkElement>WIND</atkElement>
+            <stgElement>WIND</stgElement>
+            <wkElement>DARK</wkElement>
+        </elements>
     </enemy>
     <enemy key="TEST-NME2">
         <name>Enemy 2</name>

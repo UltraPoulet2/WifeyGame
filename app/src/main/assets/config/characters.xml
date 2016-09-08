@@ -723,6 +723,11 @@
         <strength>90</strength>
         <magic>110</magic>
         <weapon>BALL</weapon>
+        <elements>
+            <atkElement>WIND</atkElement>
+            <stgElement>WIND</stgElement>
+            <wkElement>DARK</wkElement>
+        </elements>
         <skills>
             <skill>MAID</skill>
             <skill>REM</skill>
