@@ -8,6 +8,7 @@ import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.wifeygame.battle.enemyai.EnemyAI;
 import ultrapoulet.wifeygame.battle.enemyai.EnemyAI.EnemyAction;
 import ultrapoulet.wifeygame.battle.skills.SkillList;
+import ultrapoulet.wifeygame.character.Element;
 import ultrapoulet.wifeygame.character.SkillsEnum;
 
 /**
@@ -68,6 +69,9 @@ public class BattleEnemy extends BattleCharacter{
             int specialDamage,
             int specialHits,
             ArrayList<SkillsEnum> skills,
+            Element atkElement,
+            Element stgElement,
+            Element wkElement,
             Image image,
             EnemyAI ai){
         this.name = name;
@@ -86,6 +90,9 @@ public class BattleEnemy extends BattleCharacter{
         this.specialDamage = specialDamage;
         this.specialHits = specialHits;
         this.skills = new SkillList(skills, this);
+        this.attackElement = atkElement;
+        this.strongElement = stgElement;
+        this.weakElement = wkElement;
         this.image = image;
         this.ai = ai;
 
@@ -193,8 +200,8 @@ public class BattleEnemy extends BattleCharacter{
         if(powerDownActive){
             multiplier -= powerDownPercentage;
         }
-        System.out.println("Enemy's multiplying damage by: " + multiplier);
-        int modDamage = (int) (baseDamage * multiplier);
+        System.out.println("Enemy's multiplying damage by: " + multiplier * getElementDamage(enemy));
+        int modDamage = (int) (baseDamage * multiplier * getElementDamage(enemy));
         modDamage = modDamage + (int) ((modDamage / 10) * Math.random());
         return modDamage;
     }
@@ -217,8 +224,8 @@ public class BattleEnemy extends BattleCharacter{
         if(powerDownActive){
             multiplier -= powerDownPercentage;
         }
-        System.out.println("Enemy's multiplying damage by: " + multiplier);
-        int modDamage = (int) (baseDamage * multiplier);
+        System.out.println("Enemy's multiplying damage by: " + multiplier * getElementDamage(enemy));
+        int modDamage = (int) (baseDamage * multiplier * getElementDamage(enemy));
         modDamage = modDamage + (int) ((modDamage / 10) * Math.random());
         return modDamage;
     }

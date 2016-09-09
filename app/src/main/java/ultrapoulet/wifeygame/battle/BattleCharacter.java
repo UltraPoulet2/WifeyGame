@@ -16,6 +16,9 @@ public abstract class BattleCharacter {
     protected Element strongElement;
     protected Element weakElement;
 
+    protected final static double strongMultiplier = 0.5;
+    protected final static double weakMultiplier = 2.0;
+
     public String getName(){ return this.name; }
 
     public int getMaxHP(){ return this.maxHP; }
@@ -76,4 +79,14 @@ public abstract class BattleCharacter {
     public void startRound(){ skills.startRound(); }
 
     public abstract void endRound();
+
+    public double getElementDamage(BattleCharacter enemy){
+        if(enemy.getStrongElement() == attackElement){
+            return strongMultiplier;
+        }
+        else if(enemy.getWeakElement() == attackElement){
+            return weakMultiplier;
+        }
+        return 1.0;
+    }
 }

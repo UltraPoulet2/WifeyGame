@@ -13,7 +13,7 @@
         </skills>
         <elements>
             <atkElement>WIND</atkElement>
-            <stgElement>WIND</stgElement>
+            <stgElement>FIRE</stgElement>
             <wkElement>DARK</wkElement>
         </elements>
     </enemy>

@@ -202,6 +202,9 @@ public class EnemyCharacter {
                 specialDamage,
                 specialHits,
                 skills,
+                attackElement,
+                strongElement,
+                weakElement,
                 image,
                 EnemyAI.getAI(ai));
     }

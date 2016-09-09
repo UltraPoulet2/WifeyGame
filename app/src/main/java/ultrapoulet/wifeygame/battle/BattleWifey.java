@@ -3,6 +3,7 @@ package ultrapoulet.wifeygame.battle;
 import java.util.ArrayList;
 
 import ultrapoulet.androidgame.framework.Image;
+import ultrapoulet.wifeygame.character.Element;
 import ultrapoulet.wifeygame.character.SkillsEnum;
 import ultrapoulet.wifeygame.character.Weapon;
 import ultrapoulet.wifeygame.battle.skills.SkillList;
@@ -21,7 +22,16 @@ public class BattleWifey extends BattleCharacter{
 
     private boolean isDefending = false;
 
-    public BattleWifey(String name, Weapon weapon, int strength, int magic, Image image, ArrayList<SkillsEnum> skills){
+    public BattleWifey(
+            String name,
+            Weapon weapon,
+            int strength,
+            int magic,
+            Image image,
+            ArrayList<SkillsEnum> skills,
+            Element atkElement,
+            Element stgElement,
+            Element wkElement){
         this.name = name;
         this.maxHP = calculateHP(strength);
         this.currentHP = this.maxHP;
@@ -31,6 +41,9 @@ public class BattleWifey extends BattleCharacter{
         this.magic = magic;
         this.image = image;
         this.skills = new SkillList(skills, this);
+        this.attackElement = atkElement;
+        this.strongElement = stgElement;
+        this.weakElement = wkElement;
     }
 
     public static int calculateHP(int strength){
@@ -96,8 +109,8 @@ public class BattleWifey extends BattleCharacter{
     public int MagicAttackDamage(BattleCharacter enemy){
         int baseDamage = this.magic * 5;
         //Do checks on skills to determine bonus damage
-        int modDamage = (int) (baseDamage * skills.magicalAttackPercentage(enemy));
-        System.out.println("Multiplying damage by: " + skills.magicalAttackPercentage(enemy));
+        int modDamage = (int) (baseDamage * skills.magicalAttackPercentage(enemy) * getElementDamage(enemy));
+        System.out.println("Multiplying damage by: " + skills.magicalAttackPercentage(enemy) * getElementDamage(enemy));
         modDamage = modDamage + (int) ((modDamage / 10) * Math.random());
         return modDamage;
     }
@@ -114,8 +127,8 @@ public class BattleWifey extends BattleCharacter{
     public int SpecialAttackDamage(BattleCharacter enemy){
         int baseDamage = this.strength * 10 + this.magic * 10;
         //Do checks on skills to determine bonus damage
-        int modDamage = (int) (baseDamage * skills.specialAttackPercentage(enemy));
-        System.out.println("Multiplying damage by: " + skills.specialAttackPercentage(enemy));
+        int modDamage = (int) (baseDamage * skills.specialAttackPercentage(enemy) * getElementDamage(enemy));
+        System.out.println("Multiplying damage by: " + skills.specialAttackPercentage(enemy) * getElementDamage(enemy));
         modDamage = modDamage + (int) ((modDamage / 10) * Math.random());
         return modDamage;
 
