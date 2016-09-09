@@ -8,6 +8,11 @@
         <skills>
             <skill>PROTAGONIST</skill>
         </skills>
+        <elements>
+            <atkElement>WIND</atkElement>
+            <stgElement>WIND</stgElement>
+            <wkElement>WATER</wkElement>
+        </elements>
     </character>
     <character key="TEST-ANGU">
         <name>Ange Ushiromiya</name>
@@ -17,30 +22,55 @@
         <skills>
             <skill>WITCH</skill>
         </skills>
+        <elements>
+            <atkElement>LIGHT</atkElement>
+            <stgElement>LIGHT</stgElement>
+            <wkElement>DARK</wkElement>
+        </elements>
     </character>
     <character key="TEST-ANNA">
         <name>Anna Nishikinomiya</name>
         <strength>120</strength>
         <magic>10</magic>
         <weapon>FISTS</weapon>
+        <elements>
+            <atkElement>WATER</atkElement>
+            <stgElement>WATER</stgElement>
+            <wkElement>WIND</wkElement>
+        </elements>
     </character>
     <character key="TEST-ASHA">
         <name>Aisha Clanclan</name>
         <strength>100</strength>
         <magic>25</magic>
         <weapon>FISTS</weapon>
+        <elements>
+            <atkElement>EARTH</atkElement>
+            <stgElement>FIRE</stgElement>
+            <wkElement>DARK</wkElement>
+        </elements>
     </character>
     <character key="TEST-CCCC">
         <name>CC</name>
         <strength>25</strength>
         <magic>100</magic>
         <weapon>MECHA</weapon>
+        <elements>
+            <atkElement>WIND</atkElement>
+            <stgElement>WIND</stgElement>
+            <wkElement>DARK</wkElement>
+        </elements>
     </character>
     <character key="TEST-CGLI">
         <name>Cagali Yula Atha</name>
         <strength>50</strength>
         <magic>75</magic>
         <weapon>MECHA</weapon>
+        <elements>
+            <atkElement>FIRE</atkElement>
+            <stgElement>WIND</stgElement>
+            <wkElement>WATER</wkElement>
+        </elements>
     </character>
     <character key="TEST-CLTY">
         <name>Celty Struluson</name>
@@ -51,6 +81,11 @@
             <skill>DULLAHAN</skill>
             <skill>BIKER</skill>
         </skills>
+        <elements>
+            <atkElement>DARK</atkElement>
+            <stgElement>DARK</stgElement>
+            <wkElement>LIGHT</wkElement>
+        </elements>
     </character>
     <character key="TEST-CMPA">
         <name>Compa</name>
@@ -60,6 +95,11 @@
         <skills>
             <skill>NURSE</skill>
         </skills>
+        <elements>
+            <atkElement>LIGHT</atkElement>
+            <stgElement>LIGHT</stgElement>
+            <wkElement>DARK</wkElement>
+        </elements>
     </character>
     <character key="TEST-CYAN">
         <name>Cyan Hijirikawa</name>
@@ -69,12 +109,22 @@
         <skills>
             <skill>MUSICIAN</skill>
         </skills>
+        <elements>
+            <atkElement>LIGHT</atkElement>
+            <stgElement>LIGHT</stgElement>
+            <wkElement>DARK</wkElement>
+        </elements>
     </character>
     <character key="TEST-DKRO">
         <name>Dokuro Mitsukai</name>
         <strength>70</strength>
         <magic>90</magic>
         <weapon>CLUB</weapon>
+        <elements>
+            <atkElement>LIGHT</atkElement>
+            <stgElement>LIGHT</stgElement>
+            <wkElement>DARK</wkElement>
+        </elements>
     </character>
     <character key="TEST-DWRD">
         <name>Edward Wong Hau Pepelu Tivursky IV</name>
@@ -85,6 +135,11 @@
             <skill>HYPER</skill>
             <skill>PROGRAMMER</skill>
         </skills>
+        <elements>
+            <atkElement>EARTH</atkElement>
+            <stgElement>EARTH</stgElement>
+            <wkElement>WATER</wkElement>
+        </elements>
     </character>
     <character key="TEST-EEMI">
         <name>Emi Yusa</name>
@@ -94,6 +149,11 @@
         <skills>
             <skill>TSUNDERE</skill>
         </skills>
+        <elements>
+            <atkElement>LIGHT</atkElement>
+            <stgElement>LIGHT</stgElement>
+            <wkElement>DARK</wkElement>
+        </elements>
     </character>
     <character key="TEST-EXCL">
         <name>Excel</name>
@@ -103,6 +163,11 @@
         <skills>
             <skill>HYPER</skill>
         </skills>
+        <elements>
+            <atkElement>FIRE</atkElement>
+            <stgElement>FIRE</stgElement>
+            <wkElement>WATER</wkElement>
+        </elements>
     </character>
     <character key="TEST-GGOU">
         <name>Gou Matsuoka</name>
@@ -112,6 +177,11 @@
         <skills>
             <skill>SPORTSMANAGER</skill>
         </skills>
+        <elements>
+            <atkElement>WATER</atkElement>
+            <stgElement>WATER</stgElement>
+            <wkElement>EARTH</wkElement>
+        </elements>
     </character>
     <character key="TEST-HARU">
         <name>Haruko Haruhara</name>
@@ -121,6 +191,11 @@
         <skills>
             <skill>HYPER</skill>
         </skills>
+        <elements>
+            <atkElement>FIRE</atkElement>
+            <stgElement>FIRE</stgElement>
+            <wkElement>EARTH</wkElement>
+        </elements>
     </character>
     <character key="TEST-HIME">
         <name>Hime Arikawa</name>
@@ -130,12 +205,22 @@
         <skills>
             <skill>TRAP</skill>
         </skills>
+        <elements>
+            <atkElement>LIGHT</atkElement>
+            <stgElement>LIGHT</stgElement>
+            <wkElement>WATER</wkElement>
+        </elements>
     </character>
     <character key="TEST-HKSE">
         <name>Hakase Shinonome</name>
         <strength>20</strength>
         <magic>60</magic>
         <weapon>FOOD</weapon>
+        <elements>
+            <atkElement>EARTH</atkElement>
+            <stgElement>EARTH</stgElement>
+            <wkElement>WATER</wkElement>
+        </elements>
     </character>
     <character key="TEST-HMRA">
         <name>Homura Akemi</name>
@@ -146,24 +231,44 @@
             <skill>MAGICALGIRL</skill>
             <skill>TIMETRAVELER</skill>
         </skills>
+        <elements>
+            <atkElement>FIRE</atkElement>
+            <stgElement>FIRE</stgElement>
+            <wkElement>DARK</wkElement>
+        </elements>
     </character>
     <character key="TEST-HMRI">
         <name>Himari Takakura</name>
         <strength>30</strength>
         <magic>50</magic>
         <weapon>ANIMAL</weapon>
+        <elements>
+            <atkElement>WATER</atkElement>
+            <stgElement>WATER</stgElement>
+            <wkElement>FIRE</wkElement>
+        </elements>
     </character>
     <character key="TEST-HOLO">
         <name>Holo</name>
         <strength>70</strength>
         <magic>60</magic>
         <weapon>CLAW</weapon>
+        <elements>
+            <atkElement>EARTH</atkElement>
+            <stgElement>EARTH</stgElement>
+            <wkElement>WATER</wkElement>
+        </elements>
     </character>
     <character key="TEST-HRHI">
         <name>Haruhi Fujioka</name>
         <strength>50</strength>
         <magic>30</magic>
         <weapon>FISTS</weapon>
+        <elements>
+            <atkElement>WIND</atkElement>
+            <stgElement>WIND</stgElement>
+            <wkElement>WATER</wkElement>
+        </elements>
     </character>
     <character key="TEST-ICHK">
         <name>Ichika Mizuhara</name>
