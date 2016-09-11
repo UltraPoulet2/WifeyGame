@@ -66,7 +66,6 @@ public class BattleCharacterInfoScreen extends Screen {
     private static final int ATK_Y = 322 + BG_Y;
     private static final int DEF_Y = 85 + ATK_Y;
 
-    private int skillsPage;
     private Paint skillsPaint;
     private static final int SKILLS_SIZE = 40;
     private static final int SKILLS_PER_PAGE = 14;
@@ -86,8 +85,14 @@ public class BattleCharacterInfoScreen extends Screen {
     private static final int SKILLS_DESC_WIDTH = 616;
     private TextPaint descPaint;
 
-    private int currentPage = 0;
+    private int skillsPage = 0;
     private int displayText = -1;
+    private int maxPage;
+    private static final int SKILLS_PAGE_X = 600 + BG_X;
+    private static final int SKILLS_PREV_Y = 455 + BG_Y;
+    private static final int SKILLS_NEXT_Y = 730 + BG_Y;
+    private static final int SKILLS_PAGE_WIDTH = 50;
+    private static final int SKILLS_PAGE_HEIGHT = 105;
 
     private enum ButtonPressed{
         CLOSE,
@@ -106,7 +111,9 @@ public class BattleCharacterInfoScreen extends Screen {
         SKILLS12,
         SKILLS13,
         SKILLS14,
-        SKILLS15
+        SKILLS15,
+        SKILLSPREV,
+        SKILLSNEXT
     }
 
     private ButtonPressed[] SkillButtons = {
@@ -172,13 +179,20 @@ public class BattleCharacterInfoScreen extends Screen {
         nameY = MAX_NAME_Y - ((MAX_NAME_FONT - nameFontSize) / 2);
 
         displayText = -1;
-
+        skillsPage = 0;
+        maxPage = displayChar.getSkills().size() / SKILLS_PER_PAGE;
         multipliers = displayChar.getMultipliers(enemy);
     }
 
     private ButtonPressed getButtonPressed(int x, int y){
         if(x >= CLOSE_LEFT_X && x <= CLOSE_RIGHT_X && y >= CLOSE_TOP_Y && y <= CLOSE_BOT_Y){
             return ButtonPressed.CLOSE;
+        }
+        if(x >= SKILLS_PAGE_X && x <= SKILLS_PAGE_X + SKILLS_PAGE_WIDTH && y >= SKILLS_PREV_Y && y <= SKILLS_PREV_Y + SKILLS_PAGE_HEIGHT){
+            return ButtonPressed.SKILLSPREV;
+        }
+        if(x >= SKILLS_PAGE_X && x <= SKILLS_PAGE_X + SKILLS_PAGE_WIDTH && y >= SKILLS_NEXT_Y && y <= SKILLS_NEXT_Y + SKILLS_PAGE_HEIGHT){
+            return ButtonPressed.SKILLSNEXT;
         }
         for(int i = 0; i < SKILLS_PER_PAGE; i++){
             int baseX = SKILLS_BUTTON_LEFT_X + (SKILLS_BUTTON_OFFSET_X * (i % 2));
@@ -205,6 +219,16 @@ public class BattleCharacterInfoScreen extends Screen {
                 switch (press) {
                     case CLOSE:
                         backButton();
+                        break;
+                    case SKILLSPREV:
+                        if(skillsPage > 0){
+                            skillsPage--;
+                        }
+                        break;
+                    case SKILLSNEXT:
+                        if(skillsPage < maxPage){
+                            skillsPage++;
+                        }
                         break;
                     case SKILLS15:
                         skillNum++;
@@ -237,7 +261,7 @@ public class BattleCharacterInfoScreen extends Screen {
                     case SKILLS1:
                         skillNum++;
                     case SKILLS0:
-                        displayText = (displayText == skillNum) ? -1 : skillNum + SKILLS_PER_PAGE * currentPage;
+                        displayText = (displayText == skillNum) ? -1 : skillNum + SKILLS_PER_PAGE * skillsPage;
                         break;
                     default:
                         break;
@@ -268,7 +292,7 @@ public class BattleCharacterInfoScreen extends Screen {
         g.drawString(displayChar.getName(), NAME_X, nameY, namePaint);
 
         //List out names for the skills
-        for(int i = SKILLS_PER_PAGE * skillsPage; i < 14 * skillsPage + SKILLS_PER_PAGE && i < displayChar.getSkills().size(); i++){
+        for(int i = SKILLS_PER_PAGE * skillsPage; i < SKILLS_PER_PAGE * skillsPage + SKILLS_PER_PAGE && i < displayChar.getSkills().size(); i++){
             AbsSkill skill = displayChar.getSkills().get(i);
             int xOffset;
             int yOffset = SKILLS_BASE_Y + ((i % SKILLS_PER_PAGE) / 2) * SKILLS_OFFSET_Y;

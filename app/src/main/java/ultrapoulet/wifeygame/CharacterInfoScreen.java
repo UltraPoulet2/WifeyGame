@@ -74,7 +74,6 @@ public class CharacterInfoScreen extends Screen {
     private static final int HITS_X = 100 + WEAPON_X;
     private static final int HITS_Y = 407 + BG_Y;
 
-    private int skillsPage;
     private Paint skillsPaint;
     private static final int SKILLS_SIZE = 40;
     private static final int SKILLS_PER_PAGE = 14;
@@ -94,8 +93,14 @@ public class CharacterInfoScreen extends Screen {
     private static final int SKILLS_DESC_WIDTH = 616;
     private TextPaint descPaint;
 
-    private int currentPage = 0;
     private int displayText = -1;
+    private int skillsPage;
+    private int maxPage;
+    private static final int SKILLS_PAGE_X = 600 + BG_X;
+    private static final int SKILLS_PREV_Y = 455 + BG_Y;
+    private static final int SKILLS_NEXT_Y = 730 + BG_Y;
+    private static final int SKILLS_PAGE_WIDTH = 50;
+    private static final int SKILLS_PAGE_HEIGHT = 105;
 
     private enum ButtonPressed{
         CLOSE,
@@ -114,7 +119,9 @@ public class CharacterInfoScreen extends Screen {
         SKILLS12,
         SKILLS13,
         SKILLS14,
-        SKILLS15
+        SKILLS15,
+        SKILLSPREV,
+        SKILLSNEXT
         //Fill with skill buttons later
     }
 
@@ -204,18 +211,27 @@ public class CharacterInfoScreen extends Screen {
         weaponY = MAX_WEAPON_Y - ((MAX_WEAPON_FONT - weaponFontSize) / 2);
 
         displayText = -1;
+
+        maxPage = (displayChar.getSkills().size() / SKILLS_PER_PAGE);
+        skillsPage = 0;
     }
 
     private ButtonPressed getButtonPressed(int x, int y){
         if(x >= CLOSE_LEFT_X && x <= CLOSE_RIGHT_X && y >= CLOSE_TOP_Y && y <= CLOSE_BOT_Y){
             return ButtonPressed.CLOSE;
         }
+        if(x >= SKILLS_PAGE_X && x <= SKILLS_PAGE_X + SKILLS_PAGE_WIDTH && y >= SKILLS_PREV_Y && y <= SKILLS_PREV_Y + SKILLS_PAGE_HEIGHT){
+            return ButtonPressed.SKILLSPREV;
+        }
+        if(x >= SKILLS_PAGE_X && x <= SKILLS_PAGE_X + SKILLS_PAGE_WIDTH && y >= SKILLS_NEXT_Y && y <= SKILLS_NEXT_Y + SKILLS_PAGE_HEIGHT){
+            return ButtonPressed.SKILLSNEXT;
+        }
         for(int i = 0; i < SKILLS_PER_PAGE; i++){
             int baseX = SKILLS_BUTTON_LEFT_X + (SKILLS_BUTTON_OFFSET_X * (i % 2));
             int baseY = SKILLS_BUTTON_TOP_Y + (SKILLS_BUTTON_OFFSET_Y * (i / 2));
             if(x >= baseX && x <= baseX + SKILLS_BUTTON_OFFSET_X &&
                 y >= baseY && y <= baseY + SKILLS_BUTTON_OFFSET_Y){
-                return SkillButtons[i];
+                return SkillButtons[i + (SKILLS_PER_PAGE * skillsPage)];
             }
         }
         return null;
@@ -235,6 +251,16 @@ public class CharacterInfoScreen extends Screen {
                 switch (press) {
                     case CLOSE:
                         backButton();
+                        break;
+                    case SKILLSPREV:
+                        if(skillsPage > 0){
+                            skillsPage--;
+                        }
+                        break;
+                    case SKILLSNEXT:
+                        if(skillsPage < maxPage){
+                            skillsPage++;
+                        }
                         break;
                     case SKILLS15:
                         skillNum++;
@@ -267,7 +293,7 @@ public class CharacterInfoScreen extends Screen {
                     case SKILLS1:
                         skillNum++;
                     case SKILLS0:
-                        displayText = (displayText == skillNum) ? -1 : skillNum + SKILLS_PER_PAGE * currentPage;
+                        displayText = (displayText == skillNum) ? -1 : skillNum + SKILLS_PER_PAGE * skillsPage;
                         break;
                     default:
                         break;
@@ -299,7 +325,7 @@ public class CharacterInfoScreen extends Screen {
         g.drawString(String.valueOf(charWeapon.getNumHits()), HITS_X, HITS_Y, hitsPaint);
 
         //List out names for the skills
-        for(int i = SKILLS_PER_PAGE * skillsPage; i < 14 * skillsPage + SKILLS_PER_PAGE && i < displayChar.getSkills().size(); i++){
+        for(int i = SKILLS_PER_PAGE * skillsPage; i < SKILLS_PER_PAGE * skillsPage + SKILLS_PER_PAGE && i < displayChar.getSkills().size(); i++){
             SkillsEnum skill = displayChar.getSkills().get(i);
             int xOffset;
             int yOffset = SKILLS_BASE_Y + ((i % SKILLS_PER_PAGE) / 2) * SKILLS_OFFSET_Y;

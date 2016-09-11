@@ -200,11 +200,9 @@ public class CharacterParser extends DefaultHandler{
         if(charBuilder.getWeapon() == null){
             return false;
         }
-        /* For now, remove this check
         if(charBuilder.getAttackElement() == null || charBuilder.getStrongElement() == null | charBuilder.getWeakElement() == null){
             return false;
         }
-        */
         if(error == true){
             return false;
         }
