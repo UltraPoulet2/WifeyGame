@@ -23,6 +23,11 @@
         <maxHP>20000</maxHP>
         <magicDamage>50</magicDamage>
         <healAmount>1000</healAmount>
+        <elements>
+            <atkElement>DARK</atkElement>
+            <stgElement>DARK</stgElement>
+            <wkElement>LIGHT</wkElement>
+        </elements>
     </enemy>
     <enemy key="TEST-NME3">
         <name>Enemy 3</name>
@@ -37,6 +42,11 @@
         <skills>
             <skill>SADIST</skill>
         </skills>
+        <elements>
+            <atkElement>FIRE</atkElement>
+            <stgElement>FIRE</stgElement>
+            <wkElement>WATER</wkElement>
+        </elements>
     </enemy>
     <enemy key="TEST-NME4">
         <name>Enemy 4</name>
@@ -51,6 +61,11 @@
             <skill>RACER</skill>
             <skill>BIKER</skill>
         </skills>
+        <elements>
+            <atkElement>WIND</atkElement>
+            <stgElement>WIND</stgElement>
+            <wkElement>EARTH</wkElement>
+        </elements>
     </enemy>
     <enemy key="TEST-NME5">
         <name>Enemy 5</name>
@@ -63,6 +78,11 @@
         <skills>
             <skill>SPORTSMANAGER</skill>
         </skills>
+        <elements>
+            <atkElement>EARTH</atkElement>
+            <stgElement>EARTH</stgElement>
+            <wkElement>WIND</wkElement>
+        </elements>
     </enemy>
     <enemy key="TEST-NME6">
         <name>Enemy 6</name>
@@ -76,5 +96,10 @@
             <skill>MASOCHIST</skill>
             <skill>SADIST</skill>
         </skills>
+        <elements>
+            <atkElement>LIGHT</atkElement>
+            <stgElement>LIGHT</stgElement>
+            <wkElement>DARK</wkElement>
+        </elements>
     </enemy>
 </enemies>
