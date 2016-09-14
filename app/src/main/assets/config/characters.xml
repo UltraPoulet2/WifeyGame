@@ -1182,5 +1182,26 @@
             <stgElement>WIND</stgElement>
             <wkElement>DARK</wkElement>
         </elements>
+        <!-- Commented out test transformation
+        <transformations>
+            <transformation>
+                <name>Rem Transformed</name>
+                <strength>10000</strength>
+                <magic>10000</magic>
+                <weapon>TANK</weapon>
+                <skills mode="add">
+                    <skill>PRAVDA</skill>
+                </skills>
+                <skills mode="remove">
+                    <skill>PRAVDA</skill>
+                </skills>
+                <elements>
+                    <atkElement>FIRE</atkElement>
+                    <stgElement>FIRE</stgElement>
+                    <wkElement>LIGHT</wkElement>
+                </elements>
+            </transformation>
+        </transformations>
+        -->
     </character>
 </characters>

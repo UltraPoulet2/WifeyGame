@@ -115,4 +115,23 @@ public class WifeyCharacter {
             return this.getHashKey().compareTo(other.getHashKey());
         }
     }
+
+    public boolean validate(){
+        if(name.length() == 0){
+            return false;
+        }
+        if(strength <= 0){
+            return false;
+        }
+        if(magic <= 0){
+            return false;
+        }
+        if(weapon == null){
+            return false;
+        }
+        if(attackElement == null || strongElement == null | weakElement == null){
+            return false;
+        }
+        return true;
+    }
 }
