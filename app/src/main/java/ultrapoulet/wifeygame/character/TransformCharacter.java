@@ -4,49 +4,34 @@ import java.util.ArrayList;
 
 import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.wifeygame.battle.BattleWifey;
-import ultrapoulet.wifeygame.battle.skills.AbsSkill;
-import ultrapoulet.wifeygame.battle.skills.SkillList;
 
 /**
- * Created by John on 5/5/2016.
+ * Created by John on 9/14/2016.
  */
-public class WifeyCharacter {
+public class TransformCharacter {
 
     private String name;
-    private String hashKey;
     private int strength;
     private int magic;
-    private ArrayList<SkillsEnum> skills;
-
-    private int experience;
-    private int level;
-
+    private ArrayList<SkillsEnum> addSkills;
+    private ArrayList<SkillsEnum> removeSkills;
     private Weapon weapon;
-
     private Element attackElement;
     private Element strongElement;
     private Element weakElement;
-
     private Image image;
 
-    private ArrayList<TransformCharacter> transformations;
-
-    public WifeyCharacter(){
-        skills = new ArrayList<>();
-        transformations = new ArrayList<>();
+    public TransformCharacter(){
+        addSkills = new ArrayList();
+        removeSkills = new ArrayList();
     }
 
-    public BattleWifey getBattleCharacter(){
-        return new BattleWifey(name, weapon, strength, magic, image, skills,
-                attackElement, strongElement, weakElement);
+    public void setName(String name){
+        this.name = name;
     }
 
     public String getName(){
         return this.name;
-    }
-
-    public String getHashKey(){
-        return this.hashKey;
     }
 
     public Image getImage(){
@@ -73,20 +58,6 @@ public class WifeyCharacter {
 
     public Element getWeakElement() { return this.weakElement; }
 
-    public ArrayList<SkillsEnum> getSkills() { return this.skills; }
-
-    public ArrayList<TransformCharacter> getTransformations(){
-        return this.transformations;
-    }
-
-    public void setHashKey(String hashKey){
-        this.hashKey = hashKey;
-    }
-
-    public void setName(String name){
-        this.name = name;
-    }
-
     public void setImage(Image image){
         this.image = image;
     }
@@ -108,22 +79,14 @@ public class WifeyCharacter {
     public void setWeakElement(Element element) { this.weakElement = element; }
 
     public void addSkill(SkillsEnum skill) {
-        if (!this.skills.contains(skill)) {
-            this.skills.add(skill);
+        if (!this.addSkills.contains(skill)) {
+            this.addSkills.add(skill);
         }
     }
 
-    public void addTransformation(TransformCharacter t){
-        this.transformations.add(t);
-    }
-
-    public int compareName(WifeyCharacter other){
-        int result = this.getName().compareTo(other.getName());
-        if(result != 0){
-            return result;
-        }
-        else{
-            return this.getHashKey().compareTo(other.getHashKey());
+    public void removeSkill(SkillsEnum skill) {
+        if (!this.removeSkills.contains(skill)) {
+            this.removeSkills.add(skill);
         }
     }
 
@@ -135,12 +98,6 @@ public class WifeyCharacter {
             return false;
         }
         if(magic <= 0){
-            return false;
-        }
-        if(weapon == null){
-            return false;
-        }
-        if(attackElement == null || strongElement == null | weakElement == null){
             return false;
         }
         return true;

@@ -1182,7 +1182,7 @@
             <stgElement>WIND</stgElement>
             <wkElement>DARK</wkElement>
         </elements>
-        <!-- Commented out test transformation
+        <!-- Commented out test transformation -->
         <transformations>
             <transformation>
                 <name>Rem Transformed</name>
@@ -1202,6 +1202,6 @@
                 </elements>
             </transformation>
         </transformations>
-        -->
+        <!---->
     </character>
 </characters>

@@ -8,6 +8,7 @@ import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Graphics.ImageFormat;
 import ultrapoulet.wifeygame.character.Element;
 import ultrapoulet.wifeygame.character.SkillsEnum;
+import ultrapoulet.wifeygame.character.TransformCharacter;
 import ultrapoulet.wifeygame.character.Weapon;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
 import ultrapoulet.wifeygame.gamestate.RecruitedCharacters;
@@ -38,7 +39,7 @@ public class CharacterParser extends DefaultHandler{
     private boolean error;
 
     private WifeyCharacter charBuilder;
-    //private TranformCharacter transformBuilder;
+    private TransformCharacter transformBuilder;
     private String charKey;
 
     private int charNumber = 0;
@@ -115,7 +116,7 @@ public class CharacterParser extends DefaultHandler{
             bTransformSec = true;
         }
         else if(qName.equalsIgnoreCase("transformation")){
-            //transformBuilder = new TransformCharacter();
+            transformBuilder = new TransformCharacter();
             //transformBuilder.setImage(Get image);
             bTransform = true;
         }
@@ -140,8 +141,9 @@ public class CharacterParser extends DefaultHandler{
         }
         else if(qName.equalsIgnoreCase("transformation")){
             //Do things for validating a transformation
-            //if(transformBuilder.validate()){
-            //charBuilder.addTransformation(num, transformBuilder);
+            if(transformBuilder.validate()) {
+                charBuilder.addTransformation(transformBuilder);
+            }
             bTransform = false;
         }
         else if(qName.equalsIgnoreCase("transformations")){
@@ -165,7 +167,7 @@ public class CharacterParser extends DefaultHandler{
                 }
                 else {
                     System.out.println("Transform name: " + temp);
-                    //transformBuilder.setName(temp);
+                    transformBuilder.setName(temp);
                 }
                 bName = false;
             } else if (bStrength) {
@@ -174,7 +176,7 @@ public class CharacterParser extends DefaultHandler{
                 }
                 else {
                     System.out.println("Transform strength: " + temp);
-                    //transformBuilder.setStrength(Integer.parseInt(temp));
+                    transformBuilder.setStrength(Integer.parseInt(temp));
                 }
                 bStrength = false;
             } else if (bMagic) {
@@ -183,7 +185,7 @@ public class CharacterParser extends DefaultHandler{
                 }
                 else {
                     System.out.println("Transform magic: " + temp);
-                    //transformBuilder.setMagic(Integer.parseInt(temp));
+                    transformBuilder.setMagic(Integer.parseInt(temp));
                 }
                 bMagic = false;
             } else if (bWeapon) {
@@ -192,7 +194,7 @@ public class CharacterParser extends DefaultHandler{
                 }
                 else {
                     System.out.println("Transform weapon: " + temp);
-                    //transformBuilder.setWeapon(Weapon.getWeapon(temp));
+                    transformBuilder.setWeapon(Weapon.getWeapon(temp));
                 }
                 bWeapon = false;
             } else if (bSkill) {
@@ -206,11 +208,11 @@ public class CharacterParser extends DefaultHandler{
                     }
                     else if(bAddSkill) {
                         System.out.println("Transform add skill: " + skill.getSkillName());
-                        //transformBuilder.addSkill(skill);
+                        transformBuilder.addSkill(skill);
                     }
                     else if(bRemoveSkill) {
                         System.out.println("Transform remove skill: " + skill.getSkillName());
-                        //transformBuilder.removeSkill(skill);
+                        transformBuilder.removeSkill(skill);
                     }
                 }
                 bSkill = false;
@@ -227,7 +229,7 @@ public class CharacterParser extends DefaultHandler{
                     }
                     else {
                         System.out.println("Transform attack element: " + elm.getElementType());
-                        //transformBuilder.setAttackElement(elm);
+                        transformBuilder.setAttackElement(elm);
                     }
                 }
                 bAtkElement = false;
@@ -242,7 +244,7 @@ public class CharacterParser extends DefaultHandler{
                     }
                     else {
                         System.out.println("Transform strong element: " + elm.getElementType());
-                        //transformBuilder.setStrongElement(elm);
+                        transformBuilder.setStrongElement(elm);
                     }
                 }
                 bStgElement = false;
@@ -257,7 +259,7 @@ public class CharacterParser extends DefaultHandler{
                     }
                     else {
                         System.out.println("Transform weak element: " + elm.getElementType());
-                        //transformBuilder.setWeakElement(elm);
+                        transformBuilder.setWeakElement(elm);
                     }
                 }
                 bWkElement = false;
