@@ -43,6 +43,7 @@ public class CharacterParser extends DefaultHandler{
     private String charKey;
 
     private int charNumber = 0;
+    private int tNumber = 0;
 
     public void setGraphics(Graphics g){
         this.g = g;
@@ -117,7 +118,7 @@ public class CharacterParser extends DefaultHandler{
         }
         else if(qName.equalsIgnoreCase("transformation")){
             transformBuilder = new TransformCharacter();
-            //transformBuilder.setImage(Get image);
+            transformBuilder.setImage(g.newImage("characters/" + charKey + "-T" + tNumber + ".png", ImageFormat.RGB565));
             bTransform = true;
         }
         else{
@@ -143,11 +144,13 @@ public class CharacterParser extends DefaultHandler{
             //Do things for validating a transformation
             if(transformBuilder.validate()) {
                 charBuilder.addTransformation(transformBuilder);
+                tNumber++;
             }
             bTransform = false;
         }
         else if(qName.equalsIgnoreCase("transformations")){
             bTransformSec = false;
+            tNumber = 0;
         }
         else if(qName.equalsIgnoreCase("skills")){
             bAddSkill = false;
