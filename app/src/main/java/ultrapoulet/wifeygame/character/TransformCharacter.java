@@ -58,6 +58,10 @@ public class TransformCharacter {
 
     public Element getWeakElement() { return this.weakElement; }
 
+    public ArrayList<SkillsEnum> getAddSkills() { return this.addSkills; }
+
+    public ArrayList<SkillsEnum> getRemoveSkills() { return this.removeSkills; }
+
     public void setImage(Image image){
         this.image = image;
     }

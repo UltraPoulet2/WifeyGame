@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.wifeygame.character.Element;
 import ultrapoulet.wifeygame.character.SkillsEnum;
+import ultrapoulet.wifeygame.character.TransformCharacter;
 import ultrapoulet.wifeygame.character.Weapon;
 import ultrapoulet.wifeygame.battle.skills.SkillList;
 
@@ -20,6 +21,9 @@ public class BattleWifey extends BattleCharacter{
 
     private Image image;
 
+    private ArrayList<TransformCharacter>  transformCharacters;
+    private int transformNumber;
+
     private boolean isDefending = false;
 
     public BattleWifey(
@@ -31,7 +35,8 @@ public class BattleWifey extends BattleCharacter{
             ArrayList<SkillsEnum> skills,
             Element atkElement,
             Element stgElement,
-            Element wkElement){
+            Element wkElement,
+            ArrayList<TransformCharacter> transformCharacters){
         this.name = name;
         this.maxHP = calculateHP(strength);
         this.currentHP = this.maxHP;
@@ -44,6 +49,7 @@ public class BattleWifey extends BattleCharacter{
         this.attackElement = atkElement;
         this.strongElement = stgElement;
         this.weakElement = wkElement;
+        this.transformCharacters = transformCharacters;
     }
 
     public static int calculateHP(int strength){
@@ -194,6 +200,37 @@ public class BattleWifey extends BattleCharacter{
             this.currentHP = this.maxHP;
         }
         return displayHeal;
+    }
+
+    public void transform(){
+        TransformCharacter form = transformCharacters.get(transformNumber);
+        transformNumber++;
+        this.image = form.getImage();
+        this.maxHP = form.getHP();
+        this.strength = form.getStrength();
+        this.magic = form.getMagic();
+        if(form.getWeapon() != null){
+            this.weapon = form.getWeapon();
+        }
+        if(form.getAttackElement() != null){
+            this.attackElement = form.getAttackElement();
+        }
+        if(form.getStrongElement() != null){
+            this.strongElement = form.getStrongElement();
+        }
+        if(form.getWeakElement() != null){
+            this.weakElement = form.getWeakElement();
+        }
+        for(int i = 0; i < form.getAddSkills().size(); i++){
+            skills.addSkill(form.getAddSkills().get(i).getBattleSkill(this));
+        }
+        for(int i = 0; i < form.getRemoveSkills().size(); i++){
+            skills.removeSkill(form.getAddSkills().get(i).getBattleSkill(this));
+        }
+    }
+
+    public boolean canTransform(){
+        return transformCharacters.size() > transformNumber;
     }
 
     public double[] getMultipliers(BattleEnemy enemy){

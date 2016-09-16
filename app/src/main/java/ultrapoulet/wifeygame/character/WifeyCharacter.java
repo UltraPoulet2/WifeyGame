@@ -38,7 +38,7 @@ public class WifeyCharacter {
 
     public BattleWifey getBattleCharacter(){
         return new BattleWifey(name, weapon, strength, magic, image, skills,
-                attackElement, strongElement, weakElement);
+                attackElement, strongElement, weakElement, transformations);
     }
 
     public String getName(){
