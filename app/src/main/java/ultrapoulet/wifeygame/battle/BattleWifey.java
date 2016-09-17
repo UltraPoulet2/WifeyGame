@@ -225,7 +225,7 @@ public class BattleWifey extends BattleCharacter{
             skills.addSkill(form.getAddSkills().get(i).getBattleSkill(this));
         }
         for(int i = 0; i < form.getRemoveSkills().size(); i++){
-            skills.removeSkill(form.getAddSkills().get(i).getBattleSkill(this));
+            skills.removeSkill(form.getRemoveSkills().get(i).getBattleSkill(this));
         }
     }
 

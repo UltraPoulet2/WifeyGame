@@ -35,7 +35,7 @@ public class BattleScreen extends Screen {
     private double enemyMultiplier = 1.00;
     private final double roundMultiplier = 0.025;
 
-    private static Image background, buttonMenuNormal, buttonMenuSpecial;
+    private static Image background, buttonMenuNormal, buttonMenuSpecial, buttonMenuTrans;
 
     private static Image specialBar, specialBarBase, specialBarTop;
 
@@ -123,6 +123,8 @@ public class BattleScreen extends Screen {
 
     private BattleCharacterInfoScreen charInfo;
 
+    private boolean transformEnabled;
+
     private enum ButtonPressed{
         POWER_ATTACK,
         COMBO_ATTACK,
@@ -164,6 +166,7 @@ public class BattleScreen extends Screen {
 
         buttonMenuNormal = Assets.buttonMenuNormal;
         buttonMenuSpecial = Assets.buttonMenuSpecial;
+        buttonMenuTrans = Assets.buttonMenuBoth;
         charHolder = Assets.charHolder;
         enemyHolder = Assets.enemyHolder;
         specialBar = Assets.specialBar;
@@ -453,6 +456,9 @@ public class BattleScreen extends Screen {
                         partyDamage[i] = 0;
                     }
                     enemyDamage = 0;
+                    if(party[partyIndex].canTransform()){
+                        transformEnabled = true;
+                    }
                 }
                 else {
                     List<TouchEvent> touchEvents = game.getInput().getTouchEvents();
@@ -474,6 +480,10 @@ public class BattleScreen extends Screen {
                         }
 
                         switch (command) {
+                            case TRANSFORM:
+                                if(!party[partyIndex].canTransform()){
+                                    continue;
+                                }
                             case SPECIAL_ATTACK:
                                 if (numHits < SPECIAL_HITS) {
                                     continue;
@@ -486,8 +496,6 @@ public class BattleScreen extends Screen {
                             case HEALING_MAGIC:
                                 commandSelected = command;
                                 break;
-                            case TRANSFORM:
-                                continue;
                             default:
                                 continue;
                         }
@@ -561,6 +569,8 @@ public class BattleScreen extends Screen {
                             break;
                         case TRANSFORM:
                             //I'll need to figure out how to do this.
+                            party[partyIndex].transform();
+                            //Do reset on party skills
                             break;
                         case DEFEND:
                             party[partyIndex].Defend();
@@ -911,7 +921,12 @@ public class BattleScreen extends Screen {
         g.clearScreen(0xffffffff);
         g.drawImage(background, 0, 0);
         if(numHits >= SPECIAL_HITS){
-            g.drawImage(buttonMenuSpecial, 0, BUTTON_MENU_Y);
+            if(partyIndex < party.length && party[partyIndex].canTransform()){
+                g.drawImage(buttonMenuTrans, 0, BUTTON_MENU_Y);
+            }
+            else {
+                g.drawImage(buttonMenuSpecial, 0, BUTTON_MENU_Y);
+            }
         }
         else {
             g.drawImage(buttonMenuNormal, 0, BUTTON_MENU_Y);

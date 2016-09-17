@@ -1186,14 +1186,14 @@
         <transformations>
             <transformation>
                 <name>Rem Transformed</name>
-                <strength>10000</strength>
-                <magic>10000</magic>
+                <strength>150</strength>
+                <magic>150</magic>
                 <weapon>TANK</weapon>
                 <skills mode="add">
-                    <skill>PRAVDA</skill>
+                    <skill>KILLER</skill>
                 </skills>
                 <skills mode="remove">
-                    <skill>PRAVDA</skill>
+                    <skill>MAID</skill>
                 </skills>
                 <elements>
                     <atkElement>FIRE</atkElement>
