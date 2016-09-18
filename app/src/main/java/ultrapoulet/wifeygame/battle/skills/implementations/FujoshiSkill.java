@@ -13,12 +13,22 @@ public class FujoshiSkill extends AbsSkill {
         this.skillName = "Fujoshi";
     }
 
-    private double multiplier = 1.0;
+    private double multiplier;
     private double perTrap = 1.0/3.0;
     private double twoTrapBonus = 1.0;
 
     @Override
     public void startBattle(BattleCharacter[] party) {
+        setMultiplier(party);
+    }
+
+    @Override
+    public void updateParty(BattleCharacter[] party){
+        setMultiplier(party);
+    }
+
+    private void setMultiplier(BattleCharacter[] party){
+        multiplier = 1.0;
         int count = 0;
         for(int i = 0; i < party.length; i++){
             if(party[i] != owner && party[i].hasSkill(TrapSkill.class)){

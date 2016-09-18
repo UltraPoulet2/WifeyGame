@@ -50,6 +50,15 @@ public class AbsSkill {
         //Do anything that needs to be done at the end of a round
     }
 
+    public void resetValues(){
+        //This function is used to reset multipliers before updateParty is called
+    }
+
+    public void updateParty(BattleCharacter[] party){
+        //Do anything that needs to be done if the party is modified (Transformation)
+        System.out.println("Base update");
+    }
+
     public double physicalAttackPercentage(BattleCharacter enemy){
         //The amount to increase physical damage.
         //Some skill might need to see the state of the BattleEnemy, so it is included

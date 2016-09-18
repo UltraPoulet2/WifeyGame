@@ -89,4 +89,12 @@ public abstract class BattleCharacter {
         }
         return 1.0;
     }
+
+    public abstract boolean canTransform();
+
+    public abstract void transform();
+
+    public abstract void resetSkills();
+
+    public abstract void updateParty(BattleCharacter[] party);
 }

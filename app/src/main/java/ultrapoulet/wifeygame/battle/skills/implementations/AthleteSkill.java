@@ -13,13 +13,29 @@ public class AthleteSkill extends AbsSkill {
         this.skillName = "Athlete";
     }
 
-    private double multiplier = 1.5;
+    private double baseMultiplier = 1.5;
+    private double multiplier = baseMultiplier;
     private double perGirl = 0.5;
 
     private boolean managerFound = false;
 
     @Override
     public void startBattle(BattleCharacter[] party) {
+        setMultiplier(party);
+    }
+
+    @Override
+    public void resetValues(){
+        multiplier = baseMultiplier;
+        managerFound = false;
+    }
+
+    @Override
+    public void updateParty(BattleCharacter[] party){
+        setMultiplier(party);
+    }
+
+    private void setMultiplier(BattleCharacter[] party){
         for(int i = 0; i < party.length; i++){
             if(party[i] != owner && party[i].hasSkill(AthleteSkill.class)){
                 multiplier += perGirl;

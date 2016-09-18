@@ -18,6 +18,15 @@ public class SportsManagerSkill extends AbsSkill {
 
     @Override
     public void startBattle(BattleCharacter[] party) {
+        setMultiplier(party);
+    }
+
+    @Override
+    public void updateParty(BattleCharacter[] party){
+        setMultiplier(party);
+    }
+
+    private void setMultiplier(BattleCharacter[] party){
         for(int i = 0; i < party.length; i++){
             if(party[i] != owner && party[i].hasSkill(AthleteSkill.class)){
                 multiplier += perGirl;

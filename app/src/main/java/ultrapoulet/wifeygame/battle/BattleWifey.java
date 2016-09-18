@@ -93,6 +93,14 @@ public class BattleWifey extends BattleCharacter{
         this.isDefending = false;
     }
 
+    public void resetSkills(){
+        skills.resetSkills();
+    }
+
+    public void updateParty(BattleCharacter[] party){
+        skills.updateParty(party);
+    }
+
     public int PowerAttackDamage(BattleCharacter enemy){
         int baseDamage = this.strength * 5;
         //Do checks on skills to determine bonus damage

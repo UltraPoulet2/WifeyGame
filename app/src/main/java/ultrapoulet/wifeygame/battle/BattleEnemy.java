@@ -356,4 +356,20 @@ public class BattleEnemy extends BattleCharacter{
             }
         }
     }
+
+    public boolean canTransform(){
+        return false;
+    }
+
+    public void transform(){
+        //Implement later
+    }
+
+    public void resetSkills(){
+        //Implement later
+    }
+
+    public void updateParty(BattleCharacter[] party){
+        //Implement later
+    }
 }

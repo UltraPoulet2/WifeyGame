@@ -570,7 +570,12 @@ public class BattleScreen extends Screen {
                         case TRANSFORM:
                             //I'll need to figure out how to do this.
                             party[partyIndex].transform();
-                            //Do reset on party skills
+                            for(int i = 0; i < party.length; i++){
+                                party[i].resetSkills();
+                            }
+                            for(int i = 0; i < party.length; i++){
+                                party[i].updateParty(party);
+                            }
                             break;
                         case DEFEND:
                             party[partyIndex].Defend();

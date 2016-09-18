@@ -89,6 +89,18 @@ public class SkillList {
         }
     }
 
+    public void resetSkills(){
+        for(int i = 0; i < skills.size(); i++){
+            skills.get(i).resetValues();
+        }
+    }
+
+    public void updateParty(BattleCharacter[] party){
+        for(int i = 0; i < skills.size(); i++){
+            skills.get(i).updateParty(party);
+        }
+    }
+
     public double physicalAttackPercentage(BattleCharacter enemy){
         //The amount to increase physical damage.
         //Some skill might need to see the state of the BattleEnemy, so it is included
