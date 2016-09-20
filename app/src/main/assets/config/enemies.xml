@@ -101,5 +101,37 @@
             <stgElement>LIGHT</stgElement>
             <wkElement>DARK</wkElement>
         </elements>
+        <!-- Commented out test transformation -->
+        <transformations>
+            <transformation>
+                <name>Enemy 6.5</name>
+                <ai>BasicMagicEnemyAI</ai>
+                <maxHP>12000</maxHP>
+                <powerDamage>0</powerDamage>
+                <powerHits>0</powerHits>
+                <comboDamage>0</comboDamage>
+                <comboHits>0</comboHits>
+                <magicDamage>20</magicDamage>
+                <healAmount>2000</healAmount>
+                <powerUp>0.0</powerUp>
+                <powerDown>0.0</powerDown>
+                <defend>0.0</defend>
+                <weaken>0.0</weaken>
+                <specialDamage>50</specialDamage>
+                <specialHits>3</specialHits>
+                <skills mode="add">
+                    <skill>NURSE</skill>
+                </skills>
+                <skills mode="remove">
+                    <skill>TIMETRAVELER</skill>
+                </skills>
+                <elements>
+                    <atkElement>LIGHT</atkElement>
+                    <stgElement>LIGHT</stgElement>
+                    <wkElement>DARK</wkElement>
+                </elements>
+            </transformation>
+        </transformations>
+        <!-- -->
     </enemy>
 </enemies>
