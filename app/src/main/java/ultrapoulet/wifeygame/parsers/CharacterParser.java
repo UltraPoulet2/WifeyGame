@@ -8,7 +8,7 @@ import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Graphics.ImageFormat;
 import ultrapoulet.wifeygame.character.Element;
 import ultrapoulet.wifeygame.character.SkillsEnum;
-import ultrapoulet.wifeygame.character.TransformCharacter;
+import ultrapoulet.wifeygame.character.TransformWifey;
 import ultrapoulet.wifeygame.character.Weapon;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
 import ultrapoulet.wifeygame.gamestate.RecruitedCharacters;
@@ -39,7 +39,7 @@ public class CharacterParser extends DefaultHandler{
     private boolean error;
 
     private WifeyCharacter charBuilder;
-    private TransformCharacter transformBuilder;
+    private TransformWifey transformBuilder;
     private String charKey;
 
     private int charNumber = 0;
@@ -117,7 +117,7 @@ public class CharacterParser extends DefaultHandler{
             bTransformSec = true;
         }
         else if(qName.equalsIgnoreCase("transformation")){
-            transformBuilder = new TransformCharacter();
+            transformBuilder = new TransformWifey();
             transformBuilder.setImage(g.newImage("characters/" + charKey + "-T" + tNumber + ".png", ImageFormat.RGB565));
             bTransform = true;
         }

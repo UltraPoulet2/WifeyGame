@@ -8,7 +8,7 @@ import ultrapoulet.wifeygame.battle.BattleWifey;
 /**
  * Created by John on 9/14/2016.
  */
-public class TransformCharacter {
+public class TransformWifey {
 
     private String name;
     private int strength;
@@ -21,13 +21,9 @@ public class TransformCharacter {
     private Element weakElement;
     private Image image;
 
-    public TransformCharacter(){
+    public TransformWifey(){
         addSkills = new ArrayList();
         removeSkills = new ArrayList();
-    }
-
-    public void setName(String name){
-        this.name = name;
     }
 
     public String getName(){
@@ -61,6 +57,10 @@ public class TransformCharacter {
     public ArrayList<SkillsEnum> getAddSkills() { return this.addSkills; }
 
     public ArrayList<SkillsEnum> getRemoveSkills() { return this.removeSkills; }
+
+    public void setName(String name){
+        this.name = name;
+    }
 
     public void setImage(Image image){
         this.image = image;
@@ -96,6 +96,9 @@ public class TransformCharacter {
 
     public boolean validate(){
         if(name.length() == 0){
+            return false;
+        }
+        if(image == null){
             return false;
         }
         if(strength <= 0){

@@ -9,6 +9,7 @@ import ultrapoulet.androidgame.framework.Graphics.ImageFormat;
 import ultrapoulet.wifeygame.character.Element;
 import ultrapoulet.wifeygame.character.EnemyCharacter;
 import ultrapoulet.wifeygame.character.SkillsEnum;
+import ultrapoulet.wifeygame.character.TransformEnemy;
 import ultrapoulet.wifeygame.gamestate.Enemies;
 
 /**
@@ -47,8 +48,10 @@ public class EnemyParser extends DefaultHandler{
     private boolean error = false;
 
     private EnemyCharacter enemyBuilder;
-    //private TransformEnemy transformBuilder;
+    private TransformEnemy transformBuilder;
     private String enemyKey;
+
+    private int tNumber;
 
     public void setGraphics(Graphics g){
         this.g = g;
@@ -154,7 +157,7 @@ public class EnemyParser extends DefaultHandler{
             bTransformSec = true;
         }
         else if(qName.equalsIgnoreCase("transformation")){
-            //transformBuilder = new TransformEnemy();
+            transformBuilder = new TransformEnemy();
             //transformBuilder.setImage("enemies/" + enemyKey + "-T" + tNumber = ".png", ImageFormat.RGB565));
             bTransform = true;
         }
@@ -177,16 +180,16 @@ public class EnemyParser extends DefaultHandler{
             }
         }
         else if(qName.equalsIgnoreCase("transformation")){
-            /*if(transformBuilder.validate()) {
-                enemyBuilder.addTransformation(transformBuilder);
+            if(transformBuilder.validate()) {
+                //enemyBuilder.addTransformation(transformBuilder);
                 tNumber++;
             }
-            */
+
             bTransform = false;
         }
         else if(qName.equalsIgnoreCase("transformations")){
             bTransformSec = false;
-            //tNumber = 0;
+            tNumber = 0;
         }
         else if(qName.equalsIgnoreCase("skills")){
             bAddSkill = false;

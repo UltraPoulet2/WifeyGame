@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.wifeygame.character.Element;
 import ultrapoulet.wifeygame.character.SkillsEnum;
-import ultrapoulet.wifeygame.character.TransformCharacter;
+import ultrapoulet.wifeygame.character.TransformWifey;
 import ultrapoulet.wifeygame.character.Weapon;
 import ultrapoulet.wifeygame.battle.skills.SkillList;
 
@@ -21,7 +21,7 @@ public class BattleWifey extends BattleCharacter{
 
     private Image image;
 
-    private ArrayList<TransformCharacter>  transformCharacters;
+    private ArrayList<TransformWifey> transformWifeys;
     private int transformNumber;
 
     private boolean isDefending = false;
@@ -36,7 +36,7 @@ public class BattleWifey extends BattleCharacter{
             Element atkElement,
             Element stgElement,
             Element wkElement,
-            ArrayList<TransformCharacter> transformCharacters){
+            ArrayList<TransformWifey> transformWifeys){
         this.name = name;
         this.maxHP = calculateHP(strength);
         this.currentHP = this.maxHP;
@@ -49,7 +49,7 @@ public class BattleWifey extends BattleCharacter{
         this.attackElement = atkElement;
         this.strongElement = stgElement;
         this.weakElement = wkElement;
-        this.transformCharacters = transformCharacters;
+        this.transformWifeys = transformWifeys;
     }
 
     public static int calculateHP(int strength){
@@ -211,7 +211,7 @@ public class BattleWifey extends BattleCharacter{
     }
 
     public void transform(){
-        TransformCharacter form = transformCharacters.get(transformNumber);
+        TransformWifey form = transformWifeys.get(transformNumber);
         transformNumber++;
         this.image = form.getImage();
         this.maxHP = form.getHP();
@@ -238,7 +238,7 @@ public class BattleWifey extends BattleCharacter{
     }
 
     public boolean canTransform(){
-        return transformCharacters.size() > transformNumber;
+        return transformWifeys.size() > transformNumber;
     }
 
     public double[] getMultipliers(BattleEnemy enemy){

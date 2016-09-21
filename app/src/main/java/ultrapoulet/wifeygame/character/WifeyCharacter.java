@@ -4,8 +4,6 @@ import java.util.ArrayList;
 
 import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.wifeygame.battle.BattleWifey;
-import ultrapoulet.wifeygame.battle.skills.AbsSkill;
-import ultrapoulet.wifeygame.battle.skills.SkillList;
 
 /**
  * Created by John on 5/5/2016.
@@ -29,7 +27,7 @@ public class WifeyCharacter {
 
     private Image image;
 
-    private ArrayList<TransformCharacter> transformations;
+    private ArrayList<TransformWifey> transformations;
 
     public WifeyCharacter(){
         skills = new ArrayList<>();
@@ -75,7 +73,7 @@ public class WifeyCharacter {
 
     public ArrayList<SkillsEnum> getSkills() { return this.skills; }
 
-    public ArrayList<TransformCharacter> getTransformations(){
+    public ArrayList<TransformWifey> getTransformations(){
         return this.transformations;
     }
 
@@ -113,7 +111,7 @@ public class WifeyCharacter {
         }
     }
 
-    public void addTransformation(TransformCharacter t){
+    public void addTransformation(TransformWifey t){
         this.transformations.add(t);
     }
 
