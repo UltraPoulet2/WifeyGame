@@ -10,6 +10,7 @@ import ultrapoulet.wifeygame.battle.enemyai.EnemyAI.EnemyAction;
 import ultrapoulet.wifeygame.battle.skills.SkillList;
 import ultrapoulet.wifeygame.character.Element;
 import ultrapoulet.wifeygame.character.SkillsEnum;
+import ultrapoulet.wifeygame.character.TransformEnemy;
 
 /**
  * Created by John on 3/5/2016.
@@ -53,6 +54,8 @@ public class BattleEnemy extends BattleCharacter{
 
     private EnemyAI ai;
 
+    private ArrayList<TransformEnemy> transformations;
+
     public BattleEnemy(
             String name,
             int maxHP,
@@ -73,7 +76,8 @@ public class BattleEnemy extends BattleCharacter{
             Element stgElement,
             Element wkElement,
             Image image,
-            EnemyAI ai){
+            EnemyAI ai,
+            ArrayList<TransformEnemy> transformEnemies){
         this.name = name;
         this.maxHP = maxHP;
         this.currentHP = maxHP;
@@ -95,6 +99,7 @@ public class BattleEnemy extends BattleCharacter{
         this.weakElement = wkElement;
         this.image = image;
         this.ai = ai;
+        this.transformations = transformEnemies;
 
         actionStrings = new HashMap<>();
         actionStrings.put(EnemyAction.POWER_ATTACK, "Power Attack");

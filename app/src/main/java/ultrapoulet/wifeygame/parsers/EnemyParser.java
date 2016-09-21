@@ -51,7 +51,7 @@ public class EnemyParser extends DefaultHandler{
     private TransformEnemy transformBuilder;
     private String enemyKey;
 
-    private int tNumber;
+    private int tNumber = 0;
 
     public void setGraphics(Graphics g){
         this.g = g;
@@ -158,7 +158,7 @@ public class EnemyParser extends DefaultHandler{
         }
         else if(qName.equalsIgnoreCase("transformation")){
             transformBuilder = new TransformEnemy();
-            //transformBuilder.setImage("enemies/" + enemyKey + "-T" + tNumber = ".png", ImageFormat.RGB565));
+            transformBuilder.setImage(g.newImage("enemies/" + enemyKey + "-T" + tNumber + ".png", ImageFormat.RGB565));
             bTransform = true;
         }
         else{
@@ -181,10 +181,13 @@ public class EnemyParser extends DefaultHandler{
         }
         else if(qName.equalsIgnoreCase("transformation")){
             if(transformBuilder.validate()) {
-                //enemyBuilder.addTransformation(transformBuilder);
+                enemyBuilder.addTransformation(transformBuilder);
                 tNumber++;
             }
-
+            else{
+                error = true;
+                System.out.println("EnemyParser:endElement(): Error adding transformation: " + tNumber);
+            }
             bTransform = false;
         }
         else if(qName.equalsIgnoreCase("transformations")){
@@ -208,7 +211,7 @@ public class EnemyParser extends DefaultHandler{
                     enemyBuilder.setName(temp);
                 }
                 else {
-                    System.out.println("Transform name: " + temp);
+                    transformBuilder.setName(temp);
                 }
                 bName = false;
             } else if (bAi) {
@@ -216,7 +219,7 @@ public class EnemyParser extends DefaultHandler{
                     enemyBuilder.setAI(temp);
                 }
                 else {
-                    System.out.println("Transfom ai: " + temp);
+                    transformBuilder.setAi(temp);
                 }
                 bAi = false;
             } else if (bMaxHp) {
@@ -224,7 +227,7 @@ public class EnemyParser extends DefaultHandler{
                     enemyBuilder.setMaxHP(Integer.parseInt(temp));
                 }
                 else {
-                    System.out.println("Transform HP: " + temp);
+                    transformBuilder.setHP(Integer.parseInt(temp));
                 }
                 bMaxHp = false;
             } else if (bPowerDamage) {
@@ -232,7 +235,7 @@ public class EnemyParser extends DefaultHandler{
                     enemyBuilder.setPowerDamage(Integer.parseInt(temp));
                 }
                 else {
-                    System.out.println("Transform Power Damage: " + temp);
+                    transformBuilder.setPowerDamage(Integer.parseInt(temp));
                 }
                 bPowerDamage = false;
             } else if (bPowerHits) {
@@ -240,7 +243,7 @@ public class EnemyParser extends DefaultHandler{
                     enemyBuilder.setPowerHits(Integer.parseInt(temp));
                 }
                 else {
-                    System.out.println("Transform Power Hits: " + temp);
+                    transformBuilder.setPowerHits(Integer.parseInt(temp));
                 }
                 bPowerHits = false;
             } else if (bComboDamage) {
@@ -248,7 +251,7 @@ public class EnemyParser extends DefaultHandler{
                     enemyBuilder.setComboDamage(Integer.parseInt(temp));
                 }
                 else {
-                    System.out.println("Transform Combo Damage: " + temp);
+                    transformBuilder.setComboDamage(Integer.parseInt(temp));
                 }
                 bComboDamage = false;
             } else if (bComboHits) {
@@ -256,7 +259,7 @@ public class EnemyParser extends DefaultHandler{
                     enemyBuilder.setComboHits(Integer.parseInt(temp));
                 }
                 else {
-                    System.out.println("Transform Combo Hits: " + temp);
+                    transformBuilder.setComboHits(Integer.parseInt(temp));
                 }
                 bComboHits = false;
             } else if (bMagicDamage) {
@@ -264,7 +267,7 @@ public class EnemyParser extends DefaultHandler{
                     enemyBuilder.setMagicDamage(Integer.parseInt(temp));
                 }
                 else {
-                    System.out.println("Transform Magic Damage: " + temp);
+                    transformBuilder.setMagicDamage(Integer.parseInt(temp));
                 }
                 bMagicDamage = false;
             } else if (bHealAmount) {
@@ -272,7 +275,7 @@ public class EnemyParser extends DefaultHandler{
                     enemyBuilder.setHealAmount(Integer.parseInt(temp));
                 }
                 else {
-                    System.out.println("Transform Heal Amount: " + temp);
+                    transformBuilder.setHealAmount(Integer.parseInt(temp));
                 }
                 bHealAmount = false;
             } else if (bPowerUp) {
@@ -280,7 +283,7 @@ public class EnemyParser extends DefaultHandler{
                     enemyBuilder.setPowerUpPercentage(Double.parseDouble(temp));
                 }
                 else {
-                    System.out.println("Transform Power Up: " + temp);
+                    transformBuilder.setPowerUpPercentage(Double.parseDouble(temp));
                 }
                 bPowerUp = false;
             } else if (bPowerDown) {
@@ -288,7 +291,7 @@ public class EnemyParser extends DefaultHandler{
                     enemyBuilder.setPowerDownPercentage(Double.parseDouble(temp));
                 }
                 else {
-                    System.out.println("Transform Power Down: " + temp);
+                    transformBuilder.setPowerDownPercentage(Double.parseDouble(temp));
                 }
                 bPowerDown = false;
             } else if (bDefend) {
@@ -296,7 +299,6 @@ public class EnemyParser extends DefaultHandler{
                     enemyBuilder.setDefendPercentage(Double.parseDouble(temp));
                 }
                 else {
-                    System.out.println("Transform Defend: " + temp);
                 }
                 bDefend = false;
             } else if (bWeaken) {
@@ -304,7 +306,7 @@ public class EnemyParser extends DefaultHandler{
                     enemyBuilder.setWeakenPercentage(Double.parseDouble(temp));
                 }
                 else {
-                    System.out.println("Transform Weaken: " + temp);
+                    transformBuilder.setWeakenPercentage(Double.parseDouble(temp));
                 }
                 bWeaken = false;
             } else if (bSpecialDamage) {
@@ -312,7 +314,7 @@ public class EnemyParser extends DefaultHandler{
                     enemyBuilder.setSpecialDamage(Integer.parseInt(temp));
                 }
                 else {
-                    System.out.println("Transform Special Damage: " + temp);
+                    transformBuilder.setSpecialDamage(Integer.parseInt(temp));
                 }
                 bSpecialDamage = false;
             } else if (bSpecialHits) {
@@ -320,7 +322,7 @@ public class EnemyParser extends DefaultHandler{
                     enemyBuilder.setSpecialHits(Integer.parseInt(temp));
                 }
                 else {
-                    System.out.println("Transform Special Hits: " + temp);
+                    transformBuilder.setSpecialHits(Integer.parseInt(temp));
                 }
                 bSpecialHits = false;
             } else if (bSkill) {
@@ -334,10 +336,10 @@ public class EnemyParser extends DefaultHandler{
                         enemyBuilder.addSkill(skill);
                     }
                     else if(bAddSkill) {
-                        System.out.println("Transform add skill: " + skill.getSkillName());
+                        transformBuilder.addSkill(skill);
                     }
                     else if(bRemoveSkill) {
-                        System.out.println("Transform remove skill: " + skill.getSkillName());
+                        transformBuilder.removeSkill(skill);
                     }
                 }
                 bSkill = false;
@@ -355,7 +357,7 @@ public class EnemyParser extends DefaultHandler{
                         enemyBuilder.setAttackElement(elm);
                     }
                     else {
-                        System.out.println("Transform attack element: " + elm.getElementType());
+                        transformBuilder.setAttackElement(elm);
                     }
                 }
                 bAtkElement = false;
@@ -371,7 +373,7 @@ public class EnemyParser extends DefaultHandler{
                         enemyBuilder.setStrongElement(elm);
                     }
                     else {
-                        System.out.println("Transform strong element: " + elm.getElementType());
+                        transformBuilder.setStrongElement(elm);
                     }
                 }
                 bStgElement = false;
@@ -387,7 +389,7 @@ public class EnemyParser extends DefaultHandler{
                         enemyBuilder.setWeakElement(elm);
                     }
                     else {
-                        System.out.println("Transform weak element: " + elm.getElementType());
+                        transformBuilder.setWeakElement(elm);
                     }
                 }
                 bWkElement = false;

@@ -40,7 +40,12 @@ public class EnemyCharacter {
     //private EnemyAI ai;
     private String ai;
 
-    public EnemyCharacter() { skills = new ArrayList<>(); }
+    private ArrayList<TransformEnemy> transformations;
+
+    public EnemyCharacter() {
+        skills = new ArrayList<>();
+        transformations = new ArrayList<>();
+    }
 
     public String getName(){
         return this.name;
@@ -109,6 +114,10 @@ public class EnemyCharacter {
     public Element getStrongElement() { return this.strongElement; }
 
     public Element getWeakElement() { return this.weakElement; }
+
+    public ArrayList<TransformEnemy> getTransformations(){
+        return this.transformations;
+    }
 
 
     public void setName(String name){
@@ -185,6 +194,10 @@ public class EnemyCharacter {
         }
     }
 
+    public void addTransformation(TransformEnemy t){
+        this.transformations.add(t);
+    }
+
     public BattleEnemy getBattleEnemy(){
         return new BattleEnemy(
                 name,
@@ -206,7 +219,8 @@ public class EnemyCharacter {
                 strongElement,
                 weakElement,
                 image,
-                EnemyAI.getAI(ai));
+                EnemyAI.getAI(ai),
+                transformations);
     }
 
     public boolean validate(){

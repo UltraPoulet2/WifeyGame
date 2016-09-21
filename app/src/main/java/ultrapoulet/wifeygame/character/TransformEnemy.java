@@ -220,6 +220,7 @@ public class TransformEnemy {
             return false;
         }
         if(image == null){
+            System.out.println("No image");
             return false;
         }
         if(ai == null || ai.length() == 0){

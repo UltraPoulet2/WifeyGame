@@ -146,6 +146,10 @@ public class CharacterParser extends DefaultHandler{
                 charBuilder.addTransformation(transformBuilder);
                 tNumber++;
             }
+            else{
+                error = true;
+                System.out.println("CharacterParser:endElement(): Error adding transformation: " + tNumber);
+            }
             bTransform = false;
         }
         else if(qName.equalsIgnoreCase("transformations")){
@@ -169,7 +173,6 @@ public class CharacterParser extends DefaultHandler{
                     charBuilder.setName(temp);
                 }
                 else {
-                    System.out.println("Transform name: " + temp);
                     transformBuilder.setName(temp);
                 }
                 bName = false;
@@ -178,7 +181,6 @@ public class CharacterParser extends DefaultHandler{
                     charBuilder.setStrength(Integer.parseInt(temp));
                 }
                 else {
-                    System.out.println("Transform strength: " + temp);
                     transformBuilder.setStrength(Integer.parseInt(temp));
                 }
                 bStrength = false;
@@ -187,7 +189,6 @@ public class CharacterParser extends DefaultHandler{
                     charBuilder.setMagic(Integer.parseInt(temp));
                 }
                 else {
-                    System.out.println("Transform magic: " + temp);
                     transformBuilder.setMagic(Integer.parseInt(temp));
                 }
                 bMagic = false;
@@ -196,7 +197,6 @@ public class CharacterParser extends DefaultHandler{
                     charBuilder.setWeapon(Weapon.getWeapon(temp));
                 }
                 else {
-                    System.out.println("Transform weapon: " + temp);
                     transformBuilder.setWeapon(Weapon.getWeapon(temp));
                 }
                 bWeapon = false;
@@ -210,11 +210,9 @@ public class CharacterParser extends DefaultHandler{
                         charBuilder.addSkill(skill);
                     }
                     else if(bAddSkill) {
-                        System.out.println("Transform add skill: " + skill.getSkillName());
                         transformBuilder.addSkill(skill);
                     }
                     else if(bRemoveSkill) {
-                        System.out.println("Transform remove skill: " + skill.getSkillName());
                         transformBuilder.removeSkill(skill);
                     }
                 }
@@ -231,7 +229,6 @@ public class CharacterParser extends DefaultHandler{
                         charBuilder.setAttackElement(elm);
                     }
                     else {
-                        System.out.println("Transform attack element: " + elm.getElementType());
                         transformBuilder.setAttackElement(elm);
                     }
                 }
@@ -246,7 +243,6 @@ public class CharacterParser extends DefaultHandler{
                         charBuilder.setStrongElement(elm);
                     }
                     else {
-                        System.out.println("Transform strong element: " + elm.getElementType());
                         transformBuilder.setStrongElement(elm);
                     }
                 }
@@ -261,7 +257,6 @@ public class CharacterParser extends DefaultHandler{
                         charBuilder.setWeakElement(elm);
                     }
                     else {
-                        System.out.println("Transform weak element: " + elm.getElementType());
                         transformBuilder.setWeakElement(elm);
                     }
                 }
