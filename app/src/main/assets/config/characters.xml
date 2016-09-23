@@ -7,6 +7,7 @@
         <weapon>MECHA</weapon>
         <skills>
             <skill>PROTAGONIST</skill>
+            <skill>PILOT</skill>
         </skills>
         <elements>
             <atkElement>WIND</atkElement>
@@ -55,6 +56,9 @@
         <strength>25</strength>
         <magic>100</magic>
         <weapon>MECHA</weapon>
+        <skills>
+            <skill>PILOT</skill>
+        </skills>
         <elements>
             <atkElement>WIND</atkElement>
             <stgElement>WIND</stgElement>
@@ -66,6 +70,9 @@
         <strength>50</strength>
         <magic>75</magic>
         <weapon>MECHA</weapon>
+        <skills>
+            <skill>PILOT</skill>
+        </skills>
         <elements>
             <atkElement>FIRE</atkElement>
             <stgElement>WIND</stgElement>
@@ -861,6 +868,9 @@
         <strength>40</strength>
         <magic>70</magic>
         <weapon>MAGIC</weapon>
+        <skills>
+            <skill>MAGICIAN</skill>
+        </skills>
         <elements>
             <atkElement>WIND</atkElement>
             <stgElement>WIND</stgElement>

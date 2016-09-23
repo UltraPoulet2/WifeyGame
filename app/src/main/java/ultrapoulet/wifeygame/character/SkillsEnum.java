@@ -14,12 +14,14 @@ import ultrapoulet.wifeygame.battle.skills.implementations.GhostSkill;
 import ultrapoulet.wifeygame.battle.skills.implementations.HyperSkill;
 import ultrapoulet.wifeygame.battle.skills.implementations.KillerSkill;
 import ultrapoulet.wifeygame.battle.skills.implementations.MagicalGirlSkill;
+import ultrapoulet.wifeygame.battle.skills.implementations.MagicianSkill;
 import ultrapoulet.wifeygame.battle.skills.implementations.MaidSkill;
 import ultrapoulet.wifeygame.battle.skills.implementations.MasochistSkill;
 import ultrapoulet.wifeygame.battle.skills.implementations.MechanicSkill;
 import ultrapoulet.wifeygame.battle.skills.implementations.MediumSkill;
 import ultrapoulet.wifeygame.battle.skills.implementations.MusicianSkill;
 import ultrapoulet.wifeygame.battle.skills.implementations.NurseSkill;
+import ultrapoulet.wifeygame.battle.skills.implementations.PilotSkill;
 import ultrapoulet.wifeygame.battle.skills.implementations.PravdaSkill;
 import ultrapoulet.wifeygame.battle.skills.implementations.ProgrammerSkill;
 import ultrapoulet.wifeygame.battle.skills.implementations.ProtagonistSkill;
@@ -79,6 +81,8 @@ public class SkillsEnum {
                 return new KillerSkill(owner);
             case "Magical Girl":
                 return new MagicalGirlSkill(owner);
+            case "Magician":
+                return new MagicianSkill(owner);
             case "Maid":
                 return new MaidSkill(owner);
             case "Masochist":
@@ -91,6 +95,8 @@ public class SkillsEnum {
                 return new MusicianSkill(owner);
             case "Nurse":
                 return new NurseSkill(owner);
+            case "Pilot":
+                return new PilotSkill(owner);
             case "Pravda":
                 return new PravdaSkill(owner, false);
             case "Pravda President":
@@ -152,18 +158,20 @@ public class SkillsEnum {
         skillsList.put("HYPER", new SkillsEnum("Hyper", "Increases combo hits by 1."));
         skillsList.put("KILLER", new SkillsEnum("Killer", "Defeating an enemy with this wifey increases damage dealt multiplier by 1.0x for the rest of the battle."));
         skillsList.put("MAGICALGIRL", new SkillsEnum("Magical Girl", "Multiplies magical damage dealt, healing, and special attack damage dealt by 1.5x. Multiplier increases by 0.25x for each other Magical Girl wifey in the party."));
+        skillsList.put("MAGICIAN", new SkillsEnum("Magician", "Multiplies magical damage dealt by 3.0x at the start of a wave. Multiplier decreases by 0.5x each time a magical attack is used, to a minimum of 1.0x."));
         skillsList.put("MAID", new SkillsEnum("Maid", "Multiplies damage dealt by 2.0x if this wifey healed the previous turn."));
         skillsList.put("MASOCHIST", new SkillsEnum("Masochist", "Multiplies damage dealt up to 4.0x the lower this wifey's health is. Healing received multiplied by 0.5x."));
         skillsList.put("MECHANIC", new SkillsEnum("Mechanic", "Fully heals Robot wifeys."));
         skillsList.put("MEDIUM", new SkillsEnum("Medium", "Multiplies magical and special damage dealt by 2.0x against Ghosts."));
         skillsList.put("MUSICIAN", new SkillsEnum("Musician", "Multiplies damage dealt by 4.0x every eighth hit."));
         skillsList.put("NURSE", new SkillsEnum("Nurse", "Multiplies healing by 2.0x. Gains health at the start of every round."));
+        skillsList.put("PILOT", new SkillsEnum("Pilot", "Multiplies magical and special damage taken from WIND sources by 0.5x"));
         skillsList.put("PRAVDA", new SkillsEnum("Pravda", "Increases damage dealt multiplier by 1.0x for each other Pravda wifey."));
         skillsList.put("PRAVDAPRES", new SkillsEnum("Pravda President", "Increases damage dealt multiplier by 2.0x for each other Pravda wifey."));
         skillsList.put("PROGRAMMER", new SkillsEnum("Programmer", "Increases damage dealt multiplier by 0.75x each time this wifey attacks a Robot. Resets at the start of the round."));
         skillsList.put("PROTAGONIST", new SkillsEnum("Protagonist", "When this wifey suffers lethal damage the first time, prevent the death and heal self."));
         skillsList.put("RACER", new SkillsEnum("Racer", "Multiplies damage dealt by 4.0x at the start of a wave. Multiplier decreases by 0.5x for each turn the wave lasts, to a minimum of 0.5x."));
-        skillsList.put("ROBOT", new SkillsEnum("Robot", "Multiplies physical damage taken by 0.8x. Multiplies magical damage taken by 1.2x."));
+        skillsList.put("ROBOT", new SkillsEnum("Robot", "Multiplies physical damage taken by 0.8x. Multiplies magical and special damage taken from WATER sources by 1.5x."));
         skillsList.put("SADIST", new SkillsEnum("Sadist", "Increases damage dealt multiplier by 0.05x for each hit. The number of hits resets to 0 if an enemy is defeated by this wifey."));
         skillsList.put("SLUGABED", new SkillsEnum("Slugabed", "Multiplies damage dealt by 6.0x. Reduces multiplier by 0.25x for each turn, to a minimum of 0.25x."));
         skillsList.put("SPORTSMANAGER", new SkillsEnum("Sports Manager", "Increases physical damage dealt multiplier by 0.05x for each Athlete wifey. Increases the physical damage multiplier of each Athlete wifey by 1.0x. This does not stack."));
@@ -179,7 +187,6 @@ public class SkillsEnum {
 
         //Skills that need to be implemented
         skillsList.put("ROYALTY", new SkillsEnum("Royalty", "Royalty description"));
-        skillsList.put("PILOT", new SkillsEnum("Pilot", "Pilot description"));
         skillsList.put("YANDERE", new SkillsEnum("Yandere", "Yandere description"));
         skillsList.put("STUCOPRES", new SkillsEnum("Student Council President", "Student Council President description"));
         skillsList.put("STUCO", new SkillsEnum("Student Council", "Student Council description"));
@@ -209,6 +216,5 @@ public class SkillsEnum {
         skillsList.put("PERSONA", new SkillsEnum("Persona", "Persona description"));
         skillsList.put("SPIRIT", new SkillsEnum("Spirit", "Spirit description"));
         skillsList.put("NINJA", new SkillsEnum("Ninja", "Ninja description"));
-        skillsList.put("MAGICIAN", new SkillsEnum("Magician", "Magician description"));
     }
 }

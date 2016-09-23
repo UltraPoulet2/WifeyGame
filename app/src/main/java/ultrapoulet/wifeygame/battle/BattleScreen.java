@@ -698,7 +698,6 @@ public class BattleScreen extends Screen {
                             }
                             break;
                         case MAGIC_ATTACK:
-                            System.out.println("Magicing");
                             for(int i = 0; i < party.length; i++){
                                 if(party[i].getCurrentHP() > 0){
                                     baseDamage = (int) (enemies[enemyIndex].MagicAttackDamage(party[i]) * enemyMultiplier);
@@ -749,7 +748,6 @@ public class BattleScreen extends Screen {
                             }
                             break;
                         case TRANSFORM:
-                            System.out.println("Transforming?");
                             enemies[enemyIndex].transform();
                             for(int i = 0; i < enemies.length; i++){
                                 enemies[i].resetSkills();
