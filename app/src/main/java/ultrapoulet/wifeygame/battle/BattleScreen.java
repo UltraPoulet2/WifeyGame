@@ -698,6 +698,7 @@ public class BattleScreen extends Screen {
                             }
                             break;
                         case MAGIC_ATTACK:
+                            System.out.println("Magicing");
                             for(int i = 0; i < party.length; i++){
                                 if(party[i].getCurrentHP() > 0){
                                     baseDamage = (int) (enemies[enemyIndex].MagicAttackDamage(party[i]) * enemyMultiplier);
@@ -746,6 +747,17 @@ public class BattleScreen extends Screen {
                                     enemies[enemyIndex].onEnemyDefeat(party[i]);
                                 }
                             }
+                            break;
+                        case TRANSFORM:
+                            System.out.println("Transforming?");
+                            enemies[enemyIndex].transform();
+                            for(int i = 0; i < enemies.length; i++){
+                                enemies[i].resetSkills();
+                            }
+                            for(int i = 0; i < enemies.length; i++){
+                                enemies[i].updateParty(party);
+                            }
+                            hitsPerformed++;
                             break;
                         case POWER_UP:
                             enemies[enemyIndex].powerUp();
@@ -815,6 +827,7 @@ public class BattleScreen extends Screen {
                 //Perform end of round things
                 //Go back to ROUND_START
                 if (phaseEntered) {
+                    System.out.println("Round ending");
                     phaseTime = 0;
                     phaseEntered = false;
                     for(int i = 0; i < party.length; i++){

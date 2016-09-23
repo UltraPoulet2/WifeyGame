@@ -19,6 +19,8 @@ public abstract class BattleCharacter {
     protected final static double strongMultiplier = 0.5;
     protected final static double weakMultiplier = 2.0;
 
+    protected int transformNumber = 0;
+
     public String getName(){ return this.name; }
 
     public int getMaxHP(){ return this.maxHP; }
@@ -94,7 +96,11 @@ public abstract class BattleCharacter {
 
     public abstract void transform();
 
-    public abstract void resetSkills();
+    public void resetSkills(){
+        skills.resetSkills();
+    }
 
-    public abstract void updateParty(BattleCharacter[] party);
+    public void updateParty(BattleCharacter[] party){
+        skills.updateParty(party);
+    }
 }

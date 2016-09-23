@@ -86,7 +86,7 @@
     </enemy>
     <enemy key="TEST-NME6">
         <name>Enemy 6</name>
-        <ai>BasicMagicEnemyAI</ai>
+        <ai>BasicTransformEnemyAI</ai>
         <maxHP>8000</maxHP>
         <magicDamage>10</magicDamage>
         <healAmount>1500</healAmount>

@@ -39,6 +39,9 @@ public abstract class EnemyAI {
         else if(name.equalsIgnoreCase("OriginalBossAI")){
             return new OriginalBossAI();
         }
+        else if(name.equalsIgnoreCase("BasicTransformEnemyAI")){
+            return new BasicTransformEnemyAI();
+        }
 
         System.out.println("EnemyAI:getAI(): No AI found for: " + name);
         return null;

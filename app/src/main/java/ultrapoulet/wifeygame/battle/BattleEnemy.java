@@ -56,6 +56,8 @@ public class BattleEnemy extends BattleCharacter{
 
     private ArrayList<TransformEnemy> transformations;
 
+    private EnemyAction storedAction;
+
     public BattleEnemy(
             String name,
             int maxHP,
@@ -153,14 +155,15 @@ public class BattleEnemy extends BattleCharacter{
     //Might not need to though
     public void determineAction(){
         ai.selectAction();
+        storedAction = ai.getAction();
     }
 
     public EnemyAction getAction(){
-        return ai.getAction();
+        return storedAction;
     }
 
     public String getActionString() {
-        return actionStrings.get(ai.getAction());
+        return actionStrings.get(storedAction);
     }
 
     public int PowerAttackDamage(BattleCharacter enemy){
@@ -363,18 +366,72 @@ public class BattleEnemy extends BattleCharacter{
     }
 
     public boolean canTransform(){
-        return false;
+        return transformations.size() > transformNumber;
     }
 
     public void transform(){
-        //Implement later
+        TransformEnemy form = transformations.get(transformNumber);
+        transformNumber++;
+        this.name = form.getName();
+        this.image = form.getImage();
+        this.ai = EnemyAI.getAI(form.getAi());
+        if(form.getHP() > 0) {
+            this.maxHP = form.getHP();
+            if(this.maxHP < this.currentHP){
+                this.currentHP = this.maxHP;
+            }
+        }
+        if(form.getPowerDamage() > 0){
+            this.powerDamage = form.getPowerDamage();
+        }
+        if(form.getPowerHits() > 0){
+            this.powerHits = form.getPowerHits();
+        }
+        if(form.getComboDamage() > 0){
+            this.comboDamage = form.getComboDamage();
+        }
+        if(form.getComboHits() > 0){
+            this.comboHits = form.getComboHits();
+        }
+        if(form.getMagicDamage() > 0){
+            this.comboHits = form.getMagicDamage();
+        }
+        if(form.getHealAmount() > 0){
+            this.healAmount = form.getHealAmount();
+        }
+        if(form.getPowerUpPercentage() > 0.0){
+            this.powerUpPercentage = form.getPowerUpPercentage();
+        }
+        if(form.getPowerDownPercentage() > 0.0){
+            this.powerDownPercentage = form.getPowerDownPercentage();
+        }
+        if(form.getDefendPercentage() > 0.0){
+            this.defendPercentage = form.getDefendPercentage();
+        }
+        if(form.getWeakenPercentage() > 0.0){
+            this.weakenPercentage = form.getWeakenPercentage();
+        }
+        if(form.getSpecialDamage() > 0){
+            this.specialDamage = form.getSpecialDamage();
+        }
+        if(form.getSpecialHits() > 0){
+            this.specialDamage = form.getSpecialHits();
+        }
+        if(form.getAttackElement() != null){
+            this.attackElement = form.getAttackElement();
+        }
+        if(form.getStrongElement() != null){
+            this.strongElement = form.getStrongElement();
+        }
+        if(form.getWeakElement() != null){
+            this.weakElement = form.getWeakElement();
+        }
+        for(int i = 0; i < form.getAddSkills().size(); i++){
+            skills.addSkill(form.getAddSkills().get(i).getBattleSkill(this));
+        }
+        for(int i = 0; i < form.getRemoveSkills().size(); i++){
+            skills.removeSkill(form.getRemoveSkills().get(i).getBattleSkill(this));
+        }
     }
 
-    public void resetSkills(){
-        //Implement later
-    }
-
-    public void updateParty(BattleCharacter[] party){
-        //Implement later
-    }
 }

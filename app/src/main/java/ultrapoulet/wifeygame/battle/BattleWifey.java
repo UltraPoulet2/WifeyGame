@@ -22,7 +22,6 @@ public class BattleWifey extends BattleCharacter{
     private Image image;
 
     private ArrayList<TransformWifey> transformWifeys;
-    private int transformNumber;
 
     private boolean isDefending = false;
 
@@ -91,14 +90,6 @@ public class BattleWifey extends BattleCharacter{
     public void turnStart(){
         //Function for things that happen at start of turn
         this.isDefending = false;
-    }
-
-    public void resetSkills(){
-        skills.resetSkills();
-    }
-
-    public void updateParty(BattleCharacter[] party){
-        skills.updateParty(party);
     }
 
     public int PowerAttackDamage(BattleCharacter enemy){

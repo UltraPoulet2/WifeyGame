@@ -13,19 +13,19 @@ public class TransformEnemy {
 
     private String name;
     private String ai;
-    private int maxHP;
-    private int powerDamage;
-    private int powerHits;
-    private int comboDamage;
-    private int comboHits;
-    private int magicDamage;
-    private int healAmount;
-    private double powerUpPercentage;
-    private double powerDownPercentage;
-    private double defendPercentage;
-    private double weakenPercentage;
-    private int specialDamage;
-    private int specialHits;
+    private int maxHP = 0;
+    private int powerDamage = 0;
+    private int powerHits = 0;
+    private int comboDamage = 0;
+    private int comboHits = 0;
+    private int magicDamage = 0;
+    private int healAmount = 0;
+    private double powerUpPercentage = 0.0;
+    private double powerDownPercentage = 0.0;
+    private double defendPercentage = 0.0;
+    private double weakenPercentage = 0.0;
+    private int specialDamage = 0;
+    private int specialHits = 0;
 
     private Element attackElement;
     private Element strongElement;
@@ -220,7 +220,6 @@ public class TransformEnemy {
             return false;
         }
         if(image == null){
-            System.out.println("No image");
             return false;
         }
         if(ai == null || ai.length() == 0){
