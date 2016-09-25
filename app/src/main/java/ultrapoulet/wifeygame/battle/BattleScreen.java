@@ -1189,7 +1189,14 @@ public class BattleScreen extends Screen {
             numberStart = (numberStart || (numberPart > 0));
             if(numberStart){
                 int y = ENEMY_DAMAGE_START_Y - (int) (ENEMY_DAMAGE_INCREASE_Y * phaseTime / ATTACK_PHASE_WAIT);
-                g.drawImage(Assets.HPNumbers[numberPart], ENEMY_DAMAGE_BASE_X - ENEMY_DAMAGE_OFFSET_X * offset + ENEMY_DAMAGE_DISTANCE_X * j, y);
+                Image hpNum;
+                if(party[partyIndex].isWeakElement(enemies[enemyIndex])){
+                    hpNum = Assets.WeakNumbers[numberPart];
+                }
+                else{
+                    hpNum = Assets.HPNumbers[numberPart];
+                }
+                g.drawImage(hpNum, ENEMY_DAMAGE_BASE_X - ENEMY_DAMAGE_OFFSET_X * offset + ENEMY_DAMAGE_DISTANCE_X * j, y);
                 j++;
             }
             else{
@@ -1266,7 +1273,14 @@ public class BattleScreen extends Screen {
                 if(numberStart){
                     int y = CHAR_DAMAGE_START_Y - (int) (CHAR_DAMAGE_INCREASE_Y * phaseTime / ATTACK_PHASE_WAIT);
                     int x = CHAR_DAMAGE_BASE_X - CHAR_DAMAGE_OFFSET_X * offset + CHAR_DAMAGE_DISTANCE_X * j + CHAR_HOLDER_X_DISTANCE * i;
-                    g.drawImage(Assets.HPNumbers[numberPart], x, y);
+                    Image hpNum;
+                    if(enemies[enemyIndex].isWeakElement(party[i])){
+                        hpNum = Assets.WeakNumbers[numberPart];
+                    }
+                    else{
+                        hpNum = Assets.HPNumbers[numberPart];
+                    }
+                    g.drawImage(hpNum, x, y);
                     j++;
                 }
                 else{
