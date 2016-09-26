@@ -1190,8 +1190,12 @@ public class BattleScreen extends Screen {
             if(numberStart){
                 int y = ENEMY_DAMAGE_START_Y - (int) (ENEMY_DAMAGE_INCREASE_Y * phaseTime / ATTACK_PHASE_WAIT);
                 Image hpNum;
-                if(party[partyIndex].isWeakElement(enemies[enemyIndex])){
+                if(party[partyIndex].isWeaknessAttack(enemies[enemyIndex])){
                     hpNum = Assets.WeakNumbers[numberPart];
+                }
+                else if(party[partyIndex].isStrongAttack(enemies[enemyIndex])){
+                    //This will be modified later
+                    hpNum = Assets.HPNumbers[numberPart];
                 }
                 else{
                     hpNum = Assets.HPNumbers[numberPart];
@@ -1274,8 +1278,12 @@ public class BattleScreen extends Screen {
                     int y = CHAR_DAMAGE_START_Y - (int) (CHAR_DAMAGE_INCREASE_Y * phaseTime / ATTACK_PHASE_WAIT);
                     int x = CHAR_DAMAGE_BASE_X - CHAR_DAMAGE_OFFSET_X * offset + CHAR_DAMAGE_DISTANCE_X * j + CHAR_HOLDER_X_DISTANCE * i;
                     Image hpNum;
-                    if(enemies[enemyIndex].isWeakElement(party[i])){
+                    if(enemies[enemyIndex].isWeaknessAttack(party[i])){
                         hpNum = Assets.WeakNumbers[numberPart];
+                    }
+                    else if(enemies[enemyIndex].isStrongAttack(party[i])){
+                        //This will be replaced later
+                        hpNum = Assets.HPNumbers[numberPart];
                     }
                     else{
                         hpNum = Assets.HPNumbers[numberPart];

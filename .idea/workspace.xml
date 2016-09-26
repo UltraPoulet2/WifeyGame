@@ -11,10 +11,11 @@
   <component name="ChangeListManager">
     <list default="true" id="e235d761-a903-4549-b84c-2921700595c4" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/Assets.java" afterPath="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/Assets.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/LoadingScreen.java" afterPath="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/LoadingScreen.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/BattleCharacter.java" afterPath="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/BattleCharacter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/BattleEnemy.java" afterPath="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/BattleEnemy.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/BattleScreen.java" afterPath="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/BattleScreen.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/BattleWifey.java" afterPath="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/BattleWifey.java" />
     </list>
     <ignored path="AndroidGame.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -63,8 +64,8 @@
       <file leaf-file-name="BattleScreen.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/BattleScreen.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1336">
-              <caret line="1271" column="64" selection-start-line="1271" selection-start-column="64" selection-end-line="1271" selection-end-column="64" />
+            <state relative-caret-position="347">
+              <caret line="1196" column="49" selection-start-line="1196" selection-start-column="49" selection-end-line="1196" selection-end-column="49" />
               <folding />
             </state>
           </provider>
@@ -73,7 +74,7 @@
       <file leaf-file-name="enemies.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/assets/config/enemies.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1445">
+            <state relative-caret-position="1496">
               <caret line="88" column="38" selection-start-line="88" selection-start-column="38" selection-end-line="88" selection-end-column="38" />
               <folding />
             </state>
@@ -83,7 +84,7 @@
       <file leaf-file-name="Assets.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/Assets.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
+            <state relative-caret-position="425">
               <caret line="27" column="38" selection-start-line="27" selection-start-column="38" selection-end-line="27" selection-end-column="38" />
               <folding />
             </state>
@@ -93,7 +94,7 @@
       <file leaf-file-name="LoadingScreen.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/LoadingScreen.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
+            <state relative-caret-position="1088">
               <caret line="80" column="54" selection-start-line="80" selection-start-column="54" selection-end-line="80" selection-end-column="54" />
               <folding />
             </state>
@@ -103,8 +104,8 @@
       <file leaf-file-name="BattleCharacter.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/BattleCharacter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="500">
-              <caret line="101" column="57" selection-start-line="101" selection-start-column="57" selection-end-line="101" selection-end-column="57" />
+            <state relative-caret-position="483">
+              <caret line="100" column="32" selection-start-line="100" selection-start-column="32" selection-end-line="100" selection-end-column="32" />
               <folding />
             </state>
           </provider>
@@ -113,17 +114,17 @@
       <file leaf-file-name="SkillsEnum.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/character/SkillsEnum.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="350">
+            <state relative-caret-position="816">
               <caret line="84" column="48" selection-start-line="84" selection-start-column="48" selection-end-line="84" selection-end-column="48" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="characters.xml" pinned="false" current-in-tab="true">
+      <file leaf-file-name="characters.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/assets/config/characters.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="13532">
+            <state relative-caret-position="810">
               <caret line="871" column="27" selection-start-line="871" selection-start-column="27" selection-end-line="871" selection-end-column="27" />
               <folding />
             </state>
@@ -133,7 +134,7 @@
       <file leaf-file-name="Element.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/character/Element.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
+            <state relative-caret-position="323">
               <caret line="19" column="56" selection-start-line="19" selection-start-column="56" selection-end-line="19" selection-end-column="56" />
               <folding />
             </state>
@@ -143,8 +144,18 @@
       <file leaf-file-name="BattleWifey.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/BattleWifey.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3349">
-              <caret line="204" column="0" selection-start-line="204" selection-start-column="0" selection-end-line="227" selection-end-column="9" />
+            <state relative-caret-position="228">
+              <caret line="92" column="5" selection-start-line="92" selection-start-column="5" selection-end-line="92" selection-end-column="5" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BattleEnemy.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/BattleEnemy.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-418">
+              <caret line="194" column="50" selection-start-line="194" selection-start-column="50" selection-end-line="194" selection-end-column="50" />
               <folding />
             </state>
           </provider>
@@ -1750,18 +1761,18 @@
         <option value="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/enemyai/BasicTransformEnemyAI.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/enemyai/EnemyAI.java" />
         <option value="$PROJECT_DIR$/app/src/main/assets/config/enemies.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/BattleWifey.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/character/TransformEnemy.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/BattleEnemy.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/skills/implementations/RobotSkill.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/skills/implementations/PilotSkill.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/skills/implementations/MagicianSkill.java" />
         <option value="$PROJECT_DIR$/app/src/main/assets/config/characters.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/character/SkillsEnum.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/BattleCharacter.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/Assets.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/LoadingScreen.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/BattleScreen.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/BattleCharacter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/BattleWifey.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/BattleEnemy.java" />
       </list>
     </option>
   </component>
@@ -1819,7 +1830,31 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
+      <pane id="Scope" />
+      <pane id="AndroidView">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AndroidGame" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Gradle Scripts" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidBuildScriptsGroupNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AndroidGame" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
       <pane id="PackagesPane">
         <subPane>
           <PATH>
@@ -1884,31 +1919,6 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="implementation" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="Scope" />
-      <pane id="AndroidView">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AndroidGame" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Gradle Scripts" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidBuildScriptsGroupNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AndroidGame" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -2473,6 +2483,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -2889,8 +2900,8 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
+    <editor active="false" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -2900,9 +2911,9 @@
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.319053" sideWeight="0.50213677" order="8" side_tool="true" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31737193" sideWeight="0.49786323" order="7" side_tool="false" content_ui="tabs" x="15" y="352" width="1888" height="322" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32807216" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31737193" sideWeight="0.49786323" order="7" side_tool="false" content_ui="tabs" x="15" y="352" width="1888" height="322" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32850778" sideWeight="0.49679488" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32807216" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32807216" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32905984" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -2914,8 +2925,8 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24946581" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39977476" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -3180,14 +3191,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/BattleEnemy.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2057">
-          <caret line="131" column="20" selection-start-line="131" selection-start-column="20" selection-end-line="131" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/character/TransformEnemy.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="663">
@@ -3202,14 +3205,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="442">
           <caret line="26" column="16" selection-start-line="26" selection-start-column="16" selection-end-line="26" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/BattleWifey.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3349">
-          <caret line="204" column="0" selection-start-line="204" selection-start-column="0" selection-end-line="227" selection-end-column="9" />
           <folding />
         </state>
       </provider>
@@ -3241,7 +3236,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="663">
           <caret line="41" column="0" selection-start-line="41" selection-start-column="0" selection-end-line="76" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3283,7 +3277,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/character/SkillsEnum.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="350">
+        <state relative-caret-position="816">
           <caret line="84" column="48" selection-start-line="84" selection-start-column="48" selection-end-line="84" selection-end-column="48" />
           <folding />
         </state>
@@ -3291,7 +3285,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/Assets.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
+        <state relative-caret-position="425">
           <caret line="27" column="38" selection-start-line="27" selection-start-column="38" selection-end-line="27" selection-end-column="38" />
           <folding />
         </state>
@@ -3299,31 +3293,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/LoadingScreen.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
+        <state relative-caret-position="1088">
           <caret line="80" column="54" selection-start-line="80" selection-start-column="54" selection-end-line="80" selection-end-column="54" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/BattleCharacter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="500">
-          <caret line="101" column="57" selection-start-line="101" selection-start-column="57" selection-end-line="101" selection-end-column="57" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/BattleScreen.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1336">
-          <caret line="1271" column="64" selection-start-line="1271" selection-start-column="64" selection-end-line="1271" selection-end-column="64" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/character/Element.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
+        <state relative-caret-position="323">
           <caret line="19" column="56" selection-start-line="19" selection-start-column="56" selection-end-line="19" selection-end-column="56" />
           <folding />
         </state>
@@ -3331,7 +3309,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/assets/config/enemies.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1445">
+        <state relative-caret-position="1496">
           <caret line="88" column="38" selection-start-line="88" selection-start-column="38" selection-end-line="88" selection-end-column="38" />
           <folding />
         </state>
@@ -3339,8 +3317,40 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/assets/config/characters.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="13532">
+        <state relative-caret-position="810">
           <caret line="871" column="27" selection-start-line="871" selection-start-column="27" selection-end-line="871" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/BattleCharacter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="483">
+          <caret line="100" column="32" selection-start-line="100" selection-start-column="32" selection-end-line="100" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/BattleScreen.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="347">
+          <caret line="1196" column="49" selection-start-line="1196" selection-start-column="49" selection-end-line="1196" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/BattleWifey.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="228">
+          <caret line="92" column="5" selection-start-line="92" selection-start-column="5" selection-end-line="92" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/BattleEnemy.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-418">
+          <caret line="194" column="50" selection-start-line="194" selection-start-column="50" selection-end-line="194" selection-end-column="50" />
           <folding />
         </state>
       </provider>

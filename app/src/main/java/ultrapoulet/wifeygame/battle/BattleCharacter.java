@@ -93,12 +93,12 @@ public abstract class BattleCharacter {
     }
 
     //Return true if the attack element is the enemy's weakness
-    public boolean isWeakElement(BattleCharacter enemy){
+    public boolean isWeaknessAttack(BattleCharacter enemy){
         return enemy.getWeakElement() == attackElement;
     }
 
     //Return true if the attack element is the enemy's strength
-    public boolean isStrongElement(BattleCharacter enemy){
+    public boolean isStrongAttack(BattleCharacter enemy){
         return enemy.getStrongElement() == attackElement;
     }
 

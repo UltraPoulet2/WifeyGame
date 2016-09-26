@@ -176,8 +176,8 @@ public class BattleEnemy extends BattleCharacter{
         if(powerDownActive){
             multiplier -= powerDownPercentage;
         }
-        System.out.println("Enemy's multiplying damage by: " + multiplier);
-        int modDamage = (int) (baseDamage * multiplier);
+        System.out.println("Enemy's multiplying damage by: " + multiplier * getElementDamage(enemy));
+        int modDamage = (int) (baseDamage * multiplier * getElementDamage(enemy));
         modDamage = modDamage + (int) ((modDamage / 10) * Math.random());
         return modDamage;
     }
@@ -192,8 +192,8 @@ public class BattleEnemy extends BattleCharacter{
         if(powerDownActive){
             multiplier -= powerDownPercentage;
         }
-        System.out.println("Enemy's multiplying damage by: " + multiplier);
-        int modDamage = (int) (baseDamage * multiplier);
+        System.out.println("Enemy's multiplying damage by: " + multiplier * getElementDamage(enemy));
+        int modDamage = (int) (baseDamage * multiplier * getElementDamage(enemy));
         modDamage = modDamage + (int) ((modDamage / 10) * Math.random());
         return modDamage;
     }

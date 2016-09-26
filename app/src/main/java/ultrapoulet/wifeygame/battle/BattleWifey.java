@@ -95,7 +95,7 @@ public class BattleWifey extends BattleCharacter{
     public int PowerAttackDamage(BattleCharacter enemy){
         int baseDamage = this.strength * 5;
         //Do checks on skills to determine bonus damage
-        int modDamage = (int) (baseDamage * skills.physicalAttackPercentage(enemy));
+        int modDamage = (int) (baseDamage * skills.physicalAttackPercentage(enemy) * getElementDamage(enemy));
         System.out.println("Multiplying damage by: " + skills.physicalAttackPercentage(enemy));
         modDamage = modDamage + (int) ((modDamage / 10) * Math.random());
         return modDamage;
