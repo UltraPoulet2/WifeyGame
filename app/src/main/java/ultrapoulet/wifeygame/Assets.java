@@ -26,6 +26,7 @@ public class Assets {
     public static Image[] ComboHitsNumbers;
     public static Image[] DamageHitsNumbers;
     public static Image[] WeakNumbers;
+    public static Image[] ResistNumbers;
 
     //PartySelectScreen Stuff
     public static Image PartySelectScreen;

@@ -97,8 +97,8 @@ public class BattleScreen extends Screen {
     private static final int HALF_SCALE = 50;
     private static final int FULL_SCALE = 100;
 
-    private static final int ATTACK_PHASE_WAIT = 20;
-    private static final int HEAL_PHASE_WAIT = 40;
+    private static final int ATTACK_PHASE_WAIT = 30;
+    private static final int HEAL_PHASE_WAIT = 45;
     private static final int WAIT_PHASE_WAIT = 60;
     private static final int OTHER_PHASE_WAIT = 5;
     private float phaseTime = 0;
@@ -1194,8 +1194,7 @@ public class BattleScreen extends Screen {
                     hpNum = Assets.WeakNumbers[numberPart];
                 }
                 else if(party[partyIndex].isStrongAttack(enemies[enemyIndex])){
-                    //This will be modified later
-                    hpNum = Assets.HPNumbers[numberPart];
+                    hpNum = Assets.ResistNumbers[numberPart];
                 }
                 else{
                     hpNum = Assets.HPNumbers[numberPart];
@@ -1282,8 +1281,7 @@ public class BattleScreen extends Screen {
                         hpNum = Assets.WeakNumbers[numberPart];
                     }
                     else if(enemies[enemyIndex].isStrongAttack(party[i])){
-                        //This will be replaced later
-                        hpNum = Assets.HPNumbers[numberPart];
+                        hpNum = Assets.ResistNumbers[numberPart];
                     }
                     else{
                         hpNum = Assets.HPNumbers[numberPart];

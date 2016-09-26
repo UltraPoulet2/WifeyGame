@@ -80,6 +80,11 @@ public class LoadingScreen extends Screen {
 
         Assets.WeakNumbers = Assets.DamageHitsNumbers;
 
+        Assets.ResistNumbers = new Image[10];
+        for(int i = 0; i < 10; i++){
+            Assets.ResistNumbers[i] = g.newImage("numbers/Resist" + i + ".png", ImageFormat.ARGB8888);
+        }
+
         Assets.PartySelectScreen = g.newImage("screens/PartySelectScreen.png", ImageFormat.RGB565);
         Assets.AcceptEnable = g.newImage("buttons/AcceptEnabled.png", ImageFormat.ARGB8888);
         Assets.AcceptDisable = g.newImage("buttons/AcceptDisabled.png", ImageFormat.ARGB8888);
