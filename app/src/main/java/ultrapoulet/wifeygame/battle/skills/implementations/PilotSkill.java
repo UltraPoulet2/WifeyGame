@@ -18,6 +18,16 @@ public class PilotSkill extends AbsSkill {
     }
 
     @Override
+    public double receivePhysicalAttackPercentage(BattleCharacter enemy) {
+        if(enemy.getAttackElement() == Element.getElement("WIND")) {
+            return multiplier;
+        }
+        else {
+            return 0.0;
+        }
+    }
+
+    @Override
     public double receiveMagicalAttackPercentage(BattleCharacter enemy) {
         if(enemy.getAttackElement() == Element.getElement("WIND")) {
             return multiplier;
@@ -50,7 +60,7 @@ public class PilotSkill extends AbsSkill {
         multipliers[PHYS_ATK] = 1.0;
         multipliers[MAG_ATK] = 1.0;
         multipliers[SPEC_ATK] = 1.0;
-        multipliers[PHYS_DEF] = 0.0;
+        multipliers[PHYS_DEF] = defense;
         multipliers[MAG_DEF] = defense;
         multipliers[SPEC_DEF] = defense;
 

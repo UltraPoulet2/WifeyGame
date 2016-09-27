@@ -568,7 +568,6 @@ public class BattleScreen extends Screen {
                             damageHolder += enemyDamage;
                             break;
                         case TRANSFORM:
-                            //I'll need to figure out how to do this.
                             party[partyIndex].transform();
                             for(int i = 0; i < party.length; i++){
                                 party[i].resetSkills();
@@ -825,7 +824,6 @@ public class BattleScreen extends Screen {
                 //Perform end of round things
                 //Go back to ROUND_START
                 if (phaseEntered) {
-                    System.out.println("Round ending");
                     phaseTime = 0;
                     phaseEntered = false;
                     for(int i = 0; i < party.length; i++){
@@ -881,14 +879,6 @@ public class BattleScreen extends Screen {
                 break;
 
         }
-    }
-
-    private void drawPercentageImage(Graphics g, Image i, int posX, int posY, int percX, int percY){
-        int origWidth = i.getWidth();
-        int origHeight = i.getHeight();
-        int newWidth = i.getWidth()*percX/100;
-        int newHeight = i.getHeight()*percY/100;
-        g.drawScaledImage(i, posX, posY, newWidth, newHeight, 0, 0, origWidth, origHeight);
     }
 
     private Image getPlayerHealthBar(int currentHealth, int maxHealth){
@@ -961,13 +951,13 @@ public class BattleScreen extends Screen {
         //Draw party members before the current member
         for( ; i < partyIndex && i < party.length; i++){
             //Draw the character holder and character image
-            drawPercentageImage(g, charHolder, CHAR_HOLDER_X_DISTANCE * i, CHAR_HOLDER_SMALL_Y, HALF_SCALE, HALF_SCALE);
-            drawPercentageImage(g, party[i].getImage(), CHAR_HOLDER_X_DISTANCE * i + CHAR_INTERIOR_SMALL_X, CHAR_IMAGE_SMALL_Y, HALF_SCALE, HALF_SCALE);
+            g.drawPercentageImage(charHolder, CHAR_HOLDER_X_DISTANCE * i, CHAR_HOLDER_SMALL_Y, HALF_SCALE, HALF_SCALE);
+            g.drawPercentageImage(party[i].getImage(), CHAR_HOLDER_X_DISTANCE * i + CHAR_INTERIOR_SMALL_X, CHAR_IMAGE_SMALL_Y, HALF_SCALE, HALF_SCALE);
 
             //Draw the health bar
             healthBar = getPlayerHealthBar(party[i].getCurrentHP(), party[i].getMaxHP());
             perHealth = (party[i].getCurrentHP() * 1.0)/(party[i].getMaxHP());
-            drawPercentageImage(g, healthBar, CHAR_HOLDER_X_DISTANCE * i + CHAR_INTERIOR_SMALL_X, CHAR_HEALTH_SMALL_Y, (int) Math.ceil(perHealth * HALF_SCALE), HALF_SCALE);
+            g.drawPercentageImage(healthBar, CHAR_HOLDER_X_DISTANCE * i + CHAR_INTERIOR_SMALL_X, CHAR_HEALTH_SMALL_Y, (int) Math.ceil(perHealth * HALF_SCALE), HALF_SCALE);
 
             //Draw the CurrentHP / MaxHP
             numberStart = false;
@@ -977,11 +967,11 @@ public class BattleScreen extends Screen {
                 int numberPart = (party[i].getCurrentHP() / divisor % 10);
                 numberStart = (numberStart || (numberPart > 0));
                 if(numberStart){
-                    drawPercentageImage(g, Assets.HPNumbers[numberPart], CHAR_HOLDER_X_DISTANCE * i + CHAR_NUMBER_SMALL_X + CHAR_NUMBER_SMALL_DISTANCE_X * j, CHAR_NUMBER_SMALL_Y, HALF_SCALE, HALF_SCALE);
+                    g.drawPercentageImage(Assets.HPNumbers[numberPart], CHAR_HOLDER_X_DISTANCE * i + CHAR_NUMBER_SMALL_X + CHAR_NUMBER_SMALL_DISTANCE_X * j, CHAR_NUMBER_SMALL_Y, HALF_SCALE, HALF_SCALE);
                 }
                 divisor = divisor / 10;
             }
-            drawPercentageImage(g, Assets.HPNumbers[SLASH], CHAR_HOLDER_X_DISTANCE * i + CHAR_NUMBER_SMALL_X + CHAR_NUMBER_SMALL_DISTANCE_X * j, CHAR_NUMBER_SMALL_Y, HALF_SCALE, HALF_SCALE);
+            g.drawPercentageImage(Assets.HPNumbers[SLASH], CHAR_HOLDER_X_DISTANCE * i + CHAR_NUMBER_SMALL_X + CHAR_NUMBER_SMALL_DISTANCE_X * j, CHAR_NUMBER_SMALL_Y, HALF_SCALE, HALF_SCALE);
             j++;
             numberStart = false;
             divisor = 1000;
@@ -989,7 +979,7 @@ public class BattleScreen extends Screen {
                 int numberPart = (party[i].getMaxHP() / divisor) % 10;
                 numberStart = (numberStart || (numberPart > 0));
                 if(numberStart){
-                    drawPercentageImage(g, Assets.HPNumbers[numberPart], CHAR_HOLDER_X_DISTANCE * i + CHAR_NUMBER_SMALL_X + CHAR_NUMBER_SMALL_DISTANCE_X * j, CHAR_NUMBER_SMALL_Y, HALF_SCALE, HALF_SCALE);
+                    g.drawPercentageImage(Assets.HPNumbers[numberPart], CHAR_HOLDER_X_DISTANCE * i + CHAR_NUMBER_SMALL_X + CHAR_NUMBER_SMALL_DISTANCE_X * j, CHAR_NUMBER_SMALL_Y, HALF_SCALE, HALF_SCALE);
                     j++;
                 }
                 divisor = divisor / 10;
@@ -997,7 +987,7 @@ public class BattleScreen extends Screen {
 
             //If the party member is defeated, overlay the KO Image
             if(party[i].getCurrentHP() == 0){
-                drawPercentageImage(g, KOImages[i], CHAR_HOLDER_X_DISTANCE * i, CHAR_HOLDER_SMALL_Y, HALF_SCALE, HALF_SCALE);
+                g.drawPercentageImage(KOImages[i], CHAR_HOLDER_X_DISTANCE * i, CHAR_HOLDER_SMALL_Y, HALF_SCALE, HALF_SCALE);
             }
 
         }
@@ -1008,7 +998,7 @@ public class BattleScreen extends Screen {
 
             healthBar = getPlayerHealthBar(party[i].getCurrentHP(), party[i].getMaxHP());
             perHealth = (party[i].getCurrentHP() * 1.0) / (party[i].getMaxHP());
-            drawPercentageImage(g, healthBar, CHAR_HOLDER_X_DISTANCE * i + CHAR_INTERIOR_LARGE_X, CHAR_HEALTH_LARGE_Y, (int) Math.ceil(perHealth * FULL_SCALE), FULL_SCALE);
+            g.drawPercentageImage(healthBar, CHAR_HOLDER_X_DISTANCE * i + CHAR_INTERIOR_LARGE_X, CHAR_HEALTH_LARGE_Y, (int) Math.ceil(perHealth * FULL_SCALE), FULL_SCALE);
 
             //Display CURRENTHP/MAXHP
             numberStart = false;
@@ -1043,12 +1033,12 @@ public class BattleScreen extends Screen {
         }
         //Draw the characters after the current member
         for ( ; i < party.length; i++) {
-            drawPercentageImage(g, charHolder, CHAR_HOLDER_X_DISTANCE * (i + 1), CHAR_HOLDER_SMALL_Y, HALF_SCALE, HALF_SCALE);
-            drawPercentageImage(g, party[i].getImage(), CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_INTERIOR_SMALL_X, CHAR_IMAGE_SMALL_Y, HALF_SCALE, HALF_SCALE);
+            g.drawPercentageImage(charHolder, CHAR_HOLDER_X_DISTANCE * (i + 1), CHAR_HOLDER_SMALL_Y, HALF_SCALE, HALF_SCALE);
+            g.drawPercentageImage(party[i].getImage(), CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_INTERIOR_SMALL_X, CHAR_IMAGE_SMALL_Y, HALF_SCALE, HALF_SCALE);
 
             healthBar = getPlayerHealthBar(party[i].getCurrentHP(), party[i].getMaxHP());
             perHealth = (party[i].getCurrentHP() * 1.0)/(party[i].getMaxHP());
-            drawPercentageImage(g, healthBar, CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_INTERIOR_SMALL_X, CHAR_HEALTH_SMALL_Y, (int) Math.ceil(perHealth * HALF_SCALE) , HALF_SCALE);
+            g.drawPercentageImage(healthBar, CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_INTERIOR_SMALL_X, CHAR_HEALTH_SMALL_Y, (int) Math.ceil(perHealth * HALF_SCALE) , HALF_SCALE);
 
             //Display CURRENTHP/MAXHP
             numberStart = false;
@@ -1058,11 +1048,11 @@ public class BattleScreen extends Screen {
                 int numberPart = (party[i].getCurrentHP() / divisor) % 10;
                 numberStart = (numberStart || (numberPart > 0));
                 if(numberStart){
-                    drawPercentageImage(g, Assets.HPNumbers[numberPart], CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_NUMBER_SMALL_X + CHAR_NUMBER_SMALL_DISTANCE_X * j, CHAR_NUMBER_SMALL_Y, HALF_SCALE, HALF_SCALE);
+                    g.drawPercentageImage(Assets.HPNumbers[numberPart], CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_NUMBER_SMALL_X + CHAR_NUMBER_SMALL_DISTANCE_X * j, CHAR_NUMBER_SMALL_Y, HALF_SCALE, HALF_SCALE);
                 }
                 divisor = divisor / 10;
             }
-            drawPercentageImage(g, Assets.HPNumbers[SLASH], CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_NUMBER_SMALL_X + CHAR_NUMBER_SMALL_DISTANCE_X * j, CHAR_NUMBER_SMALL_Y, HALF_SCALE, HALF_SCALE);
+            g.drawPercentageImage(Assets.HPNumbers[SLASH], CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_NUMBER_SMALL_X + CHAR_NUMBER_SMALL_DISTANCE_X * j, CHAR_NUMBER_SMALL_Y, HALF_SCALE, HALF_SCALE);
             j++;
             numberStart = false;
             divisor = 1000;
@@ -1070,14 +1060,14 @@ public class BattleScreen extends Screen {
                 int numberPart = (party[i].getMaxHP() / divisor) % 10;
                 numberStart = (numberStart || (numberPart > 0));
                 if(numberStart){
-                    drawPercentageImage(g, Assets.HPNumbers[numberPart], CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_NUMBER_SMALL_X + CHAR_NUMBER_SMALL_DISTANCE_X * j, CHAR_NUMBER_SMALL_Y, HALF_SCALE, HALF_SCALE);
+                    g.drawPercentageImage(Assets.HPNumbers[numberPart], CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_NUMBER_SMALL_X + CHAR_NUMBER_SMALL_DISTANCE_X * j, CHAR_NUMBER_SMALL_Y, HALF_SCALE, HALF_SCALE);
                     j++;
                 }
                 divisor = divisor / 10;
             }
 
             if(party[i].getCurrentHP() == 0){
-                drawPercentageImage(g, KOImages[i], CHAR_HOLDER_X_DISTANCE * (i + 1), CHAR_HOLDER_SMALL_Y, HALF_SCALE, HALF_SCALE);
+                g.drawPercentageImage(KOImages[i], CHAR_HOLDER_X_DISTANCE * (i + 1), CHAR_HOLDER_SMALL_Y, HALF_SCALE, HALF_SCALE);
             }
         }
     }
@@ -1093,7 +1083,7 @@ public class BattleScreen extends Screen {
         g.drawImage(enemyHolder, ENEMY_HEALTH_HOLDER_X, ENEMY_HEALTH_HOLDER_Y);
         Image enemyHealth = getEnemyHealthBar(enemies[enemyIndex].getCurrentHP(), enemies[enemyIndex].getMaxHP());
         perHealth = (enemies[enemyIndex].getCurrentHP() * 1.0)/enemies[enemyIndex].getMaxHP();
-        drawPercentageImage(g, enemyHealth, ENEMY_HEALTH_BAR_X, ENEMY_HEALTH_BAR_Y, (int) Math.ceil(FULL_SCALE * perHealth), FULL_SCALE);
+        g.drawPercentageImage(enemyHealth, ENEMY_HEALTH_BAR_X, ENEMY_HEALTH_BAR_Y, (int) Math.ceil(FULL_SCALE * perHealth), FULL_SCALE);
 
         //Display enemy CurrentHP/MaxHP
         numberStart = false;
@@ -1128,7 +1118,7 @@ public class BattleScreen extends Screen {
     private void drawSpecial(){
         Graphics g = game.getGraphics();
         g.drawImage(specialBarBase, SPECIAL_BAR_BASE_X, SPECIAL_BAR_BASE_Y);
-        drawPercentageImage(g, specialBar, SPECIAL_BAR_X, SPECIAL_BAR_Y, (int) ((numHits * 100.0) / MAX_HITS) , FULL_SCALE);
+        g.drawPercentageImage(specialBar, SPECIAL_BAR_X, SPECIAL_BAR_Y, (int) ((numHits * 100.0) / MAX_HITS) , FULL_SCALE);
         g.drawImage(specialBarTop, SPECIAL_BAR_X, SPECIAL_BAR_TOP_Y);
         int specialCount = numHits / SPECIAL_HITS;
         g.drawImage(Assets.HPNumbers[specialCount], SPECIAL_BAR_NUMBER_X, SPECIAL_BAR_NUMBER_Y);
