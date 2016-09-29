@@ -10,9 +10,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e235d761-a903-4549-b84c-2921700595c4" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/screens/BattleCharacterInfoScreen.png" afterPath="$PROJECT_DIR$/app/src/main/assets/screens/BattleCharacterInfoScreen.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/screens/CharacterInfoScreen.png" afterPath="$PROJECT_DIR$/app/src/main/assets/screens/CharacterInfoScreen.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/BattleScreen.java" afterPath="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/BattleScreen.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/skills/implementations/PilotSkill.java" afterPath="$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/skills/implementations/PilotSkill.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
     </list>
     <ignored path="AndroidGame.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -61,14 +62,14 @@
       <file leaf-file-name="BattleScreen.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/BattleScreen.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2744">
+            <state relative-caret-position="18802">
               <caret line="1120" column="30" selection-start-line="1120" selection-start-column="30" selection-end-line="1120" selection-end-column="30" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RobotSkill.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="RobotSkill.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/skills/implementations/RobotSkill.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="255">
@@ -81,7 +82,7 @@
       <file leaf-file-name="enemies.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/assets/config/enemies.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-155">
+            <state relative-caret-position="1496">
               <caret line="88" column="38" selection-start-line="88" selection-start-column="38" selection-end-line="88" selection-end-column="38" />
               <folding />
             </state>
@@ -118,21 +119,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="characters.xml" pinned="false" current-in-tab="true">
+      <file leaf-file-name="characters.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/assets/config/characters.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-5408">
+            <state relative-caret-position="17">
               <caret line="871" column="27" selection-start-line="871" selection-start-column="27" selection-end-line="871" selection-end-column="27" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Element.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/character/Element.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="19" column="56" selection-start-line="19" selection-start-column="56" selection-end-line="19" selection-end-column="56" />
               <folding />
             </state>
           </provider>
@@ -1827,30 +1818,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="AndroidView">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AndroidGame" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Gradle Scripts" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidBuildScriptsGroupNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AndroidGame" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -2441,8 +2408,31 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="AndroidView">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AndroidGame" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Gradle Scripts" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidBuildScriptsGroupNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AndroidGame" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
       <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="PackagesPane">
         <subPane>
           <PATH>
@@ -2511,6 +2501,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -2520,10 +2511,14 @@
     <property name="last_directory_selection" value="$PROJECT_DIR$/app/src/main/java" />
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="57641d6f" />
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="Nexus_5_API_23_x86" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/src/main/assets/screens" />
     <property name="device.picker.selection" value="57641d6f" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\John\AndroidStudioProjects\AndroidGame\app\src\main\assets\numbers" />
+      <recent name="C:\Users\John\AndroidStudioProjects\AndroidGame\app\src\main\assets" />
+    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="ultrapoulet.wifeygame.battle.skills.implementations" />
       <recent name="ultrapoulet.wifeygame.battle.skills.im" />
@@ -2532,14 +2527,10 @@
       <recent name="ultrapoulet.wifeygame.character" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\John\AndroidStudioProjects\AndroidGame\app\src\main\assets\screens" />
       <recent name="C:\Users\John\AndroidStudioProjects\AndroidGame\app\src\main\assets\numbers" />
       <recent name="C:\Users\John\AndroidStudioProjects\AndroidGame\app\src\main\assets\characters" />
       <recent name="C:\Users\John\AndroidStudioProjects\AndroidGame\app\src\main\assets\enemies" />
-      <recent name="C:\Users\John\AndroidStudioProjects\AndroidGame\app\src\main\assets\screens" />
-      <recent name="C:\Users\John\AndroidStudioProjects\AndroidGame\app\src\main\assets" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\John\AndroidStudioProjects\AndroidGame\app\src\main\assets\numbers" />
       <recent name="C:\Users\John\AndroidStudioProjects\AndroidGame\app\src\main\assets" />
     </key>
   </component>
@@ -2928,7 +2919,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -2947,7 +2938,7 @@
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32807216" sideWeight="0.50213677" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2153518" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2153518" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32942432" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24946581" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
@@ -2987,13 +2978,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/BattleInfo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/BattleSelectScreen.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -3040,7 +3024,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="254" column="0" selection-start-line="254" selection-start-column="0" selection-end-line="263" selection-end-column="30" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3048,9 +3031,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="252" column="25" selection-start-line="252" selection-start-column="25" selection-end-line="252" selection-end-column="25" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3058,7 +3038,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="270" column="5" selection-start-line="270" selection-start-column="5" selection-end-line="270" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3199,7 +3178,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3026">
           <caret line="188" column="104" selection-start-line="188" selection-start-column="104" selection-end-line="188" selection-end-column="104" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3326,29 +3304,20 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="381">
           <caret line="63" column="39" selection-start-line="63" selection-start-column="39" selection-end-line="63" selection-end-column="39" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/BattleScreen.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2744">
+        <state relative-caret-position="18802">
           <caret line="1120" column="30" selection-start-line="1120" selection-start-column="30" selection-end-line="1120" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/skills/implementations/RobotSkill.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="74" selection-start-line="17" selection-start-column="74" selection-end-line="17" selection-end-column="74" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/assets/config/enemies.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-155">
+        <state relative-caret-position="1496">
           <caret line="88" column="38" selection-start-line="88" selection-start-column="38" selection-end-line="88" selection-end-column="38" />
           <folding />
         </state>
@@ -3356,8 +3325,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/assets/config/characters.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-5408">
+        <state relative-caret-position="17">
           <caret line="871" column="27" selection-start-line="871" selection-start-column="27" selection-end-line="871" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/assets/screens/BattleCharacterInfoScreen.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/ultrapoulet/wifeygame/battle/skills/implementations/RobotSkill.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" column="74" selection-start-line="17" selection-start-column="74" selection-end-line="17" selection-end-column="74" />
           <folding />
         </state>
       </provider>
