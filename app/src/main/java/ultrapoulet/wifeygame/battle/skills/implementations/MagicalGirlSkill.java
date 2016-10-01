@@ -20,6 +20,15 @@ public class MagicalGirlSkill extends AbsSkill {
 
     @Override
     public void startBattle(BattleCharacter[] party) {
+        setMultiplier(party);
+    }
+
+    @Override
+    public void updateParty(BattleCharacter[] party){
+        setMultiplier(party);
+    }
+
+    private void setMultiplier(BattleCharacter[] party){
         multiplier = baseMultiplier;
         for(int i = 0; i < party.length; i++){
             if(party[i] != owner && party[i].hasSkill(MagicalGirlSkill.class)){

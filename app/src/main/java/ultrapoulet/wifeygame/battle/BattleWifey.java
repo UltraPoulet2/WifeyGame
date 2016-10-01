@@ -3,29 +3,39 @@ package ultrapoulet.wifeygame.battle;
 import java.util.ArrayList;
 
 import ultrapoulet.androidgame.framework.Image;
+import ultrapoulet.wifeygame.character.Element;
 import ultrapoulet.wifeygame.character.SkillsEnum;
+import ultrapoulet.wifeygame.character.TransformWifey;
 import ultrapoulet.wifeygame.character.Weapon;
 import ultrapoulet.wifeygame.battle.skills.SkillList;
 
 /**
  * Created by John on 3/5/2016.
  */
-public class BattleWifey implements BattleCharacter{
+public class BattleWifey extends BattleCharacter{
 
-    private String name;
-    private int maxHP;
-    private int currentHP;
     private int numHits;
     private Weapon weapon;
-    private SkillList skills;
     private int strength;
     private int magic;
 
     private Image image;
 
+    private ArrayList<TransformWifey> transformWifeys;
+
     private boolean isDefending = false;
 
-    public BattleWifey(String name, Weapon weapon, int strength, int magic, Image image, ArrayList<SkillsEnum> skills){
+    public BattleWifey(
+            String name,
+            Weapon weapon,
+            int strength,
+            int magic,
+            Image image,
+            ArrayList<SkillsEnum> skills,
+            Element atkElement,
+            Element stgElement,
+            Element wkElement,
+            ArrayList<TransformWifey> transformWifeys){
         this.name = name;
         this.maxHP = calculateHP(strength);
         this.currentHP = this.maxHP;
@@ -35,14 +45,14 @@ public class BattleWifey implements BattleCharacter{
         this.magic = magic;
         this.image = image;
         this.skills = new SkillList(skills, this);
+        this.attackElement = atkElement;
+        this.strongElement = stgElement;
+        this.weakElement = wkElement;
+        this.transformWifeys = transformWifeys;
     }
 
     public static int calculateHP(int strength){
         return 10 * strength;
-    }
-
-    public String getName(){
-        return this.name;
     }
 
     public Weapon getWeapon() { return this.weapon; }
@@ -53,14 +63,6 @@ public class BattleWifey implements BattleCharacter{
             return 10;
         }
         return temp;
-    }
-
-    public int getMaxHP(){
-        return this.maxHP;
-    }
-
-    public int getCurrentHP(){
-        return this.currentHP;
     }
 
     public int getStrength(){
@@ -77,28 +79,10 @@ public class BattleWifey implements BattleCharacter{
 
     public SkillList getSkills() { return this.skills; }
 
-    public boolean hasSkill(Class skillClass){
-        return skills.hasSkill(skillClass);
-    }
-
-    public void giveSkillBonus(double multiplier, Class givingSkill, Class receivingSkill){
-        skills.giveSkillBonus(multiplier, givingSkill, receivingSkill);
-    }
-
-    public void setCurrentHP(int hp){
-        this.currentHP = hp;
-    }
-
     public void startBattle(BattleCharacter[] party){
         this.currentHP = this.maxHP;
         this.isDefending = false;
         this.skills.startBattle(party);
-    }
-
-    public void startWave() { skills.startWave(); }
-
-    public void startRound(){
-        skills.startRound();
     }
 
     public void endRound() { skills.endRound(); }
@@ -111,7 +95,7 @@ public class BattleWifey implements BattleCharacter{
     public int PowerAttackDamage(BattleCharacter enemy){
         int baseDamage = this.strength * 5;
         //Do checks on skills to determine bonus damage
-        int modDamage = (int) (baseDamage * skills.physicalAttackPercentage(enemy));
+        int modDamage = (int) (baseDamage * skills.physicalAttackPercentage(enemy) * getElementDamage(enemy));
         System.out.println("Multiplying damage by: " + skills.physicalAttackPercentage(enemy));
         modDamage = modDamage + (int) ((modDamage / 10) * Math.random());
         return modDamage;
@@ -130,8 +114,8 @@ public class BattleWifey implements BattleCharacter{
     public int MagicAttackDamage(BattleCharacter enemy){
         int baseDamage = this.magic * 5;
         //Do checks on skills to determine bonus damage
-        int modDamage = (int) (baseDamage * skills.magicalAttackPercentage(enemy));
-        System.out.println("Multiplying damage by: " + skills.magicalAttackPercentage(enemy));
+        int modDamage = (int) (baseDamage * skills.magicalAttackPercentage(enemy) * getElementDamage(enemy));
+        System.out.println("Multiplying damage by: " + skills.magicalAttackPercentage(enemy) * getElementDamage(enemy));
         modDamage = modDamage + (int) ((modDamage / 10) * Math.random());
         return modDamage;
     }
@@ -148,19 +132,11 @@ public class BattleWifey implements BattleCharacter{
     public int SpecialAttackDamage(BattleCharacter enemy){
         int baseDamage = this.strength * 10 + this.magic * 10;
         //Do checks on skills to determine bonus damage
-        int modDamage = (int) (baseDamage * skills.specialAttackPercentage(enemy));
-        System.out.println("Multiplying damage by: " + skills.specialAttackPercentage(enemy));
+        int modDamage = (int) (baseDamage * skills.specialAttackPercentage(enemy) * getElementDamage(enemy));
+        System.out.println("Multiplying damage by: " + skills.specialAttackPercentage(enemy) * getElementDamage(enemy));
         modDamage = modDamage + (int) ((modDamage / 10) * Math.random());
         return modDamage;
 
-    }
-
-    public void onDamageDealt(int damage){
-        skills.onDamageDealt(damage);
-    }
-
-    public void onEnemyDefeat(BattleCharacter enemy){
-        skills.onEnemyDefeat(enemy);
     }
 
     public void Defend(){
@@ -223,6 +199,37 @@ public class BattleWifey implements BattleCharacter{
             this.currentHP = this.maxHP;
         }
         return displayHeal;
+    }
+
+    public void transform(){
+        TransformWifey form = transformWifeys.get(transformNumber);
+        transformNumber++;
+        this.image = form.getImage();
+        this.maxHP = form.getHP();
+        this.strength = form.getStrength();
+        this.magic = form.getMagic();
+        if(form.getWeapon() != null){
+            this.weapon = form.getWeapon();
+        }
+        if(form.getAttackElement() != null){
+            this.attackElement = form.getAttackElement();
+        }
+        if(form.getStrongElement() != null){
+            this.strongElement = form.getStrongElement();
+        }
+        if(form.getWeakElement() != null){
+            this.weakElement = form.getWeakElement();
+        }
+        for(int i = 0; i < form.getAddSkills().size(); i++){
+            skills.addSkill(form.getAddSkills().get(i).getBattleSkill(this));
+        }
+        for(int i = 0; i < form.getRemoveSkills().size(); i++){
+            skills.removeSkill(form.getRemoveSkills().get(i).getBattleSkill(this));
+        }
+    }
+
+    public boolean canTransform(){
+        return transformWifeys.size() > transformNumber;
     }
 
     public double[] getMultipliers(BattleEnemy enemy){

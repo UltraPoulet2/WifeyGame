@@ -6,8 +6,10 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Graphics.ImageFormat;
+import ultrapoulet.wifeygame.character.Element;
 import ultrapoulet.wifeygame.character.EnemyCharacter;
 import ultrapoulet.wifeygame.character.SkillsEnum;
+import ultrapoulet.wifeygame.character.TransformEnemy;
 import ultrapoulet.wifeygame.gamestate.Enemies;
 
 /**
@@ -34,10 +36,22 @@ public class EnemyParser extends DefaultHandler{
     private boolean bSpecialHits = false;
     private boolean bSkill = false;
 
+    private boolean bTransformSec;
+    private boolean bTransform;
+    private boolean bAddSkill;
+    private boolean bRemoveSkill;
+
+    private boolean bAtkElement;
+    private boolean bStgElement;
+    private boolean bWkElement;
+
     private boolean error = false;
 
     private EnemyCharacter enemyBuilder;
+    private TransformEnemy transformBuilder;
     private String enemyKey;
+
+    private int tNumber = 0;
 
     public void setGraphics(Graphics g){
         this.g = g;
@@ -110,14 +124,79 @@ public class EnemyParser extends DefaultHandler{
             //Do nothing
         }
         else if(qName.equalsIgnoreCase("skills")){
-            //Do nothing
+            String mode = attributes.getValue("mode");
+            if(mode != null){
+                if(mode.equalsIgnoreCase("add")){
+                    bAddSkill = true;
+                }
+                else if(mode.equalsIgnoreCase("remove")){
+                    bRemoveSkill = true;
+                }
+                else {
+                    error = true;
+                    System.out.println("EnemyParser:startElement(): Invalid skill mode: " + mode + " for key " + enemyKey);
+                }
+            }
         }
         else if(qName.equalsIgnoreCase("skill")){
             bSkill = true;
         }
+        else if(qName.equalsIgnoreCase("elements")){
+            //Do nothing.
+        }
+        else if(qName.equalsIgnoreCase("atkElement")){
+            bAtkElement = true;
+        }
+        else if(qName.equalsIgnoreCase("stgElement")){
+            bStgElement = true;
+        }
+        else if(qName.equalsIgnoreCase("wkElement")){
+            bWkElement = true;
+        }
+        else if(qName.equalsIgnoreCase("transformations")){
+            bTransformSec = true;
+        }
+        else if(qName.equalsIgnoreCase("transformation")){
+            transformBuilder = new TransformEnemy();
+            transformBuilder.setImage(g.newImage("enemies/" + enemyKey + "-T" + tNumber + ".png", ImageFormat.RGB565));
+            bTransform = true;
+        }
         else{
             System.out.println("EnemyParser:startElement(): Invalid qName: " + qName + " for key: " + enemyKey);
             error = true;
+        }
+    }
+
+    @Override
+    public void endElement(String uri,
+                           String localName,
+                           String qName) throws SAXException {
+        if(qName.equalsIgnoreCase("enemy")){
+            if(validate()){
+                Enemies.put(enemyKey, enemyBuilder);
+            }
+            else{
+                System.out.println("EnemyParser:endElement(): Error parsing: " + enemyKey);
+            }
+        }
+        else if(qName.equalsIgnoreCase("transformation")){
+            if(transformBuilder.validate()) {
+                enemyBuilder.addTransformation(transformBuilder);
+                tNumber++;
+            }
+            else{
+                error = true;
+                System.out.println("EnemyParser:endElement(): Error adding transformation: " + tNumber);
+            }
+            bTransform = false;
+        }
+        else if(qName.equalsIgnoreCase("transformations")){
+            bTransformSec = false;
+            tNumber = 0;
+        }
+        else if(qName.equalsIgnoreCase("skills")){
+            bAddSkill = false;
+            bRemoveSkill = false;
         }
     }
 
@@ -128,49 +207,123 @@ public class EnemyParser extends DefaultHandler{
         String temp = new String(ch, start, length);
         try {
             if (bName) {
-                enemyBuilder.setName(temp);
+                if(!bTransformSec) {
+                    enemyBuilder.setName(temp);
+                }
+                else {
+                    transformBuilder.setName(temp);
+                }
                 bName = false;
             } else if (bAi) {
-                enemyBuilder.setAI(temp);
+                if(!bTransformSec) {
+                    enemyBuilder.setAI(temp);
+                }
+                else {
+                    transformBuilder.setAi(temp);
+                }
                 bAi = false;
             } else if (bMaxHp) {
-                enemyBuilder.setMaxHP(Integer.parseInt(temp));
+                if(!bTransformSec) {
+                    enemyBuilder.setMaxHP(Integer.parseInt(temp));
+                }
+                else {
+                    transformBuilder.setHP(Integer.parseInt(temp));
+                }
                 bMaxHp = false;
             } else if (bPowerDamage) {
-                enemyBuilder.setPowerDamage(Integer.parseInt(temp));
+                if(!bTransformSec) {
+                    enemyBuilder.setPowerDamage(Integer.parseInt(temp));
+                }
+                else {
+                    transformBuilder.setPowerDamage(Integer.parseInt(temp));
+                }
                 bPowerDamage = false;
             } else if (bPowerHits) {
-                enemyBuilder.setPowerHits(Integer.parseInt(temp));
+                if(!bTransformSec) {
+                    enemyBuilder.setPowerHits(Integer.parseInt(temp));
+                }
+                else {
+                    transformBuilder.setPowerHits(Integer.parseInt(temp));
+                }
                 bPowerHits = false;
             } else if (bComboDamage) {
-                enemyBuilder.setComboDamage(Integer.parseInt(temp));
+                if(!bTransformSec) {
+                    enemyBuilder.setComboDamage(Integer.parseInt(temp));
+                }
+                else {
+                    transformBuilder.setComboDamage(Integer.parseInt(temp));
+                }
                 bComboDamage = false;
             } else if (bComboHits) {
-                enemyBuilder.setComboHits(Integer.parseInt(temp));
+                if(!bTransformSec) {
+                    enemyBuilder.setComboHits(Integer.parseInt(temp));
+                }
+                else {
+                    transformBuilder.setComboHits(Integer.parseInt(temp));
+                }
                 bComboHits = false;
             } else if (bMagicDamage) {
-                enemyBuilder.setMagicDamage(Integer.parseInt(temp));
+                if(!bTransformSec) {
+                    enemyBuilder.setMagicDamage(Integer.parseInt(temp));
+                }
+                else {
+                    transformBuilder.setMagicDamage(Integer.parseInt(temp));
+                }
                 bMagicDamage = false;
             } else if (bHealAmount) {
-                enemyBuilder.setHealAmount(Integer.parseInt(temp));
+                if(!bTransformSec) {
+                    enemyBuilder.setHealAmount(Integer.parseInt(temp));
+                }
+                else {
+                    transformBuilder.setHealAmount(Integer.parseInt(temp));
+                }
                 bHealAmount = false;
             } else if (bPowerUp) {
-                enemyBuilder.setPowerUpPercentage(Double.parseDouble(temp));
+                if(!bTransformSec) {
+                    enemyBuilder.setPowerUpPercentage(Double.parseDouble(temp));
+                }
+                else {
+                    transformBuilder.setPowerUpPercentage(Double.parseDouble(temp));
+                }
                 bPowerUp = false;
             } else if (bPowerDown) {
-                enemyBuilder.setPowerDownPercentage(Double.parseDouble(temp));
+                if(!bTransformSec) {
+                    enemyBuilder.setPowerDownPercentage(Double.parseDouble(temp));
+                }
+                else {
+                    transformBuilder.setPowerDownPercentage(Double.parseDouble(temp));
+                }
                 bPowerDown = false;
             } else if (bDefend) {
-                enemyBuilder.setDefendPercentage(Double.parseDouble(temp));
+                if(!bTransformSec) {
+                    enemyBuilder.setDefendPercentage(Double.parseDouble(temp));
+                }
+                else {
+                }
                 bDefend = false;
             } else if (bWeaken) {
-                enemyBuilder.setWeakenPercentage(Double.parseDouble(temp));
+                if(!bTransformSec) {
+                    enemyBuilder.setWeakenPercentage(Double.parseDouble(temp));
+                }
+                else {
+                    transformBuilder.setWeakenPercentage(Double.parseDouble(temp));
+                }
                 bWeaken = false;
             } else if (bSpecialDamage) {
-                enemyBuilder.setSpecialDamage(Integer.parseInt(temp));
+                if(!bTransformSec) {
+                    enemyBuilder.setSpecialDamage(Integer.parseInt(temp));
+                }
+                else {
+                    transformBuilder.setSpecialDamage(Integer.parseInt(temp));
+                }
                 bSpecialDamage = false;
             } else if (bSpecialHits) {
-                enemyBuilder.setSpecialHits(Integer.parseInt(temp));
+                if(!bTransformSec) {
+                    enemyBuilder.setSpecialHits(Integer.parseInt(temp));
+                }
+                else {
+                    transformBuilder.setSpecialHits(Integer.parseInt(temp));
+                }
                 bSpecialHits = false;
             } else if (bSkill) {
                 SkillsEnum skill = SkillsEnum.getSkill(temp);
@@ -179,10 +332,67 @@ public class EnemyParser extends DefaultHandler{
                     error = true;
                 }
                 else{
-                    System.out.println("EnemyParser:characters(): Adding skill: " + temp);
-                    enemyBuilder.addSkill(skill);
+                    if(!bTransformSec) {
+                        enemyBuilder.addSkill(skill);
+                    }
+                    else if(bAddSkill) {
+                        transformBuilder.addSkill(skill);
+                    }
+                    else if(bRemoveSkill) {
+                        transformBuilder.removeSkill(skill);
+                    }
                 }
                 bSkill = false;
+                bAddSkill = false;
+                bRemoveSkill = false;
+            }
+            else if(bAtkElement){
+                Element elm = Element.getElement(temp);
+                if(elm == null){
+                    System.out.println("EnemyParser:characters(): Could not find element: " + temp);
+                    error = true;
+                }
+                else{
+                    if(!bTransformSec) {
+                        enemyBuilder.setAttackElement(elm);
+                    }
+                    else {
+                        transformBuilder.setAttackElement(elm);
+                    }
+                }
+                bAtkElement = false;
+            }
+            else if(bStgElement){
+                Element elm = Element.getElement(temp);
+                if(elm == null){
+                    System.out.println("EnemyParser:characters(): Could not find element: " + temp);
+                    error = true;
+                }
+                else{
+                    if(!bTransformSec) {
+                        enemyBuilder.setStrongElement(elm);
+                    }
+                    else {
+                        transformBuilder.setStrongElement(elm);
+                    }
+                }
+                bStgElement = false;
+            }
+            else if(bWkElement){
+                Element elm = Element.getElement(temp);
+                if(elm == null){
+                    System.out.println("EnemyParser:characters(): Could not find element: " + temp);
+                    error = true;
+                }
+                else{
+                    if(!bTransformSec) {
+                        enemyBuilder.setWeakElement(elm);
+                    }
+                    else {
+                        transformBuilder.setWeakElement(elm);
+                    }
+                }
+                bWkElement = false;
             }
 
         }
@@ -204,20 +414,6 @@ public class EnemyParser extends DefaultHandler{
             bSpecialHits = false;
         }
 
-    }
-
-    @Override
-    public void endElement(String uri,
-                           String localName,
-                           String qName) throws SAXException {
-        if(qName.equalsIgnoreCase("enemy")){
-            if(validate()){
-                Enemies.put(enemyKey, enemyBuilder);
-            }
-            else{
-                System.out.println("EnemyParser:endElement(): Error parsing: " + enemyKey);
-            }
-        }
     }
 
     private boolean validate(){

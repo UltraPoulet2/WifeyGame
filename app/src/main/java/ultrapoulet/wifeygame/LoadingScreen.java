@@ -78,6 +78,13 @@ public class LoadingScreen extends Screen {
             Assets.DamageHitsNumbers[i] = g.newImage("numbers/Damage" + i + ".png", ImageFormat.ARGB8888);
         }
 
+        Assets.WeakNumbers = Assets.DamageHitsNumbers;
+
+        Assets.ResistNumbers = new Image[10];
+        for(int i = 0; i < 10; i++){
+            Assets.ResistNumbers[i] = g.newImage("numbers/Resist" + i + ".png", ImageFormat.ARGB8888);
+        }
+
         Assets.PartySelectScreen = g.newImage("screens/PartySelectScreen.png", ImageFormat.RGB565);
         Assets.AcceptEnable = g.newImage("buttons/AcceptEnabled.png", ImageFormat.ARGB8888);
         Assets.AcceptDisable = g.newImage("buttons/AcceptDisabled.png", ImageFormat.ARGB8888);
@@ -89,6 +96,14 @@ public class LoadingScreen extends Screen {
 
         Assets.CharacterInfoScreen = g.newImage("screens/CharacterInfoScreen.png", ImageFormat.RGB565);
         Assets.BattleCharacterInfoScreen = g.newImage("screens/BattleCharacterInfoScreen.png", ImageFormat.RGB565);
+
+        Assets.ElementImages = new Image[6];
+        Assets.ElementImages[0] = g.newImage("elements/AirElement.png", ImageFormat.ARGB8888);
+        Assets.ElementImages[1] = g.newImage("elements/DarkElement.png", ImageFormat.ARGB8888);
+        Assets.ElementImages[2] = g.newImage("elements/EarthElement.png", ImageFormat.ARGB8888);
+        Assets.ElementImages[3] = g.newImage("elements/FireElement.png", ImageFormat.ARGB8888);
+        Assets.ElementImages[4] = g.newImage("elements/LightElement.png", ImageFormat.ARGB8888);
+        Assets.ElementImages[5] = g.newImage("elements/WaterElement.png", ImageFormat.ARGB8888);
 
         createRecruits();
         createParty();

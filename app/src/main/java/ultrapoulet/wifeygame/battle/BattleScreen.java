@@ -35,7 +35,7 @@ public class BattleScreen extends Screen {
     private double enemyMultiplier = 1.00;
     private final double roundMultiplier = 0.025;
 
-    private static Image background, buttonMenuNormal, buttonMenuSpecial;
+    private static Image background, buttonMenuNormal, buttonMenuSpecial, buttonMenuTrans;
 
     private static Image specialBar, specialBarBase, specialBarTop;
 
@@ -97,8 +97,8 @@ public class BattleScreen extends Screen {
     private static final int HALF_SCALE = 50;
     private static final int FULL_SCALE = 100;
 
-    private static final int ATTACK_PHASE_WAIT = 20;
-    private static final int HEAL_PHASE_WAIT = 40;
+    private static final int ATTACK_PHASE_WAIT = 30;
+    private static final int HEAL_PHASE_WAIT = 45;
     private static final int WAIT_PHASE_WAIT = 60;
     private static final int OTHER_PHASE_WAIT = 5;
     private float phaseTime = 0;
@@ -122,6 +122,8 @@ public class BattleScreen extends Screen {
     private ButtonPressed commandSelected;
 
     private BattleCharacterInfoScreen charInfo;
+
+    private boolean transformEnabled;
 
     private enum ButtonPressed{
         POWER_ATTACK,
@@ -164,6 +166,7 @@ public class BattleScreen extends Screen {
 
         buttonMenuNormal = Assets.buttonMenuNormal;
         buttonMenuSpecial = Assets.buttonMenuSpecial;
+        buttonMenuTrans = Assets.buttonMenuBoth;
         charHolder = Assets.charHolder;
         enemyHolder = Assets.enemyHolder;
         specialBar = Assets.specialBar;
@@ -453,6 +456,9 @@ public class BattleScreen extends Screen {
                         partyDamage[i] = 0;
                     }
                     enemyDamage = 0;
+                    if(party[partyIndex].canTransform()){
+                        transformEnabled = true;
+                    }
                 }
                 else {
                     List<TouchEvent> touchEvents = game.getInput().getTouchEvents();
@@ -474,6 +480,10 @@ public class BattleScreen extends Screen {
                         }
 
                         switch (command) {
+                            case TRANSFORM:
+                                if(!party[partyIndex].canTransform()){
+                                    continue;
+                                }
                             case SPECIAL_ATTACK:
                                 if (numHits < SPECIAL_HITS) {
                                     continue;
@@ -486,8 +496,6 @@ public class BattleScreen extends Screen {
                             case HEALING_MAGIC:
                                 commandSelected = command;
                                 break;
-                            case TRANSFORM:
-                                continue;
                             default:
                                 continue;
                         }
@@ -560,7 +568,13 @@ public class BattleScreen extends Screen {
                             damageHolder += enemyDamage;
                             break;
                         case TRANSFORM:
-                            //I'll need to figure out how to do this.
+                            party[partyIndex].transform();
+                            for(int i = 0; i < party.length; i++){
+                                party[i].resetSkills();
+                            }
+                            for(int i = 0; i < party.length; i++){
+                                party[i].updateParty(party);
+                            }
                             break;
                         case DEFEND:
                             party[partyIndex].Defend();
@@ -732,6 +746,16 @@ public class BattleScreen extends Screen {
                                 }
                             }
                             break;
+                        case TRANSFORM:
+                            enemies[enemyIndex].transform();
+                            for(int i = 0; i < enemies.length; i++){
+                                enemies[i].resetSkills();
+                            }
+                            for(int i = 0; i < enemies.length; i++){
+                                enemies[i].updateParty(party);
+                            }
+                            hitsPerformed++;
+                            break;
                         case POWER_UP:
                             enemies[enemyIndex].powerUp();
                             hitsPerformed++;
@@ -857,14 +881,6 @@ public class BattleScreen extends Screen {
         }
     }
 
-    private void drawPercentageImage(Graphics g, Image i, int posX, int posY, int percX, int percY){
-        int origWidth = i.getWidth();
-        int origHeight = i.getHeight();
-        int newWidth = i.getWidth()*percX/100;
-        int newHeight = i.getHeight()*percY/100;
-        g.drawScaledImage(i, posX, posY, newWidth, newHeight, 0, 0, origWidth, origHeight);
-    }
-
     private Image getPlayerHealthBar(int currentHealth, int maxHealth){
         Double percent = (100.0 * currentHealth)/maxHealth;
         if(percent >= 50.0){
@@ -911,7 +927,12 @@ public class BattleScreen extends Screen {
         g.clearScreen(0xffffffff);
         g.drawImage(background, 0, 0);
         if(numHits >= SPECIAL_HITS){
-            g.drawImage(buttonMenuSpecial, 0, BUTTON_MENU_Y);
+            if(partyIndex < party.length && party[partyIndex].canTransform()){
+                g.drawImage(buttonMenuTrans, 0, BUTTON_MENU_Y);
+            }
+            else {
+                g.drawImage(buttonMenuSpecial, 0, BUTTON_MENU_Y);
+            }
         }
         else {
             g.drawImage(buttonMenuNormal, 0, BUTTON_MENU_Y);
@@ -930,13 +951,13 @@ public class BattleScreen extends Screen {
         //Draw party members before the current member
         for( ; i < partyIndex && i < party.length; i++){
             //Draw the character holder and character image
-            drawPercentageImage(g, charHolder, CHAR_HOLDER_X_DISTANCE * i, CHAR_HOLDER_SMALL_Y, HALF_SCALE, HALF_SCALE);
-            drawPercentageImage(g, party[i].getImage(), CHAR_HOLDER_X_DISTANCE * i + CHAR_INTERIOR_SMALL_X, CHAR_IMAGE_SMALL_Y, HALF_SCALE, HALF_SCALE);
+            g.drawPercentageImage(charHolder, CHAR_HOLDER_X_DISTANCE * i, CHAR_HOLDER_SMALL_Y, HALF_SCALE, HALF_SCALE);
+            g.drawPercentageImage(party[i].getImage(), CHAR_HOLDER_X_DISTANCE * i + CHAR_INTERIOR_SMALL_X, CHAR_IMAGE_SMALL_Y, HALF_SCALE, HALF_SCALE);
 
             //Draw the health bar
             healthBar = getPlayerHealthBar(party[i].getCurrentHP(), party[i].getMaxHP());
             perHealth = (party[i].getCurrentHP() * 1.0)/(party[i].getMaxHP());
-            drawPercentageImage(g, healthBar, CHAR_HOLDER_X_DISTANCE * i + CHAR_INTERIOR_SMALL_X, CHAR_HEALTH_SMALL_Y, (int) Math.ceil(perHealth * HALF_SCALE), HALF_SCALE);
+            g.drawPercentageImage(healthBar, CHAR_HOLDER_X_DISTANCE * i + CHAR_INTERIOR_SMALL_X, CHAR_HEALTH_SMALL_Y, (int) Math.ceil(perHealth * HALF_SCALE), HALF_SCALE);
 
             //Draw the CurrentHP / MaxHP
             numberStart = false;
@@ -946,11 +967,11 @@ public class BattleScreen extends Screen {
                 int numberPart = (party[i].getCurrentHP() / divisor % 10);
                 numberStart = (numberStart || (numberPart > 0));
                 if(numberStart){
-                    drawPercentageImage(g, Assets.HPNumbers[numberPart], CHAR_HOLDER_X_DISTANCE * i + CHAR_NUMBER_SMALL_X + CHAR_NUMBER_SMALL_DISTANCE_X * j, CHAR_NUMBER_SMALL_Y, HALF_SCALE, HALF_SCALE);
+                    g.drawPercentageImage(Assets.HPNumbers[numberPart], CHAR_HOLDER_X_DISTANCE * i + CHAR_NUMBER_SMALL_X + CHAR_NUMBER_SMALL_DISTANCE_X * j, CHAR_NUMBER_SMALL_Y, HALF_SCALE, HALF_SCALE);
                 }
                 divisor = divisor / 10;
             }
-            drawPercentageImage(g, Assets.HPNumbers[SLASH], CHAR_HOLDER_X_DISTANCE * i + CHAR_NUMBER_SMALL_X + CHAR_NUMBER_SMALL_DISTANCE_X * j, CHAR_NUMBER_SMALL_Y, HALF_SCALE, HALF_SCALE);
+            g.drawPercentageImage(Assets.HPNumbers[SLASH], CHAR_HOLDER_X_DISTANCE * i + CHAR_NUMBER_SMALL_X + CHAR_NUMBER_SMALL_DISTANCE_X * j, CHAR_NUMBER_SMALL_Y, HALF_SCALE, HALF_SCALE);
             j++;
             numberStart = false;
             divisor = 1000;
@@ -958,7 +979,7 @@ public class BattleScreen extends Screen {
                 int numberPart = (party[i].getMaxHP() / divisor) % 10;
                 numberStart = (numberStart || (numberPart > 0));
                 if(numberStart){
-                    drawPercentageImage(g, Assets.HPNumbers[numberPart], CHAR_HOLDER_X_DISTANCE * i + CHAR_NUMBER_SMALL_X + CHAR_NUMBER_SMALL_DISTANCE_X * j, CHAR_NUMBER_SMALL_Y, HALF_SCALE, HALF_SCALE);
+                    g.drawPercentageImage(Assets.HPNumbers[numberPart], CHAR_HOLDER_X_DISTANCE * i + CHAR_NUMBER_SMALL_X + CHAR_NUMBER_SMALL_DISTANCE_X * j, CHAR_NUMBER_SMALL_Y, HALF_SCALE, HALF_SCALE);
                     j++;
                 }
                 divisor = divisor / 10;
@@ -966,7 +987,7 @@ public class BattleScreen extends Screen {
 
             //If the party member is defeated, overlay the KO Image
             if(party[i].getCurrentHP() == 0){
-                drawPercentageImage(g, KOImages[i], CHAR_HOLDER_X_DISTANCE * i, CHAR_HOLDER_SMALL_Y, HALF_SCALE, HALF_SCALE);
+                g.drawPercentageImage(KOImages[i], CHAR_HOLDER_X_DISTANCE * i, CHAR_HOLDER_SMALL_Y, HALF_SCALE, HALF_SCALE);
             }
 
         }
@@ -977,7 +998,7 @@ public class BattleScreen extends Screen {
 
             healthBar = getPlayerHealthBar(party[i].getCurrentHP(), party[i].getMaxHP());
             perHealth = (party[i].getCurrentHP() * 1.0) / (party[i].getMaxHP());
-            drawPercentageImage(g, healthBar, CHAR_HOLDER_X_DISTANCE * i + CHAR_INTERIOR_LARGE_X, CHAR_HEALTH_LARGE_Y, (int) Math.ceil(perHealth * FULL_SCALE), FULL_SCALE);
+            g.drawPercentageImage(healthBar, CHAR_HOLDER_X_DISTANCE * i + CHAR_INTERIOR_LARGE_X, CHAR_HEALTH_LARGE_Y, (int) Math.ceil(perHealth * FULL_SCALE), FULL_SCALE);
 
             //Display CURRENTHP/MAXHP
             numberStart = false;
@@ -1012,12 +1033,12 @@ public class BattleScreen extends Screen {
         }
         //Draw the characters after the current member
         for ( ; i < party.length; i++) {
-            drawPercentageImage(g, charHolder, CHAR_HOLDER_X_DISTANCE * (i + 1), CHAR_HOLDER_SMALL_Y, HALF_SCALE, HALF_SCALE);
-            drawPercentageImage(g, party[i].getImage(), CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_INTERIOR_SMALL_X, CHAR_IMAGE_SMALL_Y, HALF_SCALE, HALF_SCALE);
+            g.drawPercentageImage(charHolder, CHAR_HOLDER_X_DISTANCE * (i + 1), CHAR_HOLDER_SMALL_Y, HALF_SCALE, HALF_SCALE);
+            g.drawPercentageImage(party[i].getImage(), CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_INTERIOR_SMALL_X, CHAR_IMAGE_SMALL_Y, HALF_SCALE, HALF_SCALE);
 
             healthBar = getPlayerHealthBar(party[i].getCurrentHP(), party[i].getMaxHP());
             perHealth = (party[i].getCurrentHP() * 1.0)/(party[i].getMaxHP());
-            drawPercentageImage(g, healthBar, CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_INTERIOR_SMALL_X, CHAR_HEALTH_SMALL_Y, (int) Math.ceil(perHealth * HALF_SCALE) , HALF_SCALE);
+            g.drawPercentageImage(healthBar, CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_INTERIOR_SMALL_X, CHAR_HEALTH_SMALL_Y, (int) Math.ceil(perHealth * HALF_SCALE) , HALF_SCALE);
 
             //Display CURRENTHP/MAXHP
             numberStart = false;
@@ -1027,11 +1048,11 @@ public class BattleScreen extends Screen {
                 int numberPart = (party[i].getCurrentHP() / divisor) % 10;
                 numberStart = (numberStart || (numberPart > 0));
                 if(numberStart){
-                    drawPercentageImage(g, Assets.HPNumbers[numberPart], CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_NUMBER_SMALL_X + CHAR_NUMBER_SMALL_DISTANCE_X * j, CHAR_NUMBER_SMALL_Y, HALF_SCALE, HALF_SCALE);
+                    g.drawPercentageImage(Assets.HPNumbers[numberPart], CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_NUMBER_SMALL_X + CHAR_NUMBER_SMALL_DISTANCE_X * j, CHAR_NUMBER_SMALL_Y, HALF_SCALE, HALF_SCALE);
                 }
                 divisor = divisor / 10;
             }
-            drawPercentageImage(g, Assets.HPNumbers[SLASH], CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_NUMBER_SMALL_X + CHAR_NUMBER_SMALL_DISTANCE_X * j, CHAR_NUMBER_SMALL_Y, HALF_SCALE, HALF_SCALE);
+            g.drawPercentageImage(Assets.HPNumbers[SLASH], CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_NUMBER_SMALL_X + CHAR_NUMBER_SMALL_DISTANCE_X * j, CHAR_NUMBER_SMALL_Y, HALF_SCALE, HALF_SCALE);
             j++;
             numberStart = false;
             divisor = 1000;
@@ -1039,14 +1060,14 @@ public class BattleScreen extends Screen {
                 int numberPart = (party[i].getMaxHP() / divisor) % 10;
                 numberStart = (numberStart || (numberPart > 0));
                 if(numberStart){
-                    drawPercentageImage(g, Assets.HPNumbers[numberPart], CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_NUMBER_SMALL_X + CHAR_NUMBER_SMALL_DISTANCE_X * j, CHAR_NUMBER_SMALL_Y, HALF_SCALE, HALF_SCALE);
+                    g.drawPercentageImage(Assets.HPNumbers[numberPart], CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_NUMBER_SMALL_X + CHAR_NUMBER_SMALL_DISTANCE_X * j, CHAR_NUMBER_SMALL_Y, HALF_SCALE, HALF_SCALE);
                     j++;
                 }
                 divisor = divisor / 10;
             }
 
             if(party[i].getCurrentHP() == 0){
-                drawPercentageImage(g, KOImages[i], CHAR_HOLDER_X_DISTANCE * (i + 1), CHAR_HOLDER_SMALL_Y, HALF_SCALE, HALF_SCALE);
+                g.drawPercentageImage(KOImages[i], CHAR_HOLDER_X_DISTANCE * (i + 1), CHAR_HOLDER_SMALL_Y, HALF_SCALE, HALF_SCALE);
             }
         }
     }
@@ -1062,7 +1083,7 @@ public class BattleScreen extends Screen {
         g.drawImage(enemyHolder, ENEMY_HEALTH_HOLDER_X, ENEMY_HEALTH_HOLDER_Y);
         Image enemyHealth = getEnemyHealthBar(enemies[enemyIndex].getCurrentHP(), enemies[enemyIndex].getMaxHP());
         perHealth = (enemies[enemyIndex].getCurrentHP() * 1.0)/enemies[enemyIndex].getMaxHP();
-        drawPercentageImage(g, enemyHealth, ENEMY_HEALTH_BAR_X, ENEMY_HEALTH_BAR_Y, (int) Math.ceil(FULL_SCALE * perHealth), FULL_SCALE);
+        g.drawPercentageImage(enemyHealth, ENEMY_HEALTH_BAR_X, ENEMY_HEALTH_BAR_Y, (int) Math.ceil(FULL_SCALE * perHealth), FULL_SCALE);
 
         //Display enemy CurrentHP/MaxHP
         numberStart = false;
@@ -1097,7 +1118,7 @@ public class BattleScreen extends Screen {
     private void drawSpecial(){
         Graphics g = game.getGraphics();
         g.drawImage(specialBarBase, SPECIAL_BAR_BASE_X, SPECIAL_BAR_BASE_Y);
-        drawPercentageImage(g, specialBar, SPECIAL_BAR_X, SPECIAL_BAR_Y, (int) ((numHits * 100.0) / MAX_HITS) , FULL_SCALE);
+        g.drawPercentageImage(specialBar, SPECIAL_BAR_X, SPECIAL_BAR_Y, (int) ((numHits * 100.0) / MAX_HITS) , FULL_SCALE);
         g.drawImage(specialBarTop, SPECIAL_BAR_X, SPECIAL_BAR_TOP_Y);
         int specialCount = numHits / SPECIAL_HITS;
         g.drawImage(Assets.HPNumbers[specialCount], SPECIAL_BAR_NUMBER_X, SPECIAL_BAR_NUMBER_Y);
@@ -1158,7 +1179,17 @@ public class BattleScreen extends Screen {
             numberStart = (numberStart || (numberPart > 0));
             if(numberStart){
                 int y = ENEMY_DAMAGE_START_Y - (int) (ENEMY_DAMAGE_INCREASE_Y * phaseTime / ATTACK_PHASE_WAIT);
-                g.drawImage(Assets.HPNumbers[numberPart], ENEMY_DAMAGE_BASE_X - ENEMY_DAMAGE_OFFSET_X * offset + ENEMY_DAMAGE_DISTANCE_X * j, y);
+                Image hpNum;
+                if(party[partyIndex].isWeaknessAttack(enemies[enemyIndex])){
+                    hpNum = Assets.WeakNumbers[numberPart];
+                }
+                else if(party[partyIndex].isStrongAttack(enemies[enemyIndex])){
+                    hpNum = Assets.ResistNumbers[numberPart];
+                }
+                else{
+                    hpNum = Assets.HPNumbers[numberPart];
+                }
+                g.drawImage(hpNum, ENEMY_DAMAGE_BASE_X - ENEMY_DAMAGE_OFFSET_X * offset + ENEMY_DAMAGE_DISTANCE_X * j, y);
                 j++;
             }
             else{
@@ -1235,7 +1266,17 @@ public class BattleScreen extends Screen {
                 if(numberStart){
                     int y = CHAR_DAMAGE_START_Y - (int) (CHAR_DAMAGE_INCREASE_Y * phaseTime / ATTACK_PHASE_WAIT);
                     int x = CHAR_DAMAGE_BASE_X - CHAR_DAMAGE_OFFSET_X * offset + CHAR_DAMAGE_DISTANCE_X * j + CHAR_HOLDER_X_DISTANCE * i;
-                    g.drawImage(Assets.HPNumbers[numberPart], x, y);
+                    Image hpNum;
+                    if(enemies[enemyIndex].isWeaknessAttack(party[i])){
+                        hpNum = Assets.WeakNumbers[numberPart];
+                    }
+                    else if(enemies[enemyIndex].isStrongAttack(party[i])){
+                        hpNum = Assets.ResistNumbers[numberPart];
+                    }
+                    else{
+                        hpNum = Assets.HPNumbers[numberPart];
+                    }
+                    g.drawImage(hpNum, x, y);
                     j++;
                 }
                 else{

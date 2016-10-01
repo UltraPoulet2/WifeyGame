@@ -26,6 +26,10 @@ public class EnemyCharacter {
     private int specialDamage;
     private int specialHits;
 
+    private Element attackElement;
+    private Element strongElement;
+    private Element weakElement;
+
     private ArrayList<SkillsEnum> skills;
 
     private int gold;
@@ -36,7 +40,12 @@ public class EnemyCharacter {
     //private EnemyAI ai;
     private String ai;
 
-    public EnemyCharacter() { skills = new ArrayList<>(); }
+    private ArrayList<TransformEnemy> transformations;
+
+    public EnemyCharacter() {
+        skills = new ArrayList<>();
+        transformations = new ArrayList<>();
+    }
 
     public String getName(){
         return this.name;
@@ -100,6 +109,17 @@ public class EnemyCharacter {
         return this.image;
     }
 
+    public Element getAttackElement() { return this.attackElement; }
+
+    public Element getStrongElement() { return this.strongElement; }
+
+    public Element getWeakElement() { return this.weakElement; }
+
+    public ArrayList<TransformEnemy> getTransformations(){
+        return this.transformations;
+    }
+
+
     public void setName(String name){
         this.name = name;
     }
@@ -162,10 +182,20 @@ public class EnemyCharacter {
         this.image = image;
     }
 
+    public void setAttackElement(Element element){ this.attackElement = element; }
+
+    public void setStrongElement(Element element) { this.strongElement = element; }
+
+    public void setWeakElement(Element element) { this.weakElement = element; }
+
     public void setAI(String ai){
         if(EnemyAI.getAI(ai) != null) {
             this.ai = ai;
         }
+    }
+
+    public void addTransformation(TransformEnemy t){
+        this.transformations.add(t);
     }
 
     public BattleEnemy getBattleEnemy(){
@@ -185,9 +215,12 @@ public class EnemyCharacter {
                 specialDamage,
                 specialHits,
                 skills,
+                attackElement,
+                strongElement,
+                weakElement,
                 image,
-                EnemyAI.getAI(ai));
-        //Add skills argument later
+                EnemyAI.getAI(ai),
+                transformations);
     }
 
     public boolean validate(){
@@ -201,6 +234,9 @@ public class EnemyCharacter {
             return false;
         }
         if(maxHP == 0){
+            return false;
+        }
+        if(attackElement == null || strongElement == null | weakElement == null){
             return false;
         }
         return true;

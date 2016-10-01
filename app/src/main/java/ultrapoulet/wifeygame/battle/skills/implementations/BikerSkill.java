@@ -13,10 +13,20 @@ public class BikerSkill extends AbsSkill {
         this.skillName = "Biker";
     }
 
-    private int extraHits = 0;
+    private int extraHits;
 
     @Override
     public void startBattle(BattleCharacter[] party) {
+        setExtraHits(party);
+    }
+
+    @Override
+    public void updateParty(BattleCharacter[] party){
+        setExtraHits(party);
+    }
+
+    private void setExtraHits(BattleCharacter[] party){
+        extraHits = 0;
         for(int i = 0; i < party.length; i++){
             if(party[i] != owner && party[i].hasSkill(BikerSkill.class)){
                 extraHits++;

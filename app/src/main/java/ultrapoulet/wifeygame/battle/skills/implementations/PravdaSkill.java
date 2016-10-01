@@ -23,6 +23,15 @@ public class PravdaSkill extends AbsSkill {
 
     @Override
     public void startBattle(BattleCharacter[] party){
+        setMultiplier(party);
+    }
+
+    @Override
+    public void updateParty(BattleCharacter[] party){
+        setMultiplier(party);
+    }
+
+    private void setMultiplier(BattleCharacter[] party){
         for(int i = 0; i < party.length; i++){
             if(party[i] != owner && party[i].hasSkill(PravdaSkill.class)){
                 multiplier += 1.0;

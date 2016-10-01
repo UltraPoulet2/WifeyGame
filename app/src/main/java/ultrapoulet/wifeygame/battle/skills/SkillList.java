@@ -25,6 +25,16 @@ public class SkillList {
         }
     }
 
+    public void removeSkill(AbsSkill removeSkill){
+        if(removeSkill != null && hasSkill(removeSkill.getClass())){
+            int i = 0;
+            while(i < skills.size() && skills.get(i).getClass() != removeSkill.getClass()){
+                i++;
+            }
+            skills.remove(i);
+        }
+    }
+
     public void giveSkillBonus(double multiplier, Class givingSkill, Class receivingSkill){
         if(!AbsSkill.class.isAssignableFrom(givingSkill) || !AbsSkill.class.isAssignableFrom(receivingSkill)){
             System.out.println("SkillList:giveSkillBonus: input " + givingSkill + " and/or " + receivingSkill + " are not AbsSkills");
@@ -76,6 +86,18 @@ public class SkillList {
         //Do anything that needs to be done at the end of a round
         for(int i = 0; i < skills.size(); i++){
             skills.get(i).endRound();
+        }
+    }
+
+    public void resetSkills(){
+        for(int i = 0; i < skills.size(); i++){
+            skills.get(i).resetValues();
+        }
+    }
+
+    public void updateParty(BattleCharacter[] party){
+        for(int i = 0; i < skills.size(); i++){
+            skills.get(i).updateParty(party);
         }
     }
 
@@ -217,6 +239,7 @@ public class SkillList {
         }
         return false;
     }
+
 
     public double[] getMultipliers(BattleCharacter enemy){
         double multipliers[] = new double[6];

@@ -11,6 +11,11 @@
         <skills>
             <skill>GHOST</skill>
         </skills>
+        <elements>
+            <atkElement>AIR</atkElement>
+            <stgElement>FIRE</stgElement>
+            <wkElement>DARK</wkElement>
+        </elements>
     </enemy>
     <enemy key="TEST-NME2">
         <name>Enemy 2</name>
@@ -18,6 +23,11 @@
         <maxHP>20000</maxHP>
         <magicDamage>50</magicDamage>
         <healAmount>1000</healAmount>
+        <elements>
+            <atkElement>DARK</atkElement>
+            <stgElement>DARK</stgElement>
+            <wkElement>LIGHT</wkElement>
+        </elements>
     </enemy>
     <enemy key="TEST-NME3">
         <name>Enemy 3</name>
@@ -32,6 +42,11 @@
         <skills>
             <skill>SADIST</skill>
         </skills>
+        <elements>
+            <atkElement>FIRE</atkElement>
+            <stgElement>FIRE</stgElement>
+            <wkElement>WATER</wkElement>
+        </elements>
     </enemy>
     <enemy key="TEST-NME4">
         <name>Enemy 4</name>
@@ -46,6 +61,11 @@
             <skill>RACER</skill>
             <skill>BIKER</skill>
         </skills>
+        <elements>
+            <atkElement>AIR</atkElement>
+            <stgElement>AIR</stgElement>
+            <wkElement>EARTH</wkElement>
+        </elements>
     </enemy>
     <enemy key="TEST-NME5">
         <name>Enemy 5</name>
@@ -58,10 +78,15 @@
         <skills>
             <skill>SPORTSMANAGER</skill>
         </skills>
+        <elements>
+            <atkElement>EARTH</atkElement>
+            <stgElement>EARTH</stgElement>
+            <wkElement>AIR</wkElement>
+        </elements>
     </enemy>
     <enemy key="TEST-NME6">
         <name>Enemy 6</name>
-        <ai>BasicMagicEnemyAI</ai>
+        <ai>BasicTransformEnemyAI</ai>
         <maxHP>8000</maxHP>
         <magicDamage>10</magicDamage>
         <healAmount>1500</healAmount>
@@ -71,5 +96,42 @@
             <skill>MASOCHIST</skill>
             <skill>SADIST</skill>
         </skills>
+        <elements>
+            <atkElement>LIGHT</atkElement>
+            <stgElement>LIGHT</stgElement>
+            <wkElement>DARK</wkElement>
+        </elements>
+        <!-- Commented out test transformation -->
+        <transformations>
+            <transformation>
+                <name>Enemy 6.5</name>
+                <ai>BasicMagicEnemyAI</ai>
+                <maxHP>12000</maxHP>
+                <powerDamage>0</powerDamage>
+                <powerHits>0</powerHits>
+                <comboDamage>0</comboDamage>
+                <comboHits>0</comboHits>
+                <magicDamage>20</magicDamage>
+                <healAmount>2000</healAmount>
+                <powerUp>0.0</powerUp>
+                <powerDown>0.0</powerDown>
+                <defend>0.0</defend>
+                <weaken>0.0</weaken>
+                <specialDamage>50</specialDamage>
+                <specialHits>3</specialHits>
+                <skills mode="add">
+                    <skill>NURSE</skill>
+                </skills>
+                <skills mode="remove">
+                    <skill>TIMETRAVELER</skill>
+                </skills>
+                <elements>
+                    <atkElement>LIGHT</atkElement>
+                    <stgElement>LIGHT</stgElement>
+                    <wkElement>DARK</wkElement>
+                </elements>
+            </transformation>
+        </transformations>
+        <!-- -->
     </enemy>
 </enemies>

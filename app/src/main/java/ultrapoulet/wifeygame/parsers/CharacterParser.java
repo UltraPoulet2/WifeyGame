@@ -6,7 +6,9 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Graphics.ImageFormat;
+import ultrapoulet.wifeygame.character.Element;
 import ultrapoulet.wifeygame.character.SkillsEnum;
+import ultrapoulet.wifeygame.character.TransformWifey;
 import ultrapoulet.wifeygame.character.Weapon;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
 import ultrapoulet.wifeygame.gamestate.RecruitedCharacters;
@@ -24,12 +26,24 @@ public class CharacterParser extends DefaultHandler{
     private boolean bWeapon;
     private boolean bSkill;
 
+    private boolean bTransformSec;
+    private boolean bTransform;
+    private boolean bAddSkill;
+    private boolean bRemoveSkill;
+    private boolean bNum;
+
+    private boolean bAtkElement;
+    private boolean bStgElement;
+    private boolean bWkElement;
+
     private boolean error;
 
     private WifeyCharacter charBuilder;
+    private TransformWifey transformBuilder;
     private String charKey;
 
     private int charNumber = 0;
+    private int tNumber = 0;
 
     public void setGraphics(Graphics g){
         this.g = g;
@@ -70,10 +84,42 @@ public class CharacterParser extends DefaultHandler{
             //Do nothing.
         }
         else if(qName.equalsIgnoreCase("skills")){
-            //Do nothing.
+            String mode = attributes.getValue("mode");
+            if(mode != null){
+                if(mode.equalsIgnoreCase("add")){
+                    bAddSkill = true;
+                }
+                else if(mode.equalsIgnoreCase("remove")){
+                    bRemoveSkill = true;
+                }
+                else{
+                    error = true;
+                    System.out.println("CharacterParser:startElement(): Invalid skill mode: " + mode + " for key " + charKey);
+                }
+            }
         }
         else if(qName.equalsIgnoreCase("skill")){
             bSkill = true;
+        }
+        else if(qName.equalsIgnoreCase("elements")){
+            //Do nothing.
+        }
+        else if(qName.equalsIgnoreCase("atkElement")){
+            bAtkElement = true;
+        }
+        else if(qName.equalsIgnoreCase("stgElement")){
+            bStgElement = true;
+        }
+        else if(qName.equalsIgnoreCase("wkElement")){
+            bWkElement = true;
+        }
+        else if(qName.equalsIgnoreCase("transformations")){
+            bTransformSec = true;
+        }
+        else if(qName.equalsIgnoreCase("transformation")){
+            transformBuilder = new TransformWifey();
+            transformBuilder.setImage(g.newImage("characters/" + charKey + "-T" + tNumber + ".png", ImageFormat.RGB565));
+            bTransform = true;
         }
         else{
             System.out.println("CharacterParser:startElement(): Invalid qName: " + qName + " for key " + charKey);
@@ -94,6 +140,26 @@ public class CharacterParser extends DefaultHandler{
                 System.out.println("CharacterParser:endElement(): Error parsing for key: " + charKey);
             }
         }
+        else if(qName.equalsIgnoreCase("transformation")){
+            //Do things for validating a transformation
+            if(transformBuilder.validate()) {
+                charBuilder.addTransformation(transformBuilder);
+                tNumber++;
+            }
+            else{
+                error = true;
+                System.out.println("CharacterParser:endElement(): Error adding transformation: " + tNumber);
+            }
+            bTransform = false;
+        }
+        else if(qName.equalsIgnoreCase("transformations")){
+            bTransformSec = false;
+            tNumber = 0;
+        }
+        else if(qName.equalsIgnoreCase("skills")){
+            bAddSkill = false;
+            bRemoveSkill = false;
+        }
     }
 
     @Override
@@ -103,30 +169,98 @@ public class CharacterParser extends DefaultHandler{
         String temp = new String(ch, start, length);
         try {
             if (bName) {
-                charBuilder.setName(temp);
+                if(!bTransformSec) {
+                    charBuilder.setName(temp);
+                }
+                else {
+                    transformBuilder.setName(temp);
+                }
                 bName = false;
             } else if (bStrength) {
-                charBuilder.setStrength(Integer.parseInt(temp));
+                if(!bTransformSec) {
+                    charBuilder.setStrength(Integer.parseInt(temp));
+                }
+                else {
+                    transformBuilder.setStrength(Integer.parseInt(temp));
+                }
                 bStrength = false;
             } else if (bMagic) {
-                charBuilder.setMagic(Integer.parseInt(temp));
+                if(!bTransformSec) {
+                    charBuilder.setMagic(Integer.parseInt(temp));
+                }
+                else {
+                    transformBuilder.setMagic(Integer.parseInt(temp));
+                }
                 bMagic = false;
-            }
-            else if (bWeapon) {
-                charBuilder.setWeapon(Weapon.getWeapon(temp));
+            } else if (bWeapon) {
+                if(!bTransformSec) {
+                    charBuilder.setWeapon(Weapon.getWeapon(temp));
+                }
+                else {
+                    transformBuilder.setWeapon(Weapon.getWeapon(temp));
+                }
                 bWeapon = false;
-            }
-            else if(bSkill){
+            } else if (bSkill) {
                 SkillsEnum skill = SkillsEnum.getSkill(temp);
-                if(skill == null){
+                if (skill == null) {
                     System.out.println("CharacterParser:characters(): Could not find skill: " + temp);
                     error = true;
-                }
-                else{
-                    System.out.println("CharacterParser:characters(): Adding skill: " + temp);
-                    charBuilder.addSkill(skill);
+                } else {
+                    if(!bTransformSec) {
+                        charBuilder.addSkill(skill);
+                    }
+                    else if(bAddSkill) {
+                        transformBuilder.addSkill(skill);
+                    }
+                    else if(bRemoveSkill) {
+                        transformBuilder.removeSkill(skill);
+                    }
                 }
                 bSkill = false;
+                bAddSkill = false;
+                bRemoveSkill = false;
+            } else if (bAtkElement) {
+                Element elm = Element.getElement(temp);
+                if (elm == null) {
+                    System.out.println("CharacterParser:characters(): Could not find element: " + temp);
+                    error = true;
+                } else {
+                    if(!bTransformSec) {
+                        charBuilder.setAttackElement(elm);
+                    }
+                    else {
+                        transformBuilder.setAttackElement(elm);
+                    }
+                }
+                bAtkElement = false;
+            } else if (bStgElement) {
+                Element elm = Element.getElement(temp);
+                if (elm == null) {
+                    System.out.println("CharacterParser:characters(): Could not find element: " + temp);
+                    error = true;
+                } else {
+                    if(!bTransformSec) {
+                        charBuilder.setStrongElement(elm);
+                    }
+                    else {
+                        transformBuilder.setStrongElement(elm);
+                    }
+                }
+                bStgElement = false;
+            } else if (bWkElement) {
+                Element elm = Element.getElement(temp);
+                if (elm == null) {
+                    System.out.println("CharacterParser:characters(): Could not find element: " + temp);
+                    error = true;
+                } else {
+                    if(!bTransformSec) {
+                        charBuilder.setWeakElement(elm);
+                    }
+                    else {
+                        transformBuilder.setWeakElement(elm);
+                    }
+                }
+                bWkElement = false;
             }
         }
         catch(NumberFormatException e){
@@ -138,21 +272,10 @@ public class CharacterParser extends DefaultHandler{
     }
 
     private boolean validate(){
-        if(charBuilder.getName().length() == 0){
-            return false;
-        }
-        if(charBuilder.getStrength() <= 0){
-            return false;
-        }
-        if(charBuilder.getMagic() <= 0){
-            return false;
-        }
-        if(charBuilder.getWeapon() == null){
-            return false;
-        }
+
         if(error == true){
             return false;
         }
-        return true;
+        return charBuilder.validate();
     }
 }
