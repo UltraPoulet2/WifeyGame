@@ -10,8 +10,8 @@
             <skill>PILOT</skill>
         </skills>
         <elements>
-            <atkElement>WIND</atkElement>
-            <stgElement>WIND</stgElement>
+            <atkElement>AIR</atkElement>
+            <stgElement>AIR</stgElement>
             <wkElement>WATER</wkElement>
         </elements>
     </character>
@@ -37,7 +37,7 @@
         <elements>
             <atkElement>WATER</atkElement>
             <stgElement>WATER</stgElement>
-            <wkElement>WIND</wkElement>
+            <wkElement>AIR</wkElement>
         </elements>
     </character>
     <character key="TEST-ASHA">
@@ -60,8 +60,8 @@
             <skill>PILOT</skill>
         </skills>
         <elements>
-            <atkElement>WIND</atkElement>
-            <stgElement>WIND</stgElement>
+            <atkElement>AIR</atkElement>
+            <stgElement>AIR</stgElement>
             <wkElement>DARK</wkElement>
         </elements>
     </character>
@@ -75,7 +75,7 @@
         </skills>
         <elements>
             <atkElement>FIRE</atkElement>
-            <stgElement>WIND</stgElement>
+            <stgElement>AIR</stgElement>
             <wkElement>WATER</wkElement>
         </elements>
     </character>
@@ -272,8 +272,8 @@
         <magic>30</magic>
         <weapon>FISTS</weapon>
         <elements>
-            <atkElement>WIND</atkElement>
-            <stgElement>WIND</stgElement>
+            <atkElement>AIR</atkElement>
+            <stgElement>AIR</stgElement>
             <wkElement>WATER</wkElement>
         </elements>
     </character>
@@ -308,7 +308,7 @@
             <skill>HYPER</skill>
         </skills>
         <elements>
-            <atkElement>WIND</atkElement>
+            <atkElement>AIR</atkElement>
             <stgElement>WATER</stgElement>
             <wkElement>EARTH</wkElement>
         </elements>
@@ -359,8 +359,8 @@
             <skill>SLUGABED</skill>
         </skills>
         <elements>
-            <atkElement>WIND</atkElement>
-            <stgElement>WIND</stgElement>
+            <atkElement>AIR</atkElement>
+            <stgElement>AIR</stgElement>
             <wkElement>EARTH</wkElement>
         </elements>
     </character>
@@ -389,7 +389,7 @@
         <elements>
             <atkElement>FIRE</atkElement>
             <stgElement>FIRE</stgElement>
-            <wkElement>WIND</wkElement>
+            <wkElement>AIR</wkElement>
         </elements>
     </character>
     <character key="TEST-KTYS">
@@ -490,8 +490,8 @@
         <magic>50</magic>
         <weapon>COOKING</weapon>
         <elements>
-            <atkElement>WIND</atkElement>
-            <stgElement>WIND</stgElement>
+            <atkElement>AIR</atkElement>
+            <stgElement>AIR</stgElement>
             <wkElement>EARTH</wkElement>
         </elements>
     </character>
@@ -531,7 +531,7 @@
         </skills>
         <elements>
             <atkElement>LIGHT</atkElement>
-            <stgElement>WIND</stgElement>
+            <stgElement>AIR</stgElement>
             <wkElement>WATER</wkElement>
         </elements>
     </character>
@@ -541,8 +541,8 @@
         <magic>20</magic>
         <weapon>SWORD</weapon>
         <elements>
-            <atkElement>WIND</atkElement>
-            <stgElement>WIND</stgElement>
+            <atkElement>AIR</atkElement>
+            <stgElement>AIR</stgElement>
             <wkElement>EARTH</wkElement>
         </elements>
     </character>
@@ -556,7 +556,7 @@
             <skill>SURVIVAL</skill>
         </skills>
         <elements>
-            <atkElement>WIND</atkElement>
+            <atkElement>AIR</atkElement>
             <stgElement>EARTH</stgElement>
             <wkElement>WATER</wkElement>
         </elements>
@@ -592,8 +592,8 @@
         <magic>40</magic>
         <weapon>BOOK</weapon>
         <elements>
-            <atkElement>WIND</atkElement>
-            <stgElement>WIND</stgElement>
+            <atkElement>AIR</atkElement>
+            <stgElement>AIR</stgElement>
             <wkElement>EARTH</wkElement>
         </elements>
     </character>
@@ -679,8 +679,8 @@
             <skill>BIKER</skill>
         </skills>
         <elements>
-            <atkElement>WIND</atkElement>
-            <stgElement>WIND</stgElement>
+            <atkElement>AIR</atkElement>
+            <stgElement>AIR</stgElement>
             <wkElement>EARTH</wkElement>
         </elements>
     </character>
@@ -761,8 +761,8 @@
             <skill>TRAP</skill>
         </skills>
         <elements>
-            <atkElement>WIND</atkElement>
-            <stgElement>WIND</stgElement>
+            <atkElement>AIR</atkElement>
+            <stgElement>AIR</stgElement>
             <wkElement>FIRE</wkElement>
         </elements>
     </character>
@@ -811,8 +811,8 @@
             <skill>SPORTSMANAGER</skill>
         </skills>
         <elements>
-            <atkElement>WIND</atkElement>
-            <stgElement>WIND</stgElement>
+            <atkElement>AIR</atkElement>
+            <stgElement>AIR</stgElement>
             <wkElement>WATER</wkElement>
         </elements>
     </character>
@@ -825,8 +825,8 @@
             <skill>MECHANIC</skill>
         </skills>
         <elements>
-            <atkElement>WIND</atkElement>
-            <stgElement>WIND</stgElement>
+            <atkElement>AIR</atkElement>
+            <stgElement>AIR</stgElement>
             <wkElement>EARTH</wkElement>
         </elements>
     </character>
@@ -836,9 +836,9 @@
         <magic>60</magic>
         <weapon>CARD</weapon>
         <elements>
-            <atkElement>WIND</atkElement>
+            <atkElement>AIR</atkElement>
             <stgElement>WATER</stgElement>
-            <wkElement>WIND</wkElement>
+            <wkElement>AIR</wkElement>
         </elements>
     </character>
     <character key="TEST-SUZU">
@@ -847,8 +847,8 @@
         <magic>60</magic>
         <weapon>FISTS</weapon>
         <elements>
-            <atkElement>WIND</atkElement>
-            <stgElement>WIND</stgElement>
+            <atkElement>AIR</atkElement>
+            <stgElement>AIR</stgElement>
             <wkElement>EARTH</wkElement>
         </elements>
     </character>
@@ -872,8 +872,8 @@
             <skill>MAGICIAN</skill>
         </skills>
         <elements>
-            <atkElement>WIND</atkElement>
-            <stgElement>WIND</stgElement>
+            <atkElement>AIR</atkElement>
+            <stgElement>AIR</stgElement>
             <wkElement>DARK</wkElement>
         </elements>
     </character>
@@ -886,8 +886,8 @@
             <skill>TSUNDERE</skill>
         </skills>
         <elements>
-            <atkElement>WIND</atkElement>
-            <stgElement>WIND</stgElement>
+            <atkElement>AIR</atkElement>
+            <stgElement>AIR</stgElement>
             <wkElement>WATER</wkElement>
         </elements>
     </character>
@@ -900,8 +900,8 @@
             <skill>MAGICALGIRL</skill>
         </skills>
         <elements>
-            <atkElement>WIND</atkElement>
-            <stgElement>WIND</stgElement>
+            <atkElement>AIR</atkElement>
+            <stgElement>AIR</stgElement>
             <wkElement>EARTH</wkElement>
         </elements>
     </character>
@@ -928,9 +928,9 @@
             <skill>CHUUNI</skill>
         </skills>
         <elements>
-            <atkElement>WIND</atkElement>
+            <atkElement>AIR</atkElement>
             <stgElement>EARTH</stgElement>
-            <wkElement>WIND</wkElement>
+            <wkElement>AIR</wkElement>
         </elements>
     </character>
     <character key="TEST-YKKO">
@@ -965,7 +965,7 @@
         <weapon>FISTS</weapon>
         <elements>
             <atkElement>FIRE</atkElement>
-            <stgElement>WIND</stgElement>
+            <stgElement>AIR</stgElement>
             <wkElement>EARTH</wkElement>
         </elements>
     </character>
@@ -990,8 +990,8 @@
             <skill>MAGICALGIRL</skill>
         </skills>
         <elements>
-            <atkElement>WIND</atkElement>
-            <stgElement>WIND</stgElement>
+            <atkElement>AIR</atkElement>
+            <stgElement>AIR</stgElement>
             <wkElement>DARK</wkElement>
         </elements>
     </character>
@@ -1019,7 +1019,7 @@
             <skill>SURVIVAL</skill>
         </skills>
         <elements>
-            <atkElement>WIND</atkElement>
+            <atkElement>AIR</atkElement>
             <stgElement>EARTH</stgElement>
             <wkElement>WATER</wkElement>
         </elements>
@@ -1036,7 +1036,7 @@
         <elements>
             <atkElement>FIRE</atkElement>
             <stgElement>EARTH</stgElement>
-            <wkElement>WIND</wkElement>
+            <wkElement>AIR</wkElement>
         </elements>
     </character>
     <character key="TEST-NINA">
@@ -1077,7 +1077,7 @@
             <skill>SURVIVAL</skill>
         </skills>
         <elements>
-            <atkElement>WIND</atkElement>
+            <atkElement>AIR</atkElement>
             <stgElement>EARTH</stgElement>
             <wkElement>WATER</wkElement>
         </elements>
@@ -1091,8 +1091,8 @@
             <skill>SLUGABED</skill>
         </skills>
         <elements>
-            <atkElement>WIND</atkElement>
-            <stgElement>WIND</stgElement>
+            <atkElement>AIR</atkElement>
+            <stgElement>AIR</stgElement>
             <wkElement>LIGHT</wkElement>
         </elements>
     </character>
@@ -1150,7 +1150,7 @@
         <elements>
             <atkElement>FIRE</atkElement>
             <stgElement>FIRE</stgElement>
-            <wkElement>WIND</wkElement>
+            <wkElement>AIR</wkElement>
         </elements>
     </character>
     <character key="TEST-AKTS">
@@ -1188,8 +1188,8 @@
             <skill>REM</skill>
         </skills>
         <elements>
-            <atkElement>WIND</atkElement>
-            <stgElement>WIND</stgElement>
+            <atkElement>AIR</atkElement>
+            <stgElement>AIR</stgElement>
             <wkElement>DARK</wkElement>
         </elements>
         <!-- Commented out test transformation -->

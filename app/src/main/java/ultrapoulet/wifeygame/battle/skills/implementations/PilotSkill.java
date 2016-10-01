@@ -19,7 +19,7 @@ public class PilotSkill extends AbsSkill {
 
     @Override
     public double receivePhysicalAttackPercentage(BattleCharacter enemy) {
-        if(enemy.getAttackElement() == Element.getElement("WIND")) {
+        if(enemy.getAttackElement() == Element.getElement("AIR")) {
             return multiplier;
         }
         else {
@@ -29,7 +29,7 @@ public class PilotSkill extends AbsSkill {
 
     @Override
     public double receiveMagicalAttackPercentage(BattleCharacter enemy) {
-        if(enemy.getAttackElement() == Element.getElement("WIND")) {
+        if(enemy.getAttackElement() == Element.getElement("AIR")) {
             return multiplier;
         }
         else {
@@ -39,7 +39,7 @@ public class PilotSkill extends AbsSkill {
 
     @Override
     public double receiveSpecialAttackPercentage(BattleCharacter enemy) {
-        if(enemy.getAttackElement() == Element.getElement("WIND")) {
+        if(enemy.getAttackElement() == Element.getElement("AIR")) {
             return multiplier;
         }
         else {
@@ -50,7 +50,7 @@ public class PilotSkill extends AbsSkill {
     @Override
     public double[] getMultipliers(BattleCharacter enemy){
         double defense;
-        if(enemy.getAttackElement() == Element.getElement("WIND")) {
+        if(enemy.getAttackElement() == Element.getElement("AIR")) {
             defense = multiplier;
         }
         else {
@@ -70,7 +70,7 @@ public class PilotSkill extends AbsSkill {
     @Override
     public String getDescription(BattleCharacter enemy) {
         double defense;
-        if(enemy.getAttackElement() == Element.getElement("WIND")) {
+        if(enemy.getAttackElement() == Element.getElement("AIR")) {
             defense = multiplier;
         }
         else {
@@ -79,7 +79,7 @@ public class PilotSkill extends AbsSkill {
         StringBuilder desc = new StringBuilder();
         desc.append("Magical Defense Multiplier: " + defense + "x\n");
         desc.append("Special Defense Multiplier: " + defense  + "x\n\n");
-        desc.append("Multiplies magical and special damage taken from WIND sources by 0.5x");
+        desc.append("Multiplies magical and special damage taken from AIR sources by 0.5x");
         return desc.toString();
     }
 

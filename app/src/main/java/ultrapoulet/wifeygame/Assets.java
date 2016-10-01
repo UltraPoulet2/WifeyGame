@@ -38,4 +38,14 @@ public class Assets {
     //CharacterInfoScreen Stuff
     public static Image CharacterInfoScreen;
     public static Image BattleCharacterInfoScreen;
+
+    //Element Image stuff
+    public static Image[] ElementImages;
+    public static final int AIR = 0;
+    public static final int DARK = 1;
+    public static final int EARTH = 2;
+    public static final int FIRE = 3;
+    public static final int LIGHT = 4;
+    public static final int WATER = 5;
+
 }

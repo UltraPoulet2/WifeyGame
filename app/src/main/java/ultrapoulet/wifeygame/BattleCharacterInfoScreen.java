@@ -36,6 +36,12 @@ public class BattleCharacterInfoScreen extends Screen {
     private static final int CHAR_Y = 100 + BG_Y;
     private static final int DOUBLE_SCALE = 200;
 
+    private static final int ELEMENT_X = 357 + BG_X;
+    private static final int ATK_ELEMENT_Y = 158 + BG_Y;
+    private static final int RES_ELEMENT_Y = 269 + BG_Y;
+    private static final int WEAK_ELEMENT_Y = 380 + BG_Y;
+    private static final int QUARTER_SCALE = 25;
+
     private BattleEnemy displayEnemy;
 
     private double[] multipliers;
@@ -288,6 +294,10 @@ public class BattleCharacterInfoScreen extends Screen {
         Graphics g= game.getGraphics();
         g.drawImage(background, BG_X, BG_Y);
         g.drawPercentageImage(displayChar.getImage(),CHAR_X, CHAR_Y, DOUBLE_SCALE, DOUBLE_SCALE);
+
+        g.drawPercentageImage(displayChar.getAttackElement().getElementImage(), ELEMENT_X, ATK_ELEMENT_Y, QUARTER_SCALE, QUARTER_SCALE);
+        g.drawPercentageImage(displayChar.getStrongElement().getElementImage(), ELEMENT_X, RES_ELEMENT_Y, QUARTER_SCALE, QUARTER_SCALE);
+        g.drawPercentageImage(displayChar.getWeakElement().getElementImage(), ELEMENT_X, WEAK_ELEMENT_Y, QUARTER_SCALE, QUARTER_SCALE);
 
         g.drawString(displayChar.getName(), NAME_X, nameY, namePaint);
 

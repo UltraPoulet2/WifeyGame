@@ -12,7 +12,7 @@
             <skill>GHOST</skill>
         </skills>
         <elements>
-            <atkElement>WIND</atkElement>
+            <atkElement>AIR</atkElement>
             <stgElement>FIRE</stgElement>
             <wkElement>DARK</wkElement>
         </elements>
@@ -62,8 +62,8 @@
             <skill>BIKER</skill>
         </skills>
         <elements>
-            <atkElement>WIND</atkElement>
-            <stgElement>WIND</stgElement>
+            <atkElement>AIR</atkElement>
+            <stgElement>AIR</stgElement>
             <wkElement>EARTH</wkElement>
         </elements>
     </enemy>
@@ -81,7 +81,7 @@
         <elements>
             <atkElement>EARTH</atkElement>
             <stgElement>EARTH</stgElement>
-            <wkElement>WIND</wkElement>
+            <wkElement>AIR</wkElement>
         </elements>
     </enemy>
     <enemy key="TEST-NME6">

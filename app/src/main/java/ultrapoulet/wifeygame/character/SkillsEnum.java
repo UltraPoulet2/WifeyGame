@@ -165,7 +165,7 @@ public class SkillsEnum {
         skillsList.put("MEDIUM", new SkillsEnum("Medium", "Multiplies magical and special damage dealt by 2.0x against Ghosts."));
         skillsList.put("MUSICIAN", new SkillsEnum("Musician", "Multiplies damage dealt by 4.0x every eighth hit."));
         skillsList.put("NURSE", new SkillsEnum("Nurse", "Multiplies healing by 2.0x. Gains health at the start of every round."));
-        skillsList.put("PILOT", new SkillsEnum("Pilot", "Multiplies magical and special damage taken from WIND sources by 0.5x"));
+        skillsList.put("PILOT", new SkillsEnum("Pilot", "Multiplies magical and special damage taken from AIR sources by 0.5x"));
         skillsList.put("PRAVDA", new SkillsEnum("Pravda", "Increases damage dealt multiplier by 1.0x for each other Pravda wifey."));
         skillsList.put("PRAVDAPRES", new SkillsEnum("Pravda President", "Increases damage dealt multiplier by 2.0x for each other Pravda wifey."));
         skillsList.put("PROGRAMMER", new SkillsEnum("Programmer", "Increases damage dealt multiplier by 0.75x each time this wifey attacks a Robot. Resets at the start of the round."));
