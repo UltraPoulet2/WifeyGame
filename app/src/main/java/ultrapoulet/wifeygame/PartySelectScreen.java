@@ -119,6 +119,25 @@ public class PartySelectScreen extends Screen {
 
     private ButtonPressed lastPressed = null;
 
+    private static Comparator<WifeyCharacter> nameComp = new Comparator<WifeyCharacter>(){
+        @Override
+        public int compare(WifeyCharacter a, WifeyCharacter b){
+            return a.compareName(b);
+        }
+    };
+    private static Comparator<WifeyCharacter> strengthComp = new Comparator<WifeyCharacter>() {
+        @Override
+        public int compare(WifeyCharacter a, WifeyCharacter b) {
+            return a.compareStrength(b);
+        }
+    };
+    private static Comparator<WifeyCharacter> magicComp = new Comparator<WifeyCharacter>() {
+        @Override
+        public int compare(WifeyCharacter a, WifeyCharacter b) {
+            return a.compareMagic(b);
+        }
+    };
+
     public PartySelectScreen(Game game){
         super(game);
         textPaint = new Paint();
@@ -140,12 +159,6 @@ public class PartySelectScreen extends Screen {
             //Do a check to make sure the character is valid for this battle
             validCharacters.add(inputCharacters[i]);
         }
-        Comparator<WifeyCharacter> nameComp = new Comparator<WifeyCharacter>(){
-            @Override
-            public int compare(WifeyCharacter a, WifeyCharacter b){
-                return a.compareName(b);
-            }
-        };
         Collections.sort(validCharacters, nameComp);
         maxPage = (validCharacters.size() / PER_PAGE) + 1;
     }
