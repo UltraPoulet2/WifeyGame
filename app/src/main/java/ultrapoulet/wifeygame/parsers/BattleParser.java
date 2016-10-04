@@ -5,9 +5,13 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import ultrapoulet.wifeygame.battle.BattleInfo;
+import ultrapoulet.wifeygame.battle.requirements.AbsRequirement;
+import ultrapoulet.wifeygame.battle.requirements.RequirementFactory;
 import ultrapoulet.wifeygame.character.EnemyCharacter;
+import ultrapoulet.wifeygame.character.WifeyCharacter;
 import ultrapoulet.wifeygame.gamestate.Battles;
 import ultrapoulet.wifeygame.gamestate.Enemies;
+import ultrapoulet.wifeygame.gamestate.RecruitedCharacters;
 
 /**
  * Created by John on 6/22/2016.
@@ -23,6 +27,7 @@ public class BattleParser extends DefaultHandler {
     private boolean error = false;
 
     private BattleInfo battleBuilder;
+    private AbsRequirement reqBuilder;
     private String battleKey;
 
     @Override
@@ -55,8 +60,14 @@ public class BattleParser extends DefaultHandler {
         }
         else if(qName.equalsIgnoreCase("requirement")){
             //Create a new requirement
-            System.out.println("Creating new requirement");
-            bRequirement = true;
+            reqBuilder = RequirementFactory.getRequirement(attributes.getValue("type"));
+            if(reqBuilder == null){
+                System.out.println("BattleParser:startElement(): Invalid Requirement: " + attributes.getValue("type"));
+                bRequirement = false;
+            }
+            else {
+                bRequirement = true;
+            }
         }
         else if(qName.equalsIgnoreCase("value")){
             System.out.println("Creating value");
@@ -80,8 +91,17 @@ public class BattleParser extends DefaultHandler {
                 System.out.println("BattleParser:endElement(): Error parsing for key: " + battleKey);
             }
         }
-        else if(bRequirement){
+        else if(qName.equalsIgnoreCase("requirement")){
             //Do stuff
+            /* Quick testing
+            WifeyCharacter[] recruits = RecruitedCharacters.getArray();
+            if(reqBuilder != null) {
+                for (int i = 0; i < recruits.length; i++) {
+                    reqBuilder.validateCharacter(recruits[i]);
+                }
+            }
+            */
+            reqBuilder = null;
             bRequirement = false;
         }
     }
@@ -119,6 +139,9 @@ public class BattleParser extends DefaultHandler {
         }
         else if(bRValue){
             System.out.println("Value for requirement: " + temp);
+            if(reqBuilder != null){
+                reqBuilder.addValue(temp);
+            }
             bRValue = false;
         }
     }
