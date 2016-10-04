@@ -17,6 +17,8 @@ public class BattleParser extends DefaultHandler {
     private boolean bName = false;
     private boolean bEnemy = false;
     private boolean bPartySize = false;
+    private boolean bRequirement = false;
+    private boolean bRValue = false;
 
     private boolean error = false;
 
@@ -48,6 +50,18 @@ public class BattleParser extends DefaultHandler {
         else if(qName.equalsIgnoreCase("partysize")){
             bPartySize = true;
         }
+        else if(qName.equalsIgnoreCase("requirements")){
+            //Do nothing, but it's valid
+        }
+        else if(qName.equalsIgnoreCase("requirement")){
+            //Create a new requirement
+            System.out.println("Creating new requirement");
+            bRequirement = true;
+        }
+        else if(qName.equalsIgnoreCase("value")){
+            System.out.println("Creating value");
+            bRValue = true;
+        }
         else{
             System.out.println("BattleParser:startElement(): Invalid qName: " + qName + " for key " + battleKey);
         }
@@ -65,6 +79,10 @@ public class BattleParser extends DefaultHandler {
             else{
                 System.out.println("BattleParser:endElement(): Error parsing for key: " + battleKey);
             }
+        }
+        else if(bRequirement){
+            //Do stuff
+            bRequirement = false;
         }
     }
 
@@ -99,12 +117,17 @@ public class BattleParser extends DefaultHandler {
                 bPartySize = false;
             }
         }
+        else if(bRValue){
+            System.out.println("Value for requirement: " + temp);
+            bRValue = false;
+        }
     }
 
     private void resetValues(){
         error = false;
         bName = false;
         bEnemy = false;
+        bRValue = false;
     }
 
     private boolean validate(){
