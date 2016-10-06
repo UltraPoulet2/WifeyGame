@@ -24,7 +24,7 @@
                 <value>MAID</value>
             </requirement>
             <requirement type="BannedCharacter">
-                <value>TEST-REM</value>
+                <value>TEST-RREM</value>
             </requirement>
         </requirements>
     </battle>
