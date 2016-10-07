@@ -11,6 +11,8 @@ import ultrapoulet.wifeygame.character.WifeyCharacter;
 
 public class RequiredSkillRequirement extends AbsRequirement {
 
+    //Required Skill list a list of several skills that a character must have at least one of
+
     private ArrayList<SkillsEnum> requiredSkills;
 
     public RequiredSkillRequirement(){
@@ -29,6 +31,7 @@ public class RequiredSkillRequirement extends AbsRequirement {
         return true;
     }
 
+    @Override
     public boolean validateCharacter(WifeyCharacter character){
         for(int i = 0; i < requiredSkills.size(); i++){
             if(character.getSkills().contains(requiredSkills.get(i))){
