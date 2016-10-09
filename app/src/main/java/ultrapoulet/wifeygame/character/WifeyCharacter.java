@@ -125,6 +125,26 @@ public class WifeyCharacter {
         }
     }
 
+    public int compareStrength(WifeyCharacter other){
+        int result = other.getStrength() - this.getStrength();
+        if(result != 0){
+            return result;
+        }
+        else{
+            return this.compareName(other);
+        }
+    }
+
+    public int compareMagic(WifeyCharacter other){
+        int result = other.getMagic() - this.getMagic();
+        if(result != 0){
+            return result;
+        }
+        else{
+            return this.compareName(other);
+        }
+    }
+
     public boolean validate(){
         if(name.length() == 0){
             return false;
