@@ -8,11 +8,8 @@ import ultrapoulet.wifeygame.battle.BattleInfo;
 import ultrapoulet.wifeygame.battle.requirements.AbsRequirement;
 import ultrapoulet.wifeygame.battle.requirements.RequirementFactory;
 import ultrapoulet.wifeygame.character.EnemyCharacter;
-import ultrapoulet.wifeygame.character.WifeyCharacter;
 import ultrapoulet.wifeygame.gamestate.Battles;
 import ultrapoulet.wifeygame.gamestate.Enemies;
-import ultrapoulet.wifeygame.gamestate.RecruitedCharacters;
-
 /**
  * Created by John on 6/22/2016.
  */
@@ -94,7 +91,7 @@ public class BattleParser extends DefaultHandler {
         }
         else if(qName.equalsIgnoreCase("requirement")){
             //Do stuff
-            // Quick testing
+            /* Quick testing
             WifeyCharacter[] recruits = RecruitedCharacters.getArray();
             if(reqBuilder != null){
                 for(int i = 0; i < recruits.length; i++){
@@ -102,6 +99,9 @@ public class BattleParser extends DefaultHandler {
                 }
             }
             // */
+            if(reqBuilder != null){
+                battleBuilder.addRequirement(reqBuilder);
+            }
             reqBuilder = null;
             bRequirement = false;
         }

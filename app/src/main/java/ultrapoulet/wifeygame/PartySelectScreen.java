@@ -159,7 +159,13 @@ public class PartySelectScreen extends Screen {
         validCharacters = new ArrayList<>();
         for(int i = 0; i < inputCharacters.length; i++){
             //Do a check to make sure the character is valid for this battle
-            validCharacters.add(inputCharacters[i]);
+            boolean allowed = true;
+            if(battleInfo != null){
+                allowed = battleInfo.allowCharacter(inputCharacters[i]);
+            }
+            if(allowed){
+                validCharacters.add(inputCharacters[i]);
+            }
         }
         Collections.sort(validCharacters, nameComp);
         maxPage = (validCharacters.size() / PER_PAGE) + 1;
@@ -259,12 +265,14 @@ public class PartySelectScreen extends Screen {
                     }
                     else if(lastPressed == ButtonPressed.ACCEPT && getButtonPressed(t.x, t.y) == ButtonPressed.ACCEPT){
                         if(currentParty[0] != null) {
-                            BattleScreen bs = new BattleScreen(game);
-                            Party.setParty(currentParty);
-                            bs.setParty(Party.getBattleParty());
-                            bs.setBattleInfo(battleInfo);
-                            bs.setBackground(Assets.testBG);
-                            game.setScreen(bs);
+                            if(battleInfo == null || battleInfo.validParty(currentParty)) {
+                                BattleScreen bs = new BattleScreen(game);
+                                Party.setParty(currentParty);
+                                bs.setParty(Party.getBattleParty());
+                                bs.setBattleInfo(battleInfo);
+                                bs.setBackground(Assets.testBG);
+                                game.setScreen(bs);
+                            }
                         }
                     }
                     else if(lastPressed == ButtonPressed.PREV_PAGE && getButtonPressed(t.x, t.y) == ButtonPressed.PREV_PAGE && currentPage > 1) {
