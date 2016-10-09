@@ -26,6 +26,9 @@
             <requirement type="BannedCharacter">
                 <value>TEST-RREM</value>
             </requirement>
+            <requirement type="RequiredCharacter">
+                <value>TEST-MOMO</value>
+            </requirement>
         </requirements>
     </battle>
     <battle key="TEST-PHYS">

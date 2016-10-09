@@ -13,6 +13,9 @@ public class RequirementFactory {
         else if(input.equalsIgnoreCase("BannedCharacter")){
             return new BannedCharacterRequirement();
         }
+        else if(input.equalsIgnoreCase("RequiredCharacter")){
+            return new RequiredCharacterRequirement();
+        }
         return null;
     }
 }

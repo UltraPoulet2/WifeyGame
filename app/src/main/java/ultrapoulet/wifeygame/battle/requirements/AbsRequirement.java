@@ -12,7 +12,14 @@ public abstract class AbsRequirement {
     public abstract boolean addValue(String input);
 
     //Returns true if the character is valid for this requirement
-    public abstract boolean validateCharacter(WifeyCharacter character);
+    public boolean validateCharacter(WifeyCharacter character){
+        return true;
+    }
+
+    //Returns true if the party is valid for this requirement
+    public boolean validateParty(WifeyCharacter[] party){
+        return true;
+    }
 
     public abstract String getDescription();
 }

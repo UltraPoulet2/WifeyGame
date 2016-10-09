@@ -11,6 +11,7 @@ import ultrapoulet.wifeygame.gamestate.RecruitedCharacters;
 
 public class BannedCharacterRequirement extends AbsRequirement {
 
+    //Banned Wifey list contains Wifeys that are not allowed to participate in a battle
     private ArrayList<WifeyCharacter> bannedWifeys;
 
     public BannedCharacterRequirement(){
@@ -32,6 +33,7 @@ public class BannedCharacterRequirement extends AbsRequirement {
     }
 
     //Returns true if the character is valid for this requirement
+    @Override
     public boolean validateCharacter(WifeyCharacter character){
         return !bannedWifeys.contains(character);
     }

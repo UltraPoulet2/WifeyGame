@@ -71,12 +71,21 @@ public class BattleInfo {
         return true;
     }
 
+    public boolean allowParty(WifeyCharacter[] party){
+        for(int i = 0; i < restrictionList.size(); i++){
+            if(!restrictionList.get(i).validateParty(party)){
+                return false;
+            }
+        }
+        return true;
+    }
+
     public boolean validParty(WifeyCharacter[] party){
         for(int i = 0; i < party.length && party[i] != null; i++){
             if(allowCharacter(party[i]) == false){
                 return false;
             }
         }
-        return true;
+        return allowParty(party);
     }
 }
