@@ -10,6 +10,9 @@ public class RequirementFactory {
         if(input.equalsIgnoreCase("RequiredSkill")){
             return new RequiredSkillRequirement();
         }
+        else if(input.equalsIgnoreCase("BannedCharacter")){
+            return new BannedCharacterRequirement();
+        }
         return null;
     }
 }

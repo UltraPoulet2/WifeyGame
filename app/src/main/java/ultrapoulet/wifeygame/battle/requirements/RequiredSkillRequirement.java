@@ -32,7 +32,6 @@ public class RequiredSkillRequirement extends AbsRequirement {
     public boolean validateCharacter(WifeyCharacter character){
         for(int i = 0; i < requiredSkills.size(); i++){
             if(character.getSkills().contains(requiredSkills.get(i))){
-                System.out.println("Character allowed " + character.getName());
                 return true;
             }
         }
