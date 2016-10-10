@@ -3,6 +3,7 @@ package ultrapoulet.wifeygame.battle;
 import java.util.ArrayList;
 
 import ultrapoulet.wifeygame.battle.requirements.AbsRequirement;
+import ultrapoulet.wifeygame.battle.requirements.RequiredCharacterRequirement;
 import ultrapoulet.wifeygame.character.EnemyCharacter;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
 
@@ -15,6 +16,8 @@ public class BattleInfo {
     private int partyMax = 7;
     private ArrayList<EnemyCharacter> enemyList = new ArrayList<>();
     private ArrayList<AbsRequirement> restrictionList = new ArrayList<>();
+
+    private ArrayList<WifeyCharacter> requiredList = null;
 
     public void setName(String name){
         battleName = name;
@@ -59,7 +62,14 @@ public class BattleInfo {
     public void addRequirement(AbsRequirement r) {
         if(r != null){
             restrictionList.add(r);
+            if(r instanceof RequiredCharacterRequirement){
+                requiredList = ((RequiredCharacterRequirement) r).getRequiredList();
+            }
         }
+    }
+
+    public ArrayList<WifeyCharacter> getRequiredList(){
+        return requiredList;
     }
 
     public boolean allowCharacter(WifeyCharacter c){

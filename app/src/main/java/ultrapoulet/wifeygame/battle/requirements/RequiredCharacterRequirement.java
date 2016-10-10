@@ -49,6 +49,10 @@ public class RequiredCharacterRequirement extends AbsRequirement {
         return true;
     }
 
+    public ArrayList<WifeyCharacter> getRequiredList(){
+        return requiredWifeys;
+    }
+
     @Override
     public String getDescription() {
         return "To do";

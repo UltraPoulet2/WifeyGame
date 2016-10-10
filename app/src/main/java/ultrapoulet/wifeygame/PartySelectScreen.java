@@ -15,6 +15,7 @@ import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.androidgame.framework.Input;
 import ultrapoulet.androidgame.framework.Input.TouchEvent;
 import ultrapoulet.androidgame.framework.Screen;
+import ultrapoulet.wifeygame.battle.BattleCharacter;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
 import ultrapoulet.wifeygame.battle.BattleInfo;
 import ultrapoulet.wifeygame.battle.BattleScreen;
@@ -109,6 +110,12 @@ public class PartySelectScreen extends Screen {
     private static final int CHAR_IMAGE_BASE_BOT_Y = CHAR_IMAGE_BASE_TOP_Y + CHAR_IMAGE_HEIGHT;
     private static final int CHAR_IMAGE_OFFSET_Y = 90;
 
+    private static final int CHAR_HIGHLIGHT_WIDTH = 86;
+    private static final int CHAR_HIGHLIGHT_HEIGHT = 86;
+    private static final int CHAR_HIGHLIGHT_BASE_X = 42;
+    private static final int CHAR_HIGHLIGHT_BASE_Y = 397;
+    private static final int CHAR_HIGHLIGHT_OFFSET = 90;
+
     private static final int PARTY_IMAGE_BASE_LEFT_X = 60;
     private static final int PARTY_IMAGE_BASE_RIGHT_X = 150;
     private static final int PARTY_IMAGE_OFFSET_X = 100;
@@ -119,23 +126,63 @@ public class PartySelectScreen extends Screen {
 
     private ButtonPressed lastPressed = null;
 
-    private static Comparator<WifeyCharacter> nameComp = new Comparator<WifeyCharacter>(){
+    private boolean hasRequiredList(){
+        return battleInfo != null && battleInfo.getRequiredList() != null;
+    }
+
+    private Comparator<WifeyCharacter> nameComp = new Comparator<WifeyCharacter>(){
         @Override
         public int compare(WifeyCharacter a, WifeyCharacter b){
+            if(hasRequiredList()){
+                ArrayList<WifeyCharacter> list = battleInfo.getRequiredList();
+                if(list.contains(a) && list.contains(b)){
+                    return a.compareName(b);
+                }
+                else if(list.contains(a)){
+                    return -1;
+                }
+                else if(list.contains(b)){
+                    return 1;
+                }
+            }
             return a.compareName(b);
         }
     };
 
-    private static Comparator<WifeyCharacter> strengthComp = new Comparator<WifeyCharacter>() {
+    private Comparator<WifeyCharacter> strengthComp = new Comparator<WifeyCharacter>() {
         @Override
         public int compare(WifeyCharacter a, WifeyCharacter b) {
+            if(hasRequiredList()){
+                ArrayList<WifeyCharacter> list = battleInfo.getRequiredList();
+                if(list.contains(a) && list.contains(b)){
+                    return a.compareStrength(b);
+                }
+                else if(list.contains(a)){
+                    return -1;
+                }
+                else if(list.contains(b)){
+                    return 1;
+                }
+            }
             return a.compareStrength(b);
         }
     };
 
-    private static Comparator<WifeyCharacter> magicComp = new Comparator<WifeyCharacter>() {
+    private Comparator<WifeyCharacter> magicComp = new Comparator<WifeyCharacter>() {
         @Override
         public int compare(WifeyCharacter a, WifeyCharacter b) {
+            if(hasRequiredList()){
+                ArrayList<WifeyCharacter> list = battleInfo.getRequiredList();
+                if(list.contains(a) && list.contains(b)){
+                    return a.compareMagic(b);
+                }
+                else if(list.contains(a)){
+                    return -1;
+                }
+                else if(list.contains(b)){
+                    return 1;
+                }
+            }
             return a.compareMagic(b);
         }
     };
@@ -412,7 +459,19 @@ public class PartySelectScreen extends Screen {
         }
         int minIndex = PER_PAGE * (currentPage - 1);
         int maxIndex = PER_PAGE * currentPage;
+        ArrayList<WifeyCharacter> reqList;
+        if(hasRequiredList()){
+            reqList = battleInfo.getRequiredList();
+        }
+        else{
+            reqList = new ArrayList<>();
+        }
         for(int i = minIndex; i < validCharacters.size() && i < maxIndex; i++){
+            if(reqList.contains(validCharacters.get(i))){
+                g.drawRect((i % ROW_SIZE) * CHAR_HIGHLIGHT_OFFSET + CHAR_HIGHLIGHT_BASE_X,
+                        (i % PER_PAGE / COLUMN_SIZE) * CHAR_HIGHLIGHT_OFFSET + CHAR_HIGHLIGHT_BASE_Y,
+                        CHAR_HIGHLIGHT_WIDTH, CHAR_HIGHLIGHT_HEIGHT, Color.BLUE);
+            }
             if(!dragging || i != draggingRecruitIndex) {
                 g.drawPercentageImage(validCharacters.get(i).getImage(),
                         CHAR_IMAGE_OFFSET_X * (i % ROW_SIZE) + CHAR_IMAGE_BASE_LEFT_X,

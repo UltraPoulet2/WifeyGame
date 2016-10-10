@@ -28,6 +28,7 @@
             </requirement>
             <requirement type="RequiredCharacter">
                 <value>TEST-MOMO</value>
+                <value>TEST-NYRK</value>
             </requirement>
         </requirements>
     </battle>
