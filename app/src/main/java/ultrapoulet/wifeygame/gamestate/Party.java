@@ -82,6 +82,10 @@ public class Party {
         return size;
     }
 
+    public static WifeyCharacter[] getParty(){
+        return party;
+    }
+
     public static BattleWifey[] getBattleParty(){
         BattleWifey[] battleParty = new BattleWifey[partySize()];
         for(int i = 0; i < battleParty.length; i++){

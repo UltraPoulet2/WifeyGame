@@ -228,7 +228,7 @@ public class PartySelectScreen extends Screen {
     public void setBattleInfo(BattleInfo info){
         this.battleInfo = info;
 
-        maxPartySize = battleInfo.getPartyMax();
+        maxPartySize = battleInfo != null ? battleInfo.getPartyMax() : 7;
         finalIndex = maxPartySize - 1;
         currentParty = new WifeyCharacter[maxPartySize];
         for(int i = 0; i < currentParty.length; i++){
@@ -313,12 +313,14 @@ public class PartySelectScreen extends Screen {
                     else if(lastPressed == ButtonPressed.ACCEPT && getButtonPressed(t.x, t.y) == ButtonPressed.ACCEPT){
                         if(currentParty[0] != null) {
                             if(battleInfo == null || battleInfo.validParty(currentParty)) {
-                                BattleScreen bs = new BattleScreen(game);
+                                //This will be changed to go back to previous screen and save party
+                                //BattleScreen bs = new BattleScreen(game);
                                 Party.setParty(currentParty);
-                                bs.setParty(Party.getBattleParty());
-                                bs.setBattleInfo(battleInfo);
-                                bs.setBackground(Assets.testBG);
-                                game.setScreen(bs);
+                                backButton();
+                                //bs.setParty(Party.getBattleParty());
+                                //bs.setBattleInfo(battleInfo);
+                                //bs.setBackground(Assets.testBG);
+                                //game.setScreen(bs);
                             }
                         }
                     }
