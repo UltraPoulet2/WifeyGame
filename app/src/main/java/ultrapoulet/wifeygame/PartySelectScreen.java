@@ -116,8 +116,8 @@ public class PartySelectScreen extends Screen {
     private static final int CHAR_HIGHLIGHT_BASE_Y = 397;
     private static final int CHAR_HIGHLIGHT_OFFSET = 90;
 
-    private static final int PARTY_IMAGE_BASE_LEFT_X = 60;
-    private static final int PARTY_IMAGE_BASE_RIGHT_X = 150;
+    private static final int PARTY_IMAGE_BASE_LEFT_X = 55;
+    private static final int PARTY_IMAGE_BASE_RIGHT_X = 145;
     private static final int PARTY_IMAGE_OFFSET_X = 100;
     private static final int PARTY_IMAGE_TOP_Y = 180;
     private static final int PARTY_IMAGE_BOT_Y = 270;
