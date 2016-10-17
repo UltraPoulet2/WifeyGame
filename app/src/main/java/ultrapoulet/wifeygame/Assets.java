@@ -39,6 +39,9 @@ public class Assets {
     public static Image CharacterInfoScreen;
     public static Image BattleCharacterInfoScreen;
 
+    //BattleInfoScreen Stuff
+    public static Image BattleInfoScreen;
+
     //Element Image stuff
     public static Image[] ElementImages;
     public static final int AIR = 0;

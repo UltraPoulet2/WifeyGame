@@ -8,6 +8,7 @@ import java.util.List;
 
 import ultrapoulet.androidgame.framework.Game;
 import ultrapoulet.androidgame.framework.Graphics;
+import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.androidgame.framework.Input;
 import ultrapoulet.androidgame.framework.Input.TouchEvent;
 import ultrapoulet.androidgame.framework.Screen;
@@ -26,27 +27,26 @@ public class BattleInfoScreen extends Screen{
     private BattleInfo battleInfo;
     private PartySelectScreen partySelect;
 
+    private Image background = Assets.BattleInfoScreen;
+
     private static int BATTLE_NAME_X = 400;
-    private static int BATTLE_NAME_Y = 100;
+    private static int BATTLE_NAME_Y = 92;
     private Paint battlePaint;
 
-    private static int BACK_BUTTON_LEFT_X = 50;
-    private static int BACK_BUTTON_RIGHT_X = 150;
+    private static int BACK_BUTTON_LEFT_X = 45;
+    private static int BACK_BUTTON_RIGHT_X = 215;
     private static int BACK_BUTTON_TOP_Y = 1150;
     private static int BACK_BUTTON_BOTTOM_Y = 1250;
 
-    private static int PARTY_BUTTON_LEFT_X = 400;
-    private static int PARTY_BUTTON_RIGHT_X = 500;
-    private static int PARTY_BUTTON_TOP_Y = 900;
-    private static int PARTY_BUTTON_BOTTOM_Y = 1000;
+    private static int PARTY_BUTTON_LEFT_X = 250;
+    private static int PARTY_BUTTON_RIGHT_X = 550;
+    private static int PARTY_BUTTON_TOP_Y = 1150;
+    private static int PARTY_BUTTON_BOTTOM_Y = 1250;
 
-    private static int START_BUTTON_LEFT_X = 650;
-    private static int START_BUTTON_RIGHT_X = 750;
+    private static int START_BUTTON_LEFT_X = 585;
+    private static int START_BUTTON_RIGHT_X = 755;
     private static int START_BUTTON_TOP_Y = 1150;
     private static int START_BUTTON_BOTTOM_Y = 1250;
-
-    //This is temporary
-    private Paint buttonPaint;
 
     private ButtonPressed lastPressed = null;
 
@@ -62,12 +62,7 @@ public class BattleInfoScreen extends Screen{
         battlePaint = new Paint();
         battlePaint.setColor(Color.BLACK);
         battlePaint.setTextAlign(Align.CENTER);
-        battlePaint.setTextSize(30);
-
-        buttonPaint = new Paint();
-        buttonPaint.setColor(Color.YELLOW);
-        buttonPaint.setTextAlign(Align.LEFT);
-        buttonPaint.setTextSize(20);
+        battlePaint.setTextSize(40);
 
         partySelect = new PartySelectScreen(game);
         partySelect.setPreviousScreen(this);
@@ -136,11 +131,9 @@ public class BattleInfoScreen extends Screen{
         Graphics g = game.getGraphics();
         g.clearScreen(0xFF777777);
 
-        g.drawString(battleInfo.getName(), BATTLE_NAME_X, BATTLE_NAME_Y, battlePaint);
+        g.drawImage(background, 0, 0);
 
-        g.drawString("BACK", BACK_BUTTON_LEFT_X, BACK_BUTTON_TOP_Y, buttonPaint);
-        g.drawString("PARTY", PARTY_BUTTON_LEFT_X, PARTY_BUTTON_TOP_Y, buttonPaint);
-        g.drawString("START", START_BUTTON_LEFT_X, START_BUTTON_TOP_Y, buttonPaint);
+        g.drawString(battleInfo.getName(), BATTLE_NAME_X, BATTLE_NAME_Y, battlePaint);
     }
 
     @Override

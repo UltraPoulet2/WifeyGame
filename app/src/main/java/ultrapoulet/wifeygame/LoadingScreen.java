@@ -96,6 +96,7 @@ public class LoadingScreen extends Screen {
 
         Assets.CharacterInfoScreen = g.newImage("screens/CharacterInfoScreen.png", ImageFormat.RGB565);
         Assets.BattleCharacterInfoScreen = g.newImage("screens/BattleCharacterInfoScreen.png", ImageFormat.RGB565);
+        Assets.BattleInfoScreen = g.newImage("screens/BattleInfoScreen.png", ImageFormat.RGB565);
 
         Assets.ElementImages = new Image[6];
         Assets.ElementImages[0] = g.newImage("elements/AirElement.png", ImageFormat.ARGB8888);
