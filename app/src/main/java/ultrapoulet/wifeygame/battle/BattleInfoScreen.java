@@ -13,6 +13,7 @@ import ultrapoulet.androidgame.framework.Input;
 import ultrapoulet.androidgame.framework.Input.TouchEvent;
 import ultrapoulet.androidgame.framework.Screen;
 import ultrapoulet.wifeygame.Assets;
+import ultrapoulet.wifeygame.CharacterInfoScreen;
 import ultrapoulet.wifeygame.PartySelectScreen;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
 import ultrapoulet.wifeygame.gamestate.Party;
@@ -28,6 +29,9 @@ public class BattleInfoScreen extends Screen{
     private BattleInfo battleInfo;
     private PartySelectScreen partySelect;
 
+    private CharacterInfoScreen charInfo;
+    private int selectedChar;
+
     private Image background = Assets.BattleInfoScreen;
 
     private WifeyCharacter[] party;
@@ -37,14 +41,16 @@ public class BattleInfoScreen extends Screen{
     private Paint battlePaint;
 
     private static final int PARTY_IMAGE_BASE_LEFT_X = 55;
+    private static final int PARTY_IMAGE_BASE_RIGHT_X = 145;
     private static final int PARTY_IMAGE_OFFSET_X = 100;
     private static final int PARTY_IMAGE_TOP_Y = 1000;
+    private static final int PARTY_IMAGE_BOT_Y = 1090;
+    private final static int PARTY_SCALE = 57;
 
     private static int BACK_BUTTON_LEFT_X = 45;
     private static int BACK_BUTTON_RIGHT_X = 215;
     private static int BACK_BUTTON_TOP_Y = 1150;
     private static int BACK_BUTTON_BOTTOM_Y = 1250;
-    private final static int PARTY_SCALE = 57;
 
     private static int PARTY_BUTTON_LEFT_X = 250;
     private static int PARTY_BUTTON_RIGHT_X = 550;
@@ -74,6 +80,9 @@ public class BattleInfoScreen extends Screen{
 
         partySelect = new PartySelectScreen(game);
         partySelect.setPreviousScreen(this);
+
+        charInfo = new CharacterInfoScreen(game);
+        charInfo.setPreviousScreen(this);
     }
 
     public void setBattleInfo(BattleInfo info){
@@ -99,6 +108,20 @@ public class BattleInfoScreen extends Screen{
         }
     }
 
+    //Gets the index of the party member that is presently being touched
+    private int getPartyIndex(int x, int y){
+        for(int i = 0; i < battleInfo.getPartyMax(); i++){
+            int xLeft = PARTY_IMAGE_BASE_LEFT_X + PARTY_IMAGE_OFFSET_X * i;
+            int xRight = PARTY_IMAGE_BASE_RIGHT_X + PARTY_IMAGE_OFFSET_X * i;
+            int yTop = PARTY_IMAGE_TOP_Y;
+            int yBot = PARTY_IMAGE_BOT_Y;
+            if(x >= xLeft && x <= xRight && y >= yTop && y <= yBot){
+                return i;
+            }
+        }
+        return -1;
+    }
+
     @Override
     public void update(float deltaTime) {
         List<Input.TouchEvent> touchEvents = game.getInput().getTouchEvents();
@@ -106,6 +129,7 @@ public class BattleInfoScreen extends Screen{
             Input.TouchEvent t = touchEvents.get(i);
             if(t.type == TouchEvent.TOUCH_DOWN){
                 lastPressed = getButtonPressed(t.x, t.y);
+                selectedChar = getPartyIndex(t.x, t.y);
                 continue;
             }
             else if(t.type == TouchEvent.TOUCH_UP){
@@ -129,6 +153,10 @@ public class BattleInfoScreen extends Screen{
                             }
                             break;
                     }
+                }
+                else if(selectedChar == getPartyIndex(t.x, t.y) && selectedChar != -1){
+                    charInfo.setChar(party[selectedChar]);
+                    game.setScreen(charInfo);
                 }
             }
         }
