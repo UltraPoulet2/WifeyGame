@@ -14,6 +14,7 @@ import ultrapoulet.androidgame.framework.Input.TouchEvent;
 import ultrapoulet.androidgame.framework.Screen;
 import ultrapoulet.wifeygame.Assets;
 import ultrapoulet.wifeygame.PartySelectScreen;
+import ultrapoulet.wifeygame.character.WifeyCharacter;
 import ultrapoulet.wifeygame.gamestate.Party;
 
 /**
@@ -29,14 +30,21 @@ public class BattleInfoScreen extends Screen{
 
     private Image background = Assets.BattleInfoScreen;
 
+    private WifeyCharacter[] party;
+
     private static int BATTLE_NAME_X = 400;
     private static int BATTLE_NAME_Y = 92;
     private Paint battlePaint;
+
+    private static final int PARTY_IMAGE_BASE_LEFT_X = 55;
+    private static final int PARTY_IMAGE_OFFSET_X = 100;
+    private static final int PARTY_IMAGE_TOP_Y = 1000;
 
     private static int BACK_BUTTON_LEFT_X = 45;
     private static int BACK_BUTTON_RIGHT_X = 215;
     private static int BACK_BUTTON_TOP_Y = 1150;
     private static int BACK_BUTTON_BOTTOM_Y = 1250;
+    private final static int PARTY_SCALE = 57;
 
     private static int PARTY_BUTTON_LEFT_X = 250;
     private static int PARTY_BUTTON_RIGHT_X = 550;
@@ -134,6 +142,13 @@ public class BattleInfoScreen extends Screen{
         g.drawImage(background, 0, 0);
 
         g.drawString(battleInfo.getName(), BATTLE_NAME_X, BATTLE_NAME_Y, battlePaint);
+
+        for(int i = 0; i < battleInfo.getPartyMax() && party[i] != null; i++){
+            g.drawPercentageImage(party[i].getImage(), PARTY_IMAGE_OFFSET_X * i + PARTY_IMAGE_BASE_LEFT_X, PARTY_IMAGE_TOP_Y, PARTY_SCALE, PARTY_SCALE);
+        }
+        for(int i = battleInfo.getPartyMax(); i < 7; i++){
+            g.drawImage(Assets.LockSelection, PARTY_IMAGE_OFFSET_X * i + PARTY_IMAGE_BASE_LEFT_X, PARTY_IMAGE_TOP_Y);
+        }
     }
 
     @Override
@@ -143,7 +158,7 @@ public class BattleInfoScreen extends Screen{
 
     @Override
     public void resume() {
-
+        party = Party.getParty();
     }
 
     @Override
