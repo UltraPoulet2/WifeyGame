@@ -40,6 +40,10 @@ public class BattleInfoScreen extends Screen{
     private static int BATTLE_NAME_Y = 92;
     private Paint battlePaint;
 
+    private static int NUMBER_WAVES_X = 228;
+    private static int NUMBER_WAVES_Y = 228;
+    private Paint wavesPaint;
+
     private static final int PARTY_IMAGE_BASE_LEFT_X = 55;
     private static final int PARTY_IMAGE_BASE_RIGHT_X = 145;
     private static final int PARTY_IMAGE_OFFSET_X = 100;
@@ -76,7 +80,12 @@ public class BattleInfoScreen extends Screen{
         battlePaint = new Paint();
         battlePaint.setColor(Color.BLACK);
         battlePaint.setTextAlign(Align.CENTER);
-        battlePaint.setTextSize(40);
+        battlePaint.setTextSize(50);
+
+        wavesPaint = new Paint();
+        wavesPaint.setColor(Color.BLACK);
+        wavesPaint.setTextAlign(Align.CENTER);
+        wavesPaint.setTextSize(50);
 
         partySelect = new PartySelectScreen(game);
         partySelect.setPreviousScreen(this);
@@ -165,11 +174,13 @@ public class BattleInfoScreen extends Screen{
     @Override
     public void paint(float deltaTime) {
         Graphics g = game.getGraphics();
-        g.clearScreen(0xFF777777);
+        g.clearScreen(0xFFFFFFFF);
 
         g.drawImage(background, 0, 0);
 
         g.drawString(battleInfo.getName(), BATTLE_NAME_X, BATTLE_NAME_Y, battlePaint);
+
+        g.drawString(String.valueOf(battleInfo.getCharacterEnemies().length), NUMBER_WAVES_X, NUMBER_WAVES_Y, wavesPaint);
 
         for(int i = 0; i < battleInfo.getPartyMax() && party[i] != null; i++){
             g.drawPercentageImage(party[i].getImage(), PARTY_IMAGE_OFFSET_X * i + PARTY_IMAGE_BASE_LEFT_X, PARTY_IMAGE_TOP_Y, PARTY_SCALE, PARTY_SCALE);
