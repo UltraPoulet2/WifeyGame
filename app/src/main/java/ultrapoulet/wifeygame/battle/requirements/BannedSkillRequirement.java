@@ -41,6 +41,6 @@ public class BannedSkillRequirement extends AbsRequirement {
     }
 
     public String getDescription(){
-        return "Determine later";
+        return "Certain skills banned";
     }
 }

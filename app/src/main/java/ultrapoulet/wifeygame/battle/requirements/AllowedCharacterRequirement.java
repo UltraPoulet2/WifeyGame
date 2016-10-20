@@ -39,6 +39,6 @@ public class AllowedCharacterRequirement extends AbsRequirement {
     }
 
     public String getDescription(){
-        return "To do";
+        return "Only certain Wifeys allowed";
     }
 }

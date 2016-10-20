@@ -41,6 +41,6 @@ public class RequiredSkillRequirement extends AbsRequirement {
     }
 
     public String getDescription(){
-        return "Determine later";
+        return "Wifeys required to have certain skills";
     }
 }

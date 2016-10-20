@@ -39,6 +39,6 @@ public class BannedCharacterRequirement extends AbsRequirement {
     }
 
     public String getDescription(){
-        return "To do";
+        return "Certain Wifeys banned";
     }
 }

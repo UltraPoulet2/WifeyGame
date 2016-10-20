@@ -68,6 +68,10 @@ public class BattleInfo {
         }
     }
 
+    public ArrayList<AbsRequirement> getRequirements(){
+        return restrictionList;
+    }
+
     public ArrayList<WifeyCharacter> getRequiredList(){
         return requiredList;
     }

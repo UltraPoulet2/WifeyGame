@@ -3,6 +3,7 @@ package ultrapoulet.wifeygame.battle;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
+import android.text.TextPaint;
 
 import java.util.List;
 
@@ -44,12 +45,22 @@ public class BattleInfoScreen extends Screen{
     private static int NUMBER_WAVES_Y = 228;
     private Paint wavesPaint;
 
-    private static final int PARTY_IMAGE_BASE_LEFT_X = 55;
-    private static final int PARTY_IMAGE_BASE_RIGHT_X = 145;
-    private static final int PARTY_IMAGE_OFFSET_X = 100;
-    private static final int PARTY_IMAGE_TOP_Y = 1000;
-    private static final int PARTY_IMAGE_BOT_Y = 1090;
+    private static int PARTY_IMAGE_BASE_LEFT_X = 55;
+    private static int PARTY_IMAGE_BASE_RIGHT_X = 145;
+    private static int PARTY_IMAGE_OFFSET_X = 100;
+    private static int PARTY_IMAGE_TOP_Y = 1000;
+    private static int PARTY_IMAGE_BOT_Y = 1090;
     private final static int PARTY_SCALE = 57;
+
+    private static int REQUIREMENT_CENTER_X = 400;
+    private static int REQUIREMENT_LEFT_X = 47;
+    private static int REQUIREMENT_RIGHT_X = 752;
+    private static int REQUIREMENT_WIDTH = REQUIREMENT_RIGHT_X - REQUIREMENT_LEFT_X - 200;
+    private static int REQUIREMENT_BASE_TOP_Y = 413;
+    private static int REQUIREMENT_BASE_BOT_Y = 512;
+    private static int REQUIREMENT_BASE_TEXT_Y = 485;
+    private static int REQUIREMENT_OFFSET_Y = 105;
+    private TextPaint requirementPaint;
 
     private static int BACK_BUTTON_LEFT_X = 45;
     private static int BACK_BUTTON_RIGHT_X = 215;
@@ -86,6 +97,11 @@ public class BattleInfoScreen extends Screen{
         wavesPaint.setColor(Color.BLACK);
         wavesPaint.setTextAlign(Align.CENTER);
         wavesPaint.setTextSize(50);
+
+        requirementPaint = new TextPaint();
+        requirementPaint.setColor(Color.BLACK);
+        requirementPaint.setTextAlign(Align.CENTER);
+        requirementPaint.setTextSize(45);
 
         partySelect = new PartySelectScreen(game);
         partySelect.setPreviousScreen(this);
@@ -181,6 +197,17 @@ public class BattleInfoScreen extends Screen{
         g.drawString(battleInfo.getName(), BATTLE_NAME_X, BATTLE_NAME_Y, battlePaint);
 
         g.drawString(String.valueOf(battleInfo.getCharacterEnemies().length), NUMBER_WAVES_X, NUMBER_WAVES_Y, wavesPaint);
+
+        for(int i = 0; i < battleInfo.getRequirements().size(); i++){
+            String desc = battleInfo.getRequirements().get(i).getDescription();
+            float[] array = new float[3];
+            if(requirementPaint.breakText(desc, true, REQUIREMENT_WIDTH, null) == desc.length() ){
+                g.drawString(desc, REQUIREMENT_CENTER_X, REQUIREMENT_BASE_TEXT_Y + i * REQUIREMENT_OFFSET_Y, requirementPaint);
+            }
+            else {
+                g.drawMultiLineString(desc, REQUIREMENT_CENTER_X, REQUIREMENT_BASE_TOP_Y + i * REQUIREMENT_OFFSET_Y, REQUIREMENT_WIDTH, requirementPaint);
+            }
+        }
 
         for(int i = 0; i < battleInfo.getPartyMax() && party[i] != null; i++){
             g.drawPercentageImage(party[i].getImage(), PARTY_IMAGE_OFFSET_X * i + PARTY_IMAGE_BASE_LEFT_X, PARTY_IMAGE_TOP_Y, PARTY_SCALE, PARTY_SCALE);
