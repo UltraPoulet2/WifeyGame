@@ -78,6 +78,7 @@ public class BattleInfoScreen extends Screen{
     private static int START_BUTTON_BOTTOM_Y = 1250;
 
     private ButtonPressed lastPressed = null;
+    private int selectedReq = -1;
 
     private enum ButtonPressed{
         BACK,
@@ -133,6 +134,19 @@ public class BattleInfoScreen extends Screen{
         }
     }
 
+    private int getRequirementIndex(int x, int y){
+        for(int i = 0; i < 5 && i < battleInfo.getRequirements().size(); i++){
+            int xLeft = REQUIREMENT_LEFT_X;
+            int xRight = REQUIREMENT_RIGHT_X;
+            int yTop = REQUIREMENT_BASE_TOP_Y + REQUIREMENT_OFFSET_Y * i;
+            int yBot = REQUIREMENT_BASE_BOT_Y + REQUIREMENT_OFFSET_Y * i;
+            if(x >= xLeft && x <= xRight && y >= yTop && y <= yBot){
+                return i;
+            }
+        }
+        return -1;
+    }
+
     //Gets the index of the party member that is presently being touched
     private int getPartyIndex(int x, int y){
         for(int i = 0; i < battleInfo.getPartyMax(); i++){
@@ -155,6 +169,7 @@ public class BattleInfoScreen extends Screen{
             if(t.type == TouchEvent.TOUCH_DOWN){
                 lastPressed = getButtonPressed(t.x, t.y);
                 selectedChar = getPartyIndex(t.x, t.y);
+                selectedReq = getRequirementIndex(t.x, t.y);
                 continue;
             }
             else if(t.type == TouchEvent.TOUCH_UP){
@@ -182,6 +197,10 @@ public class BattleInfoScreen extends Screen{
                 else if(selectedChar == getPartyIndex(t.x, t.y) && selectedChar != -1){
                     charInfo.setChar(party[selectedChar]);
                     game.setScreen(charInfo);
+                }
+                else if(selectedReq == getRequirementIndex(t.x, t.y) && selectedReq != -1){
+                    //Set up displaying a requirement
+                    System.out.println("Displaying requirement: " + selectedReq + " " + battleInfo.getRequirements().get(selectedReq).getDescription());
                 }
             }
         }
