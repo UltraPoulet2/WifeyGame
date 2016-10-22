@@ -184,7 +184,7 @@ public class BattleInfoScreen extends Screen{
                             game.setScreen(partySelect);
                             break;
                         case START:
-                            if(Party.partySize() > 0 && battleInfo.validParty(Party.getParty())){
+                            if(party[0] != null && battleInfo.validParty(party)){
                                 BattleScreen bs = new BattleScreen(game);
                                 bs.setParty(Party.getBattleParty());
                                 bs.setBattleInfo(battleInfo);
@@ -219,7 +219,6 @@ public class BattleInfoScreen extends Screen{
 
         for(int i = 0; i < battleInfo.getRequirements().size(); i++){
             String desc = battleInfo.getRequirements().get(i).getDescription();
-            float[] array = new float[3];
             if(requirementPaint.breakText(desc, true, REQUIREMENT_WIDTH, null) == desc.length() ){
                 g.drawString(desc, REQUIREMENT_CENTER_X, REQUIREMENT_BASE_TEXT_Y + i * REQUIREMENT_OFFSET_Y, requirementPaint);
             }
@@ -233,6 +232,10 @@ public class BattleInfoScreen extends Screen{
         }
         for(int i = battleInfo.getPartyMax(); i < 7; i++){
             g.drawImage(Assets.LockSelection, PARTY_IMAGE_OFFSET_X * i + PARTY_IMAGE_BASE_LEFT_X, PARTY_IMAGE_TOP_Y);
+        }
+
+        if(party[0] == null || !battleInfo.validParty(party)){
+            g.drawImage(Assets.AcceptDisable, START_BUTTON_LEFT_X, START_BUTTON_TOP_Y);
         }
     }
 

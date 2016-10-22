@@ -488,6 +488,11 @@ public class PartySelectScreen extends Screen {
             g.drawPercentageImage(currentParty[draggingPartyIndex].getImage(), draggingX - DRAGGING_OFFSET, draggingY - DRAGGING_OFFSET, DRAGGING_SCALE, DRAGGING_SCALE);
         }
 
+        boolean validParty = (currentParty[0] != null) && (battleInfo == null || battleInfo.validParty(currentParty));
+        if(!validParty){
+            g.drawImage(Assets.AcceptDisable, ACCEPT_BUTTON_LEFT_X, ACCEPT_BUTTON_TOP_Y);
+        }
+
 
     }
 
