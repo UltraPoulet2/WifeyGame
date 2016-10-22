@@ -234,8 +234,11 @@ public class BattleInfoScreen extends Screen{
             g.drawImage(Assets.LockSelection, PARTY_IMAGE_OFFSET_X * i + PARTY_IMAGE_BASE_LEFT_X, PARTY_IMAGE_TOP_Y);
         }
 
-        if(party[0] == null || !battleInfo.validParty(party)){
-            g.drawImage(Assets.AcceptDisable, START_BUTTON_LEFT_X, START_BUTTON_TOP_Y);
+        if(party[0] != null && battleInfo.validParty(party)){
+            g.drawImage(Assets.BattleEnable, START_BUTTON_LEFT_X, START_BUTTON_TOP_Y);
+        }
+        else{
+            g.drawImage(Assets.BattleDisable, START_BUTTON_LEFT_X, START_BUTTON_TOP_Y);
         }
     }
 

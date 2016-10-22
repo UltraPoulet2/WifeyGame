@@ -41,6 +41,7 @@ public class Assets {
 
     //BattleInfoScreen Stuff
     public static Image BattleInfoScreen;
+    public static Image BattleEnable, BattleDisable;
 
     //Element Image stuff
     public static Image[] ElementImages;

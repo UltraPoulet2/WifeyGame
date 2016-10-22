@@ -489,7 +489,10 @@ public class PartySelectScreen extends Screen {
         }
 
         boolean validParty = (currentParty[0] != null) && (battleInfo == null || battleInfo.validParty(currentParty));
-        if(!validParty){
+        if(validParty){
+            g.drawImage(Assets.AcceptEnable, ACCEPT_BUTTON_LEFT_X, ACCEPT_BUTTON_TOP_Y);
+        }
+        else{
             g.drawImage(Assets.AcceptDisable, ACCEPT_BUTTON_LEFT_X, ACCEPT_BUTTON_TOP_Y);
         }
 
