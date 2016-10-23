@@ -38,6 +38,8 @@ public class Assets {
     //CharacterInfoScreen Stuff
     public static Image CharacterInfoScreen;
     public static Image BattleCharacterInfoScreen;
+    public static Image ScrollBarFull;
+    public static Image ScrollBarShort;
 
     //BattleInfoScreen Stuff
     public static Image BattleInfoScreen;

@@ -107,6 +107,9 @@ public class CharacterInfoScreen extends Screen {
     private static final int SKILLS_NEXT_Y = 730 + BG_Y;
     private static final int SKILLS_PAGE_WIDTH = 50;
     private static final int SKILLS_PAGE_HEIGHT = 105;
+    private static final int SKILLS_SCROLL_X = 600 + BG_X;
+    private static final int SKILLS_SCROLL_TOP_Y = 565 + BG_Y;
+    private static final int SKILLS_SCROLL_MAX_Y = 645 + BG_Y;
 
     private enum ButtonPressed{
         CLOSE,
@@ -346,6 +349,13 @@ public class CharacterInfoScreen extends Screen {
                 xOffset = SKILLS_RIGHT_X;
             }
             g.drawString(skill.getSkillName(), xOffset, yOffset, skillsPaint);
+        }
+        if(maxPage == 0){
+            g.drawImage(Assets.ScrollBarFull, SKILLS_SCROLL_X, SKILLS_SCROLL_TOP_Y);
+        }
+        else{
+            int offsetPerPage = (SKILLS_SCROLL_MAX_Y - SKILLS_SCROLL_TOP_Y) / maxPage;
+            g.drawImage(Assets.ScrollBarShort, SKILLS_SCROLL_X, SKILLS_SCROLL_TOP_Y + (offsetPerPage * skillsPage));
         }
 
         if(displayText != -1 && displayChar.getSkills().size() > displayText){
