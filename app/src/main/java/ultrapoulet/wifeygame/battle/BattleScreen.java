@@ -80,10 +80,10 @@ public class BattleScreen extends Screen {
     private static final int ENEMY_HEALTH_HOLDER_X = 195;
     private static final int ENEMY_HEALTH_HOLDER_Y = 508;
     private static final int ENEMY_HEALTH_BAR_X = 200;
-    private static final int ENEMY_HEALTH_BAR_Y = 510;
+    private static final int ENEMY_HEALTH_BAR_Y = 540;
 
     private static final int ENEMY_NUMBER_X = 250;
-    private static final int ENEMY_NUMBER_Y = 495;
+    private static final int ENEMY_NUMBER_Y = 525;
     private static final int ENEMY_NUMBER_DISTANCE_X = 20;
 
     private static final int SPECIAL_BAR_BASE_X = 0;
