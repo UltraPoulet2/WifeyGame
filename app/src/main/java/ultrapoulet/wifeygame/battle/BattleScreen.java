@@ -55,8 +55,8 @@ public class BattleScreen extends Screen {
     private static final int ENEMY_IMAGE_Y = 100;
 
     private static final int CHAR_HOLDER_X_DISTANCE = 100;
-    private static final int CHAR_HOLDER_SMALL_Y = 760;
-    private static final int CHAR_HOLDER_LARGE_Y = 640;
+    private static final int CHAR_HOLDER_SMALL_Y = 740;
+    private static final int CHAR_HOLDER_LARGE_Y = 610;
 
     private static final int SLASH = 10;
     private static final int CHAR_NUMBER_SMALL_X = 13;
@@ -78,21 +78,21 @@ public class BattleScreen extends Screen {
     private static final int CHAR_IMAGE_LARGE_SIZE = 160;
 
     private static final int ENEMY_HEALTH_HOLDER_X = 195;
-    private static final int ENEMY_HEALTH_HOLDER_Y = 508;
+    private static final int ENEMY_HEALTH_HOLDER_Y = 503;
     private static final int ENEMY_HEALTH_BAR_X = 200;
-    private static final int ENEMY_HEALTH_BAR_Y = 540;
+    private static final int ENEMY_HEALTH_BAR_Y = 535;
 
     private static final int ENEMY_NUMBER_X = 250;
-    private static final int ENEMY_NUMBER_Y = 525;
+    private static final int ENEMY_NUMBER_Y = 520;
     private static final int ENEMY_NUMBER_DISTANCE_X = 20;
 
     private static final int SPECIAL_BAR_BASE_X = 0;
-    private static final int SPECIAL_BAR_BASE_Y = 610;
+    private static final int SPECIAL_BAR_BASE_Y = 580;
     private static final int SPECIAL_BAR_X = 100;
-    private static final int SPECIAL_BAR_Y = 615;
-    private static final int SPECIAL_BAR_TOP_Y = 585;
+    private static final int SPECIAL_BAR_Y = 585;
+    private static final int SPECIAL_BAR_TOP_Y = 555;
     private static final int SPECIAL_BAR_NUMBER_X = 390;
-    private static final int SPECIAL_BAR_NUMBER_Y = 590;
+    private static final int SPECIAL_BAR_NUMBER_Y = 560;
 
     private static final int HALF_SCALE = 50;
     private static final int FULL_SCALE = 100;
