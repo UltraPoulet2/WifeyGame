@@ -229,6 +229,9 @@ public class BattleInfoScreen extends Screen{
 
         for(int i = 0; i < battleInfo.getPartyMax() && party[i] != null; i++){
             g.drawPercentageImage(party[i].getImage(), PARTY_IMAGE_OFFSET_X * i + PARTY_IMAGE_BASE_LEFT_X, PARTY_IMAGE_TOP_Y, PARTY_SCALE, PARTY_SCALE);
+            if(!battleInfo.allowCharacter(party[i])){
+                g.drawPercentageImage(Assets.InvalidChar, PARTY_IMAGE_OFFSET_X * i + PARTY_IMAGE_BASE_LEFT_X, PARTY_IMAGE_TOP_Y, PARTY_SCALE, PARTY_SCALE);
+            }
         }
         for(int i = battleInfo.getPartyMax(); i < 7; i++){
             g.drawImage(Assets.LockSelection, PARTY_IMAGE_OFFSET_X * i + PARTY_IMAGE_BASE_LEFT_X, PARTY_IMAGE_TOP_Y);

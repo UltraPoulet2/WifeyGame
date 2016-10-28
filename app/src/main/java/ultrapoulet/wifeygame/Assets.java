@@ -34,6 +34,7 @@ public class Assets {
     public static Image NextPageEnable, NextPageDisable;
     public static Image PrevPageEnable, PrevPageDisable;
     public static Image LockSelection;
+    public static Image InvalidChar;
 
     //CharacterInfoScreen Stuff
     public static Image CharacterInfoScreen;

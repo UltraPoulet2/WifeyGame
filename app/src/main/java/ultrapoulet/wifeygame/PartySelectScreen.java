@@ -454,6 +454,9 @@ public class PartySelectScreen extends Screen {
         for(int i = 0; i < maxPartySize && currentParty[i] != null; i++){
             if(!dragging || i != draggingPartyIndex) {
                 g.drawPercentageImage(currentParty[i].getImage(), PARTY_IMAGE_OFFSET_X * i + PARTY_IMAGE_BASE_LEFT_X, PARTY_IMAGE_TOP_Y, PARTY_SCALE, PARTY_SCALE);
+                if(battleInfo != null && !battleInfo.allowCharacter(currentParty[i])){
+                    g.drawPercentageImage(Assets.InvalidChar, PARTY_IMAGE_OFFSET_X * i + PARTY_IMAGE_BASE_LEFT_X, PARTY_IMAGE_TOP_Y, PARTY_SCALE, PARTY_SCALE);
+                }
             }
         }
         for(int i = maxPartySize; i < 7; i++){
@@ -486,6 +489,9 @@ public class PartySelectScreen extends Screen {
         }
         if(dragging && draggingPartyIndex != -1){
             g.drawPercentageImage(currentParty[draggingPartyIndex].getImage(), draggingX - DRAGGING_OFFSET, draggingY - DRAGGING_OFFSET, DRAGGING_SCALE, DRAGGING_SCALE);
+            if(battleInfo != null && !battleInfo.allowCharacter(currentParty[draggingPartyIndex])){
+                g.drawPercentageImage(Assets.InvalidChar, draggingX - DRAGGING_OFFSET, draggingY - DRAGGING_OFFSET, DRAGGING_SCALE, DRAGGING_SCALE);
+            }
         }
 
         boolean validParty = (currentParty[0] != null) && (battleInfo == null || battleInfo.validParty(currentParty));
