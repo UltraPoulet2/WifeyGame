@@ -110,11 +110,9 @@ public class PartySelectScreen extends Screen {
     private static final int CHAR_IMAGE_BASE_BOT_Y = CHAR_IMAGE_BASE_TOP_Y + CHAR_IMAGE_HEIGHT;
     private static final int CHAR_IMAGE_OFFSET_Y = 90;
 
-    private static final int CHAR_HIGHLIGHT_WIDTH = 86;
-    private static final int CHAR_HIGHLIGHT_HEIGHT = 86;
-    private static final int CHAR_HIGHLIGHT_BASE_X = 42;
-    private static final int CHAR_HIGHLIGHT_BASE_Y = 397;
-    private static final int CHAR_HIGHLIGHT_OFFSET = 90;
+    private static final int CHAR_REQUIRED_HOLDER_BASE_X = CHAR_IMAGE_BASE_LEFT_X - 3;
+    private static final int CHAR_REQUIRED_HOLDER_BASE_Y = CHAR_IMAGE_BASE_TOP_Y - 12;
+    private static final int CHAR_REQUIRED_OFFSET = 90;
 
     private static final int PARTY_IMAGE_BASE_LEFT_X = 55;
     private static final int PARTY_IMAGE_BASE_RIGHT_X = 145;
@@ -473,9 +471,8 @@ public class PartySelectScreen extends Screen {
         }
         for(int i = minIndex; i < validCharacters.size() && i < maxIndex; i++){
             if(reqList.contains(validCharacters.get(i))){
-                g.drawRect((i % ROW_SIZE) * CHAR_HIGHLIGHT_OFFSET + CHAR_HIGHLIGHT_BASE_X,
-                        (i % PER_PAGE / COLUMN_SIZE) * CHAR_HIGHLIGHT_OFFSET + CHAR_HIGHLIGHT_BASE_Y,
-                        CHAR_HIGHLIGHT_WIDTH, CHAR_HIGHLIGHT_HEIGHT, Color.BLUE);
+                //Since this can only be on row 1, the Y doesn't calculate offset.
+                g.drawImage(Assets.RequiredCharHolder, (i % ROW_SIZE) * CHAR_REQUIRED_OFFSET + CHAR_REQUIRED_HOLDER_BASE_X, CHAR_REQUIRED_HOLDER_BASE_Y);
             }
             if(!dragging || i != draggingRecruitIndex) {
                 g.drawPercentageImage(validCharacters.get(i).getImage(),

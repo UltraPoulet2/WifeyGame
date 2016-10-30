@@ -98,6 +98,7 @@ public class LoadingScreen extends Screen {
         Assets.ScrollBarFull = g.newImage("buttons/ScrollBarFull.png", ImageFormat.ARGB8888);
         Assets.ScrollBarShort = g.newImage("buttons/ScrollBarShort.png", ImageFormat.ARGB8888);
         Assets.InvalidChar = g.newImage("InvalidChar.png", ImageFormat.ARGB8888);
+        Assets.RequiredCharHolder = g.newImage("RequiredCharHolder.png", ImageFormat.ARGB8888);
 
         Assets.CharacterInfoScreen = g.newImage("screens/CharacterInfoScreen.png", ImageFormat.RGB565);
         Assets.BattleCharacterInfoScreen = g.newImage("screens/BattleCharacterInfoScreen.png", ImageFormat.RGB565);
