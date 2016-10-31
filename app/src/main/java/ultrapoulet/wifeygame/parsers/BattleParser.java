@@ -5,10 +5,11 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import ultrapoulet.wifeygame.battle.BattleInfo;
+import ultrapoulet.wifeygame.battle.requirements.AbsRequirement;
+import ultrapoulet.wifeygame.battle.requirements.RequirementFactory;
 import ultrapoulet.wifeygame.character.EnemyCharacter;
 import ultrapoulet.wifeygame.gamestate.Battles;
 import ultrapoulet.wifeygame.gamestate.Enemies;
-
 /**
  * Created by John on 6/22/2016.
  */
@@ -17,10 +18,13 @@ public class BattleParser extends DefaultHandler {
     private boolean bName = false;
     private boolean bEnemy = false;
     private boolean bPartySize = false;
+    private boolean bRequirement = false;
+    private boolean bRValue = false;
 
     private boolean error = false;
 
     private BattleInfo battleBuilder;
+    private AbsRequirement reqBuilder;
     private String battleKey;
 
     @Override
@@ -48,6 +52,25 @@ public class BattleParser extends DefaultHandler {
         else if(qName.equalsIgnoreCase("partysize")){
             bPartySize = true;
         }
+        else if(qName.equalsIgnoreCase("requirements")){
+            //Do nothing, but it's valid
+        }
+        else if(qName.equalsIgnoreCase("requirement")){
+            //Create a new requirement
+            reqBuilder = RequirementFactory.getRequirement(attributes.getValue("type"));
+            if(reqBuilder == null){
+                System.out.println("BattleParser:startElement(): Invalid Requirement: " + attributes.getValue("type"));
+                bRequirement = false;
+            }
+            else{
+                bRequirement = true;
+            }
+            bRequirement = true;
+        }
+        else if(qName.equalsIgnoreCase("value")){
+            System.out.println("Creating value");
+            bRValue = true;
+        }
         else{
             System.out.println("BattleParser:startElement(): Invalid qName: " + qName + " for key " + battleKey);
         }
@@ -65,6 +88,22 @@ public class BattleParser extends DefaultHandler {
             else{
                 System.out.println("BattleParser:endElement(): Error parsing for key: " + battleKey);
             }
+        }
+        else if(qName.equalsIgnoreCase("requirement")){
+            //Do stuff
+            /* Quick testing
+            WifeyCharacter[] recruits = RecruitedCharacters.getArray();
+            if(reqBuilder != null){
+                for(int i = 0; i < recruits.length; i++){
+                    reqBuilder.validateCharacter(recruits[i]);
+                }
+            }
+            // */
+            if(reqBuilder != null){
+                battleBuilder.addRequirement(reqBuilder);
+            }
+            reqBuilder = null;
+            bRequirement = false;
         }
     }
 
@@ -99,12 +138,20 @@ public class BattleParser extends DefaultHandler {
                 bPartySize = false;
             }
         }
+        else if(bRValue){
+            System.out.println("Value for requirement: " + temp);
+            if(reqBuilder != null){
+                reqBuilder.addValue(temp);
+            }
+            bRValue = false;
+        }
     }
 
     private void resetValues(){
         error = false;
         bName = false;
         bEnemy = false;
+        bRValue = false;
     }
 
     private boolean validate(){

@@ -1,7 +1,12 @@
 package ultrapoulet.wifeygame;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -12,6 +17,7 @@ import ultrapoulet.androidgame.framework.Graphics.ImageFormat;
 import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.androidgame.framework.Screen;
 import ultrapoulet.wifeygame.battle.BattleSelectScreen;
+import ultrapoulet.wifeygame.character.WifeyCharacter;
 import ultrapoulet.wifeygame.gamestate.Party;
 import ultrapoulet.wifeygame.gamestate.RecruitedCharacters;
 import ultrapoulet.wifeygame.parsers.BattleParser;
@@ -93,9 +99,16 @@ public class LoadingScreen extends Screen {
         Assets.PrevPageEnable = g.newImage("buttons/PrevPageEnabled.png", ImageFormat.ARGB8888);
         Assets.PrevPageDisable = g.newImage("buttons/PrevPageDisabled.png", ImageFormat.ARGB8888);
         Assets.LockSelection = g.newImage("LockSelection.png", ImageFormat.ARGB8888);
+        Assets.BattleEnable = g.newImage("buttons/BattleEnabled.png", ImageFormat.ARGB8888);
+        Assets.BattleDisable = g.newImage("buttons/BattleDisabled.png", ImageFormat.ARGB8888);
+        Assets.ScrollBarFull = g.newImage("buttons/ScrollBarFull.png", ImageFormat.ARGB8888);
+        Assets.ScrollBarShort = g.newImage("buttons/ScrollBarShort.png", ImageFormat.ARGB8888);
+        Assets.InvalidChar = g.newImage("InvalidChar.png", ImageFormat.ARGB8888);
+        Assets.RequiredCharHolder = g.newImage("RequiredCharHolder.png", ImageFormat.ARGB8888);
 
         Assets.CharacterInfoScreen = g.newImage("screens/CharacterInfoScreen.png", ImageFormat.RGB565);
         Assets.BattleCharacterInfoScreen = g.newImage("screens/BattleCharacterInfoScreen.png", ImageFormat.RGB565);
+        Assets.BattleInfoScreen = g.newImage("screens/BattleInfoScreen.png", ImageFormat.RGB565);
 
         Assets.ElementImages = new Image[6];
         Assets.ElementImages[0] = g.newImage("elements/AirElement.png", ImageFormat.ARGB8888);
@@ -141,13 +154,20 @@ public class LoadingScreen extends Screen {
     }
 
     private void createParty(){
-        Party.setIndex(0, RecruitedCharacters.get("TEST-YUNO"));
-        Party.setIndex(1, RecruitedCharacters.get("TEST-RENA"));
-        Party.setIndex(2, RecruitedCharacters.get("TEST-KTNH"));
-        Party.setIndex(3, RecruitedCharacters.get("TEST-ANNA"));
-        Party.setIndex(4, RecruitedCharacters.get("TEST-SJGH"));
-        Party.setIndex(5, RecruitedCharacters.get("TEST-YNDR"));
-        Party.setIndex(6, RecruitedCharacters.get("TEST-PERI"));
+        SharedPreferences prefs = game.getGamePreferences("ultrapoulet.wifeygame.PREFERENCE_FILE_KEY", Context.MODE_PRIVATE);
+        Party.init(prefs);
+
+        //This will get cleaned up later
+        ArrayList<WifeyCharacter> party = new ArrayList<>();
+        party.add(RecruitedCharacters.get(prefs.getString("party_0", "TEST-YUNO")));
+        party.add(RecruitedCharacters.get(prefs.getString("party_1", "TEST-RENA")));
+        party.add(RecruitedCharacters.get(prefs.getString("party_2", "TEST-KTNH")));
+        party.add(RecruitedCharacters.get(prefs.getString("party_3", "TEST-ANNA")));
+        party.add(RecruitedCharacters.get(prefs.getString("party_4", "TEST-SJGH")));
+        party.add(RecruitedCharacters.get(prefs.getString("party_5", "TEST-YNDR")));
+        party.add(RecruitedCharacters.get(prefs.getString("party_6", "TEST-PERI")));
+
+        Party.setParty(party);
     }
 
     private void createEnemies(){

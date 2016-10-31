@@ -55,8 +55,8 @@ public class BattleScreen extends Screen {
     private static final int ENEMY_IMAGE_Y = 100;
 
     private static final int CHAR_HOLDER_X_DISTANCE = 100;
-    private static final int CHAR_HOLDER_SMALL_Y = 760;
-    private static final int CHAR_HOLDER_LARGE_Y = 640;
+    private static final int CHAR_HOLDER_SMALL_Y = 740;
+    private static final int CHAR_HOLDER_LARGE_Y = 610;
 
     private static final int SLASH = 10;
     private static final int CHAR_NUMBER_SMALL_X = 13;
@@ -77,22 +77,39 @@ public class BattleScreen extends Screen {
     private static final int CHAR_IMAGE_SMALL_SIZE = 80;
     private static final int CHAR_IMAGE_LARGE_SIZE = 160;
 
+    private static final int CHAR_LARGE_BASE_ELEM_ATK_X = 39;
+    private static final int CHAR_SMALL_BASE_ELEM_ATK_X = 19;
+    private static final int CHAR_LARGE_BASE_ELEM_RES_X = 102;
+    private static final int CHAR_SMALL_BASE_ELEM_RES_X = 51;
+    private static final int CHAR_LARGE_BASE_ELEM_WEAK_X = 165;
+    private static final int CHAR_SMALL_BASE_ELEM_WEAK_X = 82;
+    private static final int CHAR_LARGE_ELEM_Y = CHAR_HOLDER_LARGE_Y + 3;
+    private static final int CHAR_SMALL_ELEM_Y = CHAR_HOLDER_SMALL_Y + 1;
+    private static final int CHAR_LARGE_ELEM_SCALE = 25;
+    private static final int CHAR_SMALL_ELEM_SCALE = 13;
+
     private static final int ENEMY_HEALTH_HOLDER_X = 195;
-    private static final int ENEMY_HEALTH_HOLDER_Y = 508;
+    private static final int ENEMY_HEALTH_HOLDER_Y = 503;
     private static final int ENEMY_HEALTH_BAR_X = 200;
-    private static final int ENEMY_HEALTH_BAR_Y = 510;
+    private static final int ENEMY_HEALTH_BAR_Y = 535;
+
+    private static final int ENEMY_ELEM_ATK_X = 64 + ENEMY_HEALTH_HOLDER_X;
+    private static final int ENEMY_ELEM_RES_X = 150 + ENEMY_ELEM_ATK_X;
+    private static final int ENEMY_ELEM_WEAK_X = 150 + ENEMY_ELEM_RES_X;
+    private static final int ENEMY_ELEM_Y = 3 + ENEMY_HEALTH_HOLDER_Y;
+    private static final int ENEMY_ELEM_SCALE = 25;
 
     private static final int ENEMY_NUMBER_X = 250;
-    private static final int ENEMY_NUMBER_Y = 495;
+    private static final int ENEMY_NUMBER_Y = 520;
     private static final int ENEMY_NUMBER_DISTANCE_X = 20;
 
     private static final int SPECIAL_BAR_BASE_X = 0;
-    private static final int SPECIAL_BAR_BASE_Y = 610;
+    private static final int SPECIAL_BAR_BASE_Y = 580;
     private static final int SPECIAL_BAR_X = 100;
-    private static final int SPECIAL_BAR_Y = 615;
-    private static final int SPECIAL_BAR_TOP_Y = 585;
+    private static final int SPECIAL_BAR_Y = 585;
+    private static final int SPECIAL_BAR_TOP_Y = 555;
     private static final int SPECIAL_BAR_NUMBER_X = 390;
-    private static final int SPECIAL_BAR_NUMBER_Y = 590;
+    private static final int SPECIAL_BAR_NUMBER_Y = 560;
 
     private static final int HALF_SCALE = 50;
     private static final int FULL_SCALE = 100;
@@ -954,6 +971,11 @@ public class BattleScreen extends Screen {
             g.drawPercentageImage(charHolder, CHAR_HOLDER_X_DISTANCE * i, CHAR_HOLDER_SMALL_Y, HALF_SCALE, HALF_SCALE);
             g.drawPercentageImage(party[i].getImage(), CHAR_HOLDER_X_DISTANCE * i + CHAR_INTERIOR_SMALL_X, CHAR_IMAGE_SMALL_Y, HALF_SCALE, HALF_SCALE);
 
+            //Draw the elements
+            g.drawPercentageImage(party[i].getAttackElement().getElementImage(), CHAR_HOLDER_X_DISTANCE * i + CHAR_SMALL_BASE_ELEM_ATK_X, CHAR_SMALL_ELEM_Y, CHAR_SMALL_ELEM_SCALE, CHAR_SMALL_ELEM_SCALE);
+            g.drawPercentageImage(party[i].getStrongElement().getElementImage(), CHAR_HOLDER_X_DISTANCE * i + CHAR_SMALL_BASE_ELEM_RES_X, CHAR_SMALL_ELEM_Y, CHAR_SMALL_ELEM_SCALE, CHAR_SMALL_ELEM_SCALE);
+            g.drawPercentageImage(party[i].getWeakElement().getElementImage(), CHAR_HOLDER_X_DISTANCE * i + CHAR_SMALL_BASE_ELEM_WEAK_X, CHAR_SMALL_ELEM_Y, CHAR_SMALL_ELEM_SCALE, CHAR_SMALL_ELEM_SCALE);
+
             //Draw the health bar
             healthBar = getPlayerHealthBar(party[i].getCurrentHP(), party[i].getMaxHP());
             perHealth = (party[i].getCurrentHP() * 1.0)/(party[i].getMaxHP());
@@ -996,6 +1018,11 @@ public class BattleScreen extends Screen {
             g.drawImage(charHolder, CHAR_HOLDER_X_DISTANCE * i, CHAR_HOLDER_LARGE_Y);
             g.drawImage(party[i].getImage(), CHAR_HOLDER_X_DISTANCE * i + CHAR_INTERIOR_LARGE_X, CHAR_IMAGE_LARGE_Y);
 
+            //Draw the elements
+            g.drawPercentageImage(party[i].getAttackElement().getElementImage(), CHAR_HOLDER_X_DISTANCE * i + CHAR_LARGE_BASE_ELEM_ATK_X, CHAR_LARGE_ELEM_Y, CHAR_LARGE_ELEM_SCALE, CHAR_LARGE_ELEM_SCALE);
+            g.drawPercentageImage(party[i].getStrongElement().getElementImage(), CHAR_HOLDER_X_DISTANCE * i + CHAR_LARGE_BASE_ELEM_RES_X, CHAR_LARGE_ELEM_Y, CHAR_LARGE_ELEM_SCALE, CHAR_LARGE_ELEM_SCALE);
+            g.drawPercentageImage(party[i].getWeakElement().getElementImage(), CHAR_HOLDER_X_DISTANCE * i + CHAR_LARGE_BASE_ELEM_WEAK_X, CHAR_LARGE_ELEM_Y, CHAR_LARGE_ELEM_SCALE, CHAR_LARGE_ELEM_SCALE);
+
             healthBar = getPlayerHealthBar(party[i].getCurrentHP(), party[i].getMaxHP());
             perHealth = (party[i].getCurrentHP() * 1.0) / (party[i].getMaxHP());
             g.drawPercentageImage(healthBar, CHAR_HOLDER_X_DISTANCE * i + CHAR_INTERIOR_LARGE_X, CHAR_HEALTH_LARGE_Y, (int) Math.ceil(perHealth * FULL_SCALE), FULL_SCALE);
@@ -1035,6 +1062,11 @@ public class BattleScreen extends Screen {
         for ( ; i < party.length; i++) {
             g.drawPercentageImage(charHolder, CHAR_HOLDER_X_DISTANCE * (i + 1), CHAR_HOLDER_SMALL_Y, HALF_SCALE, HALF_SCALE);
             g.drawPercentageImage(party[i].getImage(), CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_INTERIOR_SMALL_X, CHAR_IMAGE_SMALL_Y, HALF_SCALE, HALF_SCALE);
+
+            //Draw the elements
+            g.drawPercentageImage(party[i].getAttackElement().getElementImage(), CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_SMALL_BASE_ELEM_ATK_X, CHAR_SMALL_ELEM_Y, CHAR_SMALL_ELEM_SCALE, CHAR_SMALL_ELEM_SCALE);
+            g.drawPercentageImage(party[i].getStrongElement().getElementImage(), CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_SMALL_BASE_ELEM_RES_X, CHAR_SMALL_ELEM_Y, CHAR_SMALL_ELEM_SCALE, CHAR_SMALL_ELEM_SCALE);
+            g.drawPercentageImage(party[i].getWeakElement().getElementImage(), CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_SMALL_BASE_ELEM_WEAK_X, CHAR_SMALL_ELEM_Y, CHAR_SMALL_ELEM_SCALE, CHAR_SMALL_ELEM_SCALE);
 
             healthBar = getPlayerHealthBar(party[i].getCurrentHP(), party[i].getMaxHP());
             perHealth = (party[i].getCurrentHP() * 1.0)/(party[i].getMaxHP());
@@ -1084,6 +1116,9 @@ public class BattleScreen extends Screen {
         Image enemyHealth = getEnemyHealthBar(enemies[enemyIndex].getCurrentHP(), enemies[enemyIndex].getMaxHP());
         perHealth = (enemies[enemyIndex].getCurrentHP() * 1.0)/enemies[enemyIndex].getMaxHP();
         g.drawPercentageImage(enemyHealth, ENEMY_HEALTH_BAR_X, ENEMY_HEALTH_BAR_Y, (int) Math.ceil(FULL_SCALE * perHealth), FULL_SCALE);
+        g.drawPercentageImage(enemies[enemyIndex].getAttackElement().getElementImage(), ENEMY_ELEM_ATK_X, ENEMY_ELEM_Y, ENEMY_ELEM_SCALE, ENEMY_ELEM_SCALE);
+        g.drawPercentageImage(enemies[enemyIndex].getStrongElement().getElementImage(), ENEMY_ELEM_RES_X, ENEMY_ELEM_Y, ENEMY_ELEM_SCALE, ENEMY_ELEM_SCALE);
+        g.drawPercentageImage(enemies[enemyIndex].getWeakElement().getElementImage(), ENEMY_ELEM_WEAK_X, ENEMY_ELEM_Y, ENEMY_ELEM_SCALE, ENEMY_ELEM_SCALE);
 
         //Display enemy CurrentHP/MaxHP
         numberStart = false;

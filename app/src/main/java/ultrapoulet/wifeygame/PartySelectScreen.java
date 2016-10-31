@@ -15,6 +15,7 @@ import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.androidgame.framework.Input;
 import ultrapoulet.androidgame.framework.Input.TouchEvent;
 import ultrapoulet.androidgame.framework.Screen;
+import ultrapoulet.wifeygame.battle.BattleCharacter;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
 import ultrapoulet.wifeygame.battle.BattleInfo;
 import ultrapoulet.wifeygame.battle.BattleScreen;
@@ -109,8 +110,12 @@ public class PartySelectScreen extends Screen {
     private static final int CHAR_IMAGE_BASE_BOT_Y = CHAR_IMAGE_BASE_TOP_Y + CHAR_IMAGE_HEIGHT;
     private static final int CHAR_IMAGE_OFFSET_Y = 90;
 
-    private static final int PARTY_IMAGE_BASE_LEFT_X = 60;
-    private static final int PARTY_IMAGE_BASE_RIGHT_X = 150;
+    private static final int CHAR_REQUIRED_HOLDER_BASE_X = CHAR_IMAGE_BASE_LEFT_X - 3;
+    private static final int CHAR_REQUIRED_HOLDER_BASE_Y = CHAR_IMAGE_BASE_TOP_Y - 12;
+    private static final int CHAR_REQUIRED_OFFSET = 90;
+
+    private static final int PARTY_IMAGE_BASE_LEFT_X = 55;
+    private static final int PARTY_IMAGE_BASE_RIGHT_X = 145;
     private static final int PARTY_IMAGE_OFFSET_X = 100;
     private static final int PARTY_IMAGE_TOP_Y = 180;
     private static final int PARTY_IMAGE_BOT_Y = 270;
@@ -118,6 +123,67 @@ public class PartySelectScreen extends Screen {
     private static final int DRAGGING_OFFSET = 60;
 
     private ButtonPressed lastPressed = null;
+
+    private boolean hasRequiredList(){
+        return battleInfo != null && battleInfo.getRequiredList() != null;
+    }
+
+    private Comparator<WifeyCharacter> nameComp = new Comparator<WifeyCharacter>(){
+        @Override
+        public int compare(WifeyCharacter a, WifeyCharacter b){
+            if(hasRequiredList()){
+                ArrayList<WifeyCharacter> list = battleInfo.getRequiredList();
+                if(list.contains(a) && list.contains(b)){
+                    return a.compareName(b);
+                }
+                else if(list.contains(a)){
+                    return -1;
+                }
+                else if(list.contains(b)){
+                    return 1;
+                }
+            }
+            return a.compareName(b);
+        }
+    };
+
+    private Comparator<WifeyCharacter> strengthComp = new Comparator<WifeyCharacter>() {
+        @Override
+        public int compare(WifeyCharacter a, WifeyCharacter b) {
+            if(hasRequiredList()){
+                ArrayList<WifeyCharacter> list = battleInfo.getRequiredList();
+                if(list.contains(a) && list.contains(b)){
+                    return a.compareStrength(b);
+                }
+                else if(list.contains(a)){
+                    return -1;
+                }
+                else if(list.contains(b)){
+                    return 1;
+                }
+            }
+            return a.compareStrength(b);
+        }
+    };
+
+    private Comparator<WifeyCharacter> magicComp = new Comparator<WifeyCharacter>() {
+        @Override
+        public int compare(WifeyCharacter a, WifeyCharacter b) {
+            if(hasRequiredList()){
+                ArrayList<WifeyCharacter> list = battleInfo.getRequiredList();
+                if(list.contains(a) && list.contains(b)){
+                    return a.compareMagic(b);
+                }
+                else if(list.contains(a)){
+                    return -1;
+                }
+                else if(list.contains(b)){
+                    return 1;
+                }
+            }
+            return a.compareMagic(b);
+        }
+    };
 
     public PartySelectScreen(Game game){
         super(game);
@@ -138,14 +204,14 @@ public class PartySelectScreen extends Screen {
         validCharacters = new ArrayList<>();
         for(int i = 0; i < inputCharacters.length; i++){
             //Do a check to make sure the character is valid for this battle
-            validCharacters.add(inputCharacters[i]);
-        }
-        Comparator<WifeyCharacter> nameComp = new Comparator<WifeyCharacter>(){
-            @Override
-            public int compare(WifeyCharacter a, WifeyCharacter b){
-                return a.compareName(b);
+            boolean allowed = true;
+            if(battleInfo != null){
+                allowed = battleInfo.allowCharacter(inputCharacters[i]);
             }
-        };
+            if(allowed){
+                validCharacters.add(inputCharacters[i]);
+            }
+        }
         Collections.sort(validCharacters, nameComp);
         maxPage = (validCharacters.size() / PER_PAGE) + 1;
     }
@@ -160,7 +226,7 @@ public class PartySelectScreen extends Screen {
     public void setBattleInfo(BattleInfo info){
         this.battleInfo = info;
 
-        maxPartySize = battleInfo.getPartyMax();
+        maxPartySize = battleInfo != null ? battleInfo.getPartyMax() : 7;
         finalIndex = maxPartySize - 1;
         currentParty = new WifeyCharacter[maxPartySize];
         for(int i = 0; i < currentParty.length; i++){
@@ -244,12 +310,16 @@ public class PartySelectScreen extends Screen {
                     }
                     else if(lastPressed == ButtonPressed.ACCEPT && getButtonPressed(t.x, t.y) == ButtonPressed.ACCEPT){
                         if(currentParty[0] != null) {
-                            BattleScreen bs = new BattleScreen(game);
-                            Party.setParty(currentParty);
-                            bs.setParty(Party.getBattleParty());
-                            bs.setBattleInfo(battleInfo);
-                            bs.setBackground(Assets.testBG);
-                            game.setScreen(bs);
+                            if(battleInfo == null || battleInfo.validParty(currentParty)) {
+                                //This will be changed to go back to previous screen and save party
+                                //BattleScreen bs = new BattleScreen(game);
+                                Party.setParty(currentParty);
+                                backButton();
+                                //bs.setParty(Party.getBattleParty());
+                                //bs.setBattleInfo(battleInfo);
+                                //bs.setBackground(Assets.testBG);
+                                //game.setScreen(bs);
+                            }
                         }
                     }
                     else if(lastPressed == ButtonPressed.PREV_PAGE && getButtonPressed(t.x, t.y) == ButtonPressed.PREV_PAGE && currentPage > 1) {
@@ -382,6 +452,9 @@ public class PartySelectScreen extends Screen {
         for(int i = 0; i < maxPartySize && currentParty[i] != null; i++){
             if(!dragging || i != draggingPartyIndex) {
                 g.drawPercentageImage(currentParty[i].getImage(), PARTY_IMAGE_OFFSET_X * i + PARTY_IMAGE_BASE_LEFT_X, PARTY_IMAGE_TOP_Y, PARTY_SCALE, PARTY_SCALE);
+                if(battleInfo != null && !battleInfo.allowCharacter(currentParty[i])){
+                    g.drawPercentageImage(Assets.InvalidChar, PARTY_IMAGE_OFFSET_X * i + PARTY_IMAGE_BASE_LEFT_X, PARTY_IMAGE_TOP_Y, PARTY_SCALE, PARTY_SCALE);
+                }
             }
         }
         for(int i = maxPartySize; i < 7; i++){
@@ -389,7 +462,18 @@ public class PartySelectScreen extends Screen {
         }
         int minIndex = PER_PAGE * (currentPage - 1);
         int maxIndex = PER_PAGE * currentPage;
+        ArrayList<WifeyCharacter> reqList;
+        if(hasRequiredList()){
+            reqList = battleInfo.getRequiredList();
+        }
+        else{
+            reqList = new ArrayList<>();
+        }
         for(int i = minIndex; i < validCharacters.size() && i < maxIndex; i++){
+            if(reqList.contains(validCharacters.get(i))){
+                //Since this can only be on row 1, the Y doesn't calculate offset.
+                g.drawImage(Assets.RequiredCharHolder, (i % ROW_SIZE) * CHAR_REQUIRED_OFFSET + CHAR_REQUIRED_HOLDER_BASE_X, CHAR_REQUIRED_HOLDER_BASE_Y);
+            }
             if(!dragging || i != draggingRecruitIndex) {
                 g.drawPercentageImage(validCharacters.get(i).getImage(),
                         CHAR_IMAGE_OFFSET_X * (i % ROW_SIZE) + CHAR_IMAGE_BASE_LEFT_X,
@@ -402,6 +486,17 @@ public class PartySelectScreen extends Screen {
         }
         if(dragging && draggingPartyIndex != -1){
             g.drawPercentageImage(currentParty[draggingPartyIndex].getImage(), draggingX - DRAGGING_OFFSET, draggingY - DRAGGING_OFFSET, DRAGGING_SCALE, DRAGGING_SCALE);
+            if(battleInfo != null && !battleInfo.allowCharacter(currentParty[draggingPartyIndex])){
+                g.drawPercentageImage(Assets.InvalidChar, draggingX - DRAGGING_OFFSET, draggingY - DRAGGING_OFFSET, DRAGGING_SCALE, DRAGGING_SCALE);
+            }
+        }
+
+        boolean validParty = (currentParty[0] != null) && (battleInfo == null || battleInfo.validParty(currentParty));
+        if(validParty){
+            g.drawImage(Assets.AcceptEnable, ACCEPT_BUTTON_LEFT_X, ACCEPT_BUTTON_TOP_Y);
+        }
+        else{
+            g.drawImage(Assets.AcceptDisable, ACCEPT_BUTTON_LEFT_X, ACCEPT_BUTTON_TOP_Y);
         }
 
 

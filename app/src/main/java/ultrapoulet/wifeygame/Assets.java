@@ -34,10 +34,18 @@ public class Assets {
     public static Image NextPageEnable, NextPageDisable;
     public static Image PrevPageEnable, PrevPageDisable;
     public static Image LockSelection;
+    public static Image InvalidChar;
+    public static Image RequiredCharHolder;
 
     //CharacterInfoScreen Stuff
     public static Image CharacterInfoScreen;
     public static Image BattleCharacterInfoScreen;
+    public static Image ScrollBarFull;
+    public static Image ScrollBarShort;
+
+    //BattleInfoScreen Stuff
+    public static Image BattleInfoScreen;
+    public static Image BattleEnable, BattleDisable;
 
     //Element Image stuff
     public static Image[] ElementImages;

@@ -17,6 +17,20 @@
             <enemy>TEST-NME2</enemy>
             <enemy>TEST-NME2</enemy>
         </enemies>
+        <requirements>
+            <requirement type="RequiredSkill">
+                <value>MAGICALGIRL</value>
+                <value>CHUUNI</value>
+                <value>MAID</value>
+            </requirement>
+            <requirement type="BannedCharacter">
+                <value>TEST-RREM</value>
+            </requirement>
+            <requirement type="RequiredCharacter">
+                <value>TEST-MOMO</value>
+                <value>TEST-NYRK</value>
+            </requirement>
+        </requirements>
     </battle>
     <battle key="TEST-PHYS">
         <name>Athletes Test</name>

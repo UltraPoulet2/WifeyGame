@@ -2,7 +2,10 @@ package ultrapoulet.wifeygame.battle;
 
 import java.util.ArrayList;
 
+import ultrapoulet.wifeygame.battle.requirements.AbsRequirement;
+import ultrapoulet.wifeygame.battle.requirements.RequiredCharacterRequirement;
 import ultrapoulet.wifeygame.character.EnemyCharacter;
+import ultrapoulet.wifeygame.character.WifeyCharacter;
 
 /**
  * Created by John on 6/19/2016.
@@ -12,7 +15,9 @@ public class BattleInfo {
     private String battleName;
     private int partyMax = 7;
     private ArrayList<EnemyCharacter> enemyList = new ArrayList<>();
-    //private ArrayList<Restriction> restrictionList = new ArrayList<>();
+    private ArrayList<AbsRequirement> restrictionList = new ArrayList<>();
+
+    private ArrayList<WifeyCharacter> requiredList = null;
 
     public void setName(String name){
         battleName = name;
@@ -54,15 +59,35 @@ public class BattleInfo {
         return temp;
     }
 
-    //Future things
-    /*
-    public void addRestriction(Restriction r) {
-        restrictionList.add(r);
+    public void addRequirement(AbsRequirement r) {
+        if(r != null){
+            restrictionList.add(r);
+            if(r instanceof RequiredCharacterRequirement){
+                requiredList = ((RequiredCharacterRequirement) r).getRequiredList();
+            }
+        }
+    }
+
+    public ArrayList<AbsRequirement> getRequirements(){
+        return restrictionList;
+    }
+
+    public ArrayList<WifeyCharacter> getRequiredList(){
+        return requiredList;
     }
 
     public boolean allowCharacter(WifeyCharacter c){
         for(int i = 0; i < restrictionList.size(); i++){
-            if(!restrictionList.isAllowed(c)){
+            if(!restrictionList.get(i).validateCharacter(c)){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean allowParty(WifeyCharacter[] party){
+        for(int i = 0; i < restrictionList.size(); i++){
+            if(!restrictionList.get(i).validateParty(party)){
                 return false;
             }
         }
@@ -75,8 +100,6 @@ public class BattleInfo {
                 return false;
             }
         }
-        return true;
+        return allowParty(party);
     }
-    */
-
 }
