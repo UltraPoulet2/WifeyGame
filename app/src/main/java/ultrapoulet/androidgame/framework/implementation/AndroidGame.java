@@ -2,6 +2,7 @@ package ultrapoulet.androidgame.framework.implementation;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
@@ -59,7 +60,6 @@ public abstract class AndroidGame extends Activity implements Game {
         input = new AndroidInput(this, renderView, scaleX, scaleY);
         screen = getInitScreen();
         setContentView(renderView);
-
     }
 
     @Override
@@ -125,5 +125,9 @@ public abstract class AndroidGame extends Activity implements Game {
             throw new RuntimeException("Couldn't load config from asset '"
                     + filename + "'");
         }
+    }
+
+    public SharedPreferences getGamePreferences(String name, int mode){
+        return this.getSharedPreferences(name, mode);
     }
 }

@@ -1,5 +1,7 @@
 package ultrapoulet.androidgame.framework;
 
+import android.content.SharedPreferences;
+
 import java.io.InputStream;
 
 /**
@@ -22,4 +24,6 @@ public interface Game {
     public Screen getInitScreen();
 
     public InputStream openConfig(String filename);
+
+    public SharedPreferences getGamePreferences(String name, int mode);
 }
