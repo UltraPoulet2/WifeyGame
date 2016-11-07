@@ -55,7 +55,7 @@ public class BattleScreen extends Screen {
     private static final int ENEMY_IMAGE_Y = 100;
 
     private static final int CHAR_HOLDER_X_DISTANCE = 100;
-    private static final int CHAR_HOLDER_SMALL_Y = 740;
+    private static final int CHAR_HOLDER_SMALL_Y = 745;
     private static final int CHAR_HOLDER_LARGE_Y = 610;
 
     private static final int SLASH = 10;
