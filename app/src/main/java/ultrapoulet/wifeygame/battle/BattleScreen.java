@@ -154,9 +154,9 @@ public class BattleScreen extends Screen {
 
     private static class ButtonCoordinate{
         public int LeftX;
-        public int LeftY;
+        public int TopY;
         public int RightX;
-        public int RightY;
+        public int BotY;
     }
 
     private enum BattlePhase{
@@ -205,57 +205,57 @@ public class BattleScreen extends Screen {
         //POWER_ATTACK
         temp = new ButtonCoordinate();
         temp.LeftX = 5;
-        temp.LeftY = 845;
+        temp.TopY = 845;
         temp.RightX = 195;
-        temp.RightY = 1035;
+        temp.BotY = 1035;
         buttonMap.put(ButtonPressed.POWER_ATTACK, temp);
 
         //COMBO_ATTACK
         temp = new ButtonCoordinate();
         temp.LeftX = 5;
-        temp.LeftY = 1045;
+        temp.TopY = 1045;
         temp.RightX = 195;
-        temp.RightY = 1235;
+        temp.BotY = 1235;
         buttonMap.put(ButtonPressed.COMBO_ATTACK, temp);
 
         //MAGIC_ATTACK
         temp = new ButtonCoordinate();
         temp.LeftX = 605;
-        temp.LeftY = 845;
+        temp.TopY = 845;
         temp.RightX = 795;
-        temp.RightY = 1035;
+        temp.BotY = 1035;
         buttonMap.put(ButtonPressed.MAGIC_ATTACK, temp);
 
         //HEALING_MAGIC
         temp = new ButtonCoordinate();
         temp.LeftX = 605;
-        temp.LeftY = 1045;
+        temp.TopY = 1045;
         temp.RightX = 795;
-        temp.RightY = 1235;
+        temp.BotY = 1235;
         buttonMap.put(ButtonPressed.HEALING_MAGIC, temp);
 
         //DEFEND
         temp = new ButtonCoordinate();
         temp.LeftX = 205;
-        temp.LeftY = 1045;
+        temp.TopY = 1045;
         temp.RightX = 595;
-        temp.RightY = 1235;
+        temp.BotY = 1235;
         buttonMap.put(ButtonPressed.DEFEND, temp);
 
         //TRANSFORM
         temp = new ButtonCoordinate();
         temp.LeftX = 205;
-        temp.LeftY = 845;
+        temp.TopY = 845;
         temp.RightX = 395;
-        temp.RightY = 1035;
+        temp.BotY = 1035;
         buttonMap.put(ButtonPressed.TRANSFORM, temp);
 
         //SPECIAL_ATTACK
         temp = new ButtonCoordinate();
         temp.LeftX = 405;
-        temp.LeftY = 845;
+        temp.TopY = 845;
         temp.RightX = 595;
-        temp.RightY = 1035;
+        temp.BotY = 1035;
         buttonMap.put(ButtonPressed.SPECIAL_ATTACK, temp);
     }
 
@@ -294,7 +294,7 @@ public class BattleScreen extends Screen {
     public ButtonPressed getButtonPressed(TouchEvent touch){
         for (ButtonPressed b : ButtonPressed.values()) {
             ButtonCoordinate bc = buttonMap.get(b);
-            if(bc.LeftX <= touch.x && bc.RightX >= touch.x && bc.LeftY <= touch.y && bc.RightY >= touch.y){
+            if(bc.LeftX <= touch.x && bc.RightX >= touch.x && bc.TopY <= touch.y && bc.BotY >= touch.y){
                 return b;
             }
         }
