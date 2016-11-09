@@ -12,6 +12,8 @@ import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.androidgame.framework.Input.TouchEvent;
 import ultrapoulet.androidgame.framework.Screen;
+import ultrapoulet.androidgame.framework.helpers.Button;
+import ultrapoulet.androidgame.framework.helpers.ButtonList;
 import ultrapoulet.wifeygame.Assets;
 import ultrapoulet.wifeygame.BattleCharacterInfoScreen;
 import ultrapoulet.wifeygame.battle.enemyai.EnemyAI.EnemyAction;
@@ -136,12 +138,63 @@ public class BattleScreen extends Screen {
     private int hitsPerformed = 0;
     private int enemyDamage;
     private int partyDamage[] = new int[7];
-    private ButtonPressed commandSelected;
+    private Button commandSelected;
 
     private BattleCharacterInfoScreen charInfo;
 
-    private boolean transformEnabled;
+    //private boolean transformEnabled;
 
+    //New Button things
+    private static final int COL_1_LEFT_X = 0;
+    private static final int COL_1_RIGHT_X = 199;
+    private static final int COL_2_LEFT_X = 200;
+    private static final int COL_2_RIGHT_X = 399;
+    private static final int COL_3_LEFT_X = 400;
+    private static final int COL_3_RIGHT_X = 599;
+    private static final int COL_4_LEFT_X = 600;
+    private static final int COL_4_RIGHT_X = 799;
+    private static final int ROW_1_TOP_Y = 840;
+    private static final int ROW_1_BOT_Y = 1039;
+    private static final int ROW_2_TOP_Y = 1040;
+    private static final int ROW_2_BOT_Y = 1239;
+    private ButtonList buttonList;
+    private Button powerAttackButton;
+    private static final int POWER_LEFT_X = COL_1_LEFT_X;
+    private static final int POWER_RIGHT_X = COL_1_RIGHT_X;
+    private static final int POWER_TOP_Y = ROW_1_TOP_Y;
+    private static final int POWER_BOT_Y = ROW_1_BOT_Y;
+    private Button comboAttackButton;
+    private static final int COMBO_LEFT_X = COL_1_LEFT_X;
+    private static final int COMBO_RIGHT_X = COL_1_RIGHT_X;
+    private static final int COMBO_TOP_Y = ROW_2_TOP_Y;
+    private static final int COMBO_BOT_Y = ROW_2_BOT_Y;
+    private Button magicAttackButton;
+    private static final int MAGIC_LEFT_X = COL_4_LEFT_X;
+    private static final int MAGIC_RIGHT_X = COL_4_RIGHT_X;
+    private static final int MAGIC_TOP_Y = ROW_1_TOP_Y;
+    private static final int MAGIC_BOT_Y = ROW_1_BOT_Y;
+    private Button healMagicButton;
+    private static final int HEAL_LEFT_X = COL_4_LEFT_X;
+    private static final int HEAL_RIGHT_X = COL_4_RIGHT_X;
+    private static final int HEAL_TOP_Y = ROW_2_TOP_Y;
+    private static final int HEAL_BOT_Y = ROW_2_BOT_Y;
+    private Button defendButton;
+    private static final int DEFEND_LEFT_X = COL_2_LEFT_X;
+    private static final int DEFEND_RIGHT_X = COL_3_RIGHT_X;
+    private static final int DEFEND_TOP_Y = ROW_2_TOP_Y;
+    private static final int DEFEND_BOT_Y = ROW_2_BOT_Y;
+    private Button transformButton;
+    private static final int TRANSFORM_LEFT_X = COL_2_LEFT_X;
+    private static final int TRANSFORM_RIGHT_X = COL_2_RIGHT_X;
+    private static final int TRANSFORM_TOP_Y = ROW_1_TOP_Y;
+    private static final int TRANSFORM_BOT_Y = ROW_1_BOT_Y;
+    private Button specialAttackButton;
+    private static final int SPECIAL_LEFT_X = COL_3_LEFT_X;
+    private static final int SPECIAL_RIGHT_X = COL_3_RIGHT_X;
+    private static final int SPECIAL_TOP_Y = ROW_1_TOP_Y;
+    private static final int SPECIAL_BOT_Y = ROW_1_BOT_Y;
+
+    /*
     private enum ButtonPressed{
         POWER_ATTACK,
         COMBO_ATTACK,
@@ -151,13 +204,16 @@ public class BattleScreen extends Screen {
         TRANSFORM,
         SPECIAL_ATTACK
     }
+    */
 
+    /*
     private static class ButtonCoordinate{
         public int LeftX;
         public int TopY;
         public int RightX;
         public int BotY;
     }
+    */
 
     private enum BattlePhase{
         BATTLE_START,
@@ -174,9 +230,9 @@ public class BattleScreen extends Screen {
 
     private BattlePhase currentPhase = BattlePhase.BATTLE_START;
 
-    private static Map<ButtonPressed, ButtonCoordinate> buttonMap;
+    //private static Map<ButtonPressed, ButtonCoordinate> buttonMap;
 
-    private static Map<ButtonPressed, String> buttonNames;
+    //private static Map<ButtonPressed, String> buttonNames;
 
     public BattleScreen(Game game){
         super(game);
@@ -190,14 +246,36 @@ public class BattleScreen extends Screen {
         specialBarBase = Assets.specialBarBase;
         specialBarTop = Assets.specialBarTop;
         KOImages = Assets.KOImages;
+        /*
         createButtonMap();
         createButtonNames();
+        */
+        createButtonList();
         createPaint();
 
         charInfo = new BattleCharacterInfoScreen(game);
         charInfo.setPreviousScreen(this);
     }
 
+    public void createButtonList(){
+        buttonList = new ButtonList();
+        powerAttackButton = new Button(POWER_LEFT_X, POWER_RIGHT_X, POWER_TOP_Y, POWER_BOT_Y, true, "Power Attack");
+        buttonList.addButton(powerAttackButton);
+        comboAttackButton = new Button(COMBO_LEFT_X, COMBO_RIGHT_X, COMBO_TOP_Y, COMBO_BOT_Y, true, "Combo Attack");
+        buttonList.addButton(comboAttackButton);
+        magicAttackButton = new Button(MAGIC_LEFT_X, MAGIC_RIGHT_X, MAGIC_TOP_Y, MAGIC_BOT_Y, true, "Magic Attack");
+        buttonList.addButton(magicAttackButton);
+        healMagicButton = new Button(HEAL_LEFT_X, HEAL_RIGHT_X, HEAL_TOP_Y, HEAL_BOT_Y, true, "Heal");
+        buttonList.addButton(healMagicButton);
+        defendButton = new Button(DEFEND_LEFT_X, DEFEND_RIGHT_X, DEFEND_TOP_Y, DEFEND_BOT_Y, true, "Defend");
+        buttonList.addButton(defendButton);
+        transformButton = new Button(TRANSFORM_LEFT_X, TRANSFORM_RIGHT_X, TRANSFORM_TOP_Y, TRANSFORM_BOT_Y, false, "Transformation");
+        buttonList.addButton(transformButton);
+        specialAttackButton = new Button(SPECIAL_LEFT_X, SPECIAL_RIGHT_X, SPECIAL_TOP_Y, SPECIAL_BOT_Y, false, "Special Attack");
+        buttonList.addButton(specialAttackButton);
+    }
+
+    /*
     public void createButtonMap(){
         buttonMap = new HashMap<>();
         ButtonCoordinate temp;
@@ -269,6 +347,7 @@ public class BattleScreen extends Screen {
         buttonNames.put(ButtonPressed.DEFEND, "Defend");
         buttonNames.put(ButtonPressed.TRANSFORM, "Transformation");
     }
+    */
 
     public void createPaint(){
         textPaint = new Paint();
@@ -291,6 +370,7 @@ public class BattleScreen extends Screen {
         this.background = background;
     }
 
+    /*
     public ButtonPressed getButtonPressed(TouchEvent touch){
         for (ButtonPressed b : ButtonPressed.values()) {
             ButtonCoordinate bc = buttonMap.get(b);
@@ -299,6 +379,23 @@ public class BattleScreen extends Screen {
             }
         }
         return null;
+    }
+    */
+
+    private void updateButtons(){
+        if(numHits >= SPECIAL_HITS){
+            specialAttackButton.setActive(true);
+            if(party[partyIndex].canTransform()){
+                transformButton.setActive(true);
+            }
+            else{
+                transformButton.setActive(false);
+            }
+        }
+        else{
+            specialAttackButton.setActive(false);
+            transformButton.setActive(false);
+        }
     }
 
     public int getCharacterPressed(TouchEvent touch){
@@ -473,9 +570,7 @@ public class BattleScreen extends Screen {
                         partyDamage[i] = 0;
                     }
                     enemyDamage = 0;
-                    if(party[partyIndex].canTransform()){
-                        transformEnabled = true;
-                    }
+                    updateButtons();
                 }
                 else {
                     List<TouchEvent> touchEvents = game.getInput().getTouchEvents();
@@ -485,7 +580,7 @@ public class BattleScreen extends Screen {
                         if (t.type != TouchEvent.TOUCH_UP) {
                             continue;
                         }
-                        ButtonPressed command = getButtonPressed(touchEvents.get(i));
+                        Button command = buttonList.getButtonPressed(touchEvents.get(i).x, touchEvents.get(i).y);
                         int charPressed = getCharacterPressed(touchEvents.get(i));
                         if(charPressed != -1){
                             charInfo.setChars(party[charPressed], enemies[enemyIndex]);
@@ -496,21 +591,15 @@ public class BattleScreen extends Screen {
                             continue;
                         }
 
-                        switch (command) {
-                            case TRANSFORM:
-                                if(!party[partyIndex].canTransform()){
-                                    continue;
-                                }
-                            case SPECIAL_ATTACK:
-                                if (numHits < SPECIAL_HITS) {
-                                    continue;
-                                }
+                        switch (command.getName()) {
+                            case "Transformation":
+                            case "Special Attack":
                                 numHits -= SPECIAL_HITS;
-                            case POWER_ATTACK:
-                            case COMBO_ATTACK:
-                            case MAGIC_ATTACK:
-                            case DEFEND:
-                            case HEALING_MAGIC:
+                            case "Power Attack":
+                            case "Combo Attack":
+                            case "Magic Attack":
+                            case "Defend":
+                            case "Heal":
                                 commandSelected = command;
                                 break;
                             default:
@@ -534,8 +623,8 @@ public class BattleScreen extends Screen {
 
                     int baseDamage;
                     int displayDamage;
-                    switch (commandSelected) {
-                        case POWER_ATTACK:
+                    switch (commandSelected.getName()) {
+                        case "Power Attack":
                             baseDamage = party[partyIndex].PowerAttackDamage(enemies[enemyIndex]);
                             displayDamage = enemies[enemyIndex].takePhysicalDamage(baseDamage, party[partyIndex]);
                             enemyDamage = displayDamage;
@@ -544,7 +633,7 @@ public class BattleScreen extends Screen {
                             comboHolder++;
                             damageHolder += enemyDamage;
                             break;
-                        case COMBO_ATTACK:
+                        case "Combo Attack":
                             baseDamage = party[partyIndex].ComboAttackDamage(enemies[enemyIndex]);
                             displayDamage = enemies[enemyIndex].takePhysicalDamage(baseDamage, party[partyIndex]);
                             enemyDamage = displayDamage;
@@ -554,7 +643,7 @@ public class BattleScreen extends Screen {
                             comboHolder++;
                             damageHolder += enemyDamage;
                             break;
-                        case MAGIC_ATTACK:
+                        case "Magic Attack":
                             baseDamage = party[partyIndex].MagicAttackDamage(enemies[enemyIndex]);
                             displayDamage = enemies[enemyIndex].takeMagicalDamage(baseDamage, party[partyIndex]);
                             enemyDamage = displayDamage;
@@ -563,7 +652,7 @@ public class BattleScreen extends Screen {
                             comboHolder++;
                             damageHolder += enemyDamage;
                             break;
-                        case HEALING_MAGIC:
+                        case "Heal":
                             for (int j = 0; j < party.length; j++) {
                                 if (party[j].getCurrentHP() > 0) {
                                     baseDamage = party[partyIndex].HealAmount(party[j]);
@@ -575,7 +664,7 @@ public class BattleScreen extends Screen {
                                 }
                             }
                             break;
-                        case SPECIAL_ATTACK:
+                        case "Special Attack":
                             baseDamage = party[partyIndex].SpecialAttackDamage(enemies[enemyIndex]);
                             displayDamage = enemies[enemyIndex].takeSpecialDamage(baseDamage, party[partyIndex]);
                             enemyDamage = displayDamage;
@@ -584,7 +673,7 @@ public class BattleScreen extends Screen {
                             comboHolder++;
                             damageHolder += enemyDamage;
                             break;
-                        case TRANSFORM:
+                        case "Transformation":
                             party[partyIndex].transform();
                             for(int i = 0; i < party.length; i++){
                                 party[i].resetSkills();
@@ -593,7 +682,7 @@ public class BattleScreen extends Screen {
                                 party[i].updateParty(party);
                             }
                             break;
-                        case DEFEND:
+                        case "Defend":
                             party[partyIndex].Defend();
                             enemyDamage = 0;
                             break;
@@ -602,25 +691,25 @@ public class BattleScreen extends Screen {
                 } else {
                     phaseTime += deltaTime;
                     int phaseWait;
-                    switch(commandSelected){
-                        case POWER_ATTACK:
-                        case COMBO_ATTACK:
-                        case MAGIC_ATTACK:
-                        case SPECIAL_ATTACK:
+                    switch(commandSelected.getName()){
+                        case "Power Attack":
+                        case "Combo Attack":
+                        case "Magic Attack":
+                        case "Special Attack":
                             phaseWait = ATTACK_PHASE_WAIT;
                             break;
-                        case HEALING_MAGIC:
+                        case "Heal":
                             phaseWait = HEAL_PHASE_WAIT;
                             break;
-                        case DEFEND:
-                        case TRANSFORM:
+                        case "Defend":
+                        case "Transformation":
                             phaseWait = WAIT_PHASE_WAIT;
                             break;
                         default:
                             phaseWait = OTHER_PHASE_WAIT;
                     }
                     if (phaseTime >= phaseWait) {
-                        if (commandSelected == ButtonPressed.COMBO_ATTACK && hitsPerformed < party[partyIndex].getNumHits()) {
+                        if (commandSelected == comboAttackButton && hitsPerformed < party[partyIndex].getNumHits()) {
                             currentPhase = BattlePhase.ANIMATE_PLAYER_ACTION;
                             phaseEntered = true;
                         } else if (enemies[enemyIndex].getCurrentHP() == 0) {
@@ -649,6 +738,7 @@ public class BattleScreen extends Screen {
                         partyDamage[i] = 0;
                     }
                     enemyDamage = 0;
+                    updateButtons();
                     enemies[enemyIndex].startTurn();
                     enemies[enemyIndex].determineAction();
                 } else {
@@ -943,15 +1033,13 @@ public class BattleScreen extends Screen {
         Graphics g = game.getGraphics();
         g.clearScreen(0xffffffff);
         g.drawImage(background, 0, 0);
-        if(numHits >= SPECIAL_HITS){
-            if(partyIndex < party.length && party[partyIndex].canTransform()){
-                g.drawImage(buttonMenuTrans, 0, BUTTON_MENU_Y);
-            }
-            else {
-                g.drawImage(buttonMenuSpecial, 0, BUTTON_MENU_Y);
-            }
+        if(transformButton.isActive()){
+            g.drawImage(buttonMenuTrans, 0, BUTTON_MENU_Y);
         }
-        else {
+        else if(specialAttackButton.isActive()){
+            g.drawImage(buttonMenuSpecial, 0, BUTTON_MENU_Y);
+        }
+        else{
             g.drawImage(buttonMenuNormal, 0, BUTTON_MENU_Y);
         }
     }
@@ -1204,7 +1292,7 @@ public class BattleScreen extends Screen {
         int divisor;
         int j;
         g.drawImage(Assets.attackBox, 0, 0);
-        g.drawString(buttonNames.get(commandSelected), 400, 70, textPaint);
+        g.drawString(commandSelected.getName(), 400, 70, textPaint);
         divisor = 10000;
         numberStart = false;
         int offset = 4;
