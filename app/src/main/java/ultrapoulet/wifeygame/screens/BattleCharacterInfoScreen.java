@@ -1,4 +1,4 @@
-package ultrapoulet.wifeygame;
+package ultrapoulet.wifeygame.screens;
 
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -11,6 +11,7 @@ import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.androidgame.framework.Input;
 import ultrapoulet.androidgame.framework.Screen;
+import ultrapoulet.wifeygame.Assets;
 import ultrapoulet.wifeygame.battle.BattleEnemy;
 import ultrapoulet.wifeygame.battle.BattleWifey;
 import ultrapoulet.wifeygame.battle.skills.AbsSkill;

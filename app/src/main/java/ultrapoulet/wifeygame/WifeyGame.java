@@ -2,6 +2,7 @@ package ultrapoulet.wifeygame;
 
 import ultrapoulet.androidgame.framework.Screen;
 import ultrapoulet.androidgame.framework.implementation.AndroidGame;
+import ultrapoulet.wifeygame.screens.LoadingScreen;
 
 /**
  * Created by John on 3/12/2016.

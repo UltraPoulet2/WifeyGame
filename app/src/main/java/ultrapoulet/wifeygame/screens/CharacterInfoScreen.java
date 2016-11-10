@@ -1,4 +1,4 @@
-package ultrapoulet.wifeygame;
+package ultrapoulet.wifeygame.screens;
 
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -15,6 +15,7 @@ import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.androidgame.framework.Input;
 import ultrapoulet.androidgame.framework.Input.TouchEvent;
 import ultrapoulet.androidgame.framework.Screen;
+import ultrapoulet.wifeygame.Assets;
 import ultrapoulet.wifeygame.character.SkillsEnum;
 import ultrapoulet.wifeygame.character.Weapon;
 import ultrapoulet.wifeygame.character.WifeyCharacter;

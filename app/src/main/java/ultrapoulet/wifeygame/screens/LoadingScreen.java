@@ -1,4 +1,4 @@
-package ultrapoulet.wifeygame;
+package ultrapoulet.wifeygame.screens;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -16,7 +15,7 @@ import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Graphics.ImageFormat;
 import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.androidgame.framework.Screen;
-import ultrapoulet.wifeygame.battle.BattleSelectScreen;
+import ultrapoulet.wifeygame.Assets;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
 import ultrapoulet.wifeygame.gamestate.Party;
 import ultrapoulet.wifeygame.gamestate.RecruitedCharacters;

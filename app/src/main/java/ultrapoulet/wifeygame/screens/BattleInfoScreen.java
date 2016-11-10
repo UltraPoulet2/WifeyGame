@@ -1,4 +1,4 @@
-package ultrapoulet.wifeygame.battle;
+package ultrapoulet.wifeygame.screens;
 
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -14,8 +14,7 @@ import ultrapoulet.androidgame.framework.Input;
 import ultrapoulet.androidgame.framework.Input.TouchEvent;
 import ultrapoulet.androidgame.framework.Screen;
 import ultrapoulet.wifeygame.Assets;
-import ultrapoulet.wifeygame.CharacterInfoScreen;
-import ultrapoulet.wifeygame.PartySelectScreen;
+import ultrapoulet.wifeygame.battle.BattleInfo;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
 import ultrapoulet.wifeygame.gamestate.Party;
 

@@ -1,11 +1,9 @@
-package ultrapoulet.wifeygame.battle;
+package ultrapoulet.wifeygame.screens;
 
 import android.graphics.Color;
 import android.graphics.Paint;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import ultrapoulet.androidgame.framework.Game;
 import ultrapoulet.androidgame.framework.Graphics;
@@ -15,7 +13,9 @@ import ultrapoulet.androidgame.framework.Screen;
 import ultrapoulet.androidgame.framework.helpers.Button;
 import ultrapoulet.androidgame.framework.helpers.ButtonList;
 import ultrapoulet.wifeygame.Assets;
-import ultrapoulet.wifeygame.BattleCharacterInfoScreen;
+import ultrapoulet.wifeygame.battle.BattleEnemy;
+import ultrapoulet.wifeygame.battle.BattleInfo;
+import ultrapoulet.wifeygame.battle.BattleWifey;
 import ultrapoulet.wifeygame.battle.enemyai.EnemyAI.EnemyAction;
 
 /**
