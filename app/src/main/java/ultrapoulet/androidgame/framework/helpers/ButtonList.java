@@ -23,4 +23,14 @@ public class ButtonList {
         }
         return null;
     }
+
+    //For use for if numbered buttons
+    public int getIndexPressed(int x, int y){
+        for(int i = 0; i < buttons.size(); i++){
+            if(buttons.get(i).isPressed(x,y)){
+                return i;
+            }
+        }
+        return -1;
+    }
 }

@@ -11,6 +11,8 @@ import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.androidgame.framework.Input;
 import ultrapoulet.androidgame.framework.Screen;
+import ultrapoulet.androidgame.framework.helpers.Button;
+import ultrapoulet.androidgame.framework.helpers.ButtonList;
 
 /**
  * Created by John on 11/10/2016.
@@ -23,11 +25,6 @@ public abstract class AbsCharacterInfoScreen extends Screen {
     protected Image background;
     protected static final int BG_X = 50;
     protected static final int BG_Y = 75;
-
-    protected static final int CLOSE_LEFT_X = BG_X + 600;
-    protected static final int CLOSE_RIGHT_X = CLOSE_LEFT_X + 75;
-    protected static final int CLOSE_TOP_Y = BG_Y + 10;
-    protected static final int CLOSE_BOT_Y = CLOSE_TOP_Y + 75;
 
     protected static final int CHAR_X = 30 + BG_X;
     protected static final int CHAR_Y = 100 + BG_Y;
@@ -48,17 +45,12 @@ public abstract class AbsCharacterInfoScreen extends Screen {
     protected static final int MAX_NAME_Y = 155 + BG_Y;
 
     protected Paint skillsPaint;
-    protected static final int SKILLS_SIZE = 40;
-    protected static final int SKILLS_PER_PAGE = 14;
-    protected static final int SKILLS_LEFT_X = 32 + BG_X;
-    protected static final int SKILLS_RIGHT_X = SKILLS_LEFT_X + 285;
-    protected static final int SKILLS_BASE_Y = 495 + BG_Y;
-    protected static final int SKILLS_OFFSET_Y = 55;
-
-    protected static final int SKILLS_BUTTON_LEFT_X = 30 + BG_X;
-    protected static final int SKILLS_BUTTON_OFFSET_X = 280;
-    protected static final int SKILLS_BUTTON_TOP_Y = 455 + BG_Y;
-    protected static final int SKILLS_BUTTON_OFFSET_Y = 55;
+    protected static final int SKILLS_TEXT_SIZE = 40;
+    protected static final int SKILLS_TEXT_PER_PAGE = 14;
+    protected static final int SKILLS_TEXT_LEFT_X = 32 + BG_X;
+    protected static final int SKILLS_TEXT_RIGHT_X = SKILLS_TEXT_LEFT_X + 285;
+    protected static final int SKILLS_TEXT_BASE_Y = 495 + BG_Y;
+    protected static final int SKILLS_TEXT_OFFSET_Y = 55;
 
     protected static final int SKILLS_DESC_X = 32 + BG_X;
     protected static final int SKILLS_DESC_Y = 872 + BG_Y;
@@ -69,61 +61,40 @@ public abstract class AbsCharacterInfoScreen extends Screen {
     protected int skillsPage = 0;
     protected int displayText = -1;
     protected int maxPage;
-    protected static final int SKILLS_PAGE_X = 600 + BG_X;
-    protected static final int SKILLS_PREV_Y = 455 + BG_Y;
-    protected static final int SKILLS_NEXT_Y = 730 + BG_Y;
-    protected static final int SKILLS_PAGE_WIDTH = 50;
-    protected static final int SKILLS_PAGE_HEIGHT = 105;
+
     protected static final int SKILLS_SCROLL_X = 600 + BG_X;
     protected static final int SKILLS_SCROLL_TOP_Y = 565 + BG_Y;
     protected static final int SKILLS_SCROLL_MAX_Y = 645 + BG_Y;
 
-    private enum ButtonPressed{
-        CLOSE,
-        SKILLS0,
-        SKILLS1,
-        SKILLS2,
-        SKILLS3,
-        SKILLS4,
-        SKILLS5,
-        SKILLS6,
-        SKILLS7,
-        SKILLS8,
-        SKILLS9,
-        SKILLS10,
-        SKILLS11,
-        SKILLS12,
-        SKILLS13,
-        SKILLS14,
-        SKILLS15,
-        SKILLSPREV,
-        SKILLSNEXT
-        //Fill with skill buttons later
-    }
+    protected ButtonList basicButtonList;
 
-    private ButtonPressed[] SkillButtons = {
-            ButtonPressed.SKILLS0,
-            ButtonPressed.SKILLS1,
-            ButtonPressed.SKILLS2,
-            ButtonPressed.SKILLS3,
-            ButtonPressed.SKILLS4,
-            ButtonPressed.SKILLS5,
-            ButtonPressed.SKILLS6,
-            ButtonPressed.SKILLS7,
-            ButtonPressed.SKILLS8,
-            ButtonPressed.SKILLS9,
-            ButtonPressed.SKILLS10,
-            ButtonPressed.SKILLS11,
-            ButtonPressed.SKILLS12,
-            ButtonPressed.SKILLS13,
-            ButtonPressed.SKILLS14,
-            ButtonPressed.SKILLS15
-    };
+    protected static final int CLOSE_LEFT_X = BG_X + 600;
+    protected static final int CLOSE_RIGHT_X = CLOSE_LEFT_X + 75;
+    protected static final int CLOSE_TOP_Y = BG_Y + 10;
+    protected static final int CLOSE_BOT_Y = CLOSE_TOP_Y + 75;
+    protected static final String CLOSE_STRING = "Close";
+
+    protected static final int SKILLS_PAGE_LEFT_X = 600 + BG_X;
+    protected static final int SKILLS_PAGE_RIGHT_X = SKILLS_PAGE_LEFT_X + 50;
+    protected static final int SKILLS_PAGE_HEIGHT = 105;
+    protected static final int SKILLS_PREV_TOP_Y = 455 + BG_Y;
+    protected static final int SKILLS_PREV_BOT_Y = SKILLS_PREV_TOP_Y + SKILLS_PAGE_HEIGHT;
+    protected static final int SKILLS_NEXT_TOP_Y = 730 + BG_Y;
+    protected static final int SKILLS_NEXT_BOT_Y = SKILLS_NEXT_TOP_Y + SKILLS_PAGE_HEIGHT;
+    protected static final String PREV_STRING = "Prev";
+    protected static final String NEXT_STRING = "Next";
+
+    protected ButtonList skillsButtonList;
+    protected static final int SKILLS_BUTTON_LEFT_X = 30 + BG_X;
+    protected static final int SKILLS_BUTTON_OFFSET_X = 280;
+    protected static final int SKILLS_BUTTON_TOP_Y = 455 + BG_Y;
+    protected static final int SKILLS_BUTTON_OFFSET_Y = 55;
 
     public AbsCharacterInfoScreen(Game game) {
         super(game);
 
         createPaints();
+        createButtons();
     }
 
     protected void createPaints(){
@@ -134,7 +105,7 @@ public abstract class AbsCharacterInfoScreen extends Screen {
         skillsPaint = new Paint();
         skillsPaint.setTextAlign(Paint.Align.LEFT);
         skillsPaint.setColor(Color.BLACK);
-        skillsPaint.setTextSize(SKILLS_SIZE);
+        skillsPaint.setTextSize(SKILLS_TEXT_SIZE);
 
         descPaint = new TextPaint();
         descPaint.setTextAlign(Paint.Align.LEFT);
@@ -144,33 +115,27 @@ public abstract class AbsCharacterInfoScreen extends Screen {
         createUniquePaints();
     }
 
+    protected void createButtons(){
+        basicButtonList = new ButtonList();
+        basicButtonList.addButton(new Button(CLOSE_LEFT_X, CLOSE_RIGHT_X, CLOSE_TOP_Y, CLOSE_BOT_Y, true, CLOSE_STRING));
+        basicButtonList.addButton(new Button(SKILLS_PAGE_LEFT_X, SKILLS_PAGE_RIGHT_X, SKILLS_PREV_TOP_Y, SKILLS_PREV_BOT_Y, true, PREV_STRING));
+        basicButtonList.addButton(new Button(SKILLS_PAGE_LEFT_X, SKILLS_PAGE_RIGHT_X, SKILLS_NEXT_TOP_Y, SKILLS_NEXT_BOT_Y, true, NEXT_STRING));
+
+        skillsButtonList = new ButtonList();
+        for(int i = 0; i < SKILLS_TEXT_PER_PAGE; i++) {
+            int leftX = SKILLS_BUTTON_LEFT_X + (SKILLS_BUTTON_OFFSET_X * (i % 2));
+            int rightX = leftX + SKILLS_BUTTON_OFFSET_X;
+            int topY = SKILLS_BUTTON_TOP_Y + (SKILLS_BUTTON_OFFSET_Y * (i / 2));
+            int botY = topY + SKILLS_BUTTON_OFFSET_Y;
+            skillsButtonList.addButton(new Button(leftX, rightX, topY, botY, true, "Skill_" + i));
+        }
+    }
+
     public void setPreviousScreen(Screen screen){
         previousScreen = screen;
     }
 
     abstract protected void createUniquePaints();
-
-    //This will be replaced later
-    private ButtonPressed getButtonPressed(int x, int y){
-        if(x >= CLOSE_LEFT_X && x <= CLOSE_RIGHT_X && y >= CLOSE_TOP_Y && y <= CLOSE_BOT_Y){
-            return ButtonPressed.CLOSE;
-        }
-        if(x >= SKILLS_PAGE_X && x <= SKILLS_PAGE_X + SKILLS_PAGE_WIDTH && y >= SKILLS_PREV_Y && y <= SKILLS_PREV_Y + SKILLS_PAGE_HEIGHT){
-            return ButtonPressed.SKILLSPREV;
-        }
-        if(x >= SKILLS_PAGE_X && x <= SKILLS_PAGE_X + SKILLS_PAGE_WIDTH && y >= SKILLS_NEXT_Y && y <= SKILLS_NEXT_Y + SKILLS_PAGE_HEIGHT){
-            return ButtonPressed.SKILLSNEXT;
-        }
-        for(int i = 0; i < SKILLS_PER_PAGE; i++){
-            int baseX = SKILLS_BUTTON_LEFT_X + (SKILLS_BUTTON_OFFSET_X * (i % 2));
-            int baseY = SKILLS_BUTTON_TOP_Y + (SKILLS_BUTTON_OFFSET_Y * (i / 2));
-            if(x >= baseX && x <= baseX + SKILLS_BUTTON_OFFSET_X &&
-                    y >= baseY && y <= baseY + SKILLS_BUTTON_OFFSET_Y){
-                return SkillButtons[i + (SKILLS_PER_PAGE * skillsPage)];
-            }
-        }
-        return null;
-    }
 
     @Override
     public void update(float deltaTime) {
@@ -178,60 +143,29 @@ public abstract class AbsCharacterInfoScreen extends Screen {
         for(int i = 0; i < touchEvents.size(); i++) {
             Input.TouchEvent t = touchEvents.get(i);
             if (t.type == Input.TouchEvent.TOUCH_UP) {
-                ButtonPressed press = getButtonPressed(t.x, t.y);
-                if(press == null){
-                    continue;
+                Button basicPressed = basicButtonList.getButtonPressed(t.x, t.y);
+                int skillPressed = skillsButtonList.getIndexPressed(t.x, t.y);
+                if(basicPressed != null){
+                    switch(basicPressed.getName()){
+                        case CLOSE_STRING:
+                            backButton();
+                            break;
+                        case PREV_STRING:
+                            if(skillsPage > 0){
+                                skillsPage--;
+                            }
+                            break;
+                        case NEXT_STRING:
+                            if(skillsPage < maxPage){
+                                skillsPage++;
+                            }
+                            break;
+                        default:
+                            System.out.println("AbsCharacterInfoScreen:update(): Invalid button selection: " + basicPressed.getName());
+                    }
                 }
-                int skillNum = 0;
-                switch (press) {
-                    case CLOSE:
-                        backButton();
-                        break;
-                    case SKILLSPREV:
-                        if(skillsPage > 0){
-                            skillsPage--;
-                        }
-                        break;
-                    case SKILLSNEXT:
-                        if(skillsPage < maxPage){
-                            skillsPage++;
-                        }
-                        break;
-                    case SKILLS15:
-                        skillNum++;
-                    case SKILLS14:
-                        skillNum++;
-                    case SKILLS13:
-                        skillNum++;
-                    case SKILLS12:
-                        skillNum++;
-                    case SKILLS11:
-                        skillNum++;
-                    case SKILLS10:
-                        skillNum++;
-                    case SKILLS9:
-                        skillNum++;
-                    case SKILLS8:
-                        skillNum++;
-                    case SKILLS7:
-                        skillNum++;
-                    case SKILLS6:
-                        skillNum++;
-                    case SKILLS5:
-                        skillNum++;
-                    case SKILLS4:
-                        skillNum++;
-                    case SKILLS3:
-                        skillNum++;
-                    case SKILLS2:
-                        skillNum++;
-                    case SKILLS1:
-                        skillNum++;
-                    case SKILLS0:
-                        displayText = (displayText == skillNum) ? -1 : skillNum + SKILLS_PER_PAGE * skillsPage;
-                        break;
-                    default:
-                        break;
+                else if(skillPressed != -1){
+                    displayText = (displayText == skillPressed) ? -1 : skillPressed + SKILLS_TEXT_PER_PAGE * skillsPage;
                 }
             }
         }

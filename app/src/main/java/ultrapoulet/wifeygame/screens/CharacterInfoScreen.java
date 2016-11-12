@@ -3,18 +3,9 @@ package ultrapoulet.wifeygame.screens;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
-import android.text.Layout;
-import android.text.StaticLayout;
-import android.text.TextPaint;
-
-import java.util.List;
 
 import ultrapoulet.androidgame.framework.Game;
 import ultrapoulet.androidgame.framework.Graphics;
-import ultrapoulet.androidgame.framework.Image;
-import ultrapoulet.androidgame.framework.Input;
-import ultrapoulet.androidgame.framework.Input.TouchEvent;
-import ultrapoulet.androidgame.framework.Screen;
 import ultrapoulet.wifeygame.Assets;
 import ultrapoulet.wifeygame.character.SkillsEnum;
 import ultrapoulet.wifeygame.character.Weapon;
@@ -101,7 +92,7 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
 
         displayText = -1;
 
-        maxPage = (displayChar.getSkills().size() / SKILLS_PER_PAGE);
+        maxPage = (displayChar.getSkills().size() / SKILLS_TEXT_PER_PAGE);
         skillsPage = 0;
     }
 
@@ -137,15 +128,15 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
 
     protected void drawSkills(Graphics g){
         //List out names for the skills
-        for(int i = SKILLS_PER_PAGE * skillsPage; i < SKILLS_PER_PAGE * skillsPage + SKILLS_PER_PAGE && i < displayChar.getSkills().size(); i++){
+        for(int i = SKILLS_TEXT_PER_PAGE * skillsPage; i < SKILLS_TEXT_PER_PAGE * skillsPage + SKILLS_TEXT_PER_PAGE && i < displayChar.getSkills().size(); i++){
             SkillsEnum skill = displayChar.getSkills().get(i);
             int xOffset;
-            int yOffset = SKILLS_BASE_Y + ((i % SKILLS_PER_PAGE) / 2) * SKILLS_OFFSET_Y;
+            int yOffset = SKILLS_TEXT_BASE_Y + ((i % SKILLS_TEXT_PER_PAGE) / 2) * SKILLS_TEXT_OFFSET_Y;
             if(i % 2 == 0) {
-                xOffset = SKILLS_LEFT_X;
+                xOffset = SKILLS_TEXT_LEFT_X;
             }
             else{
-                xOffset = SKILLS_RIGHT_X;
+                xOffset = SKILLS_TEXT_RIGHT_X;
             }
             g.drawString(skill.getSkillName(), xOffset, yOffset, skillsPaint);
         }

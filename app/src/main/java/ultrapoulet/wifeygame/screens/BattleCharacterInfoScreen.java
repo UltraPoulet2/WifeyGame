@@ -66,7 +66,7 @@ public class BattleCharacterInfoScreen extends AbsCharacterInfoScreen {
 
         displayText = -1;
         skillsPage = 0;
-        maxPage = displayChar.getSkills().size() / SKILLS_PER_PAGE;
+        maxPage = displayChar.getSkills().size() / SKILLS_TEXT_PER_PAGE;
         multipliers = displayChar.getMultipliers(enemy);
     }
 
@@ -137,15 +137,15 @@ public class BattleCharacterInfoScreen extends AbsCharacterInfoScreen {
 
     protected void drawSkills(Graphics g){
         //List out names for the skills
-        for(int i = SKILLS_PER_PAGE * skillsPage; i < SKILLS_PER_PAGE * skillsPage + SKILLS_PER_PAGE && i < displayChar.getSkills().size(); i++){
+        for(int i = SKILLS_TEXT_PER_PAGE * skillsPage; i < SKILLS_TEXT_PER_PAGE * skillsPage + SKILLS_TEXT_PER_PAGE && i < displayChar.getSkills().size(); i++){
             AbsSkill skill = displayChar.getSkills().get(i);
             int xOffset;
-            int yOffset = SKILLS_BASE_Y + ((i % SKILLS_PER_PAGE) / 2) * SKILLS_OFFSET_Y;
+            int yOffset = SKILLS_TEXT_BASE_Y + ((i % SKILLS_TEXT_PER_PAGE) / 2) * SKILLS_TEXT_OFFSET_Y;
             if(i % 2 == 0) {
-                xOffset = SKILLS_LEFT_X;
+                xOffset = SKILLS_TEXT_LEFT_X;
             }
             else{
-                xOffset = SKILLS_RIGHT_X;
+                xOffset = SKILLS_TEXT_RIGHT_X;
             }
             g.drawString(skill.getSkillName(), xOffset, yOffset, skillsPaint);
         }
