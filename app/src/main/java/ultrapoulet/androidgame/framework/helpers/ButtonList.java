@@ -43,4 +43,14 @@ public class ButtonList {
             System.out.println("ButtonList:setIndexActive(): Invalid index provided: " + index);
         }
     }
+
+    //For use for numbered buttons
+    public void setIndexCoord(int index, int leftX, int rightX, int topY, int botY){
+        if(index < buttons.size() && index >= 0){
+            buttons.get(index).setCoordinates(leftX, rightX, topY, botY);
+        }
+        else{
+            System.out.println("ButtonList:setIndexCoord(): Invalid index provided: " + index);
+        }
+    }
 }

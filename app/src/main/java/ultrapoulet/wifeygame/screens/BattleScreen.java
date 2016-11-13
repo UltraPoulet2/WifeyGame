@@ -68,17 +68,6 @@ public class BattleScreen extends Screen {
     private static final int CHAR_NUMBER_SMALL_Y = 855;
     private static final int CHAR_NUMBER_LARGE_Y = 830;
 
-    private static final int CHAR_INTERIOR_SMALL_X = 10;
-    private static final int CHAR_IMAGE_SMALL_Y = 770;
-    private static final int CHAR_HEALTH_SMALL_Y = 860;
-
-    private static final int CHAR_INTERIOR_LARGE_X = 20;
-    private static final int CHAR_IMAGE_LARGE_Y = 660;
-    private static final int CHAR_HEALTH_LARGE_Y = 840;
-
-    private static final int CHAR_IMAGE_SMALL_SIZE = 80;
-    private static final int CHAR_IMAGE_LARGE_SIZE = 160;
-
     private static final int CHAR_LARGE_BASE_ELEM_ATK_X = 39;
     private static final int CHAR_SMALL_BASE_ELEM_ATK_X = 19;
     private static final int CHAR_LARGE_BASE_ELEM_RES_X = 102;
@@ -207,6 +196,18 @@ public class BattleScreen extends Screen {
 
     private Button commandSelected;
 
+    private ButtonList partyList;
+    private static final int CHAR_INTERIOR_SMALL_X = 10;
+    private static final int CHAR_IMAGE_SMALL_Y = 770;
+    private static final int CHAR_HEALTH_SMALL_Y = 860;
+
+    private static final int CHAR_INTERIOR_LARGE_X = 20;
+    private static final int CHAR_IMAGE_LARGE_Y = 660;
+    private static final int CHAR_HEALTH_LARGE_Y = 840;
+
+    private static final int CHAR_IMAGE_SMALL_SIZE = 80;
+    private static final int CHAR_IMAGE_LARGE_SIZE = 160;
+
     private enum BattlePhase{
         BATTLE_START,
         WAVE_START,
@@ -269,6 +270,19 @@ public class BattleScreen extends Screen {
 
     public void setParty(BattleWifey[] party){
         this.party = party;
+
+        createPartyList();
+    }
+
+    public void createPartyList(){
+        partyList = new ButtonList();
+        for(int i = 0; i < party.length; i++){
+            int leftX = CHAR_HOLDER_X_DISTANCE * i + CHAR_INTERIOR_SMALL_X;
+            int rightX = leftX + CHAR_IMAGE_SMALL_SIZE;
+            int topY = CHAR_IMAGE_SMALL_Y;
+            int botY = topY + CHAR_IMAGE_SMALL_SIZE;
+            partyList.addButton(new Button(leftX, rightX, topY, botY, true, "PARTY_" + i));
+        }
     }
 
 
@@ -295,41 +309,29 @@ public class BattleScreen extends Screen {
             specialAttackButton.setActive(false);
             transformButton.setActive(false);
         }
-    }
-
-    public int getCharacterPressed(TouchEvent touch){
         int i = 0;
-        int x = touch.x;
-        int y = touch.y;
-        for( ; i < partyIndex && i < party.length; i++ ){
+        for( ; i < partyIndex && i < party.length; i++){
             int leftX = CHAR_HOLDER_X_DISTANCE * i + CHAR_INTERIOR_SMALL_X;
             int rightX = leftX + CHAR_IMAGE_SMALL_SIZE;
             int topY = CHAR_IMAGE_SMALL_Y;
             int botY = topY + CHAR_IMAGE_SMALL_SIZE;
-            if(leftX <= x && rightX >= x && topY <= y && botY >= y){
-                return i;
-            }
+            partyList.setIndexCoord(i, leftX, rightX, topY, botY);
         }
         if(i == partyIndex && i < party.length){
             int leftX = CHAR_HOLDER_X_DISTANCE * i + CHAR_INTERIOR_LARGE_X;
             int rightX = leftX + CHAR_IMAGE_LARGE_SIZE;
             int topY = CHAR_IMAGE_LARGE_Y;
             int botY = topY + CHAR_IMAGE_LARGE_SIZE;
-            if(leftX <= x && rightX >= x && topY <= y && botY >= y){
-                return i;
-            }
+            partyList.setIndexCoord(i, leftX, rightX, topY, botY);
             i++;
         }
-        for( ; i < party.length; i++ ){
+        for( ; i < party.length; i++){
             int leftX = CHAR_HOLDER_X_DISTANCE * (i + 1);
             int rightX = leftX + CHAR_IMAGE_SMALL_SIZE;
             int topY = CHAR_IMAGE_SMALL_Y;
             int botY = topY + CHAR_IMAGE_SMALL_SIZE;
-            if(leftX <= x && rightX >= x && topY <= y && botY >= y){
-                return i;
-            }
+            partyList.setIndexCoord(i, leftX, rightX, topY, botY);
         }
-        return -1;
     }
 
     private void incrementHits(){
@@ -479,8 +481,8 @@ public class BattleScreen extends Screen {
                         if (t.type != TouchEvent.TOUCH_UP) {
                             continue;
                         }
-                        Button command = buttonList.getButtonPressed(touchEvents.get(i).x, touchEvents.get(i).y);
-                        int charPressed = getCharacterPressed(touchEvents.get(i));
+                        Button command = buttonList.getButtonPressed(t.x, t.y);
+                        int charPressed = partyList.getIndexPressed(t.x, t.y);
                         if(charPressed != -1){
                             charInfo.setChars(party[charPressed], enemies[enemyIndex]);
                             game.setScreen(charInfo);

@@ -41,4 +41,11 @@ public class Button {
         }
         return (x >= leftX && x <= rightX && y >= topY && y <= botY);
     }
+
+    public void setCoordinates(int leftX, int rightX, int topY, int botY){
+        this.leftX = leftX;
+        this.rightX = rightX;
+        this.topY = topY;
+        this.botY = botY;
+    }
 }
