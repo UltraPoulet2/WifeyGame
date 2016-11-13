@@ -24,7 +24,7 @@ public class ButtonList {
         return null;
     }
 
-    //For use for if numbered buttons
+    //For use for numbered buttons
     public int getIndexPressed(int x, int y){
         for(int i = 0; i < buttons.size(); i++){
             if(buttons.get(i).isPressed(x,y)){
@@ -32,5 +32,15 @@ public class ButtonList {
             }
         }
         return -1;
+    }
+
+    //For use for numbered buttons
+    public void setIndexActive(int index, boolean value){
+        if(index < buttons.size() && index >= 0){
+            buttons.get(index).setActive(value);
+        }
+        else{
+            System.out.println("ButtonList:setIndexActive(): Invalid index provided: " + index);
+        }
     }
 }

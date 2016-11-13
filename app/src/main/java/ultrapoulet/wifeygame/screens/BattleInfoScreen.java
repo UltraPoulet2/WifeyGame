@@ -5,6 +5,7 @@ import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.text.TextPaint;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ultrapoulet.androidgame.framework.Game;
@@ -13,8 +14,11 @@ import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.androidgame.framework.Input;
 import ultrapoulet.androidgame.framework.Input.TouchEvent;
 import ultrapoulet.androidgame.framework.Screen;
+import ultrapoulet.androidgame.framework.helpers.Button;
+import ultrapoulet.androidgame.framework.helpers.ButtonList;
 import ultrapoulet.wifeygame.Assets;
 import ultrapoulet.wifeygame.battle.BattleInfo;
+import ultrapoulet.wifeygame.battle.requirements.AbsRequirement;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
 import ultrapoulet.wifeygame.gamestate.Party;
 
@@ -36,54 +40,58 @@ public class BattleInfoScreen extends Screen{
 
     private WifeyCharacter[] party;
 
-    private static int BATTLE_NAME_X = 400;
-    private static int BATTLE_NAME_Y = 92;
+    private static final int BATTLE_NAME_X = 400;
+    private static final int BATTLE_NAME_Y = 92;
     private Paint battlePaint;
 
-    private static int NUMBER_WAVES_X = 228;
-    private static int NUMBER_WAVES_Y = 228;
+    private static final int NUMBER_WAVES_X = 228;
+    private static final int NUMBER_WAVES_Y = 228;
     private Paint wavesPaint;
 
-    private static int PARTY_IMAGE_BASE_LEFT_X = 55;
-    private static int PARTY_IMAGE_BASE_RIGHT_X = 145;
-    private static int PARTY_IMAGE_OFFSET_X = 100;
-    private static int PARTY_IMAGE_TOP_Y = 1000;
-    private static int PARTY_IMAGE_BOT_Y = 1090;
-    private final static int PARTY_SCALE = 57;
+    private static final int PARTY_SCALE = 57;
 
-    private static int REQUIREMENT_CENTER_X = 400;
-    private static int REQUIREMENT_LEFT_X = 47;
-    private static int REQUIREMENT_RIGHT_X = 752;
-    private static int REQUIREMENT_WIDTH = REQUIREMENT_RIGHT_X - REQUIREMENT_LEFT_X - 200;
-    private static int REQUIREMENT_BASE_TOP_Y = 413;
-    private static int REQUIREMENT_BASE_BOT_Y = 512;
-    private static int REQUIREMENT_BASE_TEXT_Y = 485;
-    private static int REQUIREMENT_OFFSET_Y = 105;
+    private static final int REQUIREMENT_CENTER_X = 400;
+    private static final int REQUIREMENT_LEFT_X = 47;
+    private static final int REQUIREMENT_RIGHT_X = 752;
+    private static final int REQUIREMENT_WIDTH = REQUIREMENT_RIGHT_X - REQUIREMENT_LEFT_X - 200;
+    private static final int REQUIREMENT_BASE_TOP_Y = 413;
+    private static final int REQUIREMENT_BASE_BOT_Y = 512;
+    private static final int REQUIREMENT_BASE_TEXT_Y = 485;
+    private static final int REQUIREMENT_OFFSET_Y = 105;
     private TextPaint requirementPaint;
 
-    private static int BACK_BUTTON_LEFT_X = 45;
-    private static int BACK_BUTTON_RIGHT_X = 215;
-    private static int BACK_BUTTON_TOP_Y = 1150;
-    private static int BACK_BUTTON_BOTTOM_Y = 1250;
-
-    private static int PARTY_BUTTON_LEFT_X = 250;
-    private static int PARTY_BUTTON_RIGHT_X = 550;
-    private static int PARTY_BUTTON_TOP_Y = 1150;
-    private static int PARTY_BUTTON_BOTTOM_Y = 1250;
-
-    private static int START_BUTTON_LEFT_X = 585;
-    private static int START_BUTTON_RIGHT_X = 755;
-    private static int START_BUTTON_TOP_Y = 1150;
-    private static int START_BUTTON_BOTTOM_Y = 1250;
-
-    private ButtonPressed lastPressed = null;
+    private Button lastPressed = null;
     private int selectedReq = -1;
 
-    private enum ButtonPressed{
-        BACK,
-        PARTY,
-        START
-    }
+    private ButtonList buttonList;
+
+    private static final int BACK_BUTTON_LEFT_X = 45;
+    private static final int BACK_BUTTON_RIGHT_X = 215;
+    private static final int BACK_BUTTON_TOP_Y = 1150;
+    private static final int BACK_BUTTON_BOTTOM_Y = 1250;
+    private static final String BACK_BUTTON_STRING = "Back";
+
+    private static final int PARTY_BUTTON_LEFT_X = 250;
+    private static final int PARTY_BUTTON_RIGHT_X = 550;
+    private static final int PARTY_BUTTON_TOP_Y = 1150;
+    private static final int PARTY_BUTTON_BOTTOM_Y = 1250;
+    private static final String PARTY_BUTTON_STRING = "Party";
+
+    private Button startButton;
+    private static final int START_BUTTON_LEFT_X = 585;
+    private static final int START_BUTTON_RIGHT_X = 755;
+    private static final int START_BUTTON_TOP_Y = 1150;
+    private static final int START_BUTTON_BOTTOM_Y = 1250;
+    private static final String START_BUTTON_STRING = "Start";
+
+    private ButtonList partyList;
+    private static final int PARTY_IMAGE_BASE_LEFT_X = 55;
+    private static final int PARTY_IMAGE_BASE_RIGHT_X = 145;
+    private static final int PARTY_IMAGE_OFFSET_X = 100;
+    private static final int PARTY_IMAGE_TOP_Y = 1000;
+    private static final int PARTY_IMAGE_BOT_Y = 1090;
+
+    private ButtonList requirementList;
 
     public BattleInfoScreen(Game game){
         super(game);
@@ -108,56 +116,39 @@ public class BattleInfoScreen extends Screen{
 
         charInfo = new CharacterInfoScreen(game);
         charInfo.setPreviousScreen(this);
+
+        buttonList = new ButtonList();
+        buttonList.addButton(new Button(BACK_BUTTON_LEFT_X, BACK_BUTTON_RIGHT_X, BACK_BUTTON_TOP_Y, BACK_BUTTON_BOTTOM_Y, true, BACK_BUTTON_STRING));
+        buttonList.addButton(new Button(PARTY_BUTTON_LEFT_X, PARTY_BUTTON_RIGHT_X, PARTY_BUTTON_TOP_Y, PARTY_BUTTON_BOTTOM_Y, true, PARTY_BUTTON_STRING));
+        startButton = new Button(START_BUTTON_LEFT_X, START_BUTTON_RIGHT_X, START_BUTTON_TOP_Y, START_BUTTON_BOTTOM_Y, false, START_BUTTON_STRING);
+        buttonList.addButton(startButton);
     }
 
     public void setBattleInfo(BattleInfo info){
         this.battleInfo = info;
-    }
 
-    public void setPreviousScreen(Screen prevScreen){
-        this.prevScreen = prevScreen;
-    }
-
-    private ButtonPressed getButtonPressed(int x, int y){
-        if(x >= BACK_BUTTON_LEFT_X && x <= BACK_BUTTON_RIGHT_X && y >= BACK_BUTTON_TOP_Y && y <= BACK_BUTTON_BOTTOM_Y){
-            return ButtonPressed.BACK;
-        }
-        else if(x >= PARTY_BUTTON_LEFT_X && x <= PARTY_BUTTON_RIGHT_X && y >= PARTY_BUTTON_TOP_Y && y <= PARTY_BUTTON_BOTTOM_Y){
-            return ButtonPressed.PARTY;
-        }
-        else if(x >= START_BUTTON_LEFT_X && x <= START_BUTTON_RIGHT_X && y >= START_BUTTON_TOP_Y && y <= START_BUTTON_BOTTOM_Y){
-            return ButtonPressed.START;
-        }
-        else{
-            return null;
-        }
-    }
-
-    private int getRequirementIndex(int x, int y){
-        for(int i = 0; i < 5 && i < battleInfo.getRequirements().size(); i++){
-            int xLeft = REQUIREMENT_LEFT_X;
-            int xRight = REQUIREMENT_RIGHT_X;
-            int yTop = REQUIREMENT_BASE_TOP_Y + REQUIREMENT_OFFSET_Y * i;
-            int yBot = REQUIREMENT_BASE_BOT_Y + REQUIREMENT_OFFSET_Y * i;
-            if(x >= xLeft && x <= xRight && y >= yTop && y <= yBot){
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    //Gets the index of the party member that is presently being touched
-    private int getPartyIndex(int x, int y){
+        partyList = new ButtonList();
         for(int i = 0; i < battleInfo.getPartyMax(); i++){
             int xLeft = PARTY_IMAGE_BASE_LEFT_X + PARTY_IMAGE_OFFSET_X * i;
             int xRight = PARTY_IMAGE_BASE_RIGHT_X + PARTY_IMAGE_OFFSET_X * i;
             int yTop = PARTY_IMAGE_TOP_Y;
             int yBot = PARTY_IMAGE_BOT_Y;
-            if(x >= xLeft && x <= xRight && y >= yTop && y <= yBot){
-                return i;
-            }
+            partyList.addButton(new Button(xLeft, xRight, yTop, yBot, false, "PARTY_" + i));
         }
-        return -1;
+
+        requirementList = new ButtonList();
+        ArrayList<AbsRequirement> tempList = battleInfo.getRequirements();
+        for(int i = 0; i < tempList.size(); i++){
+            int xLeft = REQUIREMENT_LEFT_X;
+            int xRight = REQUIREMENT_RIGHT_X;
+            int yTop = REQUIREMENT_BASE_TOP_Y + REQUIREMENT_OFFSET_Y * i;
+            int yBot = REQUIREMENT_BASE_BOT_Y + REQUIREMENT_OFFSET_Y * i;
+            requirementList.addButton(new Button(xLeft, xRight, yTop, yBot, true, "REQ_" + i));
+        }
+    }
+
+    public void setPreviousScreen(Screen prevScreen){
+        this.prevScreen = prevScreen;
     }
 
     @Override
@@ -166,38 +157,35 @@ public class BattleInfoScreen extends Screen{
         for(int i = 0; i < touchEvents.size(); i++) {
             Input.TouchEvent t = touchEvents.get(i);
             if(t.type == TouchEvent.TOUCH_DOWN){
-                lastPressed = getButtonPressed(t.x, t.y);
-                selectedChar = getPartyIndex(t.x, t.y);
-                selectedReq = getRequirementIndex(t.x, t.y);
+                lastPressed = buttonList.getButtonPressed(t.x, t.y);
+                selectedChar = partyList.getIndexPressed(t.x, t.y);
+                selectedReq = requirementList.getIndexPressed(t.x, t.y);
                 continue;
             }
             else if(t.type == TouchEvent.TOUCH_UP){
-                ButtonPressed pressed = getButtonPressed(t.x, t.y);
-                if(lastPressed == pressed && pressed != null){
-                    switch(pressed){
-                        case BACK:
+                if(lastPressed == buttonList.getButtonPressed(t.x, t.y) && lastPressed != null){
+                    switch(lastPressed.getName()){
+                        case BACK_BUTTON_STRING:
                             backButton();
                             break;
-                        case PARTY:
+                        case PARTY_BUTTON_STRING:
                             partySelect.setBattleInfo(battleInfo);
                             game.setScreen(partySelect);
                             break;
-                        case START:
-                            if(party[0] != null && battleInfo.validParty(party)){
-                                BattleScreen bs = new BattleScreen(game);
-                                bs.setParty(Party.getBattleParty());
-                                bs.setBattleInfo(battleInfo);
-                                bs.setBackground(Assets.testBG);
-                                game.setScreen(bs);
-                            }
+                        case START_BUTTON_STRING:
+                            BattleScreen bs = new BattleScreen(game);
+                            bs.setParty(Party.getBattleParty());
+                            bs.setBattleInfo(battleInfo);
+                            bs.setBackground(Assets.testBG);
+                            game.setScreen(bs);
                             break;
                     }
                 }
-                else if(selectedChar == getPartyIndex(t.x, t.y) && selectedChar != -1){
+                else if(selectedChar == partyList.getIndexPressed(t.x, t.y) && selectedChar != -1){
                     charInfo.setChar(party[selectedChar]);
                     game.setScreen(charInfo);
                 }
-                else if(selectedReq == getRequirementIndex(t.x, t.y) && selectedReq != -1){
+                else if(selectedReq == requirementList.getIndexPressed(t.x, t.y) && selectedReq != -1){
                     //Set up displaying a requirement
                     System.out.println("Displaying requirement: " + selectedReq + " " + battleInfo.getRequirements().get(selectedReq).getDescription());
                 }
@@ -252,6 +240,16 @@ public class BattleInfoScreen extends Screen{
     @Override
     public void resume() {
         party = Party.getParty();
+        if(party[0] != null && battleInfo.validParty(party)){
+            startButton.setActive(true);
+        }
+        else{
+            startButton.setActive(false);
+        }
+        for(int i = 0; i < battleInfo.getPartyMax(); i++){
+            //Set the button to active if the party member exists
+            partyList.setIndexActive(i, party[i] != null);
+        }
     }
 
     @Override
