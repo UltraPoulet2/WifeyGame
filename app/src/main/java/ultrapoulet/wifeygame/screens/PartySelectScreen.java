@@ -15,6 +15,8 @@ import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.androidgame.framework.Input;
 import ultrapoulet.androidgame.framework.Input.TouchEvent;
 import ultrapoulet.androidgame.framework.Screen;
+import ultrapoulet.androidgame.framework.helpers.Button;
+import ultrapoulet.androidgame.framework.helpers.ButtonList;
 import ultrapoulet.wifeygame.Assets;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
 import ultrapoulet.wifeygame.battle.BattleInfo;
@@ -61,38 +63,42 @@ public class PartySelectScreen extends Screen {
     private int draggingRecruitIndex = -1;
     private int draggingPartyIndex = -1;
 
-    private enum ButtonPressed{
-        PREV_PAGE,
-        NEXT_PAGE,
-        SORT,
-        BACK,
-        ACCEPT
-    };
+    private ButtonList basicButtonList;
 
-    private static final int BACK_BUTTON_LEFT_X = 45;
-    private static final int BACK_BUTTON_RIGHT_X = 215;
-    private static final int BACK_BUTTON_TOP_Y = 1150;
-    private static final int BACK_BUTTON_BOT_Y = 1250;
-
-    private static final int ACCEPT_BUTTON_LEFT_X = 585;
-    private static final int ACCEPT_BUTTON_RIGHT_X = 755;
-    private static final int ACCEPT_BUTTON_TOP_Y = 1150;
-    private static final int ACCEPT_BUTTON_BOT_Y = 1250;
-
+    private Button prevButton;
     private static final int PREV_BUTTON_LEFT_X = 45;
     private static final int PREV_BUTTON_RIGHT_X = 215;
     private static final int PREV_BUTTON_TOP_Y = 338;
     private static final int PREV_BUTTON_BOT_Y = 388;
+    private static final String PREV_BUTTON_STRING = "Prev";
 
+    private Button nextButton;
     private static final int NEXT_BUTTON_LEFT_X = 315;
     private static final int NEXT_BUTTON_RIGHT_X = 485;
     private static final int NEXT_BUTTON_TOP_Y = 338;
     private static final int NEXT_BUTTON_BOT_Y = 388;
+    private static final String NEXT_BUTTON_STRING = "Next";
 
+    private Button sortButton;
     private static final int SORT_BUTTON_LEFT_X = 585;
     private static final int SORT_BUTTON_RIGHT_X = 755;
     private static final int SORT_BUTTON_TOP_Y = 348;
     private static final int SORT_BUTTON_BOT_Y = 378;
+    private static final String SORT_BUTTON_STRING = "Sort";
+
+    private Button backButton;
+    private static final int BACK_BUTTON_LEFT_X = 45;
+    private static final int BACK_BUTTON_RIGHT_X = 215;
+    private static final int BACK_BUTTON_TOP_Y = 1150;
+    private static final int BACK_BUTTON_BOT_Y = 1250;
+    private static final String BACK_BUTTON_STRING = "Back";
+
+    private Button acceptButton;
+    private static final int ACCEPT_BUTTON_LEFT_X = 585;
+    private static final int ACCEPT_BUTTON_RIGHT_X = 755;
+    private static final int ACCEPT_BUTTON_TOP_Y = 1150;
+    private static final int ACCEPT_BUTTON_BOT_Y = 1250;
+    private static final String ACCEPT_BUTTON_STRING = "Accept";
 
     private static final int CUR_PAGE_X_1 = 215;
     private static final int CUR_PAGE_X_2 = 235;
@@ -121,7 +127,7 @@ public class PartySelectScreen extends Screen {
 
     private static final int DRAGGING_OFFSET = 60;
 
-    private ButtonPressed lastPressed = null;
+    private Button lastPressed;
 
     private boolean hasRequiredList(){
         return battleInfo != null && battleInfo.getRequiredList() != null;
@@ -197,6 +203,38 @@ public class PartySelectScreen extends Screen {
 
         charInfo = new CharacterInfoScreen(game);
         charInfo.setPreviousScreen(this);
+
+        createButtons();
+    }
+
+    public void createButtons(){
+        basicButtonList = new ButtonList();
+        prevButton = new Button(PREV_BUTTON_LEFT_X, PREV_BUTTON_RIGHT_X, PREV_BUTTON_TOP_Y, PREV_BUTTON_BOT_Y, false, PREV_BUTTON_STRING);
+        basicButtonList.addButton(prevButton);
+        nextButton = new Button(NEXT_BUTTON_LEFT_X, NEXT_BUTTON_RIGHT_X, NEXT_BUTTON_TOP_Y, NEXT_BUTTON_BOT_Y, false, NEXT_BUTTON_STRING);
+        basicButtonList.addButton(nextButton);
+        sortButton = new Button(SORT_BUTTON_LEFT_X, SORT_BUTTON_RIGHT_X, SORT_BUTTON_TOP_Y, SORT_BUTTON_BOT_Y, false, SORT_BUTTON_STRING);
+        basicButtonList.addButton(sortButton);
+        backButton = new Button(BACK_BUTTON_LEFT_X, BACK_BUTTON_RIGHT_X, BACK_BUTTON_TOP_Y, BACK_BUTTON_BOT_Y, true, BACK_BUTTON_STRING);
+        basicButtonList.addButton(backButton);
+        acceptButton = new Button(ACCEPT_BUTTON_LEFT_X, ACCEPT_BUTTON_RIGHT_X, ACCEPT_BUTTON_TOP_Y, ACCEPT_BUTTON_BOT_Y, false, ACCEPT_BUTTON_STRING);
+        basicButtonList.addButton(acceptButton);
+
+    }
+
+    public void updateButtons(){
+        prevButton.setActive(currentPage > 1);
+        nextButton.setActive(currentPage < maxPage);
+        acceptButton.setActive(validParty());
+    }
+
+    public boolean validParty(){
+        if(currentParty[0] != null){
+            if(battleInfo == null || battleInfo.validParty(currentParty)){
+                return true;
+            }
+        }
+        return false;
     }
 
     public void setValidCharacters(WifeyCharacter[] inputCharacters){
@@ -212,6 +250,7 @@ public class PartySelectScreen extends Screen {
             }
         }
         Collections.sort(validCharacters, nameComp);
+        currentPage = 1;
         maxPage = (validCharacters.size() / PER_PAGE) + 1;
     }
 
@@ -232,6 +271,7 @@ public class PartySelectScreen extends Screen {
             currentParty[i] = Party.getIndex(i);
         }
         setValidCharacters(RecruitedCharacters.getArray());
+        updateButtons();
     }
 
     public void setPreviousScreen(Screen previousScreen){
@@ -267,25 +307,6 @@ public class PartySelectScreen extends Screen {
         return -1;
     }
 
-    private ButtonPressed getButtonPressed(int x, int y){
-        if(x >= BACK_BUTTON_LEFT_X && x <= BACK_BUTTON_RIGHT_X && y >= BACK_BUTTON_TOP_Y && y <= BACK_BUTTON_BOT_Y){
-            return ButtonPressed.BACK;
-        }
-        else if(x >= ACCEPT_BUTTON_LEFT_X && x <= ACCEPT_BUTTON_RIGHT_X && y >= ACCEPT_BUTTON_TOP_Y && y <= ACCEPT_BUTTON_BOT_Y) {
-            return ButtonPressed.ACCEPT;
-        }
-        else if(x >= PREV_BUTTON_LEFT_X && x <= PREV_BUTTON_RIGHT_X && y >= PREV_BUTTON_TOP_Y && y <= PREV_BUTTON_BOT_Y) {
-            return ButtonPressed.PREV_PAGE;
-        }
-        else if(x >= NEXT_BUTTON_LEFT_X && x <= NEXT_BUTTON_RIGHT_X && y >= NEXT_BUTTON_TOP_Y && y <= NEXT_BUTTON_BOT_Y) {
-            return ButtonPressed.NEXT_PAGE;
-        }
-        else if(x >= SORT_BUTTON_LEFT_X && x <= SORT_BUTTON_RIGHT_X && y >= SORT_BUTTON_TOP_Y && y <= SORT_BUTTON_BOT_Y) {
-            return ButtonPressed.SORT;
-        }
-        return null;
-    }
-
     @Override
     public void update(float deltaTime){
         List<Input.TouchEvent> touchEvents = game.getInput().getTouchEvents();
@@ -299,33 +320,30 @@ public class PartySelectScreen extends Screen {
                 draggingY = t.y;
                 draggingRecruitIndex = getRecruitIndex(t.x, t.y);
                 draggingPartyIndex = getPartyIndex(t.x, t.y);
-                lastPressed = getButtonPressed(t.x, t.y);
+                lastPressed = basicButtonList.getButtonPressed(t.x, t.y);
                 continue;
             }
             else if (t.type == TouchEvent.TOUCH_UP) {
                 if(!dragging){
-                    if(lastPressed == ButtonPressed.BACK && getButtonPressed(t.x, t.y) == ButtonPressed.BACK){
+                    Button pressed = basicButtonList.getButtonPressed(t.x, t.y);
+                    if(lastPressed == pressed && lastPressed == backButton){
                         backButton();
                     }
-                    else if(lastPressed == ButtonPressed.ACCEPT && getButtonPressed(t.x, t.y) == ButtonPressed.ACCEPT){
+                    else if(lastPressed == pressed && lastPressed == acceptButton){
                         if(currentParty[0] != null) {
                             if(battleInfo == null || battleInfo.validParty(currentParty)) {
-                                //This will be changed to go back to previous screen and save party
-                                //BattleScreen bs = new BattleScreen(game);
                                 Party.setParty(currentParty);
                                 backButton();
-                                //bs.setParty(Party.getBattleParty());
-                                //bs.setBattleInfo(battleInfo);
-                                //bs.setBackground(Assets.testBG);
-                                //game.setScreen(bs);
                             }
                         }
                     }
-                    else if(lastPressed == ButtonPressed.PREV_PAGE && getButtonPressed(t.x, t.y) == ButtonPressed.PREV_PAGE && currentPage > 1) {
+                    else if(lastPressed == pressed && lastPressed == prevButton && currentPage > 1) {
                         currentPage--;
+                        updateButtons();
                     }
-                    else if(lastPressed == ButtonPressed.NEXT_PAGE && getButtonPressed(t.x, t.y) == ButtonPressed.NEXT_PAGE && currentPage < maxPage){
+                    else if(lastPressed == pressed && lastPressed == nextButton && currentPage < maxPage){
                         currentPage++;
+                        updateButtons();
                     }
                     else if(draggingRecruitIndex != -1){
                         charInfo.setChar(validCharacters.get(draggingRecruitIndex));
@@ -364,6 +382,7 @@ public class PartySelectScreen extends Screen {
                             currentParty[partyIndex] = validCharacters.get(draggingRecruitIndex);
                         }
                     }
+                    updateButtons();
                 }
                 else if(dragging && draggingPartyIndex != -1){
                     int partyIndex = getPartyIndex(t.x, t.y);
@@ -381,7 +400,7 @@ public class PartySelectScreen extends Screen {
                         }
                         currentParty[finalIndex] = null;
                     }
-
+                    updateButtons();
                 }
                 touchDown = false;
                 dragging = false;
@@ -434,18 +453,18 @@ public class PartySelectScreen extends Screen {
             g.drawImage(numbers[maxPage % 10], MAX_PAGE_X_1, PAGE_Y);
         }
 
-        if(currentPage == 1){
-            g.drawImage(Assets.PrevPageDisable, PREV_BUTTON_LEFT_X, PREV_BUTTON_TOP_Y);
-        }
-        else{
+        if(prevButton.isActive()){
             g.drawImage(Assets.PrevPageEnable, PREV_BUTTON_LEFT_X, PREV_BUTTON_TOP_Y);
         }
+        else{
+            g.drawImage(Assets.PrevPageDisable, PREV_BUTTON_LEFT_X, PREV_BUTTON_TOP_Y);
+        }
 
-        if(currentPage == maxPage){
-            g.drawImage(Assets.NextPageDisable, NEXT_BUTTON_LEFT_X, NEXT_BUTTON_TOP_Y);
+        if(nextButton.isActive()){
+            g.drawImage(Assets.NextPageEnable, NEXT_BUTTON_LEFT_X, NEXT_BUTTON_TOP_Y);
         }
         else{
-            g.drawImage(Assets.NextPageEnable, NEXT_BUTTON_LEFT_X, NEXT_BUTTON_TOP_Y);
+            g.drawImage(Assets.NextPageDisable, NEXT_BUTTON_LEFT_X, NEXT_BUTTON_TOP_Y);
         }
 
         for(int i = 0; i < maxPartySize && currentParty[i] != null; i++){
@@ -490,8 +509,7 @@ public class PartySelectScreen extends Screen {
             }
         }
 
-        boolean validParty = (currentParty[0] != null) && (battleInfo == null || battleInfo.validParty(currentParty));
-        if(validParty){
+        if(acceptButton.isActive()){
             g.drawImage(Assets.AcceptEnable, ACCEPT_BUTTON_LEFT_X, ACCEPT_BUTTON_TOP_Y);
         }
         else{
