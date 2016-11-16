@@ -64,6 +64,7 @@ public class PartySelectScreen extends Screen {
     private int draggingPartyIndex = -1;
 
     private ButtonList basicButtonList;
+    private Button lastPressed;
 
     private Button prevButton;
     private static final int PREV_BUTTON_LEFT_X = 45;
@@ -119,6 +120,8 @@ public class PartySelectScreen extends Screen {
     private static final int CHAR_REQUIRED_HOLDER_BASE_Y = CHAR_IMAGE_BASE_TOP_Y - 12;
     private static final int CHAR_REQUIRED_OFFSET = 90;
 
+    private ButtonList partyList;
+
     private static final int PARTY_IMAGE_BASE_LEFT_X = 55;
     private static final int PARTY_IMAGE_BASE_RIGHT_X = 145;
     private static final int PARTY_IMAGE_OFFSET_X = 100;
@@ -126,8 +129,6 @@ public class PartySelectScreen extends Screen {
     private static final int PARTY_IMAGE_BOT_Y = 270;
 
     private static final int DRAGGING_OFFSET = 60;
-
-    private Button lastPressed;
 
     private boolean hasRequiredList(){
         return battleInfo != null && battleInfo.getRequiredList() != null;
@@ -220,12 +221,27 @@ public class PartySelectScreen extends Screen {
         acceptButton = new Button(ACCEPT_BUTTON_LEFT_X, ACCEPT_BUTTON_RIGHT_X, ACCEPT_BUTTON_TOP_Y, ACCEPT_BUTTON_BOT_Y, false, ACCEPT_BUTTON_STRING);
         basicButtonList.addButton(acceptButton);
 
+        partyList = new ButtonList();
+        for(int i = 0; i < 7; i++){
+            int leftX = PARTY_IMAGE_BASE_LEFT_X + PARTY_IMAGE_OFFSET_X * i;
+            int rightX = PARTY_IMAGE_BASE_RIGHT_X + PARTY_IMAGE_OFFSET_X * i;
+            int topY = PARTY_IMAGE_TOP_Y;
+            int botY = PARTY_IMAGE_BOT_Y;
+            partyList.addButton(new Button(leftX, rightX, topY, botY, false, "PARTY_" + i));
+        }
     }
+
 
     public void updateButtons(){
         prevButton.setActive(currentPage > 1);
         nextButton.setActive(currentPage < maxPage);
         acceptButton.setActive(validParty());
+    }
+
+    public void updatePartyButtons(){
+        for(int i = 0; i < maxPartySize; i++){
+            partyList.setIndexActive(i, true);
+        }
     }
 
     public boolean validParty(){
@@ -272,6 +288,7 @@ public class PartySelectScreen extends Screen {
         }
         setValidCharacters(RecruitedCharacters.getArray());
         updateButtons();
+        updatePartyButtons();
     }
 
     public void setPreviousScreen(Screen previousScreen){
@@ -293,20 +310,6 @@ public class PartySelectScreen extends Screen {
         return -1;
     }
 
-    //Gets the index of the party member that is presently being touched
-    private int getPartyIndex(int x, int y){
-        for(int i = 0; i < maxPartySize; i++){
-            int xLeft = PARTY_IMAGE_BASE_LEFT_X + PARTY_IMAGE_OFFSET_X * i;
-            int xRight = PARTY_IMAGE_BASE_RIGHT_X + PARTY_IMAGE_OFFSET_X * i;
-            int yTop = PARTY_IMAGE_TOP_Y;
-            int yBot = PARTY_IMAGE_BOT_Y;
-            if(x >= xLeft && x <= xRight && y >= yTop && y <= yBot){
-                return i;
-            }
-        }
-        return -1;
-    }
-
     @Override
     public void update(float deltaTime){
         List<Input.TouchEvent> touchEvents = game.getInput().getTouchEvents();
@@ -319,43 +322,43 @@ public class PartySelectScreen extends Screen {
                 draggingX = t.x;
                 draggingY = t.y;
                 draggingRecruitIndex = getRecruitIndex(t.x, t.y);
-                draggingPartyIndex = getPartyIndex(t.x, t.y);
+                draggingPartyIndex = partyList.getIndexPressed(t.x, t.y);
                 lastPressed = basicButtonList.getButtonPressed(t.x, t.y);
                 continue;
             }
             else if (t.type == TouchEvent.TOUCH_UP) {
                 if(!dragging){
                     Button pressed = basicButtonList.getButtonPressed(t.x, t.y);
-                    if(lastPressed == pressed && lastPressed == backButton){
-                        backButton();
-                    }
-                    else if(lastPressed == pressed && lastPressed == acceptButton){
-                        if(currentParty[0] != null) {
-                            if(battleInfo == null || battleInfo.validParty(currentParty)) {
-                                Party.setParty(currentParty);
-                                backButton();
-                            }
+                    int pressedRecruit = getRecruitIndex(t.x, t.y);
+                    int pressedParty = partyList.getIndexPressed(t.x, t.y);
+                    if(lastPressed == pressed && lastPressed != null) {
+                        if(lastPressed == backButton){
+                            backButton();
+                        }
+                        else if(lastPressed == acceptButton){
+                            Party.setParty(currentParty);
+                            backButton();
+                        }
+                        else if(lastPressed == prevButton){
+                            currentPage--;
+                            updateButtons();
+                        }
+                        else if(lastPressed == nextButton){
+                            currentPage++;
+                            updateButtons();
                         }
                     }
-                    else if(lastPressed == pressed && lastPressed == prevButton && currentPage > 1) {
-                        currentPage--;
-                        updateButtons();
-                    }
-                    else if(lastPressed == pressed && lastPressed == nextButton && currentPage < maxPage){
-                        currentPage++;
-                        updateButtons();
-                    }
-                    else if(draggingRecruitIndex != -1){
+                    else if(pressedRecruit != -1){
                         charInfo.setChar(validCharacters.get(draggingRecruitIndex));
                         game.setScreen(charInfo);
                     }
-                    else if(draggingPartyIndex != -1 && currentParty[draggingPartyIndex] != null){
+                    else if(pressedParty != -1 && currentParty[pressedParty] != null){
                         charInfo.setChar(currentParty[draggingPartyIndex]);
                         game.setScreen(charInfo);
                     }
                 }
                 else if(dragging && draggingRecruitIndex != -1){
-                    int partyIndex = getPartyIndex(t.x, t.y);
+                    int partyIndex = partyList.getIndexPressed(t.x, t.y);
                     while(partyIndex - 1 > 0 && currentParty[partyIndex - 1] == null){
                         partyIndex--;
                     }
@@ -385,7 +388,7 @@ public class PartySelectScreen extends Screen {
                     updateButtons();
                 }
                 else if(dragging && draggingPartyIndex != -1){
-                    int partyIndex = getPartyIndex(t.x, t.y);
+                    int partyIndex = partyList.getIndexPressed(t.x, t.y);
                     while(partyIndex - 1 > 0 && currentParty[partyIndex - 1] == null){
                         partyIndex--;
                     }
@@ -415,7 +418,7 @@ public class PartySelectScreen extends Screen {
                     holdTime = 0;
                     draggingRecruitIndex = -1;
                 }
-                else if(!dragging && draggingPartyIndex != -1 && getPartyIndex(t.x, t.y) != draggingPartyIndex){
+                else if(!dragging && draggingPartyIndex != -1 && partyList.getIndexPressed(t.x, t.y) != draggingPartyIndex){
                     holdTime = 0;
                     draggingPartyIndex = -1;
                 }
