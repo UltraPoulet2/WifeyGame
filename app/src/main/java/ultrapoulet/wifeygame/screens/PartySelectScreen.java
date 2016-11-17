@@ -42,7 +42,7 @@ public class PartySelectScreen extends Screen {
 
     private Image background;
 
-    private int currentPage = 1;
+    private int currentPage = 0;
     private int maxPage;
     private final static int COLUMN_SIZE = 8;
     private final static int ROW_SIZE = 8;
@@ -107,6 +107,16 @@ public class PartySelectScreen extends Screen {
     private static final int MAX_PAGE_X_2 = 285;
     private static final int PAGE_Y = 355;
 
+    private ButtonList partyList;
+
+    private static final int PARTY_IMAGE_BASE_LEFT_X = 55;
+    private static final int PARTY_IMAGE_BASE_RIGHT_X = 145;
+    private static final int PARTY_IMAGE_OFFSET_X = 100;
+    private static final int PARTY_IMAGE_TOP_Y = 180;
+    private static final int PARTY_IMAGE_BOT_Y = 270;
+
+    private ButtonList recruitList;
+
     private static final int CHAR_IMAGE_WIDTH = 80;
     private static final int CHAR_IMAGE_HEIGHT = 80;
     private static final int CHAR_IMAGE_BASE_LEFT_X = 45;
@@ -119,14 +129,6 @@ public class PartySelectScreen extends Screen {
     private static final int CHAR_REQUIRED_HOLDER_BASE_X = CHAR_IMAGE_BASE_LEFT_X - 3;
     private static final int CHAR_REQUIRED_HOLDER_BASE_Y = CHAR_IMAGE_BASE_TOP_Y - 12;
     private static final int CHAR_REQUIRED_OFFSET = 90;
-
-    private ButtonList partyList;
-
-    private static final int PARTY_IMAGE_BASE_LEFT_X = 55;
-    private static final int PARTY_IMAGE_BASE_RIGHT_X = 145;
-    private static final int PARTY_IMAGE_OFFSET_X = 100;
-    private static final int PARTY_IMAGE_TOP_Y = 180;
-    private static final int PARTY_IMAGE_BOT_Y = 270;
 
     private static final int DRAGGING_OFFSET = 60;
 
@@ -229,11 +231,20 @@ public class PartySelectScreen extends Screen {
             int botY = PARTY_IMAGE_BOT_Y;
             partyList.addButton(new Button(leftX, rightX, topY, botY, false, "PARTY_" + i));
         }
+
+        recruitList = new ButtonList();
+        for(int i = 0; i < PER_PAGE; i++){
+            int leftX = CHAR_IMAGE_BASE_LEFT_X + CHAR_IMAGE_OFFSET_X * (i % ROW_SIZE);
+            int rightX = CHAR_IMAGE_BASE_RIGHT_X + CHAR_IMAGE_OFFSET_X * (i % ROW_SIZE);
+            int topY = CHAR_IMAGE_BASE_TOP_Y + CHAR_IMAGE_OFFSET_Y * ((i % PER_PAGE) / COLUMN_SIZE);
+            int botY = CHAR_IMAGE_BASE_BOT_Y + CHAR_IMAGE_OFFSET_Y * ((i % PER_PAGE) / COLUMN_SIZE);
+            recruitList.addButton(new Button(leftX, rightX, topY, botY, false, "RECRUIT_" + i));
+        }
     }
 
 
     public void updateButtons(){
-        prevButton.setActive(currentPage > 1);
+        prevButton.setActive(currentPage > 0);
         nextButton.setActive(currentPage < maxPage);
         acceptButton.setActive(validParty());
     }
@@ -241,6 +252,17 @@ public class PartySelectScreen extends Screen {
     public void updatePartyButtons(){
         for(int i = 0; i < maxPartySize; i++){
             partyList.setIndexActive(i, true);
+        }
+    }
+
+    public void updateRecruitButtons(){
+        for(int i = 0; i < PER_PAGE; i++){
+            if((currentPage * PER_PAGE + i) < validCharacters.size() ){
+                recruitList.setIndexActive(i, true);
+            }
+            else{
+                recruitList.setIndexActive(i, false);
+            }
         }
     }
 
@@ -266,8 +288,8 @@ public class PartySelectScreen extends Screen {
             }
         }
         Collections.sort(validCharacters, nameComp);
-        currentPage = 1;
-        maxPage = (validCharacters.size() / PER_PAGE) + 1;
+        currentPage = 0;
+        maxPage = (validCharacters.size() / PER_PAGE);
     }
 
     public void setCurrentParty(WifeyCharacter[] inputParty){
@@ -289,6 +311,7 @@ public class PartySelectScreen extends Screen {
         setValidCharacters(RecruitedCharacters.getArray());
         updateButtons();
         updatePartyButtons();
+        updateRecruitButtons();
     }
 
     public void setPreviousScreen(Screen previousScreen){
@@ -298,16 +321,13 @@ public class PartySelectScreen extends Screen {
     //Gets the index of character in the full list
     //that is presently being touched
     private int getRecruitIndex(int x, int y){
-        for(int i = PER_PAGE * (currentPage - 1); i < PER_PAGE * currentPage && i < validCharacters.size(); i++){
-            int xLeft = CHAR_IMAGE_BASE_LEFT_X + CHAR_IMAGE_OFFSET_X * (i % ROW_SIZE);
-            int xRight = CHAR_IMAGE_BASE_RIGHT_X + CHAR_IMAGE_OFFSET_X * (i % ROW_SIZE);
-            int yTop = CHAR_IMAGE_BASE_TOP_Y + CHAR_IMAGE_OFFSET_Y * ((i % PER_PAGE) / COLUMN_SIZE);
-            int yBot = CHAR_IMAGE_BASE_BOT_Y + CHAR_IMAGE_OFFSET_Y * ((i % PER_PAGE) / COLUMN_SIZE);
-            if(x >= xLeft && x <= xRight && y >= yTop && y <= yBot){
-                return i;
-            }
+        int index = recruitList.getIndexPressed(x, y);
+        if(index == -1){
+            return -1;
         }
-        return -1;
+        else{
+            return currentPage * PER_PAGE + index;
+        }
     }
 
     @Override
@@ -342,10 +362,12 @@ public class PartySelectScreen extends Screen {
                         else if(lastPressed == prevButton){
                             currentPage--;
                             updateButtons();
+                            updateRecruitButtons();
                         }
                         else if(lastPressed == nextButton){
                             currentPage++;
                             updateButtons();
+                            updateRecruitButtons();
                         }
                     }
                     else if(pressedRecruit != -1){
@@ -443,17 +465,19 @@ public class PartySelectScreen extends Screen {
         g.clearScreen(0xFFFFFFFF);
         g.drawImage(background, 0, 0);
 
-        if(currentPage > 10){
-            g.drawImage(numbers[currentPage / 10], CUR_PAGE_X_1, PAGE_Y);
+        int displayPage = currentPage + 1;
+        int displayMaxPage = maxPage + 1;
+        if(displayPage > 10){
+            g.drawImage(numbers[displayPage / 10], CUR_PAGE_X_1, PAGE_Y);
         }
-        g.drawImage(numbers[currentPage % 10], CUR_PAGE_X_2, PAGE_Y);
+        g.drawImage(numbers[displayPage % 10], CUR_PAGE_X_2, PAGE_Y);
 
-        if(maxPage > 10){
-            g.drawImage(numbers[maxPage / 10], MAX_PAGE_X_1, PAGE_Y);
-            g.drawImage(numbers[maxPage % 10], MAX_PAGE_X_2, PAGE_Y);
+        if(displayMaxPage > 10){
+            g.drawImage(numbers[displayMaxPage / 10], MAX_PAGE_X_1, PAGE_Y);
+            g.drawImage(numbers[displayMaxPage % 10], MAX_PAGE_X_2, PAGE_Y);
         }
         else {
-            g.drawImage(numbers[maxPage % 10], MAX_PAGE_X_1, PAGE_Y);
+            g.drawImage(numbers[displayMaxPage % 10], MAX_PAGE_X_1, PAGE_Y);
         }
 
         if(prevButton.isActive()){
@@ -481,8 +505,8 @@ public class PartySelectScreen extends Screen {
         for(int i = maxPartySize; i < 7; i++){
             g.drawImage(Assets.LockSelection, PARTY_IMAGE_OFFSET_X * i + PARTY_IMAGE_BASE_LEFT_X, PARTY_IMAGE_TOP_Y);
         }
-        int minIndex = PER_PAGE * (currentPage - 1);
-        int maxIndex = PER_PAGE * currentPage;
+        int minIndex = PER_PAGE * currentPage;
+        int maxIndex = PER_PAGE * (currentPage + 1);
         ArrayList<WifeyCharacter> reqList;
         if(hasRequiredList()){
             reqList = battleInfo.getRequiredList();
