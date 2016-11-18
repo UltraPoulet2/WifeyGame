@@ -1,5 +1,6 @@
 package ultrapoulet.wifeygame.gamestate;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,9 +21,10 @@ public class RecruitedCharacters {
         return recruits.get(key);
     }
 
-    public static WifeyCharacter[] getArray(){
-        WifeyCharacter[] chars = new WifeyCharacter[recruits.size()];
-        return recruits.values().toArray(chars);
+    public static ArrayList<WifeyCharacter> getArray(){
+        ArrayList<WifeyCharacter> list = new ArrayList<>();
+        list.addAll(recruits.values());
+        return list;
     }
 
     //For temporary purposes

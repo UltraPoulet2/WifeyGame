@@ -1,5 +1,7 @@
 package ultrapoulet.wifeygame.battle.requirements;
 
+import java.util.List;
+
 import ultrapoulet.wifeygame.character.WifeyCharacter;
 
 /**
@@ -17,7 +19,14 @@ public abstract class AbsRequirement {
     }
 
     //Returns true if the party is valid for this requirement
+    //REMOVE DURING CLEANUP
     public boolean validateParty(WifeyCharacter[] party){
+        return true;
+    }
+
+
+    //Returns true if the party is valid for this requirement
+    public boolean validateParty(List<WifeyCharacter> party){
         return true;
     }
 

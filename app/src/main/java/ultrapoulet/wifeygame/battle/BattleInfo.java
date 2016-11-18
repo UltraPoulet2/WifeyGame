@@ -1,6 +1,7 @@
 package ultrapoulet.wifeygame.battle;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import ultrapoulet.wifeygame.battle.requirements.AbsRequirement;
 import ultrapoulet.wifeygame.battle.requirements.RequiredCharacterRequirement;
@@ -85,6 +86,7 @@ public class BattleInfo {
         return true;
     }
 
+    //REMOVE DURING CLEANUP
     public boolean allowParty(WifeyCharacter[] party){
         for(int i = 0; i < restrictionList.size(); i++){
             if(!restrictionList.get(i).validateParty(party)){
@@ -94,9 +96,30 @@ public class BattleInfo {
         return true;
     }
 
+
+    public boolean allowParty(List<WifeyCharacter> party){
+        for(int i = 0; i < restrictionList.size(); i++){
+            if(!restrictionList.get(i).validateParty(party)){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    //REMOVE DURING CLEANUP
     public boolean validParty(WifeyCharacter[] party){
         for(int i = 0; i < party.length && party[i] != null; i++){
             if(allowCharacter(party[i]) == false){
+                return false;
+            }
+        }
+        return allowParty(party);
+    }
+
+
+    public boolean validParty(List<WifeyCharacter> party){
+        for(int i = 0; i < party.size(); i++){
+            if(allowCharacter(party.get(i)) == false){
                 return false;
             }
         }

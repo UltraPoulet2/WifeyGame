@@ -2,7 +2,7 @@ package ultrapoulet.wifeygame.gamestate;
 
 import android.content.SharedPreferences;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import ultrapoulet.wifeygame.character.WifeyCharacter;
 import ultrapoulet.wifeygame.battle.BattleWifey;
@@ -21,7 +21,7 @@ public class Party {
     }
 
     //Two version of setParty until cleanup
-    public static void setParty(ArrayList<WifeyCharacter> input){
+    public static void setParty(List<WifeyCharacter> input){
         for(int i = 0; i < input.size(); i++){
             party[i] = input.get(i);
         }

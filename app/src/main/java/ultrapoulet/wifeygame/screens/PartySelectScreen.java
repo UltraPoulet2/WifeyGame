@@ -29,7 +29,7 @@ import ultrapoulet.wifeygame.gamestate.RecruitedCharacters;
 public class PartySelectScreen extends Screen {
 
     private List<WifeyCharacter> validCharacters;
-    private WifeyCharacter[] currentParty;
+    private List<WifeyCharacter> currentParty;
     private int maxPartySize;
     private int finalIndex;
     private BattleInfo battleInfo;
@@ -267,7 +267,7 @@ public class PartySelectScreen extends Screen {
     }
 
     public boolean validParty(){
-        if(currentParty[0] != null){
+        if(currentParty.size() > 0){
             if(battleInfo == null || battleInfo.validParty(currentParty)){
                 return true;
             }
@@ -275,16 +275,16 @@ public class PartySelectScreen extends Screen {
         return false;
     }
 
-    public void setValidCharacters(WifeyCharacter[] inputCharacters){
+    public void setValidCharacters(List<WifeyCharacter> inputCharacters){
         validCharacters = new ArrayList<>();
-        for(int i = 0; i < inputCharacters.length; i++){
+        for(int i = 0; i < inputCharacters.size(); i++){
             //Do a check to make sure the character is valid for this battle
             boolean allowed = true;
             if(battleInfo != null){
-                allowed = battleInfo.allowCharacter(inputCharacters[i]);
+                allowed = battleInfo.allowCharacter(inputCharacters.get(i));
             }
             if(allowed){
-                validCharacters.add(inputCharacters[i]);
+                validCharacters.add(inputCharacters.get(i));
             }
         }
         Collections.sort(validCharacters, nameComp);
@@ -292,21 +292,14 @@ public class PartySelectScreen extends Screen {
         maxPage = (validCharacters.size() / PER_PAGE);
     }
 
-    public void setCurrentParty(WifeyCharacter[] inputParty){
-        //For now, only 7.
-        this.currentParty = new WifeyCharacter[maxPartySize];
-        //Maybe do validation here too
-        this.currentParty = inputParty;
-    }
-
     public void setBattleInfo(BattleInfo info){
         this.battleInfo = info;
 
         maxPartySize = battleInfo != null ? battleInfo.getPartyMax() : 7;
         finalIndex = maxPartySize - 1;
-        currentParty = new WifeyCharacter[maxPartySize];
-        for(int i = 0; i < currentParty.length; i++){
-            currentParty[i] = Party.getIndex(i);
+        currentParty = new ArrayList<>();
+        for(int i = 0; i < Party.partySize() && i < maxPartySize; i++){
+            currentParty.add(Party.getIndex(i));
         }
         setValidCharacters(RecruitedCharacters.getArray());
         updateButtons();
@@ -352,78 +345,82 @@ public class PartySelectScreen extends Screen {
                     int pressedRecruit = getRecruitIndex(t.x, t.y);
                     int pressedParty = partyList.getIndexPressed(t.x, t.y);
                     if(lastPressed == pressed && lastPressed != null) {
+                        //BACK BUTTON PRESSED
                         if(lastPressed == backButton){
                             backButton();
                         }
+                        //ACCEPT BUTTON PRESSED
                         else if(lastPressed == acceptButton){
                             Party.setParty(currentParty);
                             backButton();
                         }
+                        //PREV PAGE BUTTON PRESSED
                         else if(lastPressed == prevButton){
                             currentPage--;
                             updateButtons();
                             updateRecruitButtons();
                         }
+                        //NEXT PAGE BUTTON PRESSED
                         else if(lastPressed == nextButton){
                             currentPage++;
                             updateButtons();
                             updateRecruitButtons();
                         }
                     }
-                    else if(pressedRecruit != -1){
+                    //RECRUIT CHARACTER PRESSED
+                    else if(pressedRecruit != -1 && pressedRecruit == draggingRecruitIndex){
                         charInfo.setChar(validCharacters.get(draggingRecruitIndex));
                         game.setScreen(charInfo);
                     }
-                    else if(pressedParty != -1 && currentParty[pressedParty] != null){
-                        charInfo.setChar(currentParty[draggingPartyIndex]);
+                    //PARTY CHARACTER PRESSED
+                    else if(pressedParty != -1 && pressedParty == draggingPartyIndex && pressedParty < currentParty.size()){
+                        charInfo.setChar(currentParty.get(draggingPartyIndex));
                         game.setScreen(charInfo);
                     }
                 }
+                //DRAGGING A RECRUIT
                 else if(dragging && draggingRecruitIndex != -1){
                     int partyIndex = partyList.getIndexPressed(t.x, t.y);
-                    while(partyIndex - 1 > 0 && currentParty[partyIndex - 1] == null){
-                        partyIndex--;
-                    }
                     if(partyIndex != -1){
-                        int inPartyIndex = -1;
-                        for(int j = 0; j < currentParty.length; j++){
-                            if(currentParty[j] == validCharacters.get(draggingRecruitIndex)){
-                                inPartyIndex = j;
+                        int inPartyIndex = currentParty.indexOf(validCharacters.get(draggingRecruitIndex));
+                        if(inPartyIndex != -1 ){
+                            if (currentParty.size() <= partyIndex){
+                                currentParty.remove(inPartyIndex);
+                                currentParty.add(validCharacters.get(draggingRecruitIndex));
                             }
-                        }
-                        //For now, if already in party, ignore
-                        if(inPartyIndex != -1 && inPartyIndex != partyIndex){
-                            WifeyCharacter temp = currentParty[inPartyIndex];
-                            currentParty[inPartyIndex] = currentParty[partyIndex];
-                            currentParty[partyIndex] = temp;
-                            if(currentParty[inPartyIndex] == null){
-                                for(int j = inPartyIndex; j + 1 < maxPartySize; j++){
-                                    currentParty[j] = currentParty[j + 1];
-                                }
-                                currentParty[finalIndex] = null;
+                            else{
+                                WifeyCharacter temp = currentParty.get(inPartyIndex);
+                                currentParty.set(inPartyIndex, currentParty.get(partyIndex));
+                                currentParty.set(partyIndex, temp);
                             }
                         }
                         else{
-                            currentParty[partyIndex] = validCharacters.get(draggingRecruitIndex);
+                            if(currentParty.size() <= partyIndex) {
+                                currentParty.add(validCharacters.get(draggingRecruitIndex));
+                            }
+                            else{
+                                currentParty.set(partyIndex, validCharacters.get(draggingRecruitIndex));
+                            }
                         }
                     }
                     updateButtons();
                 }
+                //DRAGGING A PARTY MEMBER
                 else if(dragging && draggingPartyIndex != -1){
                     int partyIndex = partyList.getIndexPressed(t.x, t.y);
-                    while(partyIndex - 1 > 0 && currentParty[partyIndex - 1] == null){
-                        partyIndex--;
-                    }
                     if(partyIndex != -1 && partyIndex != draggingPartyIndex){
-                        WifeyCharacter temp = currentParty[draggingPartyIndex];
-                        currentParty[draggingPartyIndex] = currentParty[partyIndex];
-                        currentParty[partyIndex] = temp;
-                    }
-                    if(partyIndex == -1 || currentParty[draggingPartyIndex] == null){
-                        for(int j = draggingPartyIndex; j + 1 < maxPartySize; j++){
-                            currentParty[j] = currentParty[j + 1];
+                        WifeyCharacter temp = currentParty.get(draggingPartyIndex);
+                        if (currentParty.size() <= partyIndex){
+                            currentParty.remove(draggingPartyIndex);
+                            currentParty.add(temp);
                         }
-                        currentParty[finalIndex] = null;
+                        else{
+                            currentParty.set(draggingPartyIndex, currentParty.get(partyIndex));
+                            currentParty.set(partyIndex, temp);
+                        }
+                    }
+                    if(partyIndex == -1){
+                        currentParty.remove(draggingPartyIndex);
                     }
                     updateButtons();
                 }
@@ -450,7 +447,7 @@ public class PartySelectScreen extends Screen {
                 }
             }
         }
-        if(game.getInput().isTouchDown(0) && (draggingRecruitIndex != -1 || (draggingPartyIndex != -1 && currentParty[draggingPartyIndex] != null))){
+        if(game.getInput().isTouchDown(0) && (draggingRecruitIndex != -1 || (draggingPartyIndex != -1 && draggingPartyIndex < currentParty.size()))){
             if (holdTime < DRAG_WAIT) {
                 holdTime += deltaTime;
             } else if (!dragging) {
@@ -494,10 +491,10 @@ public class PartySelectScreen extends Screen {
             g.drawImage(Assets.NextPageDisable, NEXT_BUTTON_LEFT_X, NEXT_BUTTON_TOP_Y);
         }
 
-        for(int i = 0; i < maxPartySize && currentParty[i] != null; i++){
+        for(int i = 0; i < currentParty.size(); i++){
             if(!dragging || i != draggingPartyIndex) {
-                g.drawPercentageImage(currentParty[i].getImage(), PARTY_IMAGE_OFFSET_X * i + PARTY_IMAGE_BASE_LEFT_X, PARTY_IMAGE_TOP_Y, PARTY_SCALE, PARTY_SCALE);
-                if(battleInfo != null && !battleInfo.allowCharacter(currentParty[i])){
+                g.drawPercentageImage(currentParty.get(i).getImage(), PARTY_IMAGE_OFFSET_X * i + PARTY_IMAGE_BASE_LEFT_X, PARTY_IMAGE_TOP_Y, PARTY_SCALE, PARTY_SCALE);
+                if(battleInfo != null && !battleInfo.allowCharacter(currentParty.get(i))){
                     g.drawPercentageImage(Assets.InvalidChar, PARTY_IMAGE_OFFSET_X * i + PARTY_IMAGE_BASE_LEFT_X, PARTY_IMAGE_TOP_Y, PARTY_SCALE, PARTY_SCALE);
                 }
             }
@@ -530,8 +527,8 @@ public class PartySelectScreen extends Screen {
             g.drawPercentageImage(validCharacters.get(draggingRecruitIndex).getImage(), draggingX - DRAGGING_OFFSET, draggingY - DRAGGING_OFFSET, DRAGGING_SCALE, DRAGGING_SCALE);
         }
         if(dragging && draggingPartyIndex != -1){
-            g.drawPercentageImage(currentParty[draggingPartyIndex].getImage(), draggingX - DRAGGING_OFFSET, draggingY - DRAGGING_OFFSET, DRAGGING_SCALE, DRAGGING_SCALE);
-            if(battleInfo != null && !battleInfo.allowCharacter(currentParty[draggingPartyIndex])){
+            g.drawPercentageImage(currentParty.get(draggingPartyIndex).getImage(), draggingX - DRAGGING_OFFSET, draggingY - DRAGGING_OFFSET, DRAGGING_SCALE, DRAGGING_SCALE);
+            if(battleInfo != null && !battleInfo.allowCharacter(currentParty.get(draggingPartyIndex))){
                 g.drawPercentageImage(Assets.InvalidChar, draggingX - DRAGGING_OFFSET, draggingY - DRAGGING_OFFSET, DRAGGING_SCALE, DRAGGING_SCALE);
             }
         }
