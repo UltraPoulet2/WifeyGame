@@ -86,17 +86,6 @@ public class BattleInfo {
         return true;
     }
 
-    //REMOVE DURING CLEANUP
-    public boolean allowParty(WifeyCharacter[] party){
-        for(int i = 0; i < restrictionList.size(); i++){
-            if(!restrictionList.get(i).validateParty(party)){
-                return false;
-            }
-        }
-        return true;
-    }
-
-
     public boolean allowParty(List<WifeyCharacter> party){
         for(int i = 0; i < restrictionList.size(); i++){
             if(!restrictionList.get(i).validateParty(party)){
@@ -106,20 +95,9 @@ public class BattleInfo {
         return true;
     }
 
-    //REMOVE DURING CLEANUP
-    public boolean validParty(WifeyCharacter[] party){
-        for(int i = 0; i < party.length && party[i] != null; i++){
-            if(allowCharacter(party[i]) == false){
-                return false;
-            }
-        }
-        return allowParty(party);
-    }
-
-
     public boolean validParty(List<WifeyCharacter> party){
         for(int i = 0; i < party.size(); i++){
-            if(allowCharacter(party.get(i)) == false){
+            if(party.get(i) != null && allowCharacter(party.get(i)) == false){
                 return false;
             }
         }

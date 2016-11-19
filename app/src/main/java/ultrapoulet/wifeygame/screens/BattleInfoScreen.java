@@ -38,7 +38,7 @@ public class BattleInfoScreen extends Screen{
 
     private Image background = Assets.BattleInfoScreen;
 
-    private WifeyCharacter[] party;
+    private List<WifeyCharacter> party;
 
     private static final int BATTLE_NAME_X = 400;
     private static final int BATTLE_NAME_Y = 92;
@@ -182,7 +182,7 @@ public class BattleInfoScreen extends Screen{
                     }
                 }
                 else if(selectedChar == partyList.getIndexPressed(t.x, t.y) && selectedChar != -1){
-                    charInfo.setChar(party[selectedChar]);
+                    charInfo.setChar(party.get(selectedChar));
                     game.setScreen(charInfo);
                 }
                 else if(selectedReq == requirementList.getIndexPressed(t.x, t.y) && selectedReq != -1){
@@ -214,9 +214,9 @@ public class BattleInfoScreen extends Screen{
             }
         }
 
-        for(int i = 0; i < battleInfo.getPartyMax() && party[i] != null; i++){
-            g.drawPercentageImage(party[i].getImage(), PARTY_IMAGE_OFFSET_X * i + PARTY_IMAGE_BASE_LEFT_X, PARTY_IMAGE_TOP_Y, PARTY_SCALE, PARTY_SCALE);
-            if(!battleInfo.allowCharacter(party[i])){
+        for(int i = 0; i < battleInfo.getPartyMax() && party.get(i) != null; i++){
+            g.drawPercentageImage(party.get(i).getImage(), PARTY_IMAGE_OFFSET_X * i + PARTY_IMAGE_BASE_LEFT_X, PARTY_IMAGE_TOP_Y, PARTY_SCALE, PARTY_SCALE);
+            if(!battleInfo.allowCharacter(party.get(i))){
                 g.drawPercentageImage(Assets.InvalidChar, PARTY_IMAGE_OFFSET_X * i + PARTY_IMAGE_BASE_LEFT_X, PARTY_IMAGE_TOP_Y, PARTY_SCALE, PARTY_SCALE);
             }
         }
@@ -224,7 +224,7 @@ public class BattleInfoScreen extends Screen{
             g.drawImage(Assets.LockSelection, PARTY_IMAGE_OFFSET_X * i + PARTY_IMAGE_BASE_LEFT_X, PARTY_IMAGE_TOP_Y);
         }
 
-        if(party[0] != null && battleInfo.validParty(party)){
+        if(party.get(0) != null && battleInfo.validParty(party)){
             g.drawImage(Assets.BattleEnable, START_BUTTON_LEFT_X, START_BUTTON_TOP_Y);
         }
         else{
@@ -240,7 +240,7 @@ public class BattleInfoScreen extends Screen{
     @Override
     public void resume() {
         party = Party.getParty();
-        if(party[0] != null && battleInfo.validParty(party)){
+        if(party.get(0) != null && battleInfo.validParty(party)){
             startButton.setActive(true);
         }
         else{
@@ -248,7 +248,7 @@ public class BattleInfoScreen extends Screen{
         }
         for(int i = 0; i < battleInfo.getPartyMax(); i++){
             //Set the button to active if the party member exists
-            partyList.setIndexActive(i, party[i] != null);
+            partyList.setIndexActive(i, party.get(i) != null);
         }
     }
 
