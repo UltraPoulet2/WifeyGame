@@ -11,6 +11,63 @@ public class AbsSkill {
     protected BattleCharacter owner;
     protected String skillName;
 
+    public static class Multipliers{
+        private double physAtk = 1.0;
+        private double magAtk = 1.0;
+        private double specAtk = 1.0;
+        private double physDef = 0.0;
+        private double magDef = 0.0;
+        private double specDef = 0.0;
+
+        public void setPhysAtk(double input){
+            this.physAtk = input;
+        }
+
+        public double getPhysAtk(){
+            return this.physAtk;
+        }
+
+        public void setMagAtk(double input){
+            this.magAtk = input;
+        }
+
+        public double getMagAtk(){
+            return this.magAtk;
+        }
+
+        public void setSpecAtk(double input){
+            this.specAtk = input;
+        }
+
+        public double getSpecAtk(){
+            return this.specAtk;
+        }
+
+        public void setPhysDef(double input){
+            this.physDef = input;
+        }
+
+        public double getPhysDef(){
+            return this.physDef;
+        }
+
+        public void setMagDef(double input){
+            this.magDef = input;
+        }
+
+        public double getMagDef(){
+            return this.magDef;
+        }
+
+        public void setSpecDef(double input){
+            this.specDef = input;
+        }
+
+        public double getSpecDef(){
+            return this.specDef;
+        }
+    }
+
     protected int PHYS_ATK = 0;
     protected int MAG_ATK = 1;
     protected int SPEC_ATK = 2;
@@ -137,15 +194,8 @@ public class AbsSkill {
         this.owner = null;
     }
 
-    public double[] getMultipliers(BattleCharacter enemy){
-        double[] multipliers = new double[6];
-        for(int i = 0; i < 3; i++){
-            multipliers[i] = 1.0;
-        }
-        for(int i = 3; i < 6; i++){
-            multipliers[i] = 0.0;
-        }
-        return multipliers;
+    public Multipliers getMultipliers(BattleCharacter enemy) {
+        return new Multipliers();
     }
 
 }

@@ -39,16 +39,12 @@ public class DullahanSkill extends AbsSkill {
     }
 
     @Override
-    public double[] getMultipliers(BattleCharacter enemy) {
-        double multipliers[] = new double[6];
-        multipliers[PHYS_ATK] = getMult(enemy);
-        multipliers[MAG_ATK] = getMult(enemy);
-        multipliers[SPEC_ATK] = getMult(enemy);
-        multipliers[PHYS_DEF] = 0.0;
-        multipliers[MAG_DEF] = 0.0;
-        multipliers[SPEC_DEF] = 0.0;
-
-        return multipliers;
+    public Multipliers getMultipliers(BattleCharacter enemy){
+        Multipliers returnValue = new Multipliers();
+        returnValue.setPhysAtk(getMult(enemy));
+        returnValue.setMagAtk(getMult(enemy));
+        returnValue.setSpecAtk(getMult(enemy));
+        return returnValue;
     }
 
     @Override

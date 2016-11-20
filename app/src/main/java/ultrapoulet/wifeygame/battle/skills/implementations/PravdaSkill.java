@@ -58,16 +58,12 @@ public class PravdaSkill extends AbsSkill {
     }
 
     @Override
-    public double[] getMultipliers(BattleCharacter enemy) {
-        double multipliers[] = new double[6];
-        multipliers[PHYS_ATK] = multiplier;
-        multipliers[MAG_ATK] = multiplier;
-        multipliers[SPEC_ATK] = multiplier;
-        multipliers[PHYS_DEF] = 0.0;
-        multipliers[MAG_DEF] = 0.0;
-        multipliers[SPEC_DEF] = 0.0;
-
-        return multipliers;
+    public Multipliers getMultipliers(BattleCharacter enemy) {
+        Multipliers returnValue = new Multipliers();
+        returnValue.setPhysAtk(multiplier);
+        returnValue.setMagAtk(multiplier);
+        returnValue.setSpecAtk(multiplier);
+        return returnValue;
     }
 
     @Override

@@ -10,6 +10,7 @@ import ultrapoulet.wifeygame.Assets;
 import ultrapoulet.wifeygame.battle.BattleEnemy;
 import ultrapoulet.wifeygame.battle.BattleWifey;
 import ultrapoulet.wifeygame.battle.skills.AbsSkill;
+import ultrapoulet.wifeygame.battle.skills.AbsSkill.Multipliers;
 
 /**
  * Created by John on 8/17/2016.
@@ -20,7 +21,7 @@ public class BattleCharacterInfoScreen extends AbsCharacterInfoScreen {
 
     private BattleEnemy displayEnemy;
 
-    private double[] multipliers;
+    private Multipliers multipliers;
 
     private static final int HEALTH_BAR_X = 400 + BG_X;
     private static final int HEALTH_BAR_Y = 200 + BG_Y;
@@ -127,12 +128,12 @@ public class BattleCharacterInfoScreen extends AbsCharacterInfoScreen {
             divisor = divisor / 10;
         }
 
-        g.drawString(format(multipliers[0]) + "x", PHYS_X, ATK_Y, multPaint);
-        g.drawString(format(multipliers[1]) + "x", MAG_X, ATK_Y, multPaint);
-        g.drawString(format(multipliers[2]) + "x", SPEC_X, ATK_Y, multPaint);
-        g.drawString(format(multipliers[3]) + "x", PHYS_X, DEF_Y, multPaint);
-        g.drawString(format(multipliers[4]) + "x", MAG_X, DEF_Y, multPaint);
-        g.drawString(format(multipliers[5]) + "x", SPEC_X, DEF_Y, multPaint);
+        g.drawString(format(multipliers.getPhysAtk()) + "x", PHYS_X, ATK_Y, multPaint);
+        g.drawString(format(multipliers.getMagAtk()) + "x", MAG_X, ATK_Y, multPaint);
+        g.drawString(format(multipliers.getSpecAtk()) + "x", SPEC_X, ATK_Y, multPaint);
+        g.drawString(format(multipliers.getPhysDef()) + "x", PHYS_X, DEF_Y, multPaint);
+        g.drawString(format(multipliers.getMagDef()) + "x", MAG_X, DEF_Y, multPaint);
+        g.drawString(format(multipliers.getSpecDef()) + "x", SPEC_X, DEF_Y, multPaint);
     }
 
     protected void drawSkills(Graphics g){

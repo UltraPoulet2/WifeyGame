@@ -54,16 +54,11 @@ public class MagicalGirlSkill extends AbsSkill {
 
 
     @Override
-    public double[] getMultipliers(BattleCharacter enemy) {
-        double multipliers[] = new double[6];
-        multipliers[PHYS_ATK] = 1.0;
-        multipliers[MAG_ATK] = multiplier;
-        multipliers[SPEC_ATK] = multiplier;
-        multipliers[PHYS_DEF] = 0.0;
-        multipliers[MAG_DEF] = 0.0;
-        multipliers[SPEC_DEF] = 0.0;
-
-        return multipliers;
+    public Multipliers getMultipliers(BattleCharacter enemy) {
+        Multipliers returnValue = new Multipliers();
+        returnValue.setMagAtk(multiplier);
+        returnValue.setSpecAtk(multiplier);
+        return returnValue;
     }
 
     @Override

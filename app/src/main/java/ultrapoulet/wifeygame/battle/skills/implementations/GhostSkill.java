@@ -20,16 +20,10 @@ public class GhostSkill extends AbsSkill {
 
 
     @Override
-    public double[] getMultipliers(BattleCharacter enemy) {
-        double multipliers[] = new double[6];
-        multipliers[PHYS_ATK] = 1.0;
-        multipliers[MAG_ATK] = 1.0;
-        multipliers[SPEC_ATK] = 1.0;
-        multipliers[PHYS_DEF] = 0.5;
-        multipliers[MAG_DEF] = 0.0;
-        multipliers[SPEC_DEF] = 0.0;
-
-        return multipliers;
+    public Multipliers getMultipliers(BattleCharacter enemy) {
+        Multipliers returnValue = new Multipliers();
+        returnValue.setPhysDef(0.5);
+        return returnValue;
     }
 
     @Override

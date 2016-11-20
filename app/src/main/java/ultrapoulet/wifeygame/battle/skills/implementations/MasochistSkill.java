@@ -42,18 +42,12 @@ public class MasochistSkill extends AbsSkill {
 
 
     @Override
-    public double[] getMultipliers(BattleCharacter enemy) {
-        double multiplier = getMult();
-
-        double multipliers[] = new double[6];
-        multipliers[PHYS_ATK] = multiplier;
-        multipliers[MAG_ATK] = multiplier;
-        multipliers[SPEC_ATK] = multiplier;
-        multipliers[PHYS_DEF] = 0.0;
-        multipliers[MAG_DEF] = 0.0;
-        multipliers[SPEC_DEF] = 0.0;
-
-        return multipliers;
+    public Multipliers getMultipliers(BattleCharacter enemy) {
+        Multipliers returnValue = new Multipliers();
+        returnValue.setPhysAtk(getMult());
+        returnValue.setMagAtk(getMult());
+        returnValue.setSpecAtk(getMult());
+        return returnValue;
     }
 
     @Override

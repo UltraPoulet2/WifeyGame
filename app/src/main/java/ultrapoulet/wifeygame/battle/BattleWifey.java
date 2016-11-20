@@ -7,6 +7,7 @@ import ultrapoulet.wifeygame.character.Element;
 import ultrapoulet.wifeygame.character.SkillsEnum;
 import ultrapoulet.wifeygame.character.TransformWifey;
 import ultrapoulet.wifeygame.character.Weapon;
+import ultrapoulet.wifeygame.battle.skills.AbsSkill.Multipliers;
 import ultrapoulet.wifeygame.battle.skills.SkillList;
 
 /**
@@ -232,7 +233,7 @@ public class BattleWifey extends BattleCharacter{
         return transformWifeys.size() > transformNumber;
     }
 
-    public double[] getMultipliers(BattleEnemy enemy){
+    public Multipliers getMultipliers(BattleEnemy enemy){
         return skills.getMultipliers(enemy);
     }
 }

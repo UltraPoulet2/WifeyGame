@@ -40,23 +40,13 @@ public class RobotSkill extends AbsSkill {
     }
 
     @Override
-    public double[] getMultipliers(BattleCharacter enemy){
-        double defense;
-        if(enemy.getAttackElement() == Element.getElement("WATER")) {
-            defense = -0.5;
-        }
-        else {
-            defense = 0.0;
-        }
-        double multipliers[] = new double[6];
-        multipliers[PHYS_ATK] = 1.0;
-        multipliers[MAG_ATK] = 1.0;
-        multipliers[SPEC_ATK] = 1.0;
-        multipliers[PHYS_DEF] = 0.2;
-        multipliers[MAG_DEF] = defense;
-        multipliers[SPEC_DEF] = defense;
-
-        return multipliers;
+    public Multipliers getMultipliers(BattleCharacter enemy) {
+        double defense = enemy.getAttackElement() == Element.getElement("WATER") ? -0.5 : 0.0;
+        Multipliers returnValue = new Multipliers();
+        returnValue.setPhysDef(0.2);
+        returnValue.setMagDef(defense);
+        returnValue.setSpecDef(defense);
+        return returnValue;
     }
 
     @Override

@@ -60,18 +60,13 @@ public class MaidSkill extends AbsSkill {
 
 
     @Override
-    public double[] getMultipliers(BattleCharacter enemy) {
-        double multiplier = healLastTurn ? 2.0: 1.0;
-
-        double multipliers[] = new double[6];
-        multipliers[PHYS_ATK] = multiplier;
-        multipliers[MAG_ATK] = multiplier;
-        multipliers[SPEC_ATK] = multiplier;
-        multipliers[PHYS_DEF] = 0.0;
-        multipliers[MAG_DEF] = 0.0;
-        multipliers[SPEC_DEF] = 0.0;
-
-        return multipliers;
+    public Multipliers getMultipliers(BattleCharacter enemy) {
+        double multiplier = healLastTurn ? 2.0 : 1.0;
+        Multipliers returnValue = new Multipliers();
+        returnValue.setPhysAtk(multiplier);
+        returnValue.setMagAtk(multiplier);
+        returnValue.setSpecAtk(multiplier);
+        return returnValue;
     }
 
     @Override
