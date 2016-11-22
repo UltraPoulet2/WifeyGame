@@ -1,5 +1,7 @@
 package ultrapoulet.wifeygame.battle.skills.implementations;
 
+import java.util.List;
+
 import ultrapoulet.wifeygame.battle.BattleCharacter;
 import ultrapoulet.wifeygame.battle.skills.AbsSkill;
 
@@ -18,20 +20,20 @@ public class FujoshiSkill extends AbsSkill {
     private double twoTrapBonus = 1.0;
 
     @Override
-    public void startBattle(BattleCharacter[] party) {
+    public void startBattle(List<BattleCharacter> party) {
         setMultiplier(party);
     }
 
     @Override
-    public void updateParty(BattleCharacter[] party){
+    public void updateParty(List<BattleCharacter> party){
         setMultiplier(party);
     }
 
-    private void setMultiplier(BattleCharacter[] party){
+    private void setMultiplier(List<BattleCharacter> party){
         multiplier = 1.0;
         int count = 0;
-        for(int i = 0; i < party.length; i++){
-            if(party[i] != owner && party[i].hasSkill(TrapSkill.class)){
+        for(int i = 0; i < party.size(); i++){
+            if(party.get(i) != owner && party.get(i).hasSkill(TrapSkill.class)){
                 count++;
             }
         }

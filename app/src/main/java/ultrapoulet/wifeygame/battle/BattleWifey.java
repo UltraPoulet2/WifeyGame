@@ -1,6 +1,7 @@
 package ultrapoulet.wifeygame.battle;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.wifeygame.character.Element;
@@ -19,8 +20,6 @@ public class BattleWifey extends BattleCharacter{
     private Weapon weapon;
     private int strength;
     private int magic;
-
-    private Image image;
 
     private ArrayList<TransformWifey> transformWifeys;
 
@@ -74,13 +73,9 @@ public class BattleWifey extends BattleCharacter{
         return this.magic;
     }
 
-    public Image getImage(){
-        return this.image;
-    }
-
     public SkillList getSkills() { return this.skills; }
 
-    public void startBattle(BattleCharacter[] party){
+    public void startBattle(List<BattleCharacter> party){
         this.currentHP = this.maxHP;
         this.isDefending = false;
         this.skills.startBattle(party);
@@ -88,7 +83,7 @@ public class BattleWifey extends BattleCharacter{
 
     public void endRound() { skills.endRound(); }
 
-    public void turnStart(){
+    public void startTurn(){
         //Function for things that happen at start of turn
         this.isDefending = false;
     }

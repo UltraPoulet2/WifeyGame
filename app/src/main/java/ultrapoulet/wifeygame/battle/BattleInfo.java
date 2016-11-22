@@ -52,12 +52,13 @@ public class BattleInfo {
         return temp;
     }
 
-    public BattleEnemy[] getBattleEnemies(){
-        BattleEnemy[] temp = new BattleEnemy[enemyList.size()];
+
+    public List<BattleCharacter> getBattleEnemies() {
+        List<BattleCharacter> returnValue = new ArrayList<>();
         for(int i = 0; i < enemyList.size(); i++){
-            temp[i] = enemyList.get(i).getBattleEnemy();
+            returnValue.add(enemyList.get(i).getBattleEnemy());
         }
-        return temp;
+        return returnValue;
     }
 
     public void addRequirement(AbsRequirement r) {

@@ -1,5 +1,7 @@
 package ultrapoulet.wifeygame.battle.skills;
 
+import java.util.List;
+
 import ultrapoulet.wifeygame.battle.BattleCharacter;
 
 /**
@@ -87,7 +89,7 @@ public class AbsSkill {
         return "";
     }
 
-    public void startBattle(BattleCharacter[] party){
+    public void startBattle(List<BattleCharacter> party){
         //Do anything that needs to be done at the start of a battle
     }
 
@@ -111,9 +113,8 @@ public class AbsSkill {
         //This function is used to reset multipliers before updateParty is called
     }
 
-    public void updateParty(BattleCharacter[] party){
+    public void updateParty(List<BattleCharacter> party){
         //Do anything that needs to be done if the party is modified (Transformation)
-        System.out.println("Base update");
     }
 
     public double physicalAttackPercentage(BattleCharacter enemy){

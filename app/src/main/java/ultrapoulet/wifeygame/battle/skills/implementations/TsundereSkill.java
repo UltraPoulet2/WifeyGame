@@ -1,5 +1,7 @@
 package ultrapoulet.wifeygame.battle.skills.implementations;
 
+import java.util.List;
+
 import ultrapoulet.wifeygame.battle.BattleCharacter;
 import ultrapoulet.wifeygame.battle.skills.AbsSkill;
 
@@ -17,8 +19,8 @@ public class TsundereSkill extends AbsSkill {
     }
 
     @Override
-    public void startBattle(BattleCharacter[] party) {
-        multiplier = maxMultiplier - (party.length - 1);
+    public void startBattle(List<BattleCharacter> party) {
+        multiplier = maxMultiplier - (party.size() - 1);
         if(multiplier < 1.0){
             multiplier = 1.0;
         }

@@ -1,5 +1,8 @@
 package ultrapoulet.wifeygame.battle;
 
+import java.util.List;
+
+import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.wifeygame.battle.skills.SkillList;
 import ultrapoulet.wifeygame.character.Element;
 
@@ -11,6 +14,7 @@ public abstract class BattleCharacter {
     protected int maxHP;
     protected int currentHP;
     protected SkillList skills;
+    protected Image image;
 
     protected Element attackElement;
     protected Element strongElement;
@@ -36,6 +40,10 @@ public abstract class BattleCharacter {
         }
     }
 
+    public Image getImage(){
+        return this.image;
+    }
+
     public boolean hasSkill(Class skillClass){
         return skills.hasSkill(skillClass);
     }
@@ -56,12 +64,14 @@ public abstract class BattleCharacter {
         return this.weakElement;
     }
 
-    public abstract void startBattle(BattleCharacter[] party);
+    public abstract void startBattle(List<BattleCharacter> party);
+    public abstract void startTurn();
     public abstract int PowerAttackDamage(BattleCharacter enemy);
     public abstract int ComboAttackDamage(BattleCharacter enemy);
     public abstract int MagicAttackDamage(BattleCharacter enemy);
     public abstract int HealAmount(BattleCharacter target);
     public abstract int SpecialAttackDamage(BattleCharacter enemy);
+    public abstract int getNumHits();
 
     public void onDamageDealt(int damage){
         skills.onDamageDealt(damage);
@@ -110,7 +120,7 @@ public abstract class BattleCharacter {
         skills.resetSkills();
     }
 
-    public void updateParty(BattleCharacter[] party){
+    public void updateParty(List<BattleCharacter> party){
         skills.updateParty(party);
     }
 }

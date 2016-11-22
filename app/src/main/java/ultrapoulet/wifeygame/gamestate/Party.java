@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import ultrapoulet.wifeygame.battle.BattleCharacter;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
-import ultrapoulet.wifeygame.battle.BattleWifey;
 
 /**
  * Created by John on 5/13/2016.
@@ -100,10 +100,10 @@ public class Party {
         return party;
     }
 
-    public static BattleWifey[] getBattleParty(){
-        BattleWifey[] battleParty = new BattleWifey[partySize()];
-        for(int i = 0; i < battleParty.length; i++){
-            battleParty[i] = party.get(i).getBattleCharacter();
+    public static List<BattleCharacter> getBattleParty(){
+        List<BattleCharacter> battleParty = new ArrayList<BattleCharacter>();
+        for(int i = 0; i < partySize(); i++){
+            battleParty.add(party.get(i).getBattleCharacter());
         }
         return battleParty;
     }

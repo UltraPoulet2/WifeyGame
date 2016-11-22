@@ -1,5 +1,7 @@
 package ultrapoulet.wifeygame.battle.skills.implementations;
 
+import java.util.List;
+
 import ultrapoulet.wifeygame.battle.BattleCharacter;
 import ultrapoulet.wifeygame.battle.skills.AbsSkill;
 
@@ -16,19 +18,19 @@ public class BikerSkill extends AbsSkill {
     private int extraHits;
 
     @Override
-    public void startBattle(BattleCharacter[] party) {
+    public void startBattle(List<BattleCharacter> party) {
         setExtraHits(party);
     }
 
     @Override
-    public void updateParty(BattleCharacter[] party){
+    public void updateParty(List<BattleCharacter> party){
         setExtraHits(party);
     }
 
-    private void setExtraHits(BattleCharacter[] party){
+    private void setExtraHits(List<BattleCharacter> party){
         extraHits = 0;
-        for(int i = 0; i < party.length; i++){
-            if(party[i] != owner && party[i].hasSkill(BikerSkill.class)){
+        for(int i = 0; i < party.size(); i++){
+            if(party.get(i) != owner && party.get(i).hasSkill(BikerSkill.class)){
                 extraHits++;
             }
         }

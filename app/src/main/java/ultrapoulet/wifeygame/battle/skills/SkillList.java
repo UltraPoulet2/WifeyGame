@@ -1,6 +1,7 @@
 package ultrapoulet.wifeygame.battle.skills;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import ultrapoulet.wifeygame.battle.BattleCharacter;
 import ultrapoulet.wifeygame.battle.skills.AbsSkill.Multipliers;
@@ -62,8 +63,7 @@ public class SkillList {
         }
     }
 
-    public void startBattle(BattleCharacter[] party){
-        //Do anything that needs to be done at the start of a battle
+    public void startBattle(List<BattleCharacter> party) {
         for(int i = 0; i < skills.size(); i++){
             skills.get(i).startBattle(party);
         }
@@ -96,7 +96,7 @@ public class SkillList {
         }
     }
 
-    public void updateParty(BattleCharacter[] party){
+    public void updateParty(List<BattleCharacter> party){
         for(int i = 0; i < skills.size(); i++){
             skills.get(i).updateParty(party);
         }
