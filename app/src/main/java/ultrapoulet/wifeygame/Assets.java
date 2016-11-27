@@ -1,5 +1,6 @@
 package ultrapoulet.wifeygame;
 
+import java.util.List;
 import java.util.Map;
 
 import ultrapoulet.androidgame.framework.Image;
@@ -20,13 +21,14 @@ public class Assets {
     public static Image specialBar, specialBarBase, specialBarTop;
     public static Image hitsText, hitText, damageText;
 
-    public static Image[] KOImages;
-    public static Image[] HPNumbers;
-    public static Image[] HPHealNumbers;
-    public static Image[] ComboHitsNumbers;
-    public static Image[] DamageHitsNumbers;
-    public static Image[] WeakNumbers;
-    public static Image[] ResistNumbers;
+    public static List<Image> KOImages;
+    public static List<Image> HPNumbers;
+    public static Image HPSlash;
+    public static List<Image> HPHealNumbers;
+    public static List<Image> ComboHitsNumbers;
+    public static List<Image> DamageHitsNumbers;
+    public static List<Image> WeakNumbers;
+    public static List<Image> ResistNumbers;
 
     //PartySelectScreen Stuff
     public static Image PartySelectScreen;

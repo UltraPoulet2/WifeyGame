@@ -12,6 +12,7 @@ import ultrapoulet.androidgame.framework.Input.TouchEvent;
 import ultrapoulet.androidgame.framework.Screen;
 import ultrapoulet.androidgame.framework.helpers.Button;
 import ultrapoulet.androidgame.framework.helpers.ButtonList;
+import ultrapoulet.androidgame.framework.helpers.NumberPrinter;
 import ultrapoulet.wifeygame.Assets;
 import ultrapoulet.wifeygame.battle.BattleCharacter;
 import ultrapoulet.wifeygame.battle.BattleEnemy;
@@ -48,7 +49,6 @@ public class BattleScreen extends Screen {
     private Paint textPaint;
 
     private static Image charHolder;
-    private static Image[] KOImages;
 
     private static Image enemyHolder;
 
@@ -61,13 +61,21 @@ public class BattleScreen extends Screen {
     private static final int CHAR_HOLDER_SMALL_Y = 745;
     private static final int CHAR_HOLDER_LARGE_Y = 610;
 
-    private static final int SLASH = 10;
-    private static final int CHAR_NUMBER_SMALL_X = 13;
-    private static final int CHAR_NUMBER_LARGE_X = 26;
-    private static final int CHAR_NUMBER_SMALL_DISTANCE_X = 8;
-    private static final int CHAR_NUMBER_LARGE_DISTANCE_X = 16;
-    private static final int CHAR_NUMBER_SMALL_Y = 855;
-    private static final int CHAR_NUMBER_LARGE_Y = 830;
+    private static final int CHAR_CUR_HP_SMALL_X = 47;
+    private static final int CHAR_HP_SLASH_SMALL_X = 45;
+    private static final int CHAR_MAX_HP_SMALL_X = 53;
+    private static final int CHAR_HP_SMALL_OFFSET = -2;
+    private static final int CHAR_HP_SMALL_Y = 855;
+    private static final int CHAR_HP_SMALL_WIDTH = 10;
+    private static final int CHAR_HP_SMALL_HEIGHT = 20;
+
+    private static final int CHAR_CUR_HP_LARGE_X = 94;
+    private static final int CHAR_HP_SLASH_LARGE_X = 90;
+    private static final int CHAR_MAX_HP_LARGE_X = 106;
+    private static final int CHAR_HP_LARGE_OFFSET = -4;
+    private static final int CHAR_HP_LARGE_Y = 830;
+    private static final int CHAR_HP_LARGE_WIDTH = 20;
+    private static final int CHAR_HP_LARGE_HEIGHT = 40;
 
     private static final int CHAR_LARGE_BASE_ELEM_ATK_X = 39;
     private static final int CHAR_SMALL_BASE_ELEM_ATK_X = 19;
@@ -91,9 +99,13 @@ public class BattleScreen extends Screen {
     private static final int ENEMY_ELEM_Y = 3 + ENEMY_HEALTH_HOLDER_Y;
     private static final int ENEMY_ELEM_SCALE = 25;
 
-    private static final int ENEMY_NUMBER_X = 250;
-    private static final int ENEMY_NUMBER_Y = 520;
-    private static final int ENEMY_NUMBER_DISTANCE_X = 20;
+    private static final int ENEMY_CUR_HP_X = 390;
+    private static final int ENEMY_HP_SLASH_X = 390;
+    private static final int ENEMY_MAX_HP_X = 410;
+    private static final int ENEMY_HP_Y = 520;
+    private static final int ENEMY_HP_WIDTH = 20;
+    private static final int ENEMY_HP_HEIGHT = 40;
+    private static final int ENEMY_HP_OFFSET = 0;
 
     private static final int SPECIAL_BAR_BASE_X = 0;
     private static final int SPECIAL_BAR_BASE_Y = 580;
@@ -113,17 +125,33 @@ public class BattleScreen extends Screen {
     private float phaseTime = 0;
     private boolean phaseEntered = true;
 
-    private static final int ENEMY_DAMAGE_BASE_X = 390;
-    private static final int ENEMY_DAMAGE_OFFSET_X = 10;
-    private static final int ENEMY_DAMAGE_DISTANCE_X = 20;
+    private static final int ENEMY_DAMAGE_BASE_X = 400;
     private static final int ENEMY_DAMAGE_START_Y = 260;
     private static final int ENEMY_DAMAGE_INCREASE_Y = 80;
 
-    private static final int CHAR_DAMAGE_BASE_X = 40;
-    private static final int CHAR_DAMAGE_OFFSET_X = 10;
-    private static final int CHAR_DAMAGE_DISTANCE_X = 20;
+    private static final int CHAR_DAMAGE_BASE_X = 50;
     private static final int CHAR_DAMAGE_START_Y = 820;
     private static final int CHAR_DAMAGE_INCREASE_Y = 80;
+
+    private static final int DAMAGE_WIDTH = 20;
+    private static final int DAMAGE_HEIGHT = 40;
+    private static final int DAMAGE_OFFSET = 0;
+
+    private static final int COMBO_NUMBER_X = 690;
+    private static final int COMBO_NUMBER_Y = 400;
+    private static final int COMBO_NUMBER_WIDTH = 30;
+    private static final int COMBO_NUMBER_HEIGHT = 60;
+    private static final int COMBO_NUMBER_OFFSET = 0;
+    private static final int COMBO_TEXT_X = 700;
+    private static final int COMBO_TEXT_Y = 430;
+
+    private static final int DAMAGE_HOLDER_NUMBER_X = 720;
+    private static final int DAMAGE_HOLDER_NUMBER_Y = 460;
+    private static final int DAMAGE_HOLDER_WIDTH = 20;
+    private static final int DAMAGE_HOLDER_HEIGHT = 40;
+    private static final int DAMAGE_HOLDER_OFFSET = 0;
+    private static final int DAMAGE_TEXT_X = 720;
+    private static final int DAMAGE_TEXT_Y = 480;
 
     private int hitsPerformed = 0;
     private int enemyDamage;
@@ -235,7 +263,6 @@ public class BattleScreen extends Screen {
         specialBar = Assets.specialBar;
         specialBarBase = Assets.specialBarBase;
         specialBarTop = Assets.specialBarTop;
-        KOImages = Assets.KOImages;
 
         createButtonList();
         createPaint();
@@ -952,9 +979,6 @@ public class BattleScreen extends Screen {
         int i = 0;
         Image healthBar;
         Double perHealth;
-        boolean numberStart;
-        int divisor;
-        int j;
         //Draw party members before the current member
         for( ; i < partyIndex && i < party.size(); i++){
             //Draw the character holder and character image
@@ -972,34 +996,16 @@ public class BattleScreen extends Screen {
             g.drawPercentageImage(healthBar, CHAR_HOLDER_X_DISTANCE * i + CHAR_INTERIOR_SMALL_X, CHAR_HEALTH_SMALL_Y, (int) Math.ceil(perHealth * HALF_SCALE), HALF_SCALE);
 
             //Draw the CurrentHP / MaxHP
-            numberStart = false;
-            divisor = 1000;
-            j = 0;
-            for( ; j < 4; j++){
-                int numberPart = (party.get(i).getCurrentHP() / divisor % 10);
-                numberStart = (numberStart || (numberPart > 0));
-                if(numberStart){
-                    g.drawPercentageImage(Assets.HPNumbers[numberPart], CHAR_HOLDER_X_DISTANCE * i + CHAR_NUMBER_SMALL_X + CHAR_NUMBER_SMALL_DISTANCE_X * j, CHAR_NUMBER_SMALL_Y, HALF_SCALE, HALF_SCALE);
-                }
-                divisor = divisor / 10;
-            }
-            g.drawPercentageImage(Assets.HPNumbers[SLASH], CHAR_HOLDER_X_DISTANCE * i + CHAR_NUMBER_SMALL_X + CHAR_NUMBER_SMALL_DISTANCE_X * j, CHAR_NUMBER_SMALL_Y, HALF_SCALE, HALF_SCALE);
-            j++;
-            numberStart = false;
-            divisor = 1000;
-            while(divisor > 0){
-                int numberPart = (party.get(i).getMaxHP() / divisor) % 10;
-                numberStart = (numberStart || (numberPart > 0));
-                if(numberStart){
-                    g.drawPercentageImage(Assets.HPNumbers[numberPart], CHAR_HOLDER_X_DISTANCE * i + CHAR_NUMBER_SMALL_X + CHAR_NUMBER_SMALL_DISTANCE_X * j, CHAR_NUMBER_SMALL_Y, HALF_SCALE, HALF_SCALE);
-                    j++;
-                }
-                divisor = divisor / 10;
-            }
+            int curX = CHAR_HOLDER_X_DISTANCE * i + CHAR_CUR_HP_SMALL_X;
+            NumberPrinter.drawNumber(g, party.get(i).getCurrentHP(), curX, CHAR_HP_SMALL_Y, CHAR_HP_SMALL_WIDTH, CHAR_HP_SMALL_HEIGHT, CHAR_HP_SMALL_OFFSET, Assets.HPNumbers, NumberPrinter.Align.RIGHT);
+            int slashX = CHAR_HOLDER_X_DISTANCE * i + CHAR_HP_SLASH_SMALL_X;
+            g.drawPercentageImage(Assets.HPSlash, slashX, CHAR_HP_SMALL_Y, HALF_SCALE, HALF_SCALE);
+            int maxX = CHAR_HOLDER_X_DISTANCE * i + CHAR_MAX_HP_SMALL_X;
+            NumberPrinter.drawNumber(g, party.get(i).getMaxHP(), maxX, CHAR_HP_SMALL_Y, CHAR_HP_SMALL_WIDTH, CHAR_HP_SMALL_HEIGHT, CHAR_HP_SMALL_OFFSET, Assets.HPNumbers, NumberPrinter.Align.LEFT);
 
             //If the party member is defeated, overlay the KO Image
             if(party.get(i).getCurrentHP() == 0){
-                g.drawPercentageImage(KOImages[i], CHAR_HOLDER_X_DISTANCE * i, CHAR_HOLDER_SMALL_Y, HALF_SCALE, HALF_SCALE);
+                g.drawPercentageImage(Assets.KOImages.get(i), CHAR_HOLDER_X_DISTANCE * i, CHAR_HOLDER_SMALL_Y, HALF_SCALE, HALF_SCALE);
             }
 
         }
@@ -1018,33 +1024,16 @@ public class BattleScreen extends Screen {
             g.drawPercentageImage(healthBar, CHAR_HOLDER_X_DISTANCE * i + CHAR_INTERIOR_LARGE_X, CHAR_HEALTH_LARGE_Y, (int) Math.ceil(perHealth * FULL_SCALE), FULL_SCALE);
 
             //Display CURRENTHP/MAXHP
-            numberStart = false;
-            divisor = 1000;
-            j = 0;
-            for (; j < 4; j++) {
-                int numberPart = (party.get(i).getCurrentHP() / divisor) % 10;
-                numberStart = (numberStart || (numberPart > 0));
-                if (numberStart) {
-                    g.drawImage(Assets.HPNumbers[numberPart], CHAR_HOLDER_X_DISTANCE * i + CHAR_NUMBER_LARGE_X + CHAR_NUMBER_LARGE_DISTANCE_X * j, CHAR_NUMBER_LARGE_Y);
-                }
-                divisor = divisor / 10;
-            }
-            g.drawImage(Assets.HPNumbers[SLASH], CHAR_HOLDER_X_DISTANCE * i + CHAR_NUMBER_LARGE_X + CHAR_NUMBER_LARGE_DISTANCE_X * j, CHAR_NUMBER_LARGE_Y);
-            j++;
-            numberStart = false;
-            divisor = 1000;
-            while (divisor > 0) {
-                int numberPart = (party.get(i).getMaxHP() / divisor) % 10;
-                numberStart = (numberStart || (numberPart > 0));
-                if (numberStart) {
-                    g.drawImage(Assets.HPNumbers[numberPart], CHAR_HOLDER_X_DISTANCE * i + CHAR_NUMBER_LARGE_X + CHAR_NUMBER_LARGE_DISTANCE_X * j, CHAR_NUMBER_LARGE_Y);
-                    j++;
-                }
-                divisor = divisor / 10;
-            }
+            int curX = CHAR_HOLDER_X_DISTANCE * i + CHAR_CUR_HP_LARGE_X;
+            NumberPrinter.drawNumber(g, party.get(i).getCurrentHP(), curX, CHAR_HP_LARGE_Y, CHAR_HP_LARGE_WIDTH, CHAR_HP_LARGE_HEIGHT, CHAR_HP_LARGE_OFFSET, Assets.HPNumbers, NumberPrinter.Align.RIGHT);
+            int slashX = CHAR_HOLDER_X_DISTANCE * i + CHAR_HP_SLASH_LARGE_X;
+            g.drawImage(Assets.HPSlash, slashX, CHAR_HP_LARGE_Y);
+            int maxX = CHAR_HOLDER_X_DISTANCE * i + CHAR_MAX_HP_LARGE_X;
+            NumberPrinter.drawNumber(g, party.get(i).getMaxHP(), maxX, CHAR_HP_LARGE_Y, CHAR_HP_LARGE_WIDTH, CHAR_HP_LARGE_HEIGHT, CHAR_HP_LARGE_OFFSET, Assets.HPNumbers, NumberPrinter.Align.LEFT);
+
 
             if (party.get(i).getCurrentHP() == 0) {
-                g.drawImage(KOImages[i], CHAR_HOLDER_X_DISTANCE * i, CHAR_HOLDER_LARGE_Y);
+                g.drawImage(Assets.KOImages.get(i), CHAR_HOLDER_X_DISTANCE * i, CHAR_HOLDER_LARGE_Y);
             }
             i++;
         }
@@ -1063,43 +1052,22 @@ public class BattleScreen extends Screen {
             g.drawPercentageImage(healthBar, CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_INTERIOR_SMALL_X, CHAR_HEALTH_SMALL_Y, (int) Math.ceil(perHealth * HALF_SCALE) , HALF_SCALE);
 
             //Display CURRENTHP/MAXHP
-            numberStart = false;
-            divisor = 1000;
-            j = 0;
-            for( ; j < 4; j++){
-                int numberPart = (party.get(i).getCurrentHP() / divisor) % 10;
-                numberStart = (numberStart || (numberPart > 0));
-                if(numberStart){
-                    g.drawPercentageImage(Assets.HPNumbers[numberPart], CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_NUMBER_SMALL_X + CHAR_NUMBER_SMALL_DISTANCE_X * j, CHAR_NUMBER_SMALL_Y, HALF_SCALE, HALF_SCALE);
-                }
-                divisor = divisor / 10;
-            }
-            g.drawPercentageImage(Assets.HPNumbers[SLASH], CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_NUMBER_SMALL_X + CHAR_NUMBER_SMALL_DISTANCE_X * j, CHAR_NUMBER_SMALL_Y, HALF_SCALE, HALF_SCALE);
-            j++;
-            numberStart = false;
-            divisor = 1000;
-            while(divisor > 0){
-                int numberPart = (party.get(i).getMaxHP() / divisor) % 10;
-                numberStart = (numberStart || (numberPart > 0));
-                if(numberStart){
-                    g.drawPercentageImage(Assets.HPNumbers[numberPart], CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_NUMBER_SMALL_X + CHAR_NUMBER_SMALL_DISTANCE_X * j, CHAR_NUMBER_SMALL_Y, HALF_SCALE, HALF_SCALE);
-                    j++;
-                }
-                divisor = divisor / 10;
+            int curX = CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_CUR_HP_SMALL_X;
+            NumberPrinter.drawNumber(g, party.get(i).getCurrentHP(), curX, CHAR_HP_SMALL_Y, CHAR_HP_SMALL_WIDTH, CHAR_HP_SMALL_HEIGHT, CHAR_HP_SMALL_OFFSET, Assets.HPNumbers, NumberPrinter.Align.RIGHT);
+            int slashX = CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_HP_SLASH_SMALL_X;
+            g.drawPercentageImage(Assets.HPSlash, slashX, CHAR_HP_SMALL_Y, HALF_SCALE, HALF_SCALE);
+            int maxX = CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_MAX_HP_SMALL_X;
+            NumberPrinter.drawNumber(g, party.get(i).getMaxHP(), maxX, CHAR_HP_SMALL_Y, CHAR_HP_SMALL_WIDTH, CHAR_HP_SMALL_HEIGHT, CHAR_HP_SMALL_OFFSET, Assets.HPNumbers, NumberPrinter.Align.LEFT);
+            if(party.get(i).getCurrentHP() == 0){
+                g.drawPercentageImage(Assets.KOImages.get(i), CHAR_HOLDER_X_DISTANCE * (i + 1), CHAR_HOLDER_SMALL_Y, HALF_SCALE, HALF_SCALE);
             }
 
-            if(party.get(i).getCurrentHP() == 0){
-                g.drawPercentageImage(KOImages[i], CHAR_HOLDER_X_DISTANCE * (i + 1), CHAR_HOLDER_SMALL_Y, HALF_SCALE, HALF_SCALE);
-            }
         }
     }
 
     private void drawEnemy(){
         Graphics g = game.getGraphics();
         Double perHealth;
-        boolean numberStart;
-        int divisor;
-        int j;
 
         g.drawImage(enemies.get(enemyIndex).getImage(), ENEMY_IMAGE_X, ENEMY_IMAGE_Y);
         g.drawImage(enemyHolder, ENEMY_HEALTH_HOLDER_X, ENEMY_HEALTH_HOLDER_Y);
@@ -1111,33 +1079,9 @@ public class BattleScreen extends Screen {
         g.drawPercentageImage(enemies.get(enemyIndex).getWeakElement().getElementImage(), ENEMY_ELEM_WEAK_X, ENEMY_ELEM_Y, ENEMY_ELEM_SCALE, ENEMY_ELEM_SCALE);
 
         //Display enemy CurrentHP/MaxHP
-        numberStart = false;
-        divisor = 1000000;
-        j = 0;
-        for( ; j < 7; j++){
-            int numberPart = (enemies.get(enemyIndex).getCurrentHP() / divisor) % 10;
-            numberStart = (numberStart || (numberPart > 0));
-            if(numberStart){
-                g.drawImage(Assets.HPNumbers[numberPart], ENEMY_NUMBER_X + ENEMY_NUMBER_DISTANCE_X * j, ENEMY_NUMBER_Y);
-            }
-            divisor = divisor / 10;
-        }
-        if(enemies.get(enemyIndex).getCurrentHP() == 0){
-            g.drawImage(Assets.HPNumbers[0], ENEMY_NUMBER_X + ENEMY_NUMBER_DISTANCE_X * 6, ENEMY_NUMBER_Y);
-        }
-        g.drawImage(Assets.HPNumbers[SLASH], ENEMY_NUMBER_X + ENEMY_NUMBER_DISTANCE_X * j, ENEMY_NUMBER_Y);
-        j++;
-        numberStart = false;
-        divisor = 1000000;
-        while(divisor > 0){
-            int numberPart = (enemies.get(enemyIndex).getMaxHP() / divisor) % 10;
-            numberStart = (numberStart || (numberPart > 0));
-            if(numberStart){
-                g.drawImage(Assets.HPNumbers[numberPart], ENEMY_NUMBER_X + ENEMY_NUMBER_DISTANCE_X * j, ENEMY_NUMBER_Y);
-                j++;
-            }
-            divisor = divisor / 10;
-        }
+        NumberPrinter.drawNumber(g, enemies.get(enemyIndex).getCurrentHP(), ENEMY_CUR_HP_X, ENEMY_HP_Y, ENEMY_HP_WIDTH, ENEMY_HP_HEIGHT, ENEMY_HP_OFFSET, Assets.HPNumbers, NumberPrinter.Align.RIGHT);
+        g.drawImage(Assets.HPSlash, ENEMY_HP_SLASH_X, ENEMY_HP_Y);
+        NumberPrinter.drawNumber(g, enemies.get(enemyIndex).getMaxHP(), ENEMY_MAX_HP_X, ENEMY_HP_Y, ENEMY_HP_WIDTH, ENEMY_HP_HEIGHT, ENEMY_HP_OFFSET, Assets.HPNumbers, NumberPrinter.Align.LEFT);
     }
 
     private void drawSpecial(){
@@ -1146,168 +1090,100 @@ public class BattleScreen extends Screen {
         g.drawPercentageImage(specialBar, SPECIAL_BAR_X, SPECIAL_BAR_Y, (int) ((numHits * 100.0) / MAX_HITS) , FULL_SCALE);
         g.drawImage(specialBarTop, SPECIAL_BAR_X, SPECIAL_BAR_TOP_Y);
         int specialCount = numHits / SPECIAL_HITS;
-        g.drawImage(Assets.HPNumbers[specialCount], SPECIAL_BAR_NUMBER_X, SPECIAL_BAR_NUMBER_Y);
+        g.drawImage(Assets.HPNumbers.get(specialCount), SPECIAL_BAR_NUMBER_X, SPECIAL_BAR_NUMBER_Y);
 
     }
 
     private void drawCombo(){
         Graphics g = game.getGraphics();
-        int i = 0;
-        boolean numberStart;
-        int divisor;
-        int j;
-        //Combo Counter
-        if(comboHolder / 10 > 0){
-            g.drawImage(Assets.ComboHitsNumbers[comboHolder / 10], 630, 400);
-        }
         if(comboHolder > 0){
-            g.drawImage(Assets.ComboHitsNumbers[comboHolder % 10], 660, 400);
+            NumberPrinter.drawNumber(g, comboHolder, COMBO_NUMBER_X, COMBO_NUMBER_Y, COMBO_NUMBER_WIDTH, COMBO_NUMBER_HEIGHT, COMBO_NUMBER_OFFSET, Assets.ComboHitsNumbers, NumberPrinter.Align.RIGHT);
             if(comboHolder > 1) {
-                g.drawImage(Assets.hitsText, 700, 430);
+                g.drawImage(Assets.hitsText, COMBO_TEXT_X, COMBO_TEXT_Y);
             }
             else{
-                g.drawImage(Assets.hitText, 700, 430);
+                g.drawImage(Assets.hitText, COMBO_TEXT_X, COMBO_TEXT_Y);
             }
         }
         //Damage Counter
-        divisor = 100000;
-        j = 0;
-        numberStart = false;
-        while(divisor > 0){
-            int numberPart = (damageHolder / divisor) % 10;
-            numberStart = (numberStart || (numberPart > 0));
-            if(numberStart){
-                g.drawImage(Assets.DamageHitsNumbers[numberPart], 600 + j * 20, 460);
-            }
-            j++;
-            divisor = divisor / 10;
-        }
         if(damageHolder > 0){
-            g.drawImage(Assets.damageText, 720, 480);
+            NumberPrinter.drawNumber(g, damageHolder, DAMAGE_HOLDER_NUMBER_X, DAMAGE_HOLDER_NUMBER_Y, DAMAGE_HOLDER_WIDTH, DAMAGE_HOLDER_HEIGHT, DAMAGE_HOLDER_OFFSET, Assets.DamageHitsNumbers, NumberPrinter.Align.RIGHT);
+            g.drawImage(Assets.damageText, DAMAGE_TEXT_X, DAMAGE_TEXT_Y);
         }
     }
 
     private void drawPlayerDamage(){
         Graphics g = game.getGraphics();
-        int i = 0;
-        boolean numberStart;
-        int divisor;
-        int j;
+        int i;
         g.drawImage(Assets.attackBox, 0, 0);
         g.drawString(commandSelected.getName(), 400, 70, textPaint);
-        divisor = 10000;
-        numberStart = false;
-        int offset = 4;
-        j = 0;
-        while(divisor > 0){
-            int numberPart = enemyDamage/divisor % 10;
-            numberStart = (numberStart || (numberPart > 0));
-            if(numberStart){
-                int y = ENEMY_DAMAGE_START_Y - (int) (ENEMY_DAMAGE_INCREASE_Y * phaseTime / ATTACK_PHASE_WAIT);
-                Image hpNum;
-                if(party.get(partyIndex).isWeaknessAttack(enemies.get(enemyIndex))){
-                    hpNum = Assets.WeakNumbers[numberPart];
-                }
-                else if(party.get(partyIndex).isStrongAttack(enemies.get(enemyIndex))){
-                    hpNum = Assets.ResistNumbers[numberPart];
-                }
-                else{
-                    hpNum = Assets.HPNumbers[numberPart];
-                }
-                g.drawImage(hpNum, ENEMY_DAMAGE_BASE_X - ENEMY_DAMAGE_OFFSET_X * offset + ENEMY_DAMAGE_DISTANCE_X * j, y);
-                j++;
+        if(enemyDamage != 0){
+            int y = ENEMY_DAMAGE_START_Y - (int) (ENEMY_DAMAGE_INCREASE_Y * phaseTime / ATTACK_PHASE_WAIT);
+            List<Image> numbers;
+            if(party.get(partyIndex).isWeaknessAttack(enemies.get(enemyIndex))){
+                numbers = Assets.WeakNumbers;
+            }
+            else if(party.get(partyIndex).isStrongAttack(enemies.get(enemyIndex))){
+                numbers = Assets.ResistNumbers;
             }
             else{
-                offset--;
+                numbers = Assets.HPNumbers;
             }
-            divisor = divisor / 10;
+            NumberPrinter.drawNumber(g, enemyDamage, ENEMY_DAMAGE_BASE_X, y, DAMAGE_WIDTH, DAMAGE_HEIGHT, DAMAGE_OFFSET, numbers, NumberPrinter.Align.CENTER);
         }
 
         for(i = 0; i < party.size(); i++){
-            divisor = 1000;
-            numberStart = false;
-            offset = 3;
-            j = 0;
-            while(divisor > 0){
-                int numberPart = partyDamage[i]/divisor % 10;
-                numberStart = (numberStart || (numberPart > 0));
-                if(numberStart){
-                    int y = CHAR_DAMAGE_START_Y - (int) (CHAR_DAMAGE_INCREASE_Y * phaseTime / HEAL_PHASE_WAIT);
-                    int x;
-                    if(i < partyIndex) {
-                        x = CHAR_DAMAGE_BASE_X - CHAR_DAMAGE_OFFSET_X * offset + CHAR_DAMAGE_DISTANCE_X * j + CHAR_HOLDER_X_DISTANCE * i;
-                    }
-                    else if(i == partyIndex){
-                        x = (CHAR_DAMAGE_BASE_X * 2) - CHAR_DAMAGE_OFFSET_X * offset + CHAR_DAMAGE_DISTANCE_X * j + CHAR_HOLDER_X_DISTANCE * i;
-                    }
-                    else{
-                        x = CHAR_DAMAGE_BASE_X - CHAR_DAMAGE_OFFSET_X * offset + CHAR_DAMAGE_DISTANCE_X * j + CHAR_HOLDER_X_DISTANCE * (i + 1);
-                    }
-                    g.drawImage(Assets.HPHealNumbers[numberPart], x, y);
-                    j++;
+            if(partyDamage[i] != 0){
+                int y = CHAR_DAMAGE_START_Y - (int) (CHAR_DAMAGE_INCREASE_Y * phaseTime / ATTACK_PHASE_WAIT);
+                int x;
+                if(i < partyIndex) {
+                    x = CHAR_DAMAGE_BASE_X + CHAR_HOLDER_X_DISTANCE * i;
+                }
+                else if(i == partyIndex){
+                    x = (CHAR_DAMAGE_BASE_X * 2) + CHAR_HOLDER_X_DISTANCE * i;
                 }
                 else{
-                    offset--;
+                    x = CHAR_DAMAGE_BASE_X + CHAR_HOLDER_X_DISTANCE * (i + 1);
                 }
-                divisor = divisor / 10;
+                NumberPrinter.drawNumber(g, partyDamage[i], x, y, DAMAGE_WIDTH, DAMAGE_HEIGHT, DAMAGE_OFFSET, Assets.HPHealNumbers, NumberPrinter.Align.CENTER);
             }
         }
     }
 
     private void drawEnemyDamage(){
         Graphics g = game.getGraphics();
-        int i = 0;
-        boolean numberStart;
-        int divisor;
-        int j;
+        int i;
         g.drawImage(Assets.attackBox,0,0);
         g.drawString(((BattleEnemy) enemies.get(enemyIndex)).getActionString(), 400, 70, textPaint);
-        divisor = 10000;
-        numberStart = false;
-        int offset = 4;
-        j = 0;
-        while(divisor > 0){
-            int numberPart = enemyDamage/divisor % 10;
-            numberStart = (numberStart || (numberPart > 0));
-            if(numberStart){
-                int y = ENEMY_DAMAGE_START_Y - (int) (ENEMY_DAMAGE_INCREASE_Y * phaseTime / HEAL_PHASE_WAIT);
-                g.drawImage(Assets.HPHealNumbers[numberPart], ENEMY_DAMAGE_BASE_X - ENEMY_DAMAGE_OFFSET_X * offset + ENEMY_DAMAGE_DISTANCE_X * j, y);
-                j++;
-            }
-            else{
-                offset--;
-            }
-            divisor = divisor / 10;
+        if(enemyDamage != 0){
+            int y = ENEMY_DAMAGE_START_Y - (int) (ENEMY_DAMAGE_INCREASE_Y * phaseTime / HEAL_PHASE_WAIT);
+            NumberPrinter.drawNumber(g, enemyDamage, ENEMY_DAMAGE_BASE_X, y, DAMAGE_WIDTH, DAMAGE_HEIGHT, DAMAGE_OFFSET, Assets.HPHealNumbers, NumberPrinter.Align.CENTER);
         }
 
         for(i = 0; i < party.size(); i++ ){
-            divisor = 10000;
-            numberStart = false;
-            offset = 4;
-            j = 0;
-            while(divisor > 0){
-                int numberPart = partyDamage[i]/divisor % 10;
-                numberStart = (numberStart || (numberPart > 0));
-                if(numberStart){
-                    int y = CHAR_DAMAGE_START_Y - (int) (CHAR_DAMAGE_INCREASE_Y * phaseTime / ATTACK_PHASE_WAIT);
-                    int x = CHAR_DAMAGE_BASE_X - CHAR_DAMAGE_OFFSET_X * offset + CHAR_DAMAGE_DISTANCE_X * j + CHAR_HOLDER_X_DISTANCE * i;
-                    Image hpNum;
-                    if(enemies.get(enemyIndex).isWeaknessAttack(party.get(i))){
-                        hpNum = Assets.WeakNumbers[numberPart];
-                    }
-                    else if(enemies.get(enemyIndex).isStrongAttack(party.get(i))){
-                        hpNum = Assets.ResistNumbers[numberPart];
-                    }
-                    else{
-                        hpNum = Assets.HPNumbers[numberPart];
-                    }
-                    g.drawImage(hpNum, x, y);
-                    j++;
+            if(partyDamage[i] != 0){
+                int y = CHAR_DAMAGE_START_Y - (int) (CHAR_DAMAGE_INCREASE_Y * phaseTime / ATTACK_PHASE_WAIT);
+                int x;
+                if(i < partyIndex) {
+                    x = CHAR_DAMAGE_BASE_X + CHAR_HOLDER_X_DISTANCE * i;
+                }
+                else if(i == partyIndex){
+                    x = (CHAR_DAMAGE_BASE_X * 2) + CHAR_HOLDER_X_DISTANCE * i;
                 }
                 else{
-                    offset--;
+                    x = CHAR_DAMAGE_BASE_X + CHAR_HOLDER_X_DISTANCE * (i + 1);
                 }
-                divisor = divisor / 10;
+                List<Image> numbers;
+                if(enemies.get(enemyIndex).isWeaknessAttack(party.get(i))){
+                    numbers = Assets.WeakNumbers;
+                }
+                else if(enemies.get(enemyIndex).isStrongAttack(party.get(i))){
+                    numbers = Assets.ResistNumbers;
+                }
+                else{
+                    numbers = Assets.HPNumbers;
+                }
+                NumberPrinter.drawNumber(g, partyDamage[i], x, y, DAMAGE_WIDTH, DAMAGE_HEIGHT, DAMAGE_OFFSET, numbers, NumberPrinter.Align.CENTER);
             }
         }
     }

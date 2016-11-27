@@ -17,6 +17,7 @@ import ultrapoulet.androidgame.framework.Input.TouchEvent;
 import ultrapoulet.androidgame.framework.Screen;
 import ultrapoulet.androidgame.framework.helpers.Button;
 import ultrapoulet.androidgame.framework.helpers.ButtonList;
+import ultrapoulet.androidgame.framework.helpers.NumberPrinter;
 import ultrapoulet.wifeygame.Assets;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
 import ultrapoulet.wifeygame.battle.BattleInfo;
@@ -51,8 +52,6 @@ public class PartySelectScreen extends Screen {
     private final static int HALF_SCALE = 50;
     private final static int PARTY_SCALE = 57;
     private final static int DRAGGING_SCALE = 75;
-
-    private Image[] numbers;
 
     private boolean touchDown = false;
     private final static int DRAG_WAIT = 10;
@@ -101,11 +100,11 @@ public class PartySelectScreen extends Screen {
     private static final int ACCEPT_BUTTON_BOT_Y = 1250;
     private static final String ACCEPT_BUTTON_STRING = "Accept";
 
-    private static final int CUR_PAGE_X_1 = 215;
-    private static final int CUR_PAGE_X_2 = 235;
-    private static final int MAX_PAGE_X_1 = 265;
-    private static final int MAX_PAGE_X_2 = 285;
+    private static final int CUR_PAGE_X = 255;
+    private static final int MAX_PAGE_X = 265;
     private static final int PAGE_Y = 355;
+    private static final int PAGE_WIDTH = 20;
+    private static final int PAGE_HEIGHT = 40;
 
     private ButtonList partyList;
 
@@ -201,8 +200,6 @@ public class PartySelectScreen extends Screen {
         textPaint.setTextSize(25);
 
         background = Assets.PartySelectScreen;
-
-        numbers = Assets.HPNumbers;
 
         charInfo = new CharacterInfoScreen(game);
         charInfo.setPreviousScreen(this);
@@ -464,6 +461,9 @@ public class PartySelectScreen extends Screen {
 
         int displayPage = currentPage + 1;
         int displayMaxPage = maxPage + 1;
+        NumberPrinter.drawNumber(g, displayPage, CUR_PAGE_X, PAGE_Y, PAGE_WIDTH, PAGE_HEIGHT, 0, Assets.HPNumbers, NumberPrinter.Align.RIGHT);
+        NumberPrinter.drawNumber(g, displayMaxPage, MAX_PAGE_X, PAGE_Y, PAGE_WIDTH, PAGE_HEIGHT, 0, Assets.HPNumbers, NumberPrinter.Align.LEFT);
+        /*
         if(displayPage > 10){
             g.drawImage(numbers[displayPage / 10], CUR_PAGE_X_1, PAGE_Y);
         }
@@ -476,6 +476,7 @@ public class PartySelectScreen extends Screen {
         else {
             g.drawImage(numbers[displayMaxPage % 10], MAX_PAGE_X_1, PAGE_Y);
         }
+        */
 
         if(prevButton.isActive()){
             g.drawImage(Assets.PrevPageEnable, PREV_BUTTON_LEFT_X, PREV_BUTTON_TOP_Y);

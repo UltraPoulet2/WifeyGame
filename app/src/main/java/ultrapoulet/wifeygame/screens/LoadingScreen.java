@@ -57,37 +57,37 @@ public class LoadingScreen extends Screen {
         Assets.hitText = g.newImage("Hit.png", ImageFormat.ARGB8888);
         Assets.damageText = g.newImage("Damage.png", ImageFormat.ARGB8888);
 
-        Assets.KOImages = new Image[7];
+        Assets.KOImages = new ArrayList<>();
         for(int i = 0; i < 7; i++){
-            Assets.KOImages[i] = g.newImage("KOImage" + i + ".png", ImageFormat.ARGB8888);
+            Assets.KOImages.add(g.newImage("KOImage" + i + ".png", ImageFormat.ARGB8888));
         }
 
-        Assets.HPNumbers = new Image[11];
+        Assets.HPNumbers = new ArrayList<>();
         for(int i = 0; i < 10; i++){
-            Assets.HPNumbers[i] = g.newImage("numbers/HP" + i + ".png", ImageFormat.ARGB8888);
+            Assets.HPNumbers.add(g.newImage("numbers/HP" + i + ".png", ImageFormat.ARGB8888));
         }
-        Assets.HPNumbers[10] = g.newImage("numbers/HPSlash.png", ImageFormat.ARGB8888);
+        Assets.HPSlash = g.newImage("numbers/HPSlash.png", ImageFormat.ARGB8888);
 
-        Assets.HPHealNumbers = new Image[10];
+        Assets.HPHealNumbers = new ArrayList<>();
         for(int i = 0; i < 10; i++){
-            Assets.HPHealNumbers[i] = g.newImage("numbers/HP" + i + "G.png", ImageFormat.ARGB8888);
-        }
-
-        Assets.ComboHitsNumbers = new Image[10];
-        for(int i = 0; i < 10; i++){
-            Assets.ComboHitsNumbers[i] = g.newImage("numbers/Combo" + i + ".png", ImageFormat.ARGB8888);
+            Assets.HPHealNumbers.add(g.newImage("numbers/HP" + i + "G.png", ImageFormat.ARGB8888));
         }
 
-        Assets.DamageHitsNumbers = new Image[10];
+        Assets.ComboHitsNumbers = new ArrayList<>();
         for(int i = 0; i < 10; i++){
-            Assets.DamageHitsNumbers[i] = g.newImage("numbers/Damage" + i + ".png", ImageFormat.ARGB8888);
+            Assets.ComboHitsNumbers.add(g.newImage("numbers/Combo" + i + ".png", ImageFormat.ARGB8888));
+        }
+
+        Assets.DamageHitsNumbers = new ArrayList<>();
+        for(int i = 0; i < 10; i++){
+            Assets.DamageHitsNumbers.add(g.newImage("numbers/Damage" + i + ".png", ImageFormat.ARGB8888));
         }
 
         Assets.WeakNumbers = Assets.DamageHitsNumbers;
 
-        Assets.ResistNumbers = new Image[10];
+        Assets.ResistNumbers = new ArrayList<>();
         for(int i = 0; i < 10; i++){
-            Assets.ResistNumbers[i] = g.newImage("numbers/Resist" + i + ".png", ImageFormat.ARGB8888);
+            Assets.ResistNumbers.add(g.newImage("numbers/Resist" + i + ".png", ImageFormat.ARGB8888));
         }
 
         Assets.PartySelectScreen = g.newImage("screens/PartySelectScreen.png", ImageFormat.RGB565);

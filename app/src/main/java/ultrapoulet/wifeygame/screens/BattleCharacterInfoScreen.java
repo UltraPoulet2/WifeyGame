@@ -6,6 +6,7 @@ import android.graphics.Paint;
 import ultrapoulet.androidgame.framework.Game;
 import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Image;
+import ultrapoulet.androidgame.framework.helpers.NumberPrinter;
 import ultrapoulet.wifeygame.Assets;
 import ultrapoulet.wifeygame.battle.BattleEnemy;
 import ultrapoulet.wifeygame.battle.BattleWifey;
@@ -28,10 +29,13 @@ public class BattleCharacterInfoScreen extends AbsCharacterInfoScreen {
     private static final double HEALTH_BAR_SCALE_X = 156.25;
     private static final int HEALTH_BAR_SCALE_Y = 250;
 
-    private static final int HEALTH_START_X = HEALTH_BAR_X + 53;
-    private static final int HEALTH_START_Y = HEALTH_BAR_Y + 5;
-    private static final int HEALTH_OFFSET_X = 16;
-    private static final int SLASH = 10;
+    private static final int HEALTH_Y = HEALTH_BAR_Y + 5;
+    private static final int CUR_HEALTH_X = HEALTH_BAR_X + 119;
+    private static final int HEALTH_SLASH_X = HEALTH_BAR_X + 115;
+    private static final int MAX_HEALTH_X = HEALTH_BAR_X + 131;
+    private static final int HEALTH_NUMBER_WIDTH = 20;
+    private static final int HEALTH_NUMBER_HEIGHT = 40;
+    private static final int HEALTH_OFFSET_X = -4;
 
     private Paint multPaint;
     private static final int STAT_SIZE = 34;
@@ -104,29 +108,9 @@ public class BattleCharacterInfoScreen extends AbsCharacterInfoScreen {
         int healthSize = (int) (HEALTH_BAR_SCALE_X * perHealth);
         g.drawPercentageImage(healthBar, HEALTH_BAR_X, HEALTH_BAR_Y, healthSize, HEALTH_BAR_SCALE_Y);
 
-        boolean healthStart = false;
-        int divisor = 1000;
-        for(int i = 0; i < 4; i++){
-            int numberPart = (displayChar.getCurrentHP() / divisor % 10);
-            healthStart = healthStart || (numberPart > 0);
-            if(healthStart){
-                g.drawImage(Assets.HPNumbers[numberPart], HEALTH_START_X + HEALTH_OFFSET_X * i, HEALTH_START_Y);
-            }
-            divisor = divisor / 10;
-        }
-        g.drawImage(Assets.HPNumbers[SLASH], HEALTH_START_X + HEALTH_OFFSET_X * 4, HEALTH_START_Y);
-        int i = 5;
-        divisor = 1000;
-        healthStart = false;
-        while(divisor > 0){
-            int numberPart = (displayChar.getMaxHP() / divisor % 10);
-            healthStart = healthStart || (numberPart > 0);
-            if(healthStart){
-                g.drawImage(Assets.HPNumbers[numberPart], HEALTH_START_X + HEALTH_OFFSET_X * i, HEALTH_START_Y);
-                i++;
-            }
-            divisor = divisor / 10;
-        }
+        NumberPrinter.drawNumber(g, displayChar.getCurrentHP(), CUR_HEALTH_X, HEALTH_Y, HEALTH_NUMBER_WIDTH, HEALTH_NUMBER_HEIGHT, HEALTH_OFFSET_X, Assets.HPNumbers, NumberPrinter.Align.RIGHT);
+        g.drawImage(Assets.HPSlash, HEALTH_SLASH_X, HEALTH_Y);
+        NumberPrinter.drawNumber(g, displayChar.getMaxHP(), MAX_HEALTH_X, HEALTH_Y, HEALTH_NUMBER_WIDTH, HEALTH_NUMBER_HEIGHT, HEALTH_OFFSET_X, Assets.HPNumbers, NumberPrinter.Align.LEFT);
 
         g.drawString(format(multipliers.getPhysAtk()) + "x", PHYS_X, ATK_Y, multPaint);
         g.drawString(format(multipliers.getMagAtk()) + "x", MAG_X, ATK_Y, multPaint);
