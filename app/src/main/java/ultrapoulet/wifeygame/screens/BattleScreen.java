@@ -39,7 +39,7 @@ public class BattleScreen extends Screen {
     private double enemyMultiplier = 1.00;
     private final double roundMultiplier = 0.025;
 
-    private static Image background, buttonMenuNormal, buttonMenuSpecial, buttonMenuTrans;
+    private static Image background;
 
     private static Image specialBar, specialBarBase, specialBarTop;
 
@@ -168,10 +168,10 @@ public class BattleScreen extends Screen {
     private static final int COL_3_RIGHT_X = 599;
     private static final int COL_4_LEFT_X = 600;
     private static final int COL_4_RIGHT_X = 799;
-    private static final int ROW_1_TOP_Y = 840;
-    private static final int ROW_1_BOT_Y = 1039;
-    private static final int ROW_2_TOP_Y = 1040;
-    private static final int ROW_2_BOT_Y = 1239;
+    private static final int ROW_1_TOP_Y = 880;
+    private static final int ROW_1_BOT_Y = 1079;
+    private static final int ROW_2_TOP_Y = 1080;
+    private static final int ROW_2_BOT_Y = 1279;
 
     private ButtonList buttonList;
     private Button powerAttackButton;
@@ -255,9 +255,11 @@ public class BattleScreen extends Screen {
     public BattleScreen(Game game){
         super(game);
 
+        /*
         buttonMenuNormal = Assets.buttonMenuNormal;
         buttonMenuSpecial = Assets.buttonMenuSpecial;
         buttonMenuTrans = Assets.buttonMenuBoth;
+        */
         charHolder = Assets.charHolder;
         enemyHolder = Assets.enemyHolder;
         specialBar = Assets.specialBar;
@@ -962,15 +964,22 @@ public class BattleScreen extends Screen {
         Graphics g = game.getGraphics();
         g.clearScreen(0xffffffff);
         g.drawImage(background, 0, 0);
-        if(transformButton.isActive()){
-            g.drawImage(buttonMenuTrans, 0, BUTTON_MENU_Y);
-        }
-        else if(specialAttackButton.isActive()){
-            g.drawImage(buttonMenuSpecial, 0, BUTTON_MENU_Y);
-        }
-        else{
-            g.drawImage(buttonMenuNormal, 0, BUTTON_MENU_Y);
-        }
+
+        Image image;
+        image = powerAttackButton.isActive() ? Assets.PowerAttackEnabled : Assets.PowerAttackDisabled;
+        g.drawImage(image, POWER_LEFT_X, POWER_TOP_Y);
+        image = comboAttackButton.isActive() ? Assets.ComboAttackEnabled : Assets.ComboAttackDisabled;
+        g.drawImage(image, COMBO_LEFT_X, COMBO_TOP_Y);
+        image = specialAttackButton.isActive() ? Assets.SpecialAttackEnabled : Assets.SpecialAttackDisabled;
+        g.drawImage(image, SPECIAL_LEFT_X, SPECIAL_TOP_Y);
+        image = defendButton.isActive() ? Assets.DefendEnabled : Assets.DefendDisabled;
+        g.drawImage(image, DEFEND_LEFT_X, DEFEND_TOP_Y);
+        image = transformButton.isActive() ? Assets.TransformEnabled : Assets.TransformDisabled;
+        g.drawImage(image, TRANSFORM_LEFT_X, TRANSFORM_TOP_Y);
+        image = magicAttackButton.isActive() ? Assets.MagicAttackEnabled : Assets.MagicAttackDisabled;
+        g.drawImage(image, MAGIC_LEFT_X, MAGIC_TOP_Y);
+        image = healMagicButton.isActive() ? Assets.HealMagicEnabled : Assets.HealMagicDisabled;
+        g.drawImage(image, HEAL_LEFT_X, HEAL_TOP_Y);
     }
 
     private void drawParty(){

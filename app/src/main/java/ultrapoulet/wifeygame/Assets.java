@@ -10,7 +10,14 @@ import ultrapoulet.androidgame.framework.Image;
  */
 public class Assets {
 
-    public static Image menu, buttonMenuNormal, buttonMenuSpecial, buttonMenuBoth;
+    //BattleScreen Stuff
+    public static Image PowerAttackEnabled, PowerAttackDisabled;
+    public static Image ComboAttackEnabled, ComboAttackDisabled;
+    public static Image MagicAttackEnabled, MagicAttackDisabled;
+    public static Image HealMagicEnabled, HealMagicDisabled;
+    public static Image SpecialAttackEnabled, SpecialAttackDisabled;
+    public static Image TransformEnabled, TransformDisabled;
+    public static Image DefendEnabled, DefendDisabled;
     public static Image attackBox;
     public static Image charHolder;
     public static Image testBG, yunoBG;
