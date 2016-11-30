@@ -35,7 +35,6 @@ public class LoadingScreen extends Screen {
     public void update(float deltaTime) {
         Graphics g = game.getGraphics();
         Assets.testBG = g.newImage("backgrounds/testbg.png", ImageFormat.RGB565);
-        Assets.yunoBG = g.newImage("backgrounds/yunobg.png", ImageFormat.RGB565);
 
         Assets.PowerAttackEnabled = g.newImage("buttons/PowerAttackEnabled.png", ImageFormat.RGB565);
         Assets.PowerAttackDisabled = g.newImage("buttons/PowerAttackDisabled.png", ImageFormat.RGB565);
@@ -52,27 +51,27 @@ public class LoadingScreen extends Screen {
         Assets.DefendEnabled = g.newImage("buttons/DefendButtonEnabled.png", ImageFormat.RGB565);
         Assets.DefendDisabled = g.newImage("buttons/DefendButtonDisabled.png", ImageFormat.RGB565);
 
-        Assets.attackBox = g.newImage("AttackBox.png", ImageFormat.ARGB8888);
-        Assets.charHolder = g.newImage("CharacterHolder.png", ImageFormat.ARGB8888);
+        Assets.attackBox = g.newImage("objects/battleMisc/AttackBox.png", ImageFormat.ARGB8888);
+        Assets.charHolder = g.newImage("objects/holders/CharacterHolder.png", ImageFormat.ARGB8888);
 
-        Assets.pHealthG = g.newImage("HealthBarGreen.png", ImageFormat.RGB565);
-        Assets.pHealthY = g.newImage("HealthBarYellow.png", ImageFormat.RGB565);
-        Assets.pHealthR = g.newImage("HealthBarRed.png", ImageFormat.RGB565);
-        Assets.eHealthG = g.newImage("EnemyHealthBarGreen.png", ImageFormat.RGB565);
-        Assets.eHealthY = g.newImage("EnemyHealthBarYellow.png", ImageFormat.RGB565);
-        Assets.eHealthR = g.newImage("EnemyHealthBarRed.png", ImageFormat.RGB565);
-        Assets.enemyHolder = g.newImage("EnemyHealthHolder.png", ImageFormat.ARGB8888);
-        Assets.testEnemy = g.newImage("TemplateEnemy.png", ImageFormat.RGB565);
-        Assets.specialBar = g.newImage("SpecialBar.png", ImageFormat.RGB565);
-        Assets.specialBarBase = g.newImage("SpecialBarBase.png", ImageFormat.ARGB8888);
-        Assets.specialBarTop = g.newImage("SpecialBarTop.png", ImageFormat.ARGB8888);
-        Assets.hitsText = g.newImage("Hits.png", ImageFormat.ARGB8888);
-        Assets.hitText = g.newImage("Hit.png", ImageFormat.ARGB8888);
-        Assets.damageText = g.newImage("Damage.png", ImageFormat.ARGB8888);
+        Assets.pHealthG = g.newImage("objects/bars/HealthBarGreen.png", ImageFormat.RGB565);
+        Assets.pHealthY = g.newImage("objects/bars/HealthBarYellow.png", ImageFormat.RGB565);
+        Assets.pHealthR = g.newImage("objects/bars/HealthBarRed.png", ImageFormat.RGB565);
+        Assets.eHealthG = g.newImage("objects/bars/EnemyHealthBarGreen.png", ImageFormat.RGB565);
+        Assets.eHealthY = g.newImage("objects/bars/EnemyHealthBarYellow.png", ImageFormat.RGB565);
+        Assets.eHealthR = g.newImage("objects/bars/EnemyHealthBarRed.png", ImageFormat.RGB565);
+        Assets.enemyHolder = g.newImage("objects/bars/EnemyHealthHolder.png", ImageFormat.ARGB8888);
+        Assets.specialBar = g.newImage("objects/bars/SpecialBar.png", ImageFormat.RGB565);
+        Assets.specialBarBase = g.newImage("objects/bars/SpecialBarBase.png", ImageFormat.ARGB8888);
+        Assets.specialBarTop = g.newImage("objects/bars/SpecialBarTop.png", ImageFormat.ARGB8888);
+
+        Assets.hitsText = g.newImage("objects/text/Hits.png", ImageFormat.ARGB8888);
+        Assets.hitText = g.newImage("objects/text/Hit.png", ImageFormat.ARGB8888);
+        Assets.damageText = g.newImage("objects/text/Damage.png", ImageFormat.ARGB8888);
 
         Assets.KOImages = new ArrayList<>();
         for(int i = 0; i < 7; i++){
-            Assets.KOImages.add(g.newImage("KOImage" + i + ".png", ImageFormat.ARGB8888));
+            Assets.KOImages.add(g.newImage("objects/battleMisc/KOImage" + i + ".png", ImageFormat.ARGB8888));
         }
 
         Assets.HPNumbers = new ArrayList<>();
@@ -110,13 +109,13 @@ public class LoadingScreen extends Screen {
         Assets.NextPageDisable = g.newImage("buttons/NextPageDisabled.png", ImageFormat.ARGB8888);
         Assets.PrevPageEnable = g.newImage("buttons/PrevPageEnabled.png", ImageFormat.ARGB8888);
         Assets.PrevPageDisable = g.newImage("buttons/PrevPageDisabled.png", ImageFormat.ARGB8888);
-        Assets.LockSelection = g.newImage("LockSelection.png", ImageFormat.ARGB8888);
+        Assets.LockSelection = g.newImage("objects/holders/LockSelection.png", ImageFormat.ARGB8888);
         Assets.BattleEnable = g.newImage("buttons/BattleEnabled.png", ImageFormat.ARGB8888);
         Assets.BattleDisable = g.newImage("buttons/BattleDisabled.png", ImageFormat.ARGB8888);
         Assets.ScrollBarFull = g.newImage("buttons/ScrollBarFull.png", ImageFormat.ARGB8888);
         Assets.ScrollBarShort = g.newImage("buttons/ScrollBarShort.png", ImageFormat.ARGB8888);
-        Assets.InvalidChar = g.newImage("InvalidChar.png", ImageFormat.ARGB8888);
-        Assets.RequiredCharHolder = g.newImage("RequiredCharHolder.png", ImageFormat.ARGB8888);
+        Assets.InvalidChar = g.newImage("objects/holders/InvalidChar.png", ImageFormat.ARGB8888);
+        Assets.RequiredCharHolder = g.newImage("objects/holders/RequiredCharHolder.png", ImageFormat.ARGB8888);
 
         Assets.CharacterInfoScreen = g.newImage("screens/CharacterInfoScreen.png", ImageFormat.RGB565);
         Assets.BattleCharacterInfoScreen = g.newImage("screens/BattleCharacterInfoScreen.png", ImageFormat.RGB565);

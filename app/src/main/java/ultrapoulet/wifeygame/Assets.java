@@ -20,11 +20,10 @@ public class Assets {
     public static Image DefendEnabled, DefendDisabled;
     public static Image attackBox;
     public static Image charHolder;
-    public static Image testBG, yunoBG;
+    public static Image testBG;
     public static Image pHealthG, pHealthY, pHealthR;
     public static Image eHealthG, eHealthY, eHealthR;
     public static Image enemyHolder;
-    public static Image testEnemy;
     public static Image specialBar, specialBarBase, specialBarTop;
     public static Image hitsText, hitText, damageText;
 
