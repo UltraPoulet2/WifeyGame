@@ -37,7 +37,6 @@ public class EnemyCharacter {
 
     private Image image;
 
-    //private EnemyAI ai;
     private String ai;
 
     private ArrayList<TransformEnemy> transformations;

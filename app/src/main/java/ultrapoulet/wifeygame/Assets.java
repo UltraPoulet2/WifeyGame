@@ -1,6 +1,6 @@
 package ultrapoulet.wifeygame;
 
-import java.util.Map;
+import java.util.List;
 
 import ultrapoulet.androidgame.framework.Image;
 
@@ -9,24 +9,31 @@ import ultrapoulet.androidgame.framework.Image;
  */
 public class Assets {
 
-    public static Image menu, buttonMenuNormal, buttonMenuSpecial, buttonMenuBoth;
+    //BattleScreen Stuff
+    public static Image PowerAttackEnabled, PowerAttackDisabled;
+    public static Image ComboAttackEnabled, ComboAttackDisabled;
+    public static Image MagicAttackEnabled, MagicAttackDisabled;
+    public static Image HealMagicEnabled, HealMagicDisabled;
+    public static Image SpecialAttackEnabled, SpecialAttackDisabled;
+    public static Image TransformEnabled, TransformDisabled;
+    public static Image DefendEnabled, DefendDisabled;
     public static Image attackBox;
     public static Image charHolder;
-    public static Image testBG, yunoBG;
+    public static Image testBG;
     public static Image pHealthG, pHealthY, pHealthR;
     public static Image eHealthG, eHealthY, eHealthR;
     public static Image enemyHolder;
-    public static Image testEnemy;
     public static Image specialBar, specialBarBase, specialBarTop;
     public static Image hitsText, hitText, damageText;
 
-    public static Image[] KOImages;
-    public static Image[] HPNumbers;
-    public static Image[] HPHealNumbers;
-    public static Image[] ComboHitsNumbers;
-    public static Image[] DamageHitsNumbers;
-    public static Image[] WeakNumbers;
-    public static Image[] ResistNumbers;
+    public static List<Image> KOImages;
+    public static List<Image> HPNumbers;
+    public static Image HPSlash;
+    public static List<Image> HPHealNumbers;
+    public static List<Image> ComboHitsNumbers;
+    public static List<Image> DamageHitsNumbers;
+    public static List<Image> WeakNumbers;
+    public static List<Image> ResistNumbers;
 
     //PartySelectScreen Stuff
     public static Image PartySelectScreen;
@@ -48,7 +55,7 @@ public class Assets {
     public static Image BattleEnable, BattleDisable;
 
     //Element Image stuff
-    public static Image[] ElementImages;
+    public static List<Image> ElementImages;
     public static final int AIR = 0;
     public static final int DARK = 1;
     public static final int EARTH = 2;

@@ -1,5 +1,7 @@
 package ultrapoulet.wifeygame.battle.skills.implementations;
 
+import java.util.List;
+
 import ultrapoulet.wifeygame.battle.BattleCharacter;
 import ultrapoulet.wifeygame.battle.skills.AbsSkill;
 
@@ -22,18 +24,18 @@ public class PravdaSkill extends AbsSkill {
     private double multiplier = 1.0;
 
     @Override
-    public void startBattle(BattleCharacter[] party){
+    public void startBattle(List<BattleCharacter> party){
         setMultiplier(party);
     }
 
     @Override
-    public void updateParty(BattleCharacter[] party){
+    public void updateParty(List<BattleCharacter> party){
         setMultiplier(party);
     }
 
-    private void setMultiplier(BattleCharacter[] party){
-        for(int i = 0; i < party.length; i++){
-            if(party[i] != owner && party[i].hasSkill(PravdaSkill.class)){
+    private void setMultiplier(List<BattleCharacter> party){
+        for(int i = 0; i < party.size(); i++){
+            if(party.get(i) != owner && party.get(i).hasSkill(PravdaSkill.class)){
                 multiplier += 1.0;
                 if(isPresident){
                     multiplier += 1.0;
@@ -58,16 +60,12 @@ public class PravdaSkill extends AbsSkill {
     }
 
     @Override
-    public double[] getMultipliers(BattleCharacter enemy) {
-        double multipliers[] = new double[6];
-        multipliers[PHYS_ATK] = multiplier;
-        multipliers[MAG_ATK] = multiplier;
-        multipliers[SPEC_ATK] = multiplier;
-        multipliers[PHYS_DEF] = 0.0;
-        multipliers[MAG_DEF] = 0.0;
-        multipliers[SPEC_DEF] = 0.0;
-
-        return multipliers;
+    public Multipliers getMultipliers(BattleCharacter enemy) {
+        Multipliers returnValue = new Multipliers();
+        returnValue.setPhysAtk(multiplier);
+        returnValue.setMagAtk(multiplier);
+        returnValue.setSpecAtk(multiplier);
+        return returnValue;
     }
 
     @Override

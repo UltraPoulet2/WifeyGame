@@ -48,17 +48,12 @@ public class SadistSkill extends AbsSkill {
     }
 
     @Override
-    public double[] getMultipliers(BattleCharacter enemy) {
-
-        double multipliers[] = new double[6];
-        multipliers[PHYS_ATK] = getMult();
-        multipliers[MAG_ATK] = getMult();
-        multipliers[SPEC_ATK] = getMult();
-        multipliers[PHYS_DEF] = 0.0;
-        multipliers[MAG_DEF] = 0.0;
-        multipliers[SPEC_DEF] = 0.0;
-
-        return multipliers;
+    public Multipliers getMultipliers(BattleCharacter enemy) {
+        Multipliers returnValue = new Multipliers();
+        returnValue.setPhysAtk(getMult());
+        returnValue.setMagAtk(getMult());
+        returnValue.setSpecAtk(getMult());
+        return returnValue;
     }
 
     @Override

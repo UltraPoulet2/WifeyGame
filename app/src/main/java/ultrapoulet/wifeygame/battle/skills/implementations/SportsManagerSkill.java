@@ -1,5 +1,7 @@
 package ultrapoulet.wifeygame.battle.skills.implementations;
 
+import java.util.List;
+
 import ultrapoulet.wifeygame.battle.BattleCharacter;
 import ultrapoulet.wifeygame.battle.skills.AbsSkill;
 
@@ -17,20 +19,20 @@ public class SportsManagerSkill extends AbsSkill {
     private double perGirl = 0.05;
 
     @Override
-    public void startBattle(BattleCharacter[] party) {
+    public void startBattle(List<BattleCharacter> party) {
         setMultiplier(party);
     }
 
     @Override
-    public void updateParty(BattleCharacter[] party){
+    public void updateParty(List<BattleCharacter> party){
         setMultiplier(party);
     }
 
-    private void setMultiplier(BattleCharacter[] party){
-        for(int i = 0; i < party.length; i++){
-            if(party[i] != owner && party[i].hasSkill(AthleteSkill.class)){
+    private void setMultiplier(List<BattleCharacter> party){
+        for(int i = 0; i < party.size(); i++){
+            if(party.get(i) != owner && party.get(i).hasSkill(AthleteSkill.class)){
                 multiplier += perGirl;
-                party[i].giveSkillBonus(1.0, SportsManagerSkill.class, AthleteSkill.class);
+                party.get(i).giveSkillBonus(1.0, SportsManagerSkill.class, AthleteSkill.class);
             }
         }
     }
@@ -42,16 +44,10 @@ public class SportsManagerSkill extends AbsSkill {
 
 
     @Override
-    public double[] getMultipliers(BattleCharacter enemy) {
-        double multipliers[] = new double[6];
-        multipliers[PHYS_ATK] = multiplier;
-        multipliers[MAG_ATK] = 1.0;
-        multipliers[SPEC_ATK] = 1.0;
-        multipliers[PHYS_DEF] = 0.0;
-        multipliers[MAG_DEF] = 0.0;
-        multipliers[SPEC_DEF] = 0.0;
-
-        return multipliers;
+    public Multipliers getMultipliers(BattleCharacter enemy) {
+        Multipliers returnValue = new Multipliers();
+        returnValue.setPhysAtk(multiplier);
+        return returnValue;
     }
 
     @Override

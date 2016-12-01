@@ -1,6 +1,7 @@
 package ultrapoulet.wifeygame.battle.requirements;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import ultrapoulet.wifeygame.character.WifeyCharacter;
 import ultrapoulet.wifeygame.gamestate.RecruitedCharacters;
@@ -33,16 +34,9 @@ public class RequiredCharacterRequirement extends AbsRequirement {
     }
 
     @Override
-    public boolean validateParty(WifeyCharacter[] party){
-        //This will be so much simpler after the conversion to ArrayList
+    public boolean validateParty(List<WifeyCharacter> party){
         for(int i = 0; i < requiredWifeys.size(); i++){
-            boolean found = false;
-            for(int j = 0; j < party.length; j++){
-                if(party[j] == requiredWifeys.get(i)){
-                    found = true;
-                }
-            }
-            if(found == false){
+            if(!party.contains(requiredWifeys.get(i))){
                 return false;
             }
         }

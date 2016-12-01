@@ -90,15 +90,6 @@ public class BattleParser extends DefaultHandler {
             }
         }
         else if(qName.equalsIgnoreCase("requirement")){
-            //Do stuff
-            /* Quick testing
-            WifeyCharacter[] recruits = RecruitedCharacters.getArray();
-            if(reqBuilder != null){
-                for(int i = 0; i < recruits.length; i++){
-                    reqBuilder.validateCharacter(recruits[i]);
-                }
-            }
-            // */
             if(reqBuilder != null){
                 battleBuilder.addRequirement(reqBuilder);
             }
@@ -161,7 +152,7 @@ public class BattleParser extends DefaultHandler {
         if(battleBuilder.getName().length() == 0){
             return false;
         }
-        if(battleBuilder.getCharacterEnemies().length == 0){
+        if(battleBuilder.getCharacterEnemies().size() == 0){
             return false;
         }
         if(battleBuilder.getPartyMax() <= 0 || battleBuilder.getPartyMax() > 7){

@@ -1,5 +1,7 @@
 package ultrapoulet.wifeygame.battle.skills.implementations;
 
+import java.util.List;
+
 import ultrapoulet.wifeygame.battle.BattleCharacter;
 import ultrapoulet.wifeygame.battle.skills.AbsSkill;
 
@@ -17,8 +19,8 @@ public class TsundereSkill extends AbsSkill {
     }
 
     @Override
-    public void startBattle(BattleCharacter[] party) {
-        multiplier = maxMultiplier - (party.length - 1);
+    public void startBattle(List<BattleCharacter> party) {
+        multiplier = maxMultiplier - (party.size() - 1);
         if(multiplier < 1.0){
             multiplier = 1.0;
         }
@@ -41,16 +43,12 @@ public class TsundereSkill extends AbsSkill {
 
 
     @Override
-    public double[] getMultipliers(BattleCharacter enemy) {
-        double multipliers[] = new double[6];
-        multipliers[PHYS_ATK] = multiplier;
-        multipliers[MAG_ATK] = multiplier;
-        multipliers[SPEC_ATK] = multiplier;
-        multipliers[PHYS_DEF] = 0.0;
-        multipliers[MAG_DEF] = 0.0;
-        multipliers[SPEC_DEF] = 0.0;
-
-        return multipliers;
+    public Multipliers getMultipliers(BattleCharacter enemy) {
+        Multipliers returnValue = new Multipliers();
+        returnValue.setPhysAtk(multiplier);
+        returnValue.setMagAtk(multiplier);
+        returnValue.setSpecAtk(multiplier);
+        return returnValue;
     }
 
     @Override

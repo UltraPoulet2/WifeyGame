@@ -1,5 +1,7 @@
 package ultrapoulet.wifeygame.battle.skills.implementations;
 
+import java.util.List;
+
 import ultrapoulet.wifeygame.battle.BattleCharacter;
 import ultrapoulet.wifeygame.battle.skills.AbsSkill;
 
@@ -19,19 +21,19 @@ public class MagicalGirlSkill extends AbsSkill {
     private double multiplier;
 
     @Override
-    public void startBattle(BattleCharacter[] party) {
+    public void startBattle(List<BattleCharacter> party) {
         setMultiplier(party);
     }
 
     @Override
-    public void updateParty(BattleCharacter[] party){
+    public void updateParty(List<BattleCharacter> party){
         setMultiplier(party);
     }
 
-    private void setMultiplier(BattleCharacter[] party){
+    private void setMultiplier(List<BattleCharacter> party){
         multiplier = baseMultiplier;
-        for(int i = 0; i < party.length; i++){
-            if(party[i] != owner && party[i].hasSkill(MagicalGirlSkill.class)){
+        for(int i = 0; i < party.size(); i++){
+            if(party.get(i) != owner && party.get(i).hasSkill(MagicalGirlSkill.class)){
                 multiplier += perGirl;
             }
         }
@@ -54,16 +56,11 @@ public class MagicalGirlSkill extends AbsSkill {
 
 
     @Override
-    public double[] getMultipliers(BattleCharacter enemy) {
-        double multipliers[] = new double[6];
-        multipliers[PHYS_ATK] = 1.0;
-        multipliers[MAG_ATK] = multiplier;
-        multipliers[SPEC_ATK] = multiplier;
-        multipliers[PHYS_DEF] = 0.0;
-        multipliers[MAG_DEF] = 0.0;
-        multipliers[SPEC_DEF] = 0.0;
-
-        return multipliers;
+    public Multipliers getMultipliers(BattleCharacter enemy) {
+        Multipliers returnValue = new Multipliers();
+        returnValue.setMagAtk(multiplier);
+        returnValue.setSpecAtk(multiplier);
+        return returnValue;
     }
 
     @Override

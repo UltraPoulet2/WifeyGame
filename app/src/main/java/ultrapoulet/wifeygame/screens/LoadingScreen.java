@@ -1,4 +1,4 @@
-package ultrapoulet.wifeygame;
+package ultrapoulet.wifeygame.screens;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -16,7 +15,7 @@ import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Graphics.ImageFormat;
 import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.androidgame.framework.Screen;
-import ultrapoulet.wifeygame.battle.BattleSelectScreen;
+import ultrapoulet.wifeygame.Assets;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
 import ultrapoulet.wifeygame.gamestate.Party;
 import ultrapoulet.wifeygame.gamestate.RecruitedCharacters;
@@ -36,59 +35,71 @@ public class LoadingScreen extends Screen {
     public void update(float deltaTime) {
         Graphics g = game.getGraphics();
         Assets.testBG = g.newImage("backgrounds/testbg.png", ImageFormat.RGB565);
-        Assets.yunoBG = g.newImage("backgrounds/yunobg.png", ImageFormat.RGB565);
-        Assets.buttonMenuNormal = g.newImage("BattleButtonMenuNormal.png", ImageFormat.RGB565);
-        Assets.buttonMenuSpecial = g.newImage("BattleButtonMenuSpecial.png", ImageFormat.RGB565);
-        Assets.buttonMenuBoth = g.newImage("BattleButtonMenuBoth.png", ImageFormat.RGB565);
-        Assets.attackBox = g.newImage("AttackBox.png", ImageFormat.ARGB8888);
-        Assets.charHolder = g.newImage("CharacterHolder.png", ImageFormat.ARGB8888);
 
-        Assets.pHealthG = g.newImage("HealthBarGreen.png", ImageFormat.RGB565);
-        Assets.pHealthY = g.newImage("HealthBarYellow.png", ImageFormat.RGB565);
-        Assets.pHealthR = g.newImage("HealthBarRed.png", ImageFormat.RGB565);
-        Assets.eHealthG = g.newImage("EnemyHealthBarGreen.png", ImageFormat.RGB565);
-        Assets.eHealthY = g.newImage("EnemyHealthBarYellow.png", ImageFormat.RGB565);
-        Assets.eHealthR = g.newImage("EnemyHealthBarRed.png", ImageFormat.RGB565);
-        Assets.enemyHolder = g.newImage("EnemyHealthHolder.png", ImageFormat.ARGB8888);
-        Assets.testEnemy = g.newImage("TemplateEnemy.png", ImageFormat.RGB565);
-        Assets.specialBar = g.newImage("SpecialBar.png", ImageFormat.RGB565);
-        Assets.specialBarBase = g.newImage("SpecialBarBase.png", ImageFormat.ARGB8888);
-        Assets.specialBarTop = g.newImage("SpecialBarTop.png", ImageFormat.ARGB8888);
-        Assets.hitsText = g.newImage("Hits.png", ImageFormat.ARGB8888);
-        Assets.hitText = g.newImage("Hit.png", ImageFormat.ARGB8888);
-        Assets.damageText = g.newImage("Damage.png", ImageFormat.ARGB8888);
+        Assets.PowerAttackEnabled = g.newImage("buttons/PowerAttackEnabled.png", ImageFormat.RGB565);
+        Assets.PowerAttackDisabled = g.newImage("buttons/PowerAttackDisabled.png", ImageFormat.RGB565);
+        Assets.ComboAttackEnabled = g.newImage("buttons/ComboAttackEnabled.png", ImageFormat.RGB565);
+        Assets.ComboAttackDisabled = g.newImage("buttons/ComboAttackDisabled.png", ImageFormat.RGB565);
+        Assets.MagicAttackEnabled = g.newImage("buttons/MagicAttackEnabled.png", ImageFormat.RGB565);
+        Assets.MagicAttackDisabled = g.newImage("buttons/MagicAttackDisabled.png", ImageFormat.RGB565);
+        Assets.HealMagicEnabled = g.newImage("buttons/HealMagicEnabled.png", ImageFormat.RGB565);
+        Assets.HealMagicDisabled = g.newImage("buttons/HealMagicDisabled.png", ImageFormat.RGB565);
+        Assets.SpecialAttackEnabled = g.newImage("buttons/SpecialAttackEnabled.png", ImageFormat.RGB565);
+        Assets.SpecialAttackDisabled = g.newImage("buttons/SpecialAttackDisabled.png", ImageFormat.RGB565);
+        Assets.TransformEnabled = g.newImage("buttons/TransformEnabled.png", ImageFormat.RGB565);
+        Assets.TransformDisabled = g.newImage("buttons/TransformDisabled.png", ImageFormat.RGB565);
+        Assets.DefendEnabled = g.newImage("buttons/DefendButtonEnabled.png", ImageFormat.RGB565);
+        Assets.DefendDisabled = g.newImage("buttons/DefendButtonDisabled.png", ImageFormat.RGB565);
 
-        Assets.KOImages = new Image[7];
+        Assets.attackBox = g.newImage("objects/battleMisc/AttackBox.png", ImageFormat.ARGB8888);
+        Assets.charHolder = g.newImage("objects/holders/CharacterHolder.png", ImageFormat.ARGB8888);
+
+        Assets.pHealthG = g.newImage("objects/bars/HealthBarGreen.png", ImageFormat.RGB565);
+        Assets.pHealthY = g.newImage("objects/bars/HealthBarYellow.png", ImageFormat.RGB565);
+        Assets.pHealthR = g.newImage("objects/bars/HealthBarRed.png", ImageFormat.RGB565);
+        Assets.eHealthG = g.newImage("objects/bars/EnemyHealthBarGreen.png", ImageFormat.RGB565);
+        Assets.eHealthY = g.newImage("objects/bars/EnemyHealthBarYellow.png", ImageFormat.RGB565);
+        Assets.eHealthR = g.newImage("objects/bars/EnemyHealthBarRed.png", ImageFormat.RGB565);
+        Assets.enemyHolder = g.newImage("objects/bars/EnemyHealthHolder.png", ImageFormat.ARGB8888);
+        Assets.specialBar = g.newImage("objects/bars/SpecialBar.png", ImageFormat.RGB565);
+        Assets.specialBarBase = g.newImage("objects/bars/SpecialBarBase.png", ImageFormat.ARGB8888);
+        Assets.specialBarTop = g.newImage("objects/bars/SpecialBarTop.png", ImageFormat.ARGB8888);
+
+        Assets.hitsText = g.newImage("objects/text/Hits.png", ImageFormat.ARGB8888);
+        Assets.hitText = g.newImage("objects/text/Hit.png", ImageFormat.ARGB8888);
+        Assets.damageText = g.newImage("objects/text/Damage.png", ImageFormat.ARGB8888);
+
+        Assets.KOImages = new ArrayList<>();
         for(int i = 0; i < 7; i++){
-            Assets.KOImages[i] = g.newImage("KOImage" + i + ".png", ImageFormat.ARGB8888);
+            Assets.KOImages.add(g.newImage("objects/battleMisc/KOImage" + i + ".png", ImageFormat.ARGB8888));
         }
 
-        Assets.HPNumbers = new Image[11];
+        Assets.HPNumbers = new ArrayList<>();
         for(int i = 0; i < 10; i++){
-            Assets.HPNumbers[i] = g.newImage("numbers/HP" + i + ".png", ImageFormat.ARGB8888);
+            Assets.HPNumbers.add(g.newImage("numbers/HP" + i + ".png", ImageFormat.ARGB8888));
         }
-        Assets.HPNumbers[10] = g.newImage("numbers/HPSlash.png", ImageFormat.ARGB8888);
+        Assets.HPSlash = g.newImage("numbers/HPSlash.png", ImageFormat.ARGB8888);
 
-        Assets.HPHealNumbers = new Image[10];
+        Assets.HPHealNumbers = new ArrayList<>();
         for(int i = 0; i < 10; i++){
-            Assets.HPHealNumbers[i] = g.newImage("numbers/HP" + i + "G.png", ImageFormat.ARGB8888);
-        }
-
-        Assets.ComboHitsNumbers = new Image[10];
-        for(int i = 0; i < 10; i++){
-            Assets.ComboHitsNumbers[i] = g.newImage("numbers/Combo" + i + ".png", ImageFormat.ARGB8888);
+            Assets.HPHealNumbers.add(g.newImage("numbers/HP" + i + "G.png", ImageFormat.ARGB8888));
         }
 
-        Assets.DamageHitsNumbers = new Image[10];
+        Assets.ComboHitsNumbers = new ArrayList<>();
         for(int i = 0; i < 10; i++){
-            Assets.DamageHitsNumbers[i] = g.newImage("numbers/Damage" + i + ".png", ImageFormat.ARGB8888);
+            Assets.ComboHitsNumbers.add(g.newImage("numbers/Combo" + i + ".png", ImageFormat.ARGB8888));
+        }
+
+        Assets.DamageHitsNumbers = new ArrayList<>();
+        for(int i = 0; i < 10; i++){
+            Assets.DamageHitsNumbers.add(g.newImage("numbers/Damage" + i + ".png", ImageFormat.ARGB8888));
         }
 
         Assets.WeakNumbers = Assets.DamageHitsNumbers;
 
-        Assets.ResistNumbers = new Image[10];
+        Assets.ResistNumbers = new ArrayList<>();
         for(int i = 0; i < 10; i++){
-            Assets.ResistNumbers[i] = g.newImage("numbers/Resist" + i + ".png", ImageFormat.ARGB8888);
+            Assets.ResistNumbers.add(g.newImage("numbers/Resist" + i + ".png", ImageFormat.ARGB8888));
         }
 
         Assets.PartySelectScreen = g.newImage("screens/PartySelectScreen.png", ImageFormat.RGB565);
@@ -98,25 +109,25 @@ public class LoadingScreen extends Screen {
         Assets.NextPageDisable = g.newImage("buttons/NextPageDisabled.png", ImageFormat.ARGB8888);
         Assets.PrevPageEnable = g.newImage("buttons/PrevPageEnabled.png", ImageFormat.ARGB8888);
         Assets.PrevPageDisable = g.newImage("buttons/PrevPageDisabled.png", ImageFormat.ARGB8888);
-        Assets.LockSelection = g.newImage("LockSelection.png", ImageFormat.ARGB8888);
+        Assets.LockSelection = g.newImage("objects/holders/LockSelection.png", ImageFormat.ARGB8888);
         Assets.BattleEnable = g.newImage("buttons/BattleEnabled.png", ImageFormat.ARGB8888);
         Assets.BattleDisable = g.newImage("buttons/BattleDisabled.png", ImageFormat.ARGB8888);
         Assets.ScrollBarFull = g.newImage("buttons/ScrollBarFull.png", ImageFormat.ARGB8888);
         Assets.ScrollBarShort = g.newImage("buttons/ScrollBarShort.png", ImageFormat.ARGB8888);
-        Assets.InvalidChar = g.newImage("InvalidChar.png", ImageFormat.ARGB8888);
-        Assets.RequiredCharHolder = g.newImage("RequiredCharHolder.png", ImageFormat.ARGB8888);
+        Assets.InvalidChar = g.newImage("objects/holders/InvalidChar.png", ImageFormat.ARGB8888);
+        Assets.RequiredCharHolder = g.newImage("objects/holders/RequiredCharHolder.png", ImageFormat.ARGB8888);
 
         Assets.CharacterInfoScreen = g.newImage("screens/CharacterInfoScreen.png", ImageFormat.RGB565);
         Assets.BattleCharacterInfoScreen = g.newImage("screens/BattleCharacterInfoScreen.png", ImageFormat.RGB565);
         Assets.BattleInfoScreen = g.newImage("screens/BattleInfoScreen.png", ImageFormat.RGB565);
 
-        Assets.ElementImages = new Image[6];
-        Assets.ElementImages[0] = g.newImage("elements/AirElement.png", ImageFormat.ARGB8888);
-        Assets.ElementImages[1] = g.newImage("elements/DarkElement.png", ImageFormat.ARGB8888);
-        Assets.ElementImages[2] = g.newImage("elements/EarthElement.png", ImageFormat.ARGB8888);
-        Assets.ElementImages[3] = g.newImage("elements/FireElement.png", ImageFormat.ARGB8888);
-        Assets.ElementImages[4] = g.newImage("elements/LightElement.png", ImageFormat.ARGB8888);
-        Assets.ElementImages[5] = g.newImage("elements/WaterElement.png", ImageFormat.ARGB8888);
+        Assets.ElementImages = new ArrayList<>();
+        Assets.ElementImages.add(g.newImage("elements/AirElement.png", ImageFormat.ARGB8888));
+        Assets.ElementImages.add(g.newImage("elements/DarkElement.png", ImageFormat.ARGB8888));
+        Assets.ElementImages.add(g.newImage("elements/EarthElement.png", ImageFormat.ARGB8888));
+        Assets.ElementImages.add(g.newImage("elements/FireElement.png", ImageFormat.ARGB8888));
+        Assets.ElementImages.add(g.newImage("elements/LightElement.png", ImageFormat.ARGB8888));
+        Assets.ElementImages.add(g.newImage("elements/WaterElement.png", ImageFormat.ARGB8888));
 
         createRecruits();
         createParty();

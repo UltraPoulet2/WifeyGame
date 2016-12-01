@@ -2,7 +2,6 @@ package ultrapoulet.wifeygame.battle.skills.implementations;
 
 import ultrapoulet.wifeygame.battle.BattleCharacter;
 import ultrapoulet.wifeygame.battle.skills.AbsSkill;
-import ultrapoulet.wifeygame.battle.skills.implementations.GhostSkill;
 
 /**
  * Created by John on 7/21/2016.
@@ -35,18 +34,12 @@ public class MediumSkill extends AbsSkill {
     }
 
     @Override
-    public double[] getMultipliers(BattleCharacter enemy) {
+    public Multipliers getMultipliers(BattleCharacter enemy) {
         double multiplier = enemy.hasSkill(GhostSkill.class) ? 2.0 : 1.0;
-
-        double multipliers[] = new double[6];
-        multipliers[PHYS_ATK] = 1.0;
-        multipliers[MAG_ATK] = multiplier;
-        multipliers[SPEC_ATK] = multiplier;
-        multipliers[PHYS_DEF] = 0.0;
-        multipliers[MAG_DEF] = 0.0;
-        multipliers[SPEC_DEF] = 0.0;
-
-        return multipliers;
+        Multipliers returnValue = new Multipliers();
+        returnValue.setMagAtk(multiplier);
+        returnValue.setSpecAtk(multiplier);
+        return returnValue;
     }
 
     @Override

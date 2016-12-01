@@ -29,16 +29,12 @@ public class TrapSkill extends AbsSkill {
     }
 
     @Override
-    public double[] getMultipliers(BattleCharacter enemy){
-        double multipliers[] = new double[6];
-        multipliers[PHYS_ATK] = 1.0;
-        multipliers[MAG_ATK] = 1.0;
-        multipliers[SPEC_ATK] = 1.0;
-        multipliers[PHYS_DEF] = 0.15;
-        multipliers[MAG_DEF] = 0.15;
-        multipliers[SPEC_DEF] = 0.15;
-
-        return multipliers;
+    public Multipliers getMultipliers(BattleCharacter enemy) {
+        Multipliers returnValue = new Multipliers();
+        returnValue.setPhysDef(0.15);
+        returnValue.setMagDef(0.15);
+        returnValue.setSpecDef(0.15);
+        return returnValue;
     }
 
     @Override

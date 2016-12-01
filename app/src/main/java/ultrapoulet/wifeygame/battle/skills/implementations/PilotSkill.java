@@ -48,23 +48,13 @@ public class PilotSkill extends AbsSkill {
     }
 
     @Override
-    public double[] getMultipliers(BattleCharacter enemy){
-        double defense;
-        if(enemy.getAttackElement() == Element.getElement("AIR")) {
-            defense = multiplier;
-        }
-        else {
-            defense = 0.0;
-        }
-        double multipliers[] = new double[6];
-        multipliers[PHYS_ATK] = 1.0;
-        multipliers[MAG_ATK] = 1.0;
-        multipliers[SPEC_ATK] = 1.0;
-        multipliers[PHYS_DEF] = defense;
-        multipliers[MAG_DEF] = defense;
-        multipliers[SPEC_DEF] = defense;
-
-        return multipliers;
+    public Multipliers getMultipliers(BattleCharacter enemy) {
+        double defense = enemy.getAttackElement() == Element.getElement("AIR") ? multiplier : 0.0;
+        Multipliers returnValue = new Multipliers();
+        returnValue.setPhysDef(defense);
+        returnValue.setMagDef(defense);
+        returnValue.setSpecDef(defense);
+        return returnValue;
     }
 
     @Override

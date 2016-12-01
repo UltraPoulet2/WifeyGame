@@ -1,8 +1,10 @@
 package ultrapoulet.wifeygame.battle.skills;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import ultrapoulet.wifeygame.battle.BattleCharacter;
+import ultrapoulet.wifeygame.battle.skills.AbsSkill.Multipliers;
 import ultrapoulet.wifeygame.character.SkillsEnum;
 
 /**
@@ -61,8 +63,7 @@ public class SkillList {
         }
     }
 
-    public void startBattle(BattleCharacter[] party){
-        //Do anything that needs to be done at the start of a battle
+    public void startBattle(List<BattleCharacter> party) {
         for(int i = 0; i < skills.size(); i++){
             skills.get(i).startBattle(party);
         }
@@ -95,7 +96,7 @@ public class SkillList {
         }
     }
 
-    public void updateParty(BattleCharacter[] party){
+    public void updateParty(List<BattleCharacter> party){
         for(int i = 0; i < skills.size(); i++){
             skills.get(i).updateParty(party);
         }
@@ -241,29 +242,20 @@ public class SkillList {
     }
 
 
-    public double[] getMultipliers(BattleCharacter enemy){
-        double multipliers[] = new double[6];
-        for(int i = 0; i < 3; i++){
-            multipliers[i] = 1.0;
-        }
-        for(int i = 3; i < 6; i++){
-            multipliers[i] = 0.0;
-        }
+    public Multipliers getMultipliers(BattleCharacter enemy){
+        Multipliers returnValue = new Multipliers();
         for(int i = 0; i < skills.size(); i++){
-            double skillMult[] = skills.get(i).getMultipliers(enemy);
-            for(int j = 0; j < 3; j++){
-                multipliers[j] *= skillMult[j];
-            }
-            for(int j = 3; j < 6; j++){
-                multipliers[j] += skillMult[j] * (1.0 - multipliers[j]);
-            }
+            Multipliers skillMult = skills.get(i).getMultipliers(enemy);
+            returnValue.setPhysAtk(returnValue.getPhysAtk() * skillMult.getPhysAtk());
+            returnValue.setMagAtk(returnValue.getMagAtk() * skillMult.getMagAtk());
+            returnValue.setSpecAtk(returnValue.getSpecAtk() * skillMult.getSpecAtk());
+            returnValue.setPhysDef(skillMult.getPhysDef() * (1.0 - returnValue.getPhysDef()));
+            returnValue.setMagDef(skillMult.getMagDef() * (1.0 - returnValue.getMagDef()));
+            returnValue.setSpecDef(skillMult.getSpecDef() * (1.0 - returnValue.getSpecDef()));
         }
-        for(int j = 3; j < 6; j++){
-            multipliers[j] = 1.0 - multipliers[j];
-            if(multipliers[j] <= 0.10){
-                multipliers[j] = 0.10;
-            }
-        }
-        return multipliers;
+        returnValue.setPhysDef(1.0 - returnValue.getPhysDef() > 0.10 ? 1.0 - returnValue.getPhysDef() : 0.10);
+        returnValue.setMagDef(1.0 - returnValue.getMagDef() > 0.10 ? 1.0 - returnValue.getMagDef() : 0.10);
+        returnValue.setSpecDef(1.0 - returnValue.getSpecDef() > 0.10 ? 1.0 - returnValue.getSpecDef() : 0.10);
+        return returnValue;
     }
 }

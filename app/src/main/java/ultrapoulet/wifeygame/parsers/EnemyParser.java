@@ -299,6 +299,7 @@ public class EnemyParser extends DefaultHandler{
                     enemyBuilder.setDefendPercentage(Double.parseDouble(temp));
                 }
                 else {
+                    transformBuilder.setDefendPercentage(Double.parseDouble(temp));
                 }
                 bDefend = false;
             } else if (bWeaken) {

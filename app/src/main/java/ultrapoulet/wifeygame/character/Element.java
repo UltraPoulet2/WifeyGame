@@ -37,11 +37,11 @@ public class Element {
 
     private static void createElementList(){
         elementList = new HashMap();
-        elementList.put("AIR", new Element("Air", Assets.ElementImages[Assets.AIR]));
-        elementList.put("DARK", new Element("Dark", Assets.ElementImages[Assets.DARK]));
-        elementList.put("FIRE", new Element("Fire", Assets.ElementImages[Assets.FIRE]));
-        elementList.put("EARTH", new Element("Earth", Assets.ElementImages[Assets.EARTH]));
-        elementList.put("LIGHT", new Element("Light", Assets.ElementImages[Assets.LIGHT]));
-        elementList.put("WATER", new Element("Water", Assets.ElementImages[Assets.WATER]));
+        elementList.put("AIR", new Element("Air", Assets.ElementImages.get(Assets.AIR)));
+        elementList.put("DARK", new Element("Dark", Assets.ElementImages.get(Assets.DARK)));
+        elementList.put("FIRE", new Element("Fire", Assets.ElementImages.get(Assets.FIRE)));
+        elementList.put("EARTH", new Element("Earth", Assets.ElementImages.get(Assets.EARTH)));
+        elementList.put("LIGHT", new Element("Light", Assets.ElementImages.get(Assets.LIGHT)));
+        elementList.put("WATER", new Element("Water", Assets.ElementImages.get(Assets.WATER)));
     }
 }

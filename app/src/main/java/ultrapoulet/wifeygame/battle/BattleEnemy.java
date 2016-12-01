@@ -2,6 +2,7 @@ package ultrapoulet.wifeygame.battle;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import ultrapoulet.androidgame.framework.Image;
@@ -37,8 +38,6 @@ public class BattleEnemy extends BattleCharacter{
 
     private int gold;
     private int experience;
-
-    private Image image;
 
     private int defendTurns = 0;
     private int weakenTurns = 0;
@@ -143,9 +142,7 @@ public class BattleEnemy extends BattleCharacter{
         return this.experience;
     }
 
-    public Image getImage() { return this.image; }
-
-    public void startBattle(BattleCharacter[] party){
+    public void startBattle(List<BattleCharacter> party) {
         this.currentHP = this.maxHP;
         ai.reset();
         this.skills.startBattle(party);
