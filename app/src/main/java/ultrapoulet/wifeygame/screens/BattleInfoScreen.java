@@ -202,7 +202,7 @@ public class BattleInfoScreen extends Screen{
 
         g.drawString(battleInfo.getName(), BATTLE_NAME_X, BATTLE_NAME_Y, battlePaint);
 
-        g.drawString(String.valueOf(battleInfo.getCharacterEnemies().length), NUMBER_WAVES_X, NUMBER_WAVES_Y, wavesPaint);
+        g.drawString(String.valueOf(battleInfo.getCharacterEnemies().size()), NUMBER_WAVES_X, NUMBER_WAVES_Y, wavesPaint);
 
         for(int i = 0; i < battleInfo.getRequirements().size(); i++){
             String desc = battleInfo.getRequirements().get(i).getDescription();

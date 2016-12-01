@@ -70,13 +70,6 @@ public class AbsSkill {
         }
     }
 
-    protected int PHYS_ATK = 0;
-    protected int MAG_ATK = 1;
-    protected int SPEC_ATK = 2;
-    protected int PHYS_DEF = 3;
-    protected int MAG_DEF = 4;
-    protected int SPEC_DEF = 5;
-
     public AbsSkill(BattleCharacter owner){ this.owner = owner; }
 
     public void setOwner(BattleCharacter owner){ this.owner = owner; }

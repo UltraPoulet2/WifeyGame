@@ -1,7 +1,6 @@
 package ultrapoulet.wifeygame;
 
 import java.util.List;
-import java.util.Map;
 
 import ultrapoulet.androidgame.framework.Image;
 
@@ -56,7 +55,7 @@ public class Assets {
     public static Image BattleEnable, BattleDisable;
 
     //Element Image stuff
-    public static Image[] ElementImages;
+    public static List<Image> ElementImages;
     public static final int AIR = 0;
     public static final int DARK = 1;
     public static final int EARTH = 2;

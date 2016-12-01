@@ -121,13 +121,13 @@ public class LoadingScreen extends Screen {
         Assets.BattleCharacterInfoScreen = g.newImage("screens/BattleCharacterInfoScreen.png", ImageFormat.RGB565);
         Assets.BattleInfoScreen = g.newImage("screens/BattleInfoScreen.png", ImageFormat.RGB565);
 
-        Assets.ElementImages = new Image[6];
-        Assets.ElementImages[0] = g.newImage("elements/AirElement.png", ImageFormat.ARGB8888);
-        Assets.ElementImages[1] = g.newImage("elements/DarkElement.png", ImageFormat.ARGB8888);
-        Assets.ElementImages[2] = g.newImage("elements/EarthElement.png", ImageFormat.ARGB8888);
-        Assets.ElementImages[3] = g.newImage("elements/FireElement.png", ImageFormat.ARGB8888);
-        Assets.ElementImages[4] = g.newImage("elements/LightElement.png", ImageFormat.ARGB8888);
-        Assets.ElementImages[5] = g.newImage("elements/WaterElement.png", ImageFormat.ARGB8888);
+        Assets.ElementImages = new ArrayList<>();
+        Assets.ElementImages.add(g.newImage("elements/AirElement.png", ImageFormat.ARGB8888));
+        Assets.ElementImages.add(g.newImage("elements/DarkElement.png", ImageFormat.ARGB8888));
+        Assets.ElementImages.add(g.newImage("elements/EarthElement.png", ImageFormat.ARGB8888));
+        Assets.ElementImages.add(g.newImage("elements/FireElement.png", ImageFormat.ARGB8888));
+        Assets.ElementImages.add(g.newImage("elements/LightElement.png", ImageFormat.ARGB8888));
+        Assets.ElementImages.add(g.newImage("elements/WaterElement.png", ImageFormat.ARGB8888));
 
         createRecruits();
         createParty();

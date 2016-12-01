@@ -22,22 +22,11 @@ public class Party {
         prefs = inPrefs;
     }
 
-    //Two version of setParty until cleanup
     public static void setParty(List<WifeyCharacter> input){
         for(int i = 0; i < input.size(); i++){
             party.set(i, input.get(i));
         }
         for(int i = input.size(); i < 7; i++){
-            party.set(i, null);
-        }
-        saveParty();
-    }
-
-    public static void setParty(WifeyCharacter[] input){
-        for(int i = 0; i < input.length; i++){
-            party.set(i, input[i]);
-        }
-        for(int i = input.length; i < 7; i++){
             party.set(i, null);
         }
         saveParty();

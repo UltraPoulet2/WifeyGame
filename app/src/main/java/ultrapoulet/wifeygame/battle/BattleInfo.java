@@ -46,10 +46,8 @@ public class BattleInfo {
     }
 
     //I'm not sure if this will be needed
-    public EnemyCharacter[] getCharacterEnemies(){
-        EnemyCharacter[] temp = new EnemyCharacter[enemyList.size()];
-        enemyList.toArray(temp);
-        return temp;
+    public List<EnemyCharacter> getCharacterEnemies(){
+        return enemyList;
     }
 
 

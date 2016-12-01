@@ -152,7 +152,7 @@ public class BattleParser extends DefaultHandler {
         if(battleBuilder.getName().length() == 0){
             return false;
         }
-        if(battleBuilder.getCharacterEnemies().length == 0){
+        if(battleBuilder.getCharacterEnemies().size() == 0){
             return false;
         }
         if(battleBuilder.getPartyMax() <= 0 || battleBuilder.getPartyMax() > 7){
