@@ -85,13 +85,21 @@ public class Party {
         return size;
     }
 
-    public static List<WifeyCharacter> getParty(){
-        return party;
+    public static List<WifeyCharacter> getParty(int size){
+        List<WifeyCharacter> temp = new ArrayList<>();
+        int end = size > partySize() ? partySize() : size;
+        for(int i = 0; i < end; i++){
+            temp.add(party.get(i));
+        }
+        for(int i = end; i < 7; i++){
+            temp.add(null);
+        }
+        return temp;
     }
 
-    public static List<BattleCharacter> getBattleParty(){
-        List<BattleCharacter> battleParty = new ArrayList<BattleCharacter>();
-        for(int i = 0; i < partySize(); i++){
+    public static List<BattleCharacter> getBattleParty(int size){
+        List<BattleCharacter> battleParty = new ArrayList<>();
+        for(int i = 0; i < partySize() && i < size; i++){
             battleParty.add(party.get(i).getBattleCharacter());
         }
         return battleParty;
@@ -108,5 +116,15 @@ public class Party {
             }
         }
         editor.commit();
+    }
+
+    //For debugging purposes
+    public static String getString(){
+        StringBuilder val = new StringBuilder();
+        val.append("Party of size: " + partySize() + "\n");
+        for(int i = 0; i < partySize(); i++){
+            val.append("Party member" + i + ":"  + party.get(i).getName() + "\n");
+        }
+        return val.toString();
     }
 }

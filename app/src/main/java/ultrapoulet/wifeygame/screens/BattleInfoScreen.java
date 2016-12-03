@@ -174,7 +174,7 @@ public class BattleInfoScreen extends Screen{
                             break;
                         case START_BUTTON_STRING:
                             BattleScreen bs = new BattleScreen(game);
-                            bs.setParty(Party.getBattleParty());
+                            bs.setParty(Party.getBattleParty(battleInfo.getPartyMax()));
                             bs.setBattleInfo(battleInfo);
                             game.setScreen(bs);
                             break;
@@ -238,14 +238,14 @@ public class BattleInfoScreen extends Screen{
 
     @Override
     public void resume() {
-        party = Party.getParty();
+        party = Party.getParty(battleInfo.getPartyMax());
         if(party.get(0) != null && battleInfo.validParty(party)){
             startButton.setActive(true);
         }
         else{
             startButton.setActive(false);
         }
-        for(int i = 0; i < battleInfo.getPartyMax(); i++){
+        for(int i = 0; i < battleInfo.getPartyMax() && i < Party.partySize(); i++){
             //Set the button to active if the party member exists
             partyList.setIndexActive(i, party.get(i) != null);
         }
