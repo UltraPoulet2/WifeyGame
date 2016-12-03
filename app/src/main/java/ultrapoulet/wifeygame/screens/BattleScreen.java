@@ -39,7 +39,7 @@ public class BattleScreen extends Screen {
     private double enemyMultiplier = 1.00;
     private final double roundMultiplier = 0.025;
 
-    private static Image background;
+    private Image background;
 
     private static Image specialBar, specialBarBase, specialBarTop;
 
@@ -255,11 +255,6 @@ public class BattleScreen extends Screen {
     public BattleScreen(Game game){
         super(game);
 
-        /*
-        buttonMenuNormal = Assets.buttonMenuNormal;
-        buttonMenuSpecial = Assets.buttonMenuSpecial;
-        buttonMenuTrans = Assets.buttonMenuBoth;
-        */
         charHolder = Assets.charHolder;
         enemyHolder = Assets.enemyHolder;
         specialBar = Assets.specialBar;
@@ -319,10 +314,7 @@ public class BattleScreen extends Screen {
     public void setBattleInfo(BattleInfo info){
         this.battleInfo = info;
         this.enemies = battleInfo.getBattleEnemies();
-    }
-
-    public void setBackground(Image background){
-        this.background = background;
+        this.background = battleInfo.getBackground(game.getGraphics());
     }
 
     private void updateButtons(){

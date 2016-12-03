@@ -3,6 +3,9 @@ package ultrapoulet.wifeygame.battle;
 import java.util.ArrayList;
 import java.util.List;
 
+import ultrapoulet.androidgame.framework.Graphics;
+import ultrapoulet.androidgame.framework.Graphics.ImageFormat;
+import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.wifeygame.battle.requirements.AbsRequirement;
 import ultrapoulet.wifeygame.battle.requirements.RequiredCharacterRequirement;
 import ultrapoulet.wifeygame.character.EnemyCharacter;
@@ -19,6 +22,8 @@ public class BattleInfo {
     private ArrayList<AbsRequirement> restrictionList = new ArrayList<>();
 
     private ArrayList<WifeyCharacter> requiredList = null;
+
+    private String background;
 
     public void setName(String name){
         battleName = name;
@@ -57,6 +62,19 @@ public class BattleInfo {
             returnValue.add(enemyList.get(i).getBattleEnemy());
         }
         return returnValue;
+    }
+
+
+    public void setBackground(String input){
+        this.background = input;
+    }
+
+    public String getBackgroundName(){
+        return background;
+    }
+
+    public Image getBackground(Graphics g){
+        return g.newImage("backgrounds/" + background + ".png", ImageFormat.RGB565);
     }
 
     public void addRequirement(AbsRequirement r) {

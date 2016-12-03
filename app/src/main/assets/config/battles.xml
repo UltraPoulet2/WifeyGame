@@ -2,6 +2,7 @@
 <battles>
     <battle key="TEST-BATL">
         <name>Test Battle</name>
+        <background>testbg</background>
         <enemies>
             <enemy>TEST-NME1</enemy>
             <enemy>TEST-NME2</enemy>
@@ -10,6 +11,7 @@
     </battle>
     <battle key="TEST-BTWO">
         <name>Small Party</name>
+        <background>lastation</background>
         <partySize>4</partySize>
         <enemies>
             <enemy>TEST-NME2</enemy>
@@ -34,6 +36,7 @@
     </battle>
     <battle key="TEST-PHYS">
         <name>Athletes Test</name>
+        <background>testbg</background>
         <enemies>
             <enemy>TEST-NME5</enemy>
             <enemy>TEST-NME4</enemy>
@@ -42,6 +45,7 @@
     </battle>
     <battle key="TEST-MAGI">
         <name>Magic Test</name>
+        <background>testbg</background>
         <enemies>
             <enemy>TEST-NME6</enemy>
             <enemy>TEST-NME6</enemy>

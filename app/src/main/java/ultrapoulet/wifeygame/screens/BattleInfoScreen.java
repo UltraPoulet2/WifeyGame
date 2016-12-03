@@ -176,7 +176,6 @@ public class BattleInfoScreen extends Screen{
                             BattleScreen bs = new BattleScreen(game);
                             bs.setParty(Party.getBattleParty());
                             bs.setBattleInfo(battleInfo);
-                            bs.setBackground(Assets.testBG);
                             game.setScreen(bs);
                             break;
                     }

@@ -19,7 +19,6 @@ public class Assets {
     public static Image DefendEnabled, DefendDisabled;
     public static Image attackBox;
     public static Image charHolder;
-    public static Image testBG;
     public static Image pHealthG, pHealthY, pHealthR;
     public static Image eHealthG, eHealthY, eHealthR;
     public static Image enemyHolder;
