@@ -92,6 +92,8 @@ public abstract class BattleCharacter {
 
     public abstract void endRound();
 
+    public void endWave() { skills.endWave(); }
+
     public double getElementDamage(BattleCharacter enemy){
         if(enemy.getStrongElement() == attackElement){
             return strongMultiplier;

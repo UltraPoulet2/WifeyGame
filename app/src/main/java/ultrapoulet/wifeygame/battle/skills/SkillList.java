@@ -90,6 +90,14 @@ public class SkillList {
         }
     }
 
+    public void endWave() {
+        //Do anything that needs to be done at the end of a wave
+        //This is currently only relevant for BattleWifeys
+        for(int i = 0; i < skills.size(); i++){
+            skills.get(i).endWave();
+        }
+    }
+
     public void resetSkills(){
         for(int i = 0; i < skills.size(); i++){
             skills.get(i).resetValues();

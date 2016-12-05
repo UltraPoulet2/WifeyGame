@@ -25,16 +25,11 @@ public class WitchSkill extends AbsSkill {
 
     @Override
     public void startRound() {
-        magicCurrentTurn = false;
-    }
-
-    @Override
-    public void endRound() {
         if(magicCurrentTurn){
             numUses++;
         }
+        magicCurrentTurn = false;
     }
-
 
     @Override
     public Multipliers getMultipliers(BattleCharacter enemy) {

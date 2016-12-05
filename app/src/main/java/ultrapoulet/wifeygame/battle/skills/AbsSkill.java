@@ -102,6 +102,10 @@ public class AbsSkill {
         //Do anything that needs to be done at the end of a round
     }
 
+    public void endWave() {
+        //Do anything that needs to be done at the end of a wave
+    }
+
     public void resetValues(){
         //This function is used to reset multipliers before updateParty is called
     }

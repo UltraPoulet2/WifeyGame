@@ -25,7 +25,7 @@ public class MaidSkill extends AbsSkill {
     @Override
     public double healPercentage(BattleCharacter partyMember) {
         healCurrentTurn = true;
-        return 1.25;
+        return 1.0;
     }
 
     @Override

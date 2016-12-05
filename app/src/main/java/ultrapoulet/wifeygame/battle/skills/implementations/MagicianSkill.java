@@ -25,19 +25,21 @@ public class MagicianSkill extends AbsSkill {
     @Override
     public void startWave() {
         multiplier = defaultMultiplier;
+        magicUsed = false;
+    }
+
+    @Override
+    public void startRound() {
+        if(magicUsed && multiplier > minimumMultiplier){
+            multiplier -= decrease;
+        }
+        magicUsed = false;
     }
 
     @Override
     public double magicalAttackPercentage(BattleCharacter enemy) {
         magicUsed = true;
         return multiplier;
-    }
-
-    @Override
-    public void endRound() {
-        if(magicUsed && multiplier > minimumMultiplier){
-            multiplier -= decrease;
-        }
     }
 
     @Override

@@ -889,6 +889,9 @@ public class BattleScreen extends Screen {
                             phaseEntered = true;
                         } else {
                             party.get(partyIndex).onEnemyDefeat(enemies.get(enemyIndex));
+                            for(int i = 0; i < party.size(); i++){
+                                party.get(i).endWave();
+                            }
                             currentPhase = BattlePhase.WAVE_START;
                             phaseEntered = true;
                         }
