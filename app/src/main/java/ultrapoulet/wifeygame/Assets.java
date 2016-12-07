@@ -24,6 +24,8 @@ public class Assets {
     public static Image enemyHolder;
     public static Image specialBar, specialBarBase, specialBarTop;
     public static Image hitsText, hitText, damageText;
+    public static Image AttackUp, AttackDown;
+    public static Image DefenseUp, DefenseDown;
 
     public static List<Image> KOImages;
     public static List<Image> HPNumbers;

@@ -311,9 +311,18 @@ public class BattleEnemy extends BattleCharacter{
         defendActive = true;
         defendTurns = 0;
     }
+
+    public boolean isDefendActive() {
+        return defendActive;
+    }
+
     public void weaken(){
         weakenActive = true;
         weakenTurns = 0;
+    }
+
+    public boolean isWeakenActive() {
+        return weakenActive;
     }
 
     public void powerUp(){
@@ -321,9 +330,17 @@ public class BattleEnemy extends BattleCharacter{
         powerUpTurns = 0;
     }
 
+    public boolean isPowerUpActive() {
+        return powerUpActive;
+    }
+
     public void powerDown(){
         powerDownActive = true;
         powerDownTurns = 0;
+    }
+
+    public boolean isPowerDownActive() {
+        return powerDownActive;
     }
 
     public void startTurn(){

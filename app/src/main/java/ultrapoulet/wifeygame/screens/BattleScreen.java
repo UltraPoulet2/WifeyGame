@@ -60,6 +60,8 @@ public class BattleScreen extends Screen {
     private static final int CHAR_HOLDER_X_DISTANCE = 100;
     private static final int CHAR_HOLDER_SMALL_Y = 745;
     private static final int CHAR_HOLDER_LARGE_Y = 610;
+    private static final int CHAR_HOLDER_KO_SMALL_Y = 760;
+    private static final int CHAR_HOLDER_KO_LARGE_Y = 740;
 
     private static final int CHAR_CUR_HP_SMALL_X = 47;
     private static final int CHAR_HP_SLASH_SMALL_X = 45;
@@ -152,6 +154,10 @@ public class BattleScreen extends Screen {
     private static final int DAMAGE_HOLDER_OFFSET = 0;
     private static final int DAMAGE_TEXT_X = 720;
     private static final int DAMAGE_TEXT_Y = 480;
+
+    private static final int ENEMY_STATUS_X = ENEMY_IMAGE_X - 50;
+    private static final int ENEMY_STATUS_Y_1 = 450;
+    private static final int ENEMY_STATUS_Y_2 = 400;
 
     private int hitsPerformed = 0;
     private int enemyDamage;
@@ -1009,7 +1015,7 @@ public class BattleScreen extends Screen {
 
             //If the party member is defeated, overlay the KO Image
             if(party.get(i).getCurrentHP() == 0){
-                g.drawPercentageImage(Assets.KOImages.get(i), CHAR_HOLDER_X_DISTANCE * i, CHAR_HOLDER_SMALL_Y, HALF_SCALE, HALF_SCALE);
+                g.drawPercentageImage(Assets.KOImages.get(i), CHAR_HOLDER_X_DISTANCE * i, CHAR_HOLDER_KO_SMALL_Y, HALF_SCALE, HALF_SCALE);
             }
 
         }
@@ -1037,7 +1043,7 @@ public class BattleScreen extends Screen {
 
 
             if (party.get(i).getCurrentHP() == 0) {
-                g.drawImage(Assets.KOImages.get(i), CHAR_HOLDER_X_DISTANCE * i, CHAR_HOLDER_LARGE_Y);
+                g.drawImage(Assets.KOImages.get(i), CHAR_HOLDER_X_DISTANCE * i, CHAR_HOLDER_KO_LARGE_Y);
             }
             i++;
         }
@@ -1063,7 +1069,7 @@ public class BattleScreen extends Screen {
             int maxX = CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_MAX_HP_SMALL_X;
             NumberPrinter.drawNumber(g, party.get(i).getMaxHP(), maxX, CHAR_HP_SMALL_Y, CHAR_HP_SMALL_WIDTH, CHAR_HP_SMALL_HEIGHT, CHAR_HP_SMALL_OFFSET, Assets.HPNumbers, NumberPrinter.Align.LEFT);
             if(party.get(i).getCurrentHP() == 0){
-                g.drawPercentageImage(Assets.KOImages.get(i), CHAR_HOLDER_X_DISTANCE * (i + 1), CHAR_HOLDER_SMALL_Y, HALF_SCALE, HALF_SCALE);
+                g.drawPercentageImage(Assets.KOImages.get(i), CHAR_HOLDER_X_DISTANCE * (i + 1), CHAR_HOLDER_KO_SMALL_Y, HALF_SCALE, HALF_SCALE);
             }
 
         }
@@ -1086,6 +1092,23 @@ public class BattleScreen extends Screen {
         NumberPrinter.drawNumber(g, enemies.get(enemyIndex).getCurrentHP(), ENEMY_CUR_HP_X, ENEMY_HP_Y, ENEMY_HP_WIDTH, ENEMY_HP_HEIGHT, ENEMY_HP_OFFSET, Assets.HPNumbers, NumberPrinter.Align.RIGHT);
         g.drawImage(Assets.HPSlash, ENEMY_HP_SLASH_X, ENEMY_HP_Y);
         NumberPrinter.drawNumber(g, enemies.get(enemyIndex).getMaxHP(), ENEMY_MAX_HP_X, ENEMY_HP_Y, ENEMY_HP_WIDTH, ENEMY_HP_HEIGHT, ENEMY_HP_OFFSET, Assets.HPNumbers, NumberPrinter.Align.LEFT);
+
+        //Display Enemy Status changes
+        BattleEnemy enemy = (BattleEnemy) enemies.get(enemyIndex);
+        boolean defense = enemy.isDefendActive() || enemy.isWeakenActive();
+        if(enemy.isDefendActive()) {
+            g.drawImage(Assets.DefenseUp, ENEMY_STATUS_X, ENEMY_STATUS_Y_1);
+        }
+        else if(enemy.isWeakenActive()) {
+            g.drawImage(Assets.DefenseDown, ENEMY_STATUS_X, ENEMY_STATUS_Y_1);
+        }
+        int atkY = defense ? ENEMY_STATUS_Y_2 : ENEMY_STATUS_Y_1;
+        if(enemy.isPowerUpActive()) {
+            g.drawImage(Assets.AttackUp, ENEMY_STATUS_X, atkY);
+        }
+        else if(enemy.isPowerDownActive()) {
+            g.drawImage(Assets.AttackDown, ENEMY_STATUS_X, atkY);
+        }
     }
 
     private void drawSpecial(){

@@ -68,6 +68,11 @@ public class LoadingScreen extends Screen {
         Assets.hitText = g.newImage("objects/text/Hit.png", ImageFormat.ARGB8888);
         Assets.damageText = g.newImage("objects/text/Damage.png", ImageFormat.ARGB8888);
 
+        Assets.AttackUp = g.newImage("objects/battleMisc/StatusAttackUp.png", ImageFormat.ARGB8888);
+        Assets.AttackDown = g.newImage("objects/battleMisc/StatusAttackDown.png", ImageFormat.ARGB8888);
+        Assets.DefenseUp = g.newImage("objects/battleMisc/StatusDefenseUp.png", ImageFormat.ARGB8888);
+        Assets.DefenseDown = g.newImage("objects/battleMisc/StatusDefenseDown.png", ImageFormat.ARGB8888);
+
         Assets.KOImages = new ArrayList<>();
         for(int i = 0; i < 7; i++){
             Assets.KOImages.add(g.newImage("objects/battleMisc/KOImage" + i + ".png", ImageFormat.ARGB8888));
