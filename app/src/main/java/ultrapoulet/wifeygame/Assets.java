@@ -28,13 +28,13 @@ public class Assets {
     public static Image DefenseUp, DefenseDown;
 
     public static List<Image> KOImages;
-    public static List<Image> HPNumbers;
     public static Image HPSlash;
-    public static List<Image> HPHealNumbers;
-    public static List<Image> ComboHitsNumbers;
-    public static List<Image> DamageHitsNumbers;
-    public static List<Image> WeakNumbers;
-    public static List<Image> ResistNumbers;
+    public static List<Image> WhiteNumbers;
+    public static List<Image> GreenNumbers;
+    public static List<Image> YellowNumbers;
+    public static List<Image> RedNumbers;
+    //public static List<Image> WeakNumbers;
+    public static List<Image> GreyNumbers;
 
     //PartySelectScreen Stuff
     public static Image PartySelectScreen;

@@ -108,9 +108,9 @@ public class BattleCharacterInfoScreen extends AbsCharacterInfoScreen {
         int healthSize = (int) (HEALTH_BAR_SCALE_X * perHealth);
         g.drawPercentageImage(healthBar, HEALTH_BAR_X, HEALTH_BAR_Y, healthSize, HEALTH_BAR_SCALE_Y);
 
-        NumberPrinter.drawNumber(g, displayChar.getCurrentHP(), CUR_HEALTH_X, HEALTH_Y, HEALTH_NUMBER_WIDTH, HEALTH_NUMBER_HEIGHT, HEALTH_OFFSET_X, Assets.HPNumbers, NumberPrinter.Align.RIGHT);
+        NumberPrinter.drawNumber(g, displayChar.getCurrentHP(), CUR_HEALTH_X, HEALTH_Y, HEALTH_NUMBER_WIDTH, HEALTH_NUMBER_HEIGHT, HEALTH_OFFSET_X, Assets.WhiteNumbers, NumberPrinter.Align.RIGHT);
         g.drawImage(Assets.HPSlash, HEALTH_SLASH_X, HEALTH_Y);
-        NumberPrinter.drawNumber(g, displayChar.getMaxHP(), MAX_HEALTH_X, HEALTH_Y, HEALTH_NUMBER_WIDTH, HEALTH_NUMBER_HEIGHT, HEALTH_OFFSET_X, Assets.HPNumbers, NumberPrinter.Align.LEFT);
+        NumberPrinter.drawNumber(g, displayChar.getMaxHP(), MAX_HEALTH_X, HEALTH_Y, HEALTH_NUMBER_WIDTH, HEALTH_NUMBER_HEIGHT, HEALTH_OFFSET_X, Assets.WhiteNumbers, NumberPrinter.Align.LEFT);
 
         g.drawString(format(multipliers.getPhysAtk()) + "x", PHYS_X, ATK_Y, multPaint);
         g.drawString(format(multipliers.getMagAtk()) + "x", MAG_X, ATK_Y, multPaint);

@@ -13,7 +13,6 @@ import javax.xml.parsers.SAXParserFactory;
 import ultrapoulet.androidgame.framework.Game;
 import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Graphics.ImageFormat;
-import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.androidgame.framework.Screen;
 import ultrapoulet.wifeygame.Assets;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
@@ -78,32 +77,32 @@ public class LoadingScreen extends Screen {
             Assets.KOImages.add(g.newImage("objects/battleMisc/KOImage" + i + ".png", ImageFormat.ARGB8888));
         }
 
-        Assets.HPNumbers = new ArrayList<>();
+        Assets.WhiteNumbers = new ArrayList<>();
         for(int i = 0; i < 10; i++){
-            Assets.HPNumbers.add(g.newImage("numbers/HP" + i + ".png", ImageFormat.ARGB8888));
+            Assets.WhiteNumbers.add(g.newImage("numbers/white/" + i + ".png", ImageFormat.ARGB8888));
         }
         Assets.HPSlash = g.newImage("numbers/HPSlash.png", ImageFormat.ARGB8888);
 
-        Assets.HPHealNumbers = new ArrayList<>();
+        Assets.GreenNumbers = new ArrayList<>();
         for(int i = 0; i < 10; i++){
-            Assets.HPHealNumbers.add(g.newImage("numbers/HP" + i + "G.png", ImageFormat.ARGB8888));
+            Assets.GreenNumbers.add(g.newImage("numbers/green/" + i + ".png", ImageFormat.ARGB8888));
         }
 
-        Assets.ComboHitsNumbers = new ArrayList<>();
+        Assets.YellowNumbers = new ArrayList<>();
         for(int i = 0; i < 10; i++){
-            Assets.ComboHitsNumbers.add(g.newImage("numbers/Combo" + i + ".png", ImageFormat.ARGB8888));
+            Assets.YellowNumbers.add(g.newImage("numbers/yellow/" + i + ".png", ImageFormat.ARGB8888));
         }
 
-        Assets.DamageHitsNumbers = new ArrayList<>();
+        Assets.RedNumbers = new ArrayList<>();
         for(int i = 0; i < 10; i++){
-            Assets.DamageHitsNumbers.add(g.newImage("numbers/Damage" + i + ".png", ImageFormat.ARGB8888));
+            Assets.RedNumbers.add(g.newImage("numbers/red/" + i + ".png", ImageFormat.ARGB8888));
         }
 
-        Assets.WeakNumbers = Assets.DamageHitsNumbers;
+        //Assets.WeakNumbers = Assets.RedNumbers;
 
-        Assets.ResistNumbers = new ArrayList<>();
+        Assets.GreyNumbers = new ArrayList<>();
         for(int i = 0; i < 10; i++){
-            Assets.ResistNumbers.add(g.newImage("numbers/Resist" + i + ".png", ImageFormat.ARGB8888));
+            Assets.GreyNumbers.add(g.newImage("numbers/grey/" + i + ".png", ImageFormat.ARGB8888));
         }
 
         Assets.PartySelectScreen = g.newImage("screens/PartySelectScreen.png", ImageFormat.RGB565);

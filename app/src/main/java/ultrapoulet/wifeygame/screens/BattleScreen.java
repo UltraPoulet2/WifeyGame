@@ -116,6 +116,9 @@ public class BattleScreen extends Screen {
     private static final int SPECIAL_BAR_TOP_Y = 555;
     private static final int SPECIAL_BAR_NUMBER_X = 390;
     private static final int SPECIAL_BAR_NUMBER_Y = 560;
+    private static final int SPECIAL_NUMBER_WIDTH = 20;
+    private static final int SPECIAL_NUMBER_HEIGHT = 40;
+    private static final int SPECIAL_NUMBER_OFFSET = 0;
 
     private static final int HALF_SCALE = 50;
     private static final int FULL_SCALE = 100;
@@ -1007,11 +1010,11 @@ public class BattleScreen extends Screen {
 
             //Draw the CurrentHP / MaxHP
             int curX = CHAR_HOLDER_X_DISTANCE * i + CHAR_CUR_HP_SMALL_X;
-            NumberPrinter.drawNumber(g, party.get(i).getCurrentHP(), curX, CHAR_HP_SMALL_Y, CHAR_HP_SMALL_WIDTH, CHAR_HP_SMALL_HEIGHT, CHAR_HP_SMALL_OFFSET, Assets.HPNumbers, NumberPrinter.Align.RIGHT);
+            NumberPrinter.drawNumber(g, party.get(i).getCurrentHP(), curX, CHAR_HP_SMALL_Y, CHAR_HP_SMALL_WIDTH, CHAR_HP_SMALL_HEIGHT, CHAR_HP_SMALL_OFFSET, Assets.WhiteNumbers, NumberPrinter.Align.RIGHT);
             int slashX = CHAR_HOLDER_X_DISTANCE * i + CHAR_HP_SLASH_SMALL_X;
             g.drawPercentageImage(Assets.HPSlash, slashX, CHAR_HP_SMALL_Y, HALF_SCALE, HALF_SCALE);
             int maxX = CHAR_HOLDER_X_DISTANCE * i + CHAR_MAX_HP_SMALL_X;
-            NumberPrinter.drawNumber(g, party.get(i).getMaxHP(), maxX, CHAR_HP_SMALL_Y, CHAR_HP_SMALL_WIDTH, CHAR_HP_SMALL_HEIGHT, CHAR_HP_SMALL_OFFSET, Assets.HPNumbers, NumberPrinter.Align.LEFT);
+            NumberPrinter.drawNumber(g, party.get(i).getMaxHP(), maxX, CHAR_HP_SMALL_Y, CHAR_HP_SMALL_WIDTH, CHAR_HP_SMALL_HEIGHT, CHAR_HP_SMALL_OFFSET, Assets.WhiteNumbers, NumberPrinter.Align.LEFT);
 
             //If the party member is defeated, overlay the KO Image
             if(party.get(i).getCurrentHP() == 0){
@@ -1035,11 +1038,11 @@ public class BattleScreen extends Screen {
 
             //Display CURRENTHP/MAXHP
             int curX = CHAR_HOLDER_X_DISTANCE * i + CHAR_CUR_HP_LARGE_X;
-            NumberPrinter.drawNumber(g, party.get(i).getCurrentHP(), curX, CHAR_HP_LARGE_Y, CHAR_HP_LARGE_WIDTH, CHAR_HP_LARGE_HEIGHT, CHAR_HP_LARGE_OFFSET, Assets.HPNumbers, NumberPrinter.Align.RIGHT);
+            NumberPrinter.drawNumber(g, party.get(i).getCurrentHP(), curX, CHAR_HP_LARGE_Y, CHAR_HP_LARGE_WIDTH, CHAR_HP_LARGE_HEIGHT, CHAR_HP_LARGE_OFFSET, Assets.WhiteNumbers, NumberPrinter.Align.RIGHT);
             int slashX = CHAR_HOLDER_X_DISTANCE * i + CHAR_HP_SLASH_LARGE_X;
             g.drawImage(Assets.HPSlash, slashX, CHAR_HP_LARGE_Y);
             int maxX = CHAR_HOLDER_X_DISTANCE * i + CHAR_MAX_HP_LARGE_X;
-            NumberPrinter.drawNumber(g, party.get(i).getMaxHP(), maxX, CHAR_HP_LARGE_Y, CHAR_HP_LARGE_WIDTH, CHAR_HP_LARGE_HEIGHT, CHAR_HP_LARGE_OFFSET, Assets.HPNumbers, NumberPrinter.Align.LEFT);
+            NumberPrinter.drawNumber(g, party.get(i).getMaxHP(), maxX, CHAR_HP_LARGE_Y, CHAR_HP_LARGE_WIDTH, CHAR_HP_LARGE_HEIGHT, CHAR_HP_LARGE_OFFSET, Assets.WhiteNumbers, NumberPrinter.Align.LEFT);
 
 
             if (party.get(i).getCurrentHP() == 0) {
@@ -1063,11 +1066,11 @@ public class BattleScreen extends Screen {
 
             //Display CURRENTHP/MAXHP
             int curX = CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_CUR_HP_SMALL_X;
-            NumberPrinter.drawNumber(g, party.get(i).getCurrentHP(), curX, CHAR_HP_SMALL_Y, CHAR_HP_SMALL_WIDTH, CHAR_HP_SMALL_HEIGHT, CHAR_HP_SMALL_OFFSET, Assets.HPNumbers, NumberPrinter.Align.RIGHT);
+            NumberPrinter.drawNumber(g, party.get(i).getCurrentHP(), curX, CHAR_HP_SMALL_Y, CHAR_HP_SMALL_WIDTH, CHAR_HP_SMALL_HEIGHT, CHAR_HP_SMALL_OFFSET, Assets.WhiteNumbers, NumberPrinter.Align.RIGHT);
             int slashX = CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_HP_SLASH_SMALL_X;
             g.drawPercentageImage(Assets.HPSlash, slashX, CHAR_HP_SMALL_Y, HALF_SCALE, HALF_SCALE);
             int maxX = CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_MAX_HP_SMALL_X;
-            NumberPrinter.drawNumber(g, party.get(i).getMaxHP(), maxX, CHAR_HP_SMALL_Y, CHAR_HP_SMALL_WIDTH, CHAR_HP_SMALL_HEIGHT, CHAR_HP_SMALL_OFFSET, Assets.HPNumbers, NumberPrinter.Align.LEFT);
+            NumberPrinter.drawNumber(g, party.get(i).getMaxHP(), maxX, CHAR_HP_SMALL_Y, CHAR_HP_SMALL_WIDTH, CHAR_HP_SMALL_HEIGHT, CHAR_HP_SMALL_OFFSET, Assets.WhiteNumbers, NumberPrinter.Align.LEFT);
             if(party.get(i).getCurrentHP() == 0){
                 g.drawPercentageImage(Assets.KOImages.get(i), CHAR_HOLDER_X_DISTANCE * (i + 1), CHAR_HOLDER_KO_SMALL_Y, HALF_SCALE, HALF_SCALE);
             }
@@ -1089,9 +1092,9 @@ public class BattleScreen extends Screen {
         g.drawPercentageImage(enemies.get(enemyIndex).getWeakElement().getElementImage(), ENEMY_ELEM_WEAK_X, ENEMY_ELEM_Y, ENEMY_ELEM_SCALE, ENEMY_ELEM_SCALE);
 
         //Display enemy CurrentHP/MaxHP
-        NumberPrinter.drawNumber(g, enemies.get(enemyIndex).getCurrentHP(), ENEMY_CUR_HP_X, ENEMY_HP_Y, ENEMY_HP_WIDTH, ENEMY_HP_HEIGHT, ENEMY_HP_OFFSET, Assets.HPNumbers, NumberPrinter.Align.RIGHT);
+        NumberPrinter.drawNumber(g, enemies.get(enemyIndex).getCurrentHP(), ENEMY_CUR_HP_X, ENEMY_HP_Y, ENEMY_HP_WIDTH, ENEMY_HP_HEIGHT, ENEMY_HP_OFFSET, Assets.WhiteNumbers, NumberPrinter.Align.RIGHT);
         g.drawImage(Assets.HPSlash, ENEMY_HP_SLASH_X, ENEMY_HP_Y);
-        NumberPrinter.drawNumber(g, enemies.get(enemyIndex).getMaxHP(), ENEMY_MAX_HP_X, ENEMY_HP_Y, ENEMY_HP_WIDTH, ENEMY_HP_HEIGHT, ENEMY_HP_OFFSET, Assets.HPNumbers, NumberPrinter.Align.LEFT);
+        NumberPrinter.drawNumber(g, enemies.get(enemyIndex).getMaxHP(), ENEMY_MAX_HP_X, ENEMY_HP_Y, ENEMY_HP_WIDTH, ENEMY_HP_HEIGHT, ENEMY_HP_OFFSET, Assets.WhiteNumbers, NumberPrinter.Align.LEFT);
 
         //Display Enemy Status changes
         BattleEnemy enemy = (BattleEnemy) enemies.get(enemyIndex);
@@ -1117,14 +1120,13 @@ public class BattleScreen extends Screen {
         g.drawPercentageImage(specialBar, SPECIAL_BAR_X, SPECIAL_BAR_Y, (int) ((numHits * 100.0) / MAX_HITS) , FULL_SCALE);
         g.drawImage(specialBarTop, SPECIAL_BAR_X, SPECIAL_BAR_TOP_Y);
         int specialCount = numHits / SPECIAL_HITS;
-        g.drawImage(Assets.HPNumbers.get(specialCount), SPECIAL_BAR_NUMBER_X, SPECIAL_BAR_NUMBER_Y);
-
+        NumberPrinter.drawNumber(g, specialCount, SPECIAL_BAR_NUMBER_X, SPECIAL_BAR_NUMBER_Y, SPECIAL_NUMBER_WIDTH, SPECIAL_NUMBER_HEIGHT, SPECIAL_NUMBER_OFFSET, Assets.WhiteNumbers, NumberPrinter.Align.LEFT);
     }
 
     private void drawCombo(){
         Graphics g = game.getGraphics();
         if(comboHolder > 0){
-            NumberPrinter.drawNumber(g, comboHolder, COMBO_NUMBER_X, COMBO_NUMBER_Y, COMBO_NUMBER_WIDTH, COMBO_NUMBER_HEIGHT, COMBO_NUMBER_OFFSET, Assets.ComboHitsNumbers, NumberPrinter.Align.RIGHT);
+            NumberPrinter.drawNumber(g, comboHolder, COMBO_NUMBER_X, COMBO_NUMBER_Y, COMBO_NUMBER_WIDTH, COMBO_NUMBER_HEIGHT, COMBO_NUMBER_OFFSET, Assets.YellowNumbers, NumberPrinter.Align.RIGHT);
             if(comboHolder > 1) {
                 g.drawImage(Assets.hitsText, COMBO_TEXT_X, COMBO_TEXT_Y);
             }
@@ -1134,7 +1136,7 @@ public class BattleScreen extends Screen {
         }
         //Damage Counter
         if(damageHolder > 0){
-            NumberPrinter.drawNumber(g, damageHolder, DAMAGE_HOLDER_NUMBER_X, DAMAGE_HOLDER_NUMBER_Y, DAMAGE_HOLDER_WIDTH, DAMAGE_HOLDER_HEIGHT, DAMAGE_HOLDER_OFFSET, Assets.DamageHitsNumbers, NumberPrinter.Align.RIGHT);
+            NumberPrinter.drawNumber(g, damageHolder, DAMAGE_HOLDER_NUMBER_X, DAMAGE_HOLDER_NUMBER_Y, DAMAGE_HOLDER_WIDTH, DAMAGE_HOLDER_HEIGHT, DAMAGE_HOLDER_OFFSET, Assets.RedNumbers, NumberPrinter.Align.RIGHT);
             g.drawImage(Assets.damageText, DAMAGE_TEXT_X, DAMAGE_TEXT_Y);
         }
     }
@@ -1148,13 +1150,13 @@ public class BattleScreen extends Screen {
             int y = ENEMY_DAMAGE_START_Y - (int) (ENEMY_DAMAGE_INCREASE_Y * phaseTime / ATTACK_PHASE_WAIT);
             List<Image> numbers;
             if(party.get(partyIndex).isWeaknessAttack(enemies.get(enemyIndex))){
-                numbers = Assets.WeakNumbers;
+                numbers = Assets.RedNumbers;
             }
             else if(party.get(partyIndex).isStrongAttack(enemies.get(enemyIndex))){
-                numbers = Assets.ResistNumbers;
+                numbers = Assets.GreyNumbers;
             }
             else{
-                numbers = Assets.HPNumbers;
+                numbers = Assets.WhiteNumbers;
             }
             NumberPrinter.drawNumber(g, enemyDamage, ENEMY_DAMAGE_BASE_X, y, DAMAGE_WIDTH, DAMAGE_HEIGHT, DAMAGE_OFFSET, numbers, NumberPrinter.Align.CENTER);
         }
@@ -1172,7 +1174,7 @@ public class BattleScreen extends Screen {
                 else{
                     x = CHAR_DAMAGE_BASE_X + CHAR_HOLDER_X_DISTANCE * (i + 1);
                 }
-                NumberPrinter.drawNumber(g, partyDamage[i], x, y, DAMAGE_WIDTH, DAMAGE_HEIGHT, DAMAGE_OFFSET, Assets.HPHealNumbers, NumberPrinter.Align.CENTER);
+                NumberPrinter.drawNumber(g, partyDamage[i], x, y, DAMAGE_WIDTH, DAMAGE_HEIGHT, DAMAGE_OFFSET, Assets.GreenNumbers, NumberPrinter.Align.CENTER);
             }
         }
     }
@@ -1184,7 +1186,7 @@ public class BattleScreen extends Screen {
         g.drawString(((BattleEnemy) enemies.get(enemyIndex)).getActionString(), 400, 70, textPaint);
         if(enemyDamage != 0){
             int y = ENEMY_DAMAGE_START_Y - (int) (ENEMY_DAMAGE_INCREASE_Y * phaseTime / HEAL_PHASE_WAIT);
-            NumberPrinter.drawNumber(g, enemyDamage, ENEMY_DAMAGE_BASE_X, y, DAMAGE_WIDTH, DAMAGE_HEIGHT, DAMAGE_OFFSET, Assets.HPHealNumbers, NumberPrinter.Align.CENTER);
+            NumberPrinter.drawNumber(g, enemyDamage, ENEMY_DAMAGE_BASE_X, y, DAMAGE_WIDTH, DAMAGE_HEIGHT, DAMAGE_OFFSET, Assets.GreenNumbers, NumberPrinter.Align.CENTER);
         }
 
         for(i = 0; i < party.size(); i++ ){
@@ -1202,13 +1204,13 @@ public class BattleScreen extends Screen {
                 }
                 List<Image> numbers;
                 if(enemies.get(enemyIndex).isWeaknessAttack(party.get(i))){
-                    numbers = Assets.WeakNumbers;
+                    numbers = Assets.RedNumbers;
                 }
                 else if(enemies.get(enemyIndex).isStrongAttack(party.get(i))){
-                    numbers = Assets.ResistNumbers;
+                    numbers = Assets.GreyNumbers;
                 }
                 else{
-                    numbers = Assets.HPNumbers;
+                    numbers = Assets.WhiteNumbers;
                 }
                 NumberPrinter.drawNumber(g, partyDamage[i], x, y, DAMAGE_WIDTH, DAMAGE_HEIGHT, DAMAGE_OFFSET, numbers, NumberPrinter.Align.CENTER);
             }

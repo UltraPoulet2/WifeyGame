@@ -461,8 +461,8 @@ public class PartySelectScreen extends Screen {
 
         int displayPage = currentPage + 1;
         int displayMaxPage = maxPage + 1;
-        NumberPrinter.drawNumber(g, displayPage, CUR_PAGE_X, PAGE_Y, PAGE_WIDTH, PAGE_HEIGHT, 0, Assets.HPNumbers, NumberPrinter.Align.RIGHT);
-        NumberPrinter.drawNumber(g, displayMaxPage, MAX_PAGE_X, PAGE_Y, PAGE_WIDTH, PAGE_HEIGHT, 0, Assets.HPNumbers, NumberPrinter.Align.LEFT);
+        NumberPrinter.drawNumber(g, displayPage, CUR_PAGE_X, PAGE_Y, PAGE_WIDTH, PAGE_HEIGHT, 0, Assets.WhiteNumbers, NumberPrinter.Align.RIGHT);
+        NumberPrinter.drawNumber(g, displayMaxPage, MAX_PAGE_X, PAGE_Y, PAGE_WIDTH, PAGE_HEIGHT, 0, Assets.WhiteNumbers, NumberPrinter.Align.LEFT);
         /*
         if(displayPage > 10){
             g.drawImage(numbers[displayPage / 10], CUR_PAGE_X_1, PAGE_Y);
