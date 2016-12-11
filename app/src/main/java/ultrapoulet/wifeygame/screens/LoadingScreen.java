@@ -98,8 +98,6 @@ public class LoadingScreen extends Screen {
             Assets.RedNumbers.add(g.newImage("numbers/red/" + i + ".png", ImageFormat.ARGB8888));
         }
 
-        //Assets.WeakNumbers = Assets.RedNumbers;
-
         Assets.GreyNumbers = new ArrayList<>();
         for(int i = 0; i < 10; i++){
             Assets.GreyNumbers.add(g.newImage("numbers/grey/" + i + ".png", ImageFormat.ARGB8888));
@@ -117,6 +115,11 @@ public class LoadingScreen extends Screen {
         Assets.BattleDisable = g.newImage("buttons/BattleDisabled.png", ImageFormat.ARGB8888);
         Assets.ScrollBarFull = g.newImage("buttons/ScrollBarFull.png", ImageFormat.ARGB8888);
         Assets.ScrollBarShort = g.newImage("buttons/ScrollBarShort.png", ImageFormat.ARGB8888);
+        Assets.TransformNextEnable = g.newImage("buttons/TransformNextPageEnabled.png", ImageFormat.ARGB8888);
+        Assets.TransformNextDisable = g.newImage("buttons/TransformNextPageDisabled.png", ImageFormat.ARGB8888);
+        Assets.TransformPrevEnable = g.newImage("buttons/TransformPrevPageEnabled.png", ImageFormat.ARGB8888);
+        Assets.TransformPrevDisable = g.newImage("buttons/TransformPrevPageDisabled.png", ImageFormat.ARGB8888);
+
         Assets.InvalidChar = g.newImage("objects/holders/InvalidChar.png", ImageFormat.ARGB8888);
         Assets.RequiredCharHolder = g.newImage("objects/holders/RequiredCharHolder.png", ImageFormat.ARGB8888);
 

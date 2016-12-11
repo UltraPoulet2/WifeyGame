@@ -168,7 +168,12 @@ public abstract class AbsCharacterInfoScreen extends Screen {
                     displayText = (displayText == skillPressed) ? -1 : skillPressed + SKILLS_TEXT_PER_PAGE * skillsPage;
                 }
             }
+            uniqueUpdate(t);
         }
+    }
+
+    protected void uniqueUpdate(Input.TouchEvent t){
+        //Do nothing. This will be overriden in each class
     }
 
     @Override

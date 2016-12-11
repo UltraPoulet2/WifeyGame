@@ -4,10 +4,17 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
 
+import java.util.List;
+
 import ultrapoulet.androidgame.framework.Game;
 import ultrapoulet.androidgame.framework.Graphics;
+import ultrapoulet.androidgame.framework.Image;
+import ultrapoulet.androidgame.framework.Input;
+import ultrapoulet.androidgame.framework.helpers.Button;
+import ultrapoulet.androidgame.framework.helpers.ButtonList;
 import ultrapoulet.wifeygame.Assets;
 import ultrapoulet.wifeygame.character.SkillsEnum;
+import ultrapoulet.wifeygame.character.TransformWifey;
 import ultrapoulet.wifeygame.character.Weapon;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
 
@@ -17,6 +24,20 @@ import ultrapoulet.wifeygame.character.WifeyCharacter;
 public class CharacterInfoScreen extends AbsCharacterInfoScreen {
 
     private WifeyCharacter displayChar;
+    private List<TransformWifey> transformations;
+
+    private ButtonList TransformButtons;
+    private Button prevTransform;
+    private Button nextTransform;
+    private int transformPage;
+    private int maxTransformPage;
+    private static final int TRANSFORM_PAGE_WIDTH = 50;
+    private static final int TRANSFORM_PREV_PAGE_LEFT_X = 30 + BG_X;
+    private static final int TRANSFORM_PREV_PAGE_RIGHT_X = TRANSFORM_PREV_PAGE_LEFT_X + TRANSFORM_PAGE_WIDTH;
+    private static final int TRANSFORM_NEXT_PAGE_LEFT_X = TRANSFORM_PREV_PAGE_LEFT_X + 270;
+    private static final int TRANSFORM_NEXT_PAGE_RIGHT_X = TRANSFORM_NEXT_PAGE_LEFT_X + TRANSFORM_PAGE_WIDTH;
+    private static final int TRANSFORM_PAGE_TOP_Y = 100 + BG_Y;
+    private static final int TRANSFORM_PAGE_BOT_Y = TRANSFORM_PAGE_TOP_Y + 320;
 
     private Paint levelPaint;
     private static final int LEVEL_SIZE = 34;
@@ -47,6 +68,7 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
     public CharacterInfoScreen(Game game) {
         super(game);
         background = Assets.CharacterInfoScreen;
+        createUniqueButtons();
     }
 
     protected void createUniquePaints(){
@@ -70,8 +92,17 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
         hitsPaint.setTextSize(HITS_SIZE);
     }
 
+    public void createUniqueButtons(){
+        TransformButtons = new ButtonList();
+        prevTransform = new Button(TRANSFORM_PREV_PAGE_LEFT_X, TRANSFORM_PREV_PAGE_RIGHT_X, TRANSFORM_PAGE_TOP_Y, TRANSFORM_PAGE_BOT_Y, false, "TRANS_PREV");
+        nextTransform = new Button(TRANSFORM_NEXT_PAGE_LEFT_X, TRANSFORM_NEXT_PAGE_RIGHT_X, TRANSFORM_PAGE_TOP_Y, TRANSFORM_PAGE_BOT_Y, false, "TRANS_NEXT");
+        TransformButtons.addButton(prevTransform);
+        TransformButtons.addButton(nextTransform);
+    }
+
     public void setChar(WifeyCharacter input){
         displayChar = input;
+        transformations = displayChar.getTransformations();
         nameFontSize = MAX_NAME_FONT;
         namePaint.setTextSize(nameFontSize);
         while(namePaint.measureText(displayChar.getName()) > MAX_NAME_SIZE){
@@ -94,10 +125,27 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
 
         maxPage = (displayChar.getSkills().size() / SKILLS_TEXT_PER_PAGE);
         skillsPage = 0;
+        transformPage = 0;
+        maxTransformPage = transformations.size();
+        prevTransform.setActive(false);
+        nextTransform.setActive(maxTransformPage != transformPage);
     }
 
     protected void drawPortrait(Graphics g){
-        g.drawPercentageImage(displayChar.getImage(),CHAR_X, CHAR_Y, DOUBLE_SCALE, DOUBLE_SCALE);
+        if(transformPage == 0) {
+            g.drawPercentageImage(displayChar.getImage(), CHAR_X, CHAR_Y, DOUBLE_SCALE, DOUBLE_SCALE);
+        }
+        else{
+            g.drawPercentageImage(transformations.get(transformPage-1).getImage(), CHAR_X, CHAR_Y, DOUBLE_SCALE, DOUBLE_SCALE);
+        }
+
+        //Stuff for transformation
+        if(maxTransformPage != 0){
+            Image temp = prevTransform.isActive() ? Assets.TransformPrevEnable : Assets.TransformPrevDisable;
+            g.drawImage(temp, TRANSFORM_PREV_PAGE_LEFT_X, TRANSFORM_PAGE_TOP_Y);
+            temp = nextTransform.isActive() ? Assets.TransformNextEnable : Assets.TransformNextDisable;
+            g.drawImage(temp, TRANSFORM_NEXT_PAGE_LEFT_X, TRANSFORM_PAGE_TOP_Y);
+        }
     }
 
     protected void drawElements(Graphics g){
@@ -153,6 +201,23 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
         if(displayText != -1 && displayChar.getSkills().size() > displayText){
             String desc = displayChar.getSkills().get(displayText).getSkillDesc();
             g.drawMultiLineString(desc, SKILLS_DESC_X, SKILLS_DESC_Y, SKILLS_DESC_WIDTH, descPaint);
+        }
+    }
+
+    @Override
+    protected void uniqueUpdate(Input.TouchEvent t) {
+        if (t.type == Input.TouchEvent.TOUCH_UP) {
+            Button transformPressed = TransformButtons.getButtonPressed(t.x, t.y);
+            if(transformPressed == prevTransform){
+                transformPage--;
+                nextTransform.setActive(true);
+                prevTransform.setActive(transformPage != 0);
+            }
+            else if(transformPressed == nextTransform) {
+                transformPage++;
+                prevTransform.setActive(true);
+                nextTransform.setActive(transformPage != maxTransformPage);
+            }
         }
     }
 

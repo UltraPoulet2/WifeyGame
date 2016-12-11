@@ -33,7 +33,6 @@ public class Assets {
     public static List<Image> GreenNumbers;
     public static List<Image> YellowNumbers;
     public static List<Image> RedNumbers;
-    //public static List<Image> WeakNumbers;
     public static List<Image> GreyNumbers;
 
     //PartySelectScreen Stuff
@@ -50,6 +49,8 @@ public class Assets {
     public static Image BattleCharacterInfoScreen;
     public static Image ScrollBarFull;
     public static Image ScrollBarShort;
+    public static Image TransformNextEnable, TransformNextDisable;
+    public static Image TransformPrevEnable, TransformPrevDisable;
 
     //BattleInfoScreen Stuff
     public static Image BattleInfoScreen;
