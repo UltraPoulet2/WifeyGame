@@ -1,6 +1,7 @@
 package ultrapoulet.wifeygame.character;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.wifeygame.battle.enemyai.EnemyAI;
@@ -207,12 +208,14 @@ public class TransformEnemy {
         if (!this.addSkills.contains(skill)) {
             this.addSkills.add(skill);
         }
+        Collections.sort(this.addSkills, SkillsEnum.SKILLS_ENUM_COMPARATOR);
     }
 
     public void removeSkill(SkillsEnum skill){
         if (!this.removeSkills.contains(skill)) {
             this.removeSkills.add(skill);
         }
+        Collections.sort(this.removeSkills, SkillsEnum.SKILLS_ENUM_COMPARATOR);
     }
 
     public boolean validate(){

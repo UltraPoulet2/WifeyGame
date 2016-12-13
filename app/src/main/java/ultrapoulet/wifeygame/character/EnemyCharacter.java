@@ -1,6 +1,7 @@
 package ultrapoulet.wifeygame.character;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.wifeygame.battle.BattleEnemy;
@@ -151,7 +152,12 @@ public class EnemyCharacter {
         this.healAmount = healAmount;
     }
 
-    public void addSkill(SkillsEnum skill){ this.skills.add(skill); }
+    public void addSkill(SkillsEnum skill){
+        if (!this.skills.contains(skill)) {
+            this.skills.add(skill);
+        }
+        Collections.sort(this.skills, SkillsEnum.SKILLS_ENUM_COMPARATOR);
+    }
 
     public void setPowerUpPercentage(double powerUpPercentage){
         this.powerUpPercentage = powerUpPercentage;

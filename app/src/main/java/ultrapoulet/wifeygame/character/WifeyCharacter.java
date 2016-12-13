@@ -1,6 +1,7 @@
 package ultrapoulet.wifeygame.character;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.wifeygame.battle.BattleWifey;
@@ -109,6 +110,7 @@ public class WifeyCharacter {
         if (!this.skills.contains(skill)) {
             this.skills.add(skill);
         }
+        Collections.sort(this.skills, SkillsEnum.SKILLS_ENUM_COMPARATOR);
     }
 
     public void addTransformation(TransformWifey t){
