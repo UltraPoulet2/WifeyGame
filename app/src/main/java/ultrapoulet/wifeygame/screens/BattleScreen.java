@@ -29,7 +29,7 @@ public class BattleScreen extends Screen {
     public BattleInfo battleInfo;
     public List<BattleCharacter> enemies;
 
-    public int partyIndex = 0;
+    public int partyIndex = -1;
     public int enemyIndex = 0;
 
     private int numHits = 0;
@@ -51,8 +51,6 @@ public class BattleScreen extends Screen {
     private static Image charHolder;
 
     private static Image enemyHolder;
-
-    private static final int BUTTON_MENU_Y = 880;
 
     private static final int ENEMY_IMAGE_X = 200;
     private static final int ENEMY_IMAGE_Y = 100;
@@ -165,6 +163,7 @@ public class BattleScreen extends Screen {
     private int hitsPerformed = 0;
     private int enemyDamage;
     private int partyDamage[] = new int[7];
+    private static final int HEAL_DAMAGE = -1;
 
     private BattleCharacterInfoScreen charInfo;
 
@@ -369,11 +368,8 @@ public class BattleScreen extends Screen {
         numHits = (numHits < MAX_HITS) ? numHits + 1 : numHits;
     }
 
-    private void firstPartyIndex(){
-        partyIndex = 0;
-        while(party.get(partyIndex).getCurrentHP() == 0){
-            partyIndex++;
-        }
+    private void resetPartyIndex(){
+        partyIndex = -1;
     }
 
     private void nextPartyIndex(){
@@ -424,6 +420,13 @@ public class BattleScreen extends Screen {
         return aliveNumbers[select];
     }
 
+    private void resetDamage() {
+        enemyDamage = 0;
+        for(int i = 0; i < partyDamage.length; i++){
+            partyDamage[i] = 0;
+        }
+    }
+
     @Override
     public void update(float deltaTime) {
 
@@ -452,13 +455,14 @@ public class BattleScreen extends Screen {
             case WAVE_START:
                 //Do anything necessary for Start of Wave
                 if (phaseEntered) {
-                    firstPartyIndex();
+                    resetPartyIndex();
                     for(int i = 0; i < party.size(); i++){
                         if(party.get(i).getCurrentHP() != 0){
                             party.get(i).startWave();
                         }
                     }
                     enemies.get(enemyIndex).startWave();
+                    resetDamage();
                     phaseTime = 0;
                     phaseEntered = false;
                 } else {
@@ -472,13 +476,14 @@ public class BattleScreen extends Screen {
             case ROUND_START:
                 //Do things for Start of Round
                 if (phaseEntered) {
-                    firstPartyIndex();
+                    resetPartyIndex();
                     for(int i = 0; i < party.size(); i++){
                         if(party.get(i).getCurrentHP() != 0) {
                             party.get(i).startRound();
                         }
                     }
                     enemies.get(enemyIndex).startRound();
+                    resetDamage();
                     comboHolder = 0;
                     damageHolder = 0;
                     phaseTime = 0;
@@ -494,14 +499,12 @@ public class BattleScreen extends Screen {
             case WAIT_PLAYER_ACTION:
                 //If player has made a selection, get it ready for animating
                 if(phaseEntered){
+                    nextPartyIndex();
                     phaseEntered = false;
                     //Clear the touch input buffer
                     game.getInput().getTouchEvents();
                     party.get(partyIndex).startTurn();
-                    for(int i = 0; i < party.size(); i++){
-                        partyDamage[i] = 0;
-                    }
-                    enemyDamage = 0;
+                    resetDamage();
                     updateButtons();
                 }
                 else {
@@ -589,7 +592,7 @@ public class BattleScreen extends Screen {
                                 if (party.get(j).getCurrentHP() > 0) {
                                     baseDamage = party.get(partyIndex).HealAmount(party.get(j));
                                     displayDamage = party.get(j).healDamage(baseDamage, party.get(partyIndex));
-                                    partyDamage[j] = displayDamage;
+                                    partyDamage[j] = HEAL_DAMAGE * displayDamage;
                                 }
                                 else{
                                     partyDamage[j] = 0;
@@ -652,7 +655,6 @@ public class BattleScreen extends Screen {
                             phaseEntered = true;
                         } else {
                             currentPhase = BattlePhase.WAIT_PLAYER_ACTION;
-                            nextPartyIndex();
                             phaseEntered = true;
                         }
                     }
@@ -666,10 +668,7 @@ public class BattleScreen extends Screen {
                     noPartyIndex();
                     comboHolder = 0;
                     damageHolder = 0;
-                    for(int i = 0; i < party.size(); i++){
-                        partyDamage[i] = 0;
-                    }
-                    enemyDamage = 0;
+                    resetDamage();
                     updateButtons();
                     enemies.get(enemyIndex).startTurn();
                     ((BattleEnemy) enemies.get(enemyIndex)).determineAction();
@@ -760,7 +759,7 @@ public class BattleScreen extends Screen {
                             break;
                         case HEALING_MAGIC:
                             baseDamage = (int) (enemies.get(enemyIndex).HealAmount(enemies.get(enemyIndex)) * enemyMultiplier);
-                            enemyDamage = enemies.get(enemyIndex).healDamage(baseDamage, enemies.get(enemyIndex));
+                            enemyDamage = HEAL_DAMAGE * enemies.get(enemyIndex).healDamage(baseDamage, enemies.get(enemyIndex));
                             hitsPerformed++;
                             break;
                         case SPECIAL_ATTACK:
@@ -871,6 +870,7 @@ public class BattleScreen extends Screen {
                         }
                     }
                     enemies.get(enemyIndex).endRound();
+                    resetDamage();
                     enemyMultiplier += roundMultiplier;
                 } else {
                     phaseTime += deltaTime;
@@ -887,6 +887,7 @@ public class BattleScreen extends Screen {
                 //If no more enemies, go to BATTLE_END
                 if (phaseEntered) {
                     phaseTime = 0;
+                    resetDamage();
                     phaseEntered = false;
                 } else {
                     phaseTime += deltaTime;
@@ -956,11 +957,13 @@ public class BattleScreen extends Screen {
         drawEnemy();
         drawSpecial();
         drawCombo();
+        drawPlayerDamage();
+        drawEnemyDamage();
         if(currentPhase == BattlePhase.ANIMATE_PLAYER_ACTION){
-            drawPlayerDamage();
+            drawPlayerCommand();
         }
         if(currentPhase == BattlePhase.ANIMATE_ENEMY_ACTION){
-            drawEnemyDamage();
+            drawEnemyCommand();
         }
     }
 
@@ -989,11 +992,14 @@ public class BattleScreen extends Screen {
     private void drawParty(){
         Graphics g = game.getGraphics();
 
+        //Workaround to prevent the one frame issue
+        int index = partyIndex == -1 ? 0 : partyIndex;
+
         int i = 0;
         Image healthBar;
         Double perHealth;
         //Draw party members before the current member
-        for( ; i < partyIndex && i < party.size(); i++){
+        for( ; i < index && i < party.size(); i++){
             //Draw the character holder and character image
             g.drawPercentageImage(charHolder, CHAR_HOLDER_X_DISTANCE * i, CHAR_HOLDER_SMALL_Y, HALF_SCALE, HALF_SCALE);
             g.drawPercentageImage(party.get(i).getImage(), CHAR_HOLDER_X_DISTANCE * i + CHAR_INTERIOR_SMALL_X, CHAR_IMAGE_SMALL_Y, HALF_SCALE, HALF_SCALE);
@@ -1023,7 +1029,7 @@ public class BattleScreen extends Screen {
 
         }
         //Draw the current acting character
-        if(i == partyIndex && i < party.size()) {
+        if(i == index && i < party.size()) {
             g.drawImage(charHolder, CHAR_HOLDER_X_DISTANCE * i, CHAR_HOLDER_LARGE_Y);
             g.drawImage(party.get(i).getImage(), CHAR_HOLDER_X_DISTANCE * i + CHAR_INTERIOR_LARGE_X, CHAR_IMAGE_LARGE_Y);
 
@@ -1052,6 +1058,9 @@ public class BattleScreen extends Screen {
         }
         //Draw the characters after the current member
         for ( ; i < party.size(); i++) {
+            if(phaseEntered){
+                System.out.println(i);
+            }
             g.drawPercentageImage(charHolder, CHAR_HOLDER_X_DISTANCE * (i + 1), CHAR_HOLDER_SMALL_Y, HALF_SCALE, HALF_SCALE);
             g.drawPercentageImage(party.get(i).getImage(), CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_INTERIOR_SMALL_X, CHAR_IMAGE_SMALL_Y, HALF_SCALE, HALF_SCALE);
 
@@ -1074,7 +1083,6 @@ public class BattleScreen extends Screen {
             if(party.get(i).getCurrentHP() == 0){
                 g.drawPercentageImage(Assets.KOImages.get(i), CHAR_HOLDER_X_DISTANCE * (i + 1), CHAR_HOLDER_KO_SMALL_Y, HALF_SCALE, HALF_SCALE);
             }
-
         }
     }
 
@@ -1141,68 +1149,38 @@ public class BattleScreen extends Screen {
         }
     }
 
-    private void drawPlayerDamage(){
+    private void drawPlayerCommand() {
         Graphics g = game.getGraphics();
-        int i;
         g.drawImage(Assets.attackBox, 0, 0);
         g.drawString(commandSelected.getName(), 400, 70, textPaint);
-        if(enemyDamage != 0){
-            int y = ENEMY_DAMAGE_START_Y - (int) (ENEMY_DAMAGE_INCREASE_Y * phaseTime / ATTACK_PHASE_WAIT);
-            List<Image> numbers;
-            if(party.get(partyIndex).isWeaknessAttack(enemies.get(enemyIndex))){
-                numbers = Assets.RedNumbers;
-            }
-            else if(party.get(partyIndex).isStrongAttack(enemies.get(enemyIndex))){
-                numbers = Assets.GreyNumbers;
-            }
-            else{
-                numbers = Assets.WhiteNumbers;
-            }
-            NumberPrinter.drawNumber(g, enemyDamage, ENEMY_DAMAGE_BASE_X, y, DAMAGE_WIDTH, DAMAGE_HEIGHT, DAMAGE_OFFSET, numbers, NumberPrinter.Align.CENTER);
-        }
-
-        for(i = 0; i < party.size(); i++){
-            if(partyDamage[i] != 0){
-                int y = CHAR_DAMAGE_START_Y - (int) (CHAR_DAMAGE_INCREASE_Y * phaseTime / ATTACK_PHASE_WAIT);
-                int x;
-                if(i < partyIndex) {
-                    x = CHAR_DAMAGE_BASE_X + CHAR_HOLDER_X_DISTANCE * i;
-                }
-                else if(i == partyIndex){
-                    x = (CHAR_DAMAGE_BASE_X * 2) + CHAR_HOLDER_X_DISTANCE * i;
-                }
-                else{
-                    x = CHAR_DAMAGE_BASE_X + CHAR_HOLDER_X_DISTANCE * (i + 1);
-                }
-                NumberPrinter.drawNumber(g, partyDamage[i], x, y, DAMAGE_WIDTH, DAMAGE_HEIGHT, DAMAGE_OFFSET, Assets.GreenNumbers, NumberPrinter.Align.CENTER);
-            }
-        }
     }
 
-    private void drawEnemyDamage(){
+    private void drawEnemyCommand() {
         Graphics g = game.getGraphics();
-        int i;
-        g.drawImage(Assets.attackBox,0,0);
+        g.drawImage(Assets.attackBox, 0, 0);
         g.drawString(((BattleEnemy) enemies.get(enemyIndex)).getActionString(), 400, 70, textPaint);
-        if(enemyDamage != 0){
-            int y = ENEMY_DAMAGE_START_Y - (int) (ENEMY_DAMAGE_INCREASE_Y * phaseTime / HEAL_PHASE_WAIT);
-            NumberPrinter.drawNumber(g, enemyDamage, ENEMY_DAMAGE_BASE_X, y, DAMAGE_WIDTH, DAMAGE_HEIGHT, DAMAGE_OFFSET, Assets.GreenNumbers, NumberPrinter.Align.CENTER);
-        }
+    }
 
-        for(i = 0; i < party.size(); i++ ){
-            if(partyDamage[i] != 0){
-                int y = CHAR_DAMAGE_START_Y - (int) (CHAR_DAMAGE_INCREASE_Y * phaseTime / ATTACK_PHASE_WAIT);
-                int x;
-                if(i < partyIndex) {
-                    x = CHAR_DAMAGE_BASE_X + CHAR_HOLDER_X_DISTANCE * i;
-                }
-                else if(i == partyIndex){
-                    x = (CHAR_DAMAGE_BASE_X * 2) + CHAR_HOLDER_X_DISTANCE * i;
-                }
-                else{
-                    x = CHAR_DAMAGE_BASE_X + CHAR_HOLDER_X_DISTANCE * (i + 1);
-                }
-                List<Image> numbers;
+    private void drawPlayerDamage() {
+        Graphics g = game.getGraphics();
+        for(int i = 0; i < party.size(); i++) {
+            if(partyDamage[i] == 0) {
+                continue;
+            }
+            int x;
+            int y;
+            if(i < partyIndex) {
+                x = CHAR_DAMAGE_BASE_X + CHAR_HOLDER_X_DISTANCE * i;
+            }
+            else if(i == partyIndex){
+                x = (CHAR_DAMAGE_BASE_X * 2) + CHAR_HOLDER_X_DISTANCE * i;
+            }
+            else{
+                x = CHAR_DAMAGE_BASE_X + CHAR_HOLDER_X_DISTANCE * (i + 1);
+            }
+            List<Image> numbers;
+            if(partyDamage[i] > 0) {
+                y = CHAR_DAMAGE_START_Y - (int) (CHAR_DAMAGE_INCREASE_Y * phaseTime / ATTACK_PHASE_WAIT);
                 if(enemies.get(enemyIndex).isWeaknessAttack(party.get(i))){
                     numbers = Assets.RedNumbers;
                 }
@@ -1212,9 +1190,41 @@ public class BattleScreen extends Screen {
                 else{
                     numbers = Assets.WhiteNumbers;
                 }
-                NumberPrinter.drawNumber(g, partyDamage[i], x, y, DAMAGE_WIDTH, DAMAGE_HEIGHT, DAMAGE_OFFSET, numbers, NumberPrinter.Align.CENTER);
+            }
+            else /*partyDamage[i] < 0 */ {
+                y = CHAR_DAMAGE_START_Y - (int) (CHAR_DAMAGE_INCREASE_Y * phaseTime / HEAL_PHASE_WAIT);
+                numbers = Assets.GreenNumbers;
+            }
+
+            NumberPrinter.drawNumber(g, Math.abs(partyDamage[i]), x, y, DAMAGE_WIDTH, DAMAGE_HEIGHT, DAMAGE_OFFSET, numbers, NumberPrinter.Align.CENTER);
+        }
+    }
+
+    private void drawEnemyDamage() {
+        Graphics g = game.getGraphics();
+        if(enemyDamage == 0) {
+            return;
+        }
+        int y;
+        List<Image> numbers;
+        if(enemyDamage > 0) {
+            y = ENEMY_DAMAGE_START_Y - (int) (ENEMY_DAMAGE_INCREASE_Y * phaseTime / ATTACK_PHASE_WAIT);
+            if(party.get(partyIndex).isWeaknessAttack(enemies.get(enemyIndex))){
+                numbers = Assets.RedNumbers;
+            }
+            else if(party.get(partyIndex).isStrongAttack(enemies.get(enemyIndex))){
+                numbers = Assets.GreyNumbers;
+            }
+            else{
+                numbers = Assets.WhiteNumbers;
             }
         }
+        else /*enemyDamage < 0 */ {
+            y = ENEMY_DAMAGE_START_Y - (int) (ENEMY_DAMAGE_INCREASE_Y * phaseTime / HEAL_PHASE_WAIT);
+            numbers = Assets.GreenNumbers;
+        }
+
+        NumberPrinter.drawNumber(g, Math.abs(enemyDamage), ENEMY_DAMAGE_BASE_X, y, DAMAGE_WIDTH, DAMAGE_HEIGHT, DAMAGE_OFFSET, numbers, NumberPrinter.Align.CENTER);
     }
 
     @Override
