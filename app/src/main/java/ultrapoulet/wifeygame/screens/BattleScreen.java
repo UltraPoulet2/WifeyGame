@@ -479,18 +479,27 @@ public class BattleScreen extends Screen {
                     resetPartyIndex();
                     for(int i = 0; i < party.size(); i++){
                         if(party.get(i).getCurrentHP() != 0) {
-                            party.get(i).startRound();
+                            partyDamage[i] = party.get(i).startRound();
                         }
                     }
-                    enemies.get(enemyIndex).startRound();
-                    resetDamage();
+                    enemyDamage = enemies.get(enemyIndex).startRound();
+                    //resetDamage();
                     comboHolder = 0;
                     damageHolder = 0;
                     phaseTime = 0;
                     phaseEntered = false;
                 } else {
                     phaseTime += deltaTime;
-                    if (phaseTime >= OTHER_PHASE_WAIT) {
+                    int waitTime = OTHER_PHASE_WAIT;
+                    for(int i = 0; i < party.size(); i++){
+                        if(partyDamage[i] != 0) {
+                            waitTime = HEAL_PHASE_WAIT;
+                        }
+                    }
+                    if(enemyDamage != 0) {
+                        waitTime = HEAL_PHASE_WAIT;
+                    }
+                    if (phaseTime >= waitTime) {
                         currentPhase = BattlePhase.WAIT_PLAYER_ACTION;
                         phaseEntered = true;
                     }

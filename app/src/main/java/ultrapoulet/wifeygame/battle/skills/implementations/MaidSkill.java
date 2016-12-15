@@ -17,9 +17,10 @@ public class MaidSkill extends AbsSkill {
     private boolean healCurrentTurn = false;
 
     @Override
-    public void startRound() {
+    public int startRound() {
         healLastTurn = healCurrentTurn;
         healCurrentTurn = false;
+        return 0;
     }
 
     @Override

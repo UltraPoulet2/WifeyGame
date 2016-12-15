@@ -88,7 +88,7 @@ public abstract class BattleCharacter {
 
     public void startWave() { skills.startWave(); }
 
-    public void startRound(){ skills.startRound(); }
+    public int startRound(){ return skills.startRound(); }
 
     public abstract void endRound();
 

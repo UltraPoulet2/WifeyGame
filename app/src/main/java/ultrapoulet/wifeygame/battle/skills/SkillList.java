@@ -76,11 +76,13 @@ public class SkillList {
         }
     }
 
-    public void startRound(){
+    public int startRound(){
         //Do anything that needs to be done at the start of a round
+        int displayDamage = 0;
         for(int i = 0; i < skills.size(); i++){
-            skills.get(i).startRound();
+            displayDamage += skills.get(i).startRound();
         }
+        return displayDamage;
     }
 
     public void endRound() {

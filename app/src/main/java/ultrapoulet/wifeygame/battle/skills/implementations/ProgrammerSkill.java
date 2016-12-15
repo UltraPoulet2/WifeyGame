@@ -24,8 +24,9 @@ public class ProgrammerSkill extends AbsSkill {
     }
 
     @Override
-    public void startRound(){
+    public int startRound(){
         attackedRobot = false;
+        return 0;
     }
 
     @Override

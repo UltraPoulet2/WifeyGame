@@ -24,11 +24,12 @@ public class WitchSkill extends AbsSkill {
     }
 
     @Override
-    public void startRound() {
+    public int startRound() {
         if(magicCurrentTurn){
             numUses++;
         }
         magicCurrentTurn = false;
+        return 0;
     }
 
     @Override

@@ -29,11 +29,12 @@ public class MagicianSkill extends AbsSkill {
     }
 
     @Override
-    public void startRound() {
+    public int startRound() {
         if(magicUsed && multiplier > minimumMultiplier){
             multiplier -= decrease;
         }
         magicUsed = false;
+        return 0;
     }
 
     @Override

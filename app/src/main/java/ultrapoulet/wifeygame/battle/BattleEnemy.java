@@ -302,6 +302,7 @@ public class BattleEnemy extends BattleCharacter{
         System.out.println("Enemy's multiplying heal received by: " + skills.receiveHealPercentage(healer));
         this.currentHP = this.currentHP + displayHeal;
         if(this.currentHP > this.maxHP){
+            displayHeal = displayHeal - (this.currentHP - this.maxHP);
             this.currentHP = this.maxHP;
         }
         return displayHeal;

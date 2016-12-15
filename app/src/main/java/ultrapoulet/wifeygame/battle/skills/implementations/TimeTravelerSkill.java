@@ -17,8 +17,9 @@ public class TimeTravelerSkill extends AbsSkill {
     private int roundHealth;
 
     @Override
-    public void startRound() {
+    public int startRound() {
         roundHealth = owner.getCurrentHP();
+        return 0;
     }
 
     @Override

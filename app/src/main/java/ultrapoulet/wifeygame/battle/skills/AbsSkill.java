@@ -94,8 +94,9 @@ public class AbsSkill {
         //Do anything that needs to be done at the start of a wave
     }
 
-    public void startRound(){
+    public int startRound(){
         //Do anything that needs to be done at the start of a round
+        return 0;
     }
 
     public void endRound() {
