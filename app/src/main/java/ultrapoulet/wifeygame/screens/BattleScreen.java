@@ -133,8 +133,10 @@ public class BattleScreen extends Screen {
     private static final int ENEMY_DAMAGE_INCREASE_Y = 80;
 
     private static final int CHAR_DAMAGE_BASE_X = 50;
-    private static final int CHAR_DAMAGE_START_Y = 820;
-    private static final int CHAR_DAMAGE_INCREASE_Y = 80;
+    private static final int CHAR_DAMAGE_SMALL_START_Y = 820;
+    private static final int CHAR_DAMAGE_LARGE_START_Y = 790;
+    private static final int CHAR_DAMAGE_SMALL_INCREASE_Y = 80;
+    private static final int CHAR_DAMAGE_LARGE_INCREASE_Y = 160;
 
     private static final int DAMAGE_WIDTH = 20;
     private static final int DAMAGE_HEIGHT = 40;
@@ -383,6 +385,15 @@ public class BattleScreen extends Screen {
 
     private void noPartyIndex(){
         partyIndex = party.size();
+    }
+
+    //Returns the first living party member index
+    private int getFirstIndex() {
+        int returnVal = 0;
+        while(party.get(returnVal).getCurrentHP() == 0) {
+            returnVal++;
+        }
+        return returnVal;
     }
 
     //Returns true if the next character partyIndex would roll over, indicating end of round.
@@ -1064,7 +1075,7 @@ public class BattleScreen extends Screen {
         Graphics g = game.getGraphics();
 
         //Workaround to prevent the one frame issue
-        int index = partyIndex == -1 ? 0 : partyIndex;
+        int index = partyIndex == -1 ? getFirstIndex() : partyIndex;
 
         int i = 0;
         Image healthBar;
@@ -1234,16 +1245,20 @@ public class BattleScreen extends Screen {
 
     private void drawPlayerDamage() {
         Graphics g = game.getGraphics();
+
+        //Workaround to prevent the one frame issue
+        int index = partyIndex == -1 ? getFirstIndex() : partyIndex;
+
         for(int i = 0; i < party.size(); i++) {
             if(partyDamage[i] == 0) {
                 continue;
             }
             int x;
             int y;
-            if(i < partyIndex) {
+            if(i < index) {
                 x = CHAR_DAMAGE_BASE_X + CHAR_HOLDER_X_DISTANCE * i;
             }
-            else if(i == partyIndex){
+            else if(i == index){
                 x = (CHAR_DAMAGE_BASE_X * 2) + CHAR_HOLDER_X_DISTANCE * i;
             }
             else{
@@ -1251,7 +1266,12 @@ public class BattleScreen extends Screen {
             }
             List<Image> numbers;
             if(partyDamage[i] > 0) {
-                y = CHAR_DAMAGE_START_Y - (int) (CHAR_DAMAGE_INCREASE_Y * phaseTime / ATTACK_PHASE_WAIT);
+                if(i == index){
+                    y = CHAR_DAMAGE_LARGE_START_Y - (int) (CHAR_DAMAGE_LARGE_INCREASE_Y * phaseTime / ATTACK_PHASE_WAIT);
+                }
+                else {
+                    y = CHAR_DAMAGE_SMALL_START_Y - (int) (CHAR_DAMAGE_SMALL_INCREASE_Y * phaseTime / ATTACK_PHASE_WAIT);
+                }
                 if(enemies.get(enemyIndex).isWeaknessAttack(party.get(i))){
                     numbers = Assets.RedNumbers;
                 }
@@ -1263,7 +1283,12 @@ public class BattleScreen extends Screen {
                 }
             }
             else /*partyDamage[i] < 0 */ {
-                y = CHAR_DAMAGE_START_Y - (int) (CHAR_DAMAGE_INCREASE_Y * phaseTime / HEAL_PHASE_WAIT);
+                if(i == index){
+                    y = CHAR_DAMAGE_LARGE_START_Y - (int) (CHAR_DAMAGE_LARGE_INCREASE_Y * phaseTime / HEAL_PHASE_WAIT);
+                }
+                else {
+                    y = CHAR_DAMAGE_SMALL_START_Y - (int) (CHAR_DAMAGE_SMALL_INCREASE_Y * phaseTime / HEAL_PHASE_WAIT);
+                }
                 numbers = Assets.GreenNumbers;
             }
 
