@@ -188,6 +188,16 @@ public class AbsSkill {
         //Do things when damage is received
     }
 
+    public boolean canPreventDeath() {
+        //Return true if it is possible for death to be prevented
+        return false;
+    }
+
+    public int preventDeath() {
+        //Return the amount of heal if death is prevented
+        return 0;
+    }
+
     //Remove the skill owner at end of battle to garbage collect
     public void endBattle(){
         this.owner = null;

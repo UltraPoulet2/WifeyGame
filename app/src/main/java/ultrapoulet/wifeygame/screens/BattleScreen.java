@@ -251,8 +251,10 @@ public class BattleScreen extends Screen {
         ROUND_START,
         WAIT_PLAYER_ACTION,
         ANIMATE_PLAYER_ACTION,
+        PREVENT_ENEMY_DEFEAT,
         WAIT_ENEMY_ACTION,
         ANIMATE_ENEMY_ACTION,
+        PREVENT_PLAYER_DEFEAT,
         ROUND_END,
         WAVE_END,
         BATTLE_END
@@ -390,6 +392,16 @@ public class BattleScreen extends Screen {
             tempIndex = (tempIndex + 1) % party.size();
         }
         return tempIndex <= partyIndex;
+    }
+
+    //Returns true if a character can prevent death
+    private boolean canPreventPartyDeath() {
+        for(int i = 0; i < party.size(); i++){
+            if(party.get(i).getCurrentHP() == 0 && party.get(i).canPreventDeath()){
+                return true;
+            }
+        }
+        return false;
     }
 
     //Returns true if all characters are dead
@@ -653,11 +665,36 @@ public class BattleScreen extends Screen {
                             phaseWait = OTHER_PHASE_WAIT;
                     }
                     if (phaseTime >= phaseWait) {
-                        if (commandSelected == comboAttackButton && hitsPerformed < party.get(partyIndex).getNumHits()) {
+                        if (enemies.get(enemyIndex).getCurrentHP() == 0 && enemies.get(enemyIndex).canPreventDeath()) {
+                            currentPhase = BattlePhase.PREVENT_ENEMY_DEFEAT;
+                            phaseEntered = true;
+                        } else if (commandSelected == comboAttackButton && hitsPerformed < party.get(partyIndex).getNumHits()) {
                             currentPhase = BattlePhase.ANIMATE_PLAYER_ACTION;
                             phaseEntered = true;
                         } else if (enemies.get(enemyIndex).getCurrentHP() == 0) {
                             currentPhase = BattlePhase.WAVE_END;
+                            phaseEntered = true;
+                        } else if (isEndOfRound()) {
+                            currentPhase = BattlePhase.WAIT_ENEMY_ACTION;
+                            phaseEntered = true;
+                        } else {
+                            currentPhase = BattlePhase.WAIT_PLAYER_ACTION;
+                            phaseEntered = true;
+                        }
+                    }
+                }
+                break;
+            case PREVENT_ENEMY_DEFEAT:
+                if(phaseEntered) {
+                    phaseTime = 0;
+                    phaseEntered = false;
+                    resetDamage();
+                    enemyDamage = HEAL_DAMAGE * enemies.get(enemyIndex).preventDeath();
+                } else {
+                    phaseTime += deltaTime;
+                    if(phaseTime >= WAIT_PHASE_WAIT) {
+                        if (commandSelected == comboAttackButton && hitsPerformed < party.get(partyIndex).getNumHits()) {
+                            currentPhase = BattlePhase.ANIMATE_PLAYER_ACTION;
                             phaseEntered = true;
                         } else if (isEndOfRound()) {
                             currentPhase = BattlePhase.WAIT_ENEMY_ACTION;
@@ -853,14 +890,39 @@ public class BattleScreen extends Screen {
                             break;
                     }
                     if (phaseTime >= phaseWait) {
-                        if (isGameOver()) {
+                        if (canPreventPartyDeath()) {
+                            currentPhase = BattlePhase.PREVENT_PLAYER_DEFEAT;
+                            phaseEntered = true;
+                        } else if (isGameOver()) {
                             currentPhase = BattlePhase.BATTLE_END;
                             phaseEntered = true;
                         } else if(hitsPerformed < enemies.get(enemyIndex).getNumHits()){
                             currentPhase = BattlePhase.ANIMATE_ENEMY_ACTION;
                             phaseEntered = true;
+                        }  else{
+                            currentPhase = BattlePhase.ROUND_END;
+                            phaseEntered = true;
                         }
-                        else{
+                    }
+                }
+                break;
+            case PREVENT_PLAYER_DEFEAT:
+                if(phaseEntered) {
+                    phaseTime = 0;
+                    phaseEntered = false;
+                    resetDamage();
+                    for(int i = 0; i < party.size(); i++) {
+                        if(party.get(i).getCurrentHP() == 0 && party.get(i).canPreventDeath()){
+                            partyDamage[i] = HEAL_DAMAGE * party.get(i).preventDeath();
+                        }
+                    }
+                } else {
+                    phaseTime += deltaTime;
+                    if(phaseTime >= HEAL_PHASE_WAIT) {
+                        if (hitsPerformed < enemies.get(enemyIndex).getNumHits()) {
+                            currentPhase = BattlePhase.ANIMATE_ENEMY_ACTION;
+                            phaseEntered = true;
+                        } else {
                             currentPhase = BattlePhase.ROUND_END;
                             phaseEntered = true;
                         }

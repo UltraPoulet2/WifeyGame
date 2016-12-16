@@ -118,6 +118,14 @@ public abstract class BattleCharacter {
 
     public abstract void transform();
 
+    public boolean canPreventDeath() {
+        return skills.canPreventDeath();
+    }
+
+    public int preventDeath() {
+        return skills.preventDeath();
+    }
+
     public void resetSkills(){
         skills.resetSkills();
     }

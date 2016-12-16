@@ -242,6 +242,22 @@ public class SkillList {
         }
     }
 
+    public boolean canPreventDeath(){
+        boolean returnValue = false;
+        for(int i = 0; i < skills.size(); i++){
+            returnValue = returnValue || skills.get(i).canPreventDeath();
+        }
+        return returnValue;
+    }
+
+    public int preventDeath() {
+        int returnValue = 0;
+        for(int i = 0; i < skills.size(); i++){
+            returnValue += skills.get(i).preventDeath();
+        }
+        return returnValue;
+    }
+
     public boolean hasSkill(Class skillClass){
         for(int i = 0; i < skills.size(); i++){
             if(skills.get(i).getClass() == skillClass){
