@@ -24,6 +24,14 @@ public class BattleCharacterInfoScreen extends AbsCharacterInfoScreen {
 
     private Multipliers multipliers;
 
+    private static final int TRANSFORM_HOLDER_X = 25 + BG_X;
+    private static final int TRANSFORM_HOLDER_Y = 95 + BG_Y;
+    private static final int TRANSFORM_NUMBER_LEFT_X = CHAR_X;
+    private static final int TRANSFORM_NUMBER_RIGHT_X = TRANSFORM_NUMBER_LEFT_X + 40;
+    private static final int TRANSFORM_NUMBER_Y = CHAR_Y;
+    private static final int TRANSFORM_WIDTH = 20;
+    private static final int TRANSFORM_HEIGHT = 40;
+
     private static final int HEALTH_BAR_X = 400 + BG_X;
     private static final int HEALTH_BAR_Y = 200 + BG_Y;
     private static final double HEALTH_BAR_SCALE_X = 156.25;
@@ -90,6 +98,11 @@ public class BattleCharacterInfoScreen extends AbsCharacterInfoScreen {
 
     protected void drawPortrait(Graphics g){
         g.drawPercentageImage(displayChar.getImage(),CHAR_X, CHAR_Y, DOUBLE_SCALE, DOUBLE_SCALE);
+        if(displayChar.getMaxTransformNumber() != 1) {
+            g.drawImage(Assets.TransformHolder, TRANSFORM_HOLDER_X, TRANSFORM_HOLDER_Y);
+            NumberPrinter.drawNumber(g, displayChar.getTransformNumber(), TRANSFORM_NUMBER_LEFT_X, TRANSFORM_NUMBER_Y, TRANSFORM_WIDTH, TRANSFORM_HEIGHT, 0, Assets.WhiteNumbers, NumberPrinter.Align.LEFT);
+            NumberPrinter.drawNumber(g, displayChar.getMaxTransformNumber(), TRANSFORM_NUMBER_RIGHT_X, TRANSFORM_NUMBER_Y, TRANSFORM_WIDTH, TRANSFORM_HEIGHT, 0, Assets.WhiteNumbers, NumberPrinter.Align.LEFT);
+        }
     }
 
     protected void drawElements(Graphics g){

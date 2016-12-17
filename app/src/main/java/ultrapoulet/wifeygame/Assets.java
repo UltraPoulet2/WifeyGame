@@ -51,6 +51,7 @@ public class Assets {
     public static Image ScrollBarShort;
     public static Image TransformNextEnable, TransformNextDisable;
     public static Image TransformPrevEnable, TransformPrevDisable;
+    public static Image TransformHolder;
 
     //BattleInfoScreen Stuff
     public static Image BattleInfoScreen;

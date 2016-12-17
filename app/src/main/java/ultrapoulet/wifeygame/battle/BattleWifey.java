@@ -228,6 +228,14 @@ public class BattleWifey extends BattleCharacter{
         return transformWifeys.size() > transformNumber;
     }
 
+    public int getTransformNumber() {
+        return transformNumber + 1;
+    }
+
+    public int getMaxTransformNumber() {
+        return transformWifeys.size() + 1;
+    }
+
     public Multipliers getMultipliers(BattleEnemy enemy){
         return skills.getMultipliers(enemy);
     }
