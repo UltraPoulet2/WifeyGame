@@ -48,6 +48,8 @@ public class LoadingScreen extends Screen {
         Assets.TransformDisabled = g.newImage("buttons/TransformDisabled.png", ImageFormat.RGB565);
         Assets.DefendEnabled = g.newImage("buttons/DefendButtonEnabled.png", ImageFormat.RGB565);
         Assets.DefendDisabled = g.newImage("buttons/DefendButtonDisabled.png", ImageFormat.RGB565);
+        Assets.WaveText = g.newImage("objects/battleMisc/WaveText.png", ImageFormat.RGB565);
+        Assets.FinalWaveText = g.newImage("objects/battleMisc/WaveFinalText.png", ImageFormat.RGB565);
 
         Assets.attackBox = g.newImage("objects/battleMisc/AttackBox.png", ImageFormat.ARGB8888);
         Assets.charHolder = g.newImage("objects/holders/CharacterHolder.png", ImageFormat.ARGB8888);

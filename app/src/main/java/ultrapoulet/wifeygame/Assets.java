@@ -26,6 +26,7 @@ public class Assets {
     public static Image hitsText, hitText, damageText;
     public static Image AttackUp, AttackDown;
     public static Image DefenseUp, DefenseDown;
+    public static Image WaveText, FinalWaveText;
 
     public static List<Image> KOImages;
     public static Image HPSlash;

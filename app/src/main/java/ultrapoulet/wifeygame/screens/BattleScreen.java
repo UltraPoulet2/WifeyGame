@@ -125,6 +125,7 @@ public class BattleScreen extends Screen {
     private static final int HEAL_PHASE_WAIT = 45;
     private static final int WAIT_PHASE_WAIT = 60;
     private static final int OTHER_PHASE_WAIT = 5;
+    private static final int WAVE_PHASE_WAIT = 60;
     private float phaseTime = 0;
     private boolean phaseEntered = true;
 
@@ -161,6 +162,15 @@ public class BattleScreen extends Screen {
     private static final int ENEMY_STATUS_X = ENEMY_IMAGE_X - 50;
     private static final int ENEMY_STATUS_Y_1 = 450;
     private static final int ENEMY_STATUS_Y_2 = 400;
+
+    private static final int WAVE_TEXT_LARGE_X = 300;
+    private static final int WAVE_NUMBER_LARGE_X = WAVE_TEXT_LARGE_X + 121 + 18;
+    private static final int WAVE_TEXT_SMALL_X = 315;
+    private static final int WAVE_NUMBER_SMALL_X = WAVE_TEXT_SMALL_X + 121 + 18;
+    private static final int WAVE_FINAL_TEXT_X = 272;
+    private static final int WAVE_TEXT_Y = 270;
+    private static final int WAVE_WIDTH = 30;
+    private static final int WAVE_HEIGHT = 60;
 
     private int hitsPerformed = 0;
     private int enemyDamage;
@@ -488,9 +498,11 @@ public class BattleScreen extends Screen {
                     resetDamage();
                     phaseTime = 0;
                     phaseEntered = false;
+                    comboHolder = 0;
+                    damageHolder = 0;
                 } else {
                     phaseTime += deltaTime;
-                    if (phaseTime >= OTHER_PHASE_WAIT) {
+                    if (phaseTime >= WAVE_PHASE_WAIT) {
                         currentPhase = BattlePhase.ROUND_START;
                         phaseEntered = true;
                     }
@@ -1047,6 +1059,9 @@ public class BattleScreen extends Screen {
         if(currentPhase == BattlePhase.ANIMATE_ENEMY_ACTION){
             drawEnemyCommand();
         }
+        if(currentPhase == BattlePhase.WAVE_START){
+            drawWaveStart();
+        }
     }
 
     private void drawBackground(){
@@ -1321,6 +1336,23 @@ public class BattleScreen extends Screen {
         }
 
         NumberPrinter.drawNumber(g, Math.abs(enemyDamage), ENEMY_DAMAGE_BASE_X, y, DAMAGE_WIDTH, DAMAGE_HEIGHT, DAMAGE_OFFSET, numbers, NumberPrinter.Align.CENTER);
+    }
+
+    private void drawWaveStart() {
+        Graphics g = game.getGraphics();
+        if(enemyIndex == enemies.size() - 1){
+            g.drawImage(Assets.FinalWaveText, WAVE_FINAL_TEXT_X, WAVE_TEXT_Y);
+        }
+        else{
+            if(enemyIndex + 1 >= 10) {
+                g.drawImage(Assets.WaveText, WAVE_TEXT_LARGE_X, WAVE_TEXT_Y);
+                NumberPrinter.drawNumber(g, enemyIndex + 1, WAVE_NUMBER_LARGE_X, WAVE_TEXT_Y, WAVE_WIDTH, WAVE_HEIGHT, 0, Assets.YellowNumbers, NumberPrinter.Align.LEFT);
+            }
+            else {
+                g.drawImage(Assets.WaveText, WAVE_TEXT_SMALL_X, WAVE_TEXT_Y);
+                NumberPrinter.drawNumber(g, enemyIndex + 1, WAVE_NUMBER_SMALL_X, WAVE_TEXT_Y, WAVE_WIDTH, WAVE_HEIGHT, 0, Assets.YellowNumbers, NumberPrinter.Align.LEFT);
+            }
+        }
     }
 
     @Override
