@@ -1048,7 +1048,9 @@ public class BattleScreen extends Screen {
     public void paint(float deltaTime) {
         drawBackground();
         drawParty();
-        drawEnemy();
+        if (currentPhase != BattlePhase.BATTLE_START) {
+            drawEnemy();
+        }
         drawSpecial();
         drawCombo();
         drawPlayerDamage();
@@ -1155,9 +1157,6 @@ public class BattleScreen extends Screen {
         }
         //Draw the characters after the current member
         for ( ; i < party.size(); i++) {
-            if(phaseEntered){
-                System.out.println(i);
-            }
             g.drawPercentageImage(charHolder, CHAR_HOLDER_X_DISTANCE * (i + 1), CHAR_HOLDER_SMALL_Y, HALF_SCALE, HALF_SCALE);
             g.drawPercentageImage(party.get(i).getImage(), CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_INTERIOR_SMALL_X, CHAR_IMAGE_SMALL_Y, HALF_SCALE, HALF_SCALE);
 
@@ -1187,7 +1186,12 @@ public class BattleScreen extends Screen {
         Graphics g = game.getGraphics();
         Double perHealth;
 
-        g.drawImage(enemies.get(enemyIndex).getImage(), ENEMY_IMAGE_X, ENEMY_IMAGE_Y);
+        if(currentPhase == BattlePhase.WAVE_START){
+            g.drawImageAlpha(enemies.get(enemyIndex).getImage(), ENEMY_IMAGE_X, ENEMY_IMAGE_Y, (int) (255 * phaseTime) / WAVE_PHASE_WAIT);
+        }
+        else {
+            g.drawImage(enemies.get(enemyIndex).getImage(), ENEMY_IMAGE_X, ENEMY_IMAGE_Y);
+        }
         g.drawImage(enemyHolder, ENEMY_HEALTH_HOLDER_X, ENEMY_HEALTH_HOLDER_Y);
         Image enemyHealth = getEnemyHealthBar(enemies.get(enemyIndex).getCurrentHP(), enemies.get(enemyIndex).getMaxHP());
         perHealth = (enemies.get(enemyIndex).getCurrentHP() * 1.0)/enemies.get(enemyIndex).getMaxHP();
