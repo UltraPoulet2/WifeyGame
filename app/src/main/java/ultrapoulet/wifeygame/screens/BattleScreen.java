@@ -985,7 +985,7 @@ public class BattleScreen extends Screen {
                     phaseEntered = false;
                 } else {
                     phaseTime += deltaTime;
-                    if (phaseTime >= WAIT_PHASE_WAIT) {
+                    if (phaseTime >= WAVE_PHASE_WAIT) {
                         enemyIndex++;
                         if (enemyIndex == enemies.size()) {
                             enemyIndex--;
@@ -1186,8 +1186,13 @@ public class BattleScreen extends Screen {
         Graphics g = game.getGraphics();
         Double perHealth;
 
-        if(currentPhase == BattlePhase.WAVE_START){
-            g.drawImageAlpha(enemies.get(enemyIndex).getImage(), ENEMY_IMAGE_X, ENEMY_IMAGE_Y, (int) (255 * phaseTime) / WAVE_PHASE_WAIT);
+        if(currentPhase == BattlePhase.WAVE_START ){
+            if(!phaseEntered) {
+                g.drawImageAlpha(enemies.get(enemyIndex).getImage(), ENEMY_IMAGE_X, ENEMY_IMAGE_Y, (int) (255 * phaseTime) / WAVE_PHASE_WAIT);
+            }
+        }
+        else if(currentPhase == BattlePhase.WAVE_END && !phaseEntered) {
+            g.drawImageAlpha(enemies.get(enemyIndex).getImage(), ENEMY_IMAGE_X, ENEMY_IMAGE_Y, (int) (255 * (WAVE_PHASE_WAIT - phaseTime) / WAVE_PHASE_WAIT));
         }
         else {
             g.drawImage(enemies.get(enemyIndex).getImage(), ENEMY_IMAGE_X, ENEMY_IMAGE_Y);
