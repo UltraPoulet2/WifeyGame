@@ -56,10 +56,10 @@ public class BattleInfo {
     }
 
 
-    public List<BattleCharacter> getBattleEnemies() {
+    public List<BattleCharacter> getBattleEnemies(Graphics g) {
         List<BattleCharacter> returnValue = new ArrayList<>();
         for(int i = 0; i < enemyList.size(); i++){
-            returnValue.add(enemyList.get(i).getBattleEnemy());
+            returnValue.add(enemyList.get(i).getBattleEnemy(g));
         }
         return returnValue;
     }

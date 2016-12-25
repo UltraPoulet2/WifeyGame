@@ -335,7 +335,7 @@ public class BattleScreen extends Screen {
 
     public void setBattleInfo(BattleInfo info){
         this.battleInfo = info;
-        this.enemies = battleInfo.getBattleEnemies();
+        this.enemies = battleInfo.getBattleEnemies(game.getGraphics());
         this.background = battleInfo.getBackground(game.getGraphics());
     }
 

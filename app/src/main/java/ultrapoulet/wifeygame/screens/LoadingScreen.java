@@ -15,7 +15,11 @@ import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Graphics.ImageFormat;
 import ultrapoulet.androidgame.framework.Screen;
 import ultrapoulet.wifeygame.Assets;
+import ultrapoulet.wifeygame.character.Element;
+import ultrapoulet.wifeygame.character.EnemyCharacter;
+import ultrapoulet.wifeygame.character.Weapon;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
+import ultrapoulet.wifeygame.gamestate.Enemies;
 import ultrapoulet.wifeygame.gamestate.Party;
 import ultrapoulet.wifeygame.gamestate.RecruitedCharacters;
 import ultrapoulet.wifeygame.parsers.BattleParser;
@@ -157,6 +161,23 @@ public class LoadingScreen extends Screen {
             CharacterParser charParser = new CharacterParser();
             charParser.setGraphics(game.getGraphics());
             saxParser.parse(in, charParser);
+
+            //Temporary testing
+            /*
+            Graphics g = game.getGraphics();
+            for(int i = 0; i < 1000; i++){
+                WifeyCharacter newChar = new WifeyCharacter();
+                newChar.setImage(g.newImage("characters/test/" + i + ".png", ImageFormat.RGB565));
+                newChar.setName(String.valueOf(i));
+                newChar.setStrength(1);
+                newChar.setMagic(1);
+                newChar.setWeapon(Weapon.getWeapon("BALL"));
+                newChar.setAttackElement(Element.getElement("FIRE"));
+                newChar.setStrongElement(Element.getElement("FIRE"));
+                newChar.setWeakElement(Element.getElement("FIRE"));
+                RecruitedCharacters.put(String.valueOf(i), newChar);
+            }
+            */
         }
         catch (Exception e){
             e.printStackTrace();
@@ -199,6 +220,17 @@ public class LoadingScreen extends Screen {
             EnemyParser enemyParser = new EnemyParser();
             enemyParser.setGraphics(game.getGraphics());
             saxParser.parse(in, enemyParser);
+
+            //Temporary testing
+            /*
+            Graphics g = game.getGraphics();
+            for(int i = 0; i < 1000; i++){
+                EnemyCharacter newEnemy = new EnemyCharacter();
+                newEnemy.setImage(g.newImage("enemies/test/" + i + ".png", ImageFormat.RGB565));
+                newEnemy.setName(String.valueOf(i));
+                Enemies.put(String.valueOf(i), newEnemy);
+            }
+            */
         }
         catch (Exception e){
             e.printStackTrace();

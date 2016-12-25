@@ -3,6 +3,7 @@ package ultrapoulet.wifeygame.character;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.wifeygame.battle.BattleEnemy;
 import ultrapoulet.wifeygame.battle.enemyai.EnemyAI;
@@ -36,7 +37,7 @@ public class EnemyCharacter {
     private int gold;
     private int experience;
 
-    private Image image;
+    private String image;
 
     private String ai;
 
@@ -105,8 +106,8 @@ public class EnemyCharacter {
 
     public ArrayList<SkillsEnum> getSkills(){ return this.skills; }
 
-    public Image getImage() {
-        return this.image;
+    public Image getImage(Graphics g) {
+        return g.newImage("enemies/" + this.image + ".png", Graphics.ImageFormat.ARGB8888);
     }
 
     public Element getAttackElement() { return this.attackElement; }
@@ -183,7 +184,7 @@ public class EnemyCharacter {
         this.specialHits = specialHits;
     }
 
-    public void setImage(Image image){
+    public void setImage(String image){
         this.image = image;
     }
 
@@ -203,7 +204,7 @@ public class EnemyCharacter {
         this.transformations.add(t);
     }
 
-    public BattleEnemy getBattleEnemy(){
+    public BattleEnemy getBattleEnemy(Graphics g){
         return new BattleEnemy(
                 name,
                 maxHP,
@@ -223,7 +224,7 @@ public class EnemyCharacter {
                 attackElement,
                 strongElement,
                 weakElement,
-                image,
+                this.getImage(g),
                 EnemyAI.getAI(ai),
                 transformations);
     }
