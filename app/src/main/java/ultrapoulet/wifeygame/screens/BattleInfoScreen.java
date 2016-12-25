@@ -91,6 +91,8 @@ public class BattleInfoScreen extends Screen{
     private static final int PARTY_IMAGE_TOP_Y = 1000;
     private static final int PARTY_IMAGE_BOT_Y = 1090;
 
+    private ArrayList<Image> partyImages;
+
     private ButtonList requirementList;
 
     public BattleInfoScreen(Game game){
@@ -122,6 +124,11 @@ public class BattleInfoScreen extends Screen{
         buttonList.addButton(new Button(PARTY_BUTTON_LEFT_X, PARTY_BUTTON_RIGHT_X, PARTY_BUTTON_TOP_Y, PARTY_BUTTON_BOTTOM_Y, true, PARTY_BUTTON_STRING));
         startButton = new Button(START_BUTTON_LEFT_X, START_BUTTON_RIGHT_X, START_BUTTON_TOP_Y, START_BUTTON_BOTTOM_Y, false, START_BUTTON_STRING);
         buttonList.addButton(startButton);
+
+        partyImages = new ArrayList<>(7);
+        for(int i = 0; i < 7; i++){
+            partyImages.add(null);
+        }
     }
 
     public void setBattleInfo(BattleInfo info){
@@ -174,7 +181,6 @@ public class BattleInfoScreen extends Screen{
                             break;
                         case START_BUTTON_STRING:
                             BattleScreen bs = new BattleScreen(game);
-                            bs.setParty(Party.getBattleParty(battleInfo.getPartyMax()));
                             bs.setBattleInfo(battleInfo);
                             game.setScreen(bs);
                             break;
@@ -214,7 +220,7 @@ public class BattleInfoScreen extends Screen{
         }
 
         for(int i = 0; i < battleInfo.getPartyMax() && party.get(i) != null; i++){
-            g.drawPercentageImage(party.get(i).getImage(), PARTY_IMAGE_OFFSET_X * i + PARTY_IMAGE_BASE_LEFT_X, PARTY_IMAGE_TOP_Y, PARTY_SCALE, PARTY_SCALE);
+            g.drawPercentageImage(partyImages.get(i), PARTY_IMAGE_OFFSET_X * i + PARTY_IMAGE_BASE_LEFT_X, PARTY_IMAGE_TOP_Y, PARTY_SCALE, PARTY_SCALE);
             if(!battleInfo.allowCharacter(party.get(i))){
                 g.drawPercentageImage(Assets.InvalidChar, PARTY_IMAGE_OFFSET_X * i + PARTY_IMAGE_BASE_LEFT_X, PARTY_IMAGE_TOP_Y, PARTY_SCALE, PARTY_SCALE);
             }
@@ -245,9 +251,15 @@ public class BattleInfoScreen extends Screen{
         else{
             startButton.setActive(false);
         }
-        for(int i = 0; i < battleInfo.getPartyMax() && i < Party.partySize(); i++){
+        for(int i = 0; i < battleInfo.getPartyMax(); i++){
             //Set the button to active if the party member exists
             partyList.setIndexActive(i, party.get(i) != null);
+            if(party.get(i) != null){
+                partyImages.set(i, party.get(i).getImage(game.getGraphics()));
+            }
+            else {
+                partyImages.set(i, null);
+            }
         }
     }
 

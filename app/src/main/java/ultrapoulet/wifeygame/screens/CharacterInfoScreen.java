@@ -152,7 +152,7 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
 
     private void setDefaultDisplayInfo() {
         displayName = displayChar.getName();
-        displayImage = displayChar.getImage();
+        displayImage = displayChar.getImage(game.getGraphics());
         displayStrength = displayChar.getStrength();
         displayMagic = displayChar.getMagic();
         displaySkills.clear();

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.wifeygame.battle.BattleCharacter;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
 
@@ -97,10 +98,10 @@ public class Party {
         return temp;
     }
 
-    public static List<BattleCharacter> getBattleParty(int size){
+    public static List<BattleCharacter> getBattleParty(int size, Graphics g){
         List<BattleCharacter> battleParty = new ArrayList<>();
         for(int i = 0; i < partySize() && i < size; i++){
-            battleParty.add(party.get(i).getBattleCharacter());
+            battleParty.add(party.get(i).getBattleCharacter(g));
         }
         return battleParty;
     }

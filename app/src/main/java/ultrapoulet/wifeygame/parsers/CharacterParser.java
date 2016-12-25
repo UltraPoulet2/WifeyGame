@@ -59,7 +59,7 @@ public class CharacterParser extends DefaultHandler{
             charKey = attributes.getValue("key");
             if(charKey != null) {
                 charBuilder = new WifeyCharacter();
-                charBuilder.setImage(g.newImage("characters/" + charKey + ".png", ImageFormat.RGB565));
+                charBuilder.setImage(charKey);
                 charBuilder.setHashKey(charKey);
             }
             else{

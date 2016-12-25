@@ -19,6 +19,7 @@ import ultrapoulet.wifeygame.battle.BattleEnemy;
 import ultrapoulet.wifeygame.battle.BattleInfo;
 import ultrapoulet.wifeygame.battle.BattleWifey;
 import ultrapoulet.wifeygame.battle.enemyai.EnemyAI.EnemyAction;
+import ultrapoulet.wifeygame.gamestate.Party;
 
 /**
  * Created by John on 3/5/2016.
@@ -315,13 +316,13 @@ public class BattleScreen extends Screen {
         textPaint.setTextSize(50);
     }
 
-    public void setParty(List<BattleCharacter> party){
+    private void setParty(List<BattleCharacter> party){
         this.party = party;
 
         createPartyList();
     }
 
-    public void createPartyList(){
+    private void createPartyList(){
         partyList = new ButtonList();
         for(int i = 0; i < party.size(); i++){
             int leftX = CHAR_HOLDER_X_DISTANCE * i + CHAR_INTERIOR_SMALL_X;
@@ -337,6 +338,8 @@ public class BattleScreen extends Screen {
         this.battleInfo = info;
         this.enemies = battleInfo.getBattleEnemies(game.getGraphics());
         this.background = battleInfo.getBackground(game.getGraphics());
+
+        setParty(Party.getBattleParty(battleInfo.getPartyMax(), game.getGraphics()));
     }
 
     private void updateButtons(){

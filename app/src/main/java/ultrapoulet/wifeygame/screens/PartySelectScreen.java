@@ -129,6 +129,9 @@ public class PartySelectScreen extends Screen {
     private static final int CHAR_REQUIRED_HOLDER_BASE_Y = CHAR_IMAGE_BASE_TOP_Y - 12;
     private static final int CHAR_REQUIRED_OFFSET = 90;
 
+    private ArrayList<Image> partyImages;
+    private ArrayList<Image> recruitImages;
+
     private static final int DRAGGING_OFFSET = 60;
 
     private boolean hasRequiredList(){
@@ -205,6 +208,8 @@ public class PartySelectScreen extends Screen {
         charInfo.setPreviousScreen(this);
 
         createButtons();
+
+        createImageLists();
     }
 
     public void createButtons(){
@@ -239,6 +244,16 @@ public class PartySelectScreen extends Screen {
         }
     }
 
+    private void createImageLists() {
+        partyImages = new ArrayList<>(7);
+
+        recruitImages = new ArrayList<>(PER_PAGE);
+        for(int i = 0; i < PER_PAGE; i++){
+            recruitImages.add(null);
+        }
+
+    }
+
 
     public void updateButtons(){
         prevButton.setActive(currentPage > 0);
@@ -259,6 +274,17 @@ public class PartySelectScreen extends Screen {
             }
             else{
                 recruitList.setIndexActive(i, false);
+            }
+        }
+    }
+
+    private void updateRecruitImages(){
+        for(int i = 0; i < PER_PAGE; i++){
+            if(currentPage * PER_PAGE + i < validCharacters.size()){
+                recruitImages.set(i, validCharacters.get(currentPage * PER_PAGE + i).getImage(game.getGraphics()));
+            }
+            else{
+                recruitImages.set(i, null);
             }
         }
     }
@@ -297,11 +323,13 @@ public class PartySelectScreen extends Screen {
         currentParty = new ArrayList<>();
         for(int i = 0; i < Party.partySize() && i < maxPartySize; i++){
             currentParty.add(Party.getIndex(i));
+            partyImages.add(currentParty.get(i).getImage(game.getGraphics()));
         }
         setValidCharacters(RecruitedCharacters.getArray());
         updateButtons();
         updatePartyButtons();
         updateRecruitButtons();
+        updateRecruitImages();
     }
 
     public void setPreviousScreen(Screen previousScreen){
@@ -356,12 +384,14 @@ public class PartySelectScreen extends Screen {
                             currentPage--;
                             updateButtons();
                             updateRecruitButtons();
+                            updateRecruitImages();
                         }
                         //NEXT PAGE BUTTON PRESSED
                         else if(lastPressed == nextButton){
                             currentPage++;
                             updateButtons();
                             updateRecruitButtons();
+                            updateRecruitImages();
                         }
                     }
                     //RECRUIT CHARACTER PRESSED
@@ -384,19 +414,29 @@ public class PartySelectScreen extends Screen {
                             if (currentParty.size() <= partyIndex){
                                 currentParty.remove(inPartyIndex);
                                 currentParty.add(validCharacters.get(draggingRecruitIndex));
+
+                                Image temp = partyImages.get(inPartyIndex);
+                                partyImages.remove(inPartyIndex);
+                                partyImages.add(temp);
                             }
                             else{
                                 WifeyCharacter temp = currentParty.get(inPartyIndex);
                                 currentParty.set(inPartyIndex, currentParty.get(partyIndex));
                                 currentParty.set(partyIndex, temp);
+
+                                Image tempImage = partyImages.get(inPartyIndex);
+                                partyImages.set(inPartyIndex, partyImages.get(partyIndex));
+                                partyImages.set(partyIndex, tempImage);
                             }
                         }
                         else{
                             if(currentParty.size() <= partyIndex) {
                                 currentParty.add(validCharacters.get(draggingRecruitIndex));
+                                partyImages.add(validCharacters.get(draggingRecruitIndex).getImage(game.getGraphics()));
                             }
                             else{
                                 currentParty.set(partyIndex, validCharacters.get(draggingRecruitIndex));
+                                partyImages.set(partyIndex, validCharacters.get(draggingRecruitIndex).getImage(game.getGraphics()));
                             }
                         }
                     }
@@ -463,20 +503,6 @@ public class PartySelectScreen extends Screen {
         int displayMaxPage = maxPage + 1;
         NumberPrinter.drawNumber(g, displayPage, CUR_PAGE_X, PAGE_Y, PAGE_WIDTH, PAGE_HEIGHT, 0, Assets.WhiteNumbers, NumberPrinter.Align.RIGHT);
         NumberPrinter.drawNumber(g, displayMaxPage, MAX_PAGE_X, PAGE_Y, PAGE_WIDTH, PAGE_HEIGHT, 0, Assets.WhiteNumbers, NumberPrinter.Align.LEFT);
-        /*
-        if(displayPage > 10){
-            g.drawImage(numbers[displayPage / 10], CUR_PAGE_X_1, PAGE_Y);
-        }
-        g.drawImage(numbers[displayPage % 10], CUR_PAGE_X_2, PAGE_Y);
-
-        if(displayMaxPage > 10){
-            g.drawImage(numbers[displayMaxPage / 10], MAX_PAGE_X_1, PAGE_Y);
-            g.drawImage(numbers[displayMaxPage % 10], MAX_PAGE_X_2, PAGE_Y);
-        }
-        else {
-            g.drawImage(numbers[displayMaxPage % 10], MAX_PAGE_X_1, PAGE_Y);
-        }
-        */
 
         if(prevButton.isActive()){
             g.drawImage(Assets.PrevPageEnable, PREV_BUTTON_LEFT_X, PREV_BUTTON_TOP_Y);
@@ -494,7 +520,7 @@ public class PartySelectScreen extends Screen {
 
         for(int i = 0; i < currentParty.size(); i++){
             if(!dragging || i != draggingPartyIndex) {
-                g.drawPercentageImage(currentParty.get(i).getImage(), PARTY_IMAGE_OFFSET_X * i + PARTY_IMAGE_BASE_LEFT_X, PARTY_IMAGE_TOP_Y, PARTY_SCALE, PARTY_SCALE);
+                g.drawPercentageImage(partyImages.get(i), PARTY_IMAGE_OFFSET_X * i + PARTY_IMAGE_BASE_LEFT_X, PARTY_IMAGE_TOP_Y, PARTY_SCALE, PARTY_SCALE);
                 if(battleInfo != null && !battleInfo.allowCharacter(currentParty.get(i))){
                     g.drawPercentageImage(Assets.InvalidChar, PARTY_IMAGE_OFFSET_X * i + PARTY_IMAGE_BASE_LEFT_X, PARTY_IMAGE_TOP_Y, PARTY_SCALE, PARTY_SCALE);
                 }
@@ -518,17 +544,17 @@ public class PartySelectScreen extends Screen {
                 g.drawImage(Assets.RequiredCharHolder, (i % ROW_SIZE) * CHAR_REQUIRED_OFFSET + CHAR_REQUIRED_HOLDER_BASE_X, CHAR_REQUIRED_HOLDER_BASE_Y);
             }
             if(!dragging || i != draggingRecruitIndex) {
-                g.drawPercentageImage(validCharacters.get(i).getImage(),
+                g.drawPercentageImage(recruitImages.get(i - minIndex),
                         CHAR_IMAGE_OFFSET_X * (i % ROW_SIZE) + CHAR_IMAGE_BASE_LEFT_X,
                         CHAR_IMAGE_BASE_TOP_Y + CHAR_IMAGE_OFFSET_Y * ((i % PER_PAGE) / COLUMN_SIZE),
                         HALF_SCALE, HALF_SCALE);
             }
         }
         if(dragging && draggingRecruitIndex != -1){
-            g.drawPercentageImage(validCharacters.get(draggingRecruitIndex).getImage(), draggingX - DRAGGING_OFFSET, draggingY - DRAGGING_OFFSET, DRAGGING_SCALE, DRAGGING_SCALE);
+            g.drawPercentageImage(recruitImages.get(draggingRecruitIndex - minIndex), draggingX - DRAGGING_OFFSET, draggingY - DRAGGING_OFFSET, DRAGGING_SCALE, DRAGGING_SCALE);
         }
         if(dragging && draggingPartyIndex != -1){
-            g.drawPercentageImage(currentParty.get(draggingPartyIndex).getImage(), draggingX - DRAGGING_OFFSET, draggingY - DRAGGING_OFFSET, DRAGGING_SCALE, DRAGGING_SCALE);
+            g.drawPercentageImage(partyImages.get(draggingPartyIndex), draggingX - DRAGGING_OFFSET, draggingY - DRAGGING_OFFSET, DRAGGING_SCALE, DRAGGING_SCALE);
             if(battleInfo != null && !battleInfo.allowCharacter(currentParty.get(draggingPartyIndex))){
                 g.drawPercentageImage(Assets.InvalidChar, draggingX - DRAGGING_OFFSET, draggingY - DRAGGING_OFFSET, DRAGGING_SCALE, DRAGGING_SCALE);
             }
