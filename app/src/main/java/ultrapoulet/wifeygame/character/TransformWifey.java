@@ -3,6 +3,8 @@ package ultrapoulet.wifeygame.character;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import ultrapoulet.androidgame.framework.Graphics;
+import ultrapoulet.androidgame.framework.Graphics.ImageFormat;
 import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.wifeygame.battle.BattleWifey;
 
@@ -20,7 +22,7 @@ public class TransformWifey {
     private Element attackElement;
     private Element strongElement;
     private Element weakElement;
-    private Image image;
+    private String image;
 
     public TransformWifey(){
         addSkills = new ArrayList();
@@ -31,8 +33,8 @@ public class TransformWifey {
         return this.name;
     }
 
-    public Image getImage(){
-        return this.image;
+    public Image getImage(Graphics g){
+        return g.newImage("characters/" + image +  ".png", ImageFormat.ARGB8888);
     }
 
     public int getHP(){
@@ -63,7 +65,7 @@ public class TransformWifey {
         this.name = name;
     }
 
-    public void setImage(Image image){
+    public void setImage(String image){
         this.image = image;
     }
 

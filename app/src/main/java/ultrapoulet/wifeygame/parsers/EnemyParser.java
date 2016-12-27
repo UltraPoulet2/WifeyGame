@@ -158,7 +158,7 @@ public class EnemyParser extends DefaultHandler{
         }
         else if(qName.equalsIgnoreCase("transformation")){
             transformBuilder = new TransformEnemy();
-            transformBuilder.setImage(g.newImage("enemies/" + enemyKey + "-T" + tNumber + ".png", ImageFormat.RGB565));
+            transformBuilder.setImage(enemyKey + "-T" + tNumber);
             bTransform = true;
         }
         else{

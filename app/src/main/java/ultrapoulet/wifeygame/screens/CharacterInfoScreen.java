@@ -169,7 +169,7 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
     private void incrementDisplayInfo() {
         TransformWifey displayForm = transformations.get(transformPage - 1);
         displayName = displayForm.getName();
-        displayImage = displayForm.getImage();
+        displayImage = displayForm.getImage(game.getGraphics());
         displayStrength = displayForm.getStrength();
         displayMagic = displayForm.getMagic();
         if(displayForm.getWeapon() != null){
@@ -201,7 +201,7 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
         else {
             TransformWifey displayForm = transformations.get(transformPage - 1);
             displayName = displayForm.getName();
-            displayImage = displayForm.getImage();
+            displayImage = displayForm.getImage(game.getGraphics());
             displayStrength = displayForm.getStrength();
             displayMagic = displayForm.getMagic();
 

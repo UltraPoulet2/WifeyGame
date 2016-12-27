@@ -118,7 +118,7 @@ public class CharacterParser extends DefaultHandler{
         }
         else if(qName.equalsIgnoreCase("transformation")){
             transformBuilder = new TransformWifey();
-            transformBuilder.setImage(g.newImage("characters/" + charKey + "-T" + tNumber + ".png", ImageFormat.RGB565));
+            transformBuilder.setImage(charKey + "-T" + tNumber);
             bTransform = true;
         }
         else{

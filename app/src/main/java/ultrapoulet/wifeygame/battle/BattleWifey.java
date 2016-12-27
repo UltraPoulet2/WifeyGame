@@ -3,6 +3,7 @@ package ultrapoulet.wifeygame.battle;
 import java.util.ArrayList;
 import java.util.List;
 
+import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.wifeygame.character.Element;
 import ultrapoulet.wifeygame.character.SkillsEnum;
@@ -197,10 +198,10 @@ public class BattleWifey extends BattleCharacter{
         return displayHeal;
     }
 
-    public void transform(){
+    public void transform(Graphics g){
         TransformWifey form = transformWifeys.get(transformNumber);
         transformNumber++;
-        this.image = form.getImage();
+        this.image = form.getImage(g);
         this.maxHP = form.getHP();
         this.strength = form.getStrength();
         this.magic = form.getMagic();

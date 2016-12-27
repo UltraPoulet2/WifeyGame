@@ -3,6 +3,8 @@ package ultrapoulet.wifeygame.character;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import ultrapoulet.androidgame.framework.Graphics;
+import ultrapoulet.androidgame.framework.Graphics.ImageFormat;
 import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.wifeygame.battle.enemyai.EnemyAI;
 
@@ -35,7 +37,7 @@ public class TransformEnemy {
     private ArrayList<SkillsEnum> addSkills;
     private ArrayList<SkillsEnum> removeSkills;
 
-    private Image image;
+    private String image;
 
     public TransformEnemy(){
         addSkills = new ArrayList();
@@ -50,8 +52,8 @@ public class TransformEnemy {
         return this.ai;
     }
 
-    public Image getImage(){
-        return this.image;
+    public Image getImage(Graphics g){
+        return g.newImage("enemies/" + image + ".png", ImageFormat.ARGB8888);
     }
 
     public int getHP(){
@@ -136,7 +138,7 @@ public class TransformEnemy {
         }
     }
 
-    public void setImage(Image image){
+    public void setImage(String image){
         this.image = image;
     }
 

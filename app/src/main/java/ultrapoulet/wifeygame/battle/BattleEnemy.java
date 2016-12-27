@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.wifeygame.battle.enemyai.EnemyAI;
 import ultrapoulet.wifeygame.battle.enemyai.EnemyAI.EnemyAction;
@@ -384,11 +385,11 @@ public class BattleEnemy extends BattleCharacter{
         return transformations.size() > transformNumber;
     }
 
-    public void transform(){
+    public void transform(Graphics g){
         TransformEnemy form = transformations.get(transformNumber);
         transformNumber++;
         this.name = form.getName();
-        this.image = form.getImage();
+        this.image = form.getImage(g);
         this.ai = EnemyAI.getAI(form.getAi());
         if(form.getHP() > 0) {
             this.maxHP = form.getHP();

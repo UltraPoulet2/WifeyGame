@@ -2,6 +2,7 @@ package ultrapoulet.wifeygame.battle;
 
 import java.util.List;
 
+import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.wifeygame.battle.skills.SkillList;
 import ultrapoulet.wifeygame.character.Element;
@@ -116,7 +117,8 @@ public abstract class BattleCharacter {
 
     public abstract boolean canTransform();
 
-    public abstract void transform();
+    //I don't like passing in Graphics here, but quickest workaround for now
+    public abstract void transform(Graphics g);
 
     public boolean canPreventDeath() {
         return skills.canPreventDeath();

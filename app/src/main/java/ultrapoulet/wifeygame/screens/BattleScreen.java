@@ -656,7 +656,7 @@ public class BattleScreen extends Screen {
                             damageHolder += enemyDamage;
                             break;
                         case TRANSFORM_STRING:
-                            party.get(partyIndex).transform();
+                            party.get(partyIndex).transform(game.getGraphics());
                             for(int i = 0; i < party.size(); i++){
                                 party.get(i).resetSkills();
                             }
@@ -857,7 +857,7 @@ public class BattleScreen extends Screen {
                             }
                             break;
                         case TRANSFORM:
-                            enemies.get(enemyIndex).transform();
+                            enemies.get(enemyIndex).transform(game.getGraphics());
                             for(int i = 0; i < enemies.size(); i++){
                                 enemies.get(i).resetSkills();
                             }
