@@ -164,10 +164,9 @@ public class LoadingScreen extends Screen {
 
             //Temporary testing
             /*
-            Graphics g = game.getGraphics();
             for(int i = 0; i < 1000; i++){
                 WifeyCharacter newChar = new WifeyCharacter();
-                newChar.setImage(g.newImage("characters/test/" + i + ".png", ImageFormat.RGB565));
+                newChar.setImage("test/" + i);
                 newChar.setName(String.valueOf(i));
                 newChar.setStrength(1);
                 newChar.setMagic(1);
@@ -223,10 +222,9 @@ public class LoadingScreen extends Screen {
 
             //Temporary testing
             /*
-            Graphics g = game.getGraphics();
             for(int i = 0; i < 1000; i++){
                 EnemyCharacter newEnemy = new EnemyCharacter();
-                newEnemy.setImage(g.newImage("enemies/test/" + i + ".png", ImageFormat.RGB565));
+                newEnemy.setImage("test/" + i);
                 newEnemy.setName(String.valueOf(i));
                 Enemies.put(String.valueOf(i), newEnemy);
             }
