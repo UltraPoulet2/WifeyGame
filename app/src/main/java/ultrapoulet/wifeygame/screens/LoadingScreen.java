@@ -2,10 +2,13 @@ package ultrapoulet.wifeygame.screens;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.Paint;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -13,13 +16,10 @@ import javax.xml.parsers.SAXParserFactory;
 import ultrapoulet.androidgame.framework.Game;
 import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Graphics.ImageFormat;
+import ultrapoulet.androidgame.framework.Input.TouchEvent;
 import ultrapoulet.androidgame.framework.Screen;
 import ultrapoulet.wifeygame.Assets;
-import ultrapoulet.wifeygame.character.Element;
-import ultrapoulet.wifeygame.character.EnemyCharacter;
-import ultrapoulet.wifeygame.character.Weapon;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
-import ultrapoulet.wifeygame.gamestate.Enemies;
 import ultrapoulet.wifeygame.gamestate.Party;
 import ultrapoulet.wifeygame.gamestate.RecruitedCharacters;
 import ultrapoulet.wifeygame.parsers.BattleParser;
@@ -31,11 +31,105 @@ import ultrapoulet.wifeygame.parsers.EnemyParser;
  */
 public class LoadingScreen extends Screen {
 
+    private static final int STATUS_X = 400;
+    private static final int STATUS_Y = 1000;
+    private Paint statusPaint;
+    private boolean pressDown = false;
+
     public LoadingScreen(Game game){
         super(game);
+
+        statusPaint = new Paint();
+        statusPaint.setTextAlign(Paint.Align.CENTER);
+        statusPaint.setTextSize(40);
+        statusPaint.setColor(Color.WHITE);
     }
+
+    private enum LoadingPhase {
+        CREATE_IMAGES{
+            @Override
+            protected String getStatus() {
+                return "Creating Images";
+            }
+        },
+        CREATE_RECRUITS{
+            @Override
+            protected String getStatus() {
+                return "Creating Wifeys";
+            }
+        },
+        CREATE_PARTY{
+            @Override
+            protected String getStatus() {
+                return "Creating Current Party";
+            }
+        },
+        CREATE_ENEMIES{
+            @Override
+            protected String getStatus() {
+               return "Creating Enemies";
+            }
+        },
+        CREATE_BATTLES{
+            @Override
+            protected String getStatus() {
+                return "Creating Battles";
+            }
+        },
+        COMPLETE{
+            @Override
+            protected String getStatus() {
+                return "Tap to Start";
+            }
+        };
+        protected abstract String getStatus();
+    };
+
+    private LoadingPhase currentPhase = LoadingPhase.CREATE_IMAGES;
+
     @Override
     public void update(float deltaTime) {
+        switch(currentPhase){
+            case CREATE_IMAGES:
+                createImages();
+                currentPhase = LoadingPhase.CREATE_RECRUITS;
+                break;
+            case CREATE_RECRUITS:
+                createRecruits();
+                currentPhase = LoadingPhase.CREATE_PARTY;
+                break;
+            case CREATE_PARTY:
+                createParty();
+                currentPhase = LoadingPhase.CREATE_ENEMIES;
+                break;
+            case CREATE_ENEMIES:
+                createEnemies();
+                currentPhase = LoadingPhase.CREATE_BATTLES;
+                break;
+            case CREATE_BATTLES:
+                createBattles();
+                currentPhase = LoadingPhase.COMPLETE;
+                //Clear the touch input buffer
+                game.getInput().getTouchEvents();
+                break;
+            case COMPLETE:
+                List<TouchEvent> touchEvents = game.getInput().getTouchEvents();
+
+                for (int i = 0; i < touchEvents.size(); i++) {
+                    TouchEvent t = touchEvents.get(i);
+                    if(t.type == TouchEvent.TOUCH_DOWN){
+                        pressDown = true;
+                    }
+                    else if(t.type == TouchEvent.TOUCH_UP && pressDown) {
+                        BattleSelectScreen bss = new BattleSelectScreen(game);
+                        game.setScreen(bss);
+                    }
+                }
+                break;
+        }
+    }
+
+    private void createImages(){
         Graphics g = game.getGraphics();
 
         Assets.PowerAttackEnabled = g.newImage("buttons/PowerAttackEnabled.png", ImageFormat.RGB565);
@@ -141,15 +235,6 @@ public class LoadingScreen extends Screen {
         Assets.ElementImages.add(g.newImage("elements/FireElement.png", ImageFormat.ARGB8888));
         Assets.ElementImages.add(g.newImage("elements/LightElement.png", ImageFormat.ARGB8888));
         Assets.ElementImages.add(g.newImage("elements/WaterElement.png", ImageFormat.ARGB8888));
-
-        createRecruits();
-        createParty();
-        createEnemies();
-        createBattles();
-
-        BattleSelectScreen bss = new BattleSelectScreen(game);
-        game.setScreen(bss);
-
     }
 
     private void createRecruits(){
@@ -271,6 +356,10 @@ public class LoadingScreen extends Screen {
 
     @Override
     public void paint(float deltaTime) {
+        Graphics g = game.getGraphics();
+
+        g.clearScreen(Color.BLACK);
+        g.drawString(currentPhase.getStatus(), STATUS_X, STATUS_Y, statusPaint);
 
     }
 
