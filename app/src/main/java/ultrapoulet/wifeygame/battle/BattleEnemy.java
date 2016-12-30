@@ -11,6 +11,7 @@ import ultrapoulet.wifeygame.battle.enemyai.EnemyAI;
 import ultrapoulet.wifeygame.battle.enemyai.EnemyAI.EnemyAction;
 import ultrapoulet.wifeygame.battle.skills.SkillList;
 import ultrapoulet.wifeygame.character.Element;
+import ultrapoulet.wifeygame.character.EnemyCharacter;
 import ultrapoulet.wifeygame.character.SkillsEnum;
 import ultrapoulet.wifeygame.character.TransformEnemy;
 
@@ -58,50 +59,29 @@ public class BattleEnemy extends BattleCharacter{
 
     private EnemyAction storedAction;
 
-    public BattleEnemy(
-            String name,
-            int maxHP,
-            int powerDamage,
-            int powerHits,
-            int comboDamage,
-            int comboHits,
-            int magicDamage,
-            int healAmount,
-            double powerUpPercentage,
-            double powerDownPercentage,
-            double defendPercentage,
-            double weakenPercentage,
-            int specialDamage,
-            int specialHits,
-            ArrayList<SkillsEnum> skills,
-            Element atkElement,
-            Element stgElement,
-            Element wkElement,
-            Image image,
-            EnemyAI ai,
-            ArrayList<TransformEnemy> transformEnemies){
-        this.name = name;
-        this.maxHP = maxHP;
-        this.currentHP = maxHP;
-        this.powerDamage = powerDamage;
-        this.powerHits = powerHits;
-        this.comboDamage = comboDamage;
-        this.comboHits = comboHits;
-        this.magicDamage = magicDamage;
-        this.healAmount = healAmount;
-        this.powerUpPercentage = powerUpPercentage;
-        this.powerDownPercentage = powerDownPercentage;
-        this.defendPercentage = defendPercentage;
-        this.weakenPercentage = weakenPercentage;
-        this.specialDamage = specialDamage;
-        this.specialHits = specialHits;
-        this.skills = new SkillList(skills, this);
-        this.attackElement = atkElement;
-        this.strongElement = stgElement;
-        this.weakElement = wkElement;
-        this.image = image;
-        this.ai = ai;
-        this.transformations = transformEnemies;
+    public BattleEnemy(EnemyCharacter input, Graphics g) {
+        this.name = input.getName();
+        this.maxHP = input.getMaxHP();
+        this.currentHP = input.getMaxHP();
+        this.powerDamage = input.getPowerDamage();
+        this.powerHits = input.getPowerHits();
+        this.comboDamage = input.getComboDamage();
+        this.comboHits = input.getComboHits();
+        this.magicDamage = input.getMagicDamage();
+        this.healAmount = input.getHealAmount();
+        this.powerUpPercentage = input.getPowerUpPercentage();
+        this.powerDownPercentage = input.getPowerDownPercentage();
+        this.defendPercentage = input.getDefendPercentage();
+        this.weakenPercentage = input.getWeakenPercentage();
+        this.specialDamage = input.getSpecialDamage();
+        this.specialHits = input.getSpecialHits();
+        this.skills = new SkillList(input.getSkills(), this);
+        this.attackElement = input.getAttackElement();
+        this.strongElement = input.getStrongElement();
+        this.weakElement = input.getWeakElement();
+        this.image = input.getImage(g);
+        this.ai = input.getAI();
+        this.transformations = input.getTransformations();
 
         actionStrings = new HashMap<>();
         actionStrings.put(EnemyAction.POWER_ATTACK, "Power Attack");

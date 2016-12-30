@@ -120,6 +120,10 @@ public class EnemyCharacter {
         return this.transformations;
     }
 
+    public EnemyAI getAI(){
+        return EnemyAI.getAI(ai);
+    }
+
 
     public void setName(String name){
         this.name = name;
@@ -205,28 +209,7 @@ public class EnemyCharacter {
     }
 
     public BattleEnemy getBattleEnemy(Graphics g){
-        return new BattleEnemy(
-                name,
-                maxHP,
-                powerDamage,
-                powerHits,
-                comboDamage,
-                comboHits,
-                magicDamage,
-                healAmount,
-                powerUpPercentage,
-                powerDownPercentage,
-                defendPercentage,
-                weakenPercentage,
-                specialDamage,
-                specialHits,
-                skills,
-                attackElement,
-                strongElement,
-                weakElement,
-                this.getImage(g),
-                EnemyAI.getAI(ai),
-                transformations);
+        return new BattleEnemy(this, g);
     }
 
     public boolean validate(){
