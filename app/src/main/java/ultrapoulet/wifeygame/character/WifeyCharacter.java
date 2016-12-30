@@ -27,7 +27,6 @@ public class WifeyCharacter {
     private Element strongElement;
     private Element weakElement;
 
-    //private Image image;
     private String image;
 
     private ArrayList<TransformWifey> transformations;
@@ -38,8 +37,7 @@ public class WifeyCharacter {
     }
 
     public BattleWifey getBattleCharacter(Graphics g){
-        return new BattleWifey(name, weapon, strength, magic, this.getImage(g), skills,
-                attackElement, strongElement, weakElement, transformations);
+        return new BattleWifey(this, g);
     }
 
     public String getName(){
