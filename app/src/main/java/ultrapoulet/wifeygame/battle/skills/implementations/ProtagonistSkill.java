@@ -16,12 +16,18 @@ public class ProtagonistSkill extends AbsSkill {
     }
 
     @Override
-    public void onDamageReceived(int damage) {
-        if(owner.getCurrentHP() <= 0 && !revived){
+    public boolean canPreventDeath() {
+        return !revived;
+    }
+
+    @Override
+    public int preventDeath() {
+        if(owner.getCurrentHP() == 0 && !revived){
             owner.setCurrentHP(0);
-            owner.healDamage(owner.HealAmount(owner), owner);
             revived = true;
+            return owner.healDamage(owner.HealAmount(owner), owner);
         }
+        return 0;
     }
 
     @Override

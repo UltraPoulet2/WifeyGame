@@ -20,6 +20,7 @@ public class BattleParser extends DefaultHandler {
     private boolean bPartySize = false;
     private boolean bRequirement = false;
     private boolean bRValue = false;
+    private boolean bBackground = false;
 
     private boolean error = false;
 
@@ -68,8 +69,10 @@ public class BattleParser extends DefaultHandler {
             bRequirement = true;
         }
         else if(qName.equalsIgnoreCase("value")){
-            System.out.println("Creating value");
             bRValue = true;
+        }
+        else if(qName.equalsIgnoreCase("background")){
+            bBackground = true;
         }
         else{
             System.out.println("BattleParser:startElement(): Invalid qName: " + qName + " for key " + battleKey);
@@ -130,11 +133,14 @@ public class BattleParser extends DefaultHandler {
             }
         }
         else if(bRValue){
-            System.out.println("Value for requirement: " + temp);
             if(reqBuilder != null){
                 reqBuilder.addValue(temp);
             }
             bRValue = false;
+        }
+        else if(bBackground){
+            battleBuilder.setBackground(temp);
+            bBackground = false;
         }
     }
 
@@ -143,6 +149,7 @@ public class BattleParser extends DefaultHandler {
         bName = false;
         bEnemy = false;
         bRValue = false;
+        bBackground = false;
     }
 
     private boolean validate(){
@@ -156,6 +163,9 @@ public class BattleParser extends DefaultHandler {
             return false;
         }
         if(battleBuilder.getPartyMax() <= 0 || battleBuilder.getPartyMax() > 7){
+            return false;
+        }
+        if(battleBuilder.getBackgroundName() == null){
             return false;
         }
 

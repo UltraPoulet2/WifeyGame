@@ -19,21 +19,22 @@ public class Assets {
     public static Image DefendEnabled, DefendDisabled;
     public static Image attackBox;
     public static Image charHolder;
-    public static Image testBG;
     public static Image pHealthG, pHealthY, pHealthR;
     public static Image eHealthG, eHealthY, eHealthR;
     public static Image enemyHolder;
     public static Image specialBar, specialBarBase, specialBarTop;
     public static Image hitsText, hitText, damageText;
+    public static Image AttackUp, AttackDown;
+    public static Image DefenseUp, DefenseDown;
+    public static Image WaveText, FinalWaveText;
 
     public static List<Image> KOImages;
-    public static List<Image> HPNumbers;
     public static Image HPSlash;
-    public static List<Image> HPHealNumbers;
-    public static List<Image> ComboHitsNumbers;
-    public static List<Image> DamageHitsNumbers;
-    public static List<Image> WeakNumbers;
-    public static List<Image> ResistNumbers;
+    public static List<Image> WhiteNumbers;
+    public static List<Image> GreenNumbers;
+    public static List<Image> YellowNumbers;
+    public static List<Image> RedNumbers;
+    public static List<Image> GreyNumbers;
 
     //PartySelectScreen Stuff
     public static Image PartySelectScreen;
@@ -49,6 +50,9 @@ public class Assets {
     public static Image BattleCharacterInfoScreen;
     public static Image ScrollBarFull;
     public static Image ScrollBarShort;
+    public static Image TransformNextEnable, TransformNextDisable;
+    public static Image TransformPrevEnable, TransformPrevDisable;
+    public static Image TransformHolder;
 
     //BattleInfoScreen Stuff
     public static Image BattleInfoScreen;

@@ -6,6 +6,7 @@ import android.graphics.Paint;
 import ultrapoulet.androidgame.framework.Game;
 import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Image;
+import ultrapoulet.androidgame.framework.Screen;
 import ultrapoulet.androidgame.framework.helpers.NumberPrinter;
 import ultrapoulet.wifeygame.Assets;
 import ultrapoulet.wifeygame.battle.BattleEnemy;
@@ -23,6 +24,14 @@ public class BattleCharacterInfoScreen extends AbsCharacterInfoScreen {
     private BattleEnemy displayEnemy;
 
     private Multipliers multipliers;
+
+    private static final int TRANSFORM_HOLDER_X = 25 + BG_X;
+    private static final int TRANSFORM_HOLDER_Y = 95 + BG_Y;
+    private static final int TRANSFORM_NUMBER_LEFT_X = CHAR_X;
+    private static final int TRANSFORM_NUMBER_RIGHT_X = TRANSFORM_NUMBER_LEFT_X + 40;
+    private static final int TRANSFORM_NUMBER_Y = CHAR_Y;
+    private static final int TRANSFORM_WIDTH = 20;
+    private static final int TRANSFORM_HEIGHT = 40;
 
     private static final int HEALTH_BAR_X = 400 + BG_X;
     private static final int HEALTH_BAR_Y = 200 + BG_Y;
@@ -45,8 +54,8 @@ public class BattleCharacterInfoScreen extends AbsCharacterInfoScreen {
     private static final int ATK_Y = 322 + BG_Y;
     private static final int DEF_Y = 85 + ATK_Y;
 
-    public BattleCharacterInfoScreen(Game game) {
-        super(game);
+    public BattleCharacterInfoScreen(Game game, Screen previousScreen) {
+        super(game, previousScreen);
         background = Assets.BattleCharacterInfoScreen;
     }
 
@@ -90,6 +99,11 @@ public class BattleCharacterInfoScreen extends AbsCharacterInfoScreen {
 
     protected void drawPortrait(Graphics g){
         g.drawPercentageImage(displayChar.getImage(),CHAR_X, CHAR_Y, DOUBLE_SCALE, DOUBLE_SCALE);
+        if(displayChar.getMaxTransformNumber() != 1) {
+            g.drawImage(Assets.TransformHolder, TRANSFORM_HOLDER_X, TRANSFORM_HOLDER_Y);
+            NumberPrinter.drawNumber(g, displayChar.getTransformNumber(), TRANSFORM_NUMBER_LEFT_X, TRANSFORM_NUMBER_Y, TRANSFORM_WIDTH, TRANSFORM_HEIGHT, 0, Assets.WhiteNumbers, NumberPrinter.Align.LEFT);
+            NumberPrinter.drawNumber(g, displayChar.getMaxTransformNumber(), TRANSFORM_NUMBER_RIGHT_X, TRANSFORM_NUMBER_Y, TRANSFORM_WIDTH, TRANSFORM_HEIGHT, 0, Assets.WhiteNumbers, NumberPrinter.Align.LEFT);
+        }
     }
 
     protected void drawElements(Graphics g){
@@ -108,9 +122,9 @@ public class BattleCharacterInfoScreen extends AbsCharacterInfoScreen {
         int healthSize = (int) (HEALTH_BAR_SCALE_X * perHealth);
         g.drawPercentageImage(healthBar, HEALTH_BAR_X, HEALTH_BAR_Y, healthSize, HEALTH_BAR_SCALE_Y);
 
-        NumberPrinter.drawNumber(g, displayChar.getCurrentHP(), CUR_HEALTH_X, HEALTH_Y, HEALTH_NUMBER_WIDTH, HEALTH_NUMBER_HEIGHT, HEALTH_OFFSET_X, Assets.HPNumbers, NumberPrinter.Align.RIGHT);
+        NumberPrinter.drawNumber(g, displayChar.getCurrentHP(), CUR_HEALTH_X, HEALTH_Y, HEALTH_NUMBER_WIDTH, HEALTH_NUMBER_HEIGHT, HEALTH_OFFSET_X, Assets.WhiteNumbers, NumberPrinter.Align.RIGHT);
         g.drawImage(Assets.HPSlash, HEALTH_SLASH_X, HEALTH_Y);
-        NumberPrinter.drawNumber(g, displayChar.getMaxHP(), MAX_HEALTH_X, HEALTH_Y, HEALTH_NUMBER_WIDTH, HEALTH_NUMBER_HEIGHT, HEALTH_OFFSET_X, Assets.HPNumbers, NumberPrinter.Align.LEFT);
+        NumberPrinter.drawNumber(g, displayChar.getMaxHP(), MAX_HEALTH_X, HEALTH_Y, HEALTH_NUMBER_WIDTH, HEALTH_NUMBER_HEIGHT, HEALTH_OFFSET_X, Assets.WhiteNumbers, NumberPrinter.Align.LEFT);
 
         g.drawString(format(multipliers.getPhysAtk()) + "x", PHYS_X, ATK_Y, multPaint);
         g.drawString(format(multipliers.getMagAtk()) + "x", MAG_X, ATK_Y, multPaint);

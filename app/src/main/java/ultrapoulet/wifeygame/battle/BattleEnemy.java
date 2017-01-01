@@ -5,11 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.wifeygame.battle.enemyai.EnemyAI;
 import ultrapoulet.wifeygame.battle.enemyai.EnemyAI.EnemyAction;
 import ultrapoulet.wifeygame.battle.skills.SkillList;
 import ultrapoulet.wifeygame.character.Element;
+import ultrapoulet.wifeygame.character.EnemyCharacter;
 import ultrapoulet.wifeygame.character.SkillsEnum;
 import ultrapoulet.wifeygame.character.TransformEnemy;
 
@@ -57,50 +59,29 @@ public class BattleEnemy extends BattleCharacter{
 
     private EnemyAction storedAction;
 
-    public BattleEnemy(
-            String name,
-            int maxHP,
-            int powerDamage,
-            int powerHits,
-            int comboDamage,
-            int comboHits,
-            int magicDamage,
-            int healAmount,
-            double powerUpPercentage,
-            double powerDownPercentage,
-            double defendPercentage,
-            double weakenPercentage,
-            int specialDamage,
-            int specialHits,
-            ArrayList<SkillsEnum> skills,
-            Element atkElement,
-            Element stgElement,
-            Element wkElement,
-            Image image,
-            EnemyAI ai,
-            ArrayList<TransformEnemy> transformEnemies){
-        this.name = name;
-        this.maxHP = maxHP;
-        this.currentHP = maxHP;
-        this.powerDamage = powerDamage;
-        this.powerHits = powerHits;
-        this.comboDamage = comboDamage;
-        this.comboHits = comboHits;
-        this.magicDamage = magicDamage;
-        this.healAmount = healAmount;
-        this.powerUpPercentage = powerUpPercentage;
-        this.powerDownPercentage = powerDownPercentage;
-        this.defendPercentage = defendPercentage;
-        this.weakenPercentage = weakenPercentage;
-        this.specialDamage = specialDamage;
-        this.specialHits = specialHits;
-        this.skills = new SkillList(skills, this);
-        this.attackElement = atkElement;
-        this.strongElement = stgElement;
-        this.weakElement = wkElement;
-        this.image = image;
-        this.ai = ai;
-        this.transformations = transformEnemies;
+    public BattleEnemy(EnemyCharacter input, Graphics g) {
+        this.name = input.getName();
+        this.maxHP = input.getMaxHP();
+        this.currentHP = input.getMaxHP();
+        this.powerDamage = input.getPowerDamage();
+        this.powerHits = input.getPowerHits();
+        this.comboDamage = input.getComboDamage();
+        this.comboHits = input.getComboHits();
+        this.magicDamage = input.getMagicDamage();
+        this.healAmount = input.getHealAmount();
+        this.powerUpPercentage = input.getPowerUpPercentage();
+        this.powerDownPercentage = input.getPowerDownPercentage();
+        this.defendPercentage = input.getDefendPercentage();
+        this.weakenPercentage = input.getWeakenPercentage();
+        this.specialDamage = input.getSpecialDamage();
+        this.specialHits = input.getSpecialHits();
+        this.skills = new SkillList(input.getSkills(), this);
+        this.attackElement = input.getAttackElement();
+        this.strongElement = input.getStrongElement();
+        this.weakElement = input.getWeakElement();
+        this.image = input.getImage(g);
+        this.ai = input.getAI();
+        this.transformations = input.getTransformations();
 
         actionStrings = new HashMap<>();
         actionStrings.put(EnemyAction.POWER_ATTACK, "Power Attack");
@@ -302,6 +283,7 @@ public class BattleEnemy extends BattleCharacter{
         System.out.println("Enemy's multiplying heal received by: " + skills.receiveHealPercentage(healer));
         this.currentHP = this.currentHP + displayHeal;
         if(this.currentHP > this.maxHP){
+            displayHeal = displayHeal - (this.currentHP - this.maxHP);
             this.currentHP = this.maxHP;
         }
         return displayHeal;
@@ -311,9 +293,18 @@ public class BattleEnemy extends BattleCharacter{
         defendActive = true;
         defendTurns = 0;
     }
+
+    public boolean isDefendActive() {
+        return defendActive;
+    }
+
     public void weaken(){
         weakenActive = true;
         weakenTurns = 0;
+    }
+
+    public boolean isWeakenActive() {
+        return weakenActive;
     }
 
     public void powerUp(){
@@ -321,9 +312,17 @@ public class BattleEnemy extends BattleCharacter{
         powerUpTurns = 0;
     }
 
+    public boolean isPowerUpActive() {
+        return powerUpActive;
+    }
+
     public void powerDown(){
         powerDownActive = true;
         powerDownTurns = 0;
+    }
+
+    public boolean isPowerDownActive() {
+        return powerDownActive;
     }
 
     public void startTurn(){
@@ -366,11 +365,11 @@ public class BattleEnemy extends BattleCharacter{
         return transformations.size() > transformNumber;
     }
 
-    public void transform(){
+    public void transform(Graphics g){
         TransformEnemy form = transformations.get(transformNumber);
         transformNumber++;
         this.name = form.getName();
-        this.image = form.getImage();
+        this.image = form.getImage(g);
         this.ai = EnemyAI.getAI(form.getAi());
         if(form.getHP() > 0) {
             this.maxHP = form.getHP();

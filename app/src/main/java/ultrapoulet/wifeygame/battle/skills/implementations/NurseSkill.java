@@ -19,9 +19,10 @@ public class NurseSkill extends AbsSkill {
     }
 
     @Override
-    public void startRound() {
+    public int startRound() {
         int baseHeal = owner.HealAmount(owner) / 10;
-        owner.healDamage(baseHeal, owner);
+        //Multiply by -1 to indicate heal
+        return -1 * owner.healDamage(baseHeal, owner);
     }
 
     @Override

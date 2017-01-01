@@ -76,17 +76,27 @@ public class SkillList {
         }
     }
 
-    public void startRound(){
+    public int startRound(){
         //Do anything that needs to be done at the start of a round
+        int displayDamage = 0;
         for(int i = 0; i < skills.size(); i++){
-            skills.get(i).startRound();
+            displayDamage += skills.get(i).startRound();
         }
+        return displayDamage;
     }
 
     public void endRound() {
         //Do anything that needs to be done at the end of a round
         for(int i = 0; i < skills.size(); i++){
             skills.get(i).endRound();
+        }
+    }
+
+    public void endWave() {
+        //Do anything that needs to be done at the end of a wave
+        //This is currently only relevant for BattleWifeys
+        for(int i = 0; i < skills.size(); i++){
+            skills.get(i).endWave();
         }
     }
 
@@ -230,6 +240,22 @@ public class SkillList {
         for(int i = 0; i < skills.size(); i++){
             skills.get(i).onDamageReceived(damage);
         }
+    }
+
+    public boolean canPreventDeath(){
+        boolean returnValue = false;
+        for(int i = 0; i < skills.size(); i++){
+            returnValue = returnValue || skills.get(i).canPreventDeath();
+        }
+        return returnValue;
+    }
+
+    public int preventDeath() {
+        int returnValue = 0;
+        for(int i = 0; i < skills.size(); i++){
+            returnValue += skills.get(i).preventDeath();
+        }
+        return returnValue;
     }
 
     public boolean hasSkill(Class skillClass){

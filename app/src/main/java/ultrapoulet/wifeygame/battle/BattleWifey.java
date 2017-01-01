@@ -3,6 +3,7 @@ package ultrapoulet.wifeygame.battle;
 import java.util.ArrayList;
 import java.util.List;
 
+import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.wifeygame.character.Element;
 import ultrapoulet.wifeygame.character.SkillsEnum;
@@ -10,6 +11,7 @@ import ultrapoulet.wifeygame.character.TransformWifey;
 import ultrapoulet.wifeygame.character.Weapon;
 import ultrapoulet.wifeygame.battle.skills.AbsSkill.Multipliers;
 import ultrapoulet.wifeygame.battle.skills.SkillList;
+import ultrapoulet.wifeygame.character.WifeyCharacter;
 
 /**
  * Created by John on 3/5/2016.
@@ -25,30 +27,20 @@ public class BattleWifey extends BattleCharacter{
 
     private boolean isDefending = false;
 
-    public BattleWifey(
-            String name,
-            Weapon weapon,
-            int strength,
-            int magic,
-            Image image,
-            ArrayList<SkillsEnum> skills,
-            Element atkElement,
-            Element stgElement,
-            Element wkElement,
-            ArrayList<TransformWifey> transformWifeys){
-        this.name = name;
-        this.maxHP = calculateHP(strength);
+    public BattleWifey(WifeyCharacter input, Graphics g) {
+        this.name = input.getName();
+        this.maxHP = calculateHP(input.getStrength());
         this.currentHP = this.maxHP;
-        this.weapon = weapon;
-        this.numHits = weapon.getNumHits();
-        this.strength = strength;
-        this.magic = magic;
-        this.image = image;
-        this.skills = new SkillList(skills, this);
-        this.attackElement = atkElement;
-        this.strongElement = stgElement;
-        this.weakElement = wkElement;
-        this.transformWifeys = transformWifeys;
+        this.weapon = input.getWeapon();
+        this.numHits = this.weapon.getNumHits();
+        this.strength = input.getStrength();
+        this.magic = input.getMagic();
+        this.image = input.getImage(g);
+        this.skills = new SkillList(input.getSkills(), this);
+        this.attackElement = input.getAttackElement();
+        this.strongElement = input.getStrongElement();
+        this.weakElement = input.getWeakElement();
+        this.transformWifeys = input.getTransformations();
     }
 
     public static int calculateHP(int strength){
@@ -197,10 +189,10 @@ public class BattleWifey extends BattleCharacter{
         return displayHeal;
     }
 
-    public void transform(){
+    public void transform(Graphics g){
         TransformWifey form = transformWifeys.get(transformNumber);
         transformNumber++;
-        this.image = form.getImage();
+        this.image = form.getImage(g);
         this.maxHP = form.getHP();
         this.strength = form.getStrength();
         this.magic = form.getMagic();
@@ -226,6 +218,14 @@ public class BattleWifey extends BattleCharacter{
 
     public boolean canTransform(){
         return transformWifeys.size() > transformNumber;
+    }
+
+    public int getTransformNumber() {
+        return transformNumber + 1;
+    }
+
+    public int getMaxTransformNumber() {
+        return transformWifeys.size() + 1;
     }
 
     public Multipliers getMultipliers(BattleEnemy enemy){

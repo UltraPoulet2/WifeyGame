@@ -2,10 +2,13 @@ package ultrapoulet.wifeygame.screens;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.Paint;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -13,7 +16,7 @@ import javax.xml.parsers.SAXParserFactory;
 import ultrapoulet.androidgame.framework.Game;
 import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Graphics.ImageFormat;
-import ultrapoulet.androidgame.framework.Image;
+import ultrapoulet.androidgame.framework.Input.TouchEvent;
 import ultrapoulet.androidgame.framework.Screen;
 import ultrapoulet.wifeygame.Assets;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
@@ -28,13 +31,106 @@ import ultrapoulet.wifeygame.parsers.EnemyParser;
  */
 public class LoadingScreen extends Screen {
 
+    private static final int STATUS_X = 400;
+    private static final int STATUS_Y = 1000;
+    private Paint statusPaint;
+    private boolean pressDown = false;
+
     public LoadingScreen(Game game){
         super(game);
+
+        statusPaint = new Paint();
+        statusPaint.setTextAlign(Paint.Align.CENTER);
+        statusPaint.setTextSize(40);
+        statusPaint.setColor(Color.WHITE);
     }
+
+    private enum LoadingPhase {
+        CREATE_IMAGES{
+            @Override
+            protected String getStatus() {
+                return "Creating Images";
+            }
+        },
+        CREATE_RECRUITS{
+            @Override
+            protected String getStatus() {
+                return "Creating Wifeys";
+            }
+        },
+        CREATE_PARTY{
+            @Override
+            protected String getStatus() {
+                return "Creating Current Party";
+            }
+        },
+        CREATE_ENEMIES{
+            @Override
+            protected String getStatus() {
+               return "Creating Enemies";
+            }
+        },
+        CREATE_BATTLES{
+            @Override
+            protected String getStatus() {
+                return "Creating Battles";
+            }
+        },
+        COMPLETE{
+            @Override
+            protected String getStatus() {
+                return "Tap to Start";
+            }
+        };
+        protected abstract String getStatus();
+    };
+
+    private LoadingPhase currentPhase = LoadingPhase.CREATE_IMAGES;
+
     @Override
     public void update(float deltaTime) {
+        switch(currentPhase){
+            case CREATE_IMAGES:
+                createImages();
+                currentPhase = LoadingPhase.CREATE_RECRUITS;
+                break;
+            case CREATE_RECRUITS:
+                createRecruits();
+                currentPhase = LoadingPhase.CREATE_PARTY;
+                break;
+            case CREATE_PARTY:
+                createParty();
+                currentPhase = LoadingPhase.CREATE_ENEMIES;
+                break;
+            case CREATE_ENEMIES:
+                createEnemies();
+                currentPhase = LoadingPhase.CREATE_BATTLES;
+                break;
+            case CREATE_BATTLES:
+                createBattles();
+                currentPhase = LoadingPhase.COMPLETE;
+                //Clear the touch input buffer
+                game.getInput().getTouchEvents();
+                break;
+            case COMPLETE:
+                List<TouchEvent> touchEvents = game.getInput().getTouchEvents();
+
+                for (int i = 0; i < touchEvents.size(); i++) {
+                    TouchEvent t = touchEvents.get(i);
+                    if(t.type == TouchEvent.TOUCH_DOWN){
+                        pressDown = true;
+                    }
+                    else if(t.type == TouchEvent.TOUCH_UP && pressDown) {
+                        BattleSelectScreen bss = new BattleSelectScreen(game);
+                        game.setScreen(bss);
+                    }
+                }
+                break;
+        }
+    }
+
+    private void createImages(){
         Graphics g = game.getGraphics();
-        Assets.testBG = g.newImage("backgrounds/testbg.png", ImageFormat.RGB565);
 
         Assets.PowerAttackEnabled = g.newImage("buttons/PowerAttackEnabled.png", ImageFormat.RGB565);
         Assets.PowerAttackDisabled = g.newImage("buttons/PowerAttackDisabled.png", ImageFormat.RGB565);
@@ -50,6 +146,8 @@ public class LoadingScreen extends Screen {
         Assets.TransformDisabled = g.newImage("buttons/TransformDisabled.png", ImageFormat.RGB565);
         Assets.DefendEnabled = g.newImage("buttons/DefendButtonEnabled.png", ImageFormat.RGB565);
         Assets.DefendDisabled = g.newImage("buttons/DefendButtonDisabled.png", ImageFormat.RGB565);
+        Assets.WaveText = g.newImage("objects/battleMisc/WaveText.png", ImageFormat.RGB565);
+        Assets.FinalWaveText = g.newImage("objects/battleMisc/WaveFinalText.png", ImageFormat.RGB565);
 
         Assets.attackBox = g.newImage("objects/battleMisc/AttackBox.png", ImageFormat.ARGB8888);
         Assets.charHolder = g.newImage("objects/holders/CharacterHolder.png", ImageFormat.ARGB8888);
@@ -69,37 +167,40 @@ public class LoadingScreen extends Screen {
         Assets.hitText = g.newImage("objects/text/Hit.png", ImageFormat.ARGB8888);
         Assets.damageText = g.newImage("objects/text/Damage.png", ImageFormat.ARGB8888);
 
+        Assets.AttackUp = g.newImage("objects/battleMisc/StatusAttackUp.png", ImageFormat.ARGB8888);
+        Assets.AttackDown = g.newImage("objects/battleMisc/StatusAttackDown.png", ImageFormat.ARGB8888);
+        Assets.DefenseUp = g.newImage("objects/battleMisc/StatusDefenseUp.png", ImageFormat.ARGB8888);
+        Assets.DefenseDown = g.newImage("objects/battleMisc/StatusDefenseDown.png", ImageFormat.ARGB8888);
+
         Assets.KOImages = new ArrayList<>();
         for(int i = 0; i < 7; i++){
             Assets.KOImages.add(g.newImage("objects/battleMisc/KOImage" + i + ".png", ImageFormat.ARGB8888));
         }
 
-        Assets.HPNumbers = new ArrayList<>();
+        Assets.WhiteNumbers = new ArrayList<>();
         for(int i = 0; i < 10; i++){
-            Assets.HPNumbers.add(g.newImage("numbers/HP" + i + ".png", ImageFormat.ARGB8888));
+            Assets.WhiteNumbers.add(g.newImage("numbers/white/" + i + ".png", ImageFormat.ARGB8888));
         }
         Assets.HPSlash = g.newImage("numbers/HPSlash.png", ImageFormat.ARGB8888);
 
-        Assets.HPHealNumbers = new ArrayList<>();
+        Assets.GreenNumbers = new ArrayList<>();
         for(int i = 0; i < 10; i++){
-            Assets.HPHealNumbers.add(g.newImage("numbers/HP" + i + "G.png", ImageFormat.ARGB8888));
+            Assets.GreenNumbers.add(g.newImage("numbers/green/" + i + ".png", ImageFormat.ARGB8888));
         }
 
-        Assets.ComboHitsNumbers = new ArrayList<>();
+        Assets.YellowNumbers = new ArrayList<>();
         for(int i = 0; i < 10; i++){
-            Assets.ComboHitsNumbers.add(g.newImage("numbers/Combo" + i + ".png", ImageFormat.ARGB8888));
+            Assets.YellowNumbers.add(g.newImage("numbers/yellow/" + i + ".png", ImageFormat.ARGB8888));
         }
 
-        Assets.DamageHitsNumbers = new ArrayList<>();
+        Assets.RedNumbers = new ArrayList<>();
         for(int i = 0; i < 10; i++){
-            Assets.DamageHitsNumbers.add(g.newImage("numbers/Damage" + i + ".png", ImageFormat.ARGB8888));
+            Assets.RedNumbers.add(g.newImage("numbers/red/" + i + ".png", ImageFormat.ARGB8888));
         }
 
-        Assets.WeakNumbers = Assets.DamageHitsNumbers;
-
-        Assets.ResistNumbers = new ArrayList<>();
+        Assets.GreyNumbers = new ArrayList<>();
         for(int i = 0; i < 10; i++){
-            Assets.ResistNumbers.add(g.newImage("numbers/Resist" + i + ".png", ImageFormat.ARGB8888));
+            Assets.GreyNumbers.add(g.newImage("numbers/grey/" + i + ".png", ImageFormat.ARGB8888));
         }
 
         Assets.PartySelectScreen = g.newImage("screens/PartySelectScreen.png", ImageFormat.RGB565);
@@ -114,6 +215,12 @@ public class LoadingScreen extends Screen {
         Assets.BattleDisable = g.newImage("buttons/BattleDisabled.png", ImageFormat.ARGB8888);
         Assets.ScrollBarFull = g.newImage("buttons/ScrollBarFull.png", ImageFormat.ARGB8888);
         Assets.ScrollBarShort = g.newImage("buttons/ScrollBarShort.png", ImageFormat.ARGB8888);
+        Assets.TransformNextEnable = g.newImage("buttons/TransformNextPageEnabled.png", ImageFormat.ARGB8888);
+        Assets.TransformNextDisable = g.newImage("buttons/TransformNextPageDisabled.png", ImageFormat.ARGB8888);
+        Assets.TransformPrevEnable = g.newImage("buttons/TransformPrevPageEnabled.png", ImageFormat.ARGB8888);
+        Assets.TransformPrevDisable = g.newImage("buttons/TransformPrevPageDisabled.png", ImageFormat.ARGB8888);
+        Assets.TransformHolder = g.newImage("objects/holders/TransformationHolder.png", ImageFormat.ARGB8888);
+
         Assets.InvalidChar = g.newImage("objects/holders/InvalidChar.png", ImageFormat.ARGB8888);
         Assets.RequiredCharHolder = g.newImage("objects/holders/RequiredCharHolder.png", ImageFormat.ARGB8888);
 
@@ -128,15 +235,6 @@ public class LoadingScreen extends Screen {
         Assets.ElementImages.add(g.newImage("elements/FireElement.png", ImageFormat.ARGB8888));
         Assets.ElementImages.add(g.newImage("elements/LightElement.png", ImageFormat.ARGB8888));
         Assets.ElementImages.add(g.newImage("elements/WaterElement.png", ImageFormat.ARGB8888));
-
-        createRecruits();
-        createParty();
-        createEnemies();
-        createBattles();
-
-        BattleSelectScreen bss = new BattleSelectScreen(game);
-        game.setScreen(bss);
-
     }
 
     private void createRecruits(){
@@ -148,6 +246,22 @@ public class LoadingScreen extends Screen {
             CharacterParser charParser = new CharacterParser();
             charParser.setGraphics(game.getGraphics());
             saxParser.parse(in, charParser);
+
+            //Temporary testing
+            /*
+            for(int i = 0; i < 1000; i++){
+                WifeyCharacter newChar = new WifeyCharacter();
+                newChar.setImage("test/" + i);
+                newChar.setName(String.valueOf(i));
+                newChar.setStrength(1);
+                newChar.setMagic(1);
+                newChar.setWeapon(Weapon.getWeapon("BALL"));
+                newChar.setAttackElement(Element.getElement("FIRE"));
+                newChar.setStrongElement(Element.getElement("FIRE"));
+                newChar.setWeakElement(Element.getElement("FIRE"));
+                RecruitedCharacters.put(String.valueOf(i), newChar);
+            }
+            */
         }
         catch (Exception e){
             e.printStackTrace();
@@ -190,6 +304,16 @@ public class LoadingScreen extends Screen {
             EnemyParser enemyParser = new EnemyParser();
             enemyParser.setGraphics(game.getGraphics());
             saxParser.parse(in, enemyParser);
+
+            //Temporary testing
+            /*
+            for(int i = 0; i < 1000; i++){
+                EnemyCharacter newEnemy = new EnemyCharacter();
+                newEnemy.setImage("test/" + i);
+                newEnemy.setName(String.valueOf(i));
+                Enemies.put(String.valueOf(i), newEnemy);
+            }
+            */
         }
         catch (Exception e){
             e.printStackTrace();
@@ -232,6 +356,10 @@ public class LoadingScreen extends Screen {
 
     @Override
     public void paint(float deltaTime) {
+        Graphics g = game.getGraphics();
+
+        g.clearScreen(Color.BLACK);
+        g.drawString(currentPhase.getStatus(), STATUS_X, STATUS_Y, statusPaint);
 
     }
 

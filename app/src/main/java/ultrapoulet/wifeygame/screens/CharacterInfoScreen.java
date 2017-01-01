@@ -4,10 +4,22 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import ultrapoulet.androidgame.framework.Game;
 import ultrapoulet.androidgame.framework.Graphics;
+import ultrapoulet.androidgame.framework.Image;
+import ultrapoulet.androidgame.framework.Input;
+import ultrapoulet.androidgame.framework.Screen;
+import ultrapoulet.androidgame.framework.helpers.Button;
+import ultrapoulet.androidgame.framework.helpers.ButtonList;
 import ultrapoulet.wifeygame.Assets;
+import ultrapoulet.wifeygame.battle.BattleWifey;
+import ultrapoulet.wifeygame.character.Element;
 import ultrapoulet.wifeygame.character.SkillsEnum;
+import ultrapoulet.wifeygame.character.TransformWifey;
 import ultrapoulet.wifeygame.character.Weapon;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
 
@@ -17,6 +29,30 @@ import ultrapoulet.wifeygame.character.WifeyCharacter;
 public class CharacterInfoScreen extends AbsCharacterInfoScreen {
 
     private WifeyCharacter displayChar;
+    private List<TransformWifey> transformations;
+
+    private Image displayImage;
+    private String displayName;
+    private int displayStrength;
+    private int displayMagic;
+    private ArrayList<SkillsEnum> displaySkills = new ArrayList<>();
+    private Weapon displayWeapon;
+    private Element displayAttackElement;
+    private Element displayStrongElement;
+    private Element displayWeakElement;
+
+    private ButtonList TransformButtons;
+    private Button prevTransform;
+    private Button nextTransform;
+    private int transformPage;
+    private int maxTransformPage;
+    private static final int TRANSFORM_PAGE_WIDTH = 50;
+    private static final int TRANSFORM_PREV_PAGE_LEFT_X = 30 + BG_X;
+    private static final int TRANSFORM_PREV_PAGE_RIGHT_X = TRANSFORM_PREV_PAGE_LEFT_X + TRANSFORM_PAGE_WIDTH;
+    private static final int TRANSFORM_NEXT_PAGE_LEFT_X = TRANSFORM_PREV_PAGE_LEFT_X + 270;
+    private static final int TRANSFORM_NEXT_PAGE_RIGHT_X = TRANSFORM_NEXT_PAGE_LEFT_X + TRANSFORM_PAGE_WIDTH;
+    private static final int TRANSFORM_PAGE_TOP_Y = 100 + BG_Y;
+    private static final int TRANSFORM_PAGE_BOT_Y = TRANSFORM_PAGE_TOP_Y + 320;
 
     private Paint levelPaint;
     private static final int LEVEL_SIZE = 34;
@@ -44,9 +80,10 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
     private static final int HITS_X = 100 + WEAPON_X;
     private static final int HITS_Y = 407 + BG_Y;
 
-    public CharacterInfoScreen(Game game) {
-        super(game);
+    public CharacterInfoScreen(Game game, Screen previousScreen) {
+        super(game, previousScreen);
         background = Assets.CharacterInfoScreen;
+        createUniqueButtons();
     }
 
     protected void createUniquePaints(){
@@ -70,18 +107,41 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
         hitsPaint.setTextSize(HITS_SIZE);
     }
 
+    public void createUniqueButtons(){
+        TransformButtons = new ButtonList();
+        prevTransform = new Button(TRANSFORM_PREV_PAGE_LEFT_X, TRANSFORM_PREV_PAGE_RIGHT_X, TRANSFORM_PAGE_TOP_Y, TRANSFORM_PAGE_BOT_Y, false, "TRANS_PREV");
+        nextTransform = new Button(TRANSFORM_NEXT_PAGE_LEFT_X, TRANSFORM_NEXT_PAGE_RIGHT_X, TRANSFORM_PAGE_TOP_Y, TRANSFORM_PAGE_BOT_Y, false, "TRANS_NEXT");
+        TransformButtons.addButton(prevTransform);
+        TransformButtons.addButton(nextTransform);
+    }
+
     public void setChar(WifeyCharacter input){
         displayChar = input;
+        transformations = displayChar.getTransformations();
+
+        displayText = -1;
+
+        maxPage = (displayChar.getSkills().size() / SKILLS_TEXT_PER_PAGE);
+        skillsPage = 0;
+        transformPage = 0;
+        maxTransformPage = transformations.size();
+        prevTransform.setActive(false);
+        nextTransform.setActive(maxTransformPage != transformPage);
+
+        setDefaultDisplayInfo();
+    }
+
+    private void setFontSize(){
         nameFontSize = MAX_NAME_FONT;
         namePaint.setTextSize(nameFontSize);
-        while(namePaint.measureText(displayChar.getName()) > MAX_NAME_SIZE){
+        while(namePaint.measureText(displayName) > MAX_NAME_SIZE){
             nameFontSize--;
             namePaint.setTextSize(nameFontSize);
         }
         nameY = MAX_NAME_Y - ((MAX_NAME_FONT - nameFontSize) / 2);
 
         //Using weapon type as name for now
-        String weaponName = displayChar.getWeapon().getWeaponType();
+        String weaponName = displayWeapon.getWeaponType();
         weaponFontSize = MAX_WEAPON_FONT;
         weaponPaint.setTextSize(weaponFontSize);
         while(weaponPaint.measureText(weaponName) > MAX_WEAPON_SIZE){
@@ -89,47 +149,161 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
             weaponPaint.setTextSize(weaponFontSize);
         }
         weaponY = MAX_WEAPON_Y - ((MAX_WEAPON_FONT - weaponFontSize) / 2);
+    }
 
-        displayText = -1;
+    private void setDefaultDisplayInfo() {
+        displayName = displayChar.getName();
+        displayImage = displayChar.getImage(game.getGraphics());
+        displayStrength = displayChar.getStrength();
+        displayMagic = displayChar.getMagic();
+        displaySkills.clear();
+        for(int i = 0; i < displayChar.getSkills().size(); i++){
+            displaySkills.add(displayChar.getSkills().get(i));
+        }
+        displayWeapon = displayChar.getWeapon();
+        displayAttackElement = displayChar.getAttackElement();
+        displayStrongElement = displayChar.getStrongElement();
+        displayWeakElement = displayChar.getWeakElement();
+        setFontSize();
+    }
 
-        maxPage = (displayChar.getSkills().size() / SKILLS_TEXT_PER_PAGE);
-        skillsPage = 0;
+    private void incrementDisplayInfo() {
+        TransformWifey displayForm = transformations.get(transformPage - 1);
+        displayName = displayForm.getName();
+        displayImage = displayForm.getImage(game.getGraphics());
+        displayStrength = displayForm.getStrength();
+        displayMagic = displayForm.getMagic();
+        if(displayForm.getWeapon() != null){
+            displayWeapon = displayForm.getWeapon();
+        }
+        if(displayForm.getAttackElement() != null){
+            displayAttackElement = displayForm.getAttackElement();
+        }
+        if(displayForm.getStrongElement() != null){
+            displayStrongElement = displayForm.getStrongElement();
+        }
+        if(displayForm.getWeakElement() != null){
+            displayWeakElement = displayForm.getWeakElement();
+        }
+        for(int i = 0; i < displayForm.getAddSkills().size(); i++){
+            displaySkills.add(displayForm.getAddSkills().get(i));
+        }
+        for(int i = 0; i < displayForm.getRemoveSkills().size(); i++){
+            displaySkills.remove(displayForm.getRemoveSkills().get(i));
+        }
+        Collections.sort(displaySkills, SkillsEnum.SKILLS_ENUM_COMPARATOR);
+        setFontSize();
+    }
+
+    private void decrementDisplayInfo() {
+        if(transformPage == 0){
+            setDefaultDisplayInfo();
+        }
+        else {
+            TransformWifey displayForm = transformations.get(transformPage - 1);
+            displayName = displayForm.getName();
+            displayImage = displayForm.getImage(game.getGraphics());
+            displayStrength = displayForm.getStrength();
+            displayMagic = displayForm.getMagic();
+
+            boolean weaponFound = false;
+            boolean attackElementFound = false;
+            boolean strongElementFound = false;
+            boolean weakElementFound = false;
+            for (int i = transformPage - 1; i >= 0; i--) {
+                TransformWifey temp = transformations.get(i);
+                if (!weaponFound && temp.getWeapon() != null) {
+                    displayWeapon = temp.getWeapon();
+                    weaponFound = true;
+                }
+                if (!attackElementFound && temp.getAttackElement() != null) {
+                    displayAttackElement = temp.getAttackElement();
+                    attackElementFound = true;
+                }
+                if (!strongElementFound && temp.getStrongElement() != null) {
+                    displayStrongElement = temp.getStrongElement();
+                    strongElementFound = true;
+                }
+                if (!weakElementFound && temp.getWeakElement() != null) {
+                    displayWeakElement = temp.getWeakElement();
+                    weakElementFound = true;
+                }
+            }
+            if(!weaponFound){
+                displayWeapon = displayChar.getWeapon();
+            }
+            if(!attackElementFound){
+                displayAttackElement = displayChar.getAttackElement();
+            }
+            if(!strongElementFound){
+                displayStrongElement = displayChar.getStrongElement();
+            }
+            if(!weakElementFound){
+                displayWeakElement = displayChar.getWeakElement();
+            }
+
+            TransformWifey prevForm = transformations.get(transformPage);
+            for (int i = 0; i < prevForm.getAddSkills().size(); i++) {
+                //Since decrementing, remove the skills previously added
+                displaySkills.remove(prevForm.getAddSkills().get(i));
+            }
+            for (int i = 0; i < prevForm.getRemoveSkills().size(); i++) {
+                //Since decrementing, add skills previously removed
+                displaySkills.add(prevForm.getRemoveSkills().get(i));
+            }
+            Collections.sort(displaySkills, SkillsEnum.SKILLS_ENUM_COMPARATOR);
+            setFontSize();
+        }
     }
 
     protected void drawPortrait(Graphics g){
-        g.drawPercentageImage(displayChar.getImage(),CHAR_X, CHAR_Y, DOUBLE_SCALE, DOUBLE_SCALE);
+        //if(transformPage == 0) {
+            g.drawPercentageImage(displayImage, CHAR_X, CHAR_Y, DOUBLE_SCALE, DOUBLE_SCALE);
+        /*
+        }
+        else{
+            g.drawPercentageImage(transformations.get(transformPage-1).getImage(), CHAR_X, CHAR_Y, DOUBLE_SCALE, DOUBLE_SCALE);
+        }
+        */
+
+        //Stuff for transformation
+        if(maxTransformPage != 0){
+            Image temp = prevTransform.isActive() ? Assets.TransformPrevEnable : Assets.TransformPrevDisable;
+            g.drawImage(temp, TRANSFORM_PREV_PAGE_LEFT_X, TRANSFORM_PAGE_TOP_Y);
+            temp = nextTransform.isActive() ? Assets.TransformNextEnable : Assets.TransformNextDisable;
+            g.drawImage(temp, TRANSFORM_NEXT_PAGE_LEFT_X, TRANSFORM_PAGE_TOP_Y);
+        }
     }
 
     protected void drawElements(Graphics g){
-        g.drawPercentageImage(displayChar.getAttackElement().getElementImage(), ELEMENT_X, ATK_ELEMENT_Y, QUARTER_SCALE, QUARTER_SCALE);
-        g.drawPercentageImage(displayChar.getStrongElement().getElementImage(), ELEMENT_X, RES_ELEMENT_Y, QUARTER_SCALE, QUARTER_SCALE);
-        g.drawPercentageImage(displayChar.getWeakElement().getElementImage(), ELEMENT_X, WEAK_ELEMENT_Y, QUARTER_SCALE, QUARTER_SCALE);
+        g.drawPercentageImage(displayAttackElement.getElementImage(), ELEMENT_X, ATK_ELEMENT_Y, QUARTER_SCALE, QUARTER_SCALE);
+        g.drawPercentageImage(displayStrongElement.getElementImage(), ELEMENT_X, RES_ELEMENT_Y, QUARTER_SCALE, QUARTER_SCALE);
+        g.drawPercentageImage(displayWeakElement.getElementImage(), ELEMENT_X, WEAK_ELEMENT_Y, QUARTER_SCALE, QUARTER_SCALE);
     }
 
     protected void drawName(Graphics g){
-        g.drawString(displayChar.getName(), NAME_X, nameY, namePaint);
+        g.drawString(displayName, NAME_X, nameY, namePaint);
     }
 
     protected void drawTopRows(Graphics g){
         g.drawString("1", LEVEL_X, LEVEL_Y, levelPaint);
 
-        g.drawString(String.valueOf(displayChar.getHP()), HP_X, STAT_Y, statPaint);
-        g.drawString(String.valueOf(displayChar.getStrength()), STR_X, STAT_Y, statPaint);
-        g.drawString(String.valueOf(displayChar.getMagic()), MAG_X, STAT_Y, statPaint);
+        g.drawString(String.valueOf(BattleWifey.calculateHP(displayStrength)), HP_X, STAT_Y, statPaint);
+        g.drawString(String.valueOf(displayStrength), STR_X, STAT_Y, statPaint);
+        g.drawString(String.valueOf(displayMagic), MAG_X, STAT_Y, statPaint);
 
         //Draw image for weapon category
 
-        Weapon charWeapon = displayChar.getWeapon();
         //Draw string for weapon name
-        g.drawString(charWeapon.getWeaponType(), WEAPON_X, weaponY, weaponPaint);
+        g.drawString(displayWeapon.getWeaponType(), WEAPON_X, weaponY, weaponPaint);
         //Draw image for number hits
-        g.drawString(String.valueOf(charWeapon.getNumHits()), HITS_X, HITS_Y, hitsPaint);
+        g.drawString(String.valueOf(displayWeapon.getNumHits()), HITS_X, HITS_Y, hitsPaint);
     }
 
     protected void drawSkills(Graphics g){
         //List out names for the skills
-        for(int i = SKILLS_TEXT_PER_PAGE * skillsPage; i < SKILLS_TEXT_PER_PAGE * skillsPage + SKILLS_TEXT_PER_PAGE && i < displayChar.getSkills().size(); i++){
-            SkillsEnum skill = displayChar.getSkills().get(i);
+        for(int i = SKILLS_TEXT_PER_PAGE * skillsPage; i < SKILLS_TEXT_PER_PAGE * skillsPage + SKILLS_TEXT_PER_PAGE && i < displaySkills.size(); i++){
+            SkillsEnum skill = displaySkills.get(i);
             int xOffset;
             int yOffset = SKILLS_TEXT_BASE_Y + ((i % SKILLS_TEXT_PER_PAGE) / 2) * SKILLS_TEXT_OFFSET_Y;
             if(i % 2 == 0) {
@@ -150,9 +324,28 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
     }
 
     protected void drawDescription(Graphics g){
-        if(displayText != -1 && displayChar.getSkills().size() > displayText){
-            String desc = displayChar.getSkills().get(displayText).getSkillDesc();
+        if(displayText != -1 && displaySkills.size() > displayText){
+            String desc = displaySkills.get(displayText).getSkillDesc();
             g.drawMultiLineString(desc, SKILLS_DESC_X, SKILLS_DESC_Y, SKILLS_DESC_WIDTH, descPaint);
+        }
+    }
+
+    @Override
+    protected void uniqueUpdate(Input.TouchEvent t) {
+        if (t.type == Input.TouchEvent.TOUCH_UP) {
+            Button transformPressed = TransformButtons.getButtonPressed(t.x, t.y);
+            if(transformPressed == prevTransform){
+                transformPage--;
+                decrementDisplayInfo();
+                nextTransform.setActive(true);
+                prevTransform.setActive(transformPage != 0);
+            }
+            else if(transformPressed == nextTransform) {
+                transformPage++;
+                incrementDisplayInfo();
+                prevTransform.setActive(true);
+                nextTransform.setActive(transformPage != maxTransformPage);
+            }
         }
     }
 

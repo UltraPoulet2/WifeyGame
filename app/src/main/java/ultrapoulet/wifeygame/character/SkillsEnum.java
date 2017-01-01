@@ -1,5 +1,6 @@
 package ultrapoulet.wifeygame.character;
 
+import java.util.Comparator;
 import java.util.HashMap;
 
 import ultrapoulet.wifeygame.battle.BattleCharacter;
@@ -45,6 +46,13 @@ public class SkillsEnum {
 
     private String skillName;
     private String skillDesc;
+
+    public static Comparator<SkillsEnum> SKILLS_ENUM_COMPARATOR = new Comparator<SkillsEnum>(){
+        @Override
+        public int compare(SkillsEnum a, SkillsEnum b) {
+            return a.getSkillName().compareTo(b.getSkillName());
+        }
+    };
 
     private SkillsEnum(String skillName, String skillDesc){
         this.skillName = skillName;

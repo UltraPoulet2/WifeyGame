@@ -17,16 +17,24 @@ public class TimeTravelerSkill extends AbsSkill {
     private int roundHealth;
 
     @Override
-    public void startRound() {
+    public int startRound() {
         roundHealth = owner.getCurrentHP();
+        return 0;
     }
 
     @Override
-    public void onDamageReceived(int damage) {
-        if(owner.getCurrentHP() <= 0 && !revived){
+    public boolean canPreventDeath() {
+        return !revived;
+    }
+
+    @Override
+    public int preventDeath() {
+        if(owner.getCurrentHP() == 0 && !revived) {
             owner.setCurrentHP(roundHealth);
             revived = true;
+            return roundHealth;
         }
+        return 0;
     }
 
     @Override

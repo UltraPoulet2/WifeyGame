@@ -34,8 +34,17 @@ public class SlugabedSkill extends AbsSkill {
 
     @Override
     public void endRound(){
+        decrementMult();
+    }
+
+    @Override
+    public void endWave(){
+        decrementMult();
+    }
+
+    private void decrementMult() {
         multiplier -= perTurn;
-        if(multiplier < minMultiplier){
+        if(multiplier < minMultiplier) {
             multiplier = minMultiplier;
         }
     }

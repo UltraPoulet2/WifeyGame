@@ -1,7 +1,9 @@
 package ultrapoulet.wifeygame.character;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
+import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.wifeygame.battle.BattleEnemy;
 import ultrapoulet.wifeygame.battle.enemyai.EnemyAI;
@@ -35,7 +37,7 @@ public class EnemyCharacter {
     private int gold;
     private int experience;
 
-    private Image image;
+    private String image;
 
     private String ai;
 
@@ -104,8 +106,8 @@ public class EnemyCharacter {
 
     public ArrayList<SkillsEnum> getSkills(){ return this.skills; }
 
-    public Image getImage() {
-        return this.image;
+    public Image getImage(Graphics g) {
+        return g.newImage("enemies/" + this.image + ".png", Graphics.ImageFormat.ARGB8888);
     }
 
     public Element getAttackElement() { return this.attackElement; }
@@ -116,6 +118,10 @@ public class EnemyCharacter {
 
     public ArrayList<TransformEnemy> getTransformations(){
         return this.transformations;
+    }
+
+    public EnemyAI getAI(){
+        return EnemyAI.getAI(ai);
     }
 
 
@@ -151,7 +157,12 @@ public class EnemyCharacter {
         this.healAmount = healAmount;
     }
 
-    public void addSkill(SkillsEnum skill){ this.skills.add(skill); }
+    public void addSkill(SkillsEnum skill){
+        if (!this.skills.contains(skill)) {
+            this.skills.add(skill);
+        }
+        Collections.sort(this.skills, SkillsEnum.SKILLS_ENUM_COMPARATOR);
+    }
 
     public void setPowerUpPercentage(double powerUpPercentage){
         this.powerUpPercentage = powerUpPercentage;
@@ -177,7 +188,7 @@ public class EnemyCharacter {
         this.specialHits = specialHits;
     }
 
-    public void setImage(Image image){
+    public void setImage(String image){
         this.image = image;
     }
 
@@ -197,29 +208,8 @@ public class EnemyCharacter {
         this.transformations.add(t);
     }
 
-    public BattleEnemy getBattleEnemy(){
-        return new BattleEnemy(
-                name,
-                maxHP,
-                powerDamage,
-                powerHits,
-                comboDamage,
-                comboHits,
-                magicDamage,
-                healAmount,
-                powerUpPercentage,
-                powerDownPercentage,
-                defendPercentage,
-                weakenPercentage,
-                specialDamage,
-                specialHits,
-                skills,
-                attackElement,
-                strongElement,
-                weakElement,
-                image,
-                EnemyAI.getAI(ai),
-                transformations);
+    public BattleEnemy getBattleEnemy(Graphics g){
+        return new BattleEnemy(this, g);
     }
 
     public boolean validate(){

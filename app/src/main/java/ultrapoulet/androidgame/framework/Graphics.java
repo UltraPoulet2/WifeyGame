@@ -24,6 +24,8 @@ public interface Graphics {
 
     public void drawImage(Image image, int x, int y);
 
+    public void drawImageAlpha(Image image, int x, int y, int alpha);
+
     public void drawScaledImage(Image image, int posX, int posY, int dispWidth, int dispHeight, int srcX,
                                 int srcY, int srcWidth, int srcHeight);
 

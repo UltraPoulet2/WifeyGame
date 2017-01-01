@@ -149,6 +149,13 @@ public class AndroidGraphics implements Graphics {
     }
 
     @Override
+    public void drawImageAlpha(Image image, int x, int y, int alpha) {
+        Paint paint = new Paint();
+        paint.setAlpha(alpha);
+        canvas.drawBitmap(((AndroidImage) image).bitmap, x, y, paint);
+    }
+
+    @Override
     public void drawScaledImage(Image image, int posX, int posY, int dispWidth, int dispHeight, int srcX,
                                 int srcY, int srcWidth, int srcHeight){
         srcRect.left = srcX;

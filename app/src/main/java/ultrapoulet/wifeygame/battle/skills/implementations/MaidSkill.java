@@ -17,15 +17,16 @@ public class MaidSkill extends AbsSkill {
     private boolean healCurrentTurn = false;
 
     @Override
-    public void startRound() {
+    public int startRound() {
         healLastTurn = healCurrentTurn;
         healCurrentTurn = false;
+        return 0;
     }
 
     @Override
     public double healPercentage(BattleCharacter partyMember) {
         healCurrentTurn = true;
-        return 1.25;
+        return 1.0;
     }
 
     @Override

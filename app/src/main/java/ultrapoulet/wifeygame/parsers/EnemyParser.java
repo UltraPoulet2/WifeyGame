@@ -67,7 +67,7 @@ public class EnemyParser extends DefaultHandler{
             enemyKey = attributes.getValue("key");
             if(enemyKey != null) {
                 enemyBuilder = new EnemyCharacter();
-                enemyBuilder.setImage(g.newImage("enemies/" + enemyKey + ".png", ImageFormat.RGB565));
+                enemyBuilder.setImage(enemyKey);
             }
             else{
                 System.out.println("EnemyParser:startElement(): Error parsing enemy key");
@@ -158,7 +158,7 @@ public class EnemyParser extends DefaultHandler{
         }
         else if(qName.equalsIgnoreCase("transformation")){
             transformBuilder = new TransformEnemy();
-            transformBuilder.setImage(g.newImage("enemies/" + enemyKey + "-T" + tNumber + ".png", ImageFormat.RGB565));
+            transformBuilder.setImage(enemyKey + "-T" + tNumber);
             bTransform = true;
         }
         else{

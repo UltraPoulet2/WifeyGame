@@ -1,7 +1,9 @@
 package ultrapoulet.wifeygame.character;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
+import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.wifeygame.battle.BattleWifey;
 
@@ -25,7 +27,7 @@ public class WifeyCharacter {
     private Element strongElement;
     private Element weakElement;
 
-    private Image image;
+    private String image;
 
     private ArrayList<TransformWifey> transformations;
 
@@ -34,9 +36,8 @@ public class WifeyCharacter {
         transformations = new ArrayList<>();
     }
 
-    public BattleWifey getBattleCharacter(){
-        return new BattleWifey(name, weapon, strength, magic, image, skills,
-                attackElement, strongElement, weakElement, transformations);
+    public BattleWifey getBattleCharacter(Graphics g){
+        return new BattleWifey(this, g);
     }
 
     public String getName(){
@@ -47,8 +48,8 @@ public class WifeyCharacter {
         return this.hashKey;
     }
 
-    public Image getImage(){
-        return this.image;
+    public Image getImage(Graphics g){
+        return g.newImage("characters/" + this.image + ".png", Graphics.ImageFormat.ARGB8888);
     }
 
     public int getHP(){
@@ -85,7 +86,7 @@ public class WifeyCharacter {
         this.name = name;
     }
 
-    public void setImage(Image image){
+    public void setImage(String image){
         this.image = image;
     }
 
@@ -109,6 +110,7 @@ public class WifeyCharacter {
         if (!this.skills.contains(skill)) {
             this.skills.add(skill);
         }
+        Collections.sort(this.skills, SkillsEnum.SKILLS_ENUM_COMPARATOR);
     }
 
     public void addTransformation(TransformWifey t){
