@@ -47,9 +47,7 @@ public class BattleSelectScreen extends Screen {
                 testInfo = Battles.get("TEST-MAGI");
             }
             if(testInfo != null){
-                BattleInfoScreen bis = new BattleInfoScreen(game);
-                bis.setBattleInfo(testInfo);
-                bis.setPreviousScreen(this);
+                BattleInfoScreen bis = new BattleInfoScreen(game, this, testInfo);
                 game.setScreen(bis);
             }
         }

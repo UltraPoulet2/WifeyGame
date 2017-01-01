@@ -275,7 +275,7 @@ public class BattleScreen extends Screen {
 
     private BattlePhase currentPhase = BattlePhase.BATTLE_START;
 
-    public BattleScreen(Game game){
+    public BattleScreen(Game game, BattleInfo info){
         super(game);
 
         charHolder = Assets.charHolder;
@@ -287,8 +287,9 @@ public class BattleScreen extends Screen {
         createButtonList();
         createPaint();
 
-        charInfo = new BattleCharacterInfoScreen(game);
-        charInfo.setPreviousScreen(this);
+        charInfo = new BattleCharacterInfoScreen(game, this);
+
+        setBattleInfo(info);
     }
 
     public void createButtonList(){
@@ -334,7 +335,7 @@ public class BattleScreen extends Screen {
     }
 
 
-    public void setBattleInfo(BattleInfo info){
+    private void setBattleInfo(BattleInfo info){
         this.battleInfo = info;
         this.enemies = battleInfo.getBattleEnemies(game.getGraphics());
         this.background = battleInfo.getBackground(game.getGraphics());

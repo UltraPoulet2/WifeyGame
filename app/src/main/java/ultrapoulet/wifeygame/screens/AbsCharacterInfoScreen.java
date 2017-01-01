@@ -90,8 +90,9 @@ public abstract class AbsCharacterInfoScreen extends Screen {
     protected static final int SKILLS_BUTTON_TOP_Y = 455 + BG_Y;
     protected static final int SKILLS_BUTTON_OFFSET_Y = 55;
 
-    public AbsCharacterInfoScreen(Game game) {
+    public AbsCharacterInfoScreen(Game game, Screen previousScreen) {
         super(game);
+        setPreviousScreen(previousScreen);
 
         createPaints();
         createButtons();
@@ -131,7 +132,7 @@ public abstract class AbsCharacterInfoScreen extends Screen {
         }
     }
 
-    public void setPreviousScreen(Screen screen){
+    private void setPreviousScreen(Screen screen){
         previousScreen = screen;
     }
 

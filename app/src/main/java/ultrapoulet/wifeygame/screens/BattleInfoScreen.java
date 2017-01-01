@@ -95,7 +95,7 @@ public class BattleInfoScreen extends Screen{
 
     private ButtonList requirementList;
 
-    public BattleInfoScreen(Game game){
+    public BattleInfoScreen(Game game, Screen previousScreen, BattleInfo info){
         super(game);
 
         battlePaint = new Paint();
@@ -113,11 +113,9 @@ public class BattleInfoScreen extends Screen{
         requirementPaint.setTextAlign(Align.CENTER);
         requirementPaint.setTextSize(45);
 
-        partySelect = new PartySelectScreen(game);
-        partySelect.setPreviousScreen(this);
+        partySelect = new PartySelectScreen(game, this);
 
-        charInfo = new CharacterInfoScreen(game);
-        charInfo.setPreviousScreen(this);
+        charInfo = new CharacterInfoScreen(game, this);
 
         buttonList = new ButtonList();
         buttonList.addButton(new Button(BACK_BUTTON_LEFT_X, BACK_BUTTON_RIGHT_X, BACK_BUTTON_TOP_Y, BACK_BUTTON_BOTTOM_Y, true, BACK_BUTTON_STRING));
@@ -129,9 +127,11 @@ public class BattleInfoScreen extends Screen{
         for(int i = 0; i < 7; i++){
             partyImages.add(null);
         }
+        setBattleInfo(info);
+        setPreviousScreen(previousScreen);
     }
 
-    public void setBattleInfo(BattleInfo info){
+    private void setBattleInfo(BattleInfo info){
         this.battleInfo = info;
 
         partyList = new ButtonList();
@@ -154,7 +154,7 @@ public class BattleInfoScreen extends Screen{
         }
     }
 
-    public void setPreviousScreen(Screen prevScreen){
+    private void setPreviousScreen(Screen prevScreen){
         this.prevScreen = prevScreen;
     }
 
@@ -180,8 +180,7 @@ public class BattleInfoScreen extends Screen{
                             game.setScreen(partySelect);
                             break;
                         case START_BUTTON_STRING:
-                            BattleScreen bs = new BattleScreen(game);
-                            bs.setBattleInfo(battleInfo);
+                            BattleScreen bs = new BattleScreen(game, battleInfo);
                             game.setScreen(bs);
                             break;
                     }

@@ -12,6 +12,7 @@ import ultrapoulet.androidgame.framework.Game;
 import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.androidgame.framework.Input;
+import ultrapoulet.androidgame.framework.Screen;
 import ultrapoulet.androidgame.framework.helpers.Button;
 import ultrapoulet.androidgame.framework.helpers.ButtonList;
 import ultrapoulet.wifeygame.Assets;
@@ -79,8 +80,8 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
     private static final int HITS_X = 100 + WEAPON_X;
     private static final int HITS_Y = 407 + BG_Y;
 
-    public CharacterInfoScreen(Game game) {
-        super(game);
+    public CharacterInfoScreen(Game game, Screen previousScreen) {
+        super(game, previousScreen);
         background = Assets.CharacterInfoScreen;
         createUniqueButtons();
     }

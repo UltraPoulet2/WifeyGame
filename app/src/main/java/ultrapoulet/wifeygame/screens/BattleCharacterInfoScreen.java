@@ -6,6 +6,7 @@ import android.graphics.Paint;
 import ultrapoulet.androidgame.framework.Game;
 import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Image;
+import ultrapoulet.androidgame.framework.Screen;
 import ultrapoulet.androidgame.framework.helpers.NumberPrinter;
 import ultrapoulet.wifeygame.Assets;
 import ultrapoulet.wifeygame.battle.BattleEnemy;
@@ -53,8 +54,8 @@ public class BattleCharacterInfoScreen extends AbsCharacterInfoScreen {
     private static final int ATK_Y = 322 + BG_Y;
     private static final int DEF_Y = 85 + ATK_Y;
 
-    public BattleCharacterInfoScreen(Game game) {
-        super(game);
+    public BattleCharacterInfoScreen(Game game, Screen previousScreen) {
+        super(game, previousScreen);
         background = Assets.BattleCharacterInfoScreen;
     }
 

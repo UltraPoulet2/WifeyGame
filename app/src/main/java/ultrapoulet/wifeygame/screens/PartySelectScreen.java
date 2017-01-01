@@ -195,7 +195,7 @@ public class PartySelectScreen extends Screen {
         }
     };
 
-    public PartySelectScreen(Game game){
+    public PartySelectScreen(Game game, Screen previousScreen){
         super(game);
         textPaint = new Paint();
         textPaint.setColor(Color.BLACK);
@@ -204,12 +204,13 @@ public class PartySelectScreen extends Screen {
 
         background = Assets.PartySelectScreen;
 
-        charInfo = new CharacterInfoScreen(game);
-        charInfo.setPreviousScreen(this);
+        charInfo = new CharacterInfoScreen(game, this);
 
         createButtons();
 
         createImageLists();
+
+        setPreviousScreen(previousScreen);
     }
 
     public void createButtons(){
@@ -332,7 +333,7 @@ public class PartySelectScreen extends Screen {
         updateRecruitImages();
     }
 
-    public void setPreviousScreen(Screen previousScreen){
+    private void setPreviousScreen(Screen previousScreen){
         this.previousScreen = previousScreen;
     }
 
