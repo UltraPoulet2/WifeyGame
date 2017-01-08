@@ -40,12 +40,14 @@ public class BattleInfoScreen extends Screen{
 
     private List<WifeyCharacter> party;
 
+    private static final int BACKGROUND_OFFSET = 60;
+
     private static final int BATTLE_NAME_X = 400;
-    private static final int BATTLE_NAME_Y = 92;
+    private static final int BATTLE_NAME_Y = 137;
     private Paint battlePaint;
 
     private static final int NUMBER_WAVES_X = 228;
-    private static final int NUMBER_WAVES_Y = 228;
+    private static final int NUMBER_WAVES_Y = 357;
     private Paint wavesPaint;
 
     private static final int PARTY_SCALE = 57;
@@ -54,9 +56,9 @@ public class BattleInfoScreen extends Screen{
     private static final int REQUIREMENT_LEFT_X = 47;
     private static final int REQUIREMENT_RIGHT_X = 752;
     private static final int REQUIREMENT_WIDTH = REQUIREMENT_RIGHT_X - REQUIREMENT_LEFT_X - 200;
-    private static final int REQUIREMENT_BASE_TOP_Y = 413;
-    private static final int REQUIREMENT_BASE_BOT_Y = 512;
-    private static final int REQUIREMENT_BASE_TEXT_Y = 485;
+    private static final int REQUIREMENT_BASE_TOP_Y = 433;
+    private static final int REQUIREMENT_BASE_BOT_Y = 532;
+    private static final int REQUIREMENT_BASE_TEXT_Y = 505;
     private static final int REQUIREMENT_OFFSET_Y = 105;
     private TextPaint requirementPaint;
 
@@ -88,8 +90,8 @@ public class BattleInfoScreen extends Screen{
     private static final int PARTY_IMAGE_BASE_LEFT_X = 55;
     private static final int PARTY_IMAGE_BASE_RIGHT_X = 145;
     private static final int PARTY_IMAGE_OFFSET_X = 100;
-    private static final int PARTY_IMAGE_TOP_Y = 1000;
-    private static final int PARTY_IMAGE_BOT_Y = 1090;
+    private static final int PARTY_IMAGE_TOP_Y = 1010;
+    private static final int PARTY_IMAGE_BOT_Y = 1100;
 
     private ArrayList<Image> partyImages;
 
@@ -202,7 +204,7 @@ public class BattleInfoScreen extends Screen{
         Graphics g = game.getGraphics();
         g.clearScreen(0xFFFFFFFF);
 
-        g.drawImage(background, 0, 0);
+        g.drawImage(background, 0, BACKGROUND_OFFSET);
 
         g.drawString(battleInfo.getName(), BATTLE_NAME_X, BATTLE_NAME_Y, battlePaint);
 
