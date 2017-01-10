@@ -30,11 +30,16 @@ public class Assets {
 
     public static List<Image> KOImages;
     public static Image HPSlash;
+    public static Image Colon;
     public static List<Image> WhiteNumbers;
     public static List<Image> GreenNumbers;
     public static List<Image> YellowNumbers;
     public static List<Image> RedNumbers;
     public static List<Image> GreyNumbers;
+
+    //PartyInfo Holder Stuff
+    public static Image StatusHolder;
+    public static Image Hourglass;
 
     //PartySelectScreen Stuff
     public static Image PartySelectScreen;

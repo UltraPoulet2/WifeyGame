@@ -21,6 +21,7 @@ import ultrapoulet.wifeygame.battle.BattleInfo;
 import ultrapoulet.wifeygame.battle.requirements.AbsRequirement;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
 import ultrapoulet.wifeygame.gamestate.Party;
+import ultrapoulet.wifeygame.gamestate.PlayerInfo;
 
 /**
  * Created by John on 10/12/2016.
@@ -203,6 +204,8 @@ public class BattleInfoScreen extends Screen{
     public void paint(float deltaTime) {
         Graphics g = game.getGraphics();
         g.clearScreen(0xFFFFFFFF);
+
+        PlayerInfo.drawHeader(g);
 
         g.drawImage(background, 0, BACKGROUND_OFFSET);
 

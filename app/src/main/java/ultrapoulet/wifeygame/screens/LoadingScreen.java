@@ -16,6 +16,7 @@ import javax.xml.parsers.SAXParserFactory;
 import ultrapoulet.androidgame.framework.Game;
 import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Graphics.ImageFormat;
+import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.androidgame.framework.Input.TouchEvent;
 import ultrapoulet.androidgame.framework.Screen;
 import ultrapoulet.wifeygame.Assets;
@@ -182,6 +183,7 @@ public class LoadingScreen extends Screen {
             Assets.WhiteNumbers.add(g.newImage("numbers/white/" + i + ".png", ImageFormat.ARGB8888));
         }
         Assets.HPSlash = g.newImage("numbers/HPSlash.png", ImageFormat.ARGB8888);
+        Assets.Colon = g.newImage("numbers/Colon.png", ImageFormat.ARGB8888);
 
         Assets.GreenNumbers = new ArrayList<>();
         for(int i = 0; i < 10; i++){
@@ -202,6 +204,9 @@ public class LoadingScreen extends Screen {
         for(int i = 0; i < 10; i++){
             Assets.GreyNumbers.add(g.newImage("numbers/grey/" + i + ".png", ImageFormat.ARGB8888));
         }
+
+        Assets.StatusHolder = g.newImage("objects/status/StatusHolder.png", ImageFormat.ARGB8888);
+        Assets.Hourglass = g.newImage("objects/status/Hourglass.png", ImageFormat.ARGB8888);
 
         Assets.PartySelectScreen = g.newImage("screens/PartySelectScreen.png", ImageFormat.RGB565);
         Assets.AcceptEnable = g.newImage("buttons/AcceptEnabled.png", ImageFormat.ARGB8888);
