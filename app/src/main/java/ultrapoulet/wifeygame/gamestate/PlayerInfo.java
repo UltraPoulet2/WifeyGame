@@ -59,12 +59,17 @@ public class PlayerInfo {
     }
 
     //Objects for printing the holder
+    private static final int EXP_BAR_WIDTH = 160;
+    private static final int EXP_BAR_HEIGHT = 10;
+
     public static void drawHeader(Graphics g) {
         g.drawImage(Assets.StatusHolder, 0, 0);
         NumberPrinter.drawNumber(g, gold, 60, 0, 30, 60, 0, Assets.YellowNumbers, Align.LEFT);
         NumberPrinter.drawNumber(g, level, 340, 24, 15, 30, 0, Assets.WhiteNumbers, Align.LEFT);
         NumberPrinter.drawNumber(g, currentEnergy, 635, 0, 20, 40, 0, Assets.WhiteNumbers, Align.RIGHT);
         NumberPrinter.drawNumber(g, maxEnergy, 655, 0, 20, 40, 0, Assets.WhiteNumbers, Align.LEFT);
+
+        g.drawScaledImage(Assets.pHealthG, 390, 35, (int) (160 * 0.8), 10);
 
         if(currentEnergy != maxEnergy) {
             //Minutes
