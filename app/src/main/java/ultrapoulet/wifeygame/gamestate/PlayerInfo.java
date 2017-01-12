@@ -69,7 +69,7 @@ public class PlayerInfo {
         NumberPrinter.drawNumber(g, currentEnergy, 635, 0, 20, 40, 0, Assets.WhiteNumbers, Align.RIGHT);
         NumberPrinter.drawNumber(g, maxEnergy, 655, 0, 20, 40, 0, Assets.WhiteNumbers, Align.LEFT);
 
-        g.drawScaledImage(Assets.pHealthG, 390, 35, (int) (160 * 0.8), 10);
+        g.drawScaledImage(Assets.pHealthG, 390, 35, (int) (EXP_BAR_WIDTH * 0.8), EXP_BAR_HEIGHT);
 
         if(currentEnergy != maxEnergy) {
             //Minutes

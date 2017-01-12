@@ -70,13 +70,6 @@ public class BattleCharacterInfoScreen extends AbsCharacterInfoScreen {
     public void setChars(BattleWifey input, BattleEnemy enemy){
         displayChar = input;
         displayEnemy = enemy;
-        nameFontSize = MAX_NAME_FONT;
-        namePaint.setTextSize(nameFontSize);
-        while(namePaint.measureText(displayChar.getName()) > MAX_NAME_SIZE){
-            nameFontSize--;
-            namePaint.setTextSize(nameFontSize);
-        }
-        nameY = MAX_NAME_Y - ((MAX_NAME_FONT - nameFontSize) / 2);
 
         displayText = -1;
         skillsPage = 0;
@@ -113,7 +106,10 @@ public class BattleCharacterInfoScreen extends AbsCharacterInfoScreen {
     }
 
     protected void drawName(Graphics g){
-        g.drawString(displayChar.getName(), NAME_X, nameY, namePaint);
+        if(!g.drawString(displayChar.getName(), NAME_X, MAX_NAME_Y, namePaint, MAX_NAME_SIZE, MAX_NAME_FONT, MIN_NAME_FONT)){
+            namePaint.setTextSize(TWO_LINE_NAME_FONT);
+            g.drawMultiLineString(displayChar.getName(), NAME_X, TWO_LINE_NAME_Y, MAX_NAME_SIZE, namePaint);
+        }
     }
 
     protected void drawTopRows(Graphics g){

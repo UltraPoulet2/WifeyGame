@@ -67,8 +67,6 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
     private static final int STAT_Y = 322 + BG_Y;
 
     private Paint weaponPaint;
-    private int weaponFontSize;
-    private int weaponY;
     private static final int MAX_WEAPON_FONT = 34;
     private static final int MAX_WEAPON_SIZE = 140;
     private static final int WEAPON_X = 525 + BG_X;
@@ -131,26 +129,6 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
         setDefaultDisplayInfo();
     }
 
-    private void setFontSize(){
-        nameFontSize = MAX_NAME_FONT;
-        namePaint.setTextSize(nameFontSize);
-        while(namePaint.measureText(displayName) > MAX_NAME_SIZE){
-            nameFontSize--;
-            namePaint.setTextSize(nameFontSize);
-        }
-        nameY = MAX_NAME_Y - ((MAX_NAME_FONT - nameFontSize) / 2);
-
-        //Using weapon type as name for now
-        String weaponName = displayWeapon.getWeaponType();
-        weaponFontSize = MAX_WEAPON_FONT;
-        weaponPaint.setTextSize(weaponFontSize);
-        while(weaponPaint.measureText(weaponName) > MAX_WEAPON_SIZE){
-            weaponFontSize--;
-            weaponPaint.setTextSize(weaponFontSize);
-        }
-        weaponY = MAX_WEAPON_Y - ((MAX_WEAPON_FONT - weaponFontSize) / 2);
-    }
-
     private void setDefaultDisplayInfo() {
         displayName = displayChar.getName();
         displayImage = displayChar.getImage(game.getGraphics());
@@ -164,7 +142,6 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
         displayAttackElement = displayChar.getAttackElement();
         displayStrongElement = displayChar.getStrongElement();
         displayWeakElement = displayChar.getWeakElement();
-        setFontSize();
     }
 
     private void incrementDisplayInfo() {
@@ -192,7 +169,6 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
             displaySkills.remove(displayForm.getRemoveSkills().get(i));
         }
         Collections.sort(displaySkills, SkillsEnum.SKILLS_ENUM_COMPARATOR);
-        setFontSize();
     }
 
     private void decrementDisplayInfo() {
@@ -252,19 +228,11 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
                 displaySkills.add(prevForm.getRemoveSkills().get(i));
             }
             Collections.sort(displaySkills, SkillsEnum.SKILLS_ENUM_COMPARATOR);
-            setFontSize();
         }
     }
 
     protected void drawPortrait(Graphics g){
-        //if(transformPage == 0) {
-            g.drawPercentageImage(displayImage, CHAR_X, CHAR_Y, DOUBLE_SCALE, DOUBLE_SCALE);
-        /*
-        }
-        else{
-            g.drawPercentageImage(transformations.get(transformPage-1).getImage(), CHAR_X, CHAR_Y, DOUBLE_SCALE, DOUBLE_SCALE);
-        }
-        */
+        g.drawPercentageImage(displayImage, CHAR_X, CHAR_Y, DOUBLE_SCALE, DOUBLE_SCALE);
 
         //Stuff for transformation
         if(maxTransformPage != 0){
@@ -282,7 +250,10 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
     }
 
     protected void drawName(Graphics g){
-        g.drawString(displayName, NAME_X, nameY, namePaint);
+        if(!g.drawString(displayName, NAME_X, MAX_NAME_Y, namePaint, MAX_NAME_SIZE, MAX_NAME_FONT, MIN_NAME_FONT)){
+            namePaint.setTextSize(TWO_LINE_NAME_FONT);
+            g.drawMultiLineString(displayName, NAME_X, TWO_LINE_NAME_Y, MAX_NAME_SIZE, namePaint);
+        }
     }
 
     protected void drawTopRows(Graphics g){
@@ -295,7 +266,7 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
         //Draw image for weapon category
 
         //Draw string for weapon name
-        g.drawString(displayWeapon.getWeaponType(), WEAPON_X, weaponY, weaponPaint);
+        g.drawString(displayWeapon.getWeaponType(), WEAPON_X, MAX_WEAPON_Y, weaponPaint, MAX_WEAPON_SIZE, MAX_WEAPON_FONT);
         //Draw image for number hits
         g.drawString(String.valueOf(displayWeapon.getNumHits()), HITS_X, HITS_Y, hitsPaint);
     }

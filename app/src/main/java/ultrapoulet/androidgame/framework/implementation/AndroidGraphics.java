@@ -117,6 +117,29 @@ public class AndroidGraphics implements Graphics {
     }
 
     @Override
+    public void drawString(String text, int x, int y, Paint paint, int maxWidth, int maxFont){
+        drawString(text, x, y, paint, maxWidth, maxFont, 0);
+    }
+
+    @Override
+    public boolean drawString(String text, int x, int y, Paint paint, int maxWidth, int maxFont, int minFont){
+        int fontSize = maxFont;
+        paint.setTextSize(fontSize);
+        while(paint.measureText(text) >= maxWidth && fontSize > minFont){
+            fontSize--;
+            paint.setTextSize(fontSize);
+        }
+        if(paint.measureText(text) <= maxWidth){
+            int newY = y - ((maxFont - fontSize) / 2);
+            drawString(text, x, newY, paint);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    @Override
     public void drawMultiLineString(String text, int x, int y, int width, TextPaint paint){
         StaticLayout textLayout = new StaticLayout(
                 text, paint, width, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);

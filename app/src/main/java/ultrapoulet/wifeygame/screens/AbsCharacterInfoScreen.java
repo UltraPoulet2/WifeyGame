@@ -36,13 +36,16 @@ public abstract class AbsCharacterInfoScreen extends Screen {
     protected static final int WEAK_ELEMENT_Y = 380 + BG_Y;
     protected static final int QUARTER_SCALE = 25;
 
-    protected Paint namePaint;
-    protected int nameFontSize;
-    protected int nameY;
+    protected TextPaint namePaint;
+    //protected int nameFontSize;
+    //protected int nameY;
     protected static final int MAX_NAME_FONT = 40;
-    protected static final int MAX_NAME_SIZE = 240;
+    protected static final int MIN_NAME_FONT = 20;
+    protected static final int TWO_LINE_NAME_FONT = 20;
+    protected static final int MAX_NAME_SIZE = 236;
     protected static final int NAME_X = 402 + BG_X;
     protected static final int MAX_NAME_Y = 155 + BG_Y;
+    protected static final int TWO_LINE_NAME_Y = 115 + BG_Y;
 
     protected Paint skillsPaint;
     protected static final int SKILLS_TEXT_SIZE = 40;
@@ -99,7 +102,7 @@ public abstract class AbsCharacterInfoScreen extends Screen {
     }
 
     protected void createPaints(){
-        namePaint = new Paint();
+        namePaint = new TextPaint();
         namePaint.setTextAlign(Paint.Align.LEFT);
         namePaint.setColor(Color.BLACK);
 
