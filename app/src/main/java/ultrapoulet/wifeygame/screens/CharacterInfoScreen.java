@@ -283,7 +283,7 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
             else{
                 xOffset = SKILLS_TEXT_RIGHT_X;
             }
-            g.drawString(skill.getSkillName(), xOffset, yOffset, skillsPaint);
+            g.drawString(skill.getSkillName(), xOffset, yOffset, skillsPaint, SKILLS_TEXT_SIZE, SKILLS_TEXT_FONT);
         }
         if(maxPage == 0){
             g.drawImage(Assets.ScrollBarFull, SKILLS_SCROLL_X, SKILLS_SCROLL_TOP_Y);

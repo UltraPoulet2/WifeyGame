@@ -37,8 +37,6 @@ public abstract class AbsCharacterInfoScreen extends Screen {
     protected static final int QUARTER_SCALE = 25;
 
     protected TextPaint namePaint;
-    //protected int nameFontSize;
-    //protected int nameY;
     protected static final int MAX_NAME_FONT = 40;
     protected static final int MIN_NAME_FONT = 20;
     protected static final int TWO_LINE_NAME_FONT = 20;
@@ -48,7 +46,8 @@ public abstract class AbsCharacterInfoScreen extends Screen {
     protected static final int TWO_LINE_NAME_Y = 115 + BG_Y;
 
     protected Paint skillsPaint;
-    protected static final int SKILLS_TEXT_SIZE = 40;
+    protected static final int SKILLS_TEXT_FONT = 40;
+    protected static final int SKILLS_TEXT_SIZE = 276;
     protected static final int SKILLS_TEXT_PER_PAGE = 14;
     protected static final int SKILLS_TEXT_LEFT_X = 32 + BG_X;
     protected static final int SKILLS_TEXT_RIGHT_X = SKILLS_TEXT_LEFT_X + 285;
@@ -109,7 +108,6 @@ public abstract class AbsCharacterInfoScreen extends Screen {
         skillsPaint = new Paint();
         skillsPaint.setTextAlign(Paint.Align.LEFT);
         skillsPaint.setColor(Color.BLACK);
-        skillsPaint.setTextSize(SKILLS_TEXT_SIZE);
 
         descPaint = new TextPaint();
         descPaint.setTextAlign(Paint.Align.LEFT);
