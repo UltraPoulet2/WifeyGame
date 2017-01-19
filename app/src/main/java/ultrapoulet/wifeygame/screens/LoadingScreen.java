@@ -184,6 +184,7 @@ public class LoadingScreen extends Screen {
         }
         Assets.HPSlash = g.newImage("numbers/HPSlash.png", ImageFormat.ARGB8888);
         Assets.Colon = g.newImage("numbers/Colon.png", ImageFormat.ARGB8888);
+        Assets.Plus = g.newImage("numbers/YellowPlus.png", ImageFormat.ARGB8888);
 
         Assets.GreenNumbers = new ArrayList<>();
         for(int i = 0; i < 10; i++){
@@ -232,6 +233,12 @@ public class LoadingScreen extends Screen {
         Assets.CharacterInfoScreen = g.newImage("screens/CharacterInfoScreen.png", ImageFormat.RGB565);
         Assets.BattleCharacterInfoScreen = g.newImage("screens/BattleCharacterInfoScreen.png", ImageFormat.RGB565);
         Assets.BattleInfoScreen = g.newImage("screens/BattleInfoScreen.png", ImageFormat.RGB565);
+
+        Assets.BattleResultScreen = g.newImage("screens/BattleResultScreen.png", ImageFormat.ARGB8888);
+        Assets.BattleResultVictory = g.newImage("objects/battleResult/BattleResultVictory.png", ImageFormat.ARGB8888);
+        Assets.BattleResultDefeat = g.newImage("objects/battleResult/BattleResultDefeat.png", ImageFormat.ARGB8888);
+        Assets.BattleResultExp = g.newImage("objects/battleResult/BattleResultExp.png", ImageFormat.ARGB8888);
+        Assets.BattleResultGold = g.newImage("objects/battleResult/BattleResultGold.png", ImageFormat.ARGB8888);
 
         Assets.ElementImages = new ArrayList<>();
         Assets.ElementImages.add(g.newImage("elements/AirElement.png", ImageFormat.ARGB8888));

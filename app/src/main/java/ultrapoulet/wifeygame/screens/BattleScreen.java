@@ -1014,8 +1014,8 @@ public class BattleScreen extends Screen {
                     phaseEntered = false;
 
                     //Temporary go back to Select
-                    BattleSelectScreen bss = new BattleSelectScreen(game);
-                    game.setScreen(bss);
+                    BattleResultScreen brs = new BattleResultScreen(game, battleInfo, party, enemies);
+                    game.setScreen(brs);
                 }
                 break;
 

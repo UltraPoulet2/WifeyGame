@@ -31,6 +31,7 @@ public class Assets {
     public static List<Image> KOImages;
     public static Image HPSlash;
     public static Image Colon;
+    public static Image Plus;
     public static List<Image> WhiteNumbers;
     public static List<Image> GreenNumbers;
     public static List<Image> YellowNumbers;
@@ -62,6 +63,13 @@ public class Assets {
     //BattleInfoScreen Stuff
     public static Image BattleInfoScreen;
     public static Image BattleEnable, BattleDisable;
+
+    //BattleResultScreen Stuff
+    public static Image BattleResultScreen;
+    public static Image BattleResultVictory;
+    public static Image BattleResultDefeat;
+    public static Image BattleResultExp;
+    public static Image BattleResultGold;
 
     //Element Image stuff
     public static List<Image> ElementImages;
