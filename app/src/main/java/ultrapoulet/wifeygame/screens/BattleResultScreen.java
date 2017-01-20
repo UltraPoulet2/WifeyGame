@@ -25,12 +25,18 @@ public class BattleResultScreen extends Screen{
     private static final int RESULT_Y = 50;
     private static final int EXP_Y = 250;
     private static final int GOLD_Y = 310;
-    private static final int CENTER_X = 399;
+    private static final int CENTER_X = 400;
     private static final int RESULT_OBJECT_WIDTH = 150;
     private static final int TEXT_SPACING = 10;
     private static final int TEXT_WIDTH = 30;
     private static final int TEXT_HEIGHT = 60;
     private static final int TEXT_OFFSET = 0;
+
+    private static final int PARTY_HEIGHT = 160;
+    private static final int PARTY_WIDTH = 160;
+    private static final int PARTY_SPACING = 10;
+    private static final int PARTY_ROW_1_Y = 750;
+    private static final int PARTY_ROW_2_Y = 920;
 
     private static final int CONTINUE_LEFT_X = 500;
     private static final int CONTINUE_RIGHT_X = 750;
@@ -97,6 +103,7 @@ public class BattleResultScreen extends Screen{
 
         int currentX;
 
+        //Imagery for displaying Experience Gained
         int expWidth = RESULT_OBJECT_WIDTH + TEXT_SPACING + TEXT_WIDTH /*For the plus*/;
         int baseExpDigits = Integer.toString(baseExp).length();
         int bonusExpDigits = Integer.toString(bonusExp).length();
@@ -117,6 +124,7 @@ public class BattleResultScreen extends Screen{
             NumberPrinter.drawNumber(g, bonusExp, currentX, EXP_Y, TEXT_WIDTH, TEXT_HEIGHT, TEXT_OFFSET, Assets.YellowNumbers, Align.LEFT);
         }
 
+        //Imagery for displaying Gold Gained
         int goldWidth = RESULT_OBJECT_WIDTH + TEXT_SPACING + TEXT_WIDTH /*For the plus*/;
         int baseGoldDigits = Integer.toString(baseGold).length();
         int bonusGoldDigits = Integer.toString(bonusGold).length();
@@ -135,6 +143,20 @@ public class BattleResultScreen extends Screen{
             g.drawImage(Assets.Plus, currentX, GOLD_Y);
             currentX += TEXT_WIDTH;
             NumberPrinter.drawNumber(g, bonusGold, currentX, GOLD_Y, TEXT_WIDTH, TEXT_HEIGHT, TEXT_OFFSET, Assets.YellowNumbers, Align.LEFT);
+        }
+
+        //Draw Party Images
+        int topRowSize = party.size() - (party.size() / 2);
+        int baseX = CENTER_X - ((PARTY_WIDTH * topRowSize) + (PARTY_SPACING * (topRowSize - 1))) / 2;
+        for(int i = 0; i < topRowSize; i++){
+            int x = baseX + (PARTY_WIDTH + PARTY_SPACING) * i;
+            g.drawScaledImage(party.get(i).getImage(), x, PARTY_ROW_1_Y, PARTY_WIDTH, PARTY_HEIGHT);
+        }
+        int botRowSize = party.size() / 2;
+        baseX = CENTER_X - ((PARTY_WIDTH * botRowSize) + (PARTY_SPACING * (botRowSize - 1))) / 2;
+        for(int i = topRowSize; i < party.size(); i++){
+            int x = baseX + (PARTY_WIDTH + PARTY_SPACING) * (i - topRowSize);
+            g.drawScaledImage(party.get(i).getImage(), x, PARTY_ROW_2_Y, PARTY_WIDTH, PARTY_HEIGHT);
         }
     }
 
