@@ -451,14 +451,24 @@ public class PartySelectScreen extends Screen {
                         if (currentParty.size() <= partyIndex){
                             currentParty.remove(draggingPartyIndex);
                             currentParty.add(temp);
+
+                            Image tempImage = partyImages.get(draggingPartyIndex);
+                            partyImages.remove(draggingPartyIndex);
+                            partyImages.add(tempImage);
                         }
                         else{
                             currentParty.set(draggingPartyIndex, currentParty.get(partyIndex));
                             currentParty.set(partyIndex, temp);
+
+                            Image tempImage = partyImages.get(draggingPartyIndex);
+                            partyImages.set(draggingPartyIndex, partyImages.get(partyIndex));
+                            partyImages.set(partyIndex, tempImage);
                         }
                     }
                     if(partyIndex == -1){
                         currentParty.remove(draggingPartyIndex);
+
+                        partyImages.remove(draggingPartyIndex);
                     }
                     updateButtons();
                 }
