@@ -123,7 +123,7 @@ public class BattleInfoScreen extends Screen{
         buttonList = new ButtonList();
         buttonList.addButton(new Button(BACK_BUTTON_LEFT_X, BACK_BUTTON_RIGHT_X, BACK_BUTTON_TOP_Y, BACK_BUTTON_BOTTOM_Y, true, BACK_BUTTON_STRING));
         buttonList.addButton(new Button(PARTY_BUTTON_LEFT_X, PARTY_BUTTON_RIGHT_X, PARTY_BUTTON_TOP_Y, PARTY_BUTTON_BOTTOM_Y, true, PARTY_BUTTON_STRING));
-        startButton = new Button(START_BUTTON_LEFT_X, START_BUTTON_RIGHT_X, START_BUTTON_TOP_Y, START_BUTTON_BOTTOM_Y, false, START_BUTTON_STRING);
+        startButton = new Button(START_BUTTON_LEFT_X, START_BUTTON_RIGHT_X, START_BUTTON_TOP_Y, START_BUTTON_BOTTOM_Y, false, START_BUTTON_STRING, Assets.BattleEnable, Assets.BattleDisable);
         buttonList.addButton(startButton);
 
         partyImages = new ArrayList<>(7);
@@ -233,12 +233,7 @@ public class BattleInfoScreen extends Screen{
             g.drawImage(Assets.LockSelection, PARTY_IMAGE_OFFSET_X * i + PARTY_IMAGE_BASE_LEFT_X, PARTY_IMAGE_TOP_Y);
         }
 
-        if(party.get(0) != null && battleInfo.validParty(party)){
-            g.drawImage(Assets.BattleEnable, START_BUTTON_LEFT_X, START_BUTTON_TOP_Y);
-        }
-        else{
-            g.drawImage(Assets.BattleDisable, START_BUTTON_LEFT_X, START_BUTTON_TOP_Y);
-        }
+        buttonList.drawImage(g);
     }
 
     @Override

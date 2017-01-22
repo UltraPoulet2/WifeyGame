@@ -3,6 +3,8 @@ package ultrapoulet.androidgame.framework.helpers;
 import java.util.ArrayList;
 import java.util.List;
 
+import ultrapoulet.androidgame.framework.Graphics;
+
 /**
  * Created by John on 11/7/2016.
  */
@@ -51,6 +53,12 @@ public class ButtonList {
         }
         else{
             System.out.println("ButtonList:setIndexCoord(): Invalid index provided: " + index);
+        }
+    }
+
+    public void drawImage(Graphics g){
+        for(int i = 0; i < buttons.size(); i++){
+            buttons.get(i).drawImage(g);
         }
     }
 }

@@ -1,5 +1,8 @@
 package ultrapoulet.androidgame.framework.helpers;
 
+import ultrapoulet.androidgame.framework.Graphics;
+import ultrapoulet.androidgame.framework.Image;
+
 /**
  * Created by John on 11/7/2016.
  */
@@ -14,6 +17,10 @@ public class Button {
     private boolean active;
     private String name;
 
+    private Image activeImage;
+    private Image inactiveImage;
+
+    @Deprecated
     public Button(int leftX, int rightX, int topY, int botY, boolean active, String name){
         this.leftX = leftX;
         this.rightX = rightX;
@@ -21,6 +28,17 @@ public class Button {
         this.botY = botY;
         this.active = active;
         this.name = name;
+    }
+
+    public Button(int leftX, int rightX, int topY, int botY, boolean active, String name, Image activeImage, Image inactiveImage){
+        this.leftX = leftX;
+        this.rightX = rightX;
+        this.topY = topY;
+        this.botY = botY;
+        this.active = active;
+        this.name = name;
+        this.activeImage = activeImage;
+        this.inactiveImage = inactiveImage;
     }
 
     public boolean isActive(){
@@ -47,5 +65,15 @@ public class Button {
         this.rightX = rightX;
         this.topY = topY;
         this.botY = botY;
+    }
+
+    public void drawImage(Graphics g){
+        //Draw scaled to ensure it fits in region
+        if(active && activeImage != null) {
+            g.drawScaledImage(activeImage, leftX, topY, rightX - leftX, botY - topY);
+        }
+        else if(!active && inactiveImage != null) {
+            g.drawScaledImage(inactiveImage, leftX, topY, rightX - leftX, botY - topY);
+        }
     }
 }
