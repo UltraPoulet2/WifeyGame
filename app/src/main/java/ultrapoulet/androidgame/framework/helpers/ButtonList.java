@@ -17,6 +17,10 @@ public class ButtonList {
         buttons.add(newButton);
     }
 
+    public Button get(int index) {
+        return buttons.get(index);
+    }
+
     public Button getButtonPressed(int x, int y){
         for(int i = 0; i < buttons.size(); i++){
             if(buttons.get(i).isPressed(x,y)){
@@ -37,6 +41,7 @@ public class ButtonList {
     }
 
     //For use for numbered buttons
+    @Deprecated
     public void setIndexActive(int index, boolean value){
         if(index < buttons.size() && index >= 0){
             buttons.get(index).setActive(value);

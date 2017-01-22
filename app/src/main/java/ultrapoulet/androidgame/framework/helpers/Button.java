@@ -21,6 +21,7 @@ public class Button {
     private Image inactiveImage;
 
     @Deprecated
+    //Temporarily deprecated to determine which buttons should support the active/inactive image
     public Button(int leftX, int rightX, int topY, int botY, boolean active, String name){
         this.leftX = leftX;
         this.rightX = rightX;
@@ -65,6 +66,10 @@ public class Button {
         this.rightX = rightX;
         this.topY = topY;
         this.botY = botY;
+    }
+
+    public void setActiveImage(Image in) {
+        this.activeImage =  in;
     }
 
     public void drawImage(Graphics g){

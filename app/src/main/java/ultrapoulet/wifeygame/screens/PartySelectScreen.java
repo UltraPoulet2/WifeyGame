@@ -215,15 +215,17 @@ public class PartySelectScreen extends Screen {
 
     public void createButtons(){
         basicButtonList = new ButtonList();
-        prevButton = new Button(PREV_BUTTON_LEFT_X, PREV_BUTTON_RIGHT_X, PREV_BUTTON_TOP_Y, PREV_BUTTON_BOT_Y, false, PREV_BUTTON_STRING);
+        prevButton = new Button(PREV_BUTTON_LEFT_X, PREV_BUTTON_RIGHT_X, PREV_BUTTON_TOP_Y, PREV_BUTTON_BOT_Y, false, PREV_BUTTON_STRING, Assets.PrevPageEnable, Assets.PrevPageDisable);
         basicButtonList.addButton(prevButton);
-        nextButton = new Button(NEXT_BUTTON_LEFT_X, NEXT_BUTTON_RIGHT_X, NEXT_BUTTON_TOP_Y, NEXT_BUTTON_BOT_Y, false, NEXT_BUTTON_STRING);
+        nextButton = new Button(NEXT_BUTTON_LEFT_X, NEXT_BUTTON_RIGHT_X, NEXT_BUTTON_TOP_Y, NEXT_BUTTON_BOT_Y, false, NEXT_BUTTON_STRING, Assets.NextPageEnable, Assets.NextPageDisable);
         basicButtonList.addButton(nextButton);
+        //sortButton will be removed later
         sortButton = new Button(SORT_BUTTON_LEFT_X, SORT_BUTTON_RIGHT_X, SORT_BUTTON_TOP_Y, SORT_BUTTON_BOT_Y, false, SORT_BUTTON_STRING);
         basicButtonList.addButton(sortButton);
-        backButton = new Button(BACK_BUTTON_LEFT_X, BACK_BUTTON_RIGHT_X, BACK_BUTTON_TOP_Y, BACK_BUTTON_BOT_Y, true, BACK_BUTTON_STRING);
+        //Back button does not have an image associated with it
+        backButton = new Button(BACK_BUTTON_LEFT_X, BACK_BUTTON_RIGHT_X, BACK_BUTTON_TOP_Y, BACK_BUTTON_BOT_Y, true, BACK_BUTTON_STRING, null, null);
         basicButtonList.addButton(backButton);
-        acceptButton = new Button(ACCEPT_BUTTON_LEFT_X, ACCEPT_BUTTON_RIGHT_X, ACCEPT_BUTTON_TOP_Y, ACCEPT_BUTTON_BOT_Y, false, ACCEPT_BUTTON_STRING);
+        acceptButton = new Button(ACCEPT_BUTTON_LEFT_X, ACCEPT_BUTTON_RIGHT_X, ACCEPT_BUTTON_TOP_Y, ACCEPT_BUTTON_BOT_Y, false, ACCEPT_BUTTON_STRING, Assets.AcceptEnable, Assets.AcceptDisable);
         basicButtonList.addButton(acceptButton);
 
         partyList = new ButtonList();
@@ -264,17 +266,17 @@ public class PartySelectScreen extends Screen {
 
     public void updatePartyButtons(){
         for(int i = 0; i < maxPartySize; i++){
-            partyList.setIndexActive(i, true);
+            partyList.get(i).setActive(true);
         }
     }
 
     public void updateRecruitButtons(){
         for(int i = 0; i < PER_PAGE; i++){
             if((currentPage * PER_PAGE + i) < validCharacters.size() ){
-                recruitList.setIndexActive(i, true);
+                recruitList.get(i).setActive(true);
             }
             else{
-                recruitList.setIndexActive(i, false);
+                recruitList.get(i).setActive(false);
             }
         }
     }
@@ -515,20 +517,8 @@ public class PartySelectScreen extends Screen {
         NumberPrinter.drawNumber(g, displayPage, CUR_PAGE_X, PAGE_Y, PAGE_WIDTH, PAGE_HEIGHT, 0, Assets.WhiteNumbers, NumberPrinter.Align.RIGHT);
         NumberPrinter.drawNumber(g, displayMaxPage, MAX_PAGE_X, PAGE_Y, PAGE_WIDTH, PAGE_HEIGHT, 0, Assets.WhiteNumbers, NumberPrinter.Align.LEFT);
 
-        if(prevButton.isActive()){
-            g.drawImage(Assets.PrevPageEnable, PREV_BUTTON_LEFT_X, PREV_BUTTON_TOP_Y);
-        }
-        else{
-            g.drawImage(Assets.PrevPageDisable, PREV_BUTTON_LEFT_X, PREV_BUTTON_TOP_Y);
-        }
 
-        if(nextButton.isActive()){
-            g.drawImage(Assets.NextPageEnable, NEXT_BUTTON_LEFT_X, NEXT_BUTTON_TOP_Y);
-        }
-        else{
-            g.drawImage(Assets.NextPageDisable, NEXT_BUTTON_LEFT_X, NEXT_BUTTON_TOP_Y);
-        }
-
+        basicButtonList.drawImage(g);
         for(int i = 0; i < currentParty.size(); i++){
             if(!dragging || i != draggingPartyIndex) {
                 g.drawPercentageImage(partyImages.get(i), PARTY_IMAGE_OFFSET_X * i + PARTY_IMAGE_BASE_LEFT_X, PARTY_IMAGE_TOP_Y, PARTY_SCALE, PARTY_SCALE);
@@ -570,15 +560,6 @@ public class PartySelectScreen extends Screen {
                 g.drawPercentageImage(Assets.InvalidChar, draggingX - DRAGGING_OFFSET, draggingY - DRAGGING_OFFSET, DRAGGING_SCALE, DRAGGING_SCALE);
             }
         }
-
-        if(acceptButton.isActive()){
-            g.drawImage(Assets.AcceptEnable, ACCEPT_BUTTON_LEFT_X, ACCEPT_BUTTON_TOP_Y);
-        }
-        else{
-            g.drawImage(Assets.AcceptDisable, ACCEPT_BUTTON_LEFT_X, ACCEPT_BUTTON_TOP_Y);
-        }
-
-
     }
 
     @Override
