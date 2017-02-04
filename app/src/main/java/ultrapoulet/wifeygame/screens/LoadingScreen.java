@@ -209,6 +209,19 @@ public class LoadingScreen extends Screen {
         Assets.StatusHolder = g.newImage("objects/status/StatusHolder.png", ImageFormat.ARGB8888);
         Assets.Hourglass = g.newImage("objects/status/Hourglass.png", ImageFormat.ARGB8888);
 
+        //BattleSelectScreen stuff
+        Assets.BattleSelectScreen = g.newImage("BattleSelect/BattleSelectScreen.png", ImageFormat.ARGB8888);
+        Assets.BattleDivider = g.newImage("BattleSelect/BattleDivider.png", ImageFormat.ARGB8888);
+        Assets.PartyButton = g.newImage("BattleSelect/PartyButton.png", ImageFormat.ARGB8888);
+        Assets.UpgradeButton = g.newImage("BattleSelect/UpgradeButton.png", ImageFormat.ARGB8888);
+        Assets.InfoButton = g.newImage("BattleSelect/InfoButton.png", ImageFormat.ARGB8888);
+        Assets.StoryButtonActive = g.newImage("BattleSelect/StoryButtonActive.png", ImageFormat.ARGB8888);
+        Assets.StoryButtonInactive = g.newImage("BattleSelect/StoryButtonInactive.png", ImageFormat.ARGB8888);
+        Assets.RecruitButtonActive = g.newImage("BattleSelect/RecruitButtonActive.png", ImageFormat.ARGB8888);
+        Assets.RecruitButtonInactive = g.newImage("BattleSelect/RecruitButtonInactive.png", ImageFormat.ARGB8888);
+        Assets.SpecialButtonActive = g.newImage("BattleSelect/SpecialButtonActive.png", ImageFormat.ARGB8888);
+        Assets.SpecialButtonInactive = g.newImage("BattleSelect/SpecialButtonInactive.png", ImageFormat.ARGB8888);
+
         Assets.PartySelectScreen = g.newImage("screens/PartySelectScreen.png", ImageFormat.RGB565);
         Assets.AcceptEnable = g.newImage("buttons/AcceptEnabled.png", ImageFormat.ARGB8888);
         Assets.AcceptDisable = g.newImage("buttons/AcceptDisabled.png", ImageFormat.ARGB8888);

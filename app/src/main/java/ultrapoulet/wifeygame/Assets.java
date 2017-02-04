@@ -38,6 +38,16 @@ public class Assets {
     public static List<Image> RedNumbers;
     public static List<Image> GreyNumbers;
 
+    //BattleSelectScreen stuff
+    public static Image BattleSelectScreen;
+    public static Image BattleDivider;
+    public static Image PartyButton;
+    public static Image UpgradeButton;
+    public static Image InfoButton;
+    public static Image StoryButtonActive, StoryButtonInactive;
+    public static Image RecruitButtonActive, RecruitButtonInactive;
+    public static Image SpecialButtonActive, SpecialButtonInactive;
+
     //PartyInfo Holder Stuff
     public static Image StatusHolder;
     public static Image Hourglass;
