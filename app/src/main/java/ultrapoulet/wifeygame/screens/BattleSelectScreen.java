@@ -43,30 +43,44 @@ public class BattleSelectScreen extends Screen {
 
     private ButtonList buttonList;
     private Button storyButton;
+    private static final String STORY_BUTTON_STRING = "STORY";
     private Button recruitButton;
+    private static final String RECRUIT_BUTTON_STRING = "RECRUIT";
     private Button specialButton;
+    private static final String SPECIAL_BUTTON_STRING = "SPECIAL";
 
     private Button partyButton;
+    private static final String PARTY_BUTTON_STRING = "PARTY";
     private Button upgradeButton;
+    private static final String UPGRADE_BUTTON_STRING = "UPGRADE";
     private Button infoButton;
+    private static final String INFO_BUTTON_STRING = "INFO";
+
+    private Button lastPressedGeneral;
+
+    private PartySelectScreen pss;
+    private CharacterInfoScreen cis;
 
     public BattleSelectScreen(Game game){
         super(game);
 
         buttonList = new ButtonList();
-        storyButton = new Button(STORY_LEFT_X, STORY_RIGHT_X, TAB_TOP_Y, TAB_BOT_Y, false, "STORY", Assets.StoryButtonInactive, Assets.StoryButtonActive);
-        recruitButton = new Button(RECRUIT_LEFT_X, RECRUIT_RIGHT_X, TAB_TOP_Y, TAB_BOT_Y, true, "RECRUIT", Assets.RecruitButtonInactive, Assets.RecruitButtonActive);
-        specialButton = new Button(SPECIAL_LEFT_X, SPECIAL_RIGHT_X, TAB_TOP_Y, TAB_BOT_Y, true, "SPECIAL", Assets.SpecialButtonInactive, Assets.SpecialButtonActive);
+        storyButton = new Button(STORY_LEFT_X, STORY_RIGHT_X, TAB_TOP_Y, TAB_BOT_Y, false, STORY_BUTTON_STRING, Assets.StoryButtonInactive, Assets.StoryButtonActive);
+        recruitButton = new Button(RECRUIT_LEFT_X, RECRUIT_RIGHT_X, TAB_TOP_Y, TAB_BOT_Y, true, RECRUIT_BUTTON_STRING, Assets.RecruitButtonInactive, Assets.RecruitButtonActive);
+        specialButton = new Button(SPECIAL_LEFT_X, SPECIAL_RIGHT_X, TAB_TOP_Y, TAB_BOT_Y, true, SPECIAL_BUTTON_STRING, Assets.SpecialButtonInactive, Assets.SpecialButtonActive);
         buttonList.addButton(storyButton);
         buttonList.addButton(recruitButton);
         buttonList.addButton(specialButton);
 
-        partyButton = new Button(PARTY_LEFT_X, PARTY_RIGHT_X, BUTTONS_TOP_Y, BUTTONS_BOT_Y, true, "PARTY", Assets.PartyButton, null);
-        upgradeButton = new Button(UPGRADE_LEFT_X, UPGRADE_RIGHT_X, BUTTONS_TOP_Y, BUTTONS_BOT_Y, true, "UPGRADE", Assets.UpgradeButton, null);
-        infoButton = new Button(INFO_LEFT_X, INFO_RIGHT_X, BUTTONS_TOP_Y, BUTTONS_BOT_Y, true, "INFO", Assets.InfoButton, null);
+        partyButton = new Button(PARTY_LEFT_X, PARTY_RIGHT_X, BUTTONS_TOP_Y, BUTTONS_BOT_Y, true, PARTY_BUTTON_STRING, Assets.PartyButton, null);
+        upgradeButton = new Button(UPGRADE_LEFT_X, UPGRADE_RIGHT_X, BUTTONS_TOP_Y, BUTTONS_BOT_Y, true, UPGRADE_BUTTON_STRING, Assets.UpgradeButton, null);
+        infoButton = new Button(INFO_LEFT_X, INFO_RIGHT_X, BUTTONS_TOP_Y, BUTTONS_BOT_Y, true, INFO_BUTTON_STRING, Assets.InfoButton, null);
         buttonList.addButton(partyButton);
         buttonList.addButton(upgradeButton);
         buttonList.addButton(infoButton);
+
+        pss = new PartySelectScreen(game, this);
+        cis = new CharacterInfoScreen(game, this);
     }
 
     @Override
@@ -75,28 +89,55 @@ public class BattleSelectScreen extends Screen {
         List<TouchEvent> touchEvents = game.getInput().getTouchEvents();
         for(int i = 0; i < touchEvents.size(); i++){
             TouchEvent t = touchEvents.get(i);
-            if(t.type != TouchEvent.TOUCH_UP){
+            if(t.type == TouchEvent.TOUCH_DOWN){
+                lastPressedGeneral = buttonList.getButtonPressed(t.x, t.y);
                 continue;
             }
-            if(t.x < 100 || t.x > 700){
-                continue;
-            }
-            BattleInfo testInfo = null;
-            if(t.y >= 160 && t.y <= 260){
-                testInfo = Battles.get("TEST-BATL");
-            }
-            if(t.y >= 310 && t.y <= 410){
-                testInfo = Battles.get("TEST-BTWO");
-            }
-            if(t.y >= 460 && t.y <= 560){
-                testInfo = Battles.get("TEST-PHYS");
-            }
-            if(t.y >= 610 && t.y <= 710){
-                testInfo = Battles.get("TEST-MAGI");
-            }
-            if(testInfo != null){
-                BattleInfoScreen bis = new BattleInfoScreen(game, this, testInfo);
-                game.setScreen(bis);
+            else if(t.type == TouchEvent.TOUCH_UP) {
+                if(lastPressedGeneral != null && lastPressedGeneral == buttonList.getButtonPressed(t.x, t.y)){
+                    switch(lastPressedGeneral.getName()){
+                        case STORY_BUTTON_STRING:
+                            storyButton.setActive(false);
+                            recruitButton.setActive(true);
+                            specialButton.setActive(true);
+                            break;
+                        case RECRUIT_BUTTON_STRING:
+                            storyButton.setActive(true);
+                            recruitButton.setActive(false);
+                            specialButton.setActive(true);
+                            break;
+                        case SPECIAL_BUTTON_STRING:
+                            storyButton.setActive(true);
+                            recruitButton.setActive(true);
+                            specialButton.setActive(false);
+                            break;
+                        case PARTY_BUTTON_STRING:
+                            game.setScreen(pss);
+                            break;
+                        default:
+                            System.out.println("Not yet implemented");
+                    }
+                }
+                if (t.x < 100 || t.x > 700) {
+                    continue;
+                }
+                BattleInfo testInfo = null;
+                if (t.y >= 160 && t.y <= 260) {
+                    testInfo = Battles.get("TEST-BATL");
+                }
+                if (t.y >= 310 && t.y <= 410) {
+                    testInfo = Battles.get("TEST-BTWO");
+                }
+                if (t.y >= 460 && t.y <= 560) {
+                    testInfo = Battles.get("TEST-PHYS");
+                }
+                if (t.y >= 610 && t.y <= 710) {
+                    testInfo = Battles.get("TEST-MAGI");
+                }
+                if (testInfo != null) {
+                    BattleInfoScreen bis = new BattleInfoScreen(game, this, testInfo);
+                    game.setScreen(bis);
+                }
             }
         }
     }

@@ -211,6 +211,8 @@ public class PartySelectScreen extends Screen {
         createImageLists();
 
         setPreviousScreen(previousScreen);
+
+        setBattleInfo(null);
     }
 
     public void createButtons(){
@@ -321,6 +323,16 @@ public class PartySelectScreen extends Screen {
     public void setBattleInfo(BattleInfo info){
         this.battleInfo = info;
 
+        updateParty();
+
+        setValidCharacters(RecruitedCharacters.getArray());
+        updateButtons();
+        updatePartyButtons();
+        updateRecruitButtons();
+        updateRecruitImages();
+    }
+
+    private void updateParty(){
         maxPartySize = battleInfo != null ? battleInfo.getPartyMax() : 7;
         finalIndex = maxPartySize - 1;
         currentParty = new ArrayList<>();
@@ -328,11 +340,6 @@ public class PartySelectScreen extends Screen {
             currentParty.add(Party.getIndex(i));
             partyImages.add(currentParty.get(i).getImage(game.getGraphics()));
         }
-        setValidCharacters(RecruitedCharacters.getArray());
-        updateButtons();
-        updatePartyButtons();
-        updateRecruitButtons();
-        updateRecruitImages();
     }
 
     private void setPreviousScreen(Screen previousScreen){
