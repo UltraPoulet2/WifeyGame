@@ -13,7 +13,9 @@ import ultrapoulet.androidgame.framework.helpers.Button;
 import ultrapoulet.androidgame.framework.helpers.ButtonList;
 import ultrapoulet.wifeygame.Assets;
 import ultrapoulet.wifeygame.battle.BattleInfo;
+import ultrapoulet.wifeygame.character.WifeyCharacter;
 import ultrapoulet.wifeygame.gamestate.Battles;
+import ultrapoulet.wifeygame.gamestate.Party;
 import ultrapoulet.wifeygame.gamestate.PlayerInfo;
 
 /**
@@ -57,9 +59,18 @@ public class BattleSelectScreen extends Screen {
     private static final String INFO_BUTTON_STRING = "INFO";
 
     private Button lastPressedGeneral;
+    private int selectedChar;
 
     private PartySelectScreen pss;
     private CharacterInfoScreen cis;
+
+    private List<WifeyCharacter> party;
+    private ButtonList partyList;
+    private static final int PARTY_IMAGE_BASE_LEFT_X = 55;
+    private static final int PARTY_IMAGE_BASE_RIGHT_X = 145;
+    private static final int PARTY_IMAGE_OFFSET_X = 100;
+    private static final int PARTY_IMAGE_TOP_Y = 1010;
+    private static final int PARTY_IMAGE_BOT_Y = 1100;
 
     public BattleSelectScreen(Game game){
         super(game);
@@ -81,6 +92,17 @@ public class BattleSelectScreen extends Screen {
 
         pss = new PartySelectScreen(game, this);
         cis = new CharacterInfoScreen(game, this);
+
+        partyList = new ButtonList();
+        for(int i = 0; i < 7; i++){
+            int xLeft = PARTY_IMAGE_BASE_LEFT_X + PARTY_IMAGE_OFFSET_X * i;
+            int xRight = PARTY_IMAGE_BASE_RIGHT_X + PARTY_IMAGE_OFFSET_X * i;
+            int yTop = PARTY_IMAGE_TOP_Y;
+            int yBot = PARTY_IMAGE_BOT_Y;
+            //Active is not initially set to have an image (This is done in resume)
+            //Inactive does not have an image
+            partyList.addButton(new Button(xLeft, xRight, yTop, yBot, false, "PARTY_" + i));
+        }
     }
 
     @Override
@@ -91,6 +113,7 @@ public class BattleSelectScreen extends Screen {
             TouchEvent t = touchEvents.get(i);
             if(t.type == TouchEvent.TOUCH_DOWN){
                 lastPressedGeneral = buttonList.getButtonPressed(t.x, t.y);
+                selectedChar = partyList.getIndexPressed(t.x, t.y);
                 continue;
             }
             else if(t.type == TouchEvent.TOUCH_UP) {
@@ -117,6 +140,10 @@ public class BattleSelectScreen extends Screen {
                         default:
                             System.out.println("Not yet implemented");
                     }
+                }
+                else if(selectedChar == partyList.getIndexPressed(t.x, t.y) && selectedChar != -1){
+                    cis.setChar(party.get(selectedChar));
+                    game.setScreen(cis);
                 }
                 if (t.x < 100 || t.x > 700) {
                     continue;
@@ -170,6 +197,8 @@ public class BattleSelectScreen extends Screen {
         g.drawRect(100, 610, 600, 100, Color.DKGRAY);
         BattleInfo test4 = Battles.get("TEST-MAGI");
         g.drawString(test4.getName(), 400, 680, paint);
+
+        partyList.drawImage(g);
     }
 
     @Override
@@ -180,6 +209,17 @@ public class BattleSelectScreen extends Screen {
     @Override
     public void resume() {
         //Do stuff to get the current party
+        party = Party.getParty(7);
+        for(int i = 0; i < 7; i++){
+            //Set the button to active if the party member exists
+            partyList.get(i).setActive(party.get(i) != null);
+            if(party.get(i) != null){
+                partyList.get(i).setActiveImage(party.get(i).getImage(game.getGraphics()));
+            }
+            else {
+                partyList.get(i).setActiveImage(null);
+            }
+        }
     }
 
     @Override
