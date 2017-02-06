@@ -196,6 +196,10 @@ public class PartySelectScreen extends Screen {
     };
 
     public PartySelectScreen(Game game, Screen previousScreen){
+        this(game, previousScreen, null);
+    }
+
+    public PartySelectScreen(Game game, Screen previousScreen, BattleInfo info){
         super(game);
         textPaint = new Paint();
         textPaint.setColor(Color.BLACK);
@@ -212,7 +216,7 @@ public class PartySelectScreen extends Screen {
 
         setPreviousScreen(previousScreen);
 
-        setBattleInfo(null);
+        setBattleInfo(info);
     }
 
     public void createButtons(){
@@ -320,7 +324,7 @@ public class PartySelectScreen extends Screen {
         maxPage = (validCharacters.size() / PER_PAGE);
     }
 
-    public void setBattleInfo(BattleInfo info){
+    private void setBattleInfo(BattleInfo info){
         this.battleInfo = info;
 
         updateParty();
@@ -576,7 +580,7 @@ public class PartySelectScreen extends Screen {
 
     @Override
     public void resume() {
-
+        
     }
 
     @Override

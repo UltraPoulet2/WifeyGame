@@ -32,7 +32,6 @@ public class BattleInfoScreen extends Screen{
     private Screen prevScreen;
 
     private BattleInfo battleInfo;
-    private PartySelectScreen partySelect;
 
     private CharacterInfoScreen charInfo;
     private int selectedChar;
@@ -112,8 +111,6 @@ public class BattleInfoScreen extends Screen{
         requirementPaint.setTextAlign(Align.CENTER);
         requirementPaint.setTextSize(45);
 
-        partySelect = new PartySelectScreen(game, this);
-
         charInfo = new CharacterInfoScreen(game, this);
 
         buttonList = new ButtonList();
@@ -171,7 +168,7 @@ public class BattleInfoScreen extends Screen{
                             backButton();
                             break;
                         case PARTY_BUTTON_STRING:
-                            partySelect.setBattleInfo(battleInfo);
+                            PartySelectScreen partySelect = new PartySelectScreen(game, this, battleInfo);
                             game.setScreen(partySelect);
                             break;
                         case START_BUTTON_STRING:

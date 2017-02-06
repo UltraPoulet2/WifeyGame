@@ -61,7 +61,6 @@ public class BattleSelectScreen extends Screen {
     private Button lastPressedGeneral;
     private int selectedChar;
 
-    private PartySelectScreen pss;
     private CharacterInfoScreen cis;
 
     private List<WifeyCharacter> party;
@@ -90,7 +89,6 @@ public class BattleSelectScreen extends Screen {
         buttonList.addButton(upgradeButton);
         buttonList.addButton(infoButton);
 
-        pss = new PartySelectScreen(game, this);
         cis = new CharacterInfoScreen(game, this);
 
         partyList = new ButtonList();
@@ -135,7 +133,7 @@ public class BattleSelectScreen extends Screen {
                             specialButton.setActive(false);
                             break;
                         case PARTY_BUTTON_STRING:
-                            game.setScreen(pss);
+                            game.setScreen(new PartySelectScreen(game, this));
                             break;
                         default:
                             System.out.println("Not yet implemented");
