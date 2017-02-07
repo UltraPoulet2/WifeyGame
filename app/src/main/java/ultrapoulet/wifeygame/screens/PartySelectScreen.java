@@ -580,7 +580,7 @@ public class PartySelectScreen extends Screen {
 
     @Override
     public void resume() {
-        
+
     }
 
     @Override

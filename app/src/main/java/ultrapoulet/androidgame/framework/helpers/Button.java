@@ -1,5 +1,7 @@
 package ultrapoulet.androidgame.framework.helpers;
 
+import android.graphics.Paint;
+
 import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Image;
 
@@ -54,6 +56,10 @@ public class Button {
         return this.name;
     }
 
+    public void setName(String value){
+        this.name = value;
+    }
+
     public boolean isPressed(int x, int y){
         if(!this.active){
             return false;
@@ -80,5 +86,11 @@ public class Button {
         else if(!active && inactiveImage != null) {
             g.drawScaledImage(inactiveImage, leftX, topY, rightX - leftX, botY - topY);
         }
+    }
+
+    public void drawString(Graphics g, Paint p){
+        int X = leftX + ((rightX - leftX)/2);
+        int Y = topY + ((botY - topY)/2) - (int) p.getTextSize();
+        g.drawString(this.name, X, Y, p);
     }
 }

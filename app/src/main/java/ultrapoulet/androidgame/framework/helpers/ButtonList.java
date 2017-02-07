@@ -11,7 +11,7 @@ import ultrapoulet.androidgame.framework.Graphics;
 
 public class ButtonList {
 
-    private List<Button> buttons = new ArrayList<>();
+    protected List<Button> buttons = new ArrayList<>();
 
     public void addButton(Button newButton){
         buttons.add(newButton);
