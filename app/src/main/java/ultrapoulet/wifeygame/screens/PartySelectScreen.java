@@ -17,6 +17,7 @@ import ultrapoulet.androidgame.framework.Input.TouchEvent;
 import ultrapoulet.androidgame.framework.Screen;
 import ultrapoulet.androidgame.framework.helpers.Button;
 import ultrapoulet.androidgame.framework.helpers.ButtonList;
+import ultrapoulet.androidgame.framework.helpers.DropdownMenu;
 import ultrapoulet.androidgame.framework.helpers.NumberPrinter;
 import ultrapoulet.wifeygame.Assets;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
@@ -64,6 +65,8 @@ public class PartySelectScreen extends Screen {
 
     private ButtonList basicButtonList;
     private Button lastPressed;
+    private boolean sortMenuPressed;
+    private Button sortPressed;
 
     private Button prevButton;
     private static final int PREV_BUTTON_LEFT_X = 45;
@@ -79,12 +82,16 @@ public class PartySelectScreen extends Screen {
     private static final int NEXT_BUTTON_BOT_Y = 388;
     private static final String NEXT_BUTTON_STRING = "Next";
 
-    private Button sortButton;
+    //private Button sortButton;
+    private DropdownMenu sortDropdown;
     private static final int SORT_BUTTON_LEFT_X = 585;
     private static final int SORT_BUTTON_RIGHT_X = 755;
     private static final int SORT_BUTTON_TOP_Y = 348;
     private static final int SORT_BUTTON_BOT_Y = 378;
     private static final String SORT_BUTTON_STRING = "Sort";
+    private static final String ALPHA_SORT_STRING = "A -> Z";
+    private static final String STR_SORT_STRING = "Strength";
+    private static final String MAG_SORT_STRING = "Magic";
 
     private Button backButton;
     private static final int BACK_BUTTON_LEFT_X = 45;
@@ -225,9 +232,17 @@ public class PartySelectScreen extends Screen {
         basicButtonList.addButton(prevButton);
         nextButton = new Button(NEXT_BUTTON_LEFT_X, NEXT_BUTTON_RIGHT_X, NEXT_BUTTON_TOP_Y, NEXT_BUTTON_BOT_Y, false, NEXT_BUTTON_STRING, Assets.NextPageEnable, Assets.NextPageDisable);
         basicButtonList.addButton(nextButton);
-        //sortButton will be removed later
-        sortButton = new Button(SORT_BUTTON_LEFT_X, SORT_BUTTON_RIGHT_X, SORT_BUTTON_TOP_Y, SORT_BUTTON_BOT_Y, false, SORT_BUTTON_STRING);
-        basicButtonList.addButton(sortButton);
+        //Temporary ButtonDropdown
+        Paint sortingPaint = new Paint();
+        sortingPaint.setTextSize(20);
+        sortingPaint.setColor(Color.BLACK);
+        sortingPaint.setTextAlign(Align.CENTER);
+        List<String> sortingList = new ArrayList<String>();
+        sortingList.add(ALPHA_SORT_STRING);
+        sortingList.add(STR_SORT_STRING);
+        sortingList.add(MAG_SORT_STRING);
+        sortDropdown = new DropdownMenu(SORT_BUTTON_LEFT_X, SORT_BUTTON_RIGHT_X, SORT_BUTTON_TOP_Y, SORT_BUTTON_BOT_Y, Assets.pHealthY, Assets.pHealthG, sortingPaint, sortingList);
+
         //Back button does not have an image associated with it
         backButton = new Button(BACK_BUTTON_LEFT_X, BACK_BUTTON_RIGHT_X, BACK_BUTTON_TOP_Y, BACK_BUTTON_BOT_Y, true, BACK_BUTTON_STRING, null, null);
         basicButtonList.addButton(backButton);
@@ -376,10 +391,38 @@ public class PartySelectScreen extends Screen {
                 draggingRecruitIndex = getRecruitIndex(t.x, t.y);
                 draggingPartyIndex = partyList.getIndexPressed(t.x, t.y);
                 lastPressed = basicButtonList.getButtonPressed(t.x, t.y);
+                sortPressed = sortDropdown.getButtonPressed(t.x, t.y);
+                sortMenuPressed = sortDropdown.isMenuPressed(t.x, t.y);
                 continue;
             }
             else if (t.type == TouchEvent.TOUCH_UP) {
-                if(!dragging){
+                if(sortMenuPressed && sortDropdown.isMenuPressed(t.x, t.y)){
+                    sortDropdown.activateMenu();
+                }
+                else if(sortDropdown.isMenuActive()){
+                    if(sortPressed != null && sortPressed == sortDropdown.getButtonPressed(t.x, t.y)) {
+                        String result = sortPressed.getName();
+                        Comparator<WifeyCharacter> comp = null;
+                        switch (result) {
+                            case ALPHA_SORT_STRING:
+                                comp = nameComp;
+                                break;
+                            case STR_SORT_STRING:
+                                comp = strengthComp;
+                                break;
+                            case MAG_SORT_STRING:
+                                comp = magicComp;
+                                break;
+                        }
+                        if(result != null){
+                            Collections.sort(validCharacters, comp);
+                            updateRecruitImages();
+                            sortDropdown.setTitle(result);
+                        }
+                    }
+                    sortDropdown.deactivateMenu();
+                }
+                else if(!dragging){
                     Button pressed = basicButtonList.getButtonPressed(t.x, t.y);
                     int pressedRecruit = getRecruitIndex(t.x, t.y);
                     int pressedParty = partyList.getIndexPressed(t.x, t.y);
@@ -508,7 +551,9 @@ public class PartySelectScreen extends Screen {
                 }
             }
         }
-        if(game.getInput().isTouchDown(0) && (draggingRecruitIndex != -1 || (draggingPartyIndex != -1 && draggingPartyIndex < currentParty.size()))){
+        if(game.getInput().isTouchDown(0) &&
+                !sortDropdown.isMenuActive() &&
+                (draggingRecruitIndex != -1 || (draggingPartyIndex != -1 && draggingPartyIndex < currentParty.size()))){
             if (holdTime < DRAG_WAIT) {
                 holdTime += deltaTime;
             } else if (!dragging) {
@@ -571,6 +616,8 @@ public class PartySelectScreen extends Screen {
                 g.drawPercentageImage(Assets.InvalidChar, draggingX - DRAGGING_OFFSET, draggingY - DRAGGING_OFFSET, DRAGGING_SCALE, DRAGGING_SCALE);
             }
         }
+
+        sortDropdown.drawImage(g);
     }
 
     @Override

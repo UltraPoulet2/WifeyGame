@@ -21,31 +21,35 @@ public class DropdownMenu extends ButtonList {
         int height = botY - topY;
         menuButton = new Button(leftX, rightX, topY, botY, true, options.get(0), menuBg, menuBg);
         for(int i = 0; i < options.size(); i++) {
-            buttons.add(new Button(leftX, rightX, topY + (height * (i + 1)), botY + (height * (i + 1)), true, options.get(i), selectBg, null));
+            buttons.add(new Button(leftX, rightX, topY + (height * (i + 1)), botY + (height * (i + 1)), false, options.get(i), selectBg, null));
         }
+    }
+
+    public boolean isMenuActive(){
+        return !menuButton.isActive();
     }
 
     public boolean isMenuPressed(int x, int y){
         return menuButton.isPressed(x, y);
     }
 
-    public void menuActivated(){
+    public void activateMenu(){
         menuButton.setActive(false);
         for(int i = 0; i < buttons.size(); i++){
             buttons.get(i).setActive(true);
         }
     }
 
-    public void menuDeactivated(){
+    public void deactivateMenu(){
         menuButton.setActive(true);
         for(int i = 0; i < buttons.size(); i++){
             buttons.get(i).setActive(false);
         }
     }
 
-    //Sets the title to the value of the button at the selected index
-    public void setTitle(int index){
-        menuButton.setName(buttons.get(index).getName());
+
+    public void setTitle(String value){
+        menuButton.setName(value);
     }
 
     @Override
@@ -53,10 +57,8 @@ public class DropdownMenu extends ButtonList {
         menuButton.drawImage(g);
         //This will draw the dropdown list of buttons.
         super.drawImage(g);
-        if(menuButton.isActive()){
-            menuButton.drawString(g, textPaint);
-        }
-        else{
+        menuButton.drawString(g, textPaint);
+        if(!menuButton.isActive()){
             for(int i = 0; i < buttons.size(); i++){
                 buttons.get(i).drawString(g, textPaint);
             }

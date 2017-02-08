@@ -90,7 +90,7 @@ public class Button {
 
     public void drawString(Graphics g, Paint p){
         int X = leftX + ((rightX - leftX)/2);
-        int Y = topY + ((botY - topY)/2) - (int) p.getTextSize();
+        int Y = botY - ((botY - topY - (int) p.getTextSize()) / 2)/*+ ((botY - topY)/2) - ((int) p.getTextSize() / 2)*/;
         g.drawString(this.name, X, Y, p);
     }
 }
