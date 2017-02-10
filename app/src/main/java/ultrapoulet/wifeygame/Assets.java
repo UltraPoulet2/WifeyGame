@@ -60,6 +60,8 @@ public class Assets {
     public static Image LockSelection;
     public static Image InvalidChar;
     public static Image RequiredCharHolder;
+    public static Image DropdownMenuTop;
+    public static Image DropdownMenuOption;
 
     //CharacterInfoScreen Stuff
     public static Image CharacterInfoScreen;

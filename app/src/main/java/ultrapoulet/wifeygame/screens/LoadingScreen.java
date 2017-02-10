@@ -239,6 +239,8 @@ public class LoadingScreen extends Screen {
         Assets.TransformPrevEnable = g.newImage("buttons/TransformPrevPageEnabled.png", ImageFormat.ARGB8888);
         Assets.TransformPrevDisable = g.newImage("buttons/TransformPrevPageDisabled.png", ImageFormat.ARGB8888);
         Assets.TransformHolder = g.newImage("objects/holders/TransformationHolder.png", ImageFormat.ARGB8888);
+        Assets.DropdownMenuTop = g.newImage("buttons/DropdownMenuTop.png", ImageFormat.ARGB8888);
+        Assets.DropdownMenuOption = g.newImage("buttons/DropdownMenuOption.png", ImageFormat.ARGB8888);
 
         Assets.InvalidChar = g.newImage("objects/holders/InvalidChar.png", ImageFormat.ARGB8888);
         Assets.RequiredCharHolder = g.newImage("objects/holders/RequiredCharHolder.png", ImageFormat.ARGB8888);

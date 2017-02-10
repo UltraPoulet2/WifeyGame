@@ -84,11 +84,10 @@ public class PartySelectScreen extends Screen {
 
     //private Button sortButton;
     private DropdownMenu sortDropdown;
-    private static final int SORT_BUTTON_LEFT_X = 585;
+    private static final int SORT_BUTTON_LEFT_X = 510;
     private static final int SORT_BUTTON_RIGHT_X = 755;
-    private static final int SORT_BUTTON_TOP_Y = 348;
-    private static final int SORT_BUTTON_BOT_Y = 378;
-    private static final String SORT_BUTTON_STRING = "Sort";
+    private static final int SORT_BUTTON_TOP_Y = 338;
+    private static final int SORT_BUTTON_BOT_Y = 388;
     private static final String ALPHA_SORT_STRING = "A -> Z";
     private static final String STR_SORT_STRING = "Strength";
     private static final String MAG_SORT_STRING = "Magic";
@@ -234,14 +233,14 @@ public class PartySelectScreen extends Screen {
         basicButtonList.addButton(nextButton);
         //Temporary ButtonDropdown
         Paint sortingPaint = new Paint();
-        sortingPaint.setTextSize(20);
+        sortingPaint.setTextSize(30);
         sortingPaint.setColor(Color.BLACK);
         sortingPaint.setTextAlign(Align.CENTER);
-        List<String> sortingList = new ArrayList<String>();
+        List<String> sortingList = new ArrayList<>();
         sortingList.add(ALPHA_SORT_STRING);
         sortingList.add(STR_SORT_STRING);
         sortingList.add(MAG_SORT_STRING);
-        sortDropdown = new DropdownMenu(SORT_BUTTON_LEFT_X, SORT_BUTTON_RIGHT_X, SORT_BUTTON_TOP_Y, SORT_BUTTON_BOT_Y, Assets.pHealthY, Assets.pHealthG, sortingPaint, sortingList);
+        sortDropdown = new DropdownMenu(SORT_BUTTON_LEFT_X, SORT_BUTTON_RIGHT_X, SORT_BUTTON_TOP_Y, SORT_BUTTON_BOT_Y, Assets.DropdownMenuTop, Assets.DropdownMenuOption, sortingPaint, sortingList);
 
         //Back button does not have an image associated with it
         backButton = new Button(BACK_BUTTON_LEFT_X, BACK_BUTTON_RIGHT_X, BACK_BUTTON_TOP_Y, BACK_BUTTON_BOT_Y, true, BACK_BUTTON_STRING, null, null);
