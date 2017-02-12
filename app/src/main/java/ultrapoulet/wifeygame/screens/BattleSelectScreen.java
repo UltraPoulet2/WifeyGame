@@ -2,7 +2,9 @@ package ultrapoulet.wifeygame.screens;
 
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Paint.Align;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ultrapoulet.androidgame.framework.Game;
@@ -14,9 +16,10 @@ import ultrapoulet.androidgame.framework.helpers.ButtonList;
 import ultrapoulet.wifeygame.Assets;
 import ultrapoulet.wifeygame.battle.BattleInfo;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
-import ultrapoulet.wifeygame.gamestate.Battles;
 import ultrapoulet.wifeygame.gamestate.Party;
 import ultrapoulet.wifeygame.gamestate.PlayerInfo;
+import ultrapoulet.wifeygame.gamestate.StoryArea;
+import ultrapoulet.wifeygame.gamestate.StoryBattles;
 
 /**
  * Created by John on 4/26/2016.
@@ -34,6 +37,14 @@ public class BattleSelectScreen extends Screen {
     private static final int TAB_TOP_Y = HEADER_OFFSET + 20;
     private static final int TAB_BOT_Y = TAB_TOP_Y + 60;
 
+    private static final int AREA_LEFT_X = 52;
+    private static final int AREA_RIGHT_X = AREA_LEFT_X + 340;
+    private static final int STORY_BATTLE_LEFT_X = 408;
+    private static final int STORY_BATTLE_RIGHT_X = STORY_BATTLE_LEFT_X + 340;
+    private static final int BATTLES_TOP_Y = HEADER_OFFSET + 105;
+    private static final int BATTLES_BOT_Y = BATTLES_TOP_Y + 100;
+    private static final int BATTLES_OFFSET_Y = BATTLES_BOT_Y - BATTLES_TOP_Y + 5;
+
     private static final int PARTY_LEFT_X = 45;
     private static final int PARTY_RIGHT_X = 265;
     private static final int UPGRADE_LEFT_X = 290;
@@ -43,6 +54,9 @@ public class BattleSelectScreen extends Screen {
     private static final int BUTTONS_TOP_Y = HEADER_OFFSET + 1090;
     private static final int BUTTONS_BOT_Y = BUTTONS_TOP_Y + 100;
 
+    private static final int DIVIDER_X = 397;
+    private static final int DIVIDER_Y = HEADER_OFFSET + 95;
+
     private ButtonList buttonList;
     private Button storyButton;
     private static final String STORY_BUTTON_STRING = "STORY";
@@ -50,6 +64,14 @@ public class BattleSelectScreen extends Screen {
     private static final String RECRUIT_BUTTON_STRING = "RECRUIT";
     private Button specialButton;
     private static final String SPECIAL_BUTTON_STRING = "SPECIAL";
+
+    private ButtonList storyAreaList;
+    private ButtonList storyBattleList;
+    private Paint buttonPaint;
+    private List<StoryArea> unlockedAreas;
+    private static int selectedArea = -1;
+    private int lastPressedArea = -1;
+    private int lastPressedBattle = -1;
 
     private Button partyButton;
     private static final String PARTY_BUTTON_STRING = "PARTY";
@@ -93,13 +115,61 @@ public class BattleSelectScreen extends Screen {
 
         partyList = new ButtonList();
         for(int i = 0; i < 7; i++){
-            int xLeft = PARTY_IMAGE_BASE_LEFT_X + PARTY_IMAGE_OFFSET_X * i;
-            int xRight = PARTY_IMAGE_BASE_RIGHT_X + PARTY_IMAGE_OFFSET_X * i;
-            int yTop = PARTY_IMAGE_TOP_Y;
-            int yBot = PARTY_IMAGE_BOT_Y;
+            int leftX = PARTY_IMAGE_BASE_LEFT_X + PARTY_IMAGE_OFFSET_X * i;
+            int rightX = PARTY_IMAGE_BASE_RIGHT_X + PARTY_IMAGE_OFFSET_X * i;
+            int topY = PARTY_IMAGE_TOP_Y;
+            int botY = PARTY_IMAGE_BOT_Y;
             //Active is not initially set to have an image (This is done in resume)
             //Inactive does not have an image
-            partyList.addButton(new Button(xLeft, xRight, yTop, yBot, false, "PARTY_" + i));
+            partyList.addButton(new Button(leftX, rightX, topY, botY, false, "PARTY_" + i));
+        }
+
+        storyAreaList = new ButtonList();
+        List<StoryArea> area = StoryBattles.getBattles();
+        unlockedAreas = new ArrayList<>();
+        for(int i = 0; i < area.size(); i++){
+            if(area.get(i).isUnlocked()){
+                int leftX = AREA_LEFT_X;
+                int rightX = AREA_RIGHT_X;
+                int topY = BATTLES_TOP_Y + BATTLES_OFFSET_Y * unlockedAreas.size();
+                int botY = BATTLES_BOT_Y + BATTLES_OFFSET_Y * unlockedAreas.size();
+                System.out.println(leftX + " " + rightX + " " + topY + " " + botY);
+                storyAreaList.addButton(new Button(leftX, rightX, topY, botY, false, area.get(i).getAreaName(), Assets.pHealthY, null));
+                unlockedAreas.add(area.get(i));
+           }
+        }
+
+        createBattleButtons();
+        setAreaButtons(true);
+
+        buttonPaint = new Paint();
+        buttonPaint.setTextSize(50);
+        buttonPaint.setTextAlign(Align.CENTER);
+        buttonPaint.setColor(Color.BLACK);
+    }
+
+    private void setAreaButtons(boolean state){
+        for(int i = 0; i < storyAreaList.size(); i++){
+            storyAreaList.get(i).setActive(state);
+        }
+        for(int i = 0; i < storyBattleList.size(); i++){
+            storyBattleList.get(i).setActive(state);
+        }
+    }
+
+    private void createBattleButtons(){
+        storyBattleList = new ButtonList();
+        if(selectedArea != -1 && selectedArea < unlockedAreas.size()){
+            StoryArea area = unlockedAreas.get(selectedArea);
+            for(int i = 0; i < area.getBattles().size(); i++){
+                //An additional check later will need to be added to make sure the battle is unlocked
+                int leftX = STORY_BATTLE_LEFT_X;
+                int rightX = STORY_BATTLE_RIGHT_X;
+                int topY = BATTLES_TOP_Y + BATTLES_OFFSET_Y * i;
+                int botY = BATTLES_BOT_Y + BATTLES_OFFSET_Y * i;
+                System.out.println(leftX + " " + rightX + " " + topY + " " + botY);
+                storyBattleList.addButton(new Button(leftX, rightX, topY, botY, true, area.getBattle(i).getName(), Assets.pHealthY, null));
+            }
         }
     }
 
@@ -111,6 +181,8 @@ public class BattleSelectScreen extends Screen {
             TouchEvent t = touchEvents.get(i);
             if(t.type == TouchEvent.TOUCH_DOWN){
                 lastPressedGeneral = buttonList.getButtonPressed(t.x, t.y);
+                lastPressedArea = storyAreaList.getIndexPressed(t.x, t.y);
+                lastPressedBattle = storyBattleList.getIndexPressed(t.x, t.y);
                 selectedChar = partyList.getIndexPressed(t.x, t.y);
                 continue;
             }
@@ -119,16 +191,22 @@ public class BattleSelectScreen extends Screen {
                     switch(lastPressedGeneral.getName()){
                         case STORY_BUTTON_STRING:
                             storyButton.setActive(false);
+                            setAreaButtons(true);
+
                             recruitButton.setActive(true);
                             specialButton.setActive(true);
                             break;
                         case RECRUIT_BUTTON_STRING:
                             storyButton.setActive(true);
+                            setAreaButtons(false);
+
                             recruitButton.setActive(false);
                             specialButton.setActive(true);
                             break;
                         case SPECIAL_BUTTON_STRING:
                             storyButton.setActive(true);
+                            setAreaButtons(false);
+
                             recruitButton.setActive(true);
                             specialButton.setActive(false);
                             break;
@@ -139,29 +217,17 @@ public class BattleSelectScreen extends Screen {
                             System.out.println("Not yet implemented");
                     }
                 }
+                else if(lastPressedArea == storyAreaList.getIndexPressed(t.x, t.y) && lastPressedArea != -1){
+                    selectedArea = (selectedArea == lastPressedArea) ? -1 : lastPressedArea;
+                    createBattleButtons();
+                }
+                else if(lastPressedBattle == storyBattleList.getIndexPressed(t.x, t.y) && lastPressedBattle != -1){
+                    BattleInfo battle = unlockedAreas.get(selectedArea).getBattle(lastPressedBattle);
+                    game.setScreen(new BattleInfoScreen(game, this, battle));
+                }
                 else if(selectedChar == partyList.getIndexPressed(t.x, t.y) && selectedChar != -1){
                     cis.setChar(party.get(selectedChar));
                     game.setScreen(cis);
-                }
-                if (t.x < 100 || t.x > 700) {
-                    continue;
-                }
-                BattleInfo testInfo = null;
-                if (t.y >= 160 && t.y <= 260) {
-                    testInfo = Battles.get("TEST-BATL");
-                }
-                if (t.y >= 310 && t.y <= 410) {
-                    testInfo = Battles.get("TEST-BTWO");
-                }
-                if (t.y >= 460 && t.y <= 560) {
-                    testInfo = Battles.get("TEST-PHYS");
-                }
-                if (t.y >= 610 && t.y <= 710) {
-                    testInfo = Battles.get("TEST-MAGI");
-                }
-                if (testInfo != null) {
-                    BattleInfoScreen bis = new BattleInfoScreen(game, this, testInfo);
-                    game.setScreen(bis);
                 }
             }
         }
@@ -175,26 +241,14 @@ public class BattleSelectScreen extends Screen {
 
         buttonList.drawImage(g);
 
-        // Temporary way of making battle list
-        Paint paint = new Paint();
-        paint.setColor(Color.BLACK);
-        paint.setTextAlign(Paint.Align.CENTER);
-        paint.setTextSize(50);
-        g.drawRect(100, 160, 600, 100, Color.DKGRAY);
-        BattleInfo testInfo = Battles.get("TEST-BATL");
-        g.drawString(testInfo.getName(), 400, 230, paint);
+        storyAreaList.drawImage(g);
+        storyAreaList.drawString(g, buttonPaint);
+        storyBattleList.drawImage(g);
+        storyBattleList.drawString(g, buttonPaint);
 
-        g.drawRect(100, 310, 600, 100, Color.DKGRAY);
-        BattleInfo test2 = Battles.get("TEST-BTWO");
-        g.drawString(test2.getName(), 400, 380, paint);
-
-        g.drawRect(100, 460, 600, 100, Color.DKGRAY);
-        BattleInfo test3 = Battles.get("TEST-PHYS");
-        g.drawString(test3.getName(), 400, 530, paint);
-
-        g.drawRect(100, 610, 600, 100, Color.DKGRAY);
-        BattleInfo test4 = Battles.get("TEST-MAGI");
-        g.drawString(test4.getName(), 400, 680, paint);
+        if(!storyButton.isActive()){
+            g.drawImage(Assets.BattleDivider, DIVIDER_X, DIVIDER_Y);
+        }
 
         partyList.drawImage(g);
     }

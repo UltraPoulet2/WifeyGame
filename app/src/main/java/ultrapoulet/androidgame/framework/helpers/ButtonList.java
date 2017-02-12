@@ -1,5 +1,7 @@
 package ultrapoulet.androidgame.framework.helpers;
 
+import android.graphics.Paint;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,6 +42,10 @@ public class ButtonList {
         return -1;
     }
 
+    public int size() {
+        return buttons.size();
+    }
+
     //For use for numbered buttons
     @Deprecated
     public void setIndexActive(int index, boolean value){
@@ -64,6 +70,12 @@ public class ButtonList {
     public void drawImage(Graphics g){
         for(int i = 0; i < buttons.size(); i++){
             buttons.get(i).drawImage(g);
+        }
+    }
+
+    public void drawString(Graphics g, Paint p){
+        for(int i = 0; i < buttons.size(); i++){
+            buttons.get(i).drawString(g, p);
         }
     }
 }
