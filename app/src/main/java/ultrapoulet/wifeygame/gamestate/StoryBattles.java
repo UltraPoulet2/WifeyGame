@@ -1,11 +1,7 @@
 package ultrapoulet.wifeygame.gamestate;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import ultrapoulet.wifeygame.battle.BattleInfo;
 
 /**
  * Created by John on 2/10/2017.

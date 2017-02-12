@@ -1,5 +1,6 @@
 package ultrapoulet.wifeygame.gamestate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ultrapoulet.wifeygame.battle.BattleInfo;
@@ -15,6 +16,7 @@ public class StoryArea {
 
     public StoryArea(String name){
         this.areaName = name;
+        battles = new ArrayList<>();
     }
 
     public String getAreaName(){

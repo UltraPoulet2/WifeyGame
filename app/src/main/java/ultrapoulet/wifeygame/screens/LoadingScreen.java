@@ -16,7 +16,6 @@ import javax.xml.parsers.SAXParserFactory;
 import ultrapoulet.androidgame.framework.Game;
 import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Graphics.ImageFormat;
-import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.androidgame.framework.Input.TouchEvent;
 import ultrapoulet.androidgame.framework.Screen;
 import ultrapoulet.wifeygame.Assets;

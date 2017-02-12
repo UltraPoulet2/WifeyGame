@@ -10,6 +10,9 @@ import ultrapoulet.wifeygame.battle.requirements.RequirementFactory;
 import ultrapoulet.wifeygame.character.EnemyCharacter;
 import ultrapoulet.wifeygame.gamestate.Battles;
 import ultrapoulet.wifeygame.gamestate.Enemies;
+import ultrapoulet.wifeygame.gamestate.StoryArea;
+import ultrapoulet.wifeygame.gamestate.StoryBattles;
+
 /**
  * Created by John on 6/22/2016.
  */
@@ -26,6 +29,8 @@ public class BattleParser extends DefaultHandler {
 
     private BattleInfo battleBuilder;
     private AbsRequirement reqBuilder;
+    private StoryArea areaBuilder;
+
     private String battleKey;
 
     @Override
@@ -35,6 +40,14 @@ public class BattleParser extends DefaultHandler {
                              Attributes attributes) throws SAXException {
         if(qName.equalsIgnoreCase("battles")){
             //Do nothing, but it's valid
+        }
+        else if(qName.equalsIgnoreCase("area")){
+            String temp = attributes.getValue("name");
+            if(temp == null || temp.length() == 0){
+                System.out.println("BattleParser:startElement(): No area name provided");
+                temp = "Invalid name";
+            }
+            areaBuilder = new StoryArea(temp);
         }
         else if(qName.equalsIgnoreCase("battle")){
             resetValues();
@@ -83,9 +96,16 @@ public class BattleParser extends DefaultHandler {
     public void endElement(String uri,
                            String localName,
                            String qName) throws SAXException {
-        if(qName.equalsIgnoreCase("battle")){
+        if(qName.equalsIgnoreCase("area")){
+            StoryBattles.addArea(areaBuilder);
+            System.out.println("BattleParser:endElement(): Adding area: " + areaBuilder.getAreaName());
+        }
+        else if(qName.equalsIgnoreCase("battle")){
             if(validate()){
+                //This will be removed once Story Areas are complete
                 Battles.put(battleKey, battleBuilder);
+
+                areaBuilder.addBattle(battleBuilder);
                 System.out.println("BattleParser:endElement(): Adding battle: " + battleKey);
             }
             else{
