@@ -104,9 +104,9 @@ public class BattleSelectScreen extends Screen {
         buttonList.addButton(recruitButton);
         buttonList.addButton(specialButton);
 
-        partyButton = new Button(PARTY_LEFT_X, PARTY_RIGHT_X, BUTTONS_TOP_Y, BUTTONS_BOT_Y, true, PARTY_BUTTON_STRING, Assets.PartyButton, null);
-        upgradeButton = new Button(UPGRADE_LEFT_X, UPGRADE_RIGHT_X, BUTTONS_TOP_Y, BUTTONS_BOT_Y, true, UPGRADE_BUTTON_STRING, Assets.UpgradeButton, null);
-        infoButton = new Button(INFO_LEFT_X, INFO_RIGHT_X, BUTTONS_TOP_Y, BUTTONS_BOT_Y, true, INFO_BUTTON_STRING, Assets.InfoButton, null);
+        partyButton = new Button(PARTY_LEFT_X, PARTY_RIGHT_X, BUTTONS_TOP_Y, BUTTONS_BOT_Y, true, PARTY_BUTTON_STRING, Assets.PartyButton);
+        upgradeButton = new Button(UPGRADE_LEFT_X, UPGRADE_RIGHT_X, BUTTONS_TOP_Y, BUTTONS_BOT_Y, true, UPGRADE_BUTTON_STRING, Assets.UpgradeButton);
+        infoButton = new Button(INFO_LEFT_X, INFO_RIGHT_X, BUTTONS_TOP_Y, BUTTONS_BOT_Y, true, INFO_BUTTON_STRING, Assets.InfoButton);
         buttonList.addButton(partyButton);
         buttonList.addButton(upgradeButton);
         buttonList.addButton(infoButton);
@@ -134,7 +134,7 @@ public class BattleSelectScreen extends Screen {
                 int topY = BATTLES_TOP_Y + BATTLES_OFFSET_Y * unlockedAreas.size();
                 int botY = BATTLES_BOT_Y + BATTLES_OFFSET_Y * unlockedAreas.size();
                 System.out.println(leftX + " " + rightX + " " + topY + " " + botY);
-                storyAreaList.addButton(new Button(leftX, rightX, topY, botY, false, area.get(i).getAreaName(), Assets.pHealthY, null));
+                storyAreaList.addButton(new Button(leftX, rightX, topY, botY, false, area.get(i).getAreaName(), Assets.pHealthY));
                 unlockedAreas.add(area.get(i));
            }
         }
@@ -167,8 +167,7 @@ public class BattleSelectScreen extends Screen {
                 int rightX = STORY_BATTLE_RIGHT_X;
                 int topY = BATTLES_TOP_Y + BATTLES_OFFSET_Y * i;
                 int botY = BATTLES_BOT_Y + BATTLES_OFFSET_Y * i;
-                System.out.println(leftX + " " + rightX + " " + topY + " " + botY);
-                storyBattleList.addButton(new Button(leftX, rightX, topY, botY, true, area.getBattle(i).getName(), Assets.pHealthY, null));
+                storyBattleList.addButton(new Button(leftX, rightX, topY, botY, true, area.getBattle(i).getName(), Assets.pHealthY));
             }
         }
     }

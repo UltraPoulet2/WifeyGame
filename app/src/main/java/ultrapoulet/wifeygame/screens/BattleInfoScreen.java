@@ -241,7 +241,7 @@ public class BattleInfoScreen extends Screen{
         }
         for(int i = 0; i < battleInfo.getPartyMax(); i++){
             //Set the button to active if the party member exists
-            partyList.setIndexActive(i, party.get(i) != null);
+            partyList.get(i).setActive(party.get(i) != null);
             if(party.get(i) != null){
                 partyList.get(i).setActiveImage(party.get(i).getImage(game.getGraphics()));
             }

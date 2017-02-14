@@ -33,6 +33,10 @@ public class Button {
         this.name = name;
     }
 
+    public Button(int leftX, int rightX, int topY, int botY, boolean active, String name, Image activeImage){
+        this(leftX, rightX, topY, botY, active, name, activeImage, null);
+    }
+
     public Button(int leftX, int rightX, int topY, int botY, boolean active, String name, Image activeImage, Image inactiveImage){
         this.leftX = leftX;
         this.rightX = rightX;

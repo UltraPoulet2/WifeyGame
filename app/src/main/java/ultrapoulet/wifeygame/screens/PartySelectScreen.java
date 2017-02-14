@@ -33,7 +33,6 @@ public class PartySelectScreen extends Screen {
     private List<WifeyCharacter> validCharacters;
     private List<WifeyCharacter> currentParty;
     private int maxPartySize;
-    private int finalIndex;
     private BattleInfo battleInfo;
 
     private Screen previousScreen;
@@ -54,7 +53,6 @@ public class PartySelectScreen extends Screen {
     private final static int PARTY_SCALE = 57;
     private final static int DRAGGING_SCALE = 75;
 
-    private boolean touchDown = false;
     private final static int DRAG_WAIT = 10;
     private float holdTime = 0;
     private boolean dragging = false;
@@ -82,7 +80,6 @@ public class PartySelectScreen extends Screen {
     private static final int NEXT_BUTTON_BOT_Y = 388;
     private static final String NEXT_BUTTON_STRING = "Next";
 
-    //private Button sortButton;
     private DropdownMenu sortDropdown;
     private static final int SORT_BUTTON_LEFT_X = 510;
     private static final int SORT_BUTTON_RIGHT_X = 755;
@@ -352,7 +349,6 @@ public class PartySelectScreen extends Screen {
 
     private void updateParty(){
         maxPartySize = battleInfo != null ? battleInfo.getPartyMax() : 7;
-        finalIndex = maxPartySize - 1;
         currentParty = new ArrayList<>();
         for(int i = 0; i < Party.partySize() && i < maxPartySize; i++){
             currentParty.add(Party.getIndex(i));
@@ -382,7 +378,6 @@ public class PartySelectScreen extends Screen {
         for(int i = 0; i < touchEvents.size(); i++) {
             Input.TouchEvent t = touchEvents.get(i);
             if (t.type == TouchEvent.TOUCH_DOWN){
-                touchDown = true;
                 dragging = false;
                 holdTime = 0;
                 draggingX = t.x;
@@ -527,7 +522,6 @@ public class PartySelectScreen extends Screen {
                     }
                     updateButtons();
                 }
-                touchDown = false;
                 dragging = false;
                 holdTime = 0;
                 draggingX = 0;

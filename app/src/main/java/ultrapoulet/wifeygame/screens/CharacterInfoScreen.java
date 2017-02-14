@@ -107,8 +107,8 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
 
     public void createUniqueButtons(){
         TransformButtons = new ButtonList();
-        prevTransform = new Button(TRANSFORM_PREV_PAGE_LEFT_X, TRANSFORM_PREV_PAGE_RIGHT_X, TRANSFORM_PAGE_TOP_Y, TRANSFORM_PAGE_BOT_Y, false, "TRANS_PREV");
-        nextTransform = new Button(TRANSFORM_NEXT_PAGE_LEFT_X, TRANSFORM_NEXT_PAGE_RIGHT_X, TRANSFORM_PAGE_TOP_Y, TRANSFORM_PAGE_BOT_Y, false, "TRANS_NEXT");
+        prevTransform = new Button(TRANSFORM_PREV_PAGE_LEFT_X, TRANSFORM_PREV_PAGE_RIGHT_X, TRANSFORM_PAGE_TOP_Y, TRANSFORM_PAGE_BOT_Y, false, "TRANS_PREV", Assets.TransformPrevEnable, Assets.TransformPrevDisable);
+        nextTransform = new Button(TRANSFORM_NEXT_PAGE_LEFT_X, TRANSFORM_NEXT_PAGE_RIGHT_X, TRANSFORM_PAGE_TOP_Y, TRANSFORM_PAGE_BOT_Y, false, "TRANS_NEXT", Assets.TransformNextEnable, Assets.TransformNextDisable);
         TransformButtons.addButton(prevTransform);
         TransformButtons.addButton(nextTransform);
     }
@@ -236,10 +236,7 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
 
         //Stuff for transformation
         if(maxTransformPage != 0){
-            Image temp = prevTransform.isActive() ? Assets.TransformPrevEnable : Assets.TransformPrevDisable;
-            g.drawImage(temp, TRANSFORM_PREV_PAGE_LEFT_X, TRANSFORM_PAGE_TOP_Y);
-            temp = nextTransform.isActive() ? Assets.TransformNextEnable : Assets.TransformNextDisable;
-            g.drawImage(temp, TRANSFORM_NEXT_PAGE_LEFT_X, TRANSFORM_PAGE_TOP_Y);
+            TransformButtons.drawImage(g);
         }
     }
 
