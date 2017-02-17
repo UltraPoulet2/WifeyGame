@@ -38,10 +38,8 @@ public interface Graphics {
     //Draw a string, modifying the font size of the Paint to make the text fit within the width
     public void drawString(String text, int x, int y, Paint paint, int maxWidth, int maxFont);
 
-    //Draw a string, modifying the font size of the Paint to make the text fit within the width
-    //Returns false if the text can't fit within the width without going below minFont size
-    //(It will not print the text)
-    public boolean drawString(String text, int x, int y, Paint paint, int maxWidth, int maxFont, int minFont);
+    //Return true if the string can fit within the width at the specified font
+    public boolean canDrawString(String text, Paint paint, int maxWidth, int fontSize);
 
     public void drawMultiLineString(String text, int x, int y, int width, TextPaint paint);
 

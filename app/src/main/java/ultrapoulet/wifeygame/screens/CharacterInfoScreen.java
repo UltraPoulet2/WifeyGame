@@ -247,7 +247,10 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
     }
 
     protected void drawName(Graphics g){
-        if(!g.drawString(displayName, NAME_X, MAX_NAME_Y, namePaint, MAX_NAME_SIZE, MAX_NAME_FONT, MIN_NAME_FONT)){
+        if(g.canDrawString(displayName, namePaint, MAX_NAME_SIZE, MIN_NAME_FONT)){
+            g.drawString(displayName, NAME_X, MAX_NAME_Y, namePaint, MAX_NAME_SIZE, MAX_NAME_FONT);
+        }
+        else{
             namePaint.setTextSize(TWO_LINE_NAME_FONT);
             g.drawMultiLineString(displayName, NAME_X, TWO_LINE_NAME_Y, MAX_NAME_SIZE, namePaint);
         }

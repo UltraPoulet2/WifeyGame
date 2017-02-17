@@ -106,7 +106,10 @@ public class BattleCharacterInfoScreen extends AbsCharacterInfoScreen {
     }
 
     protected void drawName(Graphics g){
-        if(!g.drawString(displayChar.getName(), NAME_X, MAX_NAME_Y, namePaint, MAX_NAME_SIZE, MAX_NAME_FONT, MIN_NAME_FONT)){
+        if(g.canDrawString(displayChar.getName(), namePaint, MAX_NAME_SIZE, MIN_NAME_FONT)){
+            g.drawString(displayChar.getName(), NAME_X, MAX_NAME_Y, namePaint, MAX_NAME_SIZE, MAX_NAME_FONT);
+        }
+        else{
             namePaint.setTextSize(TWO_LINE_NAME_FONT);
             g.drawMultiLineString(displayChar.getName(), NAME_X, TWO_LINE_NAME_Y, MAX_NAME_SIZE, namePaint);
         }

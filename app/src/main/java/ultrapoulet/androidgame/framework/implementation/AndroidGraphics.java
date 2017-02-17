@@ -118,26 +118,38 @@ public class AndroidGraphics implements Graphics {
 
     @Override
     public void drawString(String text, int x, int y, Paint paint, int maxWidth, int maxFont){
-        drawString(text, x, y, paint, maxWidth, maxFont, 0);
-    }
-
-    @Override
-    public boolean drawString(String text, int x, int y, Paint paint, int maxWidth, int maxFont, int minFont){
         int fontSize = maxFont;
         paint.setTextSize(fontSize);
-        while(paint.measureText(text) >= maxWidth && fontSize > minFont){
+        while(paint.measureText(text) > maxWidth){
             fontSize--;
             paint.setTextSize(fontSize);
         }
-        if(paint.measureText(text) <= maxWidth){
-            int newY = y - ((maxFont - fontSize) / 2);
-            drawString(text, x, newY, paint);
-            return true;
-        }
-        else {
-            return false;
-        }
+        int newY = y - ((maxFont - fontSize) / 2);
+        drawString(text, x, newY, paint);
     }
+
+
+    @Override
+    public boolean canDrawString(String text, Paint paint, int maxWidth, int fontSize){
+        Paint copyPaint = new Paint(paint);
+        copyPaint.setTextSize(fontSize);
+        return copyPaint.measureText(text) <= maxWidth;
+    }
+
+    //@Override
+    //This will not verify that the minFontSize is within maxWidth
+    /*
+    public void drawString(String text, int x, int y, Paint paint, int maxWidth, int maxFont){
+        int fontSize = maxFont;
+        paint.setTextSize(fontSize);
+        while(paint.measureText(text) > maxWidth){
+            fontSize--;
+            paint.setTextSize(fontSize);
+        }
+        int newY = y - ((maxFont - fontSize) / 2);
+        drawString(text, x, newY, paint);
+    }
+    */
 
     @Override
     public void drawMultiLineString(String text, int x, int y, int width, TextPaint paint){
