@@ -66,10 +66,10 @@ public class MagicalGirlSkill extends AbsSkill {
     @Override
     public String getDescription(BattleCharacter enemy) {
         StringBuilder desc = new StringBuilder();
-        desc.append("Magic Attack Multiplier: " + multiplier + "\n");
-        desc.append("Special Attack Multiplier: " + multiplier + "\n");
-        desc.append("Healing Multiplier: " + multiplier + "\n\n");
-        desc.append("Multiplies magical damage dealt, healing, and special attack damage dealt by 1.5x. Multiplier increases by 0.25x for each other Magical Girl wifey in the party.");
+        desc.append("Magic Attack Multiplier: " + String.format("%1$.2f", multiplier) + "x\n");
+        desc.append("Special Attack Multiplier: " + String.format("%1$.2f",multiplier) + "x\n");
+        desc.append("Healing Multiplier: " + String.format("%1$.2f",multiplier) + "x\n\n");
+        desc.append("Multiplies magical damage dealt, healing, and special attack damage dealt by 1.50x. Multiplier increases by 0.25x for each other Magical Girl wifey in the party.");
         return desc.toString();
     }
 }

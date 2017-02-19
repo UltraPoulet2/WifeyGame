@@ -46,8 +46,8 @@ public class WitchSkill extends AbsSkill {
     @Override
     public String getDescription(BattleCharacter enemy) {
         StringBuilder desc = new StringBuilder();
-        desc.append("Magical Attack Multiplier: " + getMult() + "x\n\n");
-        desc.append("Increases magical damage dealt multiplier by 0.2x each time a magical attack is used.");
+        desc.append("Magical Attack Multiplier: " +  String.format("%1$.2f", getMult()) + "x\n\n");
+        desc.append("Increases magical damage dealt multiplier by 0.20x each time a magical attack is used.");
         return desc.toString();
     }
 }

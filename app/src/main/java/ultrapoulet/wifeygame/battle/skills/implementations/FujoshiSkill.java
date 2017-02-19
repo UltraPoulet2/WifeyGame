@@ -71,8 +71,8 @@ public class FujoshiSkill extends AbsSkill {
     @Override
     public String getDescription(BattleCharacter enemy) {
         StringBuilder desc = new StringBuilder();
-        desc.append("Attack Multiplier: " + String.format("%1$.2f", multiplier) + "\n\n");
-        desc.append("Increases damage dealt multiplier by 0.33x for each Trap wifey in the party. Damage increased by a bonus 1.0x if there are more than two Trap wifeys.");
+        desc.append("Attack Multiplier: " + String.format("%1$.2f", multiplier) + "x\n\n");
+        desc.append("Increases damage dealt multiplier by 0.33x for each Trap wifey in the party. Damage increased by a bonus 1.00x if there are more than two Trap wifeys.");
         return desc.toString();
     }
 }

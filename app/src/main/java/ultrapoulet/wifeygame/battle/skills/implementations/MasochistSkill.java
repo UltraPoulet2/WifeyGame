@@ -54,7 +54,7 @@ public class MasochistSkill extends AbsSkill {
     public String getDescription(BattleCharacter enemy) {
         StringBuilder desc = new StringBuilder();
         desc.append("Attack Multiplier: " + String.format("%1$.2f", getMult()) + "x\n\n");
-        desc.append("Multiplies damage dealt up to 4.0x the lower this wifey's health is. Healing received multiplied by 0.5x.");
+        desc.append("Multiplies damage dealt up to 4.00x the lower this wifey's health is. Healing received multiplied by 0.50x.");
         return desc.toString();
     }
 }

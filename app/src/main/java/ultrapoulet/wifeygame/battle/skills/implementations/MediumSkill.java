@@ -46,9 +46,9 @@ public class MediumSkill extends AbsSkill {
     public String getDescription(BattleCharacter enemy) {
         StringBuilder desc = new StringBuilder();
         double multiplier = enemy.hasSkill(GhostSkill.class) ? 2.0 : 1.0;
-        desc.append("Magical Attack Multiplier: " + multiplier + "x\n");
-        desc.append("Special Attack Multiplier: " + multiplier + "x\n\n");
-        desc.append("Multiplies magical and special damage dealt by 2.0x against Ghosts.");
+        desc.append("Magical Attack Multiplier: " + String.format("%1$.2f",multiplier) + "x\n");
+        desc.append("Special Attack Multiplier: " + String.format("%1$.2f",multiplier) + "x\n\n");
+        desc.append("Multiplies magical and special damage dealt by 2.00x against Ghosts.");
         return desc.toString();
     }
 }

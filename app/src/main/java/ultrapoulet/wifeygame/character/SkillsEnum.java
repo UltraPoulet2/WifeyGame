@@ -156,22 +156,22 @@ public class SkillsEnum {
 
     private static void createSkillList(){
         skillsList = new HashMap<>();
-        skillsList.put("ATHLETE", new SkillsEnum("Athlete", "Multiplies physical damage dealt by 1.5x. Increases multiplier by 0.5x for each other Athlete wifey in the party."));
+        skillsList.put("ATHLETE", new SkillsEnum("Athlete", "Multiplies physical damage dealt by 1.50x. Increases multiplier by 0.50x for each other Athlete wifey in the party."));
         skillsList.put("BIKER", new SkillsEnum("Biker", "Increases combo hits by 1 for each other Biker wifey in the party."));
-        skillsList.put("CHUUNI", new SkillsEnum("Chuunibyou", "Multiplies special attack damage dealt by 5.0x."));
-        skillsList.put("DETECTIVE", new SkillsEnum("Detective", "Multiplies damage dealt by 0.5x at the start of a wave. Multiplier increases by 0.25 at the end of each turn, up to a maximum of 5.0x."));
-        skillsList.put("DULLAHAN", new SkillsEnum("Dullahan", "Multiplies damage dealt by 0.75x. Each percentage point below 75% the enemy's health is at increases the multiplier by 0.4x."));
-        skillsList.put("FUJOSHI", new SkillsEnum("Fujoshi", "Increases damage dealt multiplier by 0.33x for each Trap wifey in the party. Damage increased by a bonus 1.0x if there are more than two Trap wifeys."));
-        skillsList.put("GHOST", new SkillsEnum("Ghost", "Multiplies physical attack damage taken by 0.5x"));
+        skillsList.put("CHUUNI", new SkillsEnum("Chuunibyou", "Multiplies special attack damage dealt by 5.00x."));
+        skillsList.put("DETECTIVE", new SkillsEnum("Detective", "Multiplies damage dealt by 0.50x at the start of a wave. Multiplier increases by 0.25x at the end of each turn, up to a maximum of 5.00x."));
+        skillsList.put("DULLAHAN", new SkillsEnum("Dullahan", "Multiplies damage dealt by 0.75x. Each percentage point below 75% the enemy's health is at increases the multiplier by 0.40x."));
+        skillsList.put("FUJOSHI", new SkillsEnum("Fujoshi", "Increases damage dealt multiplier by 0.33x for each Trap wifey in the party. Damage increased by a bonus 1.00x if there are more than two Trap wifeys."));
+        skillsList.put("GHOST", new SkillsEnum("Ghost", "Multiplies physical attack damage taken by 0.50x"));
         skillsList.put("HYPER", new SkillsEnum("Hyper", "Increases combo hits by 1."));
-        skillsList.put("KILLER", new SkillsEnum("Killer", "Defeating an enemy with this wifey increases damage dealt multiplier by 1.0x for the rest of the battle."));
-        skillsList.put("MAGICALGIRL", new SkillsEnum("Magical Girl", "Multiplies magical damage dealt, healing, and special attack damage dealt by 1.5x. Multiplier increases by 0.25x for each other Magical Girl wifey in the party."));
-        skillsList.put("MAGICIAN", new SkillsEnum("Magician", "Multiplies magical damage dealt by 3.0x at the start of a wave. Multiplier decreases by 0.5x each time a magical attack is used, to a minimum of 1.0x."));
-        skillsList.put("MAID", new SkillsEnum("Maid", "Multiplies damage dealt by 2.0x if this wifey healed the previous turn."));
-        skillsList.put("MASOCHIST", new SkillsEnum("Masochist", "Multiplies damage dealt up to 4.0x the lower this wifey's health is. Healing received multiplied by 0.5x."));
+        skillsList.put("KILLER", new SkillsEnum("Killer", "Defeating an enemy with this wifey increases damage dealt multiplier by 1.00x for the rest of the battle."));
+        skillsList.put("MAGICALGIRL", new SkillsEnum("Magical Girl", "Multiplies magical damage dealt, healing, and special attack damage dealt by 1.50x. Multiplier increases by 0.25x for each other Magical Girl wifey in the party."));
+        skillsList.put("MAGICIAN", new SkillsEnum("Magician", "Multiplies magical damage dealt by 3.00x at the start of a wave. Multiplier decreases by 0.50x each time a magical attack is used, to a minimum of 1.00x."));
+        skillsList.put("MAID", new SkillsEnum("Maid", "Multiplies damage dealt by 2.00x if this wifey healed the previous turn."));
+        skillsList.put("MASOCHIST", new SkillsEnum("Masochist", "Multiplies damage dealt up to 4.00x the lower this wifey's health is. Healing received multiplied by 0.50x."));
         skillsList.put("MECHANIC", new SkillsEnum("Mechanic", "Fully heals Robot wifeys."));
-        skillsList.put("MEDIUM", new SkillsEnum("Medium", "Multiplies magical and special damage dealt by 2.0x against Ghosts."));
-        skillsList.put("MUSICIAN", new SkillsEnum("Musician", "Multiplies damage dealt by 4.0x every eighth hit."));
+        skillsList.put("MEDIUM", new SkillsEnum("Medium", "Multiplies magical and special damage dealt by 2.00x against Ghosts."));
+        skillsList.put("MUSICIAN", new SkillsEnum("Musician", "Multiplies damage dealt by 4.00x every eighth hit."));
         skillsList.put("NURSE", new SkillsEnum("Nurse", "Multiplies healing by 2.0x. Gains health at the start of every round."));
         skillsList.put("PILOT", new SkillsEnum("Pilot", "Multiplies magical and special damage taken from AIR sources by 0.5x"));
         skillsList.put("PRAVDA", new SkillsEnum("Pravda", "Increases damage dealt multiplier by 1.0x for each other Pravda wifey."));
@@ -189,7 +189,7 @@ public class SkillsEnum {
         skillsList.put("TRAP", new SkillsEnum("Trap", "Multiplies physical, magical, and special damage taken by 0.15x."));
         skillsList.put("TSUNDERE", new SkillsEnum("Tsundere", "Multiplies damage dealt by 2.0x if there are only 3 party members, 3.0x if there are only 2, 4.0x if this is the only wifey."));
         skillsList.put("VAMPIRE", new SkillsEnum("Vampire", "Dealing damage heals self by 10% of the damage dealt."));
-        skillsList.put("WITCH", new SkillsEnum("Witch", "Increases magical damage dealt multiplier by 0.2x each time a magical attack is used."));
+        skillsList.put("WITCH", new SkillsEnum("Witch", "Increases magical damage dealt multiplier by 0.20x each time a magical attack is used."));
 
         skillsList.put("REM", new SkillsEnum("Rem", "Rem gets a special skill because she is Rem. Multiplies damage dealt and healing by 2.0x.")); //This skill will be removed.
 

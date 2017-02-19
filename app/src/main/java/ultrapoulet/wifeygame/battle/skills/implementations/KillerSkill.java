@@ -48,8 +48,8 @@ public class KillerSkill extends AbsSkill {
     @Override
     public String getDescription(BattleCharacter enemy) {
         StringBuilder desc = new StringBuilder();
-        desc.append("Attack Multiplier: " + multiplier + "\n\n");
-        desc.append("Defeating an enemy with this wifey increases damage dealt multiplier by 1.0x for the rest of the battle.");
+        desc.append("Attack Multiplier: " + String.format("%1$.2f", multiplier) + "x\n\n");
+        desc.append("Defeating an enemy with this wifey increases damage dealt multiplier by 1.00x for the rest of the battle.");
         return desc.toString();
     }
 }

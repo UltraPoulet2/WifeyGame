@@ -68,8 +68,8 @@ public class AthleteSkill extends AbsSkill {
     @Override
     public String getDescription(BattleCharacter enemy) {
         StringBuilder desc = new StringBuilder();
-        desc.append("Physical Attack Multiplier: " + multiplier + "\n\n");
-        desc.append("Multiplies physical damage dealt by 1.5x. Increases multiplier by 0.5x for each other Athlete wifey in the party.");
+        desc.append("Physical Attack Multiplier: " + String.format("%1$.2f", multiplier) + "x\n\n");
+        desc.append("Multiplies physical damage dealt by 1.50x. Increases multiplier by 0.50x for each other Athlete wifey in the party.");
         return desc.toString();
     }
 }
