@@ -59,10 +59,10 @@ public class RobotSkill extends AbsSkill {
             defense = 1.0;
         }
         StringBuilder desc = new StringBuilder();
-        desc.append("Physical Defense Multiplier: 0.8x\n");
-        desc.append("Magical Defense Multiplier: " + defense + "x\n");
-        desc.append("Special Defense Multiplier: " + defense  + "x\n\n");
-        desc.append("Multiplies physical damage taken by 0.8x. Multiplies magical and special damage taken from WATER sources by 1.5x.");
+        desc.append("Physical Defense Multiplier: 0.80x\n");
+        desc.append("Magical Defense Multiplier: " + String.format("%1$.2f", defense) + "x\n");
+        desc.append("Special Defense Multiplier: " + String.format("%1$.2f", defense)  + "x\n\n");
+        desc.append("Multiplies physical damage taken by 0.80x. Multiplies magical and special damage taken from WATER sources by 1.50x.");
         return desc.toString();
     }
 }

@@ -50,9 +50,9 @@ public class RemSkill extends AbsSkill {
     @Override
     public String getDescription(BattleCharacter enemy) {
         StringBuilder desc = new StringBuilder();
-        desc.append("Attack Multiplier: " + multiplier + "\n");
-        desc.append("Healing Multiplier: " + multiplier + "\n\n");
-        desc.append("Multiplies damage dealt by 4.0x at the start of a wave. Multiplier decreases by 0.5x for each turn the wave lasts, to a minimum of 0.5x.");
+        desc.append("Attack Multiplier: " + String.format("%1$.2f", multiplier) + "x\n");
+        desc.append("Healing Multiplier: " + String.format("%1$.2f", multiplier) + "x\n\n");
+        desc.append("Rem gets a special skill because she is Rem. Multiplies damage dealt and healing by 2.00x.");
         return desc.toString();
     }
 

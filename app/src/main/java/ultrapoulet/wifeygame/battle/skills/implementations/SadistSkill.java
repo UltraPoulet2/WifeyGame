@@ -59,7 +59,7 @@ public class SadistSkill extends AbsSkill {
     @Override
     public String getDescription(BattleCharacter enemy) {
         StringBuilder desc = new StringBuilder();
-        desc.append("Attack Multiplier: " + getMult() + "x\n\n");
+        desc.append("Attack Multiplier: " + String.format("%1$.2f", getMult()) + "x\n\n");
         desc.append("Increases damage dealt multiplier by 0.05x for each hit. The number of hits resets to 0 if an enemy is defeated by this wifey.");
         return desc.toString();
     }

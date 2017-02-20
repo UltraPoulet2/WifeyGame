@@ -172,26 +172,26 @@ public class SkillsEnum {
         skillsList.put("MECHANIC", new SkillsEnum("Mechanic", "Fully heals Robot wifeys."));
         skillsList.put("MEDIUM", new SkillsEnum("Medium", "Multiplies magical and special damage dealt by 2.00x against Ghosts."));
         skillsList.put("MUSICIAN", new SkillsEnum("Musician", "Multiplies damage dealt by 4.00x every eighth hit."));
-        skillsList.put("NURSE", new SkillsEnum("Nurse", "Multiplies healing by 2.0x. Gains health at the start of every round."));
-        skillsList.put("PILOT", new SkillsEnum("Pilot", "Multiplies magical and special damage taken from AIR sources by 0.5x"));
-        skillsList.put("PRAVDA", new SkillsEnum("Pravda", "Increases damage dealt multiplier by 1.0x for each other Pravda wifey."));
-        skillsList.put("PRAVDAPRES", new SkillsEnum("Pravda President", "Increases damage dealt multiplier by 2.0x for each other Pravda wifey."));
+        skillsList.put("NURSE", new SkillsEnum("Nurse", "Multiplies healing by 2.00x. Gains health at the start of every round."));
+        skillsList.put("PILOT", new SkillsEnum("Pilot", "Multiplies magical and special damage taken from AIR sources by 0.50x"));
+        skillsList.put("PRAVDA", new SkillsEnum("Pravda", "Increases damage dealt multiplier by 1.00x for each other Pravda wifey."));
+        skillsList.put("PRAVDAPRES", new SkillsEnum("Pravda President", "Increases damage dealt multiplier by 2.00x for each other Pravda wifey."));
         skillsList.put("PROGRAMMER", new SkillsEnum("Programmer", "Increases damage dealt multiplier by 0.75x each time this wifey attacks a Robot. Resets at the start of the round."));
         skillsList.put("PROTAGONIST", new SkillsEnum("Protagonist", "When this wifey suffers lethal damage the first time, prevent the death and heal self."));
-        skillsList.put("RACER", new SkillsEnum("Racer", "Multiplies damage dealt by 4.0x at the start of a wave. Multiplier decreases by 0.5x for each turn the wave lasts, to a minimum of 0.5x."));
-        skillsList.put("ROBOT", new SkillsEnum("Robot", "Multiplies physical damage taken by 0.8x. Multiplies magical and special damage taken from WATER sources by 1.5x."));
+        skillsList.put("RACER", new SkillsEnum("Racer", "Multiplies damage dealt by 4.00x at the start of a wave. Multiplier decreases by 0.50x for each turn the wave lasts, to a minimum of 0.50x."));
+        skillsList.put("ROBOT", new SkillsEnum("Robot", "Multiplies physical damage taken by 0.80x. Multiplies magical and special damage taken from WATER sources by 1.50x."));
         skillsList.put("SADIST", new SkillsEnum("Sadist", "Increases damage dealt multiplier by 0.05x for each hit. The number of hits resets to 0 if an enemy is defeated by this wifey."));
-        skillsList.put("SLUGABED", new SkillsEnum("Slugabed", "Multiplies damage dealt by 6.0x. Reduces multiplier by 0.25x for each turn, to a minimum of 0.25x."));
-        skillsList.put("SPORTSMANAGER", new SkillsEnum("Sports Manager", "Increases physical damage dealt multiplier by 0.05x for each Athlete wifey. Increases the physical damage multiplier of each Athlete wifey by 1.0x. This does not stack."));
+        skillsList.put("SLUGABED", new SkillsEnum("Slugabed", "Multiplies damage dealt by 6.00x. Reduces multiplier by 0.25x for each turn, to a minimum of 0.25x."));
+        skillsList.put("SPORTSMANAGER", new SkillsEnum("Sports Manager", "Increases physical damage dealt multiplier by 0.05x for each Athlete wifey. Increases the physical damage multiplier of each Athlete wifey by 1.00x. This does not stack."));
         skillsList.put("SURVIVAL", new SkillsEnum("Sabagebu", "Decreases physical, magical, and special damage taken multiplier by 0.01x each turn."));
         skillsList.put("SURVIVALPRES", new SkillsEnum("Sabagebu President", "Decreases physical, magical, and special damage taken multiplier by 0.02x each turn."));
         skillsList.put("TIMETRAVELER", new SkillsEnum("Time Traveler", "When this wifey suffers lethal damage the first time, prevent the death and set health to the wifey's health at the start of the round."));
         skillsList.put("TRAP", new SkillsEnum("Trap", "Multiplies physical, magical, and special damage taken by 0.15x."));
-        skillsList.put("TSUNDERE", new SkillsEnum("Tsundere", "Multiplies damage dealt by 2.0x if there are only 3 party members, 3.0x if there are only 2, 4.0x if this is the only wifey."));
+        skillsList.put("TSUNDERE", new SkillsEnum("Tsundere", "Multiplies damage dealt by 2.00x if there are only 3 party members, 3.00x if there are only 2, 4.00x if this is the only wifey."));
         skillsList.put("VAMPIRE", new SkillsEnum("Vampire", "Dealing damage heals self by 10% of the damage dealt."));
         skillsList.put("WITCH", new SkillsEnum("Witch", "Increases magical damage dealt multiplier by 0.20x each time a magical attack is used."));
 
-        skillsList.put("REM", new SkillsEnum("Rem", "Rem gets a special skill because she is Rem. Multiplies damage dealt and healing by 2.0x.")); //This skill will be removed.
+        skillsList.put("REM", new SkillsEnum("Rem", "Rem gets a special skill because she is Rem. Multiplies damage dealt and healing by 2.00x.")); //This skill will be removed.
 
         //Skills that need to be implemented
         skillsList.put("ROYALTY", new SkillsEnum("Royalty", "Royalty description"));

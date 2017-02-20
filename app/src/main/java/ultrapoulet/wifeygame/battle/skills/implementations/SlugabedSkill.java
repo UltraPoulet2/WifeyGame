@@ -61,8 +61,8 @@ public class SlugabedSkill extends AbsSkill {
     @Override
     public String getDescription(BattleCharacter enemy) {
         StringBuilder desc = new StringBuilder();
-        desc.append("Attack Multiplier: " + multiplier + "x\n\n");
-        desc.append("Multiplies damage dealt by 6.0x. Reduces multiplier by 0.25x for each turn, to a minimum of 0.25x.");
+        desc.append("Attack Multiplier: " + String.format("%1$.2f", multiplier) + "x\n\n");
+        desc.append("Multiplies damage dealt by 6.00x. Reduces multiplier by 0.25x for each turn, to a minimum of 0.25x.");
         return desc.toString();
     }
 }

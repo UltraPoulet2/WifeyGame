@@ -28,8 +28,8 @@ public class NurseSkill extends AbsSkill {
     @Override
     public String getDescription(BattleCharacter enemy) {
         StringBuilder desc = new StringBuilder();
-        desc.append("Healing Multiplier: 2.0x\n\n");
-        desc.append("Multiplies healing by 2.0x. Gains health at the start of every round.");
+        desc.append("Healing Multiplier: 2.00x\n\n");
+        desc.append("Multiplies healing by 2.00x. Gains health at the start of every round.");
         return desc.toString();
     }
 }
