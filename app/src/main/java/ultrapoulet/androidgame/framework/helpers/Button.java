@@ -100,6 +100,13 @@ public class Button {
         }
     }
 
+    //Draw the string, ignoring the active boolean
+    public void forceDrawString(Graphics g, Paint p){
+        int X = leftX + ((rightX - leftX) / 2);
+        int Y = botY - ((botY - topY - (int) p.getTextSize()) / 2);
+        g.drawString(this.name, X, Y, p);
+    }
+
     public void drawString(Graphics g, Paint p, int x, int y){
         if(active) {
             g.drawString(this.name, x, y, p);

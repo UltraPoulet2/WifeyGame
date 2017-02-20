@@ -57,7 +57,7 @@ public class DropdownMenu extends ButtonList {
         menuButton.drawImage(g);
         //This will draw the dropdown list of buttons.
         super.drawImage(g);
-        menuButton.drawString(g, textPaint);
+        menuButton.forceDrawString(g, textPaint);
         if(!menuButton.isActive()){
             for(int i = 0; i < buttons.size(); i++){
                 buttons.get(i).drawString(g, textPaint);

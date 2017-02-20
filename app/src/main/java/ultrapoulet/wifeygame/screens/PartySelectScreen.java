@@ -579,6 +579,12 @@ public class PartySelectScreen extends Screen {
         for(int i = maxPartySize; i < 7; i++){
             g.drawImage(Assets.LockSelection, PARTY_IMAGE_OFFSET_X * i + PARTY_IMAGE_BASE_LEFT_X, PARTY_IMAGE_TOP_Y);
         }
+
+        //If the dropdown is not activated, draw it on a lower layer than the characters
+        if(!sortDropdown.isMenuActive()) {
+            sortDropdown.drawImage(g);
+        }
+
         int minIndex = PER_PAGE * currentPage;
         int maxIndex = PER_PAGE * (currentPage + 1);
         ArrayList<WifeyCharacter> reqList;
@@ -610,7 +616,10 @@ public class PartySelectScreen extends Screen {
             }
         }
 
-        sortDropdown.drawImage(g);
+        //If the dropdown is activated, draw it on the top layer
+        if(sortDropdown.isMenuActive()) {
+            sortDropdown.drawImage(g);
+        }
     }
 
     @Override
