@@ -54,6 +54,8 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
     private static final int TRANSFORM_PAGE_TOP_Y = 100 + BG_Y;
     private static final int TRANSFORM_PAGE_BOT_Y = TRANSFORM_PAGE_TOP_Y + 320;
 
+    private static final int SKILLS_DESC_SIZE = 30;
+
     private Paint levelPaint;
     private static final int LEVEL_SIZE = 34;
     private static final int LEVEL_X = 425 + BG_X;
@@ -103,6 +105,8 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
         hitsPaint.setTextAlign(Align.CENTER);
         hitsPaint.setColor(Color.BLACK);
         hitsPaint.setTextSize(HITS_SIZE);
+
+        descPaint.setTextSize(SKILLS_DESC_SIZE);
     }
 
     public void createUniqueButtons(){

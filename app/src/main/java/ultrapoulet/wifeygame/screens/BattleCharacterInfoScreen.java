@@ -25,6 +25,8 @@ public class BattleCharacterInfoScreen extends AbsCharacterInfoScreen {
 
     private Multipliers multipliers;
 
+    private static final int SKILLS_DESC_SIZE = 25;
+
     private static final int TRANSFORM_HOLDER_X = 25 + BG_X;
     private static final int TRANSFORM_HOLDER_Y = 95 + BG_Y;
     private static final int TRANSFORM_NUMBER_LEFT_X = CHAR_X;
@@ -65,6 +67,8 @@ public class BattleCharacterInfoScreen extends AbsCharacterInfoScreen {
         multPaint.setTextAlign(Paint.Align.CENTER);
         multPaint.setColor(Color.BLACK);
         multPaint.setTextSize(STAT_SIZE);
+
+        descPaint.setTextSize(SKILLS_DESC_SIZE);
     }
 
     public void setChars(BattleWifey input, BattleEnemy enemy){

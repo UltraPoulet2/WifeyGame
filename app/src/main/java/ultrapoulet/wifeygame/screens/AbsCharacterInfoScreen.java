@@ -56,7 +56,6 @@ public abstract class AbsCharacterInfoScreen extends Screen {
 
     protected static final int SKILLS_DESC_X = 32 + BG_X;
     protected static final int SKILLS_DESC_Y = 872 + BG_Y;
-    protected static final int SKILLS_DESC_SIZE = 30;
     protected static final int SKILLS_DESC_WIDTH = 616;
     protected TextPaint descPaint;
 
@@ -112,7 +111,6 @@ public abstract class AbsCharacterInfoScreen extends Screen {
         descPaint = new TextPaint();
         descPaint.setTextAlign(Paint.Align.LEFT);
         descPaint.setColor(Color.BLACK);
-        descPaint.setTextSize(SKILLS_DESC_SIZE);
 
         createUniquePaints();
     }
