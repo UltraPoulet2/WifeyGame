@@ -198,6 +198,40 @@ public class PartySelectScreen extends Screen {
         }
     };
 
+    private enum SortMethod {
+        ALPHA,
+        STRENGTH,
+        MAGIC
+    }
+
+    private static SortMethod currentSort = SortMethod.ALPHA;
+
+    private Comparator<WifeyCharacter> getSort(){
+        switch(currentSort){
+            case ALPHA:
+                return nameComp;
+            case STRENGTH:
+                return strengthComp;
+            case MAGIC:
+                return magicComp;
+            default:
+                return nameComp;
+        }
+    }
+
+    private String getSortTitle(){
+        switch(currentSort){
+            case ALPHA:
+                return ALPHA_SORT_STRING;
+            case STRENGTH:
+                return STR_SORT_STRING;
+            case MAGIC:
+                return MAG_SORT_STRING;
+            default:
+                return ALPHA_SORT_STRING;
+        }
+    }
+
     public PartySelectScreen(Game game, Screen previousScreen){
         this(game, previousScreen, null);
     }
@@ -238,6 +272,7 @@ public class PartySelectScreen extends Screen {
         sortingList.add(STR_SORT_STRING);
         sortingList.add(MAG_SORT_STRING);
         sortDropdown = new DropdownMenu(SORT_BUTTON_LEFT_X, SORT_BUTTON_RIGHT_X, SORT_BUTTON_TOP_Y, SORT_BUTTON_BOT_Y, Assets.DropdownMenuTop, Assets.DropdownMenuOption, sortingPaint, sortingList);
+        sortDropdown.setTitle(getSortTitle());
 
         //Back button does not have an image associated with it
         backButton = new Button(BACK_BUTTON_LEFT_X, BACK_BUTTON_RIGHT_X, BACK_BUTTON_TOP_Y, BACK_BUTTON_BOT_Y, true, BACK_BUTTON_STRING, null, null);
@@ -330,7 +365,7 @@ public class PartySelectScreen extends Screen {
                 validCharacters.add(inputCharacters.get(i));
             }
         }
-        Collections.sort(validCharacters, nameComp);
+        Collections.sort(validCharacters, getSort());
         currentPage = 0;
         maxPage = (validCharacters.size() / PER_PAGE);
     }
@@ -396,22 +431,21 @@ public class PartySelectScreen extends Screen {
                 else if(sortDropdown.isMenuActive()){
                     if(sortPressed != null && sortPressed == sortDropdown.getButtonPressed(t.x, t.y)) {
                         String result = sortPressed.getName();
-                        Comparator<WifeyCharacter> comp = null;
                         switch (result) {
                             case ALPHA_SORT_STRING:
-                                comp = nameComp;
+                                currentSort = SortMethod.ALPHA;
                                 break;
                             case STR_SORT_STRING:
-                                comp = strengthComp;
+                                currentSort = SortMethod.STRENGTH;
                                 break;
                             case MAG_SORT_STRING:
-                                comp = magicComp;
+                                currentSort = SortMethod.MAGIC;
                                 break;
                         }
                         if(result != null){
-                            Collections.sort(validCharacters, comp);
+                            Collections.sort(validCharacters, getSort());
                             updateRecruitImages();
-                            sortDropdown.setTitle(result);
+                            sortDropdown.setTitle(getSortTitle());
                         }
                     }
                     sortDropdown.deactivateMenu();
@@ -629,7 +663,9 @@ public class PartySelectScreen extends Screen {
 
     @Override
     public void resume() {
-
+        Collections.sort(validCharacters, getSort());
+        updateRecruitImages();
+        sortDropdown.setTitle(getSortTitle());
     }
 
     @Override

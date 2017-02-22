@@ -160,7 +160,7 @@ public class SkillsEnum {
         skillsList.put("BIKER", new SkillsEnum("Biker", "Increases combo hits by 1 for each other Biker wifey in the party."));
         skillsList.put("CHUUNI", new SkillsEnum("Chuunibyou", "Multiplies special attack damage dealt by 5.00x."));
         skillsList.put("DETECTIVE", new SkillsEnum("Detective", "Multiplies damage dealt by 0.50x at the start of a wave. Multiplier increases by 0.25x at the end of each turn, up to a maximum of 5.00x."));
-        skillsList.put("DULLAHAN", new SkillsEnum("Dullahan", "Multiplies damage dealt by 0.75x. Each percentage point below 75% the enemy's health is at increases the multiplier by 0.40x."));
+        skillsList.put("DULLAHAN", new SkillsEnum("Dullahan", "Multiplies damage dealt by 0.50x. Each percentage point below 75% the enemy's health is at increases the multiplier by 0.40x."));
         skillsList.put("FUJOSHI", new SkillsEnum("Fujoshi", "Increases damage dealt multiplier by 0.33x for each Trap wifey in the party. Damage increased by a bonus 1.00x if there are more than two Trap wifeys."));
         skillsList.put("GHOST", new SkillsEnum("Ghost", "Multiplies physical attack damage taken by 0.50x"));
         skillsList.put("HYPER", new SkillsEnum("Hyper", "Increases combo hits by 1."));
