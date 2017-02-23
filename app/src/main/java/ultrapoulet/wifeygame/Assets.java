@@ -71,6 +71,7 @@ public class Assets {
     public static Image TransformNextEnable, TransformNextDisable;
     public static Image TransformPrevEnable, TransformPrevDisable;
     public static Image TransformHolder;
+    public static Image Favorite;
 
     //BattleInfoScreen Stuff
     public static Image BattleInfoScreen;

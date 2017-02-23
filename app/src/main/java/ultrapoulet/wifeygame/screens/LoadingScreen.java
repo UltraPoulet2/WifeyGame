@@ -240,6 +240,7 @@ public class LoadingScreen extends Screen {
         Assets.TransformHolder = g.newImage("objects/holders/TransformationHolder.png", ImageFormat.ARGB8888);
         Assets.DropdownMenuTop = g.newImage("buttons/DropdownMenuTop.png", ImageFormat.ARGB8888);
         Assets.DropdownMenuOption = g.newImage("buttons/DropdownMenuOption.png", ImageFormat.ARGB8888);
+        Assets.Favorite = g.newImage("buttons/FavoriteButton.png", ImageFormat.ARGB8888);
 
         Assets.InvalidChar = g.newImage("objects/holders/InvalidChar.png", ImageFormat.ARGB8888);
         Assets.RequiredCharHolder = g.newImage("objects/holders/RequiredCharHolder.png", ImageFormat.ARGB8888);
