@@ -88,6 +88,7 @@ public class PartySelectScreen extends Screen {
     private static final String ALPHA_SORT_STRING = "A -> Z";
     private static final String STR_SORT_STRING = "Strength";
     private static final String MAG_SORT_STRING = "Magic";
+    private static final String FAV_SORT_STRING = "Favorite";
 
     private Button backButton;
     private static final int BACK_BUTTON_LEFT_X = 45;
@@ -127,6 +128,7 @@ public class PartySelectScreen extends Screen {
     private static final int CHAR_IMAGE_BASE_TOP_Y = 400;
     private static final int CHAR_IMAGE_BASE_BOT_Y = CHAR_IMAGE_BASE_TOP_Y + CHAR_IMAGE_HEIGHT;
     private static final int CHAR_IMAGE_OFFSET_Y = 90;
+    private static final int CHAR_FAVORITE_SIZE = 30;
 
     private static final int CHAR_REQUIRED_HOLDER_BASE_X = CHAR_IMAGE_BASE_LEFT_X - 3;
     private static final int CHAR_REQUIRED_HOLDER_BASE_Y = CHAR_IMAGE_BASE_TOP_Y - 12;
@@ -198,10 +200,30 @@ public class PartySelectScreen extends Screen {
         }
     };
 
+    private Comparator<WifeyCharacter> favComp = new Comparator<WifeyCharacter>(){
+        @Override
+        public int compare(WifeyCharacter a, WifeyCharacter b){
+            if(hasRequiredList()){
+                ArrayList<WifeyCharacter> list = battleInfo.getRequiredList();
+                if(list.contains(a) && list.contains(b)){
+                    return a.compareFavorite(b);
+                }
+                else if(list.contains(a)){
+                    return -1;
+                }
+                else if(list.contains(b)){
+                    return 1;
+                }
+            }
+            return a.compareFavorite(b);
+        }
+    };
+
     private enum SortMethod {
         ALPHA,
         STRENGTH,
-        MAGIC
+        MAGIC,
+        FAVORITE
     }
 
     private static SortMethod currentSort = SortMethod.ALPHA;
@@ -214,6 +236,8 @@ public class PartySelectScreen extends Screen {
                 return strengthComp;
             case MAGIC:
                 return magicComp;
+            case FAVORITE:
+                return favComp;
             default:
                 return nameComp;
         }
@@ -227,6 +251,8 @@ public class PartySelectScreen extends Screen {
                 return STR_SORT_STRING;
             case MAGIC:
                 return MAG_SORT_STRING;
+            case FAVORITE:
+                return FAV_SORT_STRING;
             default:
                 return ALPHA_SORT_STRING;
         }
@@ -271,6 +297,7 @@ public class PartySelectScreen extends Screen {
         sortingList.add(ALPHA_SORT_STRING);
         sortingList.add(STR_SORT_STRING);
         sortingList.add(MAG_SORT_STRING);
+        sortingList.add(FAV_SORT_STRING);
         sortDropdown = new DropdownMenu(SORT_BUTTON_LEFT_X, SORT_BUTTON_RIGHT_X, SORT_BUTTON_TOP_Y, SORT_BUTTON_BOT_Y, Assets.DropdownMenuTop, Assets.DropdownMenuOption, sortingPaint, sortingList);
         sortDropdown.setTitle(getSortTitle());
 
@@ -441,6 +468,8 @@ public class PartySelectScreen extends Screen {
                             case MAG_SORT_STRING:
                                 currentSort = SortMethod.MAGIC;
                                 break;
+                            case FAV_SORT_STRING:
+                                currentSort = SortMethod.FAVORITE;
                         }
                         if(result != null){
                             Collections.sort(validCharacters, getSort());
@@ -605,6 +634,9 @@ public class PartySelectScreen extends Screen {
         for(int i = 0; i < currentParty.size(); i++){
             if(!dragging || i != draggingPartyIndex) {
                 g.drawPercentageImage(partyImages.get(i), PARTY_IMAGE_OFFSET_X * i + PARTY_IMAGE_BASE_LEFT_X, PARTY_IMAGE_TOP_Y, PARTY_SCALE, PARTY_SCALE);
+                if(currentParty.get(i).isFavorite()) {
+                    g.drawScaledImage(Assets.Favorite,  PARTY_IMAGE_OFFSET_X * i + PARTY_IMAGE_BASE_LEFT_X, PARTY_IMAGE_TOP_Y, CHAR_FAVORITE_SIZE, CHAR_FAVORITE_SIZE);
+                }
                 if(battleInfo != null && !battleInfo.allowCharacter(currentParty.get(i))){
                     g.drawPercentageImage(Assets.InvalidChar, PARTY_IMAGE_OFFSET_X * i + PARTY_IMAGE_BASE_LEFT_X, PARTY_IMAGE_TOP_Y, PARTY_SCALE, PARTY_SCALE);
                 }
@@ -638,13 +670,25 @@ public class PartySelectScreen extends Screen {
                         CHAR_IMAGE_OFFSET_X * (i % ROW_SIZE) + CHAR_IMAGE_BASE_LEFT_X,
                         CHAR_IMAGE_BASE_TOP_Y + CHAR_IMAGE_OFFSET_Y * ((i % PER_PAGE) / COLUMN_SIZE),
                         HALF_SCALE, HALF_SCALE);
+                if(validCharacters.get(i).isFavorite()) {
+                    g.drawScaledImage(Assets.Favorite,
+                            CHAR_IMAGE_OFFSET_X * (i % ROW_SIZE) + CHAR_IMAGE_BASE_LEFT_X,
+                            CHAR_IMAGE_BASE_TOP_Y + CHAR_IMAGE_OFFSET_Y * ((i % PER_PAGE) / COLUMN_SIZE),
+                            CHAR_FAVORITE_SIZE, CHAR_FAVORITE_SIZE);
+                }
             }
         }
         if(dragging && draggingRecruitIndex != -1){
             g.drawPercentageImage(recruitImages.get(draggingRecruitIndex - minIndex), draggingX - DRAGGING_OFFSET, draggingY - DRAGGING_OFFSET, DRAGGING_SCALE, DRAGGING_SCALE);
+            if(validCharacters.get(draggingRecruitIndex).isFavorite()){
+                g.drawScaledImage(Assets.Favorite, draggingX - DRAGGING_OFFSET, draggingY - DRAGGING_OFFSET, CHAR_FAVORITE_SIZE, CHAR_FAVORITE_SIZE);
+            }
         }
         if(dragging && draggingPartyIndex != -1){
             g.drawPercentageImage(partyImages.get(draggingPartyIndex), draggingX - DRAGGING_OFFSET, draggingY - DRAGGING_OFFSET, DRAGGING_SCALE, DRAGGING_SCALE);
+            if(currentParty.get(draggingPartyIndex).isFavorite()){
+                g.drawScaledImage(Assets.Favorite, draggingX - DRAGGING_OFFSET, draggingY - DRAGGING_OFFSET, CHAR_FAVORITE_SIZE, CHAR_FAVORITE_SIZE);
+            }
             if(battleInfo != null && !battleInfo.allowCharacter(currentParty.get(draggingPartyIndex))){
                 g.drawPercentageImage(Assets.InvalidChar, draggingX - DRAGGING_OFFSET, draggingY - DRAGGING_OFFSET, DRAGGING_SCALE, DRAGGING_SCALE);
             }

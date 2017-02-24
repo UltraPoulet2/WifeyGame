@@ -31,6 +31,8 @@ public class WifeyCharacter {
 
     private ArrayList<TransformWifey> transformations;
 
+    private boolean favorite = false;
+
     public WifeyCharacter(){
         skills = new ArrayList<>();
         transformations = new ArrayList<>();
@@ -117,6 +119,14 @@ public class WifeyCharacter {
         this.transformations.add(t);
     }
 
+    public void toggleFavorite(){
+        this.favorite = !this.favorite;
+    }
+
+    public boolean isFavorite() {
+        return this.favorite;
+    }
+
     public int compareName(WifeyCharacter other){
         int result = this.getName().compareTo(other.getName());
         if(result != 0){
@@ -145,6 +155,16 @@ public class WifeyCharacter {
         else{
             return this.compareName(other);
         }
+    }
+
+    public int compareFavorite(WifeyCharacter other){
+        if(this.isFavorite() && !other.isFavorite()){
+            return -1;
+        }
+        else if(!this.isFavorite() && other.isFavorite()){
+            return 1;
+        }
+        return this.compareName(other);
     }
 
     public boolean validate(){

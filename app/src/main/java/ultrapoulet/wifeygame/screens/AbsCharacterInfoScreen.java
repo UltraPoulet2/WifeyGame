@@ -40,7 +40,7 @@ public abstract class AbsCharacterInfoScreen extends Screen {
     protected static final int MAX_NAME_FONT = 40;
     protected static final int MIN_NAME_FONT = 20;
     protected static final int TWO_LINE_NAME_FONT = 20;
-    protected static final int MAX_NAME_SIZE = 236;
+    //protected static final int MAX_NAME_SIZE = 236;
     protected static final int NAME_X = 402 + BG_X;
     protected static final int MAX_NAME_Y = 155 + BG_Y;
     protected static final int TWO_LINE_NAME_Y = 115 + BG_Y;

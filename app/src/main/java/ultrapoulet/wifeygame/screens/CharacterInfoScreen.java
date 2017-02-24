@@ -41,9 +41,10 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
     private Element displayStrongElement;
     private Element displayWeakElement;
 
-    private ButtonList TransformButtons;
+    private ButtonList uniqueButtons;
     private Button prevTransform;
     private Button nextTransform;
+    private Button favoriteButton;
     private int transformPage;
     private int maxTransformPage;
     private static final int TRANSFORM_PAGE_WIDTH = 50;
@@ -53,8 +54,13 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
     private static final int TRANSFORM_NEXT_PAGE_RIGHT_X = TRANSFORM_NEXT_PAGE_LEFT_X + TRANSFORM_PAGE_WIDTH;
     private static final int TRANSFORM_PAGE_TOP_Y = 100 + BG_Y;
     private static final int TRANSFORM_PAGE_BOT_Y = TRANSFORM_PAGE_TOP_Y + 320;
+    private static final int FAVORITE_LEFT_X = BG_X + 600;
+    private static final int FAVORITE_RIGHT_X = FAVORITE_LEFT_X + 50;
+    private static final int FAVORITE_TOP_Y = BG_Y + 115;
+    private static final int FAVORITE_BOT_Y = FAVORITE_TOP_Y + 50;
 
     private static final int SKILLS_DESC_SIZE = 30;
+    private static final int MAX_NAME_SIZE = 191;
 
     private Paint levelPaint;
     private static final int LEVEL_SIZE = 34;
@@ -110,11 +116,13 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
     }
 
     public void createUniqueButtons(){
-        TransformButtons = new ButtonList();
+        uniqueButtons = new ButtonList();
         prevTransform = new Button(TRANSFORM_PREV_PAGE_LEFT_X, TRANSFORM_PREV_PAGE_RIGHT_X, TRANSFORM_PAGE_TOP_Y, TRANSFORM_PAGE_BOT_Y, false, "TRANS_PREV", Assets.TransformPrevEnable, Assets.TransformPrevDisable);
         nextTransform = new Button(TRANSFORM_NEXT_PAGE_LEFT_X, TRANSFORM_NEXT_PAGE_RIGHT_X, TRANSFORM_PAGE_TOP_Y, TRANSFORM_PAGE_BOT_Y, false, "TRANS_NEXT", Assets.TransformNextEnable, Assets.TransformNextDisable);
-        TransformButtons.addButton(prevTransform);
-        TransformButtons.addButton(nextTransform);
+        favoriteButton = new Button(FAVORITE_LEFT_X, FAVORITE_RIGHT_X, FAVORITE_TOP_Y, FAVORITE_BOT_Y, true, "FAVORITE");
+        uniqueButtons.addButton(prevTransform);
+        uniqueButtons.addButton(nextTransform);
+        uniqueButtons.addButton(favoriteButton);
     }
 
     public void setChar(WifeyCharacter input){
@@ -131,7 +139,17 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
         nextTransform.setActive(maxTransformPage != transformPage);
 
         setDefaultDisplayInfo();
+        updateFavoriteButton();
     }
+
+    private void updateFavoriteButton(){
+        if(displayChar != null && displayChar.isFavorite()) {
+            favoriteButton.setActiveImage(Assets.Favorite);
+        }
+        else {
+            favoriteButton.setActiveImage(null);
+    }
+}
 
     private void setDefaultDisplayInfo() {
         displayName = displayChar.getName();
@@ -240,7 +258,10 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
 
         //Stuff for transformation
         if(maxTransformPage != 0){
-            TransformButtons.drawImage(g);
+            //Individual buttons are drawn instead because the transform buttons might need to be hidden.
+            //There should later be an added thing to buttons for hidden.
+            prevTransform.drawImage(g);
+            nextTransform.drawImage(g);
         }
     }
 
@@ -258,6 +279,7 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
             namePaint.setTextSize(TWO_LINE_NAME_FONT);
             g.drawMultiLineString(displayName, NAME_X, TWO_LINE_NAME_Y, MAX_NAME_SIZE, namePaint);
         }
+        favoriteButton.drawImage(g);
     }
 
     protected void drawTopRows(Graphics g){
@@ -308,18 +330,23 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
     @Override
     protected void uniqueUpdate(Input.TouchEvent t) {
         if (t.type == Input.TouchEvent.TOUCH_UP) {
-            Button transformPressed = TransformButtons.getButtonPressed(t.x, t.y);
-            if(transformPressed == prevTransform){
+            Button buttonPressed = uniqueButtons.getButtonPressed(t.x, t.y);
+            if(buttonPressed == prevTransform){
                 transformPage--;
                 decrementDisplayInfo();
                 nextTransform.setActive(true);
                 prevTransform.setActive(transformPage != 0);
             }
-            else if(transformPressed == nextTransform) {
+            else if(buttonPressed == nextTransform) {
                 transformPage++;
                 incrementDisplayInfo();
                 prevTransform.setActive(true);
                 nextTransform.setActive(transformPage != maxTransformPage);
+            }
+            else if(buttonPressed == favoriteButton){
+                System.out.println("Why hello there");
+                displayChar.toggleFavorite();
+                updateFavoriteButton();
             }
         }
     }

@@ -26,6 +26,7 @@ public class BattleCharacterInfoScreen extends AbsCharacterInfoScreen {
     private Multipliers multipliers;
 
     private static final int SKILLS_DESC_SIZE = 25;
+    private static final int MAX_NAME_SIZE = 236;
 
     private static final int TRANSFORM_HOLDER_X = 25 + BG_X;
     private static final int TRANSFORM_HOLDER_Y = 95 + BG_Y;
