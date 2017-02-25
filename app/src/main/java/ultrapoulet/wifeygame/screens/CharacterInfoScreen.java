@@ -137,6 +137,8 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
         maxTransformPage = transformations.size();
         prevTransform.setActive(false);
         nextTransform.setActive(maxTransformPage != transformPage);
+        prevTransform.setHidden(maxTransformPage == 0);
+        nextTransform.setHidden(maxTransformPage == 0);
 
         setDefaultDisplayInfo();
         updateFavoriteButton();
@@ -256,13 +258,7 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
     protected void drawPortrait(Graphics g){
         g.drawPercentageImage(displayImage, CHAR_X, CHAR_Y, DOUBLE_SCALE, DOUBLE_SCALE);
 
-        //Stuff for transformation
-        if(maxTransformPage != 0){
-            //Individual buttons are drawn instead because the transform buttons might need to be hidden.
-            //There should later be an added thing to buttons for hidden.
-            prevTransform.drawImage(g);
-            nextTransform.drawImage(g);
-        }
+        uniqueButtons.drawImage(g);
     }
 
     protected void drawElements(Graphics g){
@@ -279,7 +275,6 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
             namePaint.setTextSize(TWO_LINE_NAME_FONT);
             g.drawMultiLineString(displayName, NAME_X, TWO_LINE_NAME_Y, MAX_NAME_SIZE, namePaint);
         }
-        favoriteButton.drawImage(g);
     }
 
     protected void drawTopRows(Graphics g){
@@ -344,7 +339,6 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
                 nextTransform.setActive(transformPage != maxTransformPage);
             }
             else if(buttonPressed == favoriteButton){
-                System.out.println("Why hello there");
                 displayChar.toggleFavorite();
                 updateFavoriteButton();
             }

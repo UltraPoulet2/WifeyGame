@@ -17,6 +17,7 @@ public class Button {
     private int botY;
 
     private boolean active;
+    private boolean hidden = false;
     private String name;
 
     private Image activeImage;
@@ -56,6 +57,14 @@ public class Button {
         this.active = state;
     }
 
+    public boolean isHidden(){
+        return this.hidden;
+    }
+
+    public void setHidden(boolean state) {
+        this.hidden = state;
+    }
+
     public String getName(){
         return this.name;
     }
@@ -65,7 +74,7 @@ public class Button {
     }
 
     public boolean isPressed(int x, int y){
-        if(!this.active){
+        if(!this.active || this.hidden){
             return false;
         }
         return (x >= leftX && x <= rightX && y >= topY && y <= botY);
@@ -83,6 +92,9 @@ public class Button {
     }
 
     public void drawImage(Graphics g){
+        if(hidden){
+            return;
+        }
         //Draw scaled to ensure it fits in region
         if(active && activeImage != null) {
             g.drawScaledImage(activeImage, leftX, topY, rightX - leftX, botY - topY);
@@ -93,7 +105,7 @@ public class Button {
     }
 
     public void drawString(Graphics g, Paint p){
-        if(active) {
+        if(!hidden && active) {
             int X = leftX + ((rightX - leftX) / 2);
             int Y = botY - ((botY - topY - (int) p.getTextSize()) / 2);
             g.drawString(this.name, X, Y, p);
@@ -108,7 +120,7 @@ public class Button {
     }
 
     public void drawString(Graphics g, Paint p, int x, int y){
-        if(active) {
+        if(!hidden && active) {
             g.drawString(this.name, x, y, p);
         }
     }
