@@ -74,7 +74,7 @@ public class Button {
     }
 
     public boolean isPressed(int x, int y){
-        if(!this.active || this.hidden){
+        if(!this.active){
             return false;
         }
         return (x >= leftX && x <= rightX && y >= topY && y <= botY);

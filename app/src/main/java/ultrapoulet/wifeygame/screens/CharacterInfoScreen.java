@@ -119,7 +119,7 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
         uniqueButtons = new ButtonList();
         prevTransform = new Button(TRANSFORM_PREV_PAGE_LEFT_X, TRANSFORM_PREV_PAGE_RIGHT_X, TRANSFORM_PAGE_TOP_Y, TRANSFORM_PAGE_BOT_Y, false, "TRANS_PREV", Assets.TransformPrevEnable, Assets.TransformPrevDisable);
         nextTransform = new Button(TRANSFORM_NEXT_PAGE_LEFT_X, TRANSFORM_NEXT_PAGE_RIGHT_X, TRANSFORM_PAGE_TOP_Y, TRANSFORM_PAGE_BOT_Y, false, "TRANS_NEXT", Assets.TransformNextEnable, Assets.TransformNextDisable);
-        favoriteButton = new Button(FAVORITE_LEFT_X, FAVORITE_RIGHT_X, FAVORITE_TOP_Y, FAVORITE_BOT_Y, true, "FAVORITE");
+        favoriteButton = new Button(FAVORITE_LEFT_X, FAVORITE_RIGHT_X, FAVORITE_TOP_Y, FAVORITE_BOT_Y, true, "FAVORITE", Assets.Favorite);
         uniqueButtons.addButton(prevTransform);
         uniqueButtons.addButton(nextTransform);
         uniqueButtons.addButton(favoriteButton);
@@ -146,10 +146,10 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
 
     private void updateFavoriteButton(){
         if(displayChar != null && displayChar.isFavorite()) {
-            favoriteButton.setActiveImage(Assets.Favorite);
+            favoriteButton.setHidden(false);
         }
         else {
-            favoriteButton.setActiveImage(null);
+            favoriteButton.setHidden(true);
     }
 }
 
