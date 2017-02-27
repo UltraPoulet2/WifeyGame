@@ -81,6 +81,8 @@ public class PartySelectScreen extends Screen {
     private static final String NEXT_BUTTON_STRING = "Next";
 
     private DropdownMenu sortDropdown;
+    private Paint sortingPaint;
+    private List<String> sortingList;
     private static final int SORT_BUTTON_LEFT_X = 510;
     private static final int SORT_BUTTON_RIGHT_X = 755;
     private static final int SORT_BUTTON_TOP_Y = 338;
@@ -269,6 +271,18 @@ public class PartySelectScreen extends Screen {
         textPaint.setTextAlign(Align.CENTER);
         textPaint.setTextSize(25);
 
+        sortingPaint = new Paint();
+        sortingPaint.setTextSize(30);
+        sortingPaint.setColor(Color.BLACK);
+        sortingPaint.setTextAlign(Align.CENTER);
+
+        sortingList = new ArrayList<>();
+        sortingList.add(ALPHA_SORT_STRING);
+        sortingList.add(STR_SORT_STRING);
+        sortingList.add(MAG_SORT_STRING);
+        sortingList.add(FAV_SORT_STRING);
+
+
         background = Assets.PartySelectScreen;
 
         charInfo = new CharacterInfoScreen(game, this);
@@ -288,16 +302,7 @@ public class PartySelectScreen extends Screen {
         basicButtonList.addButton(prevButton);
         nextButton = new Button(NEXT_BUTTON_LEFT_X, NEXT_BUTTON_RIGHT_X, NEXT_BUTTON_TOP_Y, NEXT_BUTTON_BOT_Y, false, NEXT_BUTTON_STRING, Assets.NextPageEnable, Assets.NextPageDisable);
         basicButtonList.addButton(nextButton);
-        //Temporary ButtonDropdown
-        Paint sortingPaint = new Paint();
-        sortingPaint.setTextSize(30);
-        sortingPaint.setColor(Color.BLACK);
-        sortingPaint.setTextAlign(Align.CENTER);
-        List<String> sortingList = new ArrayList<>();
-        sortingList.add(ALPHA_SORT_STRING);
-        sortingList.add(STR_SORT_STRING);
-        sortingList.add(MAG_SORT_STRING);
-        sortingList.add(FAV_SORT_STRING);
+
         sortDropdown = new DropdownMenu(SORT_BUTTON_LEFT_X, SORT_BUTTON_RIGHT_X, SORT_BUTTON_TOP_Y, SORT_BUTTON_BOT_Y, Assets.DropdownMenuTop, Assets.DropdownMenuOption, sortingPaint, sortingList);
         sortDropdown.setTitle(getSortTitle());
 

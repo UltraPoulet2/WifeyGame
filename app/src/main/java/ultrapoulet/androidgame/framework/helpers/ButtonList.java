@@ -46,27 +46,6 @@ public class ButtonList {
         return buttons.size();
     }
 
-    //For use for numbered buttons
-    @Deprecated
-    public void setIndexActive(int index, boolean value){
-        if(index < buttons.size() && index >= 0){
-            buttons.get(index).setActive(value);
-        }
-        else{
-            System.out.println("ButtonList:setIndexActive(): Invalid index provided: " + index);
-        }
-    }
-
-    //For use for numbered buttons
-    public void setIndexCoord(int index, int leftX, int rightX, int topY, int botY){
-        if(index < buttons.size() && index >= 0){
-            buttons.get(index).setCoordinates(leftX, rightX, topY, botY);
-        }
-        else{
-            System.out.println("ButtonList:setIndexCoord(): Invalid index provided: " + index);
-        }
-    }
-
     public void drawImage(Graphics g){
         for(int i = 0; i < buttons.size(); i++){
             buttons.get(i).drawImage(g);

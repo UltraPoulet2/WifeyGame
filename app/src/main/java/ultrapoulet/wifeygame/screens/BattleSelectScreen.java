@@ -133,7 +133,6 @@ public class BattleSelectScreen extends Screen {
                 int rightX = AREA_RIGHT_X;
                 int topY = BATTLES_TOP_Y + BATTLES_OFFSET_Y * unlockedAreas.size();
                 int botY = BATTLES_BOT_Y + BATTLES_OFFSET_Y * unlockedAreas.size();
-                System.out.println(leftX + " " + rightX + " " + topY + " " + botY);
                 storyAreaList.addButton(new Button(leftX, rightX, topY, botY, false, area.get(i).getAreaName(), Assets.pHealthY));
                 unlockedAreas.add(area.get(i));
            }

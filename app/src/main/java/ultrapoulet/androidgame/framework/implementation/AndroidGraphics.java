@@ -136,21 +136,6 @@ public class AndroidGraphics implements Graphics {
         return copyPaint.measureText(text) <= maxWidth;
     }
 
-    //@Override
-    //This will not verify that the minFontSize is within maxWidth
-    /*
-    public void drawString(String text, int x, int y, Paint paint, int maxWidth, int maxFont){
-        int fontSize = maxFont;
-        paint.setTextSize(fontSize);
-        while(paint.measureText(text) > maxWidth){
-            fontSize--;
-            paint.setTextSize(fontSize);
-        }
-        int newY = y - ((maxFont - fontSize) / 2);
-        drawString(text, x, newY, paint);
-    }
-    */
-
     @Override
     public void drawMultiLineString(String text, int x, int y, int width, TextPaint paint){
         StaticLayout textLayout = new StaticLayout(

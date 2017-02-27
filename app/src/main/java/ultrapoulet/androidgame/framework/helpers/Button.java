@@ -23,15 +23,8 @@ public class Button {
     private Image activeImage;
     private Image inactiveImage;
 
-    @Deprecated
-    //Temporarily deprecated to determine which buttons should support the active/inactive image
     public Button(int leftX, int rightX, int topY, int botY, boolean active, String name){
-        this.leftX = leftX;
-        this.rightX = rightX;
-        this.topY = topY;
-        this.botY = botY;
-        this.active = active;
-        this.name = name;
+        this(leftX, rightX, topY, botY, active, name, null, null);
     }
 
     public Button(int leftX, int rightX, int topY, int botY, boolean active, String name, Image activeImage){

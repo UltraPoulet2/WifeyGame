@@ -215,7 +215,7 @@ public class SkillsEnum {
         skillsList.put("MILITARY", new SkillsEnum("Military", "Military description"));
         skillsList.put("CRIMINAL", new SkillsEnum("Criminal", "Criminal description"));
         skillsList.put("BOOKWORM", new SkillsEnum("Bookworm", "Bookworm description"));
-        skillsList.put("POLICE", new SkillsEnum("Police", "Police description")); //Increase damage to criminals
+        skillsList.put("POLICE", new SkillsEnum("Police", "Police description")); //Increase gold when defeating a criminal
         skillsList.put("LOVECRAFT", new SkillsEnum("Lovecraft", "Lovecraft description"));
         skillsList.put("SELECTOR", new SkillsEnum("Selector", "Selector description"));
         skillsList.put("KUUDERE", new SkillsEnum("Kuudere", "Kuudere description"));

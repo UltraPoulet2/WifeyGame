@@ -363,14 +363,14 @@ public class BattleScreen extends Screen {
             int rightX = leftX + CHAR_IMAGE_SMALL_SIZE;
             int topY = CHAR_IMAGE_SMALL_Y;
             int botY = topY + CHAR_IMAGE_SMALL_SIZE;
-            partyList.setIndexCoord(i, leftX, rightX, topY, botY);
+            partyList.get(i).setCoordinates(leftX, rightX, topY, botY);
         }
         if(i == partyIndex && i < party.size()){
             int leftX = CHAR_HOLDER_X_DISTANCE * i + CHAR_INTERIOR_LARGE_X;
             int rightX = leftX + CHAR_IMAGE_LARGE_SIZE;
             int topY = CHAR_IMAGE_LARGE_Y;
             int botY = topY + CHAR_IMAGE_LARGE_SIZE;
-            partyList.setIndexCoord(i, leftX, rightX, topY, botY);
+            partyList.get(i).setCoordinates(leftX, rightX, topY, botY);
             i++;
         }
         for( ; i < party.size(); i++){
@@ -378,7 +378,7 @@ public class BattleScreen extends Screen {
             int rightX = leftX + CHAR_IMAGE_SMALL_SIZE;
             int topY = CHAR_IMAGE_SMALL_Y;
             int botY = topY + CHAR_IMAGE_SMALL_SIZE;
-            partyList.setIndexCoord(i, leftX, rightX, topY, botY);
+            partyList.get(i).setCoordinates(leftX, rightX, topY, botY);
         }
     }
 

@@ -67,7 +67,6 @@ public class Party {
     public static void removeIndex(int index){
         party.remove(index);
         party.add(null);
-        System.out.println(party.size());
         saveParty();
     }
 
