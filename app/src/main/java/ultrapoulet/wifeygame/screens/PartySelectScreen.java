@@ -222,10 +222,32 @@ public class PartySelectScreen extends Screen {
     };
 
     private enum SortMethod {
-        ALPHA,
-        STRENGTH,
-        MAGIC,
-        FAVORITE
+        ALPHA {
+            @Override
+            protected String getSortTitle() {
+                return ALPHA_SORT_STRING;
+            }
+        },
+        STRENGTH {
+            @Override
+            protected String getSortTitle() {
+                return STR_SORT_STRING;
+            }
+        },
+        MAGIC {
+            @Override
+            protected String getSortTitle() {
+                return MAG_SORT_STRING;
+            }
+        },
+        FAVORITE {
+            @Override
+            protected String getSortTitle() {
+                return FAV_SORT_STRING;
+            }
+        };
+
+        protected abstract String getSortTitle();
     }
 
     private static SortMethod currentSort = SortMethod.ALPHA;
@@ -242,21 +264,6 @@ public class PartySelectScreen extends Screen {
                 return favComp;
             default:
                 return nameComp;
-        }
-    }
-
-    private String getSortTitle(){
-        switch(currentSort){
-            case ALPHA:
-                return ALPHA_SORT_STRING;
-            case STRENGTH:
-                return STR_SORT_STRING;
-            case MAGIC:
-                return MAG_SORT_STRING;
-            case FAVORITE:
-                return FAV_SORT_STRING;
-            default:
-                return ALPHA_SORT_STRING;
         }
     }
 
@@ -304,10 +311,10 @@ public class PartySelectScreen extends Screen {
         basicButtonList.addButton(nextButton);
 
         sortDropdown = new DropdownMenu(SORT_BUTTON_LEFT_X, SORT_BUTTON_RIGHT_X, SORT_BUTTON_TOP_Y, SORT_BUTTON_BOT_Y, Assets.DropdownMenuTop, Assets.DropdownMenuOption, sortingPaint, sortingList);
-        sortDropdown.setTitle(getSortTitle());
+        sortDropdown.setTitle(currentSort.getSortTitle());
 
         //Back button does not have an image associated with it
-        backButton = new Button(BACK_BUTTON_LEFT_X, BACK_BUTTON_RIGHT_X, BACK_BUTTON_TOP_Y, BACK_BUTTON_BOT_Y, true, BACK_BUTTON_STRING, null, null);
+        backButton = new Button(BACK_BUTTON_LEFT_X, BACK_BUTTON_RIGHT_X, BACK_BUTTON_TOP_Y, BACK_BUTTON_BOT_Y, true, BACK_BUTTON_STRING);
         basicButtonList.addButton(backButton);
         acceptButton = new Button(ACCEPT_BUTTON_LEFT_X, ACCEPT_BUTTON_RIGHT_X, ACCEPT_BUTTON_TOP_Y, ACCEPT_BUTTON_BOT_Y, false, ACCEPT_BUTTON_STRING, Assets.AcceptEnable, Assets.AcceptDisable);
         basicButtonList.addButton(acceptButton);
@@ -389,11 +396,7 @@ public class PartySelectScreen extends Screen {
         validCharacters = new ArrayList<>();
         for(int i = 0; i < inputCharacters.size(); i++){
             //Do a check to make sure the character is valid for this battle
-            boolean allowed = true;
-            if(battleInfo != null){
-                allowed = battleInfo.allowCharacter(inputCharacters.get(i));
-            }
-            if(allowed){
+            if(battleInfo == null || battleInfo.allowCharacter(inputCharacters.get(i))){
                 validCharacters.add(inputCharacters.get(i));
             }
         }
@@ -479,7 +482,7 @@ public class PartySelectScreen extends Screen {
                         if(result != null){
                             Collections.sort(validCharacters, getSort());
                             updateRecruitImages();
-                            sortDropdown.setTitle(getSortTitle());
+                            sortDropdown.setTitle(currentSort.getSortTitle());
                         }
                     }
                     sortDropdown.deactivateMenu();
@@ -714,7 +717,7 @@ public class PartySelectScreen extends Screen {
     public void resume() {
         Collections.sort(validCharacters, getSort());
         updateRecruitImages();
-        sortDropdown.setTitle(getSortTitle());
+        sortDropdown.setTitle(currentSort.getSortTitle());
     }
 
     @Override
