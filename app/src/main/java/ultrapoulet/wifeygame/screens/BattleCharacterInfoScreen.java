@@ -25,6 +25,9 @@ public class BattleCharacterInfoScreen extends AbsCharacterInfoScreen {
 
     private Multipliers multipliers;
 
+    private static final int SKILLS_DESC_SIZE = 25;
+    private static final int MAX_NAME_SIZE = 236;
+
     private static final int TRANSFORM_HOLDER_X = 25 + BG_X;
     private static final int TRANSFORM_HOLDER_Y = 95 + BG_Y;
     private static final int TRANSFORM_NUMBER_LEFT_X = CHAR_X;
@@ -65,18 +68,13 @@ public class BattleCharacterInfoScreen extends AbsCharacterInfoScreen {
         multPaint.setTextAlign(Paint.Align.CENTER);
         multPaint.setColor(Color.BLACK);
         multPaint.setTextSize(STAT_SIZE);
+
+        descPaint.setTextSize(SKILLS_DESC_SIZE);
     }
 
     public void setChars(BattleWifey input, BattleEnemy enemy){
         displayChar = input;
         displayEnemy = enemy;
-        nameFontSize = MAX_NAME_FONT;
-        namePaint.setTextSize(nameFontSize);
-        while(namePaint.measureText(displayChar.getName()) > MAX_NAME_SIZE){
-            nameFontSize--;
-            namePaint.setTextSize(nameFontSize);
-        }
-        nameY = MAX_NAME_Y - ((MAX_NAME_FONT - nameFontSize) / 2);
 
         displayText = -1;
         skillsPage = 0;
@@ -113,7 +111,13 @@ public class BattleCharacterInfoScreen extends AbsCharacterInfoScreen {
     }
 
     protected void drawName(Graphics g){
-        g.drawString(displayChar.getName(), NAME_X, nameY, namePaint);
+        if(g.canDrawString(displayChar.getName(), namePaint, MAX_NAME_SIZE, MIN_NAME_FONT)){
+            g.drawString(displayChar.getName(), NAME_X, MAX_NAME_Y, namePaint, MAX_NAME_SIZE, MAX_NAME_FONT);
+        }
+        else{
+            namePaint.setTextSize(TWO_LINE_NAME_FONT);
+            g.drawMultiLineString(displayChar.getName(), NAME_X, TWO_LINE_NAME_Y, MAX_NAME_SIZE, namePaint);
+        }
     }
 
     protected void drawTopRows(Graphics g){
@@ -146,7 +150,7 @@ public class BattleCharacterInfoScreen extends AbsCharacterInfoScreen {
             else{
                 xOffset = SKILLS_TEXT_RIGHT_X;
             }
-            g.drawString(skill.getSkillName(), xOffset, yOffset, skillsPaint);
+            g.drawString(skill.getSkillName(), xOffset, yOffset, skillsPaint, SKILLS_TEXT_SIZE, SKILLS_TEXT_FONT);
         }
         if(maxPage == 0){
             g.drawImage(Assets.ScrollBarFull, SKILLS_SCROLL_X, SKILLS_SCROLL_TOP_Y);

@@ -182,6 +182,8 @@ public class LoadingScreen extends Screen {
             Assets.WhiteNumbers.add(g.newImage("numbers/white/" + i + ".png", ImageFormat.ARGB8888));
         }
         Assets.HPSlash = g.newImage("numbers/HPSlash.png", ImageFormat.ARGB8888);
+        Assets.Colon = g.newImage("numbers/Colon.png", ImageFormat.ARGB8888);
+        Assets.Plus = g.newImage("numbers/YellowPlus.png", ImageFormat.ARGB8888);
 
         Assets.GreenNumbers = new ArrayList<>();
         for(int i = 0; i < 10; i++){
@@ -203,6 +205,22 @@ public class LoadingScreen extends Screen {
             Assets.GreyNumbers.add(g.newImage("numbers/grey/" + i + ".png", ImageFormat.ARGB8888));
         }
 
+        Assets.StatusHolder = g.newImage("objects/status/StatusHolder.png", ImageFormat.ARGB8888);
+        Assets.Hourglass = g.newImage("objects/status/Hourglass.png", ImageFormat.ARGB8888);
+
+        //BattleSelectScreen stuff
+        Assets.BattleSelectScreen = g.newImage("BattleSelect/BattleSelectScreen.png", ImageFormat.ARGB8888);
+        Assets.BattleDivider = g.newImage("BattleSelect/BattleDivider.png", ImageFormat.ARGB8888);
+        Assets.PartyButton = g.newImage("BattleSelect/PartyButton.png", ImageFormat.ARGB8888);
+        Assets.UpgradeButton = g.newImage("BattleSelect/UpgradeButton.png", ImageFormat.ARGB8888);
+        Assets.InfoButton = g.newImage("BattleSelect/InfoButton.png", ImageFormat.ARGB8888);
+        Assets.StoryButtonActive = g.newImage("BattleSelect/StoryButtonActive.png", ImageFormat.ARGB8888);
+        Assets.StoryButtonInactive = g.newImage("BattleSelect/StoryButtonInactive.png", ImageFormat.ARGB8888);
+        Assets.RecruitButtonActive = g.newImage("BattleSelect/RecruitButtonActive.png", ImageFormat.ARGB8888);
+        Assets.RecruitButtonInactive = g.newImage("BattleSelect/RecruitButtonInactive.png", ImageFormat.ARGB8888);
+        Assets.SpecialButtonActive = g.newImage("BattleSelect/SpecialButtonActive.png", ImageFormat.ARGB8888);
+        Assets.SpecialButtonInactive = g.newImage("BattleSelect/SpecialButtonInactive.png", ImageFormat.ARGB8888);
+
         Assets.PartySelectScreen = g.newImage("screens/PartySelectScreen.png", ImageFormat.RGB565);
         Assets.AcceptEnable = g.newImage("buttons/AcceptEnabled.png", ImageFormat.ARGB8888);
         Assets.AcceptDisable = g.newImage("buttons/AcceptDisabled.png", ImageFormat.ARGB8888);
@@ -220,6 +238,9 @@ public class LoadingScreen extends Screen {
         Assets.TransformPrevEnable = g.newImage("buttons/TransformPrevPageEnabled.png", ImageFormat.ARGB8888);
         Assets.TransformPrevDisable = g.newImage("buttons/TransformPrevPageDisabled.png", ImageFormat.ARGB8888);
         Assets.TransformHolder = g.newImage("objects/holders/TransformationHolder.png", ImageFormat.ARGB8888);
+        Assets.DropdownMenuTop = g.newImage("buttons/DropdownMenuTop.png", ImageFormat.ARGB8888);
+        Assets.DropdownMenuOption = g.newImage("buttons/DropdownMenuOption.png", ImageFormat.ARGB8888);
+        Assets.Favorite = g.newImage("buttons/FavoriteButton.png", ImageFormat.ARGB8888);
 
         Assets.InvalidChar = g.newImage("objects/holders/InvalidChar.png", ImageFormat.ARGB8888);
         Assets.RequiredCharHolder = g.newImage("objects/holders/RequiredCharHolder.png", ImageFormat.ARGB8888);
@@ -227,6 +248,12 @@ public class LoadingScreen extends Screen {
         Assets.CharacterInfoScreen = g.newImage("screens/CharacterInfoScreen.png", ImageFormat.RGB565);
         Assets.BattleCharacterInfoScreen = g.newImage("screens/BattleCharacterInfoScreen.png", ImageFormat.RGB565);
         Assets.BattleInfoScreen = g.newImage("screens/BattleInfoScreen.png", ImageFormat.RGB565);
+
+        Assets.BattleResultScreen = g.newImage("screens/BattleResultScreen.png", ImageFormat.ARGB8888);
+        Assets.BattleResultVictory = g.newImage("objects/battleResult/BattleResultVictory.png", ImageFormat.ARGB8888);
+        Assets.BattleResultDefeat = g.newImage("objects/battleResult/BattleResultDefeat.png", ImageFormat.ARGB8888);
+        Assets.BattleResultExp = g.newImage("objects/battleResult/BattleResultExp.png", ImageFormat.ARGB8888);
+        Assets.BattleResultGold = g.newImage("objects/battleResult/BattleResultGold.png", ImageFormat.ARGB8888);
 
         Assets.ElementImages = new ArrayList<>();
         Assets.ElementImages.add(g.newImage("elements/AirElement.png", ImageFormat.ARGB8888));

@@ -54,8 +54,8 @@ public class TsundereSkill extends AbsSkill {
     @Override
     public String getDescription(BattleCharacter enemy) {
         StringBuilder desc = new StringBuilder();
-        desc.append("Damage Multiplier: " + multiplier + "x\n\n");
-        desc.append("Multiplies damage dealt by 2.0x if there are only 3 party members, 3.0x if there are only 2, 4.0x if this is the only wifey.");
+        desc.append("Damage Multiplier: " + String.format("%1$.2f", multiplier) + "x\n\n");
+        desc.append("Multiplies damage dealt by 2.00x if there are only 3 party members, 3.00x if there are only 2, 4.00x if this is the only wifey.");
         return desc.toString();
     }
 }

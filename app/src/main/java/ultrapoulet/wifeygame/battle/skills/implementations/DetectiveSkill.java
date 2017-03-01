@@ -57,8 +57,8 @@ public class DetectiveSkill extends AbsSkill {
     @Override
     public String getDescription(BattleCharacter enemy) {
         StringBuilder desc = new StringBuilder();
-        desc.append("Attack Multiplier: " + multiplier + "\n\n");
-        desc.append("Multiplies damage dealt by 0.5x at the start of a wave. Multiplier increases by 0.25x at the end of each turn, up to a maximum of 5.0x.");
+        desc.append("Attack Multiplier: " + String.format("%1$.2f", multiplier) + "x\n\n");
+        desc.append("Multiplies damage dealt by 0.50x at the start of a wave. Multiplier increases by 0.25x at the end of each turn, up to a maximum of 5.00x.");
         return desc.toString();
     }
 }

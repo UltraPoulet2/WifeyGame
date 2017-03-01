@@ -21,6 +21,7 @@ import ultrapoulet.wifeygame.battle.BattleInfo;
 import ultrapoulet.wifeygame.battle.requirements.AbsRequirement;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
 import ultrapoulet.wifeygame.gamestate.Party;
+import ultrapoulet.wifeygame.gamestate.PlayerInfo;
 
 /**
  * Created by John on 10/12/2016.
@@ -31,21 +32,20 @@ public class BattleInfoScreen extends Screen{
     private Screen prevScreen;
 
     private BattleInfo battleInfo;
-    private PartySelectScreen partySelect;
 
     private CharacterInfoScreen charInfo;
     private int selectedChar;
 
-    private Image background = Assets.BattleInfoScreen;
-
     private List<WifeyCharacter> party;
 
+    private static final int BACKGROUND_OFFSET = 60;
+
     private static final int BATTLE_NAME_X = 400;
-    private static final int BATTLE_NAME_Y = 92;
+    private static final int BATTLE_NAME_Y = 137;
     private Paint battlePaint;
 
     private static final int NUMBER_WAVES_X = 228;
-    private static final int NUMBER_WAVES_Y = 228;
+    private static final int NUMBER_WAVES_Y = 357;
     private Paint wavesPaint;
 
     private static final int PARTY_SCALE = 57;
@@ -54,9 +54,9 @@ public class BattleInfoScreen extends Screen{
     private static final int REQUIREMENT_LEFT_X = 47;
     private static final int REQUIREMENT_RIGHT_X = 752;
     private static final int REQUIREMENT_WIDTH = REQUIREMENT_RIGHT_X - REQUIREMENT_LEFT_X - 200;
-    private static final int REQUIREMENT_BASE_TOP_Y = 413;
-    private static final int REQUIREMENT_BASE_BOT_Y = 512;
-    private static final int REQUIREMENT_BASE_TEXT_Y = 485;
+    private static final int REQUIREMENT_BASE_TOP_Y = 433;
+    private static final int REQUIREMENT_BASE_BOT_Y = 532;
+    private static final int REQUIREMENT_BASE_TEXT_Y = 505;
     private static final int REQUIREMENT_OFFSET_Y = 105;
     private TextPaint requirementPaint;
 
@@ -88,10 +88,8 @@ public class BattleInfoScreen extends Screen{
     private static final int PARTY_IMAGE_BASE_LEFT_X = 55;
     private static final int PARTY_IMAGE_BASE_RIGHT_X = 145;
     private static final int PARTY_IMAGE_OFFSET_X = 100;
-    private static final int PARTY_IMAGE_TOP_Y = 1000;
-    private static final int PARTY_IMAGE_BOT_Y = 1090;
-
-    private ArrayList<Image> partyImages;
+    private static final int PARTY_IMAGE_TOP_Y = 1010;
+    private static final int PARTY_IMAGE_BOT_Y = 1100;
 
     private ButtonList requirementList;
 
@@ -113,20 +111,14 @@ public class BattleInfoScreen extends Screen{
         requirementPaint.setTextAlign(Align.CENTER);
         requirementPaint.setTextSize(45);
 
-        partySelect = new PartySelectScreen(game, this);
-
         charInfo = new CharacterInfoScreen(game, this);
 
         buttonList = new ButtonList();
         buttonList.addButton(new Button(BACK_BUTTON_LEFT_X, BACK_BUTTON_RIGHT_X, BACK_BUTTON_TOP_Y, BACK_BUTTON_BOTTOM_Y, true, BACK_BUTTON_STRING));
         buttonList.addButton(new Button(PARTY_BUTTON_LEFT_X, PARTY_BUTTON_RIGHT_X, PARTY_BUTTON_TOP_Y, PARTY_BUTTON_BOTTOM_Y, true, PARTY_BUTTON_STRING));
-        startButton = new Button(START_BUTTON_LEFT_X, START_BUTTON_RIGHT_X, START_BUTTON_TOP_Y, START_BUTTON_BOTTOM_Y, false, START_BUTTON_STRING);
+        startButton = new Button(START_BUTTON_LEFT_X, START_BUTTON_RIGHT_X, START_BUTTON_TOP_Y, START_BUTTON_BOTTOM_Y, false, START_BUTTON_STRING, Assets.BattleEnable, Assets.BattleDisable);
         buttonList.addButton(startButton);
 
-        partyImages = new ArrayList<>(7);
-        for(int i = 0; i < 7; i++){
-            partyImages.add(null);
-        }
         setBattleInfo(info);
         setPreviousScreen(previousScreen);
     }
@@ -176,7 +168,7 @@ public class BattleInfoScreen extends Screen{
                             backButton();
                             break;
                         case PARTY_BUTTON_STRING:
-                            partySelect.setBattleInfo(battleInfo);
+                            PartySelectScreen partySelect = new PartySelectScreen(game, this, battleInfo);
                             game.setScreen(partySelect);
                             break;
                         case START_BUTTON_STRING:
@@ -202,7 +194,9 @@ public class BattleInfoScreen extends Screen{
         Graphics g = game.getGraphics();
         g.clearScreen(0xFFFFFFFF);
 
-        g.drawImage(background, 0, 0);
+        PlayerInfo.drawHeader(g);
+
+        g.drawImage(Assets.BattleInfoScreen, 0, BACKGROUND_OFFSET);
 
         g.drawString(battleInfo.getName(), BATTLE_NAME_X, BATTLE_NAME_Y, battlePaint);
 
@@ -218,8 +212,8 @@ public class BattleInfoScreen extends Screen{
             }
         }
 
+        partyList.drawImage(g);
         for(int i = 0; i < battleInfo.getPartyMax() && party.get(i) != null; i++){
-            g.drawPercentageImage(partyImages.get(i), PARTY_IMAGE_OFFSET_X * i + PARTY_IMAGE_BASE_LEFT_X, PARTY_IMAGE_TOP_Y, PARTY_SCALE, PARTY_SCALE);
             if(!battleInfo.allowCharacter(party.get(i))){
                 g.drawPercentageImage(Assets.InvalidChar, PARTY_IMAGE_OFFSET_X * i + PARTY_IMAGE_BASE_LEFT_X, PARTY_IMAGE_TOP_Y, PARTY_SCALE, PARTY_SCALE);
             }
@@ -228,12 +222,7 @@ public class BattleInfoScreen extends Screen{
             g.drawImage(Assets.LockSelection, PARTY_IMAGE_OFFSET_X * i + PARTY_IMAGE_BASE_LEFT_X, PARTY_IMAGE_TOP_Y);
         }
 
-        if(party.get(0) != null && battleInfo.validParty(party)){
-            g.drawImage(Assets.BattleEnable, START_BUTTON_LEFT_X, START_BUTTON_TOP_Y);
-        }
-        else{
-            g.drawImage(Assets.BattleDisable, START_BUTTON_LEFT_X, START_BUTTON_TOP_Y);
-        }
+        buttonList.drawImage(g);
     }
 
     @Override
@@ -252,12 +241,12 @@ public class BattleInfoScreen extends Screen{
         }
         for(int i = 0; i < battleInfo.getPartyMax(); i++){
             //Set the button to active if the party member exists
-            partyList.setIndexActive(i, party.get(i) != null);
+            partyList.get(i).setActive(party.get(i) != null);
             if(party.get(i) != null){
-                partyImages.set(i, party.get(i).getImage(game.getGraphics()));
+                partyList.get(i).setActiveImage(party.get(i).getImage(game.getGraphics()));
             }
             else {
-                partyImages.set(i, null);
+                partyList.get(i).setActiveImage(null);
             }
         }
     }

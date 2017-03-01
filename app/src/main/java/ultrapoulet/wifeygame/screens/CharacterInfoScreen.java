@@ -41,9 +41,10 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
     private Element displayStrongElement;
     private Element displayWeakElement;
 
-    private ButtonList TransformButtons;
+    private ButtonList uniqueButtons;
     private Button prevTransform;
     private Button nextTransform;
+    private Button favoriteButton;
     private int transformPage;
     private int maxTransformPage;
     private static final int TRANSFORM_PAGE_WIDTH = 50;
@@ -53,6 +54,13 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
     private static final int TRANSFORM_NEXT_PAGE_RIGHT_X = TRANSFORM_NEXT_PAGE_LEFT_X + TRANSFORM_PAGE_WIDTH;
     private static final int TRANSFORM_PAGE_TOP_Y = 100 + BG_Y;
     private static final int TRANSFORM_PAGE_BOT_Y = TRANSFORM_PAGE_TOP_Y + 320;
+    private static final int FAVORITE_LEFT_X = BG_X + 600;
+    private static final int FAVORITE_RIGHT_X = FAVORITE_LEFT_X + 50;
+    private static final int FAVORITE_TOP_Y = BG_Y + 115;
+    private static final int FAVORITE_BOT_Y = FAVORITE_TOP_Y + 50;
+
+    private static final int SKILLS_DESC_SIZE = 30;
+    private static final int MAX_NAME_SIZE = 191;
 
     private Paint levelPaint;
     private static final int LEVEL_SIZE = 34;
@@ -67,8 +75,6 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
     private static final int STAT_Y = 322 + BG_Y;
 
     private Paint weaponPaint;
-    private int weaponFontSize;
-    private int weaponY;
     private static final int MAX_WEAPON_FONT = 34;
     private static final int MAX_WEAPON_SIZE = 140;
     private static final int WEAPON_X = 525 + BG_X;
@@ -105,14 +111,18 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
         hitsPaint.setTextAlign(Align.CENTER);
         hitsPaint.setColor(Color.BLACK);
         hitsPaint.setTextSize(HITS_SIZE);
+
+        descPaint.setTextSize(SKILLS_DESC_SIZE);
     }
 
     public void createUniqueButtons(){
-        TransformButtons = new ButtonList();
-        prevTransform = new Button(TRANSFORM_PREV_PAGE_LEFT_X, TRANSFORM_PREV_PAGE_RIGHT_X, TRANSFORM_PAGE_TOP_Y, TRANSFORM_PAGE_BOT_Y, false, "TRANS_PREV");
-        nextTransform = new Button(TRANSFORM_NEXT_PAGE_LEFT_X, TRANSFORM_NEXT_PAGE_RIGHT_X, TRANSFORM_PAGE_TOP_Y, TRANSFORM_PAGE_BOT_Y, false, "TRANS_NEXT");
-        TransformButtons.addButton(prevTransform);
-        TransformButtons.addButton(nextTransform);
+        uniqueButtons = new ButtonList();
+        prevTransform = new Button(TRANSFORM_PREV_PAGE_LEFT_X, TRANSFORM_PREV_PAGE_RIGHT_X, TRANSFORM_PAGE_TOP_Y, TRANSFORM_PAGE_BOT_Y, false, "TRANS_PREV", Assets.TransformPrevEnable, Assets.TransformPrevDisable);
+        nextTransform = new Button(TRANSFORM_NEXT_PAGE_LEFT_X, TRANSFORM_NEXT_PAGE_RIGHT_X, TRANSFORM_PAGE_TOP_Y, TRANSFORM_PAGE_BOT_Y, false, "TRANS_NEXT", Assets.TransformNextEnable, Assets.TransformNextDisable);
+        favoriteButton = new Button(FAVORITE_LEFT_X, FAVORITE_RIGHT_X, FAVORITE_TOP_Y, FAVORITE_BOT_Y, true, "FAVORITE", Assets.Favorite);
+        uniqueButtons.addButton(prevTransform);
+        uniqueButtons.addButton(nextTransform);
+        uniqueButtons.addButton(favoriteButton);
     }
 
     public void setChar(WifeyCharacter input){
@@ -127,29 +137,21 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
         maxTransformPage = transformations.size();
         prevTransform.setActive(false);
         nextTransform.setActive(maxTransformPage != transformPage);
+        prevTransform.setHidden(maxTransformPage == 0);
+        nextTransform.setHidden(maxTransformPage == 0);
 
         setDefaultDisplayInfo();
+        updateFavoriteButton();
     }
 
-    private void setFontSize(){
-        nameFontSize = MAX_NAME_FONT;
-        namePaint.setTextSize(nameFontSize);
-        while(namePaint.measureText(displayName) > MAX_NAME_SIZE){
-            nameFontSize--;
-            namePaint.setTextSize(nameFontSize);
+    private void updateFavoriteButton(){
+        if(displayChar != null && displayChar.isFavorite()) {
+            favoriteButton.setHidden(false);
         }
-        nameY = MAX_NAME_Y - ((MAX_NAME_FONT - nameFontSize) / 2);
-
-        //Using weapon type as name for now
-        String weaponName = displayWeapon.getWeaponType();
-        weaponFontSize = MAX_WEAPON_FONT;
-        weaponPaint.setTextSize(weaponFontSize);
-        while(weaponPaint.measureText(weaponName) > MAX_WEAPON_SIZE){
-            weaponFontSize--;
-            weaponPaint.setTextSize(weaponFontSize);
-        }
-        weaponY = MAX_WEAPON_Y - ((MAX_WEAPON_FONT - weaponFontSize) / 2);
+        else {
+            favoriteButton.setHidden(true);
     }
+}
 
     private void setDefaultDisplayInfo() {
         displayName = displayChar.getName();
@@ -164,7 +166,6 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
         displayAttackElement = displayChar.getAttackElement();
         displayStrongElement = displayChar.getStrongElement();
         displayWeakElement = displayChar.getWeakElement();
-        setFontSize();
     }
 
     private void incrementDisplayInfo() {
@@ -192,7 +193,6 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
             displaySkills.remove(displayForm.getRemoveSkills().get(i));
         }
         Collections.sort(displaySkills, SkillsEnum.SKILLS_ENUM_COMPARATOR);
-        setFontSize();
     }
 
     private void decrementDisplayInfo() {
@@ -252,27 +252,13 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
                 displaySkills.add(prevForm.getRemoveSkills().get(i));
             }
             Collections.sort(displaySkills, SkillsEnum.SKILLS_ENUM_COMPARATOR);
-            setFontSize();
         }
     }
 
     protected void drawPortrait(Graphics g){
-        //if(transformPage == 0) {
-            g.drawPercentageImage(displayImage, CHAR_X, CHAR_Y, DOUBLE_SCALE, DOUBLE_SCALE);
-        /*
-        }
-        else{
-            g.drawPercentageImage(transformations.get(transformPage-1).getImage(), CHAR_X, CHAR_Y, DOUBLE_SCALE, DOUBLE_SCALE);
-        }
-        */
+        g.drawPercentageImage(displayImage, CHAR_X, CHAR_Y, DOUBLE_SCALE, DOUBLE_SCALE);
 
-        //Stuff for transformation
-        if(maxTransformPage != 0){
-            Image temp = prevTransform.isActive() ? Assets.TransformPrevEnable : Assets.TransformPrevDisable;
-            g.drawImage(temp, TRANSFORM_PREV_PAGE_LEFT_X, TRANSFORM_PAGE_TOP_Y);
-            temp = nextTransform.isActive() ? Assets.TransformNextEnable : Assets.TransformNextDisable;
-            g.drawImage(temp, TRANSFORM_NEXT_PAGE_LEFT_X, TRANSFORM_PAGE_TOP_Y);
-        }
+        uniqueButtons.drawImage(g);
     }
 
     protected void drawElements(Graphics g){
@@ -282,7 +268,13 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
     }
 
     protected void drawName(Graphics g){
-        g.drawString(displayName, NAME_X, nameY, namePaint);
+        if(g.canDrawString(displayName, namePaint, MAX_NAME_SIZE, MIN_NAME_FONT)){
+            g.drawString(displayName, NAME_X, MAX_NAME_Y, namePaint, MAX_NAME_SIZE, MAX_NAME_FONT);
+        }
+        else{
+            namePaint.setTextSize(TWO_LINE_NAME_FONT);
+            g.drawMultiLineString(displayName, NAME_X, TWO_LINE_NAME_Y, MAX_NAME_SIZE, namePaint);
+        }
     }
 
     protected void drawTopRows(Graphics g){
@@ -295,7 +287,7 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
         //Draw image for weapon category
 
         //Draw string for weapon name
-        g.drawString(displayWeapon.getWeaponType(), WEAPON_X, weaponY, weaponPaint);
+        g.drawString(displayWeapon.getWeaponType(), WEAPON_X, MAX_WEAPON_Y, weaponPaint, MAX_WEAPON_SIZE, MAX_WEAPON_FONT);
         //Draw image for number hits
         g.drawString(String.valueOf(displayWeapon.getNumHits()), HITS_X, HITS_Y, hitsPaint);
     }
@@ -312,7 +304,7 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
             else{
                 xOffset = SKILLS_TEXT_RIGHT_X;
             }
-            g.drawString(skill.getSkillName(), xOffset, yOffset, skillsPaint);
+            g.drawString(skill.getSkillName(), xOffset, yOffset, skillsPaint, SKILLS_TEXT_SIZE, SKILLS_TEXT_FONT);
         }
         if(maxPage == 0){
             g.drawImage(Assets.ScrollBarFull, SKILLS_SCROLL_X, SKILLS_SCROLL_TOP_Y);
@@ -333,18 +325,22 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
     @Override
     protected void uniqueUpdate(Input.TouchEvent t) {
         if (t.type == Input.TouchEvent.TOUCH_UP) {
-            Button transformPressed = TransformButtons.getButtonPressed(t.x, t.y);
-            if(transformPressed == prevTransform){
+            Button buttonPressed = uniqueButtons.getButtonPressed(t.x, t.y);
+            if(buttonPressed == prevTransform){
                 transformPage--;
                 decrementDisplayInfo();
                 nextTransform.setActive(true);
                 prevTransform.setActive(transformPage != 0);
             }
-            else if(transformPressed == nextTransform) {
+            else if(buttonPressed == nextTransform) {
                 transformPage++;
                 incrementDisplayInfo();
                 prevTransform.setActive(true);
                 nextTransform.setActive(transformPage != maxTransformPage);
+            }
+            else if(buttonPressed == favoriteButton){
+                displayChar.toggleFavorite();
+                updateFavoriteButton();
             }
         }
     }

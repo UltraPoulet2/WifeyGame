@@ -28,8 +28,8 @@ public class ChuuniSkill extends AbsSkill {
     @Override
     public String getDescription(BattleCharacter enemy){
         StringBuilder desc = new StringBuilder();
-        desc.append("Special Attack Multiplier: 5.0x\n\n");
-        desc.append("Multiplies special attack damage dealt by 5.0x.");
+        desc.append("Special Attack Multiplier: 5.00x\n\n");
+        desc.append("Multiplies special attack damage dealt by 5.00x.");
         return desc.toString();
     }
 }

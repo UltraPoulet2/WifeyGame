@@ -182,17 +182,17 @@ public class BattleScreen extends Screen {
 
     //New Button things
     private static final int COL_1_LEFT_X = 0;
-    private static final int COL_1_RIGHT_X = 199;
+    private static final int COL_1_RIGHT_X = 200;
     private static final int COL_2_LEFT_X = 200;
-    private static final int COL_2_RIGHT_X = 399;
+    private static final int COL_2_RIGHT_X = 400;
     private static final int COL_3_LEFT_X = 400;
-    private static final int COL_3_RIGHT_X = 599;
+    private static final int COL_3_RIGHT_X = 600;
     private static final int COL_4_LEFT_X = 600;
-    private static final int COL_4_RIGHT_X = 799;
+    private static final int COL_4_RIGHT_X = 800;
     private static final int ROW_1_TOP_Y = 880;
-    private static final int ROW_1_BOT_Y = 1079;
+    private static final int ROW_1_BOT_Y = 1080;
     private static final int ROW_2_TOP_Y = 1080;
-    private static final int ROW_2_BOT_Y = 1279;
+    private static final int ROW_2_BOT_Y = 1280;
 
     private ButtonList buttonList;
     private Button powerAttackButton;
@@ -294,19 +294,19 @@ public class BattleScreen extends Screen {
 
     public void createButtonList(){
         buttonList = new ButtonList();
-        powerAttackButton = new Button(POWER_LEFT_X, POWER_RIGHT_X, POWER_TOP_Y, POWER_BOT_Y, true, POWER_STRING);
+        powerAttackButton = new Button(POWER_LEFT_X, POWER_RIGHT_X, POWER_TOP_Y, POWER_BOT_Y, true, POWER_STRING, Assets.PowerAttackEnabled, Assets.PowerAttackDisabled);
         buttonList.addButton(powerAttackButton);
-        comboAttackButton = new Button(COMBO_LEFT_X, COMBO_RIGHT_X, COMBO_TOP_Y, COMBO_BOT_Y, true, COMBO_STRING);
+        comboAttackButton = new Button(COMBO_LEFT_X, COMBO_RIGHT_X, COMBO_TOP_Y, COMBO_BOT_Y, true, COMBO_STRING, Assets.ComboAttackEnabled, Assets.ComboAttackDisabled);
         buttonList.addButton(comboAttackButton);
-        magicAttackButton = new Button(MAGIC_LEFT_X, MAGIC_RIGHT_X, MAGIC_TOP_Y, MAGIC_BOT_Y, true, MAGIC_STRING);
+        magicAttackButton = new Button(MAGIC_LEFT_X, MAGIC_RIGHT_X, MAGIC_TOP_Y, MAGIC_BOT_Y, true, MAGIC_STRING, Assets.MagicAttackEnabled, Assets.MagicAttackDisabled);
         buttonList.addButton(magicAttackButton);
-        healMagicButton = new Button(HEAL_LEFT_X, HEAL_RIGHT_X, HEAL_TOP_Y, HEAL_BOT_Y, true, HEAL_STRING);
+        healMagicButton = new Button(HEAL_LEFT_X, HEAL_RIGHT_X, HEAL_TOP_Y, HEAL_BOT_Y, true, HEAL_STRING, Assets.HealMagicEnabled, Assets.HealMagicDisabled);
         buttonList.addButton(healMagicButton);
-        defendButton = new Button(DEFEND_LEFT_X, DEFEND_RIGHT_X, DEFEND_TOP_Y, DEFEND_BOT_Y, true, DEFEND_STRING);
+        defendButton = new Button(DEFEND_LEFT_X, DEFEND_RIGHT_X, DEFEND_TOP_Y, DEFEND_BOT_Y, true, DEFEND_STRING, Assets.DefendEnabled, Assets.DefendDisabled);
         buttonList.addButton(defendButton);
-        transformButton = new Button(TRANSFORM_LEFT_X, TRANSFORM_RIGHT_X, TRANSFORM_TOP_Y, TRANSFORM_BOT_Y, false, TRANSFORM_STRING);
+        transformButton = new Button(TRANSFORM_LEFT_X, TRANSFORM_RIGHT_X, TRANSFORM_TOP_Y, TRANSFORM_BOT_Y, false, TRANSFORM_STRING, Assets.TransformEnabled, Assets.TransformDisabled);
         buttonList.addButton(transformButton);
-        specialAttackButton = new Button(SPECIAL_LEFT_X, SPECIAL_RIGHT_X, SPECIAL_TOP_Y, SPECIAL_BOT_Y, false, SPECIAL_STRING);
+        specialAttackButton = new Button(SPECIAL_LEFT_X, SPECIAL_RIGHT_X, SPECIAL_TOP_Y, SPECIAL_BOT_Y, false, SPECIAL_STRING, Assets.SpecialAttackEnabled, Assets.SpecialAttackDisabled);
         buttonList.addButton(specialAttackButton);
     }
 
@@ -363,14 +363,14 @@ public class BattleScreen extends Screen {
             int rightX = leftX + CHAR_IMAGE_SMALL_SIZE;
             int topY = CHAR_IMAGE_SMALL_Y;
             int botY = topY + CHAR_IMAGE_SMALL_SIZE;
-            partyList.setIndexCoord(i, leftX, rightX, topY, botY);
+            partyList.get(i).setCoordinates(leftX, rightX, topY, botY);
         }
         if(i == partyIndex && i < party.size()){
             int leftX = CHAR_HOLDER_X_DISTANCE * i + CHAR_INTERIOR_LARGE_X;
             int rightX = leftX + CHAR_IMAGE_LARGE_SIZE;
             int topY = CHAR_IMAGE_LARGE_Y;
             int botY = topY + CHAR_IMAGE_LARGE_SIZE;
-            partyList.setIndexCoord(i, leftX, rightX, topY, botY);
+            partyList.get(i).setCoordinates(leftX, rightX, topY, botY);
             i++;
         }
         for( ; i < party.size(); i++){
@@ -378,7 +378,7 @@ public class BattleScreen extends Screen {
             int rightX = leftX + CHAR_IMAGE_SMALL_SIZE;
             int topY = CHAR_IMAGE_SMALL_Y;
             int botY = topY + CHAR_IMAGE_SMALL_SIZE;
-            partyList.setIndexCoord(i, leftX, rightX, topY, botY);
+            partyList.get(i).setCoordinates(leftX, rightX, topY, botY);
         }
     }
 
@@ -1014,8 +1014,8 @@ public class BattleScreen extends Screen {
                     phaseEntered = false;
 
                     //Temporary go back to Select
-                    BattleSelectScreen bss = new BattleSelectScreen(game);
-                    game.setScreen(bss);
+                    BattleResultScreen brs = new BattleResultScreen(game, battleInfo, party, enemies);
+                    game.setScreen(brs);
                 }
                 break;
 
@@ -1074,22 +1074,7 @@ public class BattleScreen extends Screen {
         Graphics g = game.getGraphics();
         g.clearScreen(0xffffffff);
         g.drawImage(background, 0, 0);
-
-        Image image;
-        image = powerAttackButton.isActive() ? Assets.PowerAttackEnabled : Assets.PowerAttackDisabled;
-        g.drawImage(image, POWER_LEFT_X, POWER_TOP_Y);
-        image = comboAttackButton.isActive() ? Assets.ComboAttackEnabled : Assets.ComboAttackDisabled;
-        g.drawImage(image, COMBO_LEFT_X, COMBO_TOP_Y);
-        image = specialAttackButton.isActive() ? Assets.SpecialAttackEnabled : Assets.SpecialAttackDisabled;
-        g.drawImage(image, SPECIAL_LEFT_X, SPECIAL_TOP_Y);
-        image = defendButton.isActive() ? Assets.DefendEnabled : Assets.DefendDisabled;
-        g.drawImage(image, DEFEND_LEFT_X, DEFEND_TOP_Y);
-        image = transformButton.isActive() ? Assets.TransformEnabled : Assets.TransformDisabled;
-        g.drawImage(image, TRANSFORM_LEFT_X, TRANSFORM_TOP_Y);
-        image = magicAttackButton.isActive() ? Assets.MagicAttackEnabled : Assets.MagicAttackDisabled;
-        g.drawImage(image, MAGIC_LEFT_X, MAGIC_TOP_Y);
-        image = healMagicButton.isActive() ? Assets.HealMagicEnabled : Assets.HealMagicDisabled;
-        g.drawImage(image, HEAL_LEFT_X, HEAL_TOP_Y);
+        buttonList.drawImage(g);
     }
 
     private void drawParty(){

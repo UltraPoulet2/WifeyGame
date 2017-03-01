@@ -30,11 +30,27 @@ public class Assets {
 
     public static List<Image> KOImages;
     public static Image HPSlash;
+    public static Image Colon;
+    public static Image Plus;
     public static List<Image> WhiteNumbers;
     public static List<Image> GreenNumbers;
     public static List<Image> YellowNumbers;
     public static List<Image> RedNumbers;
     public static List<Image> GreyNumbers;
+
+    //BattleSelectScreen stuff
+    public static Image BattleSelectScreen;
+    public static Image BattleDivider;
+    public static Image PartyButton;
+    public static Image UpgradeButton;
+    public static Image InfoButton;
+    public static Image StoryButtonActive, StoryButtonInactive;
+    public static Image RecruitButtonActive, RecruitButtonInactive;
+    public static Image SpecialButtonActive, SpecialButtonInactive;
+
+    //PartyInfo Holder Stuff
+    public static Image StatusHolder;
+    public static Image Hourglass;
 
     //PartySelectScreen Stuff
     public static Image PartySelectScreen;
@@ -44,6 +60,8 @@ public class Assets {
     public static Image LockSelection;
     public static Image InvalidChar;
     public static Image RequiredCharHolder;
+    public static Image DropdownMenuTop;
+    public static Image DropdownMenuOption;
 
     //CharacterInfoScreen Stuff
     public static Image CharacterInfoScreen;
@@ -53,10 +71,18 @@ public class Assets {
     public static Image TransformNextEnable, TransformNextDisable;
     public static Image TransformPrevEnable, TransformPrevDisable;
     public static Image TransformHolder;
+    public static Image Favorite;
 
     //BattleInfoScreen Stuff
     public static Image BattleInfoScreen;
     public static Image BattleEnable, BattleDisable;
+
+    //BattleResultScreen Stuff
+    public static Image BattleResultScreen;
+    public static Image BattleResultVictory;
+    public static Image BattleResultDefeat;
+    public static Image BattleResultExp;
+    public static Image BattleResultGold;
 
     //Element Image stuff
     public static List<Image> ElementImages;

@@ -77,7 +77,7 @@ public class ProgrammerSkill extends AbsSkill {
     public String getDescription(BattleCharacter enemy) {
         StringBuilder desc = new StringBuilder();
         double mult = enemy.hasSkill(RobotSkill.class) ? multiplier : 1.0;
-        desc.append("Attack Multiplier: " + mult + "x\n\n");
+        desc.append("Attack Multiplier: " + String.format("%1$.2f", mult) + "x\n\n");
         desc.append("Increases damage dealt multiplier by 0.75x each time this wifey attacks a Robot. Resets at the start of the round.");
         return desc.toString();
     }

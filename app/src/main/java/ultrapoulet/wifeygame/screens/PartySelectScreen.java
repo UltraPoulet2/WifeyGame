@@ -17,6 +17,7 @@ import ultrapoulet.androidgame.framework.Input.TouchEvent;
 import ultrapoulet.androidgame.framework.Screen;
 import ultrapoulet.androidgame.framework.helpers.Button;
 import ultrapoulet.androidgame.framework.helpers.ButtonList;
+import ultrapoulet.androidgame.framework.helpers.DropdownMenu;
 import ultrapoulet.androidgame.framework.helpers.NumberPrinter;
 import ultrapoulet.wifeygame.Assets;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
@@ -32,7 +33,6 @@ public class PartySelectScreen extends Screen {
     private List<WifeyCharacter> validCharacters;
     private List<WifeyCharacter> currentParty;
     private int maxPartySize;
-    private int finalIndex;
     private BattleInfo battleInfo;
 
     private Screen previousScreen;
@@ -53,7 +53,6 @@ public class PartySelectScreen extends Screen {
     private final static int PARTY_SCALE = 57;
     private final static int DRAGGING_SCALE = 75;
 
-    private boolean touchDown = false;
     private final static int DRAG_WAIT = 10;
     private float holdTime = 0;
     private boolean dragging = false;
@@ -64,6 +63,8 @@ public class PartySelectScreen extends Screen {
 
     private ButtonList basicButtonList;
     private Button lastPressed;
+    private boolean sortMenuPressed;
+    private Button sortPressed;
 
     private Button prevButton;
     private static final int PREV_BUTTON_LEFT_X = 45;
@@ -79,12 +80,17 @@ public class PartySelectScreen extends Screen {
     private static final int NEXT_BUTTON_BOT_Y = 388;
     private static final String NEXT_BUTTON_STRING = "Next";
 
-    private Button sortButton;
-    private static final int SORT_BUTTON_LEFT_X = 585;
+    private DropdownMenu sortDropdown;
+    private Paint sortingPaint;
+    private List<String> sortingList;
+    private static final int SORT_BUTTON_LEFT_X = 510;
     private static final int SORT_BUTTON_RIGHT_X = 755;
-    private static final int SORT_BUTTON_TOP_Y = 348;
-    private static final int SORT_BUTTON_BOT_Y = 378;
-    private static final String SORT_BUTTON_STRING = "Sort";
+    private static final int SORT_BUTTON_TOP_Y = 338;
+    private static final int SORT_BUTTON_BOT_Y = 388;
+    private static final String ALPHA_SORT_STRING = "A -> Z";
+    private static final String STR_SORT_STRING = "Strength";
+    private static final String MAG_SORT_STRING = "Magic";
+    private static final String FAV_SORT_STRING = "Favorite";
 
     private Button backButton;
     private static final int BACK_BUTTON_LEFT_X = 45;
@@ -124,6 +130,7 @@ public class PartySelectScreen extends Screen {
     private static final int CHAR_IMAGE_BASE_TOP_Y = 400;
     private static final int CHAR_IMAGE_BASE_BOT_Y = CHAR_IMAGE_BASE_TOP_Y + CHAR_IMAGE_HEIGHT;
     private static final int CHAR_IMAGE_OFFSET_Y = 90;
+    private static final int CHAR_FAVORITE_SIZE = 30;
 
     private static final int CHAR_REQUIRED_HOLDER_BASE_X = CHAR_IMAGE_BASE_LEFT_X - 3;
     private static final int CHAR_REQUIRED_HOLDER_BASE_Y = CHAR_IMAGE_BASE_TOP_Y - 12;
@@ -195,12 +202,93 @@ public class PartySelectScreen extends Screen {
         }
     };
 
+    private Comparator<WifeyCharacter> favComp = new Comparator<WifeyCharacter>(){
+        @Override
+        public int compare(WifeyCharacter a, WifeyCharacter b){
+            if(hasRequiredList()){
+                ArrayList<WifeyCharacter> list = battleInfo.getRequiredList();
+                if(list.contains(a) && list.contains(b)){
+                    return a.compareFavorite(b);
+                }
+                else if(list.contains(a)){
+                    return -1;
+                }
+                else if(list.contains(b)){
+                    return 1;
+                }
+            }
+            return a.compareFavorite(b);
+        }
+    };
+
+    private enum SortMethod {
+        ALPHA {
+            @Override
+            protected String getSortTitle() {
+                return ALPHA_SORT_STRING;
+            }
+        },
+        STRENGTH {
+            @Override
+            protected String getSortTitle() {
+                return STR_SORT_STRING;
+            }
+        },
+        MAGIC {
+            @Override
+            protected String getSortTitle() {
+                return MAG_SORT_STRING;
+            }
+        },
+        FAVORITE {
+            @Override
+            protected String getSortTitle() {
+                return FAV_SORT_STRING;
+            }
+        };
+
+        protected abstract String getSortTitle();
+    }
+
+    private static SortMethod currentSort = SortMethod.ALPHA;
+
+    private Comparator<WifeyCharacter> getSort(){
+        switch(currentSort){
+            case ALPHA:
+                return nameComp;
+            case STRENGTH:
+                return strengthComp;
+            case MAGIC:
+                return magicComp;
+            case FAVORITE:
+                return favComp;
+            default:
+                return nameComp;
+        }
+    }
+
     public PartySelectScreen(Game game, Screen previousScreen){
+        this(game, previousScreen, null);
+    }
+
+    public PartySelectScreen(Game game, Screen previousScreen, BattleInfo info){
         super(game);
         textPaint = new Paint();
         textPaint.setColor(Color.BLACK);
         textPaint.setTextAlign(Align.CENTER);
         textPaint.setTextSize(25);
+
+        sortingPaint = new Paint();
+        sortingPaint.setTextSize(30);
+        sortingPaint.setColor(Color.BLACK);
+        sortingPaint.setTextAlign(Align.CENTER);
+
+        sortingList = new ArrayList<>();
+        sortingList.add(ALPHA_SORT_STRING);
+        sortingList.add(STR_SORT_STRING);
+        sortingList.add(MAG_SORT_STRING);
+        sortingList.add(FAV_SORT_STRING);
+
 
         background = Assets.PartySelectScreen;
 
@@ -211,19 +299,24 @@ public class PartySelectScreen extends Screen {
         createImageLists();
 
         setPreviousScreen(previousScreen);
+
+        setBattleInfo(info);
     }
 
     public void createButtons(){
         basicButtonList = new ButtonList();
-        prevButton = new Button(PREV_BUTTON_LEFT_X, PREV_BUTTON_RIGHT_X, PREV_BUTTON_TOP_Y, PREV_BUTTON_BOT_Y, false, PREV_BUTTON_STRING);
+        prevButton = new Button(PREV_BUTTON_LEFT_X, PREV_BUTTON_RIGHT_X, PREV_BUTTON_TOP_Y, PREV_BUTTON_BOT_Y, false, PREV_BUTTON_STRING, Assets.PrevPageEnable, Assets.PrevPageDisable);
         basicButtonList.addButton(prevButton);
-        nextButton = new Button(NEXT_BUTTON_LEFT_X, NEXT_BUTTON_RIGHT_X, NEXT_BUTTON_TOP_Y, NEXT_BUTTON_BOT_Y, false, NEXT_BUTTON_STRING);
+        nextButton = new Button(NEXT_BUTTON_LEFT_X, NEXT_BUTTON_RIGHT_X, NEXT_BUTTON_TOP_Y, NEXT_BUTTON_BOT_Y, false, NEXT_BUTTON_STRING, Assets.NextPageEnable, Assets.NextPageDisable);
         basicButtonList.addButton(nextButton);
-        sortButton = new Button(SORT_BUTTON_LEFT_X, SORT_BUTTON_RIGHT_X, SORT_BUTTON_TOP_Y, SORT_BUTTON_BOT_Y, false, SORT_BUTTON_STRING);
-        basicButtonList.addButton(sortButton);
+
+        sortDropdown = new DropdownMenu(SORT_BUTTON_LEFT_X, SORT_BUTTON_RIGHT_X, SORT_BUTTON_TOP_Y, SORT_BUTTON_BOT_Y, Assets.DropdownMenuTop, Assets.DropdownMenuOption, sortingPaint, sortingList);
+        sortDropdown.setTitle(currentSort.getSortTitle());
+
+        //Back button does not have an image associated with it
         backButton = new Button(BACK_BUTTON_LEFT_X, BACK_BUTTON_RIGHT_X, BACK_BUTTON_TOP_Y, BACK_BUTTON_BOT_Y, true, BACK_BUTTON_STRING);
         basicButtonList.addButton(backButton);
-        acceptButton = new Button(ACCEPT_BUTTON_LEFT_X, ACCEPT_BUTTON_RIGHT_X, ACCEPT_BUTTON_TOP_Y, ACCEPT_BUTTON_BOT_Y, false, ACCEPT_BUTTON_STRING);
+        acceptButton = new Button(ACCEPT_BUTTON_LEFT_X, ACCEPT_BUTTON_RIGHT_X, ACCEPT_BUTTON_TOP_Y, ACCEPT_BUTTON_BOT_Y, false, ACCEPT_BUTTON_STRING, Assets.AcceptEnable, Assets.AcceptDisable);
         basicButtonList.addButton(acceptButton);
 
         partyList = new ButtonList();
@@ -264,17 +357,17 @@ public class PartySelectScreen extends Screen {
 
     public void updatePartyButtons(){
         for(int i = 0; i < maxPartySize; i++){
-            partyList.setIndexActive(i, true);
+            partyList.get(i).setActive(true);
         }
     }
 
     public void updateRecruitButtons(){
         for(int i = 0; i < PER_PAGE; i++){
             if((currentPage * PER_PAGE + i) < validCharacters.size() ){
-                recruitList.setIndexActive(i, true);
+                recruitList.get(i).setActive(true);
             }
             else{
-                recruitList.setIndexActive(i, false);
+                recruitList.get(i).setActive(false);
             }
         }
     }
@@ -303,34 +396,34 @@ public class PartySelectScreen extends Screen {
         validCharacters = new ArrayList<>();
         for(int i = 0; i < inputCharacters.size(); i++){
             //Do a check to make sure the character is valid for this battle
-            boolean allowed = true;
-            if(battleInfo != null){
-                allowed = battleInfo.allowCharacter(inputCharacters.get(i));
-            }
-            if(allowed){
+            if(battleInfo == null || battleInfo.allowCharacter(inputCharacters.get(i))){
                 validCharacters.add(inputCharacters.get(i));
             }
         }
-        Collections.sort(validCharacters, nameComp);
+        Collections.sort(validCharacters, getSort());
         currentPage = 0;
         maxPage = (validCharacters.size() / PER_PAGE);
     }
 
-    public void setBattleInfo(BattleInfo info){
+    private void setBattleInfo(BattleInfo info){
         this.battleInfo = info;
 
-        maxPartySize = battleInfo != null ? battleInfo.getPartyMax() : 7;
-        finalIndex = maxPartySize - 1;
-        currentParty = new ArrayList<>();
-        for(int i = 0; i < Party.partySize() && i < maxPartySize; i++){
-            currentParty.add(Party.getIndex(i));
-            partyImages.add(currentParty.get(i).getImage(game.getGraphics()));
-        }
+        updateParty();
+
         setValidCharacters(RecruitedCharacters.getArray());
         updateButtons();
         updatePartyButtons();
         updateRecruitButtons();
         updateRecruitImages();
+    }
+
+    private void updateParty(){
+        maxPartySize = battleInfo != null ? battleInfo.getPartyMax() : 7;
+        currentParty = new ArrayList<>();
+        for(int i = 0; i < Party.partySize() && i < maxPartySize; i++){
+            currentParty.add(Party.getIndex(i));
+            partyImages.add(currentParty.get(i).getImage(game.getGraphics()));
+        }
     }
 
     private void setPreviousScreen(Screen previousScreen){
@@ -355,7 +448,6 @@ public class PartySelectScreen extends Screen {
         for(int i = 0; i < touchEvents.size(); i++) {
             Input.TouchEvent t = touchEvents.get(i);
             if (t.type == TouchEvent.TOUCH_DOWN){
-                touchDown = true;
                 dragging = false;
                 holdTime = 0;
                 draggingX = t.x;
@@ -363,10 +455,39 @@ public class PartySelectScreen extends Screen {
                 draggingRecruitIndex = getRecruitIndex(t.x, t.y);
                 draggingPartyIndex = partyList.getIndexPressed(t.x, t.y);
                 lastPressed = basicButtonList.getButtonPressed(t.x, t.y);
+                sortPressed = sortDropdown.getButtonPressed(t.x, t.y);
+                sortMenuPressed = sortDropdown.isMenuPressed(t.x, t.y);
                 continue;
             }
             else if (t.type == TouchEvent.TOUCH_UP) {
-                if(!dragging){
+                if(sortMenuPressed && sortDropdown.isMenuPressed(t.x, t.y)){
+                    sortDropdown.activateMenu();
+                }
+                else if(sortDropdown.isMenuActive()){
+                    if(sortPressed != null && sortPressed == sortDropdown.getButtonPressed(t.x, t.y)) {
+                        String result = sortPressed.getName();
+                        switch (result) {
+                            case ALPHA_SORT_STRING:
+                                currentSort = SortMethod.ALPHA;
+                                break;
+                            case STR_SORT_STRING:
+                                currentSort = SortMethod.STRENGTH;
+                                break;
+                            case MAG_SORT_STRING:
+                                currentSort = SortMethod.MAGIC;
+                                break;
+                            case FAV_SORT_STRING:
+                                currentSort = SortMethod.FAVORITE;
+                        }
+                        if(result != null){
+                            Collections.sort(validCharacters, getSort());
+                            updateRecruitImages();
+                            sortDropdown.setTitle(currentSort.getSortTitle());
+                        }
+                    }
+                    sortDropdown.deactivateMenu();
+                }
+                else if(!dragging){
                     Button pressed = basicButtonList.getButtonPressed(t.x, t.y);
                     int pressedRecruit = getRecruitIndex(t.x, t.y);
                     int pressedParty = partyList.getIndexPressed(t.x, t.y);
@@ -451,18 +572,27 @@ public class PartySelectScreen extends Screen {
                         if (currentParty.size() <= partyIndex){
                             currentParty.remove(draggingPartyIndex);
                             currentParty.add(temp);
+
+                            Image tempImage = partyImages.get(draggingPartyIndex);
+                            partyImages.remove(draggingPartyIndex);
+                            partyImages.add(tempImage);
                         }
                         else{
                             currentParty.set(draggingPartyIndex, currentParty.get(partyIndex));
                             currentParty.set(partyIndex, temp);
+
+                            Image tempImage = partyImages.get(draggingPartyIndex);
+                            partyImages.set(draggingPartyIndex, partyImages.get(partyIndex));
+                            partyImages.set(partyIndex, tempImage);
                         }
                     }
                     if(partyIndex == -1){
                         currentParty.remove(draggingPartyIndex);
+
+                        partyImages.remove(draggingPartyIndex);
                     }
                     updateButtons();
                 }
-                touchDown = false;
                 dragging = false;
                 holdTime = 0;
                 draggingX = 0;
@@ -485,7 +615,9 @@ public class PartySelectScreen extends Screen {
                 }
             }
         }
-        if(game.getInput().isTouchDown(0) && (draggingRecruitIndex != -1 || (draggingPartyIndex != -1 && draggingPartyIndex < currentParty.size()))){
+        if(game.getInput().isTouchDown(0) &&
+                !sortDropdown.isMenuActive() &&
+                (draggingRecruitIndex != -1 || (draggingPartyIndex != -1 && draggingPartyIndex < currentParty.size()))){
             if (holdTime < DRAG_WAIT) {
                 holdTime += deltaTime;
             } else if (!dragging) {
@@ -505,23 +637,14 @@ public class PartySelectScreen extends Screen {
         NumberPrinter.drawNumber(g, displayPage, CUR_PAGE_X, PAGE_Y, PAGE_WIDTH, PAGE_HEIGHT, 0, Assets.WhiteNumbers, NumberPrinter.Align.RIGHT);
         NumberPrinter.drawNumber(g, displayMaxPage, MAX_PAGE_X, PAGE_Y, PAGE_WIDTH, PAGE_HEIGHT, 0, Assets.WhiteNumbers, NumberPrinter.Align.LEFT);
 
-        if(prevButton.isActive()){
-            g.drawImage(Assets.PrevPageEnable, PREV_BUTTON_LEFT_X, PREV_BUTTON_TOP_Y);
-        }
-        else{
-            g.drawImage(Assets.PrevPageDisable, PREV_BUTTON_LEFT_X, PREV_BUTTON_TOP_Y);
-        }
 
-        if(nextButton.isActive()){
-            g.drawImage(Assets.NextPageEnable, NEXT_BUTTON_LEFT_X, NEXT_BUTTON_TOP_Y);
-        }
-        else{
-            g.drawImage(Assets.NextPageDisable, NEXT_BUTTON_LEFT_X, NEXT_BUTTON_TOP_Y);
-        }
-
+        basicButtonList.drawImage(g);
         for(int i = 0; i < currentParty.size(); i++){
             if(!dragging || i != draggingPartyIndex) {
                 g.drawPercentageImage(partyImages.get(i), PARTY_IMAGE_OFFSET_X * i + PARTY_IMAGE_BASE_LEFT_X, PARTY_IMAGE_TOP_Y, PARTY_SCALE, PARTY_SCALE);
+                if(currentParty.get(i).isFavorite()) {
+                    g.drawScaledImage(Assets.Favorite,  PARTY_IMAGE_OFFSET_X * i + PARTY_IMAGE_BASE_LEFT_X, PARTY_IMAGE_TOP_Y, CHAR_FAVORITE_SIZE, CHAR_FAVORITE_SIZE);
+                }
                 if(battleInfo != null && !battleInfo.allowCharacter(currentParty.get(i))){
                     g.drawPercentageImage(Assets.InvalidChar, PARTY_IMAGE_OFFSET_X * i + PARTY_IMAGE_BASE_LEFT_X, PARTY_IMAGE_TOP_Y, PARTY_SCALE, PARTY_SCALE);
                 }
@@ -530,6 +653,12 @@ public class PartySelectScreen extends Screen {
         for(int i = maxPartySize; i < 7; i++){
             g.drawImage(Assets.LockSelection, PARTY_IMAGE_OFFSET_X * i + PARTY_IMAGE_BASE_LEFT_X, PARTY_IMAGE_TOP_Y);
         }
+
+        //If the dropdown is not activated, draw it on a lower layer than the characters
+        if(!sortDropdown.isMenuActive()) {
+            sortDropdown.drawImage(g);
+        }
+
         int minIndex = PER_PAGE * currentPage;
         int maxIndex = PER_PAGE * (currentPage + 1);
         ArrayList<WifeyCharacter> reqList;
@@ -549,26 +678,34 @@ public class PartySelectScreen extends Screen {
                         CHAR_IMAGE_OFFSET_X * (i % ROW_SIZE) + CHAR_IMAGE_BASE_LEFT_X,
                         CHAR_IMAGE_BASE_TOP_Y + CHAR_IMAGE_OFFSET_Y * ((i % PER_PAGE) / COLUMN_SIZE),
                         HALF_SCALE, HALF_SCALE);
+                if(validCharacters.get(i).isFavorite()) {
+                    g.drawScaledImage(Assets.Favorite,
+                            CHAR_IMAGE_OFFSET_X * (i % ROW_SIZE) + CHAR_IMAGE_BASE_LEFT_X,
+                            CHAR_IMAGE_BASE_TOP_Y + CHAR_IMAGE_OFFSET_Y * ((i % PER_PAGE) / COLUMN_SIZE),
+                            CHAR_FAVORITE_SIZE, CHAR_FAVORITE_SIZE);
+                }
             }
         }
         if(dragging && draggingRecruitIndex != -1){
             g.drawPercentageImage(recruitImages.get(draggingRecruitIndex - minIndex), draggingX - DRAGGING_OFFSET, draggingY - DRAGGING_OFFSET, DRAGGING_SCALE, DRAGGING_SCALE);
+            if(validCharacters.get(draggingRecruitIndex).isFavorite()){
+                g.drawScaledImage(Assets.Favorite, draggingX - DRAGGING_OFFSET, draggingY - DRAGGING_OFFSET, CHAR_FAVORITE_SIZE, CHAR_FAVORITE_SIZE);
+            }
         }
         if(dragging && draggingPartyIndex != -1){
             g.drawPercentageImage(partyImages.get(draggingPartyIndex), draggingX - DRAGGING_OFFSET, draggingY - DRAGGING_OFFSET, DRAGGING_SCALE, DRAGGING_SCALE);
+            if(currentParty.get(draggingPartyIndex).isFavorite()){
+                g.drawScaledImage(Assets.Favorite, draggingX - DRAGGING_OFFSET, draggingY - DRAGGING_OFFSET, CHAR_FAVORITE_SIZE, CHAR_FAVORITE_SIZE);
+            }
             if(battleInfo != null && !battleInfo.allowCharacter(currentParty.get(draggingPartyIndex))){
                 g.drawPercentageImage(Assets.InvalidChar, draggingX - DRAGGING_OFFSET, draggingY - DRAGGING_OFFSET, DRAGGING_SCALE, DRAGGING_SCALE);
             }
         }
 
-        if(acceptButton.isActive()){
-            g.drawImage(Assets.AcceptEnable, ACCEPT_BUTTON_LEFT_X, ACCEPT_BUTTON_TOP_Y);
+        //If the dropdown is activated, draw it on the top layer
+        if(sortDropdown.isMenuActive()) {
+            sortDropdown.drawImage(g);
         }
-        else{
-            g.drawImage(Assets.AcceptDisable, ACCEPT_BUTTON_LEFT_X, ACCEPT_BUTTON_TOP_Y);
-        }
-
-
     }
 
     @Override
@@ -578,7 +715,9 @@ public class PartySelectScreen extends Screen {
 
     @Override
     public void resume() {
-
+        Collections.sort(validCharacters, getSort());
+        updateRecruitImages();
+        sortDropdown.setTitle(currentSort.getSortTitle());
     }
 
     @Override
