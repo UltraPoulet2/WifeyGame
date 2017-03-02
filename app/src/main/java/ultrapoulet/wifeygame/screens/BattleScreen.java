@@ -26,6 +26,7 @@ import ultrapoulet.wifeygame.gamestate.Party;
  */
 public class BattleScreen extends Screen {
 
+    //Determine if it is really necessary to make these Lists of BattleCharacters
     public List<BattleCharacter> party;
     public BattleInfo battleInfo;
     public List<BattleCharacter> enemies;

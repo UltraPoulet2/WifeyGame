@@ -124,6 +124,14 @@ public class EnemyCharacter {
         return EnemyAI.getAI(ai);
     }
 
+    public int getGold() {
+        return this.gold;
+    }
+
+    public int getExperience() {
+        return this.experience;
+    }
+
 
     public void setName(String name){
         this.name = name;
@@ -204,6 +212,14 @@ public class EnemyCharacter {
         }
     }
 
+    public void setGold(int gold){
+        this.gold = gold;
+    }
+
+    public void setExperience(int exp){
+        this.experience = exp;
+    }
+
     public void addTransformation(TransformEnemy t){
         this.transformations.add(t);
     }
@@ -226,6 +242,10 @@ public class EnemyCharacter {
             return false;
         }
         if(attackElement == null || strongElement == null | weakElement == null){
+            return false;
+        }
+        //For now, make every enemy provide gold and experience
+        if(gold == 0 || experience == 0){
             return false;
         }
         return true;
