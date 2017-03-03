@@ -1,5 +1,6 @@
 package ultrapoulet.wifeygame.screens;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ultrapoulet.androidgame.framework.Game;
@@ -53,10 +54,29 @@ public class BattleResultScreen extends Screen{
 
     private boolean victory;
     //Calculate actual values later
-    private int baseExp = 0;
-    private int bonusExp = 1;
-    private int baseGold = 0;
-    private int bonusGold = 1;
+    private int baseExp;
+    private int bonusExp;
+    private int baseGold;
+    private int bonusGold;
+
+    private class BonusGains{
+        private int gold;
+        private int exp;
+
+        protected BonusGains(int gold, int exp){
+            this.gold = gold;
+            this.exp = exp;
+        }
+
+        protected int getGold(){
+            return this.gold;
+        }
+
+        protected int getExp(){
+            return this.exp;
+        }
+    }
+    private List<BonusGains> gains;
 
     public BattleResultScreen(Game game, BattleInfo info, List<BattleCharacter> party, List<BattleCharacter> enemies){
         super(game);
@@ -69,6 +89,21 @@ public class BattleResultScreen extends Screen{
         buttons.addButton(continueButton);
 
         victory = enemies.get(enemies.size() - 1).getCurrentHP() == 0;
+
+        for(int i = 0; i < enemies.size(); i++){
+            BattleCharacter enemy = enemies.get(i);
+            double healthPer = (enemy.getMaxHP() - enemy.getCurrentHP()) / (1.0 * enemy.getMaxHP());
+            baseGold += (int) (enemy.getGold() * healthPer);
+            baseExp += (int) (enemy.getExperience() * healthPer);
+        }
+        gains = new ArrayList<>();
+        for(int i = 0; i < party.size(); i++){
+            int gold = party.get(i).getGold();
+            int exp = party.get(i).getExperience();
+            bonusGold += gold;
+            bonusExp += exp;
+            gains.add(new BonusGains(gold, exp));
+        }
     }
 
     @Override

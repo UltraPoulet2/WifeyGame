@@ -231,4 +231,14 @@ public class BattleWifey extends BattleCharacter{
     public Multipliers getMultipliers(BattleEnemy enemy){
         return skills.getMultipliers(enemy);
     }
+
+    public int getGold(){
+        //For now, return 5;
+        return 5;
+    }
+
+    public int getExperience(){
+        //For now, return 5;
+        return 5;
+    }
 }

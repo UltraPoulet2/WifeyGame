@@ -135,4 +135,9 @@ public abstract class BattleCharacter {
     public void updateParty(List<BattleCharacter> party){
         skills.updateParty(party);
     }
+
+    //For BattleWifeys, this will return the amount of bonus gold/experience
+    //For BattleEnemys, this will return the amount of gold/experience dropped
+    public abstract int getGold();
+    public abstract int getExperience();
 }
