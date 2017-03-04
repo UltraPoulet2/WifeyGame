@@ -39,6 +39,12 @@ public class BattleResultScreen extends Screen{
     private static final int PARTY_ROW_1_Y = 750;
     private static final int PARTY_ROW_2_Y = 920;
 
+    private static final int BONUS_EXP_OFFSET_Y = 0;
+    private static final int BONUS_GOLD_OFFSET_Y = 30;
+    private static final int BONUS_TEXT_WIDTH = 15;
+    private static final int BONUS_TEXT_HEIGHT = 30;
+    private static final int BONUS_TEXT_OFFSET = 0;
+
     private static final int CONTINUE_LEFT_X = 500;
     private static final int CONTINUE_RIGHT_X = 750;
     private static final int CONTINUE_TOP_Y = 1130;
@@ -58,6 +64,8 @@ public class BattleResultScreen extends Screen{
     private int bonusExp;
     private int baseGold;
     private int bonusGold;
+
+    private boolean printed = false;
 
     private class BonusGains{
         private int gold;
@@ -186,12 +194,44 @@ public class BattleResultScreen extends Screen{
         for(int i = 0; i < topRowSize; i++){
             int x = baseX + (PARTY_WIDTH + PARTY_SPACING) * i;
             g.drawScaledImage(party.get(i).getImage(), x, PARTY_ROW_1_Y, PARTY_WIDTH, PARTY_HEIGHT);
+            if(gains.get(i).getExp() > 0){
+                int exp = gains.get(i).getExp();
+                int numDigits = Integer.toString(exp).length();
+                int totalWidth = (numDigits + 1) * BONUS_TEXT_WIDTH;
+                int plusX = x + ((PARTY_WIDTH - totalWidth) / 2);
+                g.drawScaledImage(Assets.Plus, plusX, PARTY_ROW_1_Y + BONUS_EXP_OFFSET_Y, BONUS_TEXT_WIDTH, BONUS_TEXT_HEIGHT);
+                NumberPrinter.drawNumber(g, exp, plusX + BONUS_TEXT_WIDTH, PARTY_ROW_1_Y + BONUS_EXP_OFFSET_Y, BONUS_TEXT_WIDTH, BONUS_TEXT_HEIGHT, BONUS_TEXT_OFFSET, Assets.YellowNumbers, Align.LEFT);
+            }
+            if(gains.get(i).getGold() > 0){
+                int gold = gains.get(i).getGold();
+                int numDigits = Integer.toString(gold).length();
+                int totalWidth = (numDigits + 1) * BONUS_TEXT_WIDTH;
+                int plusX = x + ((PARTY_WIDTH - totalWidth) / 2);
+                g.drawScaledImage(Assets.Plus, plusX, PARTY_ROW_1_Y + BONUS_GOLD_OFFSET_Y, BONUS_TEXT_WIDTH, BONUS_TEXT_HEIGHT);
+                NumberPrinter.drawNumber(g, gold, plusX + BONUS_TEXT_WIDTH, PARTY_ROW_1_Y + BONUS_GOLD_OFFSET_Y, BONUS_TEXT_WIDTH, BONUS_TEXT_HEIGHT, BONUS_TEXT_OFFSET, Assets.YellowNumbers, Align.LEFT);
+            }
         }
         int botRowSize = party.size() / 2;
         baseX = CENTER_X - ((PARTY_WIDTH * botRowSize) + (PARTY_SPACING * (botRowSize - 1))) / 2;
         for(int i = topRowSize; i < party.size(); i++){
             int x = baseX + (PARTY_WIDTH + PARTY_SPACING) * (i - topRowSize);
             g.drawScaledImage(party.get(i).getImage(), x, PARTY_ROW_2_Y, PARTY_WIDTH, PARTY_HEIGHT);
+            if(gains.get(i).getExp() > 0){
+                int exp = gains.get(i).getExp();
+                int numDigits = Integer.toString(exp).length();
+                int totalWidth = (numDigits + 1) * BONUS_TEXT_WIDTH;
+                int plusX = x + ((PARTY_WIDTH - totalWidth) / 2);
+                g.drawScaledImage(Assets.Plus, plusX, PARTY_ROW_2_Y + BONUS_EXP_OFFSET_Y, BONUS_TEXT_WIDTH, BONUS_TEXT_HEIGHT);
+                NumberPrinter.drawNumber(g, exp, plusX + BONUS_TEXT_WIDTH, PARTY_ROW_2_Y + BONUS_EXP_OFFSET_Y, BONUS_TEXT_WIDTH, BONUS_TEXT_HEIGHT, BONUS_TEXT_OFFSET, Assets.YellowNumbers, Align.LEFT);
+            }
+            if(gains.get(i).getGold() > 0){
+                int gold = gains.get(i).getGold();
+                int numDigits = Integer.toString(gold).length();
+                int totalWidth = (numDigits + 1) * BONUS_TEXT_WIDTH;
+                int plusX = x + ((PARTY_WIDTH - totalWidth) / 2);
+                g.drawScaledImage(Assets.Plus, plusX, PARTY_ROW_2_Y + BONUS_GOLD_OFFSET_Y, BONUS_TEXT_WIDTH, BONUS_TEXT_HEIGHT);
+                NumberPrinter.drawNumber(g, gold, plusX + BONUS_TEXT_WIDTH, PARTY_ROW_2_Y + BONUS_GOLD_OFFSET_Y, BONUS_TEXT_WIDTH, BONUS_TEXT_HEIGHT, BONUS_TEXT_OFFSET, Assets.YellowNumbers, Align.LEFT);
+            }
         }
     }
 
