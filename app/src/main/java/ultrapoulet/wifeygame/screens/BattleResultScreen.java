@@ -157,14 +157,14 @@ public class BattleResultScreen extends Screen{
         currentX = CENTER_X - (expWidth / 2);
         g.drawImage(Assets.BattleResultExp, currentX, EXP_Y);
         currentX += RESULT_OBJECT_WIDTH + TEXT_SPACING;
-        g.drawImage(Assets.Plus, currentX, EXP_Y);
+        g.drawImage(Assets.BluePlus, currentX, EXP_Y);
         currentX += TEXT_WIDTH;
-        NumberPrinter.drawNumber(g, baseExp, currentX, EXP_Y, TEXT_WIDTH, TEXT_HEIGHT, TEXT_OFFSET, Assets.YellowNumbers, Align.LEFT);
+        NumberPrinter.drawNumber(g, baseExp, currentX, EXP_Y, TEXT_WIDTH, TEXT_HEIGHT, TEXT_OFFSET, Assets.BlueNumbers, Align.LEFT);
         if(bonusExp > 0) {
             currentX += baseExpDigits * TEXT_WIDTH + TEXT_SPACING;
-            g.drawImage(Assets.Plus, currentX, EXP_Y);
+            g.drawImage(Assets.BluePlus, currentX, EXP_Y);
             currentX += TEXT_WIDTH;
-            NumberPrinter.drawNumber(g, bonusExp, currentX, EXP_Y, TEXT_WIDTH, TEXT_HEIGHT, TEXT_OFFSET, Assets.YellowNumbers, Align.LEFT);
+            NumberPrinter.drawNumber(g, bonusExp, currentX, EXP_Y, TEXT_WIDTH, TEXT_HEIGHT, TEXT_OFFSET, Assets.BlueNumbers, Align.LEFT);
         }
 
         //Imagery for displaying Gold Gained
@@ -178,12 +178,12 @@ public class BattleResultScreen extends Screen{
         currentX = CENTER_X - (goldWidth / 2);
         g.drawImage(Assets.BattleResultGold, currentX, GOLD_Y);
         currentX += RESULT_OBJECT_WIDTH + TEXT_SPACING;
-        g.drawImage(Assets.Plus, currentX, GOLD_Y);
+        g.drawImage(Assets.YellowPlus, currentX, GOLD_Y);
         currentX += TEXT_WIDTH;
         NumberPrinter.drawNumber(g, baseGold, currentX, GOLD_Y, TEXT_WIDTH, TEXT_HEIGHT, TEXT_OFFSET, Assets.YellowNumbers, Align.LEFT);
         if(bonusGold > 0) {
             currentX += baseGoldDigits * TEXT_WIDTH + TEXT_SPACING;
-            g.drawImage(Assets.Plus, currentX, GOLD_Y);
+            g.drawImage(Assets.YellowPlus, currentX, GOLD_Y);
             currentX += TEXT_WIDTH;
             NumberPrinter.drawNumber(g, bonusGold, currentX, GOLD_Y, TEXT_WIDTH, TEXT_HEIGHT, TEXT_OFFSET, Assets.YellowNumbers, Align.LEFT);
         }
@@ -199,15 +199,15 @@ public class BattleResultScreen extends Screen{
                 int numDigits = Integer.toString(exp).length();
                 int totalWidth = (numDigits + 1) * BONUS_TEXT_WIDTH;
                 int plusX = x + ((PARTY_WIDTH - totalWidth) / 2);
-                g.drawScaledImage(Assets.Plus, plusX, PARTY_ROW_1_Y + BONUS_EXP_OFFSET_Y, BONUS_TEXT_WIDTH, BONUS_TEXT_HEIGHT);
-                NumberPrinter.drawNumber(g, exp, plusX + BONUS_TEXT_WIDTH, PARTY_ROW_1_Y + BONUS_EXP_OFFSET_Y, BONUS_TEXT_WIDTH, BONUS_TEXT_HEIGHT, BONUS_TEXT_OFFSET, Assets.YellowNumbers, Align.LEFT);
+                g.drawScaledImage(Assets.BluePlus, plusX, PARTY_ROW_1_Y + BONUS_EXP_OFFSET_Y, BONUS_TEXT_WIDTH, BONUS_TEXT_HEIGHT);
+                NumberPrinter.drawNumber(g, exp, plusX + BONUS_TEXT_WIDTH, PARTY_ROW_1_Y + BONUS_EXP_OFFSET_Y, BONUS_TEXT_WIDTH, BONUS_TEXT_HEIGHT, BONUS_TEXT_OFFSET, Assets.BlueNumbers, Align.LEFT);
             }
             if(gains.get(i).getGold() > 0){
                 int gold = gains.get(i).getGold();
                 int numDigits = Integer.toString(gold).length();
                 int totalWidth = (numDigits + 1) * BONUS_TEXT_WIDTH;
                 int plusX = x + ((PARTY_WIDTH - totalWidth) / 2);
-                g.drawScaledImage(Assets.Plus, plusX, PARTY_ROW_1_Y + BONUS_GOLD_OFFSET_Y, BONUS_TEXT_WIDTH, BONUS_TEXT_HEIGHT);
+                g.drawScaledImage(Assets.YellowPlus, plusX, PARTY_ROW_1_Y + BONUS_GOLD_OFFSET_Y, BONUS_TEXT_WIDTH, BONUS_TEXT_HEIGHT);
                 NumberPrinter.drawNumber(g, gold, plusX + BONUS_TEXT_WIDTH, PARTY_ROW_1_Y + BONUS_GOLD_OFFSET_Y, BONUS_TEXT_WIDTH, BONUS_TEXT_HEIGHT, BONUS_TEXT_OFFSET, Assets.YellowNumbers, Align.LEFT);
             }
         }
@@ -221,15 +221,15 @@ public class BattleResultScreen extends Screen{
                 int numDigits = Integer.toString(exp).length();
                 int totalWidth = (numDigits + 1) * BONUS_TEXT_WIDTH;
                 int plusX = x + ((PARTY_WIDTH - totalWidth) / 2);
-                g.drawScaledImage(Assets.Plus, plusX, PARTY_ROW_2_Y + BONUS_EXP_OFFSET_Y, BONUS_TEXT_WIDTH, BONUS_TEXT_HEIGHT);
-                NumberPrinter.drawNumber(g, exp, plusX + BONUS_TEXT_WIDTH, PARTY_ROW_2_Y + BONUS_EXP_OFFSET_Y, BONUS_TEXT_WIDTH, BONUS_TEXT_HEIGHT, BONUS_TEXT_OFFSET, Assets.YellowNumbers, Align.LEFT);
+                g.drawScaledImage(Assets.BluePlus, plusX, PARTY_ROW_2_Y + BONUS_EXP_OFFSET_Y, BONUS_TEXT_WIDTH, BONUS_TEXT_HEIGHT);
+                NumberPrinter.drawNumber(g, exp, plusX + BONUS_TEXT_WIDTH, PARTY_ROW_2_Y + BONUS_EXP_OFFSET_Y, BONUS_TEXT_WIDTH, BONUS_TEXT_HEIGHT, BONUS_TEXT_OFFSET, Assets.BlueNumbers, Align.LEFT);
             }
             if(gains.get(i).getGold() > 0){
                 int gold = gains.get(i).getGold();
                 int numDigits = Integer.toString(gold).length();
                 int totalWidth = (numDigits + 1) * BONUS_TEXT_WIDTH;
                 int plusX = x + ((PARTY_WIDTH - totalWidth) / 2);
-                g.drawScaledImage(Assets.Plus, plusX, PARTY_ROW_2_Y + BONUS_GOLD_OFFSET_Y, BONUS_TEXT_WIDTH, BONUS_TEXT_HEIGHT);
+                g.drawScaledImage(Assets.YellowPlus, plusX, PARTY_ROW_2_Y + BONUS_GOLD_OFFSET_Y, BONUS_TEXT_WIDTH, BONUS_TEXT_HEIGHT);
                 NumberPrinter.drawNumber(g, gold, plusX + BONUS_TEXT_WIDTH, PARTY_ROW_2_Y + BONUS_GOLD_OFFSET_Y, BONUS_TEXT_WIDTH, BONUS_TEXT_HEIGHT, BONUS_TEXT_OFFSET, Assets.YellowNumbers, Align.LEFT);
             }
         }

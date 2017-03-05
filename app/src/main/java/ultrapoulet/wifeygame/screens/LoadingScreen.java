@@ -183,7 +183,8 @@ public class LoadingScreen extends Screen {
         }
         Assets.HPSlash = g.newImage("numbers/HPSlash.png", ImageFormat.ARGB8888);
         Assets.Colon = g.newImage("numbers/Colon.png", ImageFormat.ARGB8888);
-        Assets.Plus = g.newImage("numbers/YellowPlus.png", ImageFormat.ARGB8888);
+        Assets.YellowPlus = g.newImage("numbers/yellow/Plus.png", ImageFormat.ARGB8888);
+        Assets.BluePlus = g.newImage("numbers/blue/Plus.png", ImageFormat.ARGB8888);
 
         Assets.GreenNumbers = new ArrayList<>();
         for(int i = 0; i < 10; i++){
@@ -203,6 +204,11 @@ public class LoadingScreen extends Screen {
         Assets.GreyNumbers = new ArrayList<>();
         for(int i = 0; i < 10; i++){
             Assets.GreyNumbers.add(g.newImage("numbers/grey/" + i + ".png", ImageFormat.ARGB8888));
+        }
+
+        Assets.BlueNumbers = new ArrayList<>();
+        for(int i = 0; i < 10; i++){
+            Assets.BlueNumbers.add(g.newImage("numbers/blue/" + i + ".png", ImageFormat.ARGB8888));
         }
 
         Assets.StatusHolder = g.newImage("objects/status/StatusHolder.png", ImageFormat.ARGB8888);

@@ -31,12 +31,14 @@ public class Assets {
     public static List<Image> KOImages;
     public static Image HPSlash;
     public static Image Colon;
-    public static Image Plus;
+    public static Image YellowPlus;
+    public static Image BluePlus;
     public static List<Image> WhiteNumbers;
     public static List<Image> GreenNumbers;
     public static List<Image> YellowNumbers;
     public static List<Image> RedNumbers;
     public static List<Image> GreyNumbers;
+    public static List<Image> BlueNumbers;
 
     //BattleSelectScreen stuff
     public static Image BattleSelectScreen;
