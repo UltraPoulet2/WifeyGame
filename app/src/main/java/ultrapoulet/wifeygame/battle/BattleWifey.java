@@ -233,12 +233,10 @@ public class BattleWifey extends BattleCharacter{
     }
 
     public int getGold(){
-        //For now, return 5;
-        return 5;
+        return skills.getBonusGold();
     }
 
     public int getExperience(){
-        //For now, return 5;
-        return 5;
+        return skills.getBonusExp();
     }
 }

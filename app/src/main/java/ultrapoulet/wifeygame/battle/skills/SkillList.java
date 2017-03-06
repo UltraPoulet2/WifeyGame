@@ -258,6 +258,22 @@ public class SkillList {
         return returnValue;
     }
 
+    public int getBonusExp() {
+        int returnValue = 0;
+        for(int i = 0; i < skills.size(); i++){
+            returnValue += skills.get(i).getBonusExp();
+        }
+        return returnValue;
+    }
+
+    public int getBonusGold() {
+        int returnValue = 0;
+        for(int i = 0; i < skills.size(); i++){
+            returnValue += skills.get(i).getBonusGold();
+        }
+        return returnValue;
+    }
+
     public boolean hasSkill(Class skillClass){
         for(int i = 0; i < skills.size(); i++){
             if(skills.get(i).getClass() == skillClass){

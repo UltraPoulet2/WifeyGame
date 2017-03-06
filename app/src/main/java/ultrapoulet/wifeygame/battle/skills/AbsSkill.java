@@ -198,6 +198,16 @@ public class AbsSkill {
         return 0;
     }
 
+    public int getBonusExp() {
+        //Return the amount of bonus experience received from battle
+        return 1;
+    }
+
+    public int getBonusGold(){
+        //Return the amount of bonus gold received from battle
+        return 2;
+    }
+
     //Remove the skill owner at end of battle to garbage collect
     public void endBattle(){
         this.owner = null;
