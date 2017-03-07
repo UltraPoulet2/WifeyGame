@@ -991,16 +991,16 @@ public class BattleScreen extends Screen {
                 } else {
                     phaseTime += deltaTime;
                     if (phaseTime >= WAVE_PHASE_WAIT) {
+                        party.get(partyIndex).onEnemyDefeat(enemies.get(enemyIndex));
+                        for(int i = 0; i < party.size(); i++){
+                            party.get(i).endWave(enemies.get(enemyIndex));
+                        }
                         enemyIndex++;
                         if (enemyIndex == enemies.size()) {
                             enemyIndex--;
                             currentPhase = BattlePhase.BATTLE_END;
                             phaseEntered = true;
                         } else {
-                            party.get(partyIndex).onEnemyDefeat(enemies.get(enemyIndex));
-                            for(int i = 0; i < party.size(); i++){
-                                party.get(i).endWave();
-                            }
                             currentPhase = BattlePhase.WAVE_START;
                             phaseEntered = true;
                         }

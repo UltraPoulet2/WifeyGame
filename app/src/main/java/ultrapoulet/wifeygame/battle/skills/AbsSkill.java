@@ -103,8 +103,9 @@ public class AbsSkill {
         //Do anything that needs to be done at the end of a round
     }
 
-    public void endWave() {
+    public void endWave(BattleCharacter enemy) {
         //Do anything that needs to be done at the end of a wave
+        //Pass in the enemy that was defeated that round
     }
 
     public void resetValues(){
@@ -200,12 +201,12 @@ public class AbsSkill {
 
     public int getBonusExp() {
         //Return the amount of bonus experience received from battle
-        return 1;
+        return 0;
     }
 
     public int getBonusGold(){
         //Return the amount of bonus gold received from battle
-        return 2;
+        return 0;
     }
 
     //Remove the skill owner at end of battle to garbage collect

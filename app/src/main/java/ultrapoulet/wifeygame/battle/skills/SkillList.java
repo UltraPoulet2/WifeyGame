@@ -92,11 +92,11 @@ public class SkillList {
         }
     }
 
-    public void endWave() {
+    public void endWave(BattleCharacter enemy) {
         //Do anything that needs to be done at the end of a wave
         //This is currently only relevant for BattleWifeys
         for(int i = 0; i < skills.size(); i++){
-            skills.get(i).endWave();
+            skills.get(i).endWave(enemy);
         }
     }
 

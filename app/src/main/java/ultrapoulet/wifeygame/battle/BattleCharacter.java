@@ -93,7 +93,7 @@ public abstract class BattleCharacter {
 
     public abstract void endRound();
 
-    public void endWave() { skills.endWave(); }
+    public void endWave(BattleCharacter enemy) { skills.endWave(enemy); }
 
     public double getElementDamage(BattleCharacter enemy){
         if(enemy.getStrongElement() == attackElement){

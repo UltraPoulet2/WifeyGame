@@ -502,6 +502,7 @@
         <weapon>BOOK</weapon>
         <skills>
             <skill>GHOST</skill>
+            <skill>TEACHER</skill>
         </skills>
         <elements>
             <atkElement>DARK</atkElement>

@@ -38,7 +38,7 @@ public class SlugabedSkill extends AbsSkill {
     }
 
     @Override
-    public void endWave(){
+    public void endWave(BattleCharacter enemy){
         decrementMult();
     }
 
