@@ -20,7 +20,6 @@ public class TeacherSkill extends AbsSkill {
     @Override
     public void endWave(BattleCharacter enemy) {
         totalBonusExp += (int) (enemy.getExperience() * bonusExpPercentage);
-        System.out.println("Granted bonus: " + (int) (enemy.getExperience() * bonusExpPercentage));
     }
 
     @Override

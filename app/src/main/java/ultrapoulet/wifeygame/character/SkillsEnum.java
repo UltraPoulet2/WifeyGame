@@ -23,6 +23,7 @@ import ultrapoulet.wifeygame.battle.skills.implementations.MediumSkill;
 import ultrapoulet.wifeygame.battle.skills.implementations.MusicianSkill;
 import ultrapoulet.wifeygame.battle.skills.implementations.NurseSkill;
 import ultrapoulet.wifeygame.battle.skills.implementations.PilotSkill;
+import ultrapoulet.wifeygame.battle.skills.implementations.PoliceSkill;
 import ultrapoulet.wifeygame.battle.skills.implementations.PravdaSkill;
 import ultrapoulet.wifeygame.battle.skills.implementations.ProgrammerSkill;
 import ultrapoulet.wifeygame.battle.skills.implementations.ProtagonistSkill;
@@ -106,6 +107,8 @@ public class SkillsEnum {
                 return new NurseSkill(owner);
             case "Pilot":
                 return new PilotSkill(owner);
+            case "Police":
+                return new PoliceSkill(owner);
             case "Pravda":
                 return new PravdaSkill(owner, false);
             case "Pravda President":
@@ -177,6 +180,7 @@ public class SkillsEnum {
         skillsList.put("MUSICIAN", new SkillsEnum("Musician", "Multiplies damage dealt by 4.00x every eighth hit."));
         skillsList.put("NURSE", new SkillsEnum("Nurse", "Multiplies healing by 2.00x. Gains health at the start of every round."));
         skillsList.put("PILOT", new SkillsEnum("Pilot", "Multiplies magical and special damage taken from AIR sources by 0.50x"));
+        skillsList.put("POLICE", new SkillsEnum("Police", "Gives bonus gold by defeating an enemy with a criminal skill."));
         skillsList.put("PRAVDA", new SkillsEnum("Pravda", "Increases damage dealt multiplier by 1.00x for each other Pravda wifey."));
         skillsList.put("PRAVDAPRES", new SkillsEnum("Pravda President", "Increases damage dealt multiplier by 2.00x for each other Pravda wifey."));
         skillsList.put("PROGRAMMER", new SkillsEnum("Programmer", "Increases damage dealt multiplier by 0.75x each time this wifey attacks a Robot. Resets at the start of the round."));
@@ -218,7 +222,6 @@ public class SkillsEnum {
         skillsList.put("MILITARY", new SkillsEnum("Military", "Military description"));
         skillsList.put("CRIMINAL", new SkillsEnum("Criminal", "Criminal description"));
         skillsList.put("BOOKWORM", new SkillsEnum("Bookworm", "Bookworm description"));
-        skillsList.put("POLICE", new SkillsEnum("Police", "Police description")); //Increase gold when defeating a criminal
         skillsList.put("LOVECRAFT", new SkillsEnum("Lovecraft", "Lovecraft description"));
         skillsList.put("SELECTOR", new SkillsEnum("Selector", "Selector description"));
         skillsList.put("KUUDERE", new SkillsEnum("Kuudere", "Kuudere description"));

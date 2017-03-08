@@ -1184,6 +1184,9 @@ public class BattleScreen extends Screen {
         else if(currentPhase == BattlePhase.WAVE_END && !phaseEntered) {
             g.drawImageAlpha(enemies.get(enemyIndex).getImage(), ENEMY_IMAGE_X, ENEMY_IMAGE_Y, (int) (255 * (WAVE_PHASE_WAIT - phaseTime) / WAVE_PHASE_WAIT));
         }
+        else if(currentPhase == BattlePhase.BATTLE_END){
+            //Draw nothing
+        }
         else {
             g.drawImage(enemies.get(enemyIndex).getImage(), ENEMY_IMAGE_X, ENEMY_IMAGE_Y);
         }

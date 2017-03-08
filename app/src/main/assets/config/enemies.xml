@@ -68,6 +68,7 @@
             <skill>ATHLETE</skill>
             <skill>RACER</skill>
             <skill>BIKER</skill>
+            <skill>KILLER</skill>
         </skills>
         <elements>
             <atkElement>AIR</atkElement>

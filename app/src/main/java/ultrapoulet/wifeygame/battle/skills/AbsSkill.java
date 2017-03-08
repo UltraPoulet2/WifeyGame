@@ -75,6 +75,10 @@ public class AbsSkill {
     public void setOwner(BattleCharacter owner){ this.owner = owner; }
 
     public String getSkillName(){
+        if(this.skillName == null){
+            System.out.println("Skill name has not been set");
+            return "";
+        }
         return this.skillName;
     }
 

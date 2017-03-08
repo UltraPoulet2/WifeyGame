@@ -636,6 +636,9 @@
         <strength>80</strength>
         <magic>90</magic>
         <weapon>GUN</weapon>
+        <skills>
+            <skill>POLICE</skill>
+        </skills>
         <elements>
             <atkElement>FIRE</atkElement>
             <stgElement>FIRE</stgElement>
@@ -649,6 +652,7 @@
         <weapon>TOOL</weapon>
         <skills>
             <skill>MAGICALGIRL</skill>
+            <skill>POLICE</skill>
         </skills>
         <elements>
             <atkElement>DARK</atkElement>
