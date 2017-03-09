@@ -291,9 +291,9 @@ public class SkillList {
             returnValue.setPhysAtk(returnValue.getPhysAtk() * skillMult.getPhysAtk());
             returnValue.setMagAtk(returnValue.getMagAtk() * skillMult.getMagAtk());
             returnValue.setSpecAtk(returnValue.getSpecAtk() * skillMult.getSpecAtk());
-            returnValue.setPhysDef(skillMult.getPhysDef() * (1.0 - returnValue.getPhysDef()));
-            returnValue.setMagDef(skillMult.getMagDef() * (1.0 - returnValue.getMagDef()));
-            returnValue.setSpecDef(skillMult.getSpecDef() * (1.0 - returnValue.getSpecDef()));
+            returnValue.setPhysDef(returnValue.getPhysDef() + (skillMult.getPhysDef() * (1.0 - returnValue.getPhysDef())));
+            returnValue.setMagDef(returnValue.getMagDef() + (skillMult.getMagDef() * (1.0 - returnValue.getMagDef())));
+            returnValue.setSpecDef(returnValue.getSpecDef() + (skillMult.getSpecDef() * (1.0 - returnValue.getSpecDef())));
         }
         returnValue.setPhysDef(1.0 - returnValue.getPhysDef() > 0.10 ? 1.0 - returnValue.getPhysDef() : 0.10);
         returnValue.setMagDef(1.0 - returnValue.getMagDef() > 0.10 ? 1.0 - returnValue.getMagDef() : 0.10);
