@@ -15,6 +15,7 @@ import ultrapoulet.androidgame.framework.helpers.NumberPrinter.Align;
 import ultrapoulet.wifeygame.Assets;
 import ultrapoulet.wifeygame.battle.BattleCharacter;
 import ultrapoulet.wifeygame.battle.BattleInfo;
+import ultrapoulet.wifeygame.gamestate.PlayerInfo;
 
 /**
  * Created by John on 1/18/2017.
@@ -112,6 +113,8 @@ public class BattleResultScreen extends Screen{
             bonusExp += exp;
             gains.add(new BonusGains(gold, exp));
         }
+        PlayerInfo.addExperience(baseExp + bonusExp);
+        PlayerInfo.addGold(baseGold + bonusGold);
     }
 
     @Override

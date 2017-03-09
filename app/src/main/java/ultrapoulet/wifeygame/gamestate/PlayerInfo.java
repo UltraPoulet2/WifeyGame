@@ -11,7 +11,7 @@ import ultrapoulet.wifeygame.Assets;
 
 public class PlayerInfo {
 
-    private static int gold = 999999999;
+    private static int gold = 0;
     private static int level = 999;
     private static int experience;
     private static int currentEnergy = 99;
