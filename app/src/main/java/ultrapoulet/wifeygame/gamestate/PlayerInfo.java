@@ -12,10 +12,13 @@ import ultrapoulet.wifeygame.Assets;
 public class PlayerInfo {
 
     private static int gold = 0;
-    private static int level = 999;
+    private static int level = 1;
     private static int experience;
     private static int currentEnergy = 99;
     private static int maxEnergy = 999;
+
+    private static int nextLevelExp = 100;
+    private static final double nextLevelMult = 1.25;
     //private int(?) timeLeft;
 
     public static int getGold() {
@@ -37,12 +40,22 @@ public class PlayerInfo {
         return experience;
     }
 
-    public static int getLevelPercentage() {
-        return 100;
+    public static double getLevelPercentage() {
+        return (1.0 * experience) / nextLevelExp;
     }
 
-    public static void addExperience(int addedExperience){
+    //Returns true if Player Levels-up
+    public static boolean addExperience(int addedExperience){
+        boolean leveled = false;
         experience += addedExperience;
+        while(experience > nextLevelExp){
+            leveled = true;
+            level++;
+            System.out.println("Level " + level + " Next exp: " + nextLevelExp);
+            experience -= nextLevelExp;
+            nextLevelExp *= nextLevelMult;
+        }
+        return leveled;
     }
 
     public static int getCurrentEnergy() {
@@ -69,7 +82,7 @@ public class PlayerInfo {
         NumberPrinter.drawNumber(g, currentEnergy, 635, 0, 20, 40, 0, Assets.WhiteNumbers, Align.RIGHT);
         NumberPrinter.drawNumber(g, maxEnergy, 655, 0, 20, 40, 0, Assets.WhiteNumbers, Align.LEFT);
 
-        g.drawScaledImage(Assets.pHealthG, 390, 35, (int) (EXP_BAR_WIDTH * 0.8), EXP_BAR_HEIGHT);
+        g.drawScaledImage(Assets.pHealthG, 390, 35, (int) (EXP_BAR_WIDTH * getLevelPercentage()), EXP_BAR_HEIGHT);
 
         if(currentEnergy != maxEnergy) {
             //Minutes

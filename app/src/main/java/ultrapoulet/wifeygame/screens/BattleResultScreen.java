@@ -113,7 +113,10 @@ public class BattleResultScreen extends Screen{
             bonusExp += exp;
             gains.add(new BonusGains(gold, exp));
         }
-        PlayerInfo.addExperience(baseExp + bonusExp);
+        boolean playerLevelUp  = PlayerInfo.addExperience(baseExp + bonusExp);
+        if(playerLevelUp){
+            System.out.println("For now, just printing out level up");
+        }
         PlayerInfo.addGold(baseGold + bonusGold);
     }
 
