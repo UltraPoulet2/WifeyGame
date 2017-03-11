@@ -18,7 +18,7 @@ public class PlayerInfo {
     private static int maxEnergy = 999;
 
     private static int nextLevelExp = 100;
-    private static final double nextLevelMult = 1.25;
+    private static final double NEXT_LEVEL_MULT = 1.25;
     //private int(?) timeLeft;
 
     public static int getGold() {
@@ -53,7 +53,7 @@ public class PlayerInfo {
             level++;
             System.out.println("Level " + level + " Next exp: " + nextLevelExp);
             experience -= nextLevelExp;
-            nextLevelExp *= nextLevelMult;
+            nextLevelExp *= NEXT_LEVEL_MULT;
         }
         return leveled;
     }
