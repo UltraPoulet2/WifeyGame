@@ -278,7 +278,7 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
     }
 
     protected void drawTopRows(Graphics g){
-        g.drawString("1", LEVEL_X, LEVEL_Y, levelPaint);
+        g.drawString(String.valueOf(displayChar.getLevel()), LEVEL_X, LEVEL_Y, levelPaint);
 
         g.drawString(String.valueOf(BattleWifey.calculateHP(displayStrength)), HP_X, STAT_Y, statPaint);
         g.drawString(String.valueOf(displayStrength), STR_X, STAT_Y, statPaint);

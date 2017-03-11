@@ -15,6 +15,8 @@ import ultrapoulet.androidgame.framework.helpers.NumberPrinter.Align;
 import ultrapoulet.wifeygame.Assets;
 import ultrapoulet.wifeygame.battle.BattleCharacter;
 import ultrapoulet.wifeygame.battle.BattleInfo;
+import ultrapoulet.wifeygame.character.WifeyCharacter;
+import ultrapoulet.wifeygame.gamestate.Party;
 import ultrapoulet.wifeygame.gamestate.PlayerInfo;
 
 /**
@@ -117,6 +119,14 @@ public class BattleResultScreen extends Screen{
         if(playerLevelUp){
             System.out.println("For now, just printing out level up");
         }
+        List<WifeyCharacter> wifeyList = Party.getParty(party.size());
+        for(int i = 0; i < wifeyList.size(); i++){
+            //This will be replaced with a boolean list later
+            boolean wifeyLevel = wifeyList.get(i).addExperience(baseExp + bonusExp);
+            if(wifeyLevel){
+                System.out.println("Printing out a wifey level up");
+            }
+    }
         PlayerInfo.addGold(baseGold + bonusGold);
     }
 

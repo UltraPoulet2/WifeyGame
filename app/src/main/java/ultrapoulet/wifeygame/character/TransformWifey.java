@@ -23,6 +23,7 @@ public class TransformWifey {
     private Element strongElement;
     private Element weakElement;
     private String image;
+    private static final int STAT_INCREASE = 2;
 
     public TransformWifey(){
         addSkills = new ArrayList();
@@ -97,6 +98,11 @@ public class TransformWifey {
             this.removeSkills.add(skill);
         }
         Collections.sort(this.removeSkills, SkillsEnum.SKILLS_ENUM_COMPARATOR);
+    }
+
+    public void levelUp(){
+        strength += STAT_INCREASE;
+        magic += STAT_INCREASE;
     }
 
     public boolean validate(){
