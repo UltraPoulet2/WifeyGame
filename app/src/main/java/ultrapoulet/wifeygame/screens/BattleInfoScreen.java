@@ -10,7 +10,6 @@ import java.util.List;
 
 import ultrapoulet.androidgame.framework.Game;
 import ultrapoulet.androidgame.framework.Graphics;
-import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.androidgame.framework.Input;
 import ultrapoulet.androidgame.framework.Input.TouchEvent;
 import ultrapoulet.androidgame.framework.Screen;
@@ -19,6 +18,7 @@ import ultrapoulet.androidgame.framework.helpers.ButtonList;
 import ultrapoulet.wifeygame.Assets;
 import ultrapoulet.wifeygame.battle.BattleInfo;
 import ultrapoulet.wifeygame.battle.requirements.AbsRequirement;
+import ultrapoulet.wifeygame.character.EnemyCharacter;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
 import ultrapoulet.wifeygame.gamestate.Party;
 import ultrapoulet.wifeygame.gamestate.PlayerInfo;
@@ -44,9 +44,19 @@ public class BattleInfoScreen extends Screen{
     private static final int BATTLE_NAME_Y = 137;
     private Paint battlePaint;
 
-    private static final int NUMBER_WAVES_X = 228;
-    private static final int NUMBER_WAVES_Y = 357;
-    private Paint wavesPaint;
+    private int goldGain;
+    private int expGain;
+    private String shortGoldGain;
+    private String shortExpGain;
+
+    private static final int COLUMN_1_X = 227;
+    private static final int COLUMN_2_X = 471;
+    private static final int COLUMN_3_X = 715;
+    private static final int ROW_1_Y = 259;
+    private static final int ROW_2_Y = 357;
+    private static final int GAINS_Y_OFFSET = 10;
+    private Paint infoPaint;
+    private Paint gainsPaint;
 
     private static final int PARTY_SCALE = 57;
 
@@ -101,10 +111,15 @@ public class BattleInfoScreen extends Screen{
         battlePaint.setTextAlign(Align.CENTER);
         battlePaint.setTextSize(50);
 
-        wavesPaint = new Paint();
-        wavesPaint.setColor(Color.BLACK);
-        wavesPaint.setTextAlign(Align.CENTER);
-        wavesPaint.setTextSize(50);
+        infoPaint = new Paint();
+        infoPaint.setColor(Color.BLACK);
+        infoPaint.setTextAlign(Align.CENTER);
+        infoPaint.setTextSize(50);
+
+        gainsPaint = new Paint();
+        gainsPaint.setColor(Color.BLACK);
+        gainsPaint.setTextAlign(Align.CENTER);
+        gainsPaint.setTextSize(30);
 
         requirementPaint = new TextPaint();
         requirementPaint.setColor(Color.BLACK);
@@ -144,6 +159,16 @@ public class BattleInfoScreen extends Screen{
             int yBot = REQUIREMENT_BASE_BOT_Y + REQUIREMENT_OFFSET_Y * i;
             requirementList.addButton(new Button(xLeft, xRight, yTop, yBot, true, "REQ_" + i));
         }
+
+        goldGain = 0;
+        expGain = 0;
+        List<EnemyCharacter> enemies = battleInfo.getCharacterEnemies();
+        for(int i = 0; i < enemies.size(); i++){
+            goldGain += enemies.get(i).getGold();
+            expGain += enemies.get(i).getExperience();
+        }
+        shortGoldGain = shortenGains(goldGain);
+        shortExpGain = shortenGains(expGain);
     }
 
     private void setPreviousScreen(Screen prevScreen){
@@ -189,6 +214,37 @@ public class BattleInfoScreen extends Screen{
         }
     }
 
+    //This function is terrible. Please come up with a better way later.
+    private String shortenGains(int input){
+        if(input < 10000){
+            return String.valueOf(input);
+        }
+        String inputString = Integer.toString(input);
+        String digits = inputString.substring(0, 3);
+        int decimal = inputString.length() % 3;
+        String abbrev;
+        switch((inputString.length() - 1)/ 3){
+            case(1):
+                abbrev = "K";
+                break;
+            case(2):
+                abbrev = "M";
+                break;
+            case(3):
+                abbrev = "B";
+                break;
+            default:
+                abbrev = "";
+                break;
+        }
+        if(decimal != 0){
+            return digits.substring(0, decimal) + "." + digits.substring(decimal) + abbrev;
+        }
+        else{
+            return digits + abbrev;
+        }
+    }
+
     @Override
     public void paint(float deltaTime) {
         Graphics g = game.getGraphics();
@@ -200,7 +256,9 @@ public class BattleInfoScreen extends Screen{
 
         g.drawString(battleInfo.getName(), BATTLE_NAME_X, BATTLE_NAME_Y, battlePaint);
 
-        g.drawString(String.valueOf(battleInfo.getCharacterEnemies().size()), NUMBER_WAVES_X, NUMBER_WAVES_Y, wavesPaint);
+        g.drawString(shortGoldGain, COLUMN_2_X, ROW_1_Y - GAINS_Y_OFFSET, gainsPaint);
+        g.drawString(shortExpGain, COLUMN_3_X, ROW_1_Y - GAINS_Y_OFFSET, gainsPaint);
+        g.drawString(String.valueOf(battleInfo.getCharacterEnemies().size()), COLUMN_1_X, ROW_2_Y, infoPaint);
 
         for(int i = 0; i < battleInfo.getRequirements().size(); i++){
             String desc = battleInfo.getRequirements().get(i).getDescription();
