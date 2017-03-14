@@ -24,6 +24,7 @@ public class BattleParser extends DefaultHandler {
     private boolean bRequirement = false;
     private boolean bRValue = false;
     private boolean bBackground = false;
+    private boolean bEnergy = false;
 
     private boolean error = false;
 
@@ -86,6 +87,9 @@ public class BattleParser extends DefaultHandler {
         }
         else if(qName.equalsIgnoreCase("background")){
             bBackground = true;
+        }
+        else if(qName.equalsIgnoreCase("energy")){
+            bEnergy = true;
         }
         else{
             System.out.println("BattleParser:startElement(): Invalid qName: " + qName + " for key " + battleKey);
@@ -162,6 +166,17 @@ public class BattleParser extends DefaultHandler {
             battleBuilder.setBackground(temp);
             bBackground = false;
         }
+        else if(bEnergy){
+            try{
+                battleBuilder.setEnergyRequirement(Integer.parseInt(temp));
+                bEnergy = false;
+            }
+            catch(NumberFormatException e){
+                System.out.println("BattleParser:characters(): NumberFormatException for key: " + battleKey);
+                error = true;
+                bPartySize = false;
+            }
+        }
     }
 
     private void resetValues(){
@@ -170,6 +185,7 @@ public class BattleParser extends DefaultHandler {
         bEnemy = false;
         bRValue = false;
         bBackground = false;
+        bEnergy = false;
     }
 
     private boolean validate(){
@@ -186,6 +202,9 @@ public class BattleParser extends DefaultHandler {
             return false;
         }
         if(battleBuilder.getBackgroundName() == null){
+            return false;
+        }
+        if(battleBuilder.getEnergyRequirement() == 0){
             return false;
         }
 

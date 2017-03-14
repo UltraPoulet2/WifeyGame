@@ -256,6 +256,7 @@ public class BattleInfoScreen extends Screen{
 
         g.drawString(battleInfo.getName(), BATTLE_NAME_X, BATTLE_NAME_Y, battlePaint);
 
+        g.drawString(String.valueOf(battleInfo.getEnergyRequirement()), COLUMN_1_X, ROW_1_Y, infoPaint);
         g.drawString(shortGoldGain, COLUMN_2_X, ROW_1_Y - GAINS_Y_OFFSET, gainsPaint);
         g.drawString(shortExpGain, COLUMN_3_X, ROW_1_Y - GAINS_Y_OFFSET, gainsPaint);
         g.drawString(String.valueOf(battleInfo.getCharacterEnemies().size()), COLUMN_1_X, ROW_2_Y, infoPaint);
