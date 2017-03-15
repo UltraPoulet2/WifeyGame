@@ -14,7 +14,7 @@ public class PlayerInfo {
     private static int gold = 0;
     private static int level = 1;
     private static int experience;
-    private static int currentEnergy = 99;
+    private static int currentEnergy = 5;
     private static int maxEnergy = 999;
 
     private static int nextLevelExp = 100;

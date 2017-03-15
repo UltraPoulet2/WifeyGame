@@ -55,6 +55,7 @@ public class BattleInfoScreen extends Screen{
     private static final int ROW_1_Y = 259;
     private static final int ROW_2_Y = 357;
     private static final int GAINS_Y_OFFSET = 10;
+    private Paint energyPaint;
     private Paint infoPaint;
     private Paint gainsPaint;
 
@@ -110,6 +111,10 @@ public class BattleInfoScreen extends Screen{
         battlePaint.setColor(Color.BLACK);
         battlePaint.setTextAlign(Align.CENTER);
         battlePaint.setTextSize(50);
+
+        energyPaint = new Paint();
+        energyPaint.setTextAlign(Align.CENTER);
+        energyPaint.setTextSize(50);
 
         infoPaint = new Paint();
         infoPaint.setColor(Color.BLACK);
@@ -175,6 +180,17 @@ public class BattleInfoScreen extends Screen{
         this.prevScreen = prevScreen;
     }
 
+    private boolean hasEnoughEnergy(){
+        return PlayerInfo.getCurrentEnergy() >= battleInfo.getEnergyRequirement();
+    }
+
+    private boolean canStartBattle(){
+        if(party.get(0) != null && battleInfo.validParty(party) && PlayerInfo.getCurrentEnergy() >= battleInfo.getEnergyRequirement()) {
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public void update(float deltaTime) {
         List<Input.TouchEvent> touchEvents = game.getInput().getTouchEvents();
@@ -197,6 +213,7 @@ public class BattleInfoScreen extends Screen{
                             game.setScreen(partySelect);
                             break;
                         case START_BUTTON_STRING:
+                            PlayerInfo.decrementEnergy(battleInfo.getEnergyRequirement());
                             BattleScreen bs = new BattleScreen(game, battleInfo);
                             game.setScreen(bs);
                             break;
@@ -212,6 +229,13 @@ public class BattleInfoScreen extends Screen{
                 }
             }
         }
+        if(hasEnoughEnergy()){
+            energyPaint.setColor(Color.BLACK);
+        }
+        else{
+            energyPaint.setColor(Color.RED);
+        }
+        startButton.setActive(canStartBattle());
     }
 
     //This function is terrible. Please come up with a better way later.
@@ -256,7 +280,7 @@ public class BattleInfoScreen extends Screen{
 
         g.drawString(battleInfo.getName(), BATTLE_NAME_X, BATTLE_NAME_Y, battlePaint);
 
-        g.drawString(String.valueOf(battleInfo.getEnergyRequirement()), COLUMN_1_X, ROW_1_Y, infoPaint);
+        g.drawString(String.valueOf(battleInfo.getEnergyRequirement()), COLUMN_1_X, ROW_1_Y, energyPaint);
         g.drawString(shortGoldGain, COLUMN_2_X, ROW_1_Y - GAINS_Y_OFFSET, gainsPaint);
         g.drawString(shortExpGain, COLUMN_3_X, ROW_1_Y - GAINS_Y_OFFSET, gainsPaint);
         g.drawString(String.valueOf(battleInfo.getCharacterEnemies().size()), COLUMN_1_X, ROW_2_Y, infoPaint);
@@ -292,12 +316,7 @@ public class BattleInfoScreen extends Screen{
     @Override
     public void resume() {
         party = Party.getParty(battleInfo.getPartyMax());
-        if(party.get(0) != null && battleInfo.validParty(party)){
-            startButton.setActive(true);
-        }
-        else{
-            startButton.setActive(false);
-        }
+        startButton.setActive(canStartBattle());
         for(int i = 0; i < battleInfo.getPartyMax(); i++){
             //Set the button to active if the party member exists
             partyList.get(i).setActive(party.get(i) != null);
