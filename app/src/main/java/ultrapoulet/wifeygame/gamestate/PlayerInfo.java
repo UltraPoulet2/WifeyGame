@@ -15,11 +15,18 @@ public class PlayerInfo {
     private static int level = 1;
     private static int experience;
     private static int currentEnergy = 5;
-    private static int maxEnergy = 999;
+    private static int maxEnergy = 5;
 
     private static int nextLevelExp = 100;
     private static final double NEXT_LEVEL_MULT = 1.25;
-    //private int(?) timeLeft;
+
+    //This is the time (in milliseconds) that the player will be at max energy again
+    private static long maxEnergyTime;
+    //This is the time (in milliseconds) that the player will get their next energy
+    private static long nextEnergyTime;
+    private static final int SECONDS_PER_ENERGY = 120;
+    private static final int MILLISECONDS = 1000;
+    private static final int MINUTE = 60;
 
     public static int getGold() {
         return gold;
@@ -59,12 +66,49 @@ public class PlayerInfo {
     }
 
     public static int getCurrentEnergy() {
+        updateTimer();
         return currentEnergy;
     }
 
     public static void decrementEnergy(int decrementedEnergy){
         currentEnergy -= decrementedEnergy;
         //Do things with time here.
+        if(maxEnergyTime == 0){
+            maxEnergyTime = System.currentTimeMillis();
+        }
+        if(nextEnergyTime == 0){
+            nextEnergyTime = System.currentTimeMillis() + (SECONDS_PER_ENERGY * MILLISECONDS);
+        }
+        maxEnergyTime += decrementedEnergy * SECONDS_PER_ENERGY * MILLISECONDS;
+    }
+
+    public static int getNextEnergyMinutes(){
+        updateTimer();
+        int totalSecondsLeft = (int) ((nextEnergyTime - System.currentTimeMillis()) / MILLISECONDS);
+        //The plus 1 is to make the range 2:00 - 0:01
+        return (totalSecondsLeft + 1) / MINUTE;
+    }
+
+    public static int getNextEnergySeconds(){
+        updateTimer();
+        int totalSecondsLeft = (int) ((nextEnergyTime - System.currentTimeMillis()) / MILLISECONDS);
+        //The plus 1 is to make the range 2:00 - 0:01
+        return (totalSecondsLeft + 1) % MINUTE;
+    }
+
+    //This will update the timer, increase currentEnergy
+    private static void updateTimer(){
+        if(System.currentTimeMillis() >= maxEnergyTime){
+            maxEnergyTime = 0;
+            nextEnergyTime = 0;
+            currentEnergy = maxEnergy;
+        }
+        else{
+            while(System.currentTimeMillis() >= nextEnergyTime){
+                currentEnergy++;
+                nextEnergyTime += SECONDS_PER_ENERGY * MILLISECONDS;
+            }
+        }
     }
 
     public static int getMaxEnergy() {
@@ -87,9 +131,9 @@ public class PlayerInfo {
         if(currentEnergy != maxEnergy) {
             //Minutes
             g.drawImage(Assets.Hourglass, 715, 0);
-            NumberPrinter.drawNumber(g, 1, 730, 0, 15, 30, 0, Assets.WhiteNumbers, Align.LEFT);
+            NumberPrinter.drawNumber(g, getNextEnergyMinutes(), 730, 0, 15, 30, 0, Assets.WhiteNumbers, Align.LEFT);
             g.drawImage(Assets.Colon, 747, 10);
-            NumberPrinter.drawNumberPadded(g, 1, 2, 750, 0, 15, 30, 0, Assets.WhiteNumbers, Align.LEFT);
+            NumberPrinter.drawNumberPadded(g, getNextEnergySeconds(), 2, 750, 0, 15, 30, 0, Assets.WhiteNumbers, Align.LEFT);
         }
     }
 }

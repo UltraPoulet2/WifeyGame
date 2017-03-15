@@ -55,16 +55,4 @@ public class RemSkill extends AbsSkill {
         desc.append("Rem gets a special skill because she is Rem. Multiplies damage dealt and healing by 2.00x.");
         return desc.toString();
     }
-
-    @Override
-    public void onDamageReceived(int damage) {
-        if(owner.getCurrentHP() <= 0){
-            WifeyCharacter rem = RecruitedCharacters.get("TEST-RREM");
-            int index = Party.getWifeyIndex(rem);
-            if(index != -1){
-                Party.removeIndex(index);
-            }
-            RecruitedCharacters.remove("TEST-RREM");
-        }
-    }
 }
