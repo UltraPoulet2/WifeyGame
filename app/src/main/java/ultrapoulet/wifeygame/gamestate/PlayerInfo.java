@@ -1,5 +1,7 @@
 package ultrapoulet.wifeygame.gamestate;
 
+import android.content.SharedPreferences;
+
 import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.helpers.NumberPrinter;
 import ultrapoulet.androidgame.framework.helpers.NumberPrinter.Align;
@@ -27,6 +29,13 @@ public class PlayerInfo {
     private static final int SECONDS_PER_ENERGY = 120;
     private static final int MILLISECONDS = 1000;
     private static final int MINUTE = 60;
+
+    private static SharedPreferences prefs;
+
+    public static void init(SharedPreferences inPrefs){
+        prefs = inPrefs;
+    }
+
 
     public static int getGold() {
         return gold;
@@ -70,6 +79,10 @@ public class PlayerInfo {
         return currentEnergy;
     }
 
+    public static void setCurrentEnergy(int energy){
+        currentEnergy = energy;
+    }
+
     public static void decrementEnergy(int decrementedEnergy){
         currentEnergy -= decrementedEnergy;
         //Do things with time here.
@@ -80,6 +93,7 @@ public class PlayerInfo {
             nextEnergyTime = System.currentTimeMillis() + (SECONDS_PER_ENERGY * MILLISECONDS);
         }
         maxEnergyTime += decrementedEnergy * SECONDS_PER_ENERGY * MILLISECONDS;
+        saveEnergy();
     }
 
     public static int getNextEnergyMinutes(){
@@ -96,6 +110,12 @@ public class PlayerInfo {
         return (totalSecondsLeft + 1) % MINUTE;
     }
 
+    public static void setEnergyTimers(long nextEnergy, long maxEnergy){
+        nextEnergyTime = nextEnergy;
+        maxEnergyTime = maxEnergy;
+        updateTimer();
+    }
+
     //This will update the timer, increase currentEnergy
     private static void updateTimer(){
         if(System.currentTimeMillis() >= maxEnergyTime){
@@ -107,6 +127,7 @@ public class PlayerInfo {
             while(System.currentTimeMillis() >= nextEnergyTime){
                 currentEnergy++;
                 nextEnergyTime += SECONDS_PER_ENERGY * MILLISECONDS;
+                saveEnergy();
             }
         }
     }
@@ -135,5 +156,14 @@ public class PlayerInfo {
             g.drawImage(Assets.Colon, 747, 10);
             NumberPrinter.drawNumberPadded(g, getNextEnergySeconds(), 2, 750, 0, 15, 30, 0, Assets.WhiteNumbers, Align.LEFT);
         }
+    }
+
+    private static void saveEnergy() {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putLong("next_energy", nextEnergyTime);
+        editor.putLong("max_energy", maxEnergyTime);
+        editor.putInt("current_energy", currentEnergy);
+        editor.commit();
+        System.out.println("Energy has been saved");
     }
 }

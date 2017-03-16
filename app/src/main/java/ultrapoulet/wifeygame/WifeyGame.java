@@ -18,4 +18,11 @@ public class WifeyGame extends AndroidGame {
     public Screen getInitScreen(){
         return new LoadingScreen(this);
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+
+    }
 }

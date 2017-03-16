@@ -21,6 +21,7 @@ import ultrapoulet.androidgame.framework.Screen;
 import ultrapoulet.wifeygame.Assets;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
 import ultrapoulet.wifeygame.gamestate.Party;
+import ultrapoulet.wifeygame.gamestate.PlayerInfo;
 import ultrapoulet.wifeygame.gamestate.RecruitedCharacters;
 import ultrapoulet.wifeygame.parsers.BattleParser;
 import ultrapoulet.wifeygame.parsers.CharacterParser;
@@ -76,6 +77,12 @@ public class LoadingScreen extends Screen {
                 return "Creating Battles";
             }
         },
+        LOAD_SAVE{
+            @Override
+            protected String getStatus() {
+                return "Loading Save";
+            }
+        },
         COMPLETE{
             @Override
             protected String getStatus() {
@@ -108,6 +115,10 @@ public class LoadingScreen extends Screen {
                 break;
             case CREATE_BATTLES:
                 createBattles();
+                currentPhase = LoadingPhase.LOAD_SAVE;
+                break;
+            case LOAD_SAVE:
+                loadSave();
                 currentPhase = LoadingPhase.COMPLETE;
                 //Clear the touch input buffer
                 game.getInput().getTouchEvents();
@@ -385,6 +396,16 @@ public class LoadingScreen extends Screen {
                 }
             }
         }
+    }
+
+    private void loadSave(){
+        SharedPreferences prefs = game.getGamePreferences("ultrapoulet.wifeygame.PREFERENCE_FILE_KEY", Context.MODE_PRIVATE);
+        PlayerInfo.init(prefs);
+        long nextEnergy = prefs.getLong("next_energy", 0);
+        long maxEnergy = prefs.getLong("max_energy", 0);
+        int currentEnergy = prefs.getInt("current_energy", 0);
+        PlayerInfo.setCurrentEnergy(currentEnergy);
+        PlayerInfo.setEnergyTimers(nextEnergy, maxEnergy);
     }
 
     @Override
