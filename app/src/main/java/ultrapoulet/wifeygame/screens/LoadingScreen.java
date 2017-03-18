@@ -402,10 +402,9 @@ public class LoadingScreen extends Screen {
         SharedPreferences prefs = game.getGamePreferences("ultrapoulet.wifeygame.PREFERENCE_FILE_KEY", Context.MODE_PRIVATE);
         PlayerInfo.init(prefs);
         long nextEnergy = prefs.getLong("next_energy", 0);
-        long maxEnergy = prefs.getLong("max_energy", 0);
         int currentEnergy = prefs.getInt("current_energy", 0);
         PlayerInfo.setCurrentEnergy(currentEnergy);
-        PlayerInfo.setEnergyTimers(nextEnergy, maxEnergy);
+        PlayerInfo.setEnergyTimers(nextEnergy);
     }
 
     @Override

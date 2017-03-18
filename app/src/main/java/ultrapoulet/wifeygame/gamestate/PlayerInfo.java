@@ -22,8 +22,6 @@ public class PlayerInfo {
     private static int nextLevelExp = 100;
     private static final double NEXT_LEVEL_MULT = 1.25;
 
-    //This is the time (in milliseconds) that the player will be at max energy again
-    private static long maxEnergyTime;
     //This is the time (in milliseconds) that the player will get their next energy
     private static long nextEnergyTime;
     private static final int SECONDS_PER_ENERGY = 120;
@@ -86,13 +84,9 @@ public class PlayerInfo {
     public static void decrementEnergy(int decrementedEnergy){
         currentEnergy -= decrementedEnergy;
         //Do things with time here.
-        if(maxEnergyTime == 0){
-            maxEnergyTime = System.currentTimeMillis();
-        }
         if(nextEnergyTime == 0){
             nextEnergyTime = System.currentTimeMillis() + (SECONDS_PER_ENERGY * MILLISECONDS);
         }
-        maxEnergyTime += decrementedEnergy * SECONDS_PER_ENERGY * MILLISECONDS;
         saveEnergy();
     }
 
@@ -110,25 +104,20 @@ public class PlayerInfo {
         return (totalSecondsLeft + 1) % MINUTE;
     }
 
-    public static void setEnergyTimers(long nextEnergy, long maxEnergy){
+    public static void setEnergyTimers(long nextEnergy){
         nextEnergyTime = nextEnergy;
-        maxEnergyTime = maxEnergy;
         updateTimer();
     }
 
     //This will update the timer, increase currentEnergy
     private static void updateTimer(){
-        if(System.currentTimeMillis() >= maxEnergyTime){
-            maxEnergyTime = 0;
-            nextEnergyTime = 0;
-            currentEnergy = maxEnergy;
-        }
-        else{
-            while(System.currentTimeMillis() >= nextEnergyTime){
-                currentEnergy++;
-                nextEnergyTime += SECONDS_PER_ENERGY * MILLISECONDS;
-                saveEnergy();
+        while(System.currentTimeMillis() >= nextEnergyTime && currentEnergy < maxEnergy){
+            currentEnergy++;
+            nextEnergyTime += SECONDS_PER_ENERGY * MILLISECONDS;
+            if(currentEnergy == maxEnergy){
+                nextEnergyTime = 0;
             }
+            saveEnergy();
         }
     }
 
@@ -161,9 +150,7 @@ public class PlayerInfo {
     private static void saveEnergy() {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putLong("next_energy", nextEnergyTime);
-        editor.putLong("max_energy", maxEnergyTime);
         editor.putInt("current_energy", currentEnergy);
         editor.commit();
-        System.out.println("Energy has been saved");
     }
 }
