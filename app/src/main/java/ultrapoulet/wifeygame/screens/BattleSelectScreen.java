@@ -133,7 +133,7 @@ public class BattleSelectScreen extends Screen {
                 int rightX = AREA_RIGHT_X;
                 int topY = BATTLES_TOP_Y + BATTLES_OFFSET_Y * unlockedAreas.size();
                 int botY = BATTLES_BOT_Y + BATTLES_OFFSET_Y * unlockedAreas.size();
-                storyAreaList.addButton(new Button(leftX, rightX, topY, botY, false, area.get(i).getAreaName(), Assets.pHealthY));
+                storyAreaList.addButton(new Button(leftX, rightX, topY, botY, false, area.get(i).getAreaName(), Assets.StoryBattleEnabled));
                 unlockedAreas.add(area.get(i));
            }
         }
@@ -166,7 +166,7 @@ public class BattleSelectScreen extends Screen {
                 int rightX = STORY_BATTLE_RIGHT_X;
                 int topY = BATTLES_TOP_Y + BATTLES_OFFSET_Y * i;
                 int botY = BATTLES_BOT_Y + BATTLES_OFFSET_Y * i;
-                storyBattleList.addButton(new Button(leftX, rightX, topY, botY, true, area.getBattle(i).getName(), Assets.pHealthY));
+                storyBattleList.addButton(new Button(leftX, rightX, topY, botY, true, area.getBattle(i).getName(), Assets.StoryBattleEnabled));
             }
         }
     }

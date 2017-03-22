@@ -49,6 +49,7 @@ public class Assets {
     public static Image StoryButtonActive, StoryButtonInactive;
     public static Image RecruitButtonActive, RecruitButtonInactive;
     public static Image SpecialButtonActive, SpecialButtonInactive;
+    public static Image StoryBattleEnabled;
 
     //PartyInfo Holder Stuff
     public static Image StatusHolder;
