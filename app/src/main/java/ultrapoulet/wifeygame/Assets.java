@@ -50,6 +50,8 @@ public class Assets {
     public static Image RecruitButtonActive, RecruitButtonInactive;
     public static Image SpecialButtonActive, SpecialButtonInactive;
     public static Image StoryBattleEnabled;
+    public static Image BattleSelectPageUpEnabled, BattleSelectPageUpDisabled;
+    public static Image BattleSelectPageDownEnabled, BattleSelectPageDownDisabled;
 
     //PartyInfo Holder Stuff
     public static Image StatusHolder;

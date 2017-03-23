@@ -41,9 +41,13 @@ public class BattleSelectScreen extends Screen {
     private static final int AREA_RIGHT_X = AREA_LEFT_X + 340;
     private static final int STORY_BATTLE_LEFT_X = 408;
     private static final int STORY_BATTLE_RIGHT_X = STORY_BATTLE_LEFT_X + 340;
-    private static final int BATTLES_TOP_Y = HEADER_OFFSET + 105;
+    private static final int BATTLES_TOP_Y = HEADER_OFFSET + 160;
     private static final int BATTLES_BOT_Y = BATTLES_TOP_Y + 100;
-    private static final int BATTLES_OFFSET_Y = BATTLES_BOT_Y - BATTLES_TOP_Y + 5;
+    private static final int BATTLES_OFFSET_Y = BATTLES_BOT_Y - BATTLES_TOP_Y + 10;
+    private static final int BATTLE_PAGE_UP_TOP_Y = HEADER_OFFSET + 110;
+    private static final int BATTLE_PAGE_UP_BOT_Y = BATTLE_PAGE_UP_TOP_Y + 40;
+    private static final int BATTLE_PAGE_DOWN_TOP_Y = HEADER_OFFSET + 820;
+    private static final int BATTLE_PAGE_DOWN_BOT_Y = BATTLE_PAGE_DOWN_TOP_Y + 40;
 
     private static final int PARTY_LEFT_X = 45;
     private static final int PARTY_RIGHT_X = 265;
@@ -67,11 +71,18 @@ public class BattleSelectScreen extends Screen {
 
     private ButtonList storyAreaList;
     private ButtonList storyBattleList;
+    private Button areaPageUpButton;
+    private Button areaPageDownButton;
+    private Button battlePageUpButton;
+    private Button battlePageDownButton;
     private Paint buttonPaint;
     private List<StoryArea> unlockedAreas;
     private static int selectedArea = -1;
+    private static int selectedAreaPage = -1;
+    private static int selectBattlePage = -1;
     private int lastPressedArea = -1;
     private int lastPressedBattle = -1;
+    private int lastPressedPageButton = -1;
 
     private Button partyButton;
     private static final String PARTY_BUTTON_STRING = "PARTY";
@@ -79,6 +90,11 @@ public class BattleSelectScreen extends Screen {
     private static final String UPGRADE_BUTTON_STRING = "UPGRADE";
     private Button infoButton;
     private static final String INFO_BUTTON_STRING = "INFO";
+
+    private static final String AREA_UP_STRING = "AREA_UP";
+    private static final String AREA_DOWN_STRING = "AREA_DOWN";
+    private static final String BATTLE_UP_STRING = "BATTLE_UP";
+    private static final String BATTLE_DOWN_STRING = "BATTLE_DOWN";
 
     private Button lastPressedGeneral;
     private int selectedChar;
@@ -110,6 +126,15 @@ public class BattleSelectScreen extends Screen {
         buttonList.addButton(partyButton);
         buttonList.addButton(upgradeButton);
         buttonList.addButton(infoButton);
+
+        areaPageUpButton = new Button(AREA_LEFT_X, AREA_RIGHT_X, BATTLE_PAGE_UP_TOP_Y, BATTLE_PAGE_UP_BOT_Y, false, AREA_UP_STRING, Assets.BattleSelectPageUpEnabled, Assets.BattleSelectPageUpDisabled);
+        areaPageDownButton = new Button(AREA_LEFT_X, AREA_RIGHT_X, BATTLE_PAGE_DOWN_TOP_Y, BATTLE_PAGE_DOWN_BOT_Y, false, AREA_DOWN_STRING, Assets.BattleSelectPageDownEnabled, Assets.BattleSelectPageDownDisabled);
+        battlePageUpButton = new Button(STORY_BATTLE_LEFT_X, STORY_BATTLE_RIGHT_X, BATTLE_PAGE_UP_TOP_Y, BATTLE_PAGE_UP_BOT_Y, false, BATTLE_UP_STRING, Assets.BattleSelectPageUpEnabled, Assets.BattleSelectPageUpDisabled);
+        battlePageDownButton = new Button(STORY_BATTLE_LEFT_X, STORY_BATTLE_RIGHT_X, BATTLE_PAGE_DOWN_TOP_Y, BATTLE_PAGE_DOWN_BOT_Y, false, BATTLE_DOWN_STRING, Assets.BattleSelectPageDownEnabled, Assets.BattleSelectPageDownDisabled);
+        buttonList.addButton(areaPageUpButton);
+        buttonList.addButton(areaPageDownButton);
+        buttonList.addButton(battlePageUpButton);
+        buttonList.addButton(battlePageDownButton);
 
         cis = new CharacterInfoScreen(game, this);
 
@@ -154,6 +179,10 @@ public class BattleSelectScreen extends Screen {
         for(int i = 0; i < storyBattleList.size(); i++){
             storyBattleList.get(i).setActive(state);
         }
+        areaPageUpButton.setHidden(!state);
+        areaPageDownButton.setHidden(!state);
+        battlePageUpButton.setHidden(!state);
+        battlePageDownButton.setHidden(!state);
     }
 
     private void createBattleButtons(){
