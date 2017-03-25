@@ -78,11 +78,11 @@ public class BattleSelectScreen extends Screen {
     private Paint buttonPaint;
     private List<StoryArea> unlockedAreas;
     private static int selectedArea = -1;
-    private static int selectedAreaPage = -1;
-    private static int selectBattlePage = -1;
+    private static int selectedAreaPage = 0;
+    private static int selectedBattlePage = 0;
     private int lastPressedArea = -1;
     private int lastPressedBattle = -1;
-    private int lastPressedPageButton = -1;
+    private static final int AREA_PAGE_SIZE = 6;
 
     private Button partyButton;
     private static final String PARTY_BUTTON_STRING = "PARTY";
@@ -156,15 +156,17 @@ public class BattleSelectScreen extends Screen {
             if(area.get(i).isUnlocked()){
                 int leftX = AREA_LEFT_X;
                 int rightX = AREA_RIGHT_X;
-                int topY = BATTLES_TOP_Y + BATTLES_OFFSET_Y * unlockedAreas.size();
-                int botY = BATTLES_BOT_Y + BATTLES_OFFSET_Y * unlockedAreas.size();
+                int topY = BATTLES_TOP_Y + BATTLES_OFFSET_Y * (unlockedAreas.size() % AREA_PAGE_SIZE);
+                int botY = BATTLES_BOT_Y + BATTLES_OFFSET_Y * (unlockedAreas.size() % AREA_PAGE_SIZE);
                 storyAreaList.addButton(new Button(leftX, rightX, topY, botY, false, area.get(i).getAreaName(), Assets.StoryBattleEnabled));
                 unlockedAreas.add(area.get(i));
            }
         }
 
         createBattleButtons();
-        setAreaButtons(true);
+        setAreaPageVisible(true);
+        setBattlePageVisible(false);
+        activatePageAndBattleButtons();
 
         buttonPaint = new Paint();
         buttonPaint.setTextSize(50);
@@ -172,15 +174,42 @@ public class BattleSelectScreen extends Screen {
         buttonPaint.setColor(Color.BLACK);
     }
 
-    private void setAreaButtons(boolean state){
+    private void deactivatePageAndBattleButtons(){
         for(int i = 0; i < storyAreaList.size(); i++){
-            storyAreaList.get(i).setActive(state);
+            storyAreaList.get(i).setActive(false);
         }
         for(int i = 0; i < storyBattleList.size(); i++){
-            storyBattleList.get(i).setActive(state);
+            storyBattleList.get(i).setActive(false);
         }
+    }
+
+    private void activatePageAndBattleButtons(){
+        int maxAreaPage = (unlockedAreas.size() - 1)/ AREA_PAGE_SIZE;
+        areaPageUpButton.setActive(selectedAreaPage > 0);
+        areaPageDownButton.setActive(selectedAreaPage < maxAreaPage);
+        for(int i = 0; i < storyAreaList.size(); i++){
+            storyAreaList.get(i).setActive(selectedAreaPage == i / AREA_PAGE_SIZE);
+        }
+        if(selectedArea == -1){
+            battlePageUpButton.setActive(false);
+            battlePageDownButton.setActive(false);
+        }
+        else{
+            int maxBattlePage = (unlockedAreas.get(selectedArea).getBattles().size() - 1) / AREA_PAGE_SIZE;
+            battlePageUpButton.setActive(selectedBattlePage > 0);
+            battlePageDownButton.setActive(selectedBattlePage < maxBattlePage);
+        }
+        for(int i = 0; i < storyBattleList.size(); i++){
+            storyBattleList.get(i).setActive(selectedBattlePage == i / AREA_PAGE_SIZE);
+        }
+    }
+
+    private void setAreaPageVisible(boolean state){
         areaPageUpButton.setHidden(!state);
         areaPageDownButton.setHidden(!state);
+    }
+
+    private void setBattlePageVisible(boolean state){
         battlePageUpButton.setHidden(!state);
         battlePageDownButton.setHidden(!state);
     }
@@ -189,12 +218,13 @@ public class BattleSelectScreen extends Screen {
         storyBattleList = new ButtonList();
         if(selectedArea != -1 && selectedArea < unlockedAreas.size()){
             StoryArea area = unlockedAreas.get(selectedArea);
+            selectedBattlePage = 0;
             for(int i = 0; i < area.getBattles().size(); i++){
                 //An additional check later will need to be added to make sure the battle is unlocked
                 int leftX = STORY_BATTLE_LEFT_X;
                 int rightX = STORY_BATTLE_RIGHT_X;
-                int topY = BATTLES_TOP_Y + BATTLES_OFFSET_Y * i;
-                int botY = BATTLES_BOT_Y + BATTLES_OFFSET_Y * i;
+                int topY = BATTLES_TOP_Y + BATTLES_OFFSET_Y * (i % AREA_PAGE_SIZE);
+                int botY = BATTLES_BOT_Y + BATTLES_OFFSET_Y * (i % AREA_PAGE_SIZE);
                 storyBattleList.addButton(new Button(leftX, rightX, topY, botY, true, area.getBattle(i).getName(), Assets.StoryBattleEnabled));
             }
         }
@@ -218,27 +248,49 @@ public class BattleSelectScreen extends Screen {
                     switch(lastPressedGeneral.getName()){
                         case STORY_BUTTON_STRING:
                             storyButton.setActive(false);
-                            setAreaButtons(true);
+                            activatePageAndBattleButtons();
+                            setAreaPageVisible(true);
+                            setBattlePageVisible(selectedArea != -1);
 
                             recruitButton.setActive(true);
                             specialButton.setActive(true);
                             break;
                         case RECRUIT_BUTTON_STRING:
                             storyButton.setActive(true);
-                            setAreaButtons(false);
+                            deactivatePageAndBattleButtons();
+                            setAreaPageVisible(false);
+                            setBattlePageVisible(false);
 
                             recruitButton.setActive(false);
                             specialButton.setActive(true);
                             break;
                         case SPECIAL_BUTTON_STRING:
                             storyButton.setActive(true);
-                            setAreaButtons(false);
+                            deactivatePageAndBattleButtons();
+                            setAreaPageVisible(false);
+                            setBattlePageVisible(false);
 
                             recruitButton.setActive(true);
                             specialButton.setActive(false);
                             break;
                         case PARTY_BUTTON_STRING:
                             game.setScreen(new PartySelectScreen(game, this));
+                            break;
+                        case AREA_UP_STRING:
+                            selectedAreaPage--;
+                            activatePageAndBattleButtons();
+                            break;
+                        case AREA_DOWN_STRING:
+                            selectedAreaPage++;
+                            activatePageAndBattleButtons();
+                            break;
+                        case BATTLE_UP_STRING:
+                            selectedBattlePage--;
+                            activatePageAndBattleButtons();
+                            break;
+                        case BATTLE_DOWN_STRING:
+                            selectedBattlePage++;
+                            activatePageAndBattleButtons();
                             break;
                         default:
                             System.out.println("Not yet implemented");
@@ -247,6 +299,8 @@ public class BattleSelectScreen extends Screen {
                 else if(lastPressedArea == storyAreaList.getIndexPressed(t.x, t.y) && lastPressedArea != -1){
                     selectedArea = (selectedArea == lastPressedArea) ? -1 : lastPressedArea;
                     createBattleButtons();
+                    setBattlePageVisible(selectedArea != -1);
+                    activatePageAndBattleButtons();
                 }
                 else if(lastPressedBattle == storyBattleList.getIndexPressed(t.x, t.y) && lastPressedBattle != -1){
                     BattleInfo battle = unlockedAreas.get(selectedArea).getBattle(lastPressedBattle);

@@ -149,7 +149,8 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
 
         displayExp = displayChar.getExperienceString();
 
-        maxPage = (displayChar.getSkills().size() / SKILLS_TEXT_PER_PAGE);
+        //Note: If the character has no skills, this will still return 0
+        maxPage = (displayChar.getSkills().size() - 1) / SKILLS_TEXT_PER_PAGE;
         skillsPage = 0;
         transformPage = 0;
         maxTransformPage = transformations.size();

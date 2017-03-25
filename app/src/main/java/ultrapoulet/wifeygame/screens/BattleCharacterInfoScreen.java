@@ -78,7 +78,8 @@ public class BattleCharacterInfoScreen extends AbsCharacterInfoScreen {
 
         displayText = -1;
         skillsPage = 0;
-        maxPage = displayChar.getSkills().size() / SKILLS_TEXT_PER_PAGE;
+        //Note: If the character has no skills, this will still return 0
+        maxPage = (displayChar.getSkills().size() - 1)/ SKILLS_TEXT_PER_PAGE;
         multipliers = displayChar.getMultipliers(enemy);
     }
 
