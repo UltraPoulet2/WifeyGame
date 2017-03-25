@@ -238,6 +238,7 @@ public class LoadingScreen extends Screen {
         Assets.SpecialButtonActive = g.newImage("BattleSelect/SpecialButtonActive.png", ImageFormat.ARGB8888);
         Assets.SpecialButtonInactive = g.newImage("BattleSelect/SpecialButtonInactive.png", ImageFormat.ARGB8888);
         Assets.StoryBattleEnabled = g.newImage("BattleSelect/StoryBattleButtonEnabled.png", ImageFormat.ARGB8888);
+        Assets.StoryBattleSelected = g.newImage("BattleSelect/StoryBattleButtonSelected.png", ImageFormat.ARGB8888);
         Assets.BattleSelectPageUpEnabled = g.newImage("BattleSelect/BattleSelectPageUpEnabled.png", ImageFormat.ARGB8888);
         Assets.BattleSelectPageUpDisabled = g.newImage("BattleSelect/BattleSelectPageUpDisabled.png", ImageFormat.ARGB8888);
         Assets.BattleSelectPageDownEnabled = g.newImage("BattleSelect/BattleSelectPageDownEnabled.png", ImageFormat.ARGB8888);

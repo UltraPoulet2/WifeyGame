@@ -49,7 +49,7 @@ public class Assets {
     public static Image StoryButtonActive, StoryButtonInactive;
     public static Image RecruitButtonActive, RecruitButtonInactive;
     public static Image SpecialButtonActive, SpecialButtonInactive;
-    public static Image StoryBattleEnabled;
+    public static Image StoryBattleEnabled, StoryBattleSelected;
     public static Image BattleSelectPageUpEnabled, BattleSelectPageUpDisabled;
     public static Image BattleSelectPageDownEnabled, BattleSelectPageDownDisabled;
 

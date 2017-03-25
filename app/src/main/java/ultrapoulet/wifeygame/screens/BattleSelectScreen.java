@@ -158,14 +158,19 @@ public class BattleSelectScreen extends Screen {
                 int rightX = AREA_RIGHT_X;
                 int topY = BATTLES_TOP_Y + BATTLES_OFFSET_Y * (unlockedAreas.size() % AREA_PAGE_SIZE);
                 int botY = BATTLES_BOT_Y + BATTLES_OFFSET_Y * (unlockedAreas.size() % AREA_PAGE_SIZE);
-                storyAreaList.addButton(new Button(leftX, rightX, topY, botY, false, area.get(i).getAreaName(), Assets.StoryBattleEnabled));
+                if(selectedArea == i){
+                    storyAreaList.addButton(new Button(leftX, rightX, topY, botY, false, area.get(i).getAreaName(), Assets.StoryBattleSelected));
+                }
+                else {
+                    storyAreaList.addButton(new Button(leftX, rightX, topY, botY, false, area.get(i).getAreaName(), Assets.StoryBattleEnabled));
+                }
                 unlockedAreas.add(area.get(i));
            }
         }
 
         createBattleButtons();
         setAreaPageVisible(true);
-        setBattlePageVisible(false);
+        setBattlePageVisible(selectedArea != -1);
         activatePageAndBattleButtons();
 
         buttonPaint = new Paint();
@@ -297,10 +302,16 @@ public class BattleSelectScreen extends Screen {
                     }
                 }
                 else if(lastPressedArea == storyAreaList.getIndexPressed(t.x, t.y) && lastPressedArea != -1){
+                    if(selectedArea != -1) {
+                        storyAreaList.get(selectedArea).setActiveImage(Assets.StoryBattleEnabled);
+                    }
                     selectedArea = (selectedArea == lastPressedArea) ? -1 : lastPressedArea;
                     createBattleButtons();
                     setBattlePageVisible(selectedArea != -1);
                     activatePageAndBattleButtons();
+                    if(selectedArea != -1) {
+                        storyAreaList.get(selectedArea).setActiveImage(Assets.StoryBattleSelected);
+                    }
                 }
                 else if(lastPressedBattle == storyBattleList.getIndexPressed(t.x, t.y) && lastPressedBattle != -1){
                     BattleInfo battle = unlockedAreas.get(selectedArea).getBattle(lastPressedBattle);
