@@ -88,6 +88,7 @@ public class Assets {
     public static Image BattleResultDefeat;
     public static Image BattleResultExp;
     public static Image BattleResultGold;
+    public static Image LevelUp;
 
     //Element Image stuff
     public static List<Image> ElementImages;

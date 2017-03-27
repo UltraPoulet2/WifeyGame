@@ -35,6 +35,7 @@ public class BattleResultScreen extends Screen{
     private static final int TEXT_WIDTH = 30;
     private static final int TEXT_HEIGHT = 60;
     private static final int TEXT_OFFSET = 0;
+    private static final int LEVEL_WIDTH = 60;
 
     private static final int PARTY_HEIGHT = 160;
     private static final int PARTY_WIDTH = 160;
@@ -47,6 +48,8 @@ public class BattleResultScreen extends Screen{
     private static final int BONUS_TEXT_WIDTH = 15;
     private static final int BONUS_TEXT_HEIGHT = 30;
     private static final int BONUS_TEXT_OFFSET = 0;
+    private static final int WIFEY_LEVEL_OFFSET_X = 50;
+    private static final int WIFEY_LEVEL_OFFSET_Y = 100;
 
     private static final int CONTINUE_LEFT_X = 500;
     private static final int CONTINUE_RIGHT_X = 750;
@@ -62,13 +65,16 @@ public class BattleResultScreen extends Screen{
     private Button pressed;
 
     private boolean victory;
-    //Calculate actual values later
+
     private int baseExp;
     private int bonusExp;
     private int baseGold;
     private int bonusGold;
 
     private boolean printed = false;
+
+    private boolean playerLevelUp = false;
+    private boolean[] wifeyLevelUp = new boolean[7];
 
     private class BonusGains{
         private int gold;
@@ -115,17 +121,11 @@ public class BattleResultScreen extends Screen{
             bonusExp += exp;
             gains.add(new BonusGains(gold, exp));
         }
-        boolean playerLevelUp  = PlayerInfo.addExperience(baseExp + bonusExp);
-        if(playerLevelUp){
-            System.out.println("For now, just printing out level up");
-        }
+        playerLevelUp  = PlayerInfo.addExperience(baseExp + bonusExp);
         List<WifeyCharacter> wifeyList = Party.getParty(party.size());
         for(int i = 0; i < wifeyList.size(); i++){
             //This will be replaced with a boolean list later
-            boolean wifeyLevel = wifeyList.get(i).addExperience(baseExp + bonusExp);
-            if(wifeyLevel){
-                System.out.println("Printing out a wifey level up");
-            }
+            wifeyLevelUp[i] = wifeyList.get(i).addExperience(baseExp + bonusExp);
     }
         PlayerInfo.addGold(baseGold + bonusGold);
     }
@@ -170,17 +170,24 @@ public class BattleResultScreen extends Screen{
         if(bonusExp > 0){
             expWidth += TEXT_SPACING + (bonusExpDigits * TEXT_WIDTH);
         }
+        if(playerLevelUp){
+            expWidth += TEXT_SPACING + LEVEL_WIDTH;
+        }
         currentX = CENTER_X - (expWidth / 2);
         g.drawImage(Assets.BattleResultExp, currentX, EXP_Y);
         currentX += RESULT_OBJECT_WIDTH + TEXT_SPACING;
         g.drawImage(Assets.BluePlus, currentX, EXP_Y);
         currentX += TEXT_WIDTH;
         NumberPrinter.drawNumber(g, baseExp, currentX, EXP_Y, TEXT_WIDTH, TEXT_HEIGHT, TEXT_OFFSET, Assets.BlueNumbers, Align.LEFT);
+        currentX += baseExpDigits * TEXT_WIDTH + TEXT_SPACING;
         if(bonusExp > 0) {
-            currentX += baseExpDigits * TEXT_WIDTH + TEXT_SPACING;
             g.drawImage(Assets.BluePlus, currentX, EXP_Y);
             currentX += TEXT_WIDTH;
             NumberPrinter.drawNumber(g, bonusExp, currentX, EXP_Y, TEXT_WIDTH, TEXT_HEIGHT, TEXT_OFFSET, Assets.BlueNumbers, Align.LEFT);
+            currentX += bonusExpDigits * TEXT_WIDTH + TEXT_SPACING;
+        }
+        if(playerLevelUp){
+            g.drawImage(Assets.LevelUp, currentX, EXP_Y);
         }
 
         //Imagery for displaying Gold Gained
@@ -226,6 +233,9 @@ public class BattleResultScreen extends Screen{
                 g.drawScaledImage(Assets.YellowPlus, plusX, PARTY_ROW_1_Y + BONUS_GOLD_OFFSET_Y, BONUS_TEXT_WIDTH, BONUS_TEXT_HEIGHT);
                 NumberPrinter.drawNumber(g, gold, plusX + BONUS_TEXT_WIDTH, PARTY_ROW_1_Y + BONUS_GOLD_OFFSET_Y, BONUS_TEXT_WIDTH, BONUS_TEXT_HEIGHT, BONUS_TEXT_OFFSET, Assets.YellowNumbers, Align.LEFT);
             }
+            if(wifeyLevelUp[i]){
+                g.drawImage(Assets.LevelUp, x + WIFEY_LEVEL_OFFSET_X, PARTY_ROW_1_Y + WIFEY_LEVEL_OFFSET_Y);
+            }
         }
         int botRowSize = party.size() / 2;
         baseX = CENTER_X - ((PARTY_WIDTH * botRowSize) + (PARTY_SPACING * (botRowSize - 1))) / 2;
@@ -247,6 +257,9 @@ public class BattleResultScreen extends Screen{
                 int plusX = x + ((PARTY_WIDTH - totalWidth) / 2);
                 g.drawScaledImage(Assets.YellowPlus, plusX, PARTY_ROW_2_Y + BONUS_GOLD_OFFSET_Y, BONUS_TEXT_WIDTH, BONUS_TEXT_HEIGHT);
                 NumberPrinter.drawNumber(g, gold, plusX + BONUS_TEXT_WIDTH, PARTY_ROW_2_Y + BONUS_GOLD_OFFSET_Y, BONUS_TEXT_WIDTH, BONUS_TEXT_HEIGHT, BONUS_TEXT_OFFSET, Assets.YellowNumbers, Align.LEFT);
+            }
+            if(wifeyLevelUp[i]){
+                g.drawImage(Assets.LevelUp, x + WIFEY_LEVEL_OFFSET_X, PARTY_ROW_2_Y + WIFEY_LEVEL_OFFSET_Y);
             }
         }
     }
