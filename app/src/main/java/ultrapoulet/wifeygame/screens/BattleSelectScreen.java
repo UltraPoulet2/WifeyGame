@@ -9,10 +9,12 @@ import java.util.List;
 
 import ultrapoulet.androidgame.framework.Game;
 import ultrapoulet.androidgame.framework.Graphics;
+import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.androidgame.framework.Input.TouchEvent;
 import ultrapoulet.androidgame.framework.Screen;
 import ultrapoulet.androidgame.framework.helpers.Button;
 import ultrapoulet.androidgame.framework.helpers.ButtonList;
+import ultrapoulet.androidgame.framework.helpers.NumberPrinter;
 import ultrapoulet.wifeygame.Assets;
 import ultrapoulet.wifeygame.battle.BattleInfo;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
@@ -44,6 +46,14 @@ public class BattleSelectScreen extends Screen {
     private static final int BATTLES_TOP_Y = HEADER_OFFSET + 160;
     private static final int BATTLES_BOT_Y = BATTLES_TOP_Y + 100;
     private static final int BATTLES_OFFSET_Y = BATTLES_BOT_Y - BATTLES_TOP_Y + 10;
+
+    private static final int BATTLE_ENERGY_IMAGE_OFFSET_X = 5;
+    private static final int BATTLE_ENERGY_NUMBER_OFFSET_X = 25;
+    private static final int BATTLE_ENERGY_OFFSET_Y = 50;
+    private static final int BATTLE_ENERGY_WIDTH = 20;
+    private static final int BATTLE_ENERGY_HEIGHT = 40;
+    private static final int BATTLE_ENERGY_OFFSET = 0;
+
     private static final int BATTLE_PAGE_UP_TOP_Y = HEADER_OFFSET + 110;
     private static final int BATTLE_PAGE_UP_BOT_Y = BATTLE_PAGE_UP_TOP_Y + 40;
     private static final int BATTLE_PAGE_DOWN_TOP_Y = HEADER_OFFSET + 820;
@@ -343,6 +353,27 @@ public class BattleSelectScreen extends Screen {
         }
 
         partyList.drawImage(g);
+
+        //Not active means selected
+        if(!storyButton.isActive() && selectedArea != -1){
+            for(int i = 0; i < storyBattleList.size(); i++){
+                if(storyBattleList.get(i).isActive()){
+                    int imageX = STORY_BATTLE_LEFT_X + BATTLE_ENERGY_IMAGE_OFFSET_X;
+                    int numberX = STORY_BATTLE_LEFT_X + BATTLE_ENERGY_NUMBER_OFFSET_X;
+                    int imageY =  BATTLES_TOP_Y + BATTLES_OFFSET_Y * (i % AREA_PAGE_SIZE) + BATTLE_ENERGY_OFFSET_Y;
+                    g.drawImage(Assets.EnergyImage, imageX, imageY);
+                    List<Image> numberList;
+                    BattleInfo battle = unlockedAreas.get(selectedArea).getBattle(i);
+                    if(PlayerInfo.getCurrentEnergy() >= battle.getEnergyRequirement()){
+                        numberList = Assets.WhiteNumbers;
+                    }
+                    else{
+                        numberList = Assets.RedNumbers;
+                    }
+                    NumberPrinter.drawNumber(g, battle.getEnergyRequirement(), numberX, imageY, BATTLE_ENERGY_WIDTH, BATTLE_ENERGY_HEIGHT, BATTLE_ENERGY_OFFSET, numberList, NumberPrinter.Align.LEFT);
+                }
+            }
+        }
     }
 
     @Override

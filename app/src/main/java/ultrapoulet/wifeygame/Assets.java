@@ -52,6 +52,7 @@ public class Assets {
     public static Image StoryBattleEnabled, StoryBattleSelected;
     public static Image BattleSelectPageUpEnabled, BattleSelectPageUpDisabled;
     public static Image BattleSelectPageDownEnabled, BattleSelectPageDownDisabled;
+    public static Image EnergyImage;
 
     //PartyInfo Holder Stuff
     public static Image StatusHolder;
