@@ -18,8 +18,11 @@ public class WifeyCharacter {
     private int magic;
     private ArrayList<SkillsEnum> skills;
 
-    private int experience;
-    private int level;
+    private int level = 1;
+    private int experience = 0;
+    private int nextLevelExp = 1000;
+    private static final double NEXT_LEVEL_MULT = 1.25;
+    private static final int STAT_INCREASE = 2;
 
     private Weapon weapon;
 
@@ -75,6 +78,16 @@ public class WifeyCharacter {
     public Element getWeakElement() { return this.weakElement; }
 
     public ArrayList<SkillsEnum> getSkills() { return this.skills; }
+
+    public int getLevel() { return this.level; }
+
+    public String getExperienceString(){
+        return experience + "/" + nextLevelExp;
+    }
+
+    public double getExperiencePercent(){
+        return 1.0 * experience / nextLevelExp;
+    }
 
     public ArrayList<TransformWifey> getTransformations(){
         return this.transformations;
@@ -185,4 +198,25 @@ public class WifeyCharacter {
         }
         return true;
     }
+
+    //Return true if level increased
+    public boolean addExperience(int addedExperience){
+        boolean leveled = false;
+        experience += addedExperience;
+        while(experience > nextLevelExp){
+            leveled = true;
+            level++;
+            experience -= nextLevelExp;
+            nextLevelExp *= NEXT_LEVEL_MULT;
+            strength += STAT_INCREASE;
+            magic += STAT_INCREASE;
+            System.out.println(name + " Level " + level + " Next exp: " + nextLevelExp);
+            for(int i = 0; i < transformations.size(); i++){
+                TransformWifey transformation = transformations.get(i);
+                transformation.levelUp();
+            }
+        }
+        return leveled;
+    }
+
 }

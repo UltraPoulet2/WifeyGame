@@ -33,6 +33,7 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
 
     private Image displayImage;
     private String displayName;
+    private String displayExp;
     private int displayStrength;
     private int displayMagic;
     private ArrayList<SkillsEnum> displaySkills = new ArrayList<>();
@@ -66,6 +67,17 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
     private static final int LEVEL_SIZE = 34;
     private static final int LEVEL_X = 425 + BG_X;
     private static final int LEVEL_Y = 237 + BG_Y;
+
+    private Paint expPaint;
+    private static final int MAX_EXP_FONT = 34;
+    private static final int MAX_EXP_SIZE = 195;
+    private static final int EXP_X = 552 + BG_X;
+    private static final int EXP_Y = 237 + BG_Y;
+
+    private static final int EXP_BAR_X = 455 + BG_X;
+    private static final int EXP_BAR_Y = 200 + BG_Y;
+    private static final int EXP_BAR_MAX_WIDTH = 195;
+    private static final int EXP_BAR_HEIGHT = 50;
 
     private Paint statPaint;
     private static final int STAT_SIZE = 34;
@@ -113,6 +125,10 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
         hitsPaint.setTextSize(HITS_SIZE);
 
         descPaint.setTextSize(SKILLS_DESC_SIZE);
+
+        expPaint = new Paint();
+        expPaint.setTextAlign(Align.CENTER);
+        expPaint.setColor(Color.WHITE);
     }
 
     public void createUniqueButtons(){
@@ -131,7 +147,10 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
 
         displayText = -1;
 
-        maxPage = (displayChar.getSkills().size() / SKILLS_TEXT_PER_PAGE);
+        displayExp = displayChar.getExperienceString();
+
+        //Note: If the character has no skills, this will still return 0
+        maxPage = (displayChar.getSkills().size() - 1) / SKILLS_TEXT_PER_PAGE;
         skillsPage = 0;
         transformPage = 0;
         maxTransformPage = transformations.size();
@@ -278,7 +297,10 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
     }
 
     protected void drawTopRows(Graphics g){
-        g.drawString("1", LEVEL_X, LEVEL_Y, levelPaint);
+        g.drawString(String.valueOf(displayChar.getLevel()), LEVEL_X, LEVEL_Y, levelPaint);
+        int expWidth = (int) (EXP_BAR_MAX_WIDTH * displayChar.getExperiencePercent());
+        g.drawScaledImage(Assets.pHealthY, EXP_BAR_X, EXP_BAR_Y, expWidth, EXP_BAR_HEIGHT);
+        g.drawString(displayExp, EXP_X, EXP_Y, expPaint, MAX_EXP_SIZE, MAX_EXP_FONT);
 
         g.drawString(String.valueOf(BattleWifey.calculateHP(displayStrength)), HP_X, STAT_Y, statPaint);
         g.drawString(String.valueOf(displayStrength), STR_X, STAT_Y, statPaint);

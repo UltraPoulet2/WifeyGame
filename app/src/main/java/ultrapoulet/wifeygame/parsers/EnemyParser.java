@@ -35,6 +35,8 @@ public class EnemyParser extends DefaultHandler{
     private boolean bSpecialDamage = false;
     private boolean bSpecialHits = false;
     private boolean bSkill = false;
+    private boolean bGold = false;
+    private boolean bExp = false;
 
     private boolean bTransformSec;
     private boolean bTransform;
@@ -160,6 +162,12 @@ public class EnemyParser extends DefaultHandler{
             transformBuilder = new TransformEnemy();
             transformBuilder.setImage(enemyKey + "-T" + tNumber);
             bTransform = true;
+        }
+        else if(qName.equalsIgnoreCase("gold")){
+            bGold = true;
+        }
+        else if(qName.equalsIgnoreCase("exp")){
+            bExp = true;
         }
         else{
             System.out.println("EnemyParser:startElement(): Invalid qName: " + qName + " for key: " + enemyKey);
@@ -395,6 +403,14 @@ public class EnemyParser extends DefaultHandler{
                 }
                 bWkElement = false;
             }
+            else if(bGold){
+                enemyBuilder.setGold(Integer.parseInt(temp));
+                bGold = false;
+            }
+            else if(bExp){
+                enemyBuilder.setExperience(Integer.parseInt(temp));
+                bExp = false;
+            }
 
         }
         catch(NumberFormatException e){
@@ -413,6 +429,8 @@ public class EnemyParser extends DefaultHandler{
             bWeaken = false;
             bSpecialDamage = false;
             bSpecialHits = false;
+            bGold = false;
+            bExp = false;
         }
 
     }

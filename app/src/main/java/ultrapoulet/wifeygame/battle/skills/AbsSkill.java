@@ -75,6 +75,10 @@ public class AbsSkill {
     public void setOwner(BattleCharacter owner){ this.owner = owner; }
 
     public String getSkillName(){
+        if(this.skillName == null){
+            System.out.println("Skill name has not been set");
+            return "";
+        }
         return this.skillName;
     }
 
@@ -103,8 +107,9 @@ public class AbsSkill {
         //Do anything that needs to be done at the end of a round
     }
 
-    public void endWave() {
+    public void endWave(BattleCharacter enemy) {
         //Do anything that needs to be done at the end of a wave
+        //Pass in the enemy that was defeated that round
     }
 
     public void resetValues(){
@@ -195,6 +200,16 @@ public class AbsSkill {
 
     public int preventDeath() {
         //Return the amount of heal if death is prevented
+        return 0;
+    }
+
+    public int getBonusExp() {
+        //Return the amount of bonus experience received from battle
+        return 0;
+    }
+
+    public int getBonusGold(){
+        //Return the amount of bonus gold received from battle
         return 0;
     }
 

@@ -3,6 +3,8 @@
     <enemy key="TEST-NME1">
         <name>Enemy 1</name>
         <ai>BasicPhysicalEnemyAI</ai>
+        <gold>100</gold>
+        <exp>100</exp>
         <maxHP>10000</maxHP>
         <powerDamage>50</powerDamage>
         <powerHits>3</powerHits>
@@ -20,6 +22,8 @@
     <enemy key="TEST-NME2">
         <name>Enemy 2</name>
         <ai>BasicMagicEnemyAI</ai>
+        <gold>200</gold>
+        <exp>200</exp>
         <maxHP>20000</maxHP>
         <magicDamage>50</magicDamage>
         <healAmount>1000</healAmount>
@@ -32,6 +36,8 @@
     <enemy key="TEST-NME3">
         <name>Enemy 3</name>
         <ai>OriginalBossAI</ai>
+        <gold>1000</gold>
+        <exp>1000</exp>
         <maxHP>50000</maxHP>
         <powerDamage>20</powerDamage>
         <powerHits>4</powerHits>
@@ -51,6 +57,8 @@
     <enemy key="TEST-NME4">
         <name>Enemy 4</name>
         <ai>BasicPhysicalEnemyAI</ai>
+        <gold>400</gold>
+        <exp>400</exp>
         <maxHP>10000</maxHP>
         <powerDamage>20</powerDamage>
         <powerHits>4</powerHits>
@@ -60,6 +68,7 @@
             <skill>ATHLETE</skill>
             <skill>RACER</skill>
             <skill>BIKER</skill>
+            <skill>KILLER</skill>
         </skills>
         <elements>
             <atkElement>AIR</atkElement>
@@ -70,6 +79,8 @@
     <enemy key="TEST-NME5">
         <name>Enemy 5</name>
         <ai>BasicPhysicalEnemyAI</ai>
+        <gold>500</gold>
+        <exp>500</exp>
         <maxHP>8000</maxHP>
         <powerDamage>30</powerDamage>
         <powerHits>3</powerHits>
@@ -87,6 +98,8 @@
     <enemy key="TEST-NME6">
         <name>Enemy 6</name>
         <ai>BasicTransformEnemyAI</ai>
+        <gold>600</gold>
+        <exp>600</exp>
         <maxHP>8000</maxHP>
         <magicDamage>10</magicDamage>
         <healAmount>1500</healAmount>

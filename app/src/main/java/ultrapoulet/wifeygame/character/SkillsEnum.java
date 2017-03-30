@@ -23,6 +23,7 @@ import ultrapoulet.wifeygame.battle.skills.implementations.MediumSkill;
 import ultrapoulet.wifeygame.battle.skills.implementations.MusicianSkill;
 import ultrapoulet.wifeygame.battle.skills.implementations.NurseSkill;
 import ultrapoulet.wifeygame.battle.skills.implementations.PilotSkill;
+import ultrapoulet.wifeygame.battle.skills.implementations.PoliceSkill;
 import ultrapoulet.wifeygame.battle.skills.implementations.PravdaSkill;
 import ultrapoulet.wifeygame.battle.skills.implementations.ProgrammerSkill;
 import ultrapoulet.wifeygame.battle.skills.implementations.ProtagonistSkill;
@@ -33,6 +34,7 @@ import ultrapoulet.wifeygame.battle.skills.implementations.SadistSkill;
 import ultrapoulet.wifeygame.battle.skills.implementations.SlugabedSkill;
 import ultrapoulet.wifeygame.battle.skills.implementations.SportsManagerSkill;
 import ultrapoulet.wifeygame.battle.skills.implementations.SurvivalSkill;
+import ultrapoulet.wifeygame.battle.skills.implementations.TeacherSkill;
 import ultrapoulet.wifeygame.battle.skills.implementations.TimeTravelerSkill;
 import ultrapoulet.wifeygame.battle.skills.implementations.TrapSkill;
 import ultrapoulet.wifeygame.battle.skills.implementations.TsundereSkill;
@@ -105,6 +107,8 @@ public class SkillsEnum {
                 return new NurseSkill(owner);
             case "Pilot":
                 return new PilotSkill(owner);
+            case "Police":
+                return new PoliceSkill(owner);
             case "Pravda":
                 return new PravdaSkill(owner, false);
             case "Pravda President":
@@ -127,6 +131,8 @@ public class SkillsEnum {
                 return new SlugabedSkill(owner);
             case "Sports Manager":
                 return new SportsManagerSkill(owner);
+            case "Teacher":
+                return new TeacherSkill(owner);
             case "Time Traveler":
                 return new TimeTravelerSkill(owner);
             case "Trap":
@@ -174,6 +180,7 @@ public class SkillsEnum {
         skillsList.put("MUSICIAN", new SkillsEnum("Musician", "Multiplies damage dealt by 4.00x every eighth hit."));
         skillsList.put("NURSE", new SkillsEnum("Nurse", "Multiplies healing by 2.00x. Gains health at the start of every round."));
         skillsList.put("PILOT", new SkillsEnum("Pilot", "Multiplies magical and special damage taken from AIR sources by 0.50x"));
+        skillsList.put("POLICE", new SkillsEnum("Police", "Gives bonus gold by defeating an enemy with a criminal skill."));
         skillsList.put("PRAVDA", new SkillsEnum("Pravda", "Increases damage dealt multiplier by 1.00x for each other Pravda wifey."));
         skillsList.put("PRAVDAPRES", new SkillsEnum("Pravda President", "Increases damage dealt multiplier by 2.00x for each other Pravda wifey."));
         skillsList.put("PROGRAMMER", new SkillsEnum("Programmer", "Increases damage dealt multiplier by 0.75x each time this wifey attacks a Robot. Resets at the start of the round."));
@@ -185,6 +192,7 @@ public class SkillsEnum {
         skillsList.put("SPORTSMANAGER", new SkillsEnum("Sports Manager", "Increases physical damage dealt multiplier by 0.05x for each Athlete wifey. Increases the physical damage multiplier of each Athlete wifey by 1.00x. This does not stack."));
         skillsList.put("SURVIVAL", new SkillsEnum("Sabagebu", "Decreases physical, magical, and special damage taken multiplier by 0.01x each turn."));
         skillsList.put("SURVIVALPRES", new SkillsEnum("Sabagebu President", "Decreases physical, magical, and special damage taken multiplier by 0.02x each turn."));
+        skillsList.put("TEACHER", new SkillsEnum("Teacher", "Increases experience received by party by 10%"));
         skillsList.put("TIMETRAVELER", new SkillsEnum("Time Traveler", "When this wifey suffers lethal damage the first time, prevent the death and set health to the wifey's health at the start of the round."));
         skillsList.put("TRAP", new SkillsEnum("Trap", "Multiplies physical, magical, and special damage taken by 0.15x."));
         skillsList.put("TSUNDERE", new SkillsEnum("Tsundere", "Multiplies damage dealt by 2.00x if there are only 3 party members, 3.00x if there are only 2, 4.00x if this is the only wifey."));
@@ -210,12 +218,10 @@ public class SkillsEnum {
         skillsList.put("MARTIALARTSPRES", new SkillsEnum("Martial Arts Club President", "Martial Arts Club President description"));
         skillsList.put("MARTIALARTS", new SkillsEnum("Martial Artist", "Martial Artist description"));
         skillsList.put("DEMON", new SkillsEnum("Demon", "Demon description"));
-        skillsList.put("TEACHER", new SkillsEnum("Teacher", "Teacher description"));
         skillsList.put("MONSTER", new SkillsEnum("Monster", "Monster description"));
         skillsList.put("MILITARY", new SkillsEnum("Military", "Military description"));
         skillsList.put("CRIMINAL", new SkillsEnum("Criminal", "Criminal description"));
         skillsList.put("BOOKWORM", new SkillsEnum("Bookworm", "Bookworm description"));
-        skillsList.put("POLICE", new SkillsEnum("Police", "Police description")); //Increase gold when defeating a criminal
         skillsList.put("LOVECRAFT", new SkillsEnum("Lovecraft", "Lovecraft description"));
         skillsList.put("SELECTOR", new SkillsEnum("Selector", "Selector description"));
         skillsList.put("KUUDERE", new SkillsEnum("Kuudere", "Kuudere description"));

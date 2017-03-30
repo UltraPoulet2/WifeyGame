@@ -92,11 +92,11 @@ public class SkillList {
         }
     }
 
-    public void endWave() {
+    public void endWave(BattleCharacter enemy) {
         //Do anything that needs to be done at the end of a wave
         //This is currently only relevant for BattleWifeys
         for(int i = 0; i < skills.size(); i++){
-            skills.get(i).endWave();
+            skills.get(i).endWave(enemy);
         }
     }
 
@@ -258,6 +258,22 @@ public class SkillList {
         return returnValue;
     }
 
+    public int getBonusExp() {
+        int returnValue = 0;
+        for(int i = 0; i < skills.size(); i++){
+            returnValue += skills.get(i).getBonusExp();
+        }
+        return returnValue;
+    }
+
+    public int getBonusGold() {
+        int returnValue = 0;
+        for(int i = 0; i < skills.size(); i++){
+            returnValue += skills.get(i).getBonusGold();
+        }
+        return returnValue;
+    }
+
     public boolean hasSkill(Class skillClass){
         for(int i = 0; i < skills.size(); i++){
             if(skills.get(i).getClass() == skillClass){
@@ -275,9 +291,9 @@ public class SkillList {
             returnValue.setPhysAtk(returnValue.getPhysAtk() * skillMult.getPhysAtk());
             returnValue.setMagAtk(returnValue.getMagAtk() * skillMult.getMagAtk());
             returnValue.setSpecAtk(returnValue.getSpecAtk() * skillMult.getSpecAtk());
-            returnValue.setPhysDef(skillMult.getPhysDef() * (1.0 - returnValue.getPhysDef()));
-            returnValue.setMagDef(skillMult.getMagDef() * (1.0 - returnValue.getMagDef()));
-            returnValue.setSpecDef(skillMult.getSpecDef() * (1.0 - returnValue.getSpecDef()));
+            returnValue.setPhysDef(returnValue.getPhysDef() + (skillMult.getPhysDef() * (1.0 - returnValue.getPhysDef())));
+            returnValue.setMagDef(returnValue.getMagDef() + (skillMult.getMagDef() * (1.0 - returnValue.getMagDef())));
+            returnValue.setSpecDef(returnValue.getSpecDef() + (skillMult.getSpecDef() * (1.0 - returnValue.getSpecDef())));
         }
         returnValue.setPhysDef(1.0 - returnValue.getPhysDef() > 0.10 ? 1.0 - returnValue.getPhysDef() : 0.10);
         returnValue.setMagDef(1.0 - returnValue.getMagDef() > 0.10 ? 1.0 - returnValue.getMagDef() : 0.10);

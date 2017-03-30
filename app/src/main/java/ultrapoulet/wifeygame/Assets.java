@@ -31,12 +31,14 @@ public class Assets {
     public static List<Image> KOImages;
     public static Image HPSlash;
     public static Image Colon;
-    public static Image Plus;
+    public static Image YellowPlus;
+    public static Image BluePlus;
     public static List<Image> WhiteNumbers;
     public static List<Image> GreenNumbers;
     public static List<Image> YellowNumbers;
     public static List<Image> RedNumbers;
     public static List<Image> GreyNumbers;
+    public static List<Image> BlueNumbers;
 
     //BattleSelectScreen stuff
     public static Image BattleSelectScreen;
@@ -47,6 +49,10 @@ public class Assets {
     public static Image StoryButtonActive, StoryButtonInactive;
     public static Image RecruitButtonActive, RecruitButtonInactive;
     public static Image SpecialButtonActive, SpecialButtonInactive;
+    public static Image StoryBattleEnabled, StoryBattleSelected;
+    public static Image BattleSelectPageUpEnabled, BattleSelectPageUpDisabled;
+    public static Image BattleSelectPageDownEnabled, BattleSelectPageDownDisabled;
+    public static Image EnergyImage;
 
     //PartyInfo Holder Stuff
     public static Image StatusHolder;
@@ -83,6 +89,7 @@ public class Assets {
     public static Image BattleResultDefeat;
     public static Image BattleResultExp;
     public static Image BattleResultGold;
+    public static Image LevelUp;
 
     //Element Image stuff
     public static List<Image> ElementImages;

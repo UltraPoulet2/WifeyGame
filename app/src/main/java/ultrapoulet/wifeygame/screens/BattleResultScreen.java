@@ -1,5 +1,6 @@
 package ultrapoulet.wifeygame.screens;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ultrapoulet.androidgame.framework.Game;
@@ -14,6 +15,9 @@ import ultrapoulet.androidgame.framework.helpers.NumberPrinter.Align;
 import ultrapoulet.wifeygame.Assets;
 import ultrapoulet.wifeygame.battle.BattleCharacter;
 import ultrapoulet.wifeygame.battle.BattleInfo;
+import ultrapoulet.wifeygame.character.WifeyCharacter;
+import ultrapoulet.wifeygame.gamestate.Party;
+import ultrapoulet.wifeygame.gamestate.PlayerInfo;
 
 /**
  * Created by John on 1/18/2017.
@@ -31,12 +35,21 @@ public class BattleResultScreen extends Screen{
     private static final int TEXT_WIDTH = 30;
     private static final int TEXT_HEIGHT = 60;
     private static final int TEXT_OFFSET = 0;
+    private static final int LEVEL_WIDTH = 60;
 
     private static final int PARTY_HEIGHT = 160;
     private static final int PARTY_WIDTH = 160;
     private static final int PARTY_SPACING = 10;
     private static final int PARTY_ROW_1_Y = 750;
     private static final int PARTY_ROW_2_Y = 920;
+
+    private static final int BONUS_EXP_OFFSET_Y = 0;
+    private static final int BONUS_GOLD_OFFSET_Y = 30;
+    private static final int BONUS_TEXT_WIDTH = 15;
+    private static final int BONUS_TEXT_HEIGHT = 30;
+    private static final int BONUS_TEXT_OFFSET = 0;
+    private static final int WIFEY_LEVEL_OFFSET_X = 50;
+    private static final int WIFEY_LEVEL_OFFSET_Y = 100;
 
     private static final int CONTINUE_LEFT_X = 500;
     private static final int CONTINUE_RIGHT_X = 750;
@@ -52,11 +65,35 @@ public class BattleResultScreen extends Screen{
     private Button pressed;
 
     private boolean victory;
-    //Calculate actual values later
-    private int baseExp = 0;
-    private int bonusExp = 1;
-    private int baseGold = 0;
-    private int bonusGold = 1;
+
+    private int baseExp;
+    private int bonusExp;
+    private int baseGold;
+    private int bonusGold;
+
+    private boolean printed = false;
+
+    private boolean playerLevelUp = false;
+    private boolean[] wifeyLevelUp = new boolean[7];
+
+    private class BonusGains{
+        private int gold;
+        private int exp;
+
+        protected BonusGains(int gold, int exp){
+            this.gold = gold;
+            this.exp = exp;
+        }
+
+        protected int getGold(){
+            return this.gold;
+        }
+
+        protected int getExp(){
+            return this.exp;
+        }
+    }
+    private List<BonusGains> gains;
 
     public BattleResultScreen(Game game, BattleInfo info, List<BattleCharacter> party, List<BattleCharacter> enemies){
         super(game);
@@ -69,6 +106,28 @@ public class BattleResultScreen extends Screen{
         buttons.addButton(continueButton);
 
         victory = enemies.get(enemies.size() - 1).getCurrentHP() == 0;
+
+        for(int i = 0; i < enemies.size(); i++){
+            BattleCharacter enemy = enemies.get(i);
+            double healthPer = (enemy.getMaxHP() - enemy.getCurrentHP()) / (1.0 * enemy.getMaxHP());
+            baseGold += (int) (enemy.getGold() * healthPer);
+            baseExp += (int) (enemy.getExperience() * healthPer);
+        }
+        gains = new ArrayList<>();
+        for(int i = 0; i < party.size(); i++){
+            int gold = party.get(i).getGold();
+            int exp = party.get(i).getExperience();
+            bonusGold += gold;
+            bonusExp += exp;
+            gains.add(new BonusGains(gold, exp));
+        }
+        playerLevelUp  = PlayerInfo.addExperience(baseExp + bonusExp);
+        List<WifeyCharacter> wifeyList = Party.getParty(party.size());
+        for(int i = 0; i < wifeyList.size(); i++){
+            //This will be replaced with a boolean list later
+            wifeyLevelUp[i] = wifeyList.get(i).addExperience(baseExp + bonusExp);
+    }
+        PlayerInfo.addGold(baseGold + bonusGold);
     }
 
     @Override
@@ -111,17 +170,24 @@ public class BattleResultScreen extends Screen{
         if(bonusExp > 0){
             expWidth += TEXT_SPACING + (bonusExpDigits * TEXT_WIDTH);
         }
+        if(playerLevelUp){
+            expWidth += TEXT_SPACING + LEVEL_WIDTH;
+        }
         currentX = CENTER_X - (expWidth / 2);
         g.drawImage(Assets.BattleResultExp, currentX, EXP_Y);
         currentX += RESULT_OBJECT_WIDTH + TEXT_SPACING;
-        g.drawImage(Assets.Plus, currentX, EXP_Y);
+        g.drawImage(Assets.BluePlus, currentX, EXP_Y);
         currentX += TEXT_WIDTH;
-        NumberPrinter.drawNumber(g, baseExp, currentX, EXP_Y, TEXT_WIDTH, TEXT_HEIGHT, TEXT_OFFSET, Assets.YellowNumbers, Align.LEFT);
+        NumberPrinter.drawNumber(g, baseExp, currentX, EXP_Y, TEXT_WIDTH, TEXT_HEIGHT, TEXT_OFFSET, Assets.BlueNumbers, Align.LEFT);
+        currentX += baseExpDigits * TEXT_WIDTH + TEXT_SPACING;
         if(bonusExp > 0) {
-            currentX += baseExpDigits * TEXT_WIDTH + TEXT_SPACING;
-            g.drawImage(Assets.Plus, currentX, EXP_Y);
+            g.drawImage(Assets.BluePlus, currentX, EXP_Y);
             currentX += TEXT_WIDTH;
-            NumberPrinter.drawNumber(g, bonusExp, currentX, EXP_Y, TEXT_WIDTH, TEXT_HEIGHT, TEXT_OFFSET, Assets.YellowNumbers, Align.LEFT);
+            NumberPrinter.drawNumber(g, bonusExp, currentX, EXP_Y, TEXT_WIDTH, TEXT_HEIGHT, TEXT_OFFSET, Assets.BlueNumbers, Align.LEFT);
+            currentX += bonusExpDigits * TEXT_WIDTH + TEXT_SPACING;
+        }
+        if(playerLevelUp){
+            g.drawImage(Assets.LevelUp, currentX, EXP_Y);
         }
 
         //Imagery for displaying Gold Gained
@@ -135,12 +201,12 @@ public class BattleResultScreen extends Screen{
         currentX = CENTER_X - (goldWidth / 2);
         g.drawImage(Assets.BattleResultGold, currentX, GOLD_Y);
         currentX += RESULT_OBJECT_WIDTH + TEXT_SPACING;
-        g.drawImage(Assets.Plus, currentX, GOLD_Y);
+        g.drawImage(Assets.YellowPlus, currentX, GOLD_Y);
         currentX += TEXT_WIDTH;
         NumberPrinter.drawNumber(g, baseGold, currentX, GOLD_Y, TEXT_WIDTH, TEXT_HEIGHT, TEXT_OFFSET, Assets.YellowNumbers, Align.LEFT);
         if(bonusGold > 0) {
             currentX += baseGoldDigits * TEXT_WIDTH + TEXT_SPACING;
-            g.drawImage(Assets.Plus, currentX, GOLD_Y);
+            g.drawImage(Assets.YellowPlus, currentX, GOLD_Y);
             currentX += TEXT_WIDTH;
             NumberPrinter.drawNumber(g, bonusGold, currentX, GOLD_Y, TEXT_WIDTH, TEXT_HEIGHT, TEXT_OFFSET, Assets.YellowNumbers, Align.LEFT);
         }
@@ -151,12 +217,50 @@ public class BattleResultScreen extends Screen{
         for(int i = 0; i < topRowSize; i++){
             int x = baseX + (PARTY_WIDTH + PARTY_SPACING) * i;
             g.drawScaledImage(party.get(i).getImage(), x, PARTY_ROW_1_Y, PARTY_WIDTH, PARTY_HEIGHT);
+            if(gains.get(i).getExp() > 0){
+                int exp = gains.get(i).getExp();
+                int numDigits = Integer.toString(exp).length();
+                int totalWidth = (numDigits + 1) * BONUS_TEXT_WIDTH;
+                int plusX = x + ((PARTY_WIDTH - totalWidth) / 2);
+                g.drawScaledImage(Assets.BluePlus, plusX, PARTY_ROW_1_Y + BONUS_EXP_OFFSET_Y, BONUS_TEXT_WIDTH, BONUS_TEXT_HEIGHT);
+                NumberPrinter.drawNumber(g, exp, plusX + BONUS_TEXT_WIDTH, PARTY_ROW_1_Y + BONUS_EXP_OFFSET_Y, BONUS_TEXT_WIDTH, BONUS_TEXT_HEIGHT, BONUS_TEXT_OFFSET, Assets.BlueNumbers, Align.LEFT);
+            }
+            if(gains.get(i).getGold() > 0){
+                int gold = gains.get(i).getGold();
+                int numDigits = Integer.toString(gold).length();
+                int totalWidth = (numDigits + 1) * BONUS_TEXT_WIDTH;
+                int plusX = x + ((PARTY_WIDTH - totalWidth) / 2);
+                g.drawScaledImage(Assets.YellowPlus, plusX, PARTY_ROW_1_Y + BONUS_GOLD_OFFSET_Y, BONUS_TEXT_WIDTH, BONUS_TEXT_HEIGHT);
+                NumberPrinter.drawNumber(g, gold, plusX + BONUS_TEXT_WIDTH, PARTY_ROW_1_Y + BONUS_GOLD_OFFSET_Y, BONUS_TEXT_WIDTH, BONUS_TEXT_HEIGHT, BONUS_TEXT_OFFSET, Assets.YellowNumbers, Align.LEFT);
+            }
+            if(wifeyLevelUp[i]){
+                g.drawImage(Assets.LevelUp, x + WIFEY_LEVEL_OFFSET_X, PARTY_ROW_1_Y + WIFEY_LEVEL_OFFSET_Y);
+            }
         }
         int botRowSize = party.size() / 2;
         baseX = CENTER_X - ((PARTY_WIDTH * botRowSize) + (PARTY_SPACING * (botRowSize - 1))) / 2;
         for(int i = topRowSize; i < party.size(); i++){
             int x = baseX + (PARTY_WIDTH + PARTY_SPACING) * (i - topRowSize);
             g.drawScaledImage(party.get(i).getImage(), x, PARTY_ROW_2_Y, PARTY_WIDTH, PARTY_HEIGHT);
+            if(gains.get(i).getExp() > 0){
+                int exp = gains.get(i).getExp();
+                int numDigits = Integer.toString(exp).length();
+                int totalWidth = (numDigits + 1) * BONUS_TEXT_WIDTH;
+                int plusX = x + ((PARTY_WIDTH - totalWidth) / 2);
+                g.drawScaledImage(Assets.BluePlus, plusX, PARTY_ROW_2_Y + BONUS_EXP_OFFSET_Y, BONUS_TEXT_WIDTH, BONUS_TEXT_HEIGHT);
+                NumberPrinter.drawNumber(g, exp, plusX + BONUS_TEXT_WIDTH, PARTY_ROW_2_Y + BONUS_EXP_OFFSET_Y, BONUS_TEXT_WIDTH, BONUS_TEXT_HEIGHT, BONUS_TEXT_OFFSET, Assets.BlueNumbers, Align.LEFT);
+            }
+            if(gains.get(i).getGold() > 0){
+                int gold = gains.get(i).getGold();
+                int numDigits = Integer.toString(gold).length();
+                int totalWidth = (numDigits + 1) * BONUS_TEXT_WIDTH;
+                int plusX = x + ((PARTY_WIDTH - totalWidth) / 2);
+                g.drawScaledImage(Assets.YellowPlus, plusX, PARTY_ROW_2_Y + BONUS_GOLD_OFFSET_Y, BONUS_TEXT_WIDTH, BONUS_TEXT_HEIGHT);
+                NumberPrinter.drawNumber(g, gold, plusX + BONUS_TEXT_WIDTH, PARTY_ROW_2_Y + BONUS_GOLD_OFFSET_Y, BONUS_TEXT_WIDTH, BONUS_TEXT_HEIGHT, BONUS_TEXT_OFFSET, Assets.YellowNumbers, Align.LEFT);
+            }
+            if(wifeyLevelUp[i]){
+                g.drawImage(Assets.LevelUp, x + WIFEY_LEVEL_OFFSET_X, PARTY_ROW_2_Y + WIFEY_LEVEL_OFFSET_Y);
+            }
         }
     }
 

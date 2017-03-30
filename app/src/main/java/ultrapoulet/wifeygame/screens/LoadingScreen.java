@@ -21,6 +21,7 @@ import ultrapoulet.androidgame.framework.Screen;
 import ultrapoulet.wifeygame.Assets;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
 import ultrapoulet.wifeygame.gamestate.Party;
+import ultrapoulet.wifeygame.gamestate.PlayerInfo;
 import ultrapoulet.wifeygame.gamestate.RecruitedCharacters;
 import ultrapoulet.wifeygame.parsers.BattleParser;
 import ultrapoulet.wifeygame.parsers.CharacterParser;
@@ -76,6 +77,12 @@ public class LoadingScreen extends Screen {
                 return "Creating Battles";
             }
         },
+        LOAD_SAVE{
+            @Override
+            protected String getStatus() {
+                return "Loading Save";
+            }
+        },
         COMPLETE{
             @Override
             protected String getStatus() {
@@ -108,6 +115,10 @@ public class LoadingScreen extends Screen {
                 break;
             case CREATE_BATTLES:
                 createBattles();
+                currentPhase = LoadingPhase.LOAD_SAVE;
+                break;
+            case LOAD_SAVE:
+                loadSave();
                 currentPhase = LoadingPhase.COMPLETE;
                 //Clear the touch input buffer
                 game.getInput().getTouchEvents();
@@ -183,7 +194,8 @@ public class LoadingScreen extends Screen {
         }
         Assets.HPSlash = g.newImage("numbers/HPSlash.png", ImageFormat.ARGB8888);
         Assets.Colon = g.newImage("numbers/Colon.png", ImageFormat.ARGB8888);
-        Assets.Plus = g.newImage("numbers/YellowPlus.png", ImageFormat.ARGB8888);
+        Assets.YellowPlus = g.newImage("numbers/yellow/Plus.png", ImageFormat.ARGB8888);
+        Assets.BluePlus = g.newImage("numbers/blue/Plus.png", ImageFormat.ARGB8888);
 
         Assets.GreenNumbers = new ArrayList<>();
         for(int i = 0; i < 10; i++){
@@ -205,6 +217,11 @@ public class LoadingScreen extends Screen {
             Assets.GreyNumbers.add(g.newImage("numbers/grey/" + i + ".png", ImageFormat.ARGB8888));
         }
 
+        Assets.BlueNumbers = new ArrayList<>();
+        for(int i = 0; i < 10; i++){
+            Assets.BlueNumbers.add(g.newImage("numbers/blue/" + i + ".png", ImageFormat.ARGB8888));
+        }
+
         Assets.StatusHolder = g.newImage("objects/status/StatusHolder.png", ImageFormat.ARGB8888);
         Assets.Hourglass = g.newImage("objects/status/Hourglass.png", ImageFormat.ARGB8888);
 
@@ -220,6 +237,13 @@ public class LoadingScreen extends Screen {
         Assets.RecruitButtonInactive = g.newImage("BattleSelect/RecruitButtonInactive.png", ImageFormat.ARGB8888);
         Assets.SpecialButtonActive = g.newImage("BattleSelect/SpecialButtonActive.png", ImageFormat.ARGB8888);
         Assets.SpecialButtonInactive = g.newImage("BattleSelect/SpecialButtonInactive.png", ImageFormat.ARGB8888);
+        Assets.StoryBattleEnabled = g.newImage("BattleSelect/StoryBattleButtonEnabled.png", ImageFormat.ARGB8888);
+        Assets.StoryBattleSelected = g.newImage("BattleSelect/StoryBattleButtonSelected.png", ImageFormat.ARGB8888);
+        Assets.BattleSelectPageUpEnabled = g.newImage("BattleSelect/BattleSelectPageUpEnabled.png", ImageFormat.ARGB8888);
+        Assets.BattleSelectPageUpDisabled = g.newImage("BattleSelect/BattleSelectPageUpDisabled.png", ImageFormat.ARGB8888);
+        Assets.BattleSelectPageDownEnabled = g.newImage("BattleSelect/BattleSelectPageDownEnabled.png", ImageFormat.ARGB8888);
+        Assets.BattleSelectPageDownDisabled = g.newImage("BattleSelect/BattleSelectPageDownDisabled.png", ImageFormat.ARGB8888);
+        Assets.EnergyImage = g.newImage("BattleSelect/EnergyImage.png", ImageFormat.ARGB8888);
 
         Assets.PartySelectScreen = g.newImage("screens/PartySelectScreen.png", ImageFormat.RGB565);
         Assets.AcceptEnable = g.newImage("buttons/AcceptEnabled.png", ImageFormat.ARGB8888);
@@ -254,6 +278,7 @@ public class LoadingScreen extends Screen {
         Assets.BattleResultDefeat = g.newImage("objects/battleResult/BattleResultDefeat.png", ImageFormat.ARGB8888);
         Assets.BattleResultExp = g.newImage("objects/battleResult/BattleResultExp.png", ImageFormat.ARGB8888);
         Assets.BattleResultGold = g.newImage("objects/battleResult/BattleResultGold.png", ImageFormat.ARGB8888);
+        Assets.LevelUp = g.newImage("BattleResult/LevelUpImage.png", ImageFormat.ARGB8888);
 
         Assets.ElementImages = new ArrayList<>();
         Assets.ElementImages.add(g.newImage("elements/AirElement.png", ImageFormat.ARGB8888));
@@ -379,6 +404,15 @@ public class LoadingScreen extends Screen {
                 }
             }
         }
+    }
+
+    private void loadSave(){
+        SharedPreferences prefs = game.getGamePreferences("ultrapoulet.wifeygame.PREFERENCE_FILE_KEY", Context.MODE_PRIVATE);
+        PlayerInfo.init(prefs);
+        long nextEnergy = prefs.getLong("next_energy", 0);
+        int currentEnergy = prefs.getInt("current_energy", 0);
+        PlayerInfo.setCurrentEnergy(currentEnergy);
+        PlayerInfo.setEnergyTimers(nextEnergy);
     }
 
     @Override

@@ -82,7 +82,10 @@ public class BattleEnemy extends BattleCharacter{
         this.image = input.getImage(g);
         this.ai = input.getAI();
         this.transformations = input.getTransformations();
+        this.gold = input.getGold();
+        this.experience = input.getExperience();
 
+        //As clean up at some point, remove all this, put in the enum
         actionStrings = new HashMap<>();
         actionStrings.put(EnemyAction.POWER_ATTACK, "Power Attack");
         actionStrings.put(EnemyAction.COMBO_ATTACK, "Combo Attack");

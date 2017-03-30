@@ -25,6 +25,8 @@ public class BattleInfo {
 
     private String background;
 
+    private int energyRequirement;
+
     public void setName(String name){
         battleName = name;
     }
@@ -75,6 +77,14 @@ public class BattleInfo {
 
     public Image getBackground(Graphics g){
         return g.newImage("backgrounds/" + background + ".png", ImageFormat.RGB565);
+    }
+
+    public void setEnergyRequirement(int energy){
+        this.energyRequirement = energy;
+    }
+
+    public int getEnergyRequirement(){
+        return energyRequirement;
     }
 
     public void addRequirement(AbsRequirement r) {

@@ -9,10 +9,12 @@ import java.util.List;
 
 import ultrapoulet.androidgame.framework.Game;
 import ultrapoulet.androidgame.framework.Graphics;
+import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.androidgame.framework.Input.TouchEvent;
 import ultrapoulet.androidgame.framework.Screen;
 import ultrapoulet.androidgame.framework.helpers.Button;
 import ultrapoulet.androidgame.framework.helpers.ButtonList;
+import ultrapoulet.androidgame.framework.helpers.NumberPrinter;
 import ultrapoulet.wifeygame.Assets;
 import ultrapoulet.wifeygame.battle.BattleInfo;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
@@ -41,9 +43,21 @@ public class BattleSelectScreen extends Screen {
     private static final int AREA_RIGHT_X = AREA_LEFT_X + 340;
     private static final int STORY_BATTLE_LEFT_X = 408;
     private static final int STORY_BATTLE_RIGHT_X = STORY_BATTLE_LEFT_X + 340;
-    private static final int BATTLES_TOP_Y = HEADER_OFFSET + 105;
+    private static final int BATTLES_TOP_Y = HEADER_OFFSET + 160;
     private static final int BATTLES_BOT_Y = BATTLES_TOP_Y + 100;
-    private static final int BATTLES_OFFSET_Y = BATTLES_BOT_Y - BATTLES_TOP_Y + 5;
+    private static final int BATTLES_OFFSET_Y = BATTLES_BOT_Y - BATTLES_TOP_Y + 10;
+
+    private static final int BATTLE_ENERGY_IMAGE_OFFSET_X = 5;
+    private static final int BATTLE_ENERGY_NUMBER_OFFSET_X = 25;
+    private static final int BATTLE_ENERGY_OFFSET_Y = 50;
+    private static final int BATTLE_ENERGY_WIDTH = 20;
+    private static final int BATTLE_ENERGY_HEIGHT = 40;
+    private static final int BATTLE_ENERGY_OFFSET = 0;
+
+    private static final int BATTLE_PAGE_UP_TOP_Y = HEADER_OFFSET + 110;
+    private static final int BATTLE_PAGE_UP_BOT_Y = BATTLE_PAGE_UP_TOP_Y + 40;
+    private static final int BATTLE_PAGE_DOWN_TOP_Y = HEADER_OFFSET + 820;
+    private static final int BATTLE_PAGE_DOWN_BOT_Y = BATTLE_PAGE_DOWN_TOP_Y + 40;
 
     private static final int PARTY_LEFT_X = 45;
     private static final int PARTY_RIGHT_X = 265;
@@ -67,11 +81,18 @@ public class BattleSelectScreen extends Screen {
 
     private ButtonList storyAreaList;
     private ButtonList storyBattleList;
+    private Button areaPageUpButton;
+    private Button areaPageDownButton;
+    private Button battlePageUpButton;
+    private Button battlePageDownButton;
     private Paint buttonPaint;
     private List<StoryArea> unlockedAreas;
     private static int selectedArea = -1;
+    private static int selectedAreaPage = 0;
+    private static int selectedBattlePage = 0;
     private int lastPressedArea = -1;
     private int lastPressedBattle = -1;
+    private static final int AREA_PAGE_SIZE = 6;
 
     private Button partyButton;
     private static final String PARTY_BUTTON_STRING = "PARTY";
@@ -79,6 +100,11 @@ public class BattleSelectScreen extends Screen {
     private static final String UPGRADE_BUTTON_STRING = "UPGRADE";
     private Button infoButton;
     private static final String INFO_BUTTON_STRING = "INFO";
+
+    private static final String AREA_UP_STRING = "AREA_UP";
+    private static final String AREA_DOWN_STRING = "AREA_DOWN";
+    private static final String BATTLE_UP_STRING = "BATTLE_UP";
+    private static final String BATTLE_DOWN_STRING = "BATTLE_DOWN";
 
     private Button lastPressedGeneral;
     private int selectedChar;
@@ -111,6 +137,15 @@ public class BattleSelectScreen extends Screen {
         buttonList.addButton(upgradeButton);
         buttonList.addButton(infoButton);
 
+        areaPageUpButton = new Button(AREA_LEFT_X, AREA_RIGHT_X, BATTLE_PAGE_UP_TOP_Y, BATTLE_PAGE_UP_BOT_Y, false, AREA_UP_STRING, Assets.BattleSelectPageUpEnabled, Assets.BattleSelectPageUpDisabled);
+        areaPageDownButton = new Button(AREA_LEFT_X, AREA_RIGHT_X, BATTLE_PAGE_DOWN_TOP_Y, BATTLE_PAGE_DOWN_BOT_Y, false, AREA_DOWN_STRING, Assets.BattleSelectPageDownEnabled, Assets.BattleSelectPageDownDisabled);
+        battlePageUpButton = new Button(STORY_BATTLE_LEFT_X, STORY_BATTLE_RIGHT_X, BATTLE_PAGE_UP_TOP_Y, BATTLE_PAGE_UP_BOT_Y, false, BATTLE_UP_STRING, Assets.BattleSelectPageUpEnabled, Assets.BattleSelectPageUpDisabled);
+        battlePageDownButton = new Button(STORY_BATTLE_LEFT_X, STORY_BATTLE_RIGHT_X, BATTLE_PAGE_DOWN_TOP_Y, BATTLE_PAGE_DOWN_BOT_Y, false, BATTLE_DOWN_STRING, Assets.BattleSelectPageDownEnabled, Assets.BattleSelectPageDownDisabled);
+        buttonList.addButton(areaPageUpButton);
+        buttonList.addButton(areaPageDownButton);
+        buttonList.addButton(battlePageUpButton);
+        buttonList.addButton(battlePageDownButton);
+
         cis = new CharacterInfoScreen(game, this);
 
         partyList = new ButtonList();
@@ -131,15 +166,22 @@ public class BattleSelectScreen extends Screen {
             if(area.get(i).isUnlocked()){
                 int leftX = AREA_LEFT_X;
                 int rightX = AREA_RIGHT_X;
-                int topY = BATTLES_TOP_Y + BATTLES_OFFSET_Y * unlockedAreas.size();
-                int botY = BATTLES_BOT_Y + BATTLES_OFFSET_Y * unlockedAreas.size();
-                storyAreaList.addButton(new Button(leftX, rightX, topY, botY, false, area.get(i).getAreaName(), Assets.pHealthY));
+                int topY = BATTLES_TOP_Y + BATTLES_OFFSET_Y * (unlockedAreas.size() % AREA_PAGE_SIZE);
+                int botY = BATTLES_BOT_Y + BATTLES_OFFSET_Y * (unlockedAreas.size() % AREA_PAGE_SIZE);
+                if(selectedArea == i){
+                    storyAreaList.addButton(new Button(leftX, rightX, topY, botY, false, area.get(i).getAreaName(), Assets.StoryBattleSelected));
+                }
+                else {
+                    storyAreaList.addButton(new Button(leftX, rightX, topY, botY, false, area.get(i).getAreaName(), Assets.StoryBattleEnabled));
+                }
                 unlockedAreas.add(area.get(i));
            }
         }
 
         createBattleButtons();
-        setAreaButtons(true);
+        setAreaPageVisible(true);
+        setBattlePageVisible(selectedArea != -1);
+        activatePageAndBattleButtons();
 
         buttonPaint = new Paint();
         buttonPaint.setTextSize(50);
@@ -147,26 +189,58 @@ public class BattleSelectScreen extends Screen {
         buttonPaint.setColor(Color.BLACK);
     }
 
-    private void setAreaButtons(boolean state){
+    private void deactivatePageAndBattleButtons(){
         for(int i = 0; i < storyAreaList.size(); i++){
-            storyAreaList.get(i).setActive(state);
+            storyAreaList.get(i).setActive(false);
         }
         for(int i = 0; i < storyBattleList.size(); i++){
-            storyBattleList.get(i).setActive(state);
+            storyBattleList.get(i).setActive(false);
         }
+    }
+
+    private void activatePageAndBattleButtons(){
+        int maxAreaPage = (unlockedAreas.size() - 1)/ AREA_PAGE_SIZE;
+        areaPageUpButton.setActive(selectedAreaPage > 0);
+        areaPageDownButton.setActive(selectedAreaPage < maxAreaPage);
+        for(int i = 0; i < storyAreaList.size(); i++){
+            storyAreaList.get(i).setActive(selectedAreaPage == i / AREA_PAGE_SIZE);
+        }
+        if(selectedArea == -1){
+            battlePageUpButton.setActive(false);
+            battlePageDownButton.setActive(false);
+        }
+        else{
+            int maxBattlePage = (unlockedAreas.get(selectedArea).getBattles().size() - 1) / AREA_PAGE_SIZE;
+            battlePageUpButton.setActive(selectedBattlePage > 0);
+            battlePageDownButton.setActive(selectedBattlePage < maxBattlePage);
+        }
+        for(int i = 0; i < storyBattleList.size(); i++){
+            storyBattleList.get(i).setActive(selectedBattlePage == i / AREA_PAGE_SIZE);
+        }
+    }
+
+    private void setAreaPageVisible(boolean state){
+        areaPageUpButton.setHidden(!state);
+        areaPageDownButton.setHidden(!state);
+    }
+
+    private void setBattlePageVisible(boolean state){
+        battlePageUpButton.setHidden(!state);
+        battlePageDownButton.setHidden(!state);
     }
 
     private void createBattleButtons(){
         storyBattleList = new ButtonList();
         if(selectedArea != -1 && selectedArea < unlockedAreas.size()){
             StoryArea area = unlockedAreas.get(selectedArea);
+            selectedBattlePage = 0;
             for(int i = 0; i < area.getBattles().size(); i++){
                 //An additional check later will need to be added to make sure the battle is unlocked
                 int leftX = STORY_BATTLE_LEFT_X;
                 int rightX = STORY_BATTLE_RIGHT_X;
-                int topY = BATTLES_TOP_Y + BATTLES_OFFSET_Y * i;
-                int botY = BATTLES_BOT_Y + BATTLES_OFFSET_Y * i;
-                storyBattleList.addButton(new Button(leftX, rightX, topY, botY, true, area.getBattle(i).getName(), Assets.pHealthY));
+                int topY = BATTLES_TOP_Y + BATTLES_OFFSET_Y * (i % AREA_PAGE_SIZE);
+                int botY = BATTLES_BOT_Y + BATTLES_OFFSET_Y * (i % AREA_PAGE_SIZE);
+                storyBattleList.addButton(new Button(leftX, rightX, topY, botY, true, area.getBattle(i).getName(), Assets.StoryBattleEnabled));
             }
         }
     }
@@ -189,21 +263,27 @@ public class BattleSelectScreen extends Screen {
                     switch(lastPressedGeneral.getName()){
                         case STORY_BUTTON_STRING:
                             storyButton.setActive(false);
-                            setAreaButtons(true);
+                            activatePageAndBattleButtons();
+                            setAreaPageVisible(true);
+                            setBattlePageVisible(selectedArea != -1);
 
                             recruitButton.setActive(true);
                             specialButton.setActive(true);
                             break;
                         case RECRUIT_BUTTON_STRING:
                             storyButton.setActive(true);
-                            setAreaButtons(false);
+                            deactivatePageAndBattleButtons();
+                            setAreaPageVisible(false);
+                            setBattlePageVisible(false);
 
                             recruitButton.setActive(false);
                             specialButton.setActive(true);
                             break;
                         case SPECIAL_BUTTON_STRING:
                             storyButton.setActive(true);
-                            setAreaButtons(false);
+                            deactivatePageAndBattleButtons();
+                            setAreaPageVisible(false);
+                            setBattlePageVisible(false);
 
                             recruitButton.setActive(true);
                             specialButton.setActive(false);
@@ -211,13 +291,37 @@ public class BattleSelectScreen extends Screen {
                         case PARTY_BUTTON_STRING:
                             game.setScreen(new PartySelectScreen(game, this));
                             break;
+                        case AREA_UP_STRING:
+                            selectedAreaPage--;
+                            activatePageAndBattleButtons();
+                            break;
+                        case AREA_DOWN_STRING:
+                            selectedAreaPage++;
+                            activatePageAndBattleButtons();
+                            break;
+                        case BATTLE_UP_STRING:
+                            selectedBattlePage--;
+                            activatePageAndBattleButtons();
+                            break;
+                        case BATTLE_DOWN_STRING:
+                            selectedBattlePage++;
+                            activatePageAndBattleButtons();
+                            break;
                         default:
                             System.out.println("Not yet implemented");
                     }
                 }
                 else if(lastPressedArea == storyAreaList.getIndexPressed(t.x, t.y) && lastPressedArea != -1){
+                    if(selectedArea != -1) {
+                        storyAreaList.get(selectedArea).setActiveImage(Assets.StoryBattleEnabled);
+                    }
                     selectedArea = (selectedArea == lastPressedArea) ? -1 : lastPressedArea;
                     createBattleButtons();
+                    setBattlePageVisible(selectedArea != -1);
+                    activatePageAndBattleButtons();
+                    if(selectedArea != -1) {
+                        storyAreaList.get(selectedArea).setActiveImage(Assets.StoryBattleSelected);
+                    }
                 }
                 else if(lastPressedBattle == storyBattleList.getIndexPressed(t.x, t.y) && lastPressedBattle != -1){
                     BattleInfo battle = unlockedAreas.get(selectedArea).getBattle(lastPressedBattle);
@@ -249,6 +353,27 @@ public class BattleSelectScreen extends Screen {
         }
 
         partyList.drawImage(g);
+
+        //Not active means selected
+        if(!storyButton.isActive() && selectedArea != -1){
+            for(int i = 0; i < storyBattleList.size(); i++){
+                if(storyBattleList.get(i).isActive()){
+                    int imageX = STORY_BATTLE_LEFT_X + BATTLE_ENERGY_IMAGE_OFFSET_X;
+                    int numberX = STORY_BATTLE_LEFT_X + BATTLE_ENERGY_NUMBER_OFFSET_X;
+                    int imageY =  BATTLES_TOP_Y + BATTLES_OFFSET_Y * (i % AREA_PAGE_SIZE) + BATTLE_ENERGY_OFFSET_Y;
+                    g.drawImage(Assets.EnergyImage, imageX, imageY);
+                    List<Image> numberList;
+                    BattleInfo battle = unlockedAreas.get(selectedArea).getBattle(i);
+                    if(PlayerInfo.getCurrentEnergy() >= battle.getEnergyRequirement()){
+                        numberList = Assets.WhiteNumbers;
+                    }
+                    else{
+                        numberList = Assets.RedNumbers;
+                    }
+                    NumberPrinter.drawNumber(g, battle.getEnergyRequirement(), numberX, imageY, BATTLE_ENERGY_WIDTH, BATTLE_ENERGY_HEIGHT, BATTLE_ENERGY_OFFSET, numberList, NumberPrinter.Align.LEFT);
+                }
+            }
+        }
     }
 
     @Override
