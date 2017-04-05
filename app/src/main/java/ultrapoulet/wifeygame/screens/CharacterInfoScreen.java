@@ -66,16 +66,16 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
     private Paint levelPaint;
     private static final int LEVEL_SIZE = 34;
     private static final int LEVEL_X = 425 + BG_X;
-    private static final int LEVEL_Y = 237 + BG_Y;
+    private static final int LEVEL_Y = 322 + BG_Y;
 
     private Paint expPaint;
     private static final int MAX_EXP_FONT = 34;
     private static final int MAX_EXP_SIZE = 195;
     private static final int EXP_X = 552 + BG_X;
-    private static final int EXP_Y = 237 + BG_Y;
+    private static final int EXP_Y = 322 + BG_Y;
 
     private static final int EXP_BAR_X = 455 + BG_X;
-    private static final int EXP_BAR_Y = 200 + BG_Y;
+    private static final int EXP_BAR_Y = 285 + BG_Y;
     private static final int EXP_BAR_MAX_WIDTH = 195;
     private static final int EXP_BAR_HEIGHT = 50;
 
@@ -84,19 +84,9 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
     private static final int HP_X = 440 + BG_X;
     private static final int STR_X = 85 + HP_X;
     private static final int MAG_X = 85 + STR_X;
-    private static final int STAT_Y = 322 + BG_Y;
+    private static final int STAT_Y = 407 + BG_Y;
 
-    private Paint weaponPaint;
-    private static final int MAX_WEAPON_FONT = 34;
-    private static final int MAX_WEAPON_SIZE = 140;
-    private static final int WEAPON_X = 525 + BG_X;
-    private static final int MAX_WEAPON_Y = 407 + BG_Y;
 
-    //These will be removed when hits images are added
-    private Paint hitsPaint;
-    private static final int HITS_SIZE = 34;
-    private static final int HITS_X = 100 + WEAPON_X;
-    private static final int HITS_Y = 407 + BG_Y;
 
     public CharacterInfoScreen(Game game, Screen previousScreen) {
         super(game, previousScreen);
@@ -114,15 +104,6 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
         statPaint.setTextAlign(Align.CENTER);
         statPaint.setColor(Color.BLACK);
         statPaint.setTextSize(STAT_SIZE);
-
-        weaponPaint = new Paint();
-        weaponPaint.setTextAlign(Align.CENTER);
-        weaponPaint.setColor(Color.BLACK);
-
-        hitsPaint = new Paint();
-        hitsPaint.setTextAlign(Align.CENTER);
-        hitsPaint.setColor(Color.BLACK);
-        hitsPaint.setTextSize(HITS_SIZE);
 
         descPaint.setTextSize(SKILLS_DESC_SIZE);
 
@@ -302,16 +283,16 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
         g.drawString(String.valueOf(BattleWifey.calculateHP(displayStrength)), HP_X, STAT_Y, statPaint);
         g.drawString(String.valueOf(displayStrength), STR_X, STAT_Y, statPaint);
         g.drawString(String.valueOf(displayMagic), MAG_X, STAT_Y, statPaint);
+    }
 
+    protected void drawSkills(Graphics g){
         //Draw image for weapon category
 
         //Draw string for weapon name
         g.drawString(displayWeapon.getWeaponType(), WEAPON_X, MAX_WEAPON_Y, weaponPaint, MAX_WEAPON_SIZE, MAX_WEAPON_FONT);
         //Draw image for number hits
         g.drawString(String.valueOf(displayWeapon.getNumHits()), HITS_X, HITS_Y, hitsPaint);
-    }
 
-    protected void drawSkills(Graphics g){
         //List out names for the skills
         for(int i = 0; i < 4 && i < displaySkills.size(); i++){
             SkillsEnum skill = displaySkills.get(i);

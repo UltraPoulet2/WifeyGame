@@ -77,6 +77,18 @@ public abstract class AbsCharacterInfoScreen extends Screen {
     protected static final int SKILLS_BUTTON_BOT_Y = SKILLS_BUTTON_TOP_Y + SKILLS_BUTTON_HEIGHT;
     protected static final int SKILLS_BUTTON_OFFSET_Y = 5;
 
+    protected Paint weaponPaint;
+    protected static final int MAX_WEAPON_FONT = 40;
+    protected static final int MAX_WEAPON_SIZE = 197;
+    protected static final int WEAPON_X = 345 + BG_X;
+    protected static final int MAX_WEAPON_Y = 495 + BG_Y;
+
+    //These will be removed when hits images are added
+    protected Paint hitsPaint;
+    protected static final int HITS_SIZE = 40;
+    protected static final int HITS_X = 625 + BG_X;
+    protected static final int HITS_Y = 495 + BG_Y;
+
     public AbsCharacterInfoScreen(Game game, Screen previousScreen) {
         super(game);
         setPreviousScreen(previousScreen);
@@ -97,6 +109,15 @@ public abstract class AbsCharacterInfoScreen extends Screen {
         descPaint = new TextPaint();
         descPaint.setTextAlign(Paint.Align.LEFT);
         descPaint.setColor(Color.BLACK);
+
+        weaponPaint = new Paint();
+        weaponPaint.setTextAlign(Paint.Align.LEFT);
+        weaponPaint.setColor(Color.BLACK);
+
+        hitsPaint = new Paint();
+        hitsPaint.setTextAlign(Paint.Align.CENTER);
+        hitsPaint.setColor(Color.BLACK);
+        hitsPaint.setTextSize(HITS_SIZE);
 
         createUniquePaints();
     }

@@ -137,6 +137,13 @@ public class BattleCharacterInfoScreen extends AbsCharacterInfoScreen {
     }
 
     protected void drawSkills(Graphics g){
+        //Draw image for weapon category
+
+        //Draw string for weapon name
+        g.drawString(displayChar.getWeapon().getWeaponType(), WEAPON_X, MAX_WEAPON_Y, weaponPaint, MAX_WEAPON_SIZE, MAX_WEAPON_FONT);
+        //Draw image for number hits
+        g.drawString(String.valueOf(displayChar.getNumHits()), HITS_X, HITS_Y, hitsPaint);
+
         //List out names for the skills
         for(int i = 0; i < 4 && i < displayChar.getSkills().size(); i++){
             AbsSkill skill = displayChar.getSkills().get(i);
