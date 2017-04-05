@@ -149,9 +149,6 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
 
         displayExp = displayChar.getExperienceString();
 
-        //Note: If the character has no skills, this will still return 0
-        maxPage = (displayChar.getSkills().size() - 1) / SKILLS_TEXT_PER_PAGE;
-        skillsPage = 0;
         transformPage = 0;
         maxTransformPage = transformations.size();
         prevTransform.setActive(false);
@@ -316,10 +313,10 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
 
     protected void drawSkills(Graphics g){
         //List out names for the skills
-        for(int i = SKILLS_TEXT_PER_PAGE * skillsPage; i < SKILLS_TEXT_PER_PAGE * skillsPage + SKILLS_TEXT_PER_PAGE && i < displaySkills.size(); i++){
+        for(int i = 0; i < 4 && i < displaySkills.size(); i++){
             SkillsEnum skill = displaySkills.get(i);
             int xOffset;
-            int yOffset = SKILLS_TEXT_BASE_Y + ((i % SKILLS_TEXT_PER_PAGE) / 2) * SKILLS_TEXT_OFFSET_Y;
+            int yOffset = SKILLS_TEXT_BASE_Y + (i / 2) * SKILLS_TEXT_OFFSET_Y;
             if(i % 2 == 0) {
                 xOffset = SKILLS_TEXT_LEFT_X;
             }
@@ -327,13 +324,6 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
                 xOffset = SKILLS_TEXT_RIGHT_X;
             }
             g.drawString(skill.getSkillName(), xOffset, yOffset, skillsPaint, SKILLS_TEXT_SIZE, SKILLS_TEXT_FONT);
-        }
-        if(maxPage == 0){
-            g.drawImage(Assets.ScrollBarFull, SKILLS_SCROLL_X, SKILLS_SCROLL_TOP_Y);
-        }
-        else{
-            int offsetPerPage = (SKILLS_SCROLL_MAX_Y - SKILLS_SCROLL_TOP_Y) / maxPage;
-            g.drawImage(Assets.ScrollBarShort, SKILLS_SCROLL_X, SKILLS_SCROLL_TOP_Y + (offsetPerPage * skillsPage));
         }
     }
 

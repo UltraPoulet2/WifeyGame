@@ -625,6 +625,9 @@
         <strength>30</strength>
         <magic>50</magic>
         <weapon>TOY</weapon>
+        <skills>
+            <skill>TEACHER</skill>
+        </skills>
         <elements>
             <atkElement>LIGHT</atkElement>
             <stgElement>LIGHT</stgElement>
