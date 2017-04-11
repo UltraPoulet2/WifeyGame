@@ -14,6 +14,7 @@ public class WifeyCharacter {
 
     private String name;
     private String hashKey;
+    private String title;
     private int strength;
     private int magic;
     private ArrayList<SkillsEnum> skills;
@@ -93,6 +94,11 @@ public class WifeyCharacter {
         return this.transformations;
     }
 
+    public String getTitle(){
+        //For now, it's fine for title to not be set
+        return this.title;
+    }
+
     public void setHashKey(String hashKey){
         this.hashKey = hashKey;
     }
@@ -120,6 +126,10 @@ public class WifeyCharacter {
     public void setStrongElement(Element element) { this.strongElement = element; }
 
     public void setWeakElement(Element element) { this.weakElement = element; }
+
+    public void setTitle(String inTitle){
+        this.title = inTitle;
+    }
 
     public void addSkill(SkillsEnum skill) {
         if (!this.skills.contains(skill)) {

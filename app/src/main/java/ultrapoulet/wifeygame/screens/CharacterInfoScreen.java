@@ -3,6 +3,7 @@ package ultrapoulet.wifeygame.screens;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
+import android.text.TextPaint;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -63,6 +64,16 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
     private static final int SKILLS_DESC_SIZE = 30;
     private static final int MAX_NAME_SIZE = 191;
 
+    private String displayTitle;
+    private TextPaint titlePaint;
+    private static final int MAX_TITLE_FONT = 40;
+    private static final int MIN_TITLE_FONT = 20;
+    private static final int MAX_TITLE_SIZE = 236;
+    private static final int TWO_LINE_TITLE_FONT = 20;
+    private static final int TITLE_X = 402 + BG_X;
+    private static final int MAX_TITLE_Y = 240 + BG_Y;
+    private static final int TWO_LINE_TITLE_Y = 200 + BG_Y;
+
     private Paint levelPaint;
     private static final int LEVEL_SIZE = 34;
     private static final int LEVEL_X = 425 + BG_X;
@@ -110,6 +121,10 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
         expPaint = new Paint();
         expPaint.setTextAlign(Align.CENTER);
         expPaint.setColor(Color.WHITE);
+
+        titlePaint = new TextPaint();
+        namePaint.setTextAlign(Align.LEFT);
+        namePaint.setColor(Color.BLACK);
     }
 
     public void createUniqueButtons(){
@@ -163,6 +178,12 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
         displayAttackElement = displayChar.getAttackElement();
         displayStrongElement = displayChar.getStrongElement();
         displayWeakElement = displayChar.getWeakElement();
+        if(displayChar.getTitle() != null){
+            displayTitle = displayChar.getTitle() + " Wifey";
+        }
+        else {
+            displayTitle = "Wifey";
+        }
     }
 
     private void incrementDisplayInfo() {
@@ -275,6 +296,13 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
     }
 
     protected void drawTopRows(Graphics g){
+        if(g.canDrawString(displayTitle, titlePaint, MAX_TITLE_SIZE, MIN_TITLE_FONT)){
+            g.drawString(displayTitle, TITLE_X, MAX_TITLE_Y, titlePaint, MAX_TITLE_SIZE, MAX_TITLE_FONT);
+        }
+        else{
+            titlePaint.setTextSize(TWO_LINE_TITLE_FONT);
+            g.drawMultiLineString(displayTitle, TITLE_X, TWO_LINE_TITLE_Y, MAX_TITLE_SIZE, titlePaint);
+        }
         g.drawString(String.valueOf(displayChar.getLevel()), LEVEL_X, LEVEL_Y, levelPaint);
         int expWidth = (int) (EXP_BAR_MAX_WIDTH * displayChar.getExperiencePercent());
         g.drawScaledImage(Assets.pHealthY, EXP_BAR_X, EXP_BAR_Y, expWidth, EXP_BAR_HEIGHT);

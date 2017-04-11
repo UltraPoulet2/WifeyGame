@@ -21,6 +21,7 @@ public class CharacterParser extends DefaultHandler{
     private Graphics g;
 
     private boolean bName;
+    private boolean bTitle;
     private boolean bStrength;
     private boolean bMagic;
     private boolean bWeapon;
@@ -70,6 +71,9 @@ public class CharacterParser extends DefaultHandler{
         }
         else if(qName.equalsIgnoreCase("name")){
             bName = true;
+        }
+        else if(qName.equalsIgnoreCase("title")){
+            bTitle = true;
         }
         else if(qName.equalsIgnoreCase("strength")){
             bStrength = true;
@@ -169,13 +173,16 @@ public class CharacterParser extends DefaultHandler{
         String temp = new String(ch, start, length);
         try {
             if (bName) {
-                if(!bTransformSec) {
+                if (!bTransformSec) {
                     charBuilder.setName(temp);
-                }
-                else {
+                } else {
                     transformBuilder.setName(temp);
                 }
                 bName = false;
+            } else if (bTitle) {
+                //For now, we are not changing the title for transformations, this could change later
+                charBuilder.setTitle(temp);
+                bTitle = false;
             } else if (bStrength) {
                 if(!bTransformSec) {
                     charBuilder.setStrength(Integer.parseInt(temp));
