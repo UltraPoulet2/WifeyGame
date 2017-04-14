@@ -27,6 +27,9 @@ public class BattleInfo {
 
     private int energyRequirement;
 
+    private int numAttempts = 0;
+    private int numComplete = 0;
+
     public void setName(String name){
         battleName = name;
     }
@@ -95,6 +98,31 @@ public class BattleInfo {
             }
         }
     }
+
+    public int getNumAttempts(){
+        return numAttempts;
+    }
+
+    public void setNumAttempts(int input){
+        numAttempts = input;
+    }
+
+    public void incrementNumAttempts(){
+        numAttempts++;
+    }
+
+    public int getNumComplete(){
+        return numComplete;
+    }
+
+    public void setNumComplete(int input){
+        numComplete = input;
+    }
+
+    public void incrementNumComplete(){
+        numComplete++;
+    }
+
 
     public ArrayList<AbsRequirement> getRequirements(){
         return restrictionList;

@@ -126,8 +126,12 @@ public class BattleResultScreen extends Screen{
         for(int i = 0; i < wifeyList.size(); i++){
             //This will be replaced with a boolean list later
             wifeyLevelUp[i] = wifeyList.get(i).addExperience(baseExp + bonusExp);
-    }
+        }
         PlayerInfo.addGold(baseGold + bonusGold);
+
+        if(victory){
+            info.incrementNumComplete();
+        }
     }
 
     @Override

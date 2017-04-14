@@ -53,6 +53,7 @@ public class BattleSelectScreen extends Screen {
     private static final int BATTLE_ENERGY_WIDTH = 20;
     private static final int BATTLE_ENERGY_HEIGHT = 40;
     private static final int BATTLE_ENERGY_OFFSET = 0;
+    private static final int BATTLE_INDICATOR_OFFSET_X = 85;
 
     private static final int BATTLE_PAGE_UP_TOP_Y = HEADER_OFFSET + 110;
     private static final int BATTLE_PAGE_UP_BOT_Y = BATTLE_PAGE_UP_TOP_Y + 40;
@@ -371,6 +372,13 @@ public class BattleSelectScreen extends Screen {
                         numberList = Assets.RedNumbers;
                     }
                     NumberPrinter.drawNumber(g, battle.getEnergyRequirement(), numberX, imageY, BATTLE_ENERGY_WIDTH, BATTLE_ENERGY_HEIGHT, BATTLE_ENERGY_OFFSET, numberList, NumberPrinter.Align.LEFT);
+                    int indicatorX = STORY_BATTLE_LEFT_X + BATTLE_INDICATOR_OFFSET_X;
+                    if(battle.getNumAttempts() == 0){
+                        g.drawImage(Assets.NewBattleIndicator, indicatorX, imageY);
+                    }
+                    else if(battle.getNumComplete() > 0){
+                        g.drawImage(Assets.CompletedBattleIndicator, indicatorX, imageY);
+                    }
                 }
             }
         }
