@@ -47,6 +47,7 @@ public class BattleSelectScreen extends Screen {
     private static final int BATTLES_BOT_Y = BATTLES_TOP_Y + 100;
     private static final int BATTLES_OFFSET_Y = BATTLES_BOT_Y - BATTLES_TOP_Y + 10;
 
+    private static final int BATTLE_TITLE_OFFSET_Y = -25;
     private static final int BATTLE_ENERGY_IMAGE_OFFSET_X = 5;
     private static final int BATTLE_ENERGY_NUMBER_OFFSET_X = 25;
     private static final int BATTLE_ENERGY_OFFSET_Y = 50;
@@ -185,7 +186,7 @@ public class BattleSelectScreen extends Screen {
         activatePageAndBattleButtons();
 
         buttonPaint = new Paint();
-        buttonPaint.setTextSize(50);
+        buttonPaint.setTextSize(40);
         buttonPaint.setTextAlign(Align.CENTER);
         buttonPaint.setColor(Color.BLACK);
     }
@@ -347,7 +348,7 @@ public class BattleSelectScreen extends Screen {
         storyAreaList.drawImage(g);
         storyAreaList.drawString(g, buttonPaint);
         storyBattleList.drawImage(g);
-        storyBattleList.drawString(g, buttonPaint);
+        storyBattleList.drawString(g, buttonPaint, 0, BATTLE_TITLE_OFFSET_Y);
 
         if(!storyButton.isActive()){
             g.drawImage(Assets.BattleDivider, DIVIDER_X, DIVIDER_Y);

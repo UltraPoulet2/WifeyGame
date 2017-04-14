@@ -112,9 +112,11 @@ public class Button {
         g.drawString(this.name, X, Y, p);
     }
 
-    public void drawString(Graphics g, Paint p, int x, int y){
+    public void drawString(Graphics g, Paint p, int offsetX, int offsetY){
         if(!hidden && active) {
-            g.drawString(this.name, x, y, p);
+            int X = leftX + ((rightX - leftX) / 2) + offsetX;
+            int Y = botY - ((botY - topY - (int) p.getTextSize()) / 2) + offsetY;
+            g.drawString(this.name, X, Y, p);
         }
     }
 }

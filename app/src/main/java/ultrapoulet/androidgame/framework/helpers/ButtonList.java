@@ -57,4 +57,10 @@ public class ButtonList {
             buttons.get(i).drawString(g, p);
         }
     }
+
+    public void drawString(Graphics g, Paint p, int offsetX, int offsetY){
+        for(int i = 0; i < buttons.size(); i++){
+            buttons.get(i).drawString(g, p, offsetX, offsetY);
+        }
+    }
 }
