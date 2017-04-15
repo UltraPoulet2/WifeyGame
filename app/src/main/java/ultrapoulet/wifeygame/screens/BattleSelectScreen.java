@@ -92,6 +92,7 @@ public class BattleSelectScreen extends Screen {
     private static int selectedArea = -1;
     private static int selectedAreaPage = 0;
     private static int selectedBattlePage = 0;
+    private static String selectedTab = STORY_BUTTON_STRING;
     private int lastPressedArea = -1;
     private int lastPressedBattle = -1;
     private static final int AREA_PAGE_SIZE = 6;
@@ -181,9 +182,12 @@ public class BattleSelectScreen extends Screen {
         }
 
         createBattleButtons();
+        /*
         setAreaPageVisible(true);
         setBattlePageVisible(selectedArea != -1);
         activatePageAndBattleButtons();
+        */
+        changeTab();
 
         buttonPaint = new Paint();
         buttonPaint.setTextSize(40);
@@ -247,6 +251,39 @@ public class BattleSelectScreen extends Screen {
         }
     }
 
+    private void changeTab(){
+        switch(selectedTab){
+            case STORY_BUTTON_STRING:
+                storyButton.setActive(false);
+                activatePageAndBattleButtons();
+                setAreaPageVisible(true);
+                setBattlePageVisible(selectedArea != -1);
+
+                recruitButton.setActive(true);
+                specialButton.setActive(true);
+                break;
+            case RECRUIT_BUTTON_STRING:
+                storyButton.setActive(true);
+                deactivatePageAndBattleButtons();
+                setAreaPageVisible(false);
+                setBattlePageVisible(false);
+
+                recruitButton.setActive(false);
+                specialButton.setActive(true);
+                break;
+            case SPECIAL_BUTTON_STRING:
+                storyButton.setActive(true);
+                deactivatePageAndBattleButtons();
+                setAreaPageVisible(false);
+                setBattlePageVisible(false);
+
+                recruitButton.setActive(true);
+                specialButton.setActive(false);
+                break;
+        }
+        System.out.println("Tab has been changed to: " + selectedTab);
+    }
+
     @Override
     public void update(float deltaTime){
 
@@ -264,31 +301,16 @@ public class BattleSelectScreen extends Screen {
                 if(lastPressedGeneral != null && lastPressedGeneral == buttonList.getButtonPressed(t.x, t.y)){
                     switch(lastPressedGeneral.getName()){
                         case STORY_BUTTON_STRING:
-                            storyButton.setActive(false);
-                            activatePageAndBattleButtons();
-                            setAreaPageVisible(true);
-                            setBattlePageVisible(selectedArea != -1);
-
-                            recruitButton.setActive(true);
-                            specialButton.setActive(true);
+                            selectedTab = STORY_BUTTON_STRING;
+                            changeTab();
                             break;
                         case RECRUIT_BUTTON_STRING:
-                            storyButton.setActive(true);
-                            deactivatePageAndBattleButtons();
-                            setAreaPageVisible(false);
-                            setBattlePageVisible(false);
-
-                            recruitButton.setActive(false);
-                            specialButton.setActive(true);
+                            selectedTab = RECRUIT_BUTTON_STRING;
+                            changeTab();
                             break;
                         case SPECIAL_BUTTON_STRING:
-                            storyButton.setActive(true);
-                            deactivatePageAndBattleButtons();
-                            setAreaPageVisible(false);
-                            setBattlePageVisible(false);
-
-                            recruitButton.setActive(true);
-                            specialButton.setActive(false);
+                            selectedTab = SPECIAL_BUTTON_STRING;
+                            changeTab();
                             break;
                         case PARTY_BUTTON_STRING:
                             game.setScreen(new PartySelectScreen(game, this));
@@ -350,14 +372,13 @@ public class BattleSelectScreen extends Screen {
         storyBattleList.drawImage(g);
         storyBattleList.drawString(g, buttonPaint, 0, BATTLE_TITLE_OFFSET_Y);
 
-        if(!storyButton.isActive()){
+        if(selectedTab == STORY_BUTTON_STRING){
             g.drawImage(Assets.BattleDivider, DIVIDER_X, DIVIDER_Y);
         }
 
         partyList.drawImage(g);
 
-        //Not active means selected
-        if(!storyButton.isActive() && selectedArea != -1){
+        if(selectedTab == STORY_BUTTON_STRING && selectedArea != -1){
             for(int i = 0; i < storyBattleList.size(); i++){
                 if(storyBattleList.get(i).isActive()){
                     int imageX = STORY_BATTLE_LEFT_X + BATTLE_ENERGY_IMAGE_OFFSET_X;
