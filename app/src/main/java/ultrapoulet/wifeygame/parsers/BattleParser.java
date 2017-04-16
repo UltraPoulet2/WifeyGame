@@ -80,7 +80,6 @@ public class BattleParser extends DefaultHandler {
             else{
                 bRequirement = true;
             }
-            bRequirement = true;
         }
         else if(qName.equalsIgnoreCase("value")){
             bRValue = true;

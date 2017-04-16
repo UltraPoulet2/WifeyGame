@@ -20,6 +20,7 @@ import ultrapoulet.androidgame.framework.Input.TouchEvent;
 import ultrapoulet.androidgame.framework.Screen;
 import ultrapoulet.wifeygame.Assets;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
+import ultrapoulet.wifeygame.gamestate.Characters;
 import ultrapoulet.wifeygame.gamestate.Party;
 import ultrapoulet.wifeygame.gamestate.PlayerInfo;
 import ultrapoulet.wifeygame.gamestate.RecruitedCharacters;
@@ -59,12 +60,6 @@ public class LoadingScreen extends Screen {
                 return "Creating Wifeys";
             }
         },
-        CREATE_PARTY{
-            @Override
-            protected String getStatus() {
-                return "Creating Current Party";
-            }
-        },
         CREATE_ENEMIES{
             @Override
             protected String getStatus() {
@@ -81,6 +76,12 @@ public class LoadingScreen extends Screen {
             @Override
             protected String getStatus() {
                 return "Loading Save";
+            }
+        },
+        CREATE_PARTY{
+            @Override
+            protected String getStatus() {
+                return "Creating Current Party";
             }
         },
         COMPLETE{
@@ -103,10 +104,6 @@ public class LoadingScreen extends Screen {
                 break;
             case CREATE_RECRUITS:
                 createRecruits();
-                currentPhase = LoadingPhase.CREATE_PARTY;
-                break;
-            case CREATE_PARTY:
-                createParty();
                 currentPhase = LoadingPhase.CREATE_ENEMIES;
                 break;
             case CREATE_ENEMIES:
@@ -119,9 +116,13 @@ public class LoadingScreen extends Screen {
                 break;
             case LOAD_SAVE:
                 loadSave();
-                currentPhase = LoadingPhase.COMPLETE;
+                currentPhase = LoadingPhase.CREATE_PARTY;
                 //Clear the touch input buffer
                 game.getInput().getTouchEvents();
+                break;
+            case CREATE_PARTY:
+                createParty();
+                currentPhase = LoadingPhase.COMPLETE;
                 break;
             case COMPLETE:
                 List<TouchEvent> touchEvents = game.getInput().getTouchEvents();
@@ -415,6 +416,12 @@ public class LoadingScreen extends Screen {
         int currentEnergy = prefs.getInt("current_energy", 0);
         PlayerInfo.setCurrentEnergy(currentEnergy);
         PlayerInfo.setEnergyTimers(nextEnergy);
+
+        //Load all recruited characters
+        for(String key : Characters.getKeys()){
+            System.out.println("Character recruited: " + key);
+            RecruitedCharacters.recruit(key);
+        }
     }
 
     @Override

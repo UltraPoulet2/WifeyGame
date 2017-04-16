@@ -31,4 +31,8 @@ public class RecruitedCharacters {
     public static void remove(String key){
         recruits.remove(key);
     }
+
+    public static void recruit(String key){
+        recruits.put(key, Characters.get(key));
+    }
 }

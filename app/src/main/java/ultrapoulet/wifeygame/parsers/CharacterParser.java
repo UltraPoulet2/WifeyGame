@@ -5,13 +5,12 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import ultrapoulet.androidgame.framework.Graphics;
-import ultrapoulet.androidgame.framework.Graphics.ImageFormat;
 import ultrapoulet.wifeygame.character.Element;
 import ultrapoulet.wifeygame.character.SkillsEnum;
 import ultrapoulet.wifeygame.character.TransformWifey;
 import ultrapoulet.wifeygame.character.Weapon;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
-import ultrapoulet.wifeygame.gamestate.RecruitedCharacters;
+import ultrapoulet.wifeygame.gamestate.Characters;
 
 /**
  * Created by John on 6/8/2016.
@@ -137,7 +136,7 @@ public class CharacterParser extends DefaultHandler{
                            String qName) throws SAXException {
         if (qName.equalsIgnoreCase("character")) {
             if(validate()) {
-                RecruitedCharacters.put(charKey, charBuilder);
+                Characters.put(charKey, charBuilder);
                 System.out.println("CharacterParser:endElement(): Adding character: " + charKey);
             }
             else{
