@@ -21,7 +21,7 @@ public class BattleInfo {
     private ArrayList<EnemyCharacter> enemyList = new ArrayList<>();
     private ArrayList<AbsRequirement> restrictionList = new ArrayList<>();
 
-    private ArrayList<WifeyCharacter> requiredList = null;
+    private ArrayList<WifeyCharacter> requiredList = new ArrayList<>();
 
     private String background;
 

@@ -37,6 +37,8 @@ public class WifeyCharacter {
 
     private boolean favorite = false;
 
+    private boolean recruited = false;
+
     public WifeyCharacter(){
         skills = new ArrayList<>();
         transformations = new ArrayList<>();
@@ -99,6 +101,10 @@ public class WifeyCharacter {
         return this.title;
     }
 
+    public boolean isRecruited(){
+        return this.recruited;
+    }
+
     public void setHashKey(String hashKey){
         this.hashKey = hashKey;
     }
@@ -129,6 +135,10 @@ public class WifeyCharacter {
 
     public void setTitle(String inTitle){
         this.title = inTitle;
+    }
+
+    public void recruit(){
+        this.recruited = true;
     }
 
     public void addSkill(SkillsEnum skill) {

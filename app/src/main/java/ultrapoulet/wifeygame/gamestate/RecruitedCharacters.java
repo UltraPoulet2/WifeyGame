@@ -34,5 +34,6 @@ public class RecruitedCharacters {
 
     public static void recruit(String key){
         recruits.put(key, Characters.get(key));
+        Characters.get(key).recruit();
     }
 }
