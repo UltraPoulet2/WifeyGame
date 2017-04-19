@@ -10,6 +10,12 @@
                 <enemy>TEST-NME2</enemy>
                 <enemy>TEST-NME3</enemy>
             </enemies>
+            <drops>
+                <drop>
+                    <wifey>TEST-NYRK</wifey>
+                    <chance>10</chance>
+                </drop>
+            </drops>
         </battle>
     </area>
     <area name="Weird Zone">

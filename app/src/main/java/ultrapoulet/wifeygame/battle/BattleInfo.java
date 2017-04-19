@@ -23,12 +23,32 @@ public class BattleInfo {
 
     private ArrayList<WifeyCharacter> requiredList = new ArrayList<>();
 
+    private ArrayList<WifeyDrop> dropList = new ArrayList<>();
+
     private String background;
 
     private int energyRequirement;
 
     private int numAttempts = 0;
     private int numComplete = 0;
+
+    private class WifeyDrop{
+        private WifeyCharacter wifey;
+        private int dropChance;
+
+        public WifeyDrop(WifeyCharacter inChar, int drop){
+            this.wifey = inChar;
+            this.dropChance = drop;
+        }
+
+        public WifeyCharacter getWifey(){
+            return this.wifey;
+        }
+
+        public int getDropChance(){
+            return this.dropChance;
+        }
+    }
 
     public void setName(String name){
         battleName = name;
@@ -97,6 +117,27 @@ public class BattleInfo {
                 requiredList = ((RequiredCharacterRequirement) r).getRequiredList();
             }
         }
+    }
+
+    public void addDrop(WifeyCharacter input, int dropChance){
+        boolean addWifey = true;
+        for(int i = 0; i < dropList.size(); i++){
+            if(dropList.get(i).getWifey() == input){
+                addWifey = false;
+            }
+        }
+        if(addWifey) {
+            dropList.add(new WifeyDrop(input, dropChance));
+            System.out.println("Added a drop: " + input.getHashKey());
+        }
+    }
+
+    public int getFoundDrops(){
+        return 0;
+    }
+
+    public int getMaxDrops(){
+        return dropList.size();
     }
 
     public int getNumAttempts(){

@@ -9,6 +9,7 @@ import ultrapoulet.wifeygame.battle.requirements.AbsRequirement;
 import ultrapoulet.wifeygame.battle.requirements.RequirementFactory;
 import ultrapoulet.wifeygame.character.EnemyCharacter;
 import ultrapoulet.wifeygame.gamestate.Battles;
+import ultrapoulet.wifeygame.gamestate.Characters;
 import ultrapoulet.wifeygame.gamestate.Enemies;
 import ultrapoulet.wifeygame.gamestate.StoryArea;
 import ultrapoulet.wifeygame.gamestate.StoryBattles;
@@ -25,12 +26,18 @@ public class BattleParser extends DefaultHandler {
     private boolean bRValue = false;
     private boolean bBackground = false;
     private boolean bEnergy = false;
+    private boolean bDrop = false;
+    private boolean bWifeyDrop = false;
+    private boolean bChanceDrop = false;
 
     private boolean error = false;
 
     private BattleInfo battleBuilder;
     private AbsRequirement reqBuilder;
     private StoryArea areaBuilder;
+
+    private String wifeyDrop;
+    private int chanceDrop = 0;
 
     private String battleKey;
 
@@ -90,6 +97,19 @@ public class BattleParser extends DefaultHandler {
         else if(qName.equalsIgnoreCase("energy")){
             bEnergy = true;
         }
+        else if(qName.equalsIgnoreCase("drops")){
+            //Do nothing, valid
+        }
+        else if(qName.equalsIgnoreCase("drop")){
+            wifeyDrop = null;
+            chanceDrop = 0;
+        }
+        else if(qName.equalsIgnoreCase("wifey")){
+            bWifeyDrop = true;
+        }
+        else if(qName.equalsIgnoreCase("chance")){
+            bChanceDrop = true;
+        }
         else{
             System.out.println("BattleParser:startElement(): Invalid qName: " + qName + " for key " + battleKey);
         }
@@ -121,6 +141,14 @@ public class BattleParser extends DefaultHandler {
             }
             reqBuilder = null;
             bRequirement = false;
+        }
+        else if(qName.equalsIgnoreCase("drop")){
+            if(wifeyDrop == null || Characters.get(wifeyDrop) == null || chanceDrop <= 0 || chanceDrop > 100){
+                System.out.println("BattleParser:endElement(): Invalid wifey drop provided. Ignoring");
+            }
+            else {
+                battleBuilder.addDrop(Characters.get(wifeyDrop), chanceDrop);
+            }
         }
     }
 
@@ -173,8 +201,22 @@ public class BattleParser extends DefaultHandler {
             catch(NumberFormatException e){
                 System.out.println("BattleParser:characters(): NumberFormatException for key: " + battleKey);
                 error = true;
-                bPartySize = false;
+                bEnergy = false;
             }
+        }
+        else if(bWifeyDrop){
+            wifeyDrop = temp;
+            bWifeyDrop = false;
+        }
+        else if(bChanceDrop){
+            try{
+                chanceDrop = Integer.parseInt(temp);
+            }
+            catch(NumberFormatException e){
+                System.out.println("BattleParser:characters(): NumberFormatException for key: " + battleKey);
+                error = true;
+            }
+            bChanceDrop = false;
         }
     }
 
@@ -185,6 +227,11 @@ public class BattleParser extends DefaultHandler {
         bRValue = false;
         bBackground = false;
         bEnergy = false;
+        bChanceDrop = false;
+        bWifeyDrop = false;
+
+        wifeyDrop = null;
+        chanceDrop = 0;
     }
 
     private boolean validate(){
