@@ -37,6 +37,7 @@ public class WifeyCharacter {
 
     private boolean favorite = false;
 
+    private boolean dropped = false;
     private boolean recruited = false;
 
     public WifeyCharacter(){
@@ -105,6 +106,10 @@ public class WifeyCharacter {
         return this.recruited;
     }
 
+    public boolean isDropped(){
+        return this.dropped;
+    }
+
     public void setHashKey(String hashKey){
         this.hashKey = hashKey;
     }
@@ -139,6 +144,10 @@ public class WifeyCharacter {
 
     public void recruit(){
         this.recruited = true;
+    }
+
+    public void drop(){
+        this.dropped = true;
     }
 
     public void addSkill(SkillsEnum skill) {
