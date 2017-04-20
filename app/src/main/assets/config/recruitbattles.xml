@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<recruitbattles>
+    <battle key="TEST-NYRK-BAT">
+        <name>Recruit Battle</name>
+        <background>lastation</background>
+        <energy>1</energy>
+        <enemies>
+            <enemy>TEST-NME1</enemy>
+        </enemies>
+    </battle>
+</recruitbattles>

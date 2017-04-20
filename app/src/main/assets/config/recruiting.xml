@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<recruiting>
+    <character key="TEST-NYRK">
+        <steps>
+            <step type="battle">TEST-NYRK-BAT</step>
+            <!-- <step type="money">1000</step> -->
+            <!-- <step type="recruit">TEST-PERI</step> -->
+        </steps>
+    </character>
+</recruiting>
