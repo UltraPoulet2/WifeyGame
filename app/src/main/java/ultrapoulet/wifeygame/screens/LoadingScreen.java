@@ -247,6 +247,10 @@ public class LoadingScreen extends Screen {
         Assets.EnergyImage = g.newImage("BattleSelect/EnergyImage.png", ImageFormat.ARGB8888);
         Assets.NewBattleIndicator = g.newImage("BattleSelect/NewBattleIndicator.png", ImageFormat.ARGB8888);
         Assets.CompletedBattleIndicator = g.newImage("BattleSelect/CompletedBattleIndicator.png", ImageFormat.ARGB8888);
+        Assets.RecruitPageUpEnabled = g.newImage("BattleSelect/RecruitPageUpEnabled.png", ImageFormat.ARGB8888);
+        Assets.RecruitPageUpDisabled = g.newImage("BattleSelect/RecruitPageUpDisabled.png", ImageFormat.ARGB8888);
+        Assets.RecruitPageDownEnabled = g.newImage("BattleSelect/RecruitPageDownEnabled.png", ImageFormat.ARGB8888);
+        Assets.RecruitPageDownDisabled = g.newImage("BattleSelect/RecruitPageDownDisabled.png", ImageFormat.ARGB8888);
 
         Assets.PartySelectScreen = g.newImage("screens/PartySelectScreen.png", ImageFormat.RGB565);
         Assets.AcceptEnable = g.newImage("buttons/AcceptEnabled.png", ImageFormat.ARGB8888);
@@ -424,7 +428,7 @@ public class LoadingScreen extends Screen {
                 continue;
             }
             System.out.println("Character recruited: " + key);
-            RecruitedCharacters.recruit(key);
+            Characters.get(key).recruit();
         }
     }
 

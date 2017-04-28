@@ -7,9 +7,10 @@ import java.util.Map;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
 
 /**
- * Created by John on 5/15/2016.
+ * Created by John on 4/27/2017.
  */
-public class RecruitedCharacters {
+
+public class RecruitableCharacters {
 
     private static Map<String, WifeyCharacter> recruits = new HashMap<>();
 
@@ -27,7 +28,6 @@ public class RecruitedCharacters {
         return list;
     }
 
-    //For temporary purposes
     public static void remove(String key){
         recruits.remove(key);
     }

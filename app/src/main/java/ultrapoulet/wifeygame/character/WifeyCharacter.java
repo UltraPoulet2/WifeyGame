@@ -6,6 +6,8 @@ import java.util.Collections;
 import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.wifeygame.battle.BattleWifey;
+import ultrapoulet.wifeygame.gamestate.RecruitableCharacters;
+import ultrapoulet.wifeygame.gamestate.RecruitedCharacters;
 
 /**
  * Created by John on 5/5/2016.
@@ -144,10 +146,15 @@ public class WifeyCharacter {
 
     public void recruit(){
         this.recruited = true;
+        if(this.dropped){
+            RecruitableCharacters.remove(this.hashKey);
+        }
+        RecruitedCharacters.put(this.hashKey, this);
     }
 
     public void drop(){
         this.dropped = true;
+        RecruitableCharacters.put(this.hashKey, this);
     }
 
     public void addSkill(SkillsEnum skill) {

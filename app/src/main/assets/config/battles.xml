@@ -7,13 +7,13 @@
             <energy>1</energy>
             <enemies>
                 <enemy>TEST-NME1</enemy>
-                <enemy>TEST-NME2</enemy>
-                <enemy>TEST-NME3</enemy>
+                <!-- <enemy>TEST-NME2</enemy>
+                <enemy>TEST-NME3</enemy> -->
             </enemies>
             <drops>
                 <drop>
                     <wifey>TEST-NYRK</wifey>
-                    <chance>50</chance>
+                    <chance>100</chance>
                 </drop>
             </drops>
         </battle>
