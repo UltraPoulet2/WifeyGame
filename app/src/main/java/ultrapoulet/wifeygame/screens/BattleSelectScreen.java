@@ -20,6 +20,7 @@ import ultrapoulet.wifeygame.battle.BattleInfo;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
 import ultrapoulet.wifeygame.gamestate.Party;
 import ultrapoulet.wifeygame.gamestate.PlayerInfo;
+import ultrapoulet.wifeygame.gamestate.RecruitableCharacters;
 import ultrapoulet.wifeygame.gamestate.StoryArea;
 import ultrapoulet.wifeygame.gamestate.StoryBattles;
 
@@ -61,6 +62,21 @@ public class BattleSelectScreen extends Screen {
     private static final int BATTLE_PAGE_DOWN_TOP_Y = HEADER_OFFSET + 820;
     private static final int BATTLE_PAGE_DOWN_BOT_Y = BATTLE_PAGE_DOWN_TOP_Y + 40;
 
+    private static final int RECRUIT_BUTTON_LEFT_X = 52;
+    private static final int RECRUIT_BUTTON_RIGHT_X = 747;
+    private static final int RECRUIT_BUTTON_TOP_Y = HEADER_OFFSET + 160;
+    private static final int RECRUIT_BUTTON_BOT_Y = RECRUIT_BUTTON_TOP_Y + 100;
+    private static final int RECRUIT_OFFSET_Y = BATTLES_OFFSET_Y;
+    private static final int RECRUIT_PAGE_UP_TOP_Y = HEADER_OFFSET + 110;
+    private static final int RECRUIT_PAGE_UP_BOT_Y = RECRUIT_PAGE_UP_TOP_Y + 40;
+    private static final int RECRUIT_PAGE_DOWN_TOP_Y = HEADER_OFFSET + 820;
+    private static final int RECRUIT_PAGE_DOWN_BOT_Y = RECRUIT_PAGE_DOWN_TOP_Y + 40;
+    private static final int RECRUIT_BUTTON_IMAGE_OFFSET_X = 10;
+    private static final int RECRUIT_BUTTON_IMAGE_OFFSET_Y = 10;
+    private static final int RECRUIT_BUTTON_IMAGE_SIZE = 80;
+    private static final String RECRUIT_UP_STRING = "RECRUIT_UP";
+    private static final String RECRUIT_DOWN_STRING = "RECRUIT_DOWN";
+
     private static final int PARTY_LEFT_X = 45;
     private static final int PARTY_RIGHT_X = 265;
     private static final int UPGRADE_LEFT_X = 290;
@@ -96,6 +112,15 @@ public class BattleSelectScreen extends Screen {
     private int lastPressedArea = -1;
     private int lastPressedBattle = -1;
     private static final int AREA_PAGE_SIZE = 6;
+
+    //For now, this will be a list of the Recruitable Wifeys
+    //Later on, this will be a list of the Recruit Info
+    private List<WifeyCharacter> recruitableWifeys;
+    private List<Image> recruitableWifeyImages;
+    private ButtonList recruitButtonList;
+    private Button recruitPageUpButton;
+    private Button recruitPageDownButton;
+    private static int selectedRecruitPage = 0;
 
     private Button partyButton;
     private static final String PARTY_BUTTON_STRING = "PARTY";
@@ -149,6 +174,11 @@ public class BattleSelectScreen extends Screen {
         buttonList.addButton(battlePageUpButton);
         buttonList.addButton(battlePageDownButton);
 
+        recruitPageUpButton = new Button(RECRUIT_BUTTON_LEFT_X, RECRUIT_BUTTON_RIGHT_X, RECRUIT_PAGE_UP_TOP_Y, RECRUIT_PAGE_UP_BOT_Y, false, RECRUIT_UP_STRING, Assets.RecruitPageUpEnabled, Assets.RecruitPageUpDisabled);
+        recruitPageDownButton = new Button(RECRUIT_BUTTON_LEFT_X, RECRUIT_BUTTON_RIGHT_X, RECRUIT_PAGE_DOWN_TOP_Y, RECRUIT_PAGE_DOWN_BOT_Y, false, RECRUIT_DOWN_STRING, Assets.RecruitPageDownEnabled, Assets.RecruitPageDownDisabled);
+        buttonList.addButton(recruitPageUpButton);
+        buttonList.addButton(recruitPageDownButton);
+
         cis = new CharacterInfoScreen(game, this);
 
         partyList = new ButtonList();
@@ -182,6 +212,7 @@ public class BattleSelectScreen extends Screen {
         }
 
         createBattleButtons();
+        createRecruitButtons();
         /*
         setAreaPageVisible(true);
         setBattlePageVisible(selectedArea != -1);
@@ -235,6 +266,26 @@ public class BattleSelectScreen extends Screen {
         battlePageDownButton.setHidden(!state);
     }
 
+    private void activateRecruitButtons(){
+        int maxRecruitPage = (recruitableWifeys.size() - 1) / AREA_PAGE_SIZE;
+        recruitPageUpButton.setActive(selectedRecruitPage > 0);
+        recruitPageDownButton.setActive(selectedRecruitPage < maxRecruitPage);
+        for(int i = 0; i < recruitButtonList.size(); i++){
+            recruitButtonList.get(i).setActive(selectedRecruitPage == i / AREA_PAGE_SIZE);
+        }
+    }
+
+    private void deactivateRecruitButtons(){
+        for(int i = 0; i < recruitButtonList.size(); i++){
+            recruitButtonList.get(i).setActive(false);
+        }
+    }
+
+    private void setRecruitPageVisible(boolean state){
+        recruitPageUpButton.setHidden(!state);
+        recruitPageDownButton.setHidden(!state);
+    }
+
     private void createBattleButtons(){
         storyBattleList = new ButtonList();
         if(selectedArea != -1 && selectedArea < unlockedAreas.size()){
@@ -251,6 +302,21 @@ public class BattleSelectScreen extends Screen {
         }
     }
 
+    private void createRecruitButtons(){
+        recruitableWifeys = RecruitableCharacters.getArray();
+        recruitableWifeyImages = new ArrayList<>();
+        //Sort should be added to make the list consistent
+        recruitButtonList = new ButtonList();
+        for(int i = 0; i < recruitableWifeys.size(); i++){
+            int leftX = RECRUIT_BUTTON_LEFT_X;
+            int rightX = RECRUIT_BUTTON_RIGHT_X;
+            int topY = RECRUIT_BUTTON_TOP_Y + RECRUIT_OFFSET_Y * (i % AREA_PAGE_SIZE);
+            int botY = RECRUIT_BUTTON_BOT_Y + RECRUIT_OFFSET_Y * (i % AREA_PAGE_SIZE);
+            recruitButtonList.addButton(new Button(leftX, rightX, topY, botY, false, recruitableWifeys.get(i).getName(), Assets.RecruitBattleButton));
+            recruitableWifeyImages.add(recruitableWifeys.get(i).getImage(game.getGraphics()));
+        }
+    }
+
     private void changeTab(){
         switch(selectedTab){
             case STORY_BUTTON_STRING:
@@ -258,6 +324,8 @@ public class BattleSelectScreen extends Screen {
                 activatePageAndBattleButtons();
                 setAreaPageVisible(true);
                 setBattlePageVisible(selectedArea != -1);
+                deactivateRecruitButtons();
+                setRecruitPageVisible(false);
 
                 recruitButton.setActive(true);
                 specialButton.setActive(true);
@@ -267,6 +335,8 @@ public class BattleSelectScreen extends Screen {
                 deactivatePageAndBattleButtons();
                 setAreaPageVisible(false);
                 setBattlePageVisible(false);
+                activateRecruitButtons();
+                setRecruitPageVisible(true);
 
                 recruitButton.setActive(false);
                 specialButton.setActive(true);
@@ -276,6 +346,8 @@ public class BattleSelectScreen extends Screen {
                 deactivatePageAndBattleButtons();
                 setAreaPageVisible(false);
                 setBattlePageVisible(false);
+                deactivateRecruitButtons();
+                setRecruitPageVisible(false);
 
                 recruitButton.setActive(true);
                 specialButton.setActive(false);
@@ -371,6 +443,7 @@ public class BattleSelectScreen extends Screen {
         storyAreaList.drawString(g, buttonPaint);
         storyBattleList.drawImage(g);
         storyBattleList.drawString(g, buttonPaint, 0, BATTLE_TITLE_OFFSET_Y);
+        recruitButtonList.drawImage(g);
 
         if(selectedTab == STORY_BUTTON_STRING){
             g.drawImage(Assets.BattleDivider, DIVIDER_X, DIVIDER_Y);
@@ -401,6 +474,15 @@ public class BattleSelectScreen extends Screen {
                     else if(battle.getNumComplete() > 0){
                         g.drawImage(Assets.CompletedBattleIndicator, indicatorX, imageY);
                     }
+                }
+            }
+        }
+        else if(selectedTab == RECRUIT_BUTTON_STRING){
+            for(int i = 0; i < recruitableWifeys.size(); i++){
+                if(recruitButtonList.get(i).isActive()){
+                    int imageX = RECRUIT_BUTTON_LEFT_X + RECRUIT_BUTTON_IMAGE_OFFSET_X;
+                    int imageY = RECRUIT_BUTTON_TOP_Y + RECRUIT_BUTTON_IMAGE_OFFSET_Y;
+                    g.drawScaledImage(recruitableWifeyImages.get(i), imageX, imageY, RECRUIT_BUTTON_IMAGE_SIZE, RECRUIT_BUTTON_IMAGE_SIZE);
                 }
             }
         }

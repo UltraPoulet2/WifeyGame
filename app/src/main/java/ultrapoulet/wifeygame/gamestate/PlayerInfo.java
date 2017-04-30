@@ -94,14 +94,16 @@ public class PlayerInfo {
         updateTimer();
         int totalSecondsLeft = (int) ((nextEnergyTime - System.currentTimeMillis()) / MILLISECONDS);
         //The plus 1 is to make the range 2:00 - 0:01
-        return (totalSecondsLeft + 1) / MINUTE;
+        int result = (totalSecondsLeft + 1) / MINUTE;
+        return (result >= 0) ? result : 0;
     }
 
     public static int getNextEnergySeconds(){
         updateTimer();
         int totalSecondsLeft = (int) ((nextEnergyTime - System.currentTimeMillis()) / MILLISECONDS);
         //The plus 1 is to make the range 2:00 - 0:01
-        return (totalSecondsLeft + 1) % MINUTE;
+        int result =  (totalSecondsLeft + 1) % MINUTE;
+        return (result >= 0) ? result : 0;
     }
 
     public static void setEnergyTimers(long nextEnergy){
