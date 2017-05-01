@@ -17,6 +17,7 @@
     </character>
     <character key="TEST-ANGU">
         <name>Ange Ushiromiya</name>
+        <title>Golden Witch of 1998</title>
         <strength>80</strength>
         <magic>50</magic>
         <weapon>BOOK</weapon>
@@ -31,6 +32,7 @@
     </character>
     <character key="TEST-ANNA">
         <name>Anna Nishikinomiya</name>
+        <title>Love Nectar</title>
         <strength>120</strength>
         <magic>10</magic>
         <weapon>FISTS</weapon>
@@ -53,6 +55,7 @@
     </character>
     <character key="TEST-CCCC">
         <name>CC</name>
+        <title>Pizza Hut</title>
         <strength>25</strength>
         <magic>100</magic>
         <weapon>MECHA</weapon>
@@ -96,6 +99,7 @@
     </character>
     <character key="TEST-CMPA">
         <name>Compa</name>
+        <title>Compile Heart</title>
         <strength>25</strength>
         <magic>100</magic>
         <weapon>MEDICINE</weapon>
@@ -124,6 +128,7 @@
     </character>
     <character key="TEST-DKRO">
         <name>Dokuro Mitsukai</name>
+        <title>Bludgeoning Angel</title>
         <strength>70</strength>
         <magic>90</magic>
         <weapon>CLUB</weapon>
@@ -231,6 +236,7 @@
     </character>
     <character key="TEST-HMRA">
         <name>Homura Akemi</name>
+        <title>Did Nothing Wrong</title>
         <strength>40</strength>
         <magic>120</magic>
         <weapon>GUN</weapon>
@@ -257,6 +263,7 @@
     </character>
     <character key="TEST-HOLO">
         <name>Holo</name>
+        <title>Wise Wolf</title>
         <strength>70</strength>
         <magic>60</magic>
         <weapon>CLAW</weapon>
@@ -301,6 +308,7 @@
     </character>
     <character key="TEST-KARN">
         <name>Karen Kujou</name>
+        <title>Happy Days</title>
         <strength>60</strength>
         <magic>40</magic>
         <weapon>FOOD</weapon>
@@ -315,6 +323,7 @@
     </character>
     <character key="TEST-KDOU">
         <name>Mirei Kudou</name>
+        <title>Grateful Robber</title>
         <strength>50</strength>
         <magic>100</magic>
         <weapon>MAGIC</weapon>
@@ -337,6 +346,7 @@
     </character>
     <character key="TEST-KRSU">
         <name>Kurisu Makise</name>
+        <title>OTP of Life's</title>
         <strength>40</strength>
         <magic>50</magic>
         <weapon>COMPUTER</weapon>
@@ -352,6 +362,7 @@
     </character>
     <character key="TEST-KSGA">
         <name>Ayumu Kasuga</name>
+        <title>Osaka</title>
         <strength>20</strength>
         <magic>20</magic>
         <weapon>FOOD</weapon>
@@ -408,6 +419,7 @@
     </character>
     <character key="TEST-KYKO">
         <name>Kyoko Kirigiri</name>
+        <title>Ultimate Detective</title>
         <strength>50</strength>
         <magic>90</magic>
         <weapon>FISTS</weapon>
@@ -497,6 +509,7 @@
     </character>
     <character key="TEST-MEGU">
         <name>Megumi Sakura</name>
+        <title>Megu-nee</title>
         <strength>40</strength>
         <magic>70</magic>
         <weapon>BOOK</weapon>
@@ -512,6 +525,7 @@
     </character>
     <character key="TEST-MIIA">
         <name>Miia</name>
+        <title>Snek</title>
         <strength>100</strength>
         <magic>30</magic>
         <weapon>TAIL</weapon>
@@ -625,6 +639,9 @@
         <strength>30</strength>
         <magic>50</magic>
         <weapon>TOY</weapon>
+        <skills>
+            <skill>TEACHER</skill>
+        </skills>
         <elements>
             <atkElement>LIGHT</atkElement>
             <stgElement>LIGHT</stgElement>
@@ -647,6 +664,7 @@
     </character>
     <character key="TEST-NYRK">
         <name>Nyaruko</name>
+        <title>Nyarlathotep</title>
         <strength>90</strength>
         <magic>60</magic>
         <weapon>TOOL</weapon>
@@ -837,6 +855,7 @@
     </character>
     <character key="TEST-STPH">
         <name>Stephanie Dola</name>
+        <title>Steph</title>
         <strength>40</strength>
         <magic>60</magic>
         <weapon>CARD</weapon>
@@ -859,6 +878,7 @@
     </character>
     <character key="TEST-TESA">
         <name>Teletha Testarossa</name>
+        <title>Madam Captain</title>
         <strength>40</strength>
         <magic>80</magic>
         <weapon>MECHA</weapon>
@@ -1146,6 +1166,7 @@
     </character>
     <character key="TEST-NORE">
         <name>Noire</name>
+        <title>Lonely Heart</title>
         <strength>180</strength>
         <magic>60</magic>
         <weapon>SWORD</weapon>

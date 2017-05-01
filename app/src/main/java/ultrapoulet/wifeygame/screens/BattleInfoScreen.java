@@ -213,6 +213,7 @@ public class BattleInfoScreen extends Screen{
                             game.setScreen(partySelect);
                             break;
                         case START_BUTTON_STRING:
+                            battleInfo.incrementNumAttempts();
                             PlayerInfo.decrementEnergy(battleInfo.getEnergyRequirement());
                             BattleScreen bs = new BattleScreen(game, battleInfo);
                             game.setScreen(bs);
@@ -284,6 +285,8 @@ public class BattleInfoScreen extends Screen{
         g.drawString(shortGoldGain, COLUMN_2_X, ROW_1_Y - GAINS_Y_OFFSET, gainsPaint);
         g.drawString(shortExpGain, COLUMN_3_X, ROW_1_Y - GAINS_Y_OFFSET, gainsPaint);
         g.drawString(String.valueOf(battleInfo.getCharacterEnemies().size()), COLUMN_1_X, ROW_2_Y, infoPaint);
+        String dropString = (battleInfo.getMaxDrops() == 0) ? "--" : battleInfo.getFoundDrops() + "/" + battleInfo.getMaxDrops();
+        g.drawString(dropString, COLUMN_3_X, ROW_2_Y - GAINS_Y_OFFSET, gainsPaint);
 
         for(int i = 0; i < battleInfo.getRequirements().size(); i++){
             String desc = battleInfo.getRequirements().get(i).getDescription();

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ultrapoulet.wifeygame.character.WifeyCharacter;
-import ultrapoulet.wifeygame.gamestate.RecruitedCharacters;
+import ultrapoulet.wifeygame.gamestate.Characters;
 
 /**
  * Created by John on 10/9/2016.
@@ -22,7 +22,7 @@ public class RequiredCharacterRequirement extends AbsRequirement {
     @Override
     public boolean addValue(String input) {
         //Change this to all instead of recruited
-        WifeyCharacter wifey = RecruitedCharacters.get(input);
+        WifeyCharacter wifey = Characters.get(input);
         if(wifey == null){
             return false;
         }

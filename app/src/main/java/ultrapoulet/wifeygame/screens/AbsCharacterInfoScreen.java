@@ -46,25 +46,18 @@ public abstract class AbsCharacterInfoScreen extends Screen {
 
     protected Paint skillsPaint;
     protected static final int SKILLS_TEXT_FONT = 40;
-    protected static final int SKILLS_TEXT_SIZE = 276;
-    protected static final int SKILLS_TEXT_PER_PAGE = 14;
+    protected static final int SKILLS_TEXT_SIZE = 303;
     protected static final int SKILLS_TEXT_LEFT_X = 32 + BG_X;
-    protected static final int SKILLS_TEXT_RIGHT_X = SKILLS_TEXT_LEFT_X + 285;
-    protected static final int SKILLS_TEXT_BASE_Y = 495 + BG_Y;
+    protected static final int SKILLS_TEXT_RIGHT_X = SKILLS_TEXT_LEFT_X + 313;
+    protected static final int SKILLS_TEXT_BASE_Y = 580 + BG_Y;
     protected static final int SKILLS_TEXT_OFFSET_Y = 55;
 
     protected static final int SKILLS_DESC_X = 32 + BG_X;
-    protected static final int SKILLS_DESC_Y = 872 + BG_Y;
+    protected static final int SKILLS_DESC_Y = 680 + BG_Y;
     protected static final int SKILLS_DESC_WIDTH = 616;
     protected TextPaint descPaint;
 
-    protected int skillsPage = 0;
     protected int displayText = -1;
-    protected int maxPage;
-
-    protected static final int SKILLS_SCROLL_X = 600 + BG_X;
-    protected static final int SKILLS_SCROLL_TOP_Y = 565 + BG_Y;
-    protected static final int SKILLS_SCROLL_MAX_Y = 645 + BG_Y;
 
     protected ButtonList basicButtonList;
 
@@ -74,21 +67,27 @@ public abstract class AbsCharacterInfoScreen extends Screen {
     protected static final int CLOSE_BOT_Y = CLOSE_TOP_Y + 75;
     protected static final String CLOSE_STRING = "Close";
 
-    protected static final int SKILLS_PAGE_LEFT_X = 600 + BG_X;
-    protected static final int SKILLS_PAGE_RIGHT_X = SKILLS_PAGE_LEFT_X + 50;
-    protected static final int SKILLS_PAGE_HEIGHT = 105;
-    protected static final int SKILLS_PREV_TOP_Y = 455 + BG_Y;
-    protected static final int SKILLS_PREV_BOT_Y = SKILLS_PREV_TOP_Y + SKILLS_PAGE_HEIGHT;
-    protected static final int SKILLS_NEXT_TOP_Y = 730 + BG_Y;
-    protected static final int SKILLS_NEXT_BOT_Y = SKILLS_NEXT_TOP_Y + SKILLS_PAGE_HEIGHT;
-    protected static final String PREV_STRING = "Prev";
-    protected static final String NEXT_STRING = "Next";
-
     protected ButtonList skillsButtonList;
     protected static final int SKILLS_BUTTON_LEFT_X = 30 + BG_X;
-    protected static final int SKILLS_BUTTON_OFFSET_X = 280;
-    protected static final int SKILLS_BUTTON_TOP_Y = 455 + BG_Y;
-    protected static final int SKILLS_BUTTON_OFFSET_Y = 55;
+    protected static final int SKILLS_BUTTON_WIDTH = 307;
+    protected static final int SKILLS_BUTTON_RIGHT_X = SKILLS_BUTTON_LEFT_X + SKILLS_BUTTON_WIDTH;
+    protected static final int SKILLS_BUTTON_OFFSET_X = 6;
+    protected static final int SKILLS_BUTTON_TOP_Y = 540 + BG_Y;
+    protected static final int SKILLS_BUTTON_HEIGHT = 50;
+    protected static final int SKILLS_BUTTON_BOT_Y = SKILLS_BUTTON_TOP_Y + SKILLS_BUTTON_HEIGHT;
+    protected static final int SKILLS_BUTTON_OFFSET_Y = 5;
+
+    protected Paint weaponPaint;
+    protected static final int MAX_WEAPON_FONT = 40;
+    protected static final int MAX_WEAPON_SIZE = 197;
+    protected static final int WEAPON_X = 345 + BG_X;
+    protected static final int MAX_WEAPON_Y = 495 + BG_Y;
+
+    //These will be removed when hits images are added
+    protected Paint hitsPaint;
+    protected static final int HITS_SIZE = 40;
+    protected static final int HITS_X = 625 + BG_X;
+    protected static final int HITS_Y = 495 + BG_Y;
 
     public AbsCharacterInfoScreen(Game game, Screen previousScreen) {
         super(game);
@@ -111,21 +110,28 @@ public abstract class AbsCharacterInfoScreen extends Screen {
         descPaint.setTextAlign(Paint.Align.LEFT);
         descPaint.setColor(Color.BLACK);
 
+        weaponPaint = new Paint();
+        weaponPaint.setTextAlign(Paint.Align.LEFT);
+        weaponPaint.setColor(Color.BLACK);
+
+        hitsPaint = new Paint();
+        hitsPaint.setTextAlign(Paint.Align.CENTER);
+        hitsPaint.setColor(Color.BLACK);
+        hitsPaint.setTextSize(HITS_SIZE);
+
         createUniquePaints();
     }
 
     protected void createButtons(){
         basicButtonList = new ButtonList();
         basicButtonList.addButton(new Button(CLOSE_LEFT_X, CLOSE_RIGHT_X, CLOSE_TOP_Y, CLOSE_BOT_Y, true, CLOSE_STRING));
-        basicButtonList.addButton(new Button(SKILLS_PAGE_LEFT_X, SKILLS_PAGE_RIGHT_X, SKILLS_PREV_TOP_Y, SKILLS_PREV_BOT_Y, true, PREV_STRING));
-        basicButtonList.addButton(new Button(SKILLS_PAGE_LEFT_X, SKILLS_PAGE_RIGHT_X, SKILLS_NEXT_TOP_Y, SKILLS_NEXT_BOT_Y, true, NEXT_STRING));
 
         skillsButtonList = new ButtonList();
-        for(int i = 0; i < SKILLS_TEXT_PER_PAGE; i++) {
-            int leftX = SKILLS_BUTTON_LEFT_X + (SKILLS_BUTTON_OFFSET_X * (i % 2));
-            int rightX = leftX + SKILLS_BUTTON_OFFSET_X;
-            int topY = SKILLS_BUTTON_TOP_Y + (SKILLS_BUTTON_OFFSET_Y * (i / 2));
-            int botY = topY + SKILLS_BUTTON_OFFSET_Y;
+        for(int i = 0; i < 4; i++) {
+            int leftX = SKILLS_BUTTON_LEFT_X + ((SKILLS_BUTTON_WIDTH +SKILLS_BUTTON_OFFSET_X) * (i % 2));
+            int rightX = SKILLS_BUTTON_RIGHT_X  + ((SKILLS_BUTTON_WIDTH +SKILLS_BUTTON_OFFSET_X) * (i % 2));
+            int topY = SKILLS_BUTTON_TOP_Y + ((SKILLS_BUTTON_HEIGHT + SKILLS_BUTTON_OFFSET_Y) * (i / 2));
+            int botY = SKILLS_BUTTON_BOT_Y + ((SKILLS_BUTTON_HEIGHT + SKILLS_BUTTON_OFFSET_Y) * (i / 2));
             skillsButtonList.addButton(new Button(leftX, rightX, topY, botY, true, "Skill_" + i));
         }
     }
@@ -149,22 +155,12 @@ public abstract class AbsCharacterInfoScreen extends Screen {
                         case CLOSE_STRING:
                             backButton();
                             break;
-                        case PREV_STRING:
-                            if(skillsPage > 0){
-                                skillsPage--;
-                            }
-                            break;
-                        case NEXT_STRING:
-                            if(skillsPage < maxPage){
-                                skillsPage++;
-                            }
-                            break;
                         default:
                             System.out.println("AbsCharacterInfoScreen:update(): Invalid button selection: " + basicPressed.getName());
                     }
                 }
                 else if(skillPressed != -1){
-                    displayText = (displayText == skillPressed) ? -1 : skillPressed + SKILLS_TEXT_PER_PAGE * skillsPage;
+                    displayText = (displayText == skillPressed) ? -1 : skillPressed;
                 }
             }
             uniqueUpdate(t);

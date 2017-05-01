@@ -2,6 +2,7 @@ package ultrapoulet.wifeygame.battle;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Graphics.ImageFormat;
@@ -10,6 +11,7 @@ import ultrapoulet.wifeygame.battle.requirements.AbsRequirement;
 import ultrapoulet.wifeygame.battle.requirements.RequiredCharacterRequirement;
 import ultrapoulet.wifeygame.character.EnemyCharacter;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
+import ultrapoulet.wifeygame.gamestate.Characters;
 
 /**
  * Created by John on 6/19/2016.
@@ -21,11 +23,34 @@ public class BattleInfo {
     private ArrayList<EnemyCharacter> enemyList = new ArrayList<>();
     private ArrayList<AbsRequirement> restrictionList = new ArrayList<>();
 
-    private ArrayList<WifeyCharacter> requiredList = null;
+    private ArrayList<WifeyCharacter> requiredList = new ArrayList<>();
+
+    private ArrayList<WifeyDrop> dropList = new ArrayList<>();
 
     private String background;
 
     private int energyRequirement;
+
+    private int numAttempts = 0;
+    private int numComplete = 0;
+
+    private class WifeyDrop{
+        private WifeyCharacter wifey;
+        private int dropChance;
+
+        public WifeyDrop(WifeyCharacter inChar, int drop){
+            this.wifey = inChar;
+            this.dropChance = drop;
+        }
+
+        public WifeyCharacter getWifey(){
+            return this.wifey;
+        }
+
+        public int getDropChance(){
+            return this.dropChance;
+        }
+    }
 
     public void setName(String name){
         battleName = name;
@@ -95,6 +120,74 @@ public class BattleInfo {
             }
         }
     }
+
+    public void addDrop(WifeyCharacter input, int dropChance){
+        boolean addWifey = true;
+        for(int i = 0; i < dropList.size(); i++){
+            if(dropList.get(i).getWifey() == input){
+                addWifey = false;
+            }
+        }
+        if(addWifey) {
+            dropList.add(new WifeyDrop(input, dropChance));
+            System.out.println("Added a drop: " + input.getHashKey());
+        }
+    }
+
+    public int getFoundDrops(){
+        int result = 0;
+        for(int i = 0; i < dropList.size(); i++){
+            if(dropList.get(i).getWifey().isDropped()){
+                result++;
+            }
+        }
+        return result;
+    }
+
+    public int getMaxDrops(){
+        return dropList.size();
+    }
+
+    //Does the calculations for the drops and returns the list of characters dropped
+    public ArrayList<WifeyCharacter> performDrops(){
+        ArrayList<WifeyCharacter> results = new ArrayList<>();
+        for(WifeyDrop drop : dropList){
+            if(drop.getWifey().isDropped()){
+                continue;
+            }
+            Random rng = new Random();
+            if(rng.nextInt(100) < drop.getDropChance()){
+                drop.getWifey().drop();
+                results.add(drop.getWifey());
+            }
+        }
+        return results;
+    }
+
+    public int getNumAttempts(){
+        return numAttempts;
+    }
+
+    public void setNumAttempts(int input){
+        numAttempts = input;
+    }
+
+    public void incrementNumAttempts(){
+        numAttempts++;
+    }
+
+    public int getNumComplete(){
+        return numComplete;
+    }
+
+    public void setNumComplete(int input){
+        numComplete = input;
+    }
+
+    public void incrementNumComplete(){
+        numComplete++;
+    }
+
 
     public ArrayList<AbsRequirement> getRequirements(){
         return restrictionList;

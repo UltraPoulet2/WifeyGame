@@ -2,10 +2,13 @@ package ultrapoulet.wifeygame.character;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 
 import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.wifeygame.battle.BattleWifey;
+import ultrapoulet.wifeygame.gamestate.RecruitableCharacters;
+import ultrapoulet.wifeygame.gamestate.RecruitedCharacters;
 
 /**
  * Created by John on 5/5/2016.
@@ -14,6 +17,7 @@ public class WifeyCharacter {
 
     private String name;
     private String hashKey;
+    private String title;
     private int strength;
     private int magic;
     private ArrayList<SkillsEnum> skills;
@@ -35,6 +39,9 @@ public class WifeyCharacter {
     private ArrayList<TransformWifey> transformations;
 
     private boolean favorite = false;
+
+    private boolean dropped = false;
+    private boolean recruited = false;
 
     public WifeyCharacter(){
         skills = new ArrayList<>();
@@ -93,6 +100,19 @@ public class WifeyCharacter {
         return this.transformations;
     }
 
+    public String getTitle(){
+        //For now, it's fine for title to not be set
+        return this.title;
+    }
+
+    public boolean isRecruited(){
+        return this.recruited;
+    }
+
+    public boolean isDropped(){
+        return this.dropped;
+    }
+
     public void setHashKey(String hashKey){
         this.hashKey = hashKey;
     }
@@ -120,6 +140,23 @@ public class WifeyCharacter {
     public void setStrongElement(Element element) { this.strongElement = element; }
 
     public void setWeakElement(Element element) { this.weakElement = element; }
+
+    public void setTitle(String inTitle){
+        this.title = inTitle;
+    }
+
+    public void recruit(){
+        this.recruited = true;
+        if(this.dropped){
+            RecruitableCharacters.remove(this.hashKey);
+        }
+        RecruitedCharacters.put(this.hashKey, this);
+    }
+
+    public void drop(){
+        this.dropped = true;
+        RecruitableCharacters.put(this.hashKey, this);
+    }
 
     public void addSkill(SkillsEnum skill) {
         if (!this.skills.contains(skill)) {
@@ -219,4 +256,14 @@ public class WifeyCharacter {
         return leveled;
     }
 
+    public static Comparator<WifeyCharacter> getNameComparator(){
+        return nameComparator;
+    }
+
+    private static Comparator<WifeyCharacter> nameComparator = new Comparator<WifeyCharacter>() {
+        @Override
+        public int compare(WifeyCharacter a, WifeyCharacter b) {
+            return a.compareName(b);
+        }
+    };
 }

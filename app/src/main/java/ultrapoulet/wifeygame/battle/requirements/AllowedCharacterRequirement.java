@@ -3,7 +3,7 @@ package ultrapoulet.wifeygame.battle.requirements;
 import java.util.ArrayList;
 
 import ultrapoulet.wifeygame.character.WifeyCharacter;
-import ultrapoulet.wifeygame.gamestate.RecruitedCharacters;
+import ultrapoulet.wifeygame.gamestate.Characters;
 
 /**
  * Created by John on 10/11/2016.
@@ -20,8 +20,7 @@ public class AllowedCharacterRequirement extends AbsRequirement {
 
     //Returns true if the value was successfully added, false otherwise
     public boolean addValue(String input){
-        //Change this to all instead of recruited
-        WifeyCharacter wifey = RecruitedCharacters.get(input);
+        WifeyCharacter wifey = Characters.get(input);
         if(wifey == null){
             return false;
         }

@@ -5,13 +5,12 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import ultrapoulet.androidgame.framework.Graphics;
-import ultrapoulet.androidgame.framework.Graphics.ImageFormat;
 import ultrapoulet.wifeygame.character.Element;
 import ultrapoulet.wifeygame.character.SkillsEnum;
 import ultrapoulet.wifeygame.character.TransformWifey;
 import ultrapoulet.wifeygame.character.Weapon;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
-import ultrapoulet.wifeygame.gamestate.RecruitedCharacters;
+import ultrapoulet.wifeygame.gamestate.Characters;
 
 /**
  * Created by John on 6/8/2016.
@@ -21,6 +20,7 @@ public class CharacterParser extends DefaultHandler{
     private Graphics g;
 
     private boolean bName;
+    private boolean bTitle;
     private boolean bStrength;
     private boolean bMagic;
     private boolean bWeapon;
@@ -70,6 +70,9 @@ public class CharacterParser extends DefaultHandler{
         }
         else if(qName.equalsIgnoreCase("name")){
             bName = true;
+        }
+        else if(qName.equalsIgnoreCase("title")){
+            bTitle = true;
         }
         else if(qName.equalsIgnoreCase("strength")){
             bStrength = true;
@@ -133,7 +136,7 @@ public class CharacterParser extends DefaultHandler{
                            String qName) throws SAXException {
         if (qName.equalsIgnoreCase("character")) {
             if(validate()) {
-                RecruitedCharacters.put(charKey, charBuilder);
+                Characters.put(charKey, charBuilder);
                 System.out.println("CharacterParser:endElement(): Adding character: " + charKey);
             }
             else{
@@ -169,13 +172,16 @@ public class CharacterParser extends DefaultHandler{
         String temp = new String(ch, start, length);
         try {
             if (bName) {
-                if(!bTransformSec) {
+                if (!bTransformSec) {
                     charBuilder.setName(temp);
-                }
-                else {
+                } else {
                     transformBuilder.setName(temp);
                 }
                 bName = false;
+            } else if (bTitle) {
+                //For now, we are not changing the title for transformations, this could change later
+                charBuilder.setTitle(temp);
+                bTitle = false;
             } else if (bStrength) {
                 if(!bTransformSec) {
                     charBuilder.setStrength(Integer.parseInt(temp));

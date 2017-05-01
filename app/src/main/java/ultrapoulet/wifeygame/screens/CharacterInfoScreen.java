@@ -3,6 +3,7 @@ package ultrapoulet.wifeygame.screens;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
+import android.text.TextPaint;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -63,19 +64,29 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
     private static final int SKILLS_DESC_SIZE = 30;
     private static final int MAX_NAME_SIZE = 191;
 
+    private String displayTitle;
+    private TextPaint titlePaint;
+    private static final int MAX_TITLE_FONT = 40;
+    private static final int MIN_TITLE_FONT = 20;
+    private static final int MAX_TITLE_SIZE = 236;
+    private static final int TWO_LINE_TITLE_FONT = 20;
+    private static final int TITLE_X = 402 + BG_X;
+    private static final int MAX_TITLE_Y = 240 + BG_Y;
+    private static final int TWO_LINE_TITLE_Y = 200 + BG_Y;
+
     private Paint levelPaint;
     private static final int LEVEL_SIZE = 34;
     private static final int LEVEL_X = 425 + BG_X;
-    private static final int LEVEL_Y = 237 + BG_Y;
+    private static final int LEVEL_Y = 322 + BG_Y;
 
     private Paint expPaint;
     private static final int MAX_EXP_FONT = 34;
     private static final int MAX_EXP_SIZE = 195;
     private static final int EXP_X = 552 + BG_X;
-    private static final int EXP_Y = 237 + BG_Y;
+    private static final int EXP_Y = 322 + BG_Y;
 
     private static final int EXP_BAR_X = 455 + BG_X;
-    private static final int EXP_BAR_Y = 200 + BG_Y;
+    private static final int EXP_BAR_Y = 285 + BG_Y;
     private static final int EXP_BAR_MAX_WIDTH = 195;
     private static final int EXP_BAR_HEIGHT = 50;
 
@@ -84,19 +95,9 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
     private static final int HP_X = 440 + BG_X;
     private static final int STR_X = 85 + HP_X;
     private static final int MAG_X = 85 + STR_X;
-    private static final int STAT_Y = 322 + BG_Y;
+    private static final int STAT_Y = 407 + BG_Y;
 
-    private Paint weaponPaint;
-    private static final int MAX_WEAPON_FONT = 34;
-    private static final int MAX_WEAPON_SIZE = 140;
-    private static final int WEAPON_X = 525 + BG_X;
-    private static final int MAX_WEAPON_Y = 407 + BG_Y;
 
-    //These will be removed when hits images are added
-    private Paint hitsPaint;
-    private static final int HITS_SIZE = 34;
-    private static final int HITS_X = 100 + WEAPON_X;
-    private static final int HITS_Y = 407 + BG_Y;
 
     public CharacterInfoScreen(Game game, Screen previousScreen) {
         super(game, previousScreen);
@@ -115,20 +116,15 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
         statPaint.setColor(Color.BLACK);
         statPaint.setTextSize(STAT_SIZE);
 
-        weaponPaint = new Paint();
-        weaponPaint.setTextAlign(Align.CENTER);
-        weaponPaint.setColor(Color.BLACK);
-
-        hitsPaint = new Paint();
-        hitsPaint.setTextAlign(Align.CENTER);
-        hitsPaint.setColor(Color.BLACK);
-        hitsPaint.setTextSize(HITS_SIZE);
-
         descPaint.setTextSize(SKILLS_DESC_SIZE);
 
         expPaint = new Paint();
         expPaint.setTextAlign(Align.CENTER);
         expPaint.setColor(Color.WHITE);
+
+        titlePaint = new TextPaint();
+        namePaint.setTextAlign(Align.LEFT);
+        namePaint.setColor(Color.BLACK);
     }
 
     public void createUniqueButtons(){
@@ -149,9 +145,6 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
 
         displayExp = displayChar.getExperienceString();
 
-        //Note: If the character has no skills, this will still return 0
-        maxPage = (displayChar.getSkills().size() - 1) / SKILLS_TEXT_PER_PAGE;
-        skillsPage = 0;
         transformPage = 0;
         maxTransformPage = transformations.size();
         prevTransform.setActive(false);
@@ -185,6 +178,12 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
         displayAttackElement = displayChar.getAttackElement();
         displayStrongElement = displayChar.getStrongElement();
         displayWeakElement = displayChar.getWeakElement();
+        if(displayChar.getTitle() != null){
+            displayTitle = displayChar.getTitle() + " Wifey";
+        }
+        else {
+            displayTitle = "Wifey";
+        }
     }
 
     private void incrementDisplayInfo() {
@@ -297,6 +296,13 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
     }
 
     protected void drawTopRows(Graphics g){
+        if(g.canDrawString(displayTitle, titlePaint, MAX_TITLE_SIZE, MIN_TITLE_FONT)){
+            g.drawString(displayTitle, TITLE_X, MAX_TITLE_Y, titlePaint, MAX_TITLE_SIZE, MAX_TITLE_FONT);
+        }
+        else{
+            titlePaint.setTextSize(TWO_LINE_TITLE_FONT);
+            g.drawMultiLineString(displayTitle, TITLE_X, TWO_LINE_TITLE_Y, MAX_TITLE_SIZE, titlePaint);
+        }
         g.drawString(String.valueOf(displayChar.getLevel()), LEVEL_X, LEVEL_Y, levelPaint);
         int expWidth = (int) (EXP_BAR_MAX_WIDTH * displayChar.getExperiencePercent());
         g.drawScaledImage(Assets.pHealthY, EXP_BAR_X, EXP_BAR_Y, expWidth, EXP_BAR_HEIGHT);
@@ -305,21 +311,21 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
         g.drawString(String.valueOf(BattleWifey.calculateHP(displayStrength)), HP_X, STAT_Y, statPaint);
         g.drawString(String.valueOf(displayStrength), STR_X, STAT_Y, statPaint);
         g.drawString(String.valueOf(displayMagic), MAG_X, STAT_Y, statPaint);
+    }
 
+    protected void drawSkills(Graphics g){
         //Draw image for weapon category
 
         //Draw string for weapon name
         g.drawString(displayWeapon.getWeaponType(), WEAPON_X, MAX_WEAPON_Y, weaponPaint, MAX_WEAPON_SIZE, MAX_WEAPON_FONT);
         //Draw image for number hits
         g.drawString(String.valueOf(displayWeapon.getNumHits()), HITS_X, HITS_Y, hitsPaint);
-    }
 
-    protected void drawSkills(Graphics g){
         //List out names for the skills
-        for(int i = SKILLS_TEXT_PER_PAGE * skillsPage; i < SKILLS_TEXT_PER_PAGE * skillsPage + SKILLS_TEXT_PER_PAGE && i < displaySkills.size(); i++){
+        for(int i = 0; i < 4 && i < displaySkills.size(); i++){
             SkillsEnum skill = displaySkills.get(i);
             int xOffset;
-            int yOffset = SKILLS_TEXT_BASE_Y + ((i % SKILLS_TEXT_PER_PAGE) / 2) * SKILLS_TEXT_OFFSET_Y;
+            int yOffset = SKILLS_TEXT_BASE_Y + (i / 2) * SKILLS_TEXT_OFFSET_Y;
             if(i % 2 == 0) {
                 xOffset = SKILLS_TEXT_LEFT_X;
             }
@@ -327,13 +333,6 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
                 xOffset = SKILLS_TEXT_RIGHT_X;
             }
             g.drawString(skill.getSkillName(), xOffset, yOffset, skillsPaint, SKILLS_TEXT_SIZE, SKILLS_TEXT_FONT);
-        }
-        if(maxPage == 0){
-            g.drawImage(Assets.ScrollBarFull, SKILLS_SCROLL_X, SKILLS_SCROLL_TOP_Y);
-        }
-        else{
-            int offsetPerPage = (SKILLS_SCROLL_MAX_Y - SKILLS_SCROLL_TOP_Y) / maxPage;
-            g.drawImage(Assets.ScrollBarShort, SKILLS_SCROLL_X, SKILLS_SCROLL_TOP_Y + (offsetPerPage * skillsPage));
         }
     }
 

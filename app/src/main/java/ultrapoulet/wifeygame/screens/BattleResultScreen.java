@@ -5,6 +5,7 @@ import java.util.List;
 
 import ultrapoulet.androidgame.framework.Game;
 import ultrapoulet.androidgame.framework.Graphics;
+import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.androidgame.framework.Input;
 import ultrapoulet.androidgame.framework.Input.TouchEvent;
 import ultrapoulet.androidgame.framework.Screen;
@@ -37,6 +38,12 @@ public class BattleResultScreen extends Screen{
     private static final int TEXT_OFFSET = 0;
     private static final int LEVEL_WIDTH = 60;
 
+    private static final int DROP_BASE_X = 90;
+    private static final int DROP_BASE_Y = 425;
+    private static final int DROP_WIDTH = 120;
+    private static final int DROP_HEIGHT = 120;
+    private static final int DROP_OFFSET = 5;
+
     private static final int PARTY_HEIGHT = 160;
     private static final int PARTY_WIDTH = 160;
     private static final int PARTY_SPACING = 10;
@@ -57,6 +64,8 @@ public class BattleResultScreen extends Screen{
     private static final int CONTINUE_BOTTOM_Y = 1230;
     private static final String CONTINUE_STRING = "Continue";
 
+    private static final int DROPS_PER_ROW = 5;
+
     private BattleInfo info;
     private List<BattleCharacter> party;
     private List<BattleCharacter> enemies;
@@ -75,6 +84,8 @@ public class BattleResultScreen extends Screen{
 
     private boolean playerLevelUp = false;
     private boolean[] wifeyLevelUp = new boolean[7];
+
+    private ArrayList<Image> drops = new ArrayList<>();
 
     private class BonusGains{
         private int gold;
@@ -126,8 +137,17 @@ public class BattleResultScreen extends Screen{
         for(int i = 0; i < wifeyList.size(); i++){
             //This will be replaced with a boolean list later
             wifeyLevelUp[i] = wifeyList.get(i).addExperience(baseExp + bonusExp);
-    }
+        }
         PlayerInfo.addGold(baseGold + bonusGold);
+
+        if(victory){
+            info.incrementNumComplete();
+            ArrayList<WifeyCharacter> droppedWifeys = info.performDrops();
+            Graphics g = game.getGraphics();
+            for(WifeyCharacter wifey : droppedWifeys){
+                drops.add(wifey.getImage(g));
+            }
+        }
     }
 
     @Override
@@ -209,6 +229,11 @@ public class BattleResultScreen extends Screen{
             g.drawImage(Assets.YellowPlus, currentX, GOLD_Y);
             currentX += TEXT_WIDTH;
             NumberPrinter.drawNumber(g, bonusGold, currentX, GOLD_Y, TEXT_WIDTH, TEXT_HEIGHT, TEXT_OFFSET, Assets.YellowNumbers, Align.LEFT);
+        }
+
+        //Draw drops
+        for(int i = 0; i < drops.size(); i++){
+            g.drawScaledImage(drops.get(i), DROP_BASE_X + ((DROP_WIDTH + DROP_OFFSET) * (i % DROPS_PER_ROW)), DROP_BASE_Y + ((DROP_HEIGHT + DROP_OFFSET) * (i / DROPS_PER_ROW)), DROP_WIDTH, DROP_HEIGHT);
         }
 
         //Draw Party Images

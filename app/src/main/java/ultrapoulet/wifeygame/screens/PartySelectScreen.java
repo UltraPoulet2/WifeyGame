@@ -32,6 +32,7 @@ public class PartySelectScreen extends Screen {
 
     private List<WifeyCharacter> validCharacters;
     private List<WifeyCharacter> currentParty;
+    private List<WifeyCharacter> requiredCharacters;
     private int maxPartySize;
     private BattleInfo battleInfo;
 
@@ -141,24 +142,17 @@ public class PartySelectScreen extends Screen {
 
     private static final int DRAGGING_OFFSET = 60;
 
-    private boolean hasRequiredList(){
-        return battleInfo != null && battleInfo.getRequiredList() != null;
-    }
-
     private Comparator<WifeyCharacter> nameComp = new Comparator<WifeyCharacter>(){
         @Override
         public int compare(WifeyCharacter a, WifeyCharacter b){
-            if(hasRequiredList()){
-                ArrayList<WifeyCharacter> list = battleInfo.getRequiredList();
-                if(list.contains(a) && list.contains(b)){
-                    return a.compareName(b);
-                }
-                else if(list.contains(a)){
-                    return -1;
-                }
-                else if(list.contains(b)){
-                    return 1;
-                }
+            if(requiredCharacters.contains(a) && requiredCharacters.contains(b)){
+                return a.compareName(b);
+            }
+            else if(requiredCharacters.contains(a)){
+                return -1;
+            }
+            else if(requiredCharacters.contains(b)){
+                return 1;
             }
             return a.compareName(b);
         }
@@ -167,17 +161,14 @@ public class PartySelectScreen extends Screen {
     private Comparator<WifeyCharacter> strengthComp = new Comparator<WifeyCharacter>() {
         @Override
         public int compare(WifeyCharacter a, WifeyCharacter b) {
-            if(hasRequiredList()){
-                ArrayList<WifeyCharacter> list = battleInfo.getRequiredList();
-                if(list.contains(a) && list.contains(b)){
-                    return a.compareStrength(b);
-                }
-                else if(list.contains(a)){
-                    return -1;
-                }
-                else if(list.contains(b)){
-                    return 1;
-                }
+            if(requiredCharacters.contains(a) && requiredCharacters.contains(b)){
+                return a.compareStrength(b);
+            }
+            else if(requiredCharacters.contains(a)){
+                return -1;
+            }
+            else if(requiredCharacters.contains(b)){
+                return 1;
             }
             return a.compareStrength(b);
         }
@@ -186,17 +177,14 @@ public class PartySelectScreen extends Screen {
     private Comparator<WifeyCharacter> magicComp = new Comparator<WifeyCharacter>() {
         @Override
         public int compare(WifeyCharacter a, WifeyCharacter b) {
-            if(hasRequiredList()){
-                ArrayList<WifeyCharacter> list = battleInfo.getRequiredList();
-                if(list.contains(a) && list.contains(b)){
-                    return a.compareMagic(b);
-                }
-                else if(list.contains(a)){
-                    return -1;
-                }
-                else if(list.contains(b)){
-                    return 1;
-                }
+            if(requiredCharacters.contains(a) && requiredCharacters.contains(b)){
+                return a.compareMagic(b);
+            }
+            else if(requiredCharacters.contains(a)){
+                return -1;
+            }
+            else if(requiredCharacters.contains(b)){
+                return 1;
             }
             return a.compareMagic(b);
         }
@@ -205,17 +193,14 @@ public class PartySelectScreen extends Screen {
     private Comparator<WifeyCharacter> favComp = new Comparator<WifeyCharacter>(){
         @Override
         public int compare(WifeyCharacter a, WifeyCharacter b){
-            if(hasRequiredList()){
-                ArrayList<WifeyCharacter> list = battleInfo.getRequiredList();
-                if(list.contains(a) && list.contains(b)){
-                    return a.compareFavorite(b);
-                }
-                else if(list.contains(a)){
-                    return -1;
-                }
-                else if(list.contains(b)){
-                    return 1;
-                }
+            if(requiredCharacters.contains(a) && requiredCharacters.contains(b)){
+                return a.compareFavorite(b);
+            }
+            else if(requiredCharacters.contains(a)){
+                return -1;
+            }
+            else if(requiredCharacters.contains(b)){
+                return 1;
             }
             return a.compareFavorite(b);
         }
@@ -288,7 +273,6 @@ public class PartySelectScreen extends Screen {
         sortingList.add(STR_SORT_STRING);
         sortingList.add(MAG_SORT_STRING);
         sortingList.add(FAV_SORT_STRING);
-
 
         background = Assets.PartySelectScreen;
 
@@ -400,6 +384,17 @@ public class PartySelectScreen extends Screen {
                 validCharacters.add(inputCharacters.get(i));
             }
         }
+        requiredCharacters = new ArrayList<>();
+        if(battleInfo != null){
+            requiredCharacters = battleInfo.getRequiredList();
+            for(int i = 0; i < requiredCharacters.size(); i++){
+                if(!validCharacters.contains(requiredCharacters.get(i))){
+                    //Add it to the list of characters, but special handling will be done so it can't be added to party
+                    validCharacters.add(requiredCharacters.get(i));
+                }
+            }
+        }
+
         Collections.sort(validCharacters, getSort());
         currentPage = 0;
         maxPage = (validCharacters.size() / PER_PAGE);
@@ -434,7 +429,8 @@ public class PartySelectScreen extends Screen {
     //that is presently being touched
     private int getRecruitIndex(int x, int y){
         int index = recruitList.getIndexPressed(x, y);
-        if(index == -1){
+        //If the character in question has not been recruited, they can't be dragged
+        if(index == -1 || !validCharacters.get(currentPage * PER_PAGE + index).isRecruited()){
             return -1;
         }
         else{
@@ -661,15 +657,8 @@ public class PartySelectScreen extends Screen {
 
         int minIndex = PER_PAGE * currentPage;
         int maxIndex = PER_PAGE * (currentPage + 1);
-        ArrayList<WifeyCharacter> reqList;
-        if(hasRequiredList()){
-            reqList = battleInfo.getRequiredList();
-        }
-        else{
-            reqList = new ArrayList<>();
-        }
         for(int i = minIndex; i < validCharacters.size() && i < maxIndex; i++){
-            if(reqList.contains(validCharacters.get(i))){
+            if(requiredCharacters.contains(validCharacters.get(i))){
                 //Since this can only be on row 1, the Y doesn't calculate offset.
                 g.drawImage(Assets.RequiredCharHolder, (i % ROW_SIZE) * CHAR_REQUIRED_OFFSET + CHAR_REQUIRED_HOLDER_BASE_X, CHAR_REQUIRED_HOLDER_BASE_Y);
             }
@@ -684,6 +673,11 @@ public class PartySelectScreen extends Screen {
                             CHAR_IMAGE_BASE_TOP_Y + CHAR_IMAGE_OFFSET_Y * ((i % PER_PAGE) / COLUMN_SIZE),
                             CHAR_FAVORITE_SIZE, CHAR_FAVORITE_SIZE);
                 }
+            }
+            if(!validCharacters.get(i).isRecruited()){
+                g.drawPercentageImage(Assets.InvalidChar,
+                        CHAR_IMAGE_OFFSET_X * (i % ROW_SIZE) + CHAR_IMAGE_BASE_LEFT_X,
+                        CHAR_IMAGE_BASE_TOP_Y + CHAR_IMAGE_OFFSET_Y * ((i % PER_PAGE) / COLUMN_SIZE), HALF_SCALE, HALF_SCALE);
             }
         }
         if(dragging && draggingRecruitIndex != -1){
