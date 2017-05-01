@@ -64,6 +64,8 @@ public class BattleResultScreen extends Screen{
     private static final int CONTINUE_BOTTOM_Y = 1230;
     private static final String CONTINUE_STRING = "Continue";
 
+    private static final int DROPS_PER_ROW = 5;
+
     private BattleInfo info;
     private List<BattleCharacter> party;
     private List<BattleCharacter> enemies;
@@ -231,7 +233,7 @@ public class BattleResultScreen extends Screen{
 
         //Draw drops
         for(int i = 0; i < drops.size(); i++){
-            g.drawScaledImage(drops.get(i), DROP_BASE_X + ((DROP_WIDTH + DROP_OFFSET) * i), DROP_BASE_Y + ((DROP_HEIGHT + DROP_OFFSET) * i), DROP_WIDTH, DROP_HEIGHT);
+            g.drawScaledImage(drops.get(i), DROP_BASE_X + ((DROP_WIDTH + DROP_OFFSET) * (i % DROPS_PER_ROW)), DROP_BASE_Y + ((DROP_HEIGHT + DROP_OFFSET) * (i / DROPS_PER_ROW)), DROP_WIDTH, DROP_HEIGHT);
         }
 
         //Draw Party Images

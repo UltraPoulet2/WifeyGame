@@ -15,6 +15,10 @@
                     <wifey>TEST-NYRK</wifey>
                     <chance>100</chance>
                 </drop>
+                <drop>
+                    <wifey>TEST-PERI</wifey>
+                    <chance>100</chance>
+                </drop>
             </drops>
         </battle>
     </area>

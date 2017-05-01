@@ -425,7 +425,7 @@ public class LoadingScreen extends Screen {
         //Load all recruited characters
         for(String key : Characters.getKeys()){
             //For Required character testing, temporarily remove Nyaruko
-            if(key.equals("TEST-NYRK")){
+            if(key.equals("TEST-NYRK") || key.equals("TEST-PERI")){
                 continue;
             }
             System.out.println("Character recruited: " + key);

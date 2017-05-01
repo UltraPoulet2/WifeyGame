@@ -5,6 +5,7 @@ import android.graphics.Paint;
 import android.graphics.Paint.Align;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import ultrapoulet.androidgame.framework.Game;
@@ -121,6 +122,7 @@ public class BattleSelectScreen extends Screen {
     private Button recruitPageUpButton;
     private Button recruitPageDownButton;
     private static int selectedRecruitPage = 0;
+    private int lastPressedRecruit = -1;
 
     private Button partyButton;
     private static final String PARTY_BUTTON_STRING = "PARTY";
@@ -303,16 +305,19 @@ public class BattleSelectScreen extends Screen {
     }
 
     private void createRecruitButtons(){
+        //We set the current page to 0 to not have any issues
+        selectedRecruitPage = 0;
         recruitableWifeys = RecruitableCharacters.getArray();
         recruitableWifeyImages = new ArrayList<>();
         //Sort should be added to make the list consistent
+        Collections.sort(recruitableWifeys, WifeyCharacter.getNameComparator());
         recruitButtonList = new ButtonList();
         for(int i = 0; i < recruitableWifeys.size(); i++){
             int leftX = RECRUIT_BUTTON_LEFT_X;
             int rightX = RECRUIT_BUTTON_RIGHT_X;
             int topY = RECRUIT_BUTTON_TOP_Y + RECRUIT_OFFSET_Y * (i % AREA_PAGE_SIZE);
             int botY = RECRUIT_BUTTON_BOT_Y + RECRUIT_OFFSET_Y * (i % AREA_PAGE_SIZE);
-            recruitButtonList.addButton(new Button(leftX, rightX, topY, botY, false, recruitableWifeys.get(i).getName(), Assets.RecruitBattleButton));
+            recruitButtonList.addButton(new Button(leftX, rightX, topY, botY, true, recruitableWifeys.get(i).getName(), Assets.RecruitBattleButton));
             recruitableWifeyImages.add(recruitableWifeys.get(i).getImage(game.getGraphics()));
         }
     }
@@ -366,6 +371,7 @@ public class BattleSelectScreen extends Screen {
                 lastPressedGeneral = buttonList.getButtonPressed(t.x, t.y);
                 lastPressedArea = storyAreaList.getIndexPressed(t.x, t.y);
                 lastPressedBattle = storyBattleList.getIndexPressed(t.x, t.y);
+                lastPressedRecruit = recruitButtonList.getIndexPressed(t.x, t.y);
                 selectedChar = partyList.getIndexPressed(t.x, t.y);
                 continue;
             }
@@ -403,6 +409,14 @@ public class BattleSelectScreen extends Screen {
                             selectedBattlePage++;
                             activatePageAndBattleButtons();
                             break;
+                        case RECRUIT_UP_STRING:
+                            selectedRecruitPage--;
+                            activateRecruitButtons();
+                            break;
+                        case RECRUIT_DOWN_STRING:
+                            selectedRecruitPage++;
+                            activateRecruitButtons();
+                            break;
                         default:
                             System.out.println("Not yet implemented");
                     }
@@ -426,6 +440,11 @@ public class BattleSelectScreen extends Screen {
                 else if(selectedChar == partyList.getIndexPressed(t.x, t.y) && selectedChar != -1){
                     cis.setChar(party.get(selectedChar));
                     game.setScreen(cis);
+                } else if (lastPressedRecruit == recruitButtonList.getIndexPressed(t.x, t.y) && lastPressedRecruit != -1){
+                    //For now, we're just going to recruit the character immediately and recreate the recruit buttons
+                    recruitableWifeys.get(lastPressedRecruit).recruit();
+                    createRecruitButtons();
+                    activateRecruitButtons();
                 }
             }
         }
@@ -481,7 +500,7 @@ public class BattleSelectScreen extends Screen {
             for(int i = 0; i < recruitableWifeys.size(); i++){
                 if(recruitButtonList.get(i).isActive()){
                     int imageX = RECRUIT_BUTTON_LEFT_X + RECRUIT_BUTTON_IMAGE_OFFSET_X;
-                    int imageY = RECRUIT_BUTTON_TOP_Y + RECRUIT_BUTTON_IMAGE_OFFSET_Y;
+                    int imageY = RECRUIT_BUTTON_TOP_Y + BATTLES_OFFSET_Y * (i % AREA_PAGE_SIZE) + RECRUIT_BUTTON_IMAGE_OFFSET_Y;
                     g.drawScaledImage(recruitableWifeyImages.get(i), imageX, imageY, RECRUIT_BUTTON_IMAGE_SIZE, RECRUIT_BUTTON_IMAGE_SIZE);
                 }
             }

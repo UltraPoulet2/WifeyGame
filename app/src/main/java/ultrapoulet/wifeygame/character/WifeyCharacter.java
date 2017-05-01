@@ -2,6 +2,7 @@ package ultrapoulet.wifeygame.character;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 
 import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Image;
@@ -255,4 +256,14 @@ public class WifeyCharacter {
         return leveled;
     }
 
+    public static Comparator<WifeyCharacter> getNameComparator(){
+        return nameComparator;
+    }
+
+    private static Comparator<WifeyCharacter> nameComparator = new Comparator<WifeyCharacter>() {
+        @Override
+        public int compare(WifeyCharacter a, WifeyCharacter b) {
+            return a.compareName(b);
+        }
+    };
 }
