@@ -95,6 +95,10 @@ public class Assets {
     public static Image BattleResultGold;
     public static Image LevelUp;
 
+    //RecruitingScreen stuff
+    public static Image RecruitingScreen;
+    public static Image RecruitingButtonEnable, RecruitingButtonDisable;
+
     //Element Image stuff
     public static List<Image> ElementImages;
     public static final int AIR = 0;

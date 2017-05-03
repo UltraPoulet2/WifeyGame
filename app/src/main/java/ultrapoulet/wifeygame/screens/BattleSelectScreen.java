@@ -140,6 +140,7 @@ public class BattleSelectScreen extends Screen {
     private int selectedChar;
 
     private CharacterInfoScreen cis;
+    private RecruitingScreen rs;
 
     private List<WifeyCharacter> party;
     private ButtonList partyList;
@@ -182,6 +183,7 @@ public class BattleSelectScreen extends Screen {
         buttonList.addButton(recruitPageDownButton);
 
         cis = new CharacterInfoScreen(game, this);
+        rs = new RecruitingScreen(game, this);
 
         partyList = new ButtonList();
         for(int i = 0; i < 7; i++){
@@ -442,9 +444,13 @@ public class BattleSelectScreen extends Screen {
                     game.setScreen(cis);
                 } else if (lastPressedRecruit == recruitButtonList.getIndexPressed(t.x, t.y) && lastPressedRecruit != -1){
                     //For now, we're just going to recruit the character immediately and recreate the recruit buttons
+                    /*
                     recruitableWifeys.get(lastPressedRecruit).recruit();
                     createRecruitButtons();
                     activateRecruitButtons();
+                    */
+                    //rs.setRecruit(recruit);
+                    game.setScreen(rs);
                 }
             }
         }
