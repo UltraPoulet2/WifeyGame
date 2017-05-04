@@ -1,14 +1,19 @@
 package ultrapoulet.wifeygame.screens;
 
+import android.graphics.Color;
+import android.graphics.Paint;
+
 import java.util.List;
 
 import ultrapoulet.androidgame.framework.Game;
 import ultrapoulet.androidgame.framework.Graphics;
+import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.androidgame.framework.Input;
 import ultrapoulet.androidgame.framework.Screen;
 import ultrapoulet.androidgame.framework.helpers.Button;
 import ultrapoulet.androidgame.framework.helpers.ButtonList;
 import ultrapoulet.wifeygame.Assets;
+import ultrapoulet.wifeygame.character.WifeyCharacter;
 import ultrapoulet.wifeygame.gamestate.PlayerInfo;
 
 /**
@@ -18,6 +23,10 @@ import ultrapoulet.wifeygame.gamestate.PlayerInfo;
 public class RecruitingScreen extends Screen {
 
     private static final int HEADER_OFFSET = 60;
+
+    private static final int IMAGE_X = 30;
+    private static final int IMAGE_Y = HEADER_OFFSET + 150;
+    private static final int IMAGE_SIZE = 160;
 
     private static final int BACK_BUTTON_LEFT_X = 45;
     private static final int BACK_BUTTON_RIGHT_X = 215;
@@ -39,7 +48,16 @@ public class RecruitingScreen extends Screen {
 
     private Button lastPressed;
 
-    public RecruitingScreen(Game game, Screen previousScreen){
+    private WifeyCharacter recruit;
+    private Image displayImage;
+
+    private static final int TITLE_NAME_X = 400;
+    private static final int TITLE_NAME_Y = 137;
+    private static final int TITLE_TEXT_MAX_WIDTH = 550;
+    private static final int TITLE_TEXT_MAX_FONT = 50;
+    private Paint titlePaint;
+
+    public RecruitingScreen(Game game, Screen previousScreen, WifeyCharacter inputRecruit){
         super(game);
         this.previousScreen = previousScreen;
 
@@ -48,6 +66,13 @@ public class RecruitingScreen extends Screen {
         recruitButton = new Button(RECRUIT_BUTTON_LEFT_X, RECRUIT_BUTTON_RIGHT_X, RECRUIT_BUTTON_TOP_Y, RECRUIT_BUTTON_BOT_Y, false, RECRUIT_STRING, Assets.RecruitingButtonEnable, Assets.RecruitingButtonDisable);
         this.basicButtons.addButton(backButton);
         this.basicButtons.addButton(recruitButton);
+
+        this.recruit = inputRecruit;
+        this.displayImage = recruit.getImage(game.getGraphics());
+
+        titlePaint = new Paint();
+        titlePaint.setColor(Color.BLACK);
+        titlePaint.setTextAlign(Paint.Align.CENTER);
     }
 
     @Override
@@ -77,6 +102,9 @@ public class RecruitingScreen extends Screen {
         Graphics g = game.getGraphics();
         PlayerInfo.drawHeader(g);
         g.drawImage(Assets.RecruitingScreen, 0, HEADER_OFFSET);
+
+        g.drawString(recruit.getName(), TITLE_NAME_X, TITLE_NAME_Y, titlePaint, TITLE_TEXT_MAX_WIDTH, TITLE_TEXT_MAX_FONT);
+        g.drawScaledImage(displayImage, IMAGE_X, IMAGE_Y, IMAGE_SIZE, IMAGE_SIZE);
 
         basicButtons.drawImage(g);
     }

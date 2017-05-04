@@ -124,6 +124,9 @@ public class BattleSelectScreen extends Screen {
     private static int selectedRecruitPage = 0;
     private int lastPressedRecruit = -1;
 
+    private Paint recruitNamePaint;
+    private static final int RECRUIT_TITLE_OFFSET_X = 45;
+
     private Button partyButton;
     private static final String PARTY_BUTTON_STRING = "PARTY";
     private Button upgradeButton;
@@ -140,7 +143,6 @@ public class BattleSelectScreen extends Screen {
     private int selectedChar;
 
     private CharacterInfoScreen cis;
-    private RecruitingScreen rs;
 
     private List<WifeyCharacter> party;
     private ButtonList partyList;
@@ -183,7 +185,6 @@ public class BattleSelectScreen extends Screen {
         buttonList.addButton(recruitPageDownButton);
 
         cis = new CharacterInfoScreen(game, this);
-        rs = new RecruitingScreen(game, this);
 
         partyList = new ButtonList();
         for(int i = 0; i < 7; i++){
@@ -228,6 +229,11 @@ public class BattleSelectScreen extends Screen {
         buttonPaint.setTextSize(40);
         buttonPaint.setTextAlign(Align.CENTER);
         buttonPaint.setColor(Color.BLACK);
+
+        recruitNamePaint = new Paint();
+        recruitNamePaint.setTextSize(50);
+        recruitNamePaint.setTextAlign(Align.CENTER);
+        recruitNamePaint.setColor(Color.BLACK);
     }
 
     private void deactivatePageAndBattleButtons(){
@@ -450,7 +456,7 @@ public class BattleSelectScreen extends Screen {
                     activateRecruitButtons();
                     */
                     //rs.setRecruit(recruit);
-                    game.setScreen(rs);
+                    game.setScreen(new RecruitingScreen(game, this, recruitableWifeys.get(lastPressedRecruit)));
                 }
             }
         }
@@ -469,6 +475,7 @@ public class BattleSelectScreen extends Screen {
         storyBattleList.drawImage(g);
         storyBattleList.drawString(g, buttonPaint, 0, BATTLE_TITLE_OFFSET_Y);
         recruitButtonList.drawImage(g);
+        recruitButtonList.drawString(g, recruitNamePaint, RECRUIT_TITLE_OFFSET_X, 0);
 
         if(selectedTab == STORY_BUTTON_STRING){
             g.drawImage(Assets.BattleDivider, DIVIDER_X, DIVIDER_Y);

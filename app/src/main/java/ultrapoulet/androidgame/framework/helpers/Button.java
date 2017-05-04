@@ -98,11 +98,7 @@ public class Button {
     }
 
     public void drawString(Graphics g, Paint p){
-        if(!hidden && active) {
-            int X = leftX + ((rightX - leftX) / 2);
-            int Y = botY - ((botY - topY - (int) p.getTextSize()) / 2);
-            g.drawString(this.name, X, Y, p);
-        }
+        drawString(g, p, 0, 0);
     }
 
     //Draw the string, ignoring the active boolean
