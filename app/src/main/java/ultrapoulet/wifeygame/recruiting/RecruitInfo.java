@@ -10,9 +10,11 @@ import ultrapoulet.wifeygame.character.WifeyCharacter;
 
 public class RecruitInfo {
 
-    private WifeyCharacter recruit;
+    //private WifeyCharacter recruit;
+    private String quote;
     private ArrayList<RecruitRequirement> requirements = new ArrayList<>();
 
+    /*
     public void setRecruit(WifeyCharacter inRecruit){
         this.recruit = inRecruit;
     }
@@ -20,6 +22,7 @@ public class RecruitInfo {
     public WifeyCharacter getRecruit(){
         return recruit;
     }
+    */
 
     public void addRequirement(RecruitRequirement inRequirement){
         requirements.add(inRequirement);
@@ -27,6 +30,14 @@ public class RecruitInfo {
 
     public ArrayList<RecruitRequirement> getRequirements(){
         return requirements;
+    }
+
+    public String getQuote() {
+        return this.quote;
+    }
+
+    public void setQuote(String input){
+        this.quote = input;
     }
 
     public boolean isRecruitable(){

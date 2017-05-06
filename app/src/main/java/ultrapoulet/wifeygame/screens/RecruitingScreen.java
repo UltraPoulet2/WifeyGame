@@ -2,6 +2,7 @@ package ultrapoulet.wifeygame.screens;
 
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.text.TextPaint;
 
 import java.util.List;
 
@@ -57,6 +58,12 @@ public class RecruitingScreen extends Screen {
     private static final int TITLE_TEXT_MAX_FONT = 50;
     private Paint titlePaint;
 
+    private TextPaint quotePaint;
+    private static final int QUOTE_X = 220;
+    private static final int QUOTE_Y = HEADER_OFFSET + 150;
+    private static final int QUOTE_MAX_WIDTH = 550;
+    private static final int QUOTE_TEXT_SIZE = 25;
+
     public RecruitingScreen(Game game, Screen previousScreen, WifeyCharacter inputRecruit){
         super(game);
         this.previousScreen = previousScreen;
@@ -73,6 +80,10 @@ public class RecruitingScreen extends Screen {
         titlePaint = new Paint();
         titlePaint.setColor(Color.BLACK);
         titlePaint.setTextAlign(Paint.Align.CENTER);
+
+        quotePaint = new TextPaint();
+        quotePaint.setColor(Color.BLACK);
+        quotePaint.setTextSize(QUOTE_TEXT_SIZE);
     }
 
     @Override
@@ -105,6 +116,10 @@ public class RecruitingScreen extends Screen {
 
         g.drawString(recruit.getName(), TITLE_NAME_X, TITLE_NAME_Y, titlePaint, TITLE_TEXT_MAX_WIDTH, TITLE_TEXT_MAX_FONT);
         g.drawScaledImage(displayImage, IMAGE_X, IMAGE_Y, IMAGE_SIZE, IMAGE_SIZE);
+
+        if(recruit.getRecruitingInfo() != null){
+            g.drawMultiLineString(recruit.getRecruitingInfo().getQuote(), QUOTE_X, QUOTE_Y, QUOTE_MAX_WIDTH, quotePaint);
+        }
 
         basicButtons.drawImage(g);
     }

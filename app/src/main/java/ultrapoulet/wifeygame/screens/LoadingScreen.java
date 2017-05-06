@@ -27,6 +27,7 @@ import ultrapoulet.wifeygame.gamestate.RecruitedCharacters;
 import ultrapoulet.wifeygame.parsers.BattleParser;
 import ultrapoulet.wifeygame.parsers.CharacterParser;
 import ultrapoulet.wifeygame.parsers.EnemyParser;
+import ultrapoulet.wifeygame.parsers.RecruitingParser;
 
 /**
  * Created by John on 3/12/2016.
@@ -333,6 +334,26 @@ public class LoadingScreen extends Screen {
         }
         finally{
             if(in != null){
+                try {
+                    in.close();
+                }
+                catch(IOException e){
+                }
+            }
+        }
+
+        try {
+            in = game.openConfig("config/recruiting.xml");
+            SAXParserFactory factory = SAXParserFactory.newInstance();
+            SAXParser saxParser = factory.newSAXParser();
+            RecruitingParser recParser = new RecruitingParser();
+            saxParser.parse(in, recParser);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        finally {
+            if (in != null){
                 try {
                     in.close();
                 }

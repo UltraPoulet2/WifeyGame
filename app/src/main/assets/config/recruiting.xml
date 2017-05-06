@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <recruiting>
     <character key="TEST-NYRK">
+        <quote>I'm saying wordy things.</quote>
+        <!--
         <steps>
             <step type="battle">TEST-NYRK-BAT</step>
-            <!-- <step type="money">1000</step> -->
-            <!-- <step type="recruit">TEST-PERI</step> -->
+            <step type="money">1000</step>
+            <step type="recruit">TEST-PERI</step>
         </steps>
+        -->
+    </character>
+    <character key="TEST-PERI">
+        <quote>Is it time to murder things?</quote>
     </character>
 </recruiting>
