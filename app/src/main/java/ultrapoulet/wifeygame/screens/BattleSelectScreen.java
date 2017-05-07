@@ -313,8 +313,6 @@ public class BattleSelectScreen extends Screen {
     }
 
     private void createRecruitButtons(){
-        //We set the current page to 0 to not have any issues
-        selectedRecruitPage = 0;
         recruitableWifeys = RecruitableCharacters.getArray();
         recruitableWifeyImages = new ArrayList<>();
         //Sort should be added to make the list consistent
@@ -327,6 +325,10 @@ public class BattleSelectScreen extends Screen {
             int botY = RECRUIT_BUTTON_BOT_Y + RECRUIT_OFFSET_Y * (i % AREA_PAGE_SIZE);
             recruitButtonList.addButton(new Button(leftX, rightX, topY, botY, true, recruitableWifeys.get(i).getName(), Assets.RecruitBattleButton));
             recruitableWifeyImages.add(recruitableWifeys.get(i).getImage(game.getGraphics()));
+        }
+        int maxRecruitPage = (recruitableWifeys.size() - 1) / AREA_PAGE_SIZE;
+        if(selectedRecruitPage > maxRecruitPage){
+            selectedRecruitPage = maxRecruitPage;
         }
     }
 
@@ -538,6 +540,14 @@ public class BattleSelectScreen extends Screen {
             else {
                 partyList.get(i).setActiveImage(null);
             }
+        }
+
+        createRecruitButtons();
+        if(selectedTab == RECRUIT_BUTTON_STRING){
+            activateRecruitButtons();
+        }
+        else{
+            deactivateRecruitButtons();
         }
     }
 

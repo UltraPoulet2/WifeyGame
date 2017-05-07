@@ -16,6 +16,7 @@ import ultrapoulet.androidgame.framework.helpers.ButtonList;
 import ultrapoulet.wifeygame.Assets;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
 import ultrapoulet.wifeygame.gamestate.PlayerInfo;
+import ultrapoulet.wifeygame.recruiting.RecruitInfo;
 
 /**
  * Created by John on 5/2/2017.
@@ -86,6 +87,14 @@ public class RecruitingScreen extends Screen {
         quotePaint.setTextSize(QUOTE_TEXT_SIZE);
     }
 
+    private void checkRecruitAvailable(){
+        RecruitInfo info = recruit.getRecruitingInfo();
+        for(int i = 0; i < info.getRequirements().size(); i++){
+            //We'll set up images indicating whether or not a requirement is complete or not
+        }
+        recruitButton.setActive(info.isRecruitable());
+    }
+
     @Override
     public void update(float deltaTime){
         List<Input.TouchEvent> touchEvents = game.getInput().getTouchEvents();
@@ -101,7 +110,9 @@ public class RecruitingScreen extends Screen {
                         break;
                     }
                     else if(lastPressed == recruitButton){
-                        //For now, this is impossible
+                        recruit.recruit();
+                        backButton();
+                        break;
                     }
                 }
             }
@@ -131,7 +142,7 @@ public class RecruitingScreen extends Screen {
 
     @Override
     public void resume() {
-
+        checkRecruitAvailable();
     }
 
     @Override
