@@ -4,9 +4,10 @@
         <quote>I'm saying wordy things.</quote>
         <!--
         <steps>
-            <step type="battle">TEST-NYRK-BAT</step>
+            <step type="recruitBattle">TEST-NYRK-BAT</step>
             <step type="money">1000</step>
             <step type="recruit">TEST-PERI</step>
+            <step type="battle">TEST-BATL</step>
         </steps>
         -->
     </character>
