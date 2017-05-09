@@ -8,7 +8,7 @@ public class RecruitRequirementGold extends RecruitRequirement {
 
     private int goldAmount;
 
-    public RecruitRequirementGold(int inputGold){
+    public void setGoldAmount(int inputGold){
         this.goldAmount = inputGold;
     }
 
@@ -18,5 +18,9 @@ public class RecruitRequirementGold extends RecruitRequirement {
 
     public String getDescription(){
         return "Pay " + goldAmount + " gold.";
+    }
+
+    public boolean validate(){
+        return goldAmount > 0;
     }
 }

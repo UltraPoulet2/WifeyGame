@@ -17,4 +17,6 @@ public abstract class RecruitRequirement {
     public boolean isComplete(){
         return complete;
     }
+
+    public abstract boolean validate();
 }

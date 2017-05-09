@@ -10,7 +10,7 @@ public class RecruitRequirementBattle extends RecruitRequirement {
 
     private BattleInfo requiredBattle;
 
-    public RecruitRequirementBattle(BattleInfo input){
+    public void setRequiredBattle(BattleInfo input){
         this.requiredBattle = input;
     }
 
@@ -20,5 +20,9 @@ public class RecruitRequirementBattle extends RecruitRequirement {
 
     public String getDescription(){
         return "Complete battle: " + requiredBattle.getName() + ".";
+    }
+
+    public boolean validate(){
+        return requiredBattle != null;
     }
 }

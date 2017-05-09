@@ -10,7 +10,7 @@ public class RecruitRequirementWifey extends RecruitRequirement {
 
     private WifeyCharacter requiredWifey;
 
-    public RecruitRequirementWifey(WifeyCharacter input){
+    public void setRequiredWifey(WifeyCharacter input){
         this.requiredWifey = input;
     }
 
@@ -25,5 +25,9 @@ public class RecruitRequirementWifey extends RecruitRequirement {
     @Override
     public boolean isComplete() {
         return requiredWifey.isRecruited();
+    }
+
+    public boolean validate(){
+        return requiredWifey != null;
     }
 }
