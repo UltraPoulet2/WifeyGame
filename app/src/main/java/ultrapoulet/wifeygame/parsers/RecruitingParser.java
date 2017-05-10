@@ -7,6 +7,8 @@ import org.xml.sax.helpers.DefaultHandler;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
 import ultrapoulet.wifeygame.gamestate.Characters;
 import ultrapoulet.wifeygame.recruiting.RecruitInfo;
+import ultrapoulet.wifeygame.recruiting.RecruitRequirement;
+import ultrapoulet.wifeygame.recruiting.RecruitRequirementWifey;
 
 /**
  * Created by John on 5/4/2017.
@@ -15,12 +17,13 @@ import ultrapoulet.wifeygame.recruiting.RecruitInfo;
 public class RecruitingParser extends DefaultHandler {
 
     private boolean bQuote;
-    private boolean bSteps;
-    private boolean bStep;
+    private boolean bRequirements;
+    private boolean bRequirement;
 
     private boolean error = false;
 
     private RecruitInfo infoBuilder;
+    private RecruitRequirement reqBuilder;
     private WifeyCharacter recruit;
 
     @Override
@@ -46,6 +49,28 @@ public class RecruitingParser extends DefaultHandler {
         else if(qName.equalsIgnoreCase("quote")){
             bQuote = true;
         }
+        else if(qName.equalsIgnoreCase("requirements")){
+            //Do nothing
+        }
+        else if(qName.equalsIgnoreCase("requirement")){
+            bRequirement = true;
+            reqBuilder = null;
+            String type = attributes.getValue("type");
+            if(type == null){
+                System.out.println("RecruitingParser:startElement(): No requirement type provided.");
+                bRequirement = false;
+                return;
+            }
+            switch(type){
+                case "wifey":
+                    reqBuilder = new RecruitRequirementWifey();
+                    break;
+                default:
+                    System.out.println("RecruitingParser:startElement(): Invalid requirement type: " + type);
+                    bRequirement = false;
+                    break;
+            }
+        }
     }
 
     @Override
@@ -55,6 +80,12 @@ public class RecruitingParser extends DefaultHandler {
         if(qName.equalsIgnoreCase("character")){
             if(infoBuilder != null){
                 recruit.setRecruitingInfo(infoBuilder);
+            }
+        }
+        else if(qName.equalsIgnoreCase("requirement")){
+            if(reqBuilder != null && reqBuilder.validate()){
+                infoBuilder.addRequirement(reqBuilder);
+                System.out.println("Added a requirement");
             }
         }
     }
@@ -68,14 +99,25 @@ public class RecruitingParser extends DefaultHandler {
             infoBuilder.setQuote(temp);
             bQuote = false;
         }
+        else if(bRequirement){
+            if(reqBuilder == null){
+                bRequirement = false;
+                return;
+            }
+            if(reqBuilder instanceof RecruitRequirementWifey){
+                WifeyCharacter wifey = Characters.get(temp);
+                ((RecruitRequirementWifey) reqBuilder).setRequiredWifey(wifey);
+                bRequirement = false;
+            }
+        }
     }
 
     private void resetValues(){
         infoBuilder = null;
         recruit = null;
         bQuote = false;
-        bSteps = false;
-        bStep = false;
+        bRequirements = false;
+        bRequirement = false;
         error = false;
     }
 }
