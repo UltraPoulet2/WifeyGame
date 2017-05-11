@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.text.TextPaint;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ultrapoulet.androidgame.framework.Game;
@@ -17,6 +18,7 @@ import ultrapoulet.wifeygame.Assets;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
 import ultrapoulet.wifeygame.gamestate.PlayerInfo;
 import ultrapoulet.wifeygame.recruiting.RecruitInfo;
+import ultrapoulet.wifeygame.recruiting.RecruitRequirement;
 
 /**
  * Created by John on 5/2/2017.
@@ -42,16 +44,28 @@ public class RecruitingScreen extends Screen {
     private static final int RECRUIT_BUTTON_BOT_Y = HEADER_OFFSET + 1190;
     private static final String RECRUIT_STRING = "Recruit";
 
+    private static final int REQUIREMENT_LEFT_X = 47;
+    private static final int REQUIREMENT_RIGHT_X = 752;
+    private static final int REQUIREMENT_TOP_Y = HEADER_OFFSET + 373;
+    private static final int REQUIREMENT_BOT_Y = HEADER_OFFSET + 472;
+    private static final int REQUIREMENT_BOX_LEFT_X = 683;
+    private static final int REQUIREMENT_BOX_TOP_Y = HEADER_OFFSET + 403;
+    private static final int REQUIREMENT_OFFSET_Y = 105;
+    private static final int REQUIREMENT_TEXT_OFFSET_X = -35;
+
     private Screen previousScreen;
 
     private ButtonList basicButtons;
     private Button backButton;
     private Button recruitButton;
 
+    private ButtonList requirementButtons;
+
     private Button lastPressed;
 
     private WifeyCharacter recruit;
     private Image displayImage;
+    private RecruitInfo info;
 
     private static final int TITLE_NAME_X = 400;
     private static final int TITLE_NAME_Y = 137;
@@ -64,6 +78,9 @@ public class RecruitingScreen extends Screen {
     private static final int QUOTE_Y = HEADER_OFFSET + 150;
     private static final int QUOTE_MAX_WIDTH = 550;
     private static final int QUOTE_TEXT_SIZE = 25;
+
+    private Paint reqPaint;
+    private static final int REQUIREMENT_TEXT_SIZE = 30;
 
     public RecruitingScreen(Game game, Screen previousScreen, WifeyCharacter inputRecruit){
         super(game);
@@ -78,6 +95,12 @@ public class RecruitingScreen extends Screen {
         this.recruit = inputRecruit;
         this.displayImage = recruit.getImage(game.getGraphics());
 
+        this.requirementButtons = new ButtonList();
+        info = recruit.getRecruitingInfo();
+        for(int i = 0; i < info.getRequirements().size(); i++){
+            requirementButtons.addButton(new Button(REQUIREMENT_LEFT_X, REQUIREMENT_RIGHT_X, REQUIREMENT_TOP_Y, REQUIREMENT_BOT_Y, true, info.getRequirements().get(i).getDescription()));
+        }
+
         titlePaint = new Paint();
         titlePaint.setColor(Color.BLACK);
         titlePaint.setTextAlign(Paint.Align.CENTER);
@@ -85,6 +108,11 @@ public class RecruitingScreen extends Screen {
         quotePaint = new TextPaint();
         quotePaint.setColor(Color.BLACK);
         quotePaint.setTextSize(QUOTE_TEXT_SIZE);
+
+        reqPaint = new Paint();
+        reqPaint.setColor(Color.WHITE);
+        reqPaint.setTextAlign(Paint.Align.CENTER);
+        reqPaint.setTextSize(REQUIREMENT_TEXT_SIZE);
     }
 
     private void checkRecruitAvailable(){
@@ -133,6 +161,13 @@ public class RecruitingScreen extends Screen {
         }
 
         basicButtons.drawImage(g);
+
+        requirementButtons.drawString(g, reqPaint, REQUIREMENT_TEXT_OFFSET_X, 0);
+        ArrayList<RecruitRequirement> reqs = info.getRequirements();
+        for(int i = 0; i < reqs.size(); i++){
+            Image box = (reqs.get(i).isComplete()) ? Assets.CheckboxComplete : Assets.CheckboxIncomplete;
+            g.drawImage(box, REQUIREMENT_BOX_LEFT_X, REQUIREMENT_BOX_TOP_Y + (REQUIREMENT_OFFSET_Y * i));
+        }
     }
 
     @Override

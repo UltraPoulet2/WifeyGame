@@ -19,7 +19,7 @@ public class RecruitRequirementBattle extends RecruitRequirement {
     }
 
     public String getDescription(){
-        return "Complete battle: " + requiredBattle.getName() + ".";
+        return "Complete battle: " + requiredBattle.getName();
     }
 
     public boolean validate(){

@@ -98,6 +98,7 @@ public class Assets {
     //RecruitingScreen stuff
     public static Image RecruitingScreen;
     public static Image RecruitingButtonEnable, RecruitingButtonDisable;
+    public static Image CheckboxComplete, CheckboxIncomplete;
 
     //Element Image stuff
     public static List<Image> ElementImages;

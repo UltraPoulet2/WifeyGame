@@ -292,6 +292,8 @@ public class LoadingScreen extends Screen {
         Assets.RecruitingScreen = g.newImage("screens/RecruitingScreen.png", ImageFormat.ARGB8888);
         Assets.RecruitingButtonEnable = g.newImage("Recruiting/RecruitButtonEnabled.png", ImageFormat.ARGB8888);
         Assets.RecruitingButtonDisable = g.newImage("Recruiting/RecruitButtonDisabled.png", ImageFormat.ARGB8888);
+        Assets.CheckboxComplete = g.newImage("Recruiting/CheckboxComplete.png", ImageFormat.ARGB8888);
+        Assets.CheckboxIncomplete = g.newImage("Recruiting/CheckboxIncomplete.png", ImageFormat.ARGB8888);
 
         Assets.ElementImages = new ArrayList<>();
         Assets.ElementImages.add(g.newImage("elements/AirElement.png", ImageFormat.ARGB8888));

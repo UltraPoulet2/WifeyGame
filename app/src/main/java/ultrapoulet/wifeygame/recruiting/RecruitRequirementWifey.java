@@ -19,7 +19,7 @@ public class RecruitRequirementWifey extends RecruitRequirement {
     }
 
     public String getDescription(){
-        return "Recruit " + requiredWifey.getName() +".";
+        return "Recruit " + requiredWifey.getName();
     }
 
     @Override

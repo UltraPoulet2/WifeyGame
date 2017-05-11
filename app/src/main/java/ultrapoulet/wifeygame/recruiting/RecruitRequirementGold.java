@@ -17,7 +17,7 @@ public class RecruitRequirementGold extends RecruitRequirement {
     }
 
     public String getDescription(){
-        return "Pay " + goldAmount + " gold.";
+        return "Pay " + goldAmount + " gold";
     }
 
     public boolean validate(){
