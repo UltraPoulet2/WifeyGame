@@ -4,10 +4,13 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import ultrapoulet.wifeygame.battle.BattleInfo;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
+import ultrapoulet.wifeygame.gamestate.Battles;
 import ultrapoulet.wifeygame.gamestate.Characters;
 import ultrapoulet.wifeygame.recruiting.RecruitInfo;
 import ultrapoulet.wifeygame.recruiting.RecruitRequirement;
+import ultrapoulet.wifeygame.recruiting.RecruitRequirementBattle;
 import ultrapoulet.wifeygame.recruiting.RecruitRequirementWifey;
 
 /**
@@ -65,6 +68,9 @@ public class RecruitingParser extends DefaultHandler {
                 case "wifey":
                     reqBuilder = new RecruitRequirementWifey();
                     break;
+                case "battle":
+                    reqBuilder = new RecruitRequirementBattle();
+                    break;
                 default:
                     System.out.println("RecruitingParser:startElement(): Invalid requirement type: " + type);
                     bRequirement = false;
@@ -107,6 +113,11 @@ public class RecruitingParser extends DefaultHandler {
             if(reqBuilder instanceof RecruitRequirementWifey){
                 WifeyCharacter wifey = Characters.get(temp);
                 ((RecruitRequirementWifey) reqBuilder).setRequiredWifey(wifey);
+                bRequirement = false;
+            }
+            else if(reqBuilder instanceof RecruitRequirementBattle){
+                BattleInfo info = Battles.get(temp);
+                ((RecruitRequirementBattle) reqBuilder).setRequiredBattle(info);
                 bRequirement = false;
             }
         }

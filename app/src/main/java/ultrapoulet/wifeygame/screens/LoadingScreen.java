@@ -73,6 +73,12 @@ public class LoadingScreen extends Screen {
                 return "Creating Battles";
             }
         },
+        CREATE_RECRUITING{
+            @Override
+            protected String getStatus() {
+                return "Creating Recruiting Info";
+            }
+        },
         LOAD_SAVE{
             @Override
             protected String getStatus() {
@@ -113,6 +119,10 @@ public class LoadingScreen extends Screen {
                 break;
             case CREATE_BATTLES:
                 createBattles();
+                currentPhase = LoadingPhase.CREATE_RECRUITING;
+                break;
+            case CREATE_RECRUITING:
+                createRecruiting();
                 currentPhase = LoadingPhase.LOAD_SAVE;
                 break;
             case LOAD_SAVE:
@@ -343,26 +353,6 @@ public class LoadingScreen extends Screen {
                 }
             }
         }
-
-        try {
-            in = game.openConfig("config/recruiting.xml");
-            SAXParserFactory factory = SAXParserFactory.newInstance();
-            SAXParser saxParser = factory.newSAXParser();
-            RecruitingParser recParser = new RecruitingParser();
-            saxParser.parse(in, recParser);
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-        finally {
-            if (in != null){
-                try {
-                    in.close();
-                }
-                catch(IOException e){
-                }
-            }
-        }
     }
 
     private void createParty(){
@@ -432,6 +422,29 @@ public class LoadingScreen extends Screen {
         }
         finally{
             if(in != null){
+                try {
+                    in.close();
+                }
+                catch(IOException e){
+                }
+            }
+        }
+    }
+
+    private void createRecruiting(){
+        InputStream in = null;
+        try {
+            in = game.openConfig("config/recruiting.xml");
+            SAXParserFactory factory = SAXParserFactory.newInstance();
+            SAXParser saxParser = factory.newSAXParser();
+            RecruitingParser recParser = new RecruitingParser();
+            saxParser.parse(in, recParser);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        finally {
+            if (in != null){
                 try {
                     in.close();
                 }

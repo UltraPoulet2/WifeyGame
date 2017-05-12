@@ -18,6 +18,11 @@ public class RecruitRequirementBattle extends RecruitRequirement {
         return requiredBattle;
     }
 
+    @Override
+    public boolean isComplete() {
+        return requiredBattle.getNumComplete() > 0;
+    }
+
     public String getDescription(){
         return "Complete battle: " + requiredBattle.getName();
     }

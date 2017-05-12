@@ -11,5 +11,8 @@
     </character>
     <character key="TEST-PERI">
         <quote>Is it time to murder things?</quote>
+        <requirements>
+            <requirement type="battle">TEST-PHYS</requirement>
+        </requirements>
     </character>
 </recruiting>
