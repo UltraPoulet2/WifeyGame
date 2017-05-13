@@ -5,6 +5,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import ultrapoulet.wifeygame.battle.BattleInfo;
+import ultrapoulet.wifeygame.character.SkillsEnum;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
 import ultrapoulet.wifeygame.gamestate.Battles;
 import ultrapoulet.wifeygame.gamestate.Characters;
@@ -12,6 +13,7 @@ import ultrapoulet.wifeygame.recruiting.RecruitInfo;
 import ultrapoulet.wifeygame.recruiting.RecruitRequirement;
 import ultrapoulet.wifeygame.recruiting.RecruitRequirementBattle;
 import ultrapoulet.wifeygame.recruiting.RecruitRequirementWifey;
+import ultrapoulet.wifeygame.recruiting.RecruitRequirementWifeyNumber;
 
 /**
  * Created by John on 5/4/2017.
@@ -68,6 +70,14 @@ public class RecruitingParser extends DefaultHandler {
                 case "wifey":
                     reqBuilder = new RecruitRequirementWifey();
                     break;
+                case "wifeyNumber":
+                    String skill = attributes.getValue("skill");
+                    SkillsEnum skillEnum = SkillsEnum.getSkill(skill);
+                    if(skill != null && skillEnum == null){
+                        System.out.println("RecruitingParser:startElement(): Could not find skill: " + skill);
+                    }
+                    reqBuilder = new RecruitRequirementWifeyNumber(skillEnum);
+                    break;
                 case "battle":
                     reqBuilder = new RecruitRequirementBattle();
                     break;
@@ -84,7 +94,7 @@ public class RecruitingParser extends DefaultHandler {
                            String localName,
                            String qName) throws SAXException {
         if(qName.equalsIgnoreCase("character")){
-            if(infoBuilder != null){
+            if(infoBuilder != null && !error){
                 recruit.setRecruitingInfo(infoBuilder);
             }
         }
@@ -113,6 +123,20 @@ public class RecruitingParser extends DefaultHandler {
             if(reqBuilder instanceof RecruitRequirementWifey){
                 WifeyCharacter wifey = Characters.get(temp);
                 ((RecruitRequirementWifey) reqBuilder).setRequiredWifey(wifey);
+                bRequirement = false;
+            }
+            else if(reqBuilder instanceof RecruitRequirementWifeyNumber){
+                try{
+                    ((RecruitRequirementWifeyNumber) reqBuilder).setNumber(Integer.parseInt(temp));
+                }
+                catch(NumberFormatException e) {
+                    if(recruit != null) {
+                        System.out.println("RecruitingParser:characters(): NumberFormatException for key: " + recruit.getHashKey());
+                    }
+                    else {
+                        System.out.println("RecruitingParser:characters(): NumberFormatException for unknown key.");
+                    }
+                }
                 bRequirement = false;
             }
             else if(reqBuilder instanceof RecruitRequirementBattle){

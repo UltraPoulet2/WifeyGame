@@ -98,7 +98,7 @@ public class RecruitingScreen extends Screen {
         this.requirementButtons = new ButtonList();
         info = recruit.getRecruitingInfo();
         for(int i = 0; i < info.getRequirements().size(); i++){
-            requirementButtons.addButton(new Button(REQUIREMENT_LEFT_X, REQUIREMENT_RIGHT_X, REQUIREMENT_TOP_Y, REQUIREMENT_BOT_Y, true, info.getRequirements().get(i).getDescription()));
+            requirementButtons.addButton(new Button(REQUIREMENT_LEFT_X, REQUIREMENT_RIGHT_X, REQUIREMENT_TOP_Y  + (REQUIREMENT_OFFSET_Y * i), REQUIREMENT_BOT_Y  + (REQUIREMENT_OFFSET_Y * i), true, info.getRequirements().get(i).getDescription()));
         }
 
         titlePaint = new Paint();

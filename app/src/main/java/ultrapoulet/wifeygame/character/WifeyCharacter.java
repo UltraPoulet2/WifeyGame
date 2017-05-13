@@ -44,7 +44,7 @@ public class WifeyCharacter {
     private boolean dropped = false;
     private boolean recruited = false;
 
-    private RecruitInfo recruitingInfo;
+    private RecruitInfo recruitingInfo = new RecruitInfo();
 
     public WifeyCharacter(){
         skills = new ArrayList<>();

@@ -11,7 +11,7 @@ import ultrapoulet.wifeygame.character.WifeyCharacter;
 public class RecruitInfo {
 
     //private WifeyCharacter recruit;
-    private String quote;
+    private String quote = "";
     private ArrayList<RecruitRequirement> requirements = new ArrayList<>();
 
     /*

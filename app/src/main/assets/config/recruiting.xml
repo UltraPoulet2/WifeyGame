@@ -13,6 +13,7 @@
         <quote>Is it time to murder things?</quote>
         <requirements>
             <requirement type="battle">TEST-PHYS</requirement>
+            <requirement type="wifeyNumber" skill="MAID">1</requirement>
         </requirements>
     </character>
 </recruiting>
