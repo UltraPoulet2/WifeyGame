@@ -100,6 +100,9 @@ public class Assets {
     public static Image RecruitingButtonEnable, RecruitingButtonDisable;
     public static Image CheckboxComplete, CheckboxIncomplete;
 
+    //Dialog Stuff
+    public static Image DialogBackground;
+
     //Element Image stuff
     public static List<Image> ElementImages;
     public static final int AIR = 0;

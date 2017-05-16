@@ -19,6 +19,7 @@ import ultrapoulet.wifeygame.character.WifeyCharacter;
 import ultrapoulet.wifeygame.gamestate.PlayerInfo;
 import ultrapoulet.wifeygame.recruiting.RecruitInfo;
 import ultrapoulet.wifeygame.recruiting.RecruitRequirement;
+import ultrapoulet.wifeygame.screens.dialogs.AbsDialog;
 
 /**
  * Created by John on 5/2/2017.
@@ -62,6 +63,7 @@ public class RecruitingScreen extends Screen {
     private ButtonList requirementButtons;
 
     private Button lastPressed;
+    private int requirementPressed = -1;
 
     private WifeyCharacter recruit;
     private Image displayImage;
@@ -117,9 +119,11 @@ public class RecruitingScreen extends Screen {
 
     private void checkRecruitAvailable(){
         RecruitInfo info = recruit.getRecruitingInfo();
+        /*
         for(int i = 0; i < info.getRequirements().size(); i++){
             //We'll set up images indicating whether or not a requirement is complete or not
         }
+        */
         recruitButton.setActive(info.isRecruitable());
     }
 
@@ -130,9 +134,11 @@ public class RecruitingScreen extends Screen {
             Input.TouchEvent t = touchEvents.get(i);
             if (t.type == Input.TouchEvent.TOUCH_DOWN) {
                 lastPressed = basicButtons.getButtonPressed(t.x, t.y);
+                requirementPressed = requirementButtons.getIndexPressed(t.x, t.y);
+                System.out.println(requirementPressed);
                 continue;
             } else if (t.type == Input.TouchEvent.TOUCH_UP) {
-                if(lastPressed == basicButtons.getButtonPressed(t.x, t.y)){
+                if(lastPressed == basicButtons.getButtonPressed(t.x, t.y) && lastPressed != null){
                     if(lastPressed == backButton){
                         backButton();
                         break;
@@ -142,6 +148,11 @@ public class RecruitingScreen extends Screen {
                         backButton();
                         break;
                     }
+                }
+                else if(requirementPressed == requirementButtons.getIndexPressed(t.x, t.y) && requirementPressed != -1){
+                    //For now, just create a dialog box
+                    AbsDialog ad = new AbsDialog(game, this);
+                    game.setScreen(ad);
                 }
             }
         }

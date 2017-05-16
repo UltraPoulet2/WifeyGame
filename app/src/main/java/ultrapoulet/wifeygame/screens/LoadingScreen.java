@@ -305,6 +305,8 @@ public class LoadingScreen extends Screen {
         Assets.CheckboxComplete = g.newImage("Recruiting/CheckboxComplete.png", ImageFormat.ARGB8888);
         Assets.CheckboxIncomplete = g.newImage("Recruiting/CheckboxIncomplete.png", ImageFormat.ARGB8888);
 
+        Assets.DialogBackground = g.newImage("Dialogs/DialogBackground.png", ImageFormat.ARGB8888);
+
         Assets.ElementImages = new ArrayList<>();
         Assets.ElementImages.add(g.newImage("elements/AirElement.png", ImageFormat.ARGB8888));
         Assets.ElementImages.add(g.newImage("elements/DarkElement.png", ImageFormat.ARGB8888));
