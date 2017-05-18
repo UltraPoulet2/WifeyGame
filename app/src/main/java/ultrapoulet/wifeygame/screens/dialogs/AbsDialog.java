@@ -8,6 +8,7 @@ import android.text.TextPaint;
 import ultrapoulet.androidgame.framework.Game;
 import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Screen;
+import ultrapoulet.androidgame.framework.helpers.ButtonList;
 import ultrapoulet.wifeygame.Assets;
 
 /**
@@ -30,6 +31,8 @@ public class AbsDialog extends Screen {
 
     private boolean fadeOut = true;
 
+    protected ButtonList buttonList;
+
     public AbsDialog(Game game, Screen prevScreen) {
         super(game);
         this.previousScreen = prevScreen;
@@ -38,6 +41,8 @@ public class AbsDialog extends Screen {
         textPaint.setTextAlign(Align.CENTER);
         textPaint.setColor(Color.BLACK);
         textPaint.setTextSize(FONT_SIZE);
+
+        buttonList = new ButtonList();
 
     }
 
@@ -56,6 +61,7 @@ public class AbsDialog extends Screen {
         g.drawImage(Assets.DialogBackground, BACKGROUND_X, BACKGROUND_Y);
         g.drawMultiLineString(text, TEXT_X, TEXT_Y, TEXT_WIDTH, textPaint);
 
+        buttonList.drawImage(g);
     }
 
     @Override
