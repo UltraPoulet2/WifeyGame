@@ -104,6 +104,7 @@ public class Assets {
     public static Image DialogBackground;
     public static Image OptionYes;
     public static Image OptionNo;
+    public static Image OptionOk;
 
     //Element Image stuff
     public static List<Image> ElementImages;

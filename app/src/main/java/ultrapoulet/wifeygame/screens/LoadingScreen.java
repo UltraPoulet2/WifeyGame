@@ -308,6 +308,7 @@ public class LoadingScreen extends Screen {
         Assets.DialogBackground = g.newImage("Dialogs/DialogBackground.png", ImageFormat.ARGB8888);
         Assets.OptionYes = g.newImage("Dialogs/OptionYes.png", ImageFormat.ARGB8888);
         Assets.OptionNo = g.newImage("Dialogs/OptionNo.png", ImageFormat.ARGB8888);
+        Assets.OptionOk = g.newImage("Dialogs/OptionOK.png", ImageFormat.ARGB8888);
 
         Assets.ElementImages = new ArrayList<>();
         Assets.ElementImages.add(g.newImage("elements/AirElement.png", ImageFormat.ARGB8888));

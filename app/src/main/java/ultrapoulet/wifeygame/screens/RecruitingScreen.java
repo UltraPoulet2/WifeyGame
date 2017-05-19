@@ -21,6 +21,7 @@ import ultrapoulet.wifeygame.recruiting.RecruitInfo;
 import ultrapoulet.wifeygame.recruiting.RecruitRequirement;
 import ultrapoulet.wifeygame.screens.dialogs.AbsDialog;
 import ultrapoulet.wifeygame.screens.dialogs.AbsYesNoDialog;
+import ultrapoulet.wifeygame.screens.dialogs.InfoDialog;
 
 /**
  * Created by John on 5/2/2017.
@@ -152,7 +153,8 @@ public class RecruitingScreen extends Screen {
                 }
                 else if(requirementPressed == requirementButtons.getIndexPressed(t.x, t.y) && requirementPressed != -1){
                     //For now, just create a dialog box
-                    AbsYesNoDialog ad = new AbsYesNoDialog(game, this);
+                    //AbsYesNoDialog ad = new AbsYesNoDialog(game, this);
+                    InfoDialog ad = new InfoDialog(game, this, "This is a test");
                     game.setScreen(ad);
                 }
             }
