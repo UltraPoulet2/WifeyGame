@@ -12,6 +12,7 @@ import ultrapoulet.wifeygame.gamestate.Characters;
 import ultrapoulet.wifeygame.recruiting.RecruitInfo;
 import ultrapoulet.wifeygame.recruiting.RecruitRequirement;
 import ultrapoulet.wifeygame.recruiting.RecruitRequirementBattle;
+import ultrapoulet.wifeygame.recruiting.RecruitRequirementGold;
 import ultrapoulet.wifeygame.recruiting.RecruitRequirementWifey;
 import ultrapoulet.wifeygame.recruiting.RecruitRequirementWifeyNumber;
 
@@ -81,6 +82,9 @@ public class RecruitingParser extends DefaultHandler {
                 case "battle":
                     reqBuilder = new RecruitRequirementBattle();
                     break;
+                case "gold":
+                    reqBuilder = new RecruitRequirementGold();
+                    break;
                 default:
                     System.out.println("RecruitingParser:startElement(): Invalid requirement type: " + type);
                     bRequirement = false;
@@ -142,6 +146,20 @@ public class RecruitingParser extends DefaultHandler {
             else if(reqBuilder instanceof RecruitRequirementBattle){
                 BattleInfo info = Battles.get(temp);
                 ((RecruitRequirementBattle) reqBuilder).setRequiredBattle(info);
+                bRequirement = false;
+            }
+            else if(reqBuilder instanceof RecruitRequirementGold){
+                try{
+                    ((RecruitRequirementGold) reqBuilder).setGoldAmount(Integer.parseInt(temp));
+                }
+                catch(NumberFormatException e) {
+                    if(recruit != null) {
+                        System.out.println("RecruitingParser:characters(): NumberFormatException for key: " + recruit.getHashKey());
+                    }
+                    else {
+                        System.out.println("RecruitingParser:characters(): NumberFormatException for unknown key.");
+                    }
+                }
                 bRequirement = false;
             }
         }

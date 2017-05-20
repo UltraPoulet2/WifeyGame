@@ -1,5 +1,8 @@
 package ultrapoulet.wifeygame.recruiting;
 
+import ultrapoulet.androidgame.framework.Game;
+import ultrapoulet.androidgame.framework.Screen;
+
 /**
  * Created by John on 4/26/2017.
  */
@@ -19,4 +22,9 @@ public abstract class RecruitRequirement {
     }
 
     public abstract boolean validate();
+
+    //Most requirements will return nothing
+    public Screen getScreen(Game game, Screen prevScreen){
+        return null;
+    }
 }

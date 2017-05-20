@@ -4,7 +4,7 @@
         <quote>I'm saying wordy things.</quote>
         <requirements>
             <!-- <requirement type="recruitBattle">TEST-NYRK-BAT</requirement> -->
-            <!-- <requirement type="money">1000</requirement> -->
+            <requirement type="gold">75</requirement>
             <requirement type="wifey">TEST-PERI</requirement>
             <!-- <requirement type="battle">TEST-BATL</requirement> -->
         </requirements>

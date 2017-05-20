@@ -12,8 +12,7 @@ import ultrapoulet.wifeygame.Assets;
  * Created by John on 5/17/2017.
  */
 
-//Abstract commented out temporaily for testing
-public /*abstract*/ class AbsYesNoDialog extends AbsDialog {
+public abstract class AbsYesNoDialog extends AbsDialog {
 
     protected Button yesButton;
     protected Button noButton;
@@ -36,8 +35,8 @@ public /*abstract*/ class AbsYesNoDialog extends AbsDialog {
         buttonList.addButton(noButton);
     }
 
-    public /* abstract */ void yesButtonAction(){ backButton(); };
-    public /* abstract */ void noButtonAction() { backButton(); };
+    public abstract void yesButtonAction();
+    public abstract void noButtonAction();
 
     @Override
     public void update(float deltaTime) {

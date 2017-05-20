@@ -152,10 +152,11 @@ public class RecruitingScreen extends Screen {
                     }
                 }
                 else if(requirementPressed == requirementButtons.getIndexPressed(t.x, t.y) && requirementPressed != -1){
-                    //For now, just create a dialog box
-                    //AbsYesNoDialog ad = new AbsYesNoDialog(game, this);
-                    InfoDialog ad = new InfoDialog(game, this, "This is a test");
-                    game.setScreen(ad);
+                    RecruitRequirement req = info.getRequirements().get(requirementPressed);
+                    Screen reqScreen = req.getScreen(game, this);
+                    if(reqScreen != null) {
+                        game.setScreen(reqScreen);
+                    }
                 }
             }
         }
