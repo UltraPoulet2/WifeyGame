@@ -215,7 +215,7 @@ public class BattleInfoScreen extends Screen{
                         case START_BUTTON_STRING:
                             battleInfo.incrementNumAttempts();
                             PlayerInfo.decrementEnergy(battleInfo.getEnergyRequirement());
-                            BattleScreen bs = new BattleScreen(game, battleInfo);
+                            StandardBattleScreen bs = new StandardBattleScreen(game, battleInfo);
                             game.setScreen(bs);
                             break;
                     }

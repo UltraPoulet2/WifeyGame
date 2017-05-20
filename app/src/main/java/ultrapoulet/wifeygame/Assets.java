@@ -9,7 +9,7 @@ import ultrapoulet.androidgame.framework.Image;
  */
 public class Assets {
 
-    //BattleScreen Stuff
+    //StandardBattleScreen Stuff
     public static Image PowerAttackEnabled, PowerAttackDisabled;
     public static Image ComboAttackEnabled, ComboAttackDisabled;
     public static Image MagicAttackEnabled, MagicAttackDisabled;

@@ -6,7 +6,6 @@
             <!-- <requirement type="recruitBattle">TEST-NYRK-BAT</requirement> -->
             <requirement type="gold">75</requirement>
             <requirement type="wifey">TEST-PERI</requirement>
-            <!-- <requirement type="battle">TEST-BATL</requirement> -->
         </requirements>
     </character>
     <character key="TEST-PERI">
