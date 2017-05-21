@@ -27,6 +27,7 @@ import ultrapoulet.wifeygame.gamestate.RecruitedCharacters;
 import ultrapoulet.wifeygame.parsers.BattleParser;
 import ultrapoulet.wifeygame.parsers.CharacterParser;
 import ultrapoulet.wifeygame.parsers.EnemyParser;
+import ultrapoulet.wifeygame.parsers.RecruitingBattleParser;
 import ultrapoulet.wifeygame.parsers.RecruitingParser;
 
 /**
@@ -419,6 +420,27 @@ public class LoadingScreen extends Screen {
             SAXParserFactory factory = SAXParserFactory.newInstance();
             SAXParser saxParser = factory.newSAXParser();
             BattleParser battleParser = new BattleParser();
+            saxParser.parse(in, battleParser);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            //Do better error handling
+        }
+        finally{
+            if(in != null){
+                try {
+                    in.close();
+                }
+                catch(IOException e){
+                }
+            }
+        }
+
+        try {
+            in = game.openConfig("config/recruitbattles.xml");
+            SAXParserFactory factory = SAXParserFactory.newInstance();
+            SAXParser saxParser = factory.newSAXParser();
+            RecruitingBattleParser battleParser = new RecruitingBattleParser();
             saxParser.parse(in, battleParser);
         }
         catch (Exception e){

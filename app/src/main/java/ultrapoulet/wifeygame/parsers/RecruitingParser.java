@@ -105,7 +105,6 @@ public class RecruitingParser extends DefaultHandler {
         else if(qName.equalsIgnoreCase("requirement")){
             if(reqBuilder != null && reqBuilder.validate()){
                 infoBuilder.addRequirement(reqBuilder);
-                System.out.println("Added a requirement");
             }
         }
     }
