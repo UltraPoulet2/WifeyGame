@@ -2,6 +2,7 @@ package ultrapoulet.wifeygame.recruiting;
 
 import ultrapoulet.androidgame.framework.Game;
 import ultrapoulet.androidgame.framework.Screen;
+import ultrapoulet.wifeygame.character.WifeyCharacter;
 import ultrapoulet.wifeygame.gamestate.PlayerInfo;
 import ultrapoulet.wifeygame.screens.dialogs.InfoDialog;
 import ultrapoulet.wifeygame.screens.dialogs.RecruitGoldDialog;
@@ -30,7 +31,7 @@ public class RecruitRequirementGold extends RecruitRequirement {
         return goldAmount > 0;
     }
 
-    public Screen getScreen(Game game, Screen prevScreen){
+    public Screen getScreen(Game game, Screen prevScreen, WifeyCharacter recruit){
         if(this.isComplete()){
             return null;
         }

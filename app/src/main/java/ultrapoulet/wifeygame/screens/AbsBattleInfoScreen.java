@@ -38,11 +38,11 @@ public abstract class AbsBattleInfoScreen extends Screen {
     private List<WifeyCharacter> party;
 
     protected Image background;
-    private static final int BACKGROUND_OFFSET = 60;
+    protected static final int BACKGROUND_OFFSET = 60;
 
     private static final int BATTLE_NAME_X = 400;
     private static final int BATTLE_NAME_Y = 137;
-    private Paint battlePaint;
+    protected Paint battlePaint;
 
     protected int goldGain;
     protected int expGain;

@@ -153,7 +153,7 @@ public class RecruitingScreen extends Screen {
                 }
                 else if(requirementPressed == requirementButtons.getIndexPressed(t.x, t.y) && requirementPressed != -1){
                     RecruitRequirement req = info.getRequirements().get(requirementPressed);
-                    Screen reqScreen = req.getScreen(game, this);
+                    Screen reqScreen = req.getScreen(game, this, recruit);
                     if(reqScreen != null) {
                         game.setScreen(reqScreen);
                     }
