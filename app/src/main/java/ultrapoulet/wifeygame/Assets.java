@@ -87,7 +87,7 @@ public class Assets {
     public static Image BattleInfoScreen;
     public static Image BattleEnable, BattleDisable;
 
-    //RecruitBattleInfoScreen Stuff
+    //RecruitingBattleInfoScreen Stuff
     public static Image RecruitBattleInfoScreen;
 
     //BattleResultScreen Stuff

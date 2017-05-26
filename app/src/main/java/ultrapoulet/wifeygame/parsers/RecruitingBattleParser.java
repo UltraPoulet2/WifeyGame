@@ -8,7 +8,6 @@ import ultrapoulet.wifeygame.battle.BattleInfo;
 import ultrapoulet.wifeygame.battle.requirements.AbsRequirement;
 import ultrapoulet.wifeygame.battle.requirements.RequirementFactory;
 import ultrapoulet.wifeygame.character.EnemyCharacter;
-import ultrapoulet.wifeygame.gamestate.Battles;
 import ultrapoulet.wifeygame.gamestate.Enemies;
 import ultrapoulet.wifeygame.gamestate.RecruitBattles;
 
@@ -44,6 +43,7 @@ public class RecruitingBattleParser extends DefaultHandler {
             resetValues();
             battleKey = attributes.getValue("key");
             battleBuilder = new BattleInfo();
+            battleBuilder.setKey(battleKey);
         }
         else if(qName.equalsIgnoreCase("name")){
             bName = true;
@@ -88,7 +88,6 @@ public class RecruitingBattleParser extends DefaultHandler {
                            String qName) throws SAXException {
         if(qName.equalsIgnoreCase("battle")){
             if(validate()){
-                Battles.put(battleKey, battleBuilder);
                 RecruitBattles.put(battleKey, battleBuilder);
 
                 System.out.println("RecruitingBattleParser:endElement(): Adding battle: " + battleKey);

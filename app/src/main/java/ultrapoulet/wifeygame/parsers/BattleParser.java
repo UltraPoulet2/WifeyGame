@@ -8,7 +8,6 @@ import ultrapoulet.wifeygame.battle.BattleInfo;
 import ultrapoulet.wifeygame.battle.requirements.AbsRequirement;
 import ultrapoulet.wifeygame.battle.requirements.RequirementFactory;
 import ultrapoulet.wifeygame.character.EnemyCharacter;
-import ultrapoulet.wifeygame.gamestate.Battles;
 import ultrapoulet.wifeygame.gamestate.Characters;
 import ultrapoulet.wifeygame.gamestate.Enemies;
 import ultrapoulet.wifeygame.gamestate.StoryArea;
@@ -61,6 +60,7 @@ public class BattleParser extends DefaultHandler {
             resetValues();
             battleKey = attributes.getValue("key");
             battleBuilder = new BattleInfo();
+            battleBuilder.setKey(battleKey);
         }
         else if(qName.equalsIgnoreCase("name")){
             bName = true;
@@ -125,9 +125,6 @@ public class BattleParser extends DefaultHandler {
         }
         else if(qName.equalsIgnoreCase("battle")){
             if(validate()){
-                //This will be removed once Story Areas are complete
-                Battles.put(battleKey, battleBuilder);
-
                 areaBuilder.addBattle(battleBuilder);
                 System.out.println("BattleParser:endElement(): Adding battle: " + battleKey);
             }

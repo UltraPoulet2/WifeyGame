@@ -3,7 +3,7 @@
     <character key="TEST-NYRK">
         <quote>I'm saying wordy things.</quote>
         <requirements>
-            <!-- <requirement type="recruitBattle">TEST-NYRK-BAT</requirement> -->
+            <requirement type="recruitBattle">TEST-NYRK-BAT</requirement>
             <requirement type="gold">75</requirement>
             <requirement type="wifey">TEST-PERI</requirement>
         </requirements>

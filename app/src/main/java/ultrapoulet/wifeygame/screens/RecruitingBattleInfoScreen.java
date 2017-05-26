@@ -15,7 +15,7 @@ import ultrapoulet.wifeygame.character.WifeyCharacter;
  * Created by John on 5/24/2017.
  */
 
-public class RecruitBattleInfoScreen extends AbsBattleInfoScreen {
+public class RecruitingBattleInfoScreen extends AbsBattleInfoScreen {
 
     private Image recruitImage;
     private static final int RECRUIT_IMAGE_X = 45;
@@ -30,7 +30,7 @@ public class RecruitBattleInfoScreen extends AbsBattleInfoScreen {
 
     private Paint namePaint;
 
-    public RecruitBattleInfoScreen(Game game, Screen previousScreen, BattleInfo info, WifeyCharacter recruit){
+    public RecruitingBattleInfoScreen(Game game, Screen previousScreen, BattleInfo info, WifeyCharacter recruit){
         super(game, previousScreen, info);
         recruitImage = recruit.getImage(game.getGraphics());
         name = "Recruiting for: " + recruit.getName();
@@ -46,7 +46,7 @@ public class RecruitBattleInfoScreen extends AbsBattleInfoScreen {
 
     @Override
     protected AbsBattleScreen getBattleScreen() {
-        return null;
+        return new RecruitingBattleScreen(game, battleInfo, prevScreen);
     }
 
     @Override

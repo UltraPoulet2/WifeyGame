@@ -216,7 +216,6 @@ public abstract class AbsBattleInfoScreen extends Screen {
                             game.setScreen(partySelect);
                             break;
                         case START_BUTTON_STRING:
-                            battleInfo.incrementNumAttempts();
                             PlayerInfo.decrementEnergy(battleInfo.getEnergyRequirement());
                             AbsBattleScreen abs = getBattleScreen();
                             game.setScreen(abs);

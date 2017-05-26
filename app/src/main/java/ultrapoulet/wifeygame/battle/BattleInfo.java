@@ -19,6 +19,7 @@ import ultrapoulet.wifeygame.gamestate.Characters;
 public class BattleInfo {
 
     private String battleName;
+    private String key;
     private int partyMax = 7;
     private ArrayList<EnemyCharacter> enemyList = new ArrayList<>();
     private ArrayList<AbsRequirement> restrictionList = new ArrayList<>();
@@ -58,6 +59,14 @@ public class BattleInfo {
 
     public String getName(){
         return battleName;
+    }
+
+    public void setKey(String key){
+        this.key = key;
+    }
+
+    public String getKey() {
+        return this.key;
     }
 
     public void setPartyMax(int max){ partyMax = max; }

@@ -474,6 +474,8 @@ public abstract class AbsBattleScreen extends Screen {
             case BATTLE_START:
                 //Do anything necessary for battle start
                 if (phaseEntered) {
+                    //On Battle Start, increment the Number attempts in the BattleInfo
+                    battleInfo.incrementNumAttempts();
                     phaseTime = 0;
                     phaseEntered = false;
                     for(int i = 0; i < party.size(); i++){
@@ -1015,6 +1017,10 @@ public abstract class AbsBattleScreen extends Screen {
                 //If loss, give other stuff, i dunno
                 if (phaseEntered) {
                     phaseEntered = false;
+                    if(!isGameOver()){
+                        //On Battle end, increment the number of completions in BattleInfo if victorious
+                        battleInfo.incrementNumComplete();
+                    }
                     game.setScreen(getCompletionScreen());
                 }
                 break;

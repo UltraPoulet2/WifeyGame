@@ -7,12 +7,14 @@ import org.xml.sax.helpers.DefaultHandler;
 import ultrapoulet.wifeygame.battle.BattleInfo;
 import ultrapoulet.wifeygame.character.SkillsEnum;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
-import ultrapoulet.wifeygame.gamestate.Battles;
 import ultrapoulet.wifeygame.gamestate.Characters;
+import ultrapoulet.wifeygame.gamestate.RecruitBattles;
+import ultrapoulet.wifeygame.gamestate.StoryBattles;
 import ultrapoulet.wifeygame.recruiting.RecruitInfo;
 import ultrapoulet.wifeygame.recruiting.RecruitRequirement;
 import ultrapoulet.wifeygame.recruiting.RecruitRequirementBattle;
 import ultrapoulet.wifeygame.recruiting.RecruitRequirementGold;
+import ultrapoulet.wifeygame.recruiting.RecruitRequirementRecruitBattle;
 import ultrapoulet.wifeygame.recruiting.RecruitRequirementWifey;
 import ultrapoulet.wifeygame.recruiting.RecruitRequirementWifeyNumber;
 
@@ -85,6 +87,9 @@ public class RecruitingParser extends DefaultHandler {
                 case "gold":
                     reqBuilder = new RecruitRequirementGold();
                     break;
+                case "recruitBattle":
+                    reqBuilder = new RecruitRequirementRecruitBattle();
+                    break;
                 default:
                     System.out.println("RecruitingParser:startElement(): Invalid requirement type: " + type);
                     bRequirement = false;
@@ -143,8 +148,13 @@ public class RecruitingParser extends DefaultHandler {
                 bRequirement = false;
             }
             else if(reqBuilder instanceof RecruitRequirementBattle){
-                BattleInfo info = Battles.get(temp);
+                BattleInfo info = StoryBattles.getBattle(temp);
                 ((RecruitRequirementBattle) reqBuilder).setRequiredBattle(info);
+                bRequirement = false;
+            }
+            else if(reqBuilder instanceof RecruitRequirementRecruitBattle){
+                BattleInfo info = RecruitBattles.getBattle(temp);
+                ((RecruitRequirementRecruitBattle) reqBuilder).setRequiredBattle(info);
                 bRequirement = false;
             }
             else if(reqBuilder instanceof RecruitRequirementGold){
