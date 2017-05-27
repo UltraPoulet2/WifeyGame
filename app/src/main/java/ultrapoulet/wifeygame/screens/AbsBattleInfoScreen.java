@@ -42,6 +42,8 @@ public abstract class AbsBattleInfoScreen extends Screen {
 
     private static final int BATTLE_NAME_X = 400;
     private static final int BATTLE_NAME_Y = 137;
+    private static final int MAX_BATTLE_WIDTH = 550;
+    private static final int MAX_BATTLE_FONT = 50;
     protected Paint battlePaint;
 
     protected int goldGain;
@@ -110,7 +112,6 @@ public abstract class AbsBattleInfoScreen extends Screen {
         battlePaint = new Paint();
         battlePaint.setColor(Color.BLACK);
         battlePaint.setTextAlign(Paint.Align.CENTER);
-        battlePaint.setTextSize(50);
 
         energyPaint = new Paint();
         energyPaint.setTextAlign(Paint.Align.CENTER);
@@ -285,7 +286,7 @@ public abstract class AbsBattleInfoScreen extends Screen {
 
         g.drawImage(background, 0, BACKGROUND_OFFSET);
 
-        g.drawString(battleInfo.getName(), BATTLE_NAME_X, BATTLE_NAME_Y, battlePaint);
+        g.drawString(battleInfo.getName(), BATTLE_NAME_X, BATTLE_NAME_Y, battlePaint, MAX_BATTLE_WIDTH, MAX_BATTLE_FONT);
 
         drawInfo(g);
 

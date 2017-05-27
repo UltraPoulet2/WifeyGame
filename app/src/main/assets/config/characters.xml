@@ -663,7 +663,7 @@
         </elements>
     </character>
     <character key="TEST-NYRK">
-        <name>Nyaruko</name>
+        <name>Nyaruko gets an even longer name</name>
         <title>Nyarlathotep</title>
         <strength>90</strength>
         <magic>60</magic>

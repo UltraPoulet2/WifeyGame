@@ -2,6 +2,7 @@ package ultrapoulet.wifeygame.screens;
 
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.text.TextPaint;
 
 import ultrapoulet.androidgame.framework.Game;
 import ultrapoulet.androidgame.framework.Graphics;
@@ -22,20 +23,23 @@ public class RecruitingBattleInfoScreen extends AbsBattleInfoScreen {
     private static final int RECRUIT_IMAGE_Y = BACKGROUND_OFFSET + 133;
     private static final int RECRUIT_IMAGE_SIZE = 90;
 
-    private String name;
+    private String recruitInfo;
     private static final int NAME_TEXT_X = 450;
     private static final int NAME_TEXT_Y = BACKGROUND_OFFSET + 196;
     private static final int MAX_NAME_WIDTH = 615;
     private static final int MAX_NAME_FONT = 50;
+    private static final int MIN_NAME_FONT = 30;
+    private static final int TWO_LINE_NAME_SIZE = 30;
+    private static final int TWO_LINE_NAME_Y = BACKGROUND_OFFSET + 143;
 
-    private Paint namePaint;
+    private TextPaint namePaint;
 
     public RecruitingBattleInfoScreen(Game game, Screen previousScreen, BattleInfo info, WifeyCharacter recruit){
         super(game, previousScreen, info);
         recruitImage = recruit.getImage(game.getGraphics());
-        name = "Recruiting for: " + recruit.getName();
+        recruitInfo = "Recruiting for: " + recruit.getName();
 
-        namePaint = new Paint();
+        namePaint = new TextPaint();
         namePaint.setColor(Color.BLACK);
         namePaint.setTextAlign(Paint.Align.CENTER);
     }
@@ -52,7 +56,15 @@ public class RecruitingBattleInfoScreen extends AbsBattleInfoScreen {
     @Override
     protected void drawInfo(Graphics g) {
         g.drawScaledImage(recruitImage, RECRUIT_IMAGE_X, RECRUIT_IMAGE_Y, RECRUIT_IMAGE_SIZE, RECRUIT_IMAGE_SIZE);
-        g.drawString(name, NAME_TEXT_X, NAME_TEXT_Y, battlePaint, MAX_NAME_WIDTH, MAX_NAME_FONT);
+
+        if(g.canDrawString(recruitInfo, namePaint, MAX_NAME_WIDTH, MIN_NAME_FONT)){
+            g.drawString(recruitInfo, NAME_TEXT_X, NAME_TEXT_Y, namePaint, MAX_NAME_WIDTH, MAX_NAME_FONT);
+        }
+        else {
+            namePaint.setTextSize(TWO_LINE_NAME_SIZE);
+            g.drawMultiLineString(recruitInfo, NAME_TEXT_X, TWO_LINE_NAME_Y, MAX_NAME_WIDTH, namePaint);
+        }
+        //g.drawString(recruitInfo, NAME_TEXT_X, NAME_TEXT_Y, namePaint, MAX_NAME_WIDTH, MAX_NAME_FONT);
         g.drawString(String.valueOf(battleInfo.getEnergyRequirement()), COLUMN_1_X, ROW_2_Y, energyPaint);
         g.drawString(String.valueOf(battleInfo.getCharacterEnemies().size()), COLUMN_3_X, ROW_2_Y, infoPaint);
     }

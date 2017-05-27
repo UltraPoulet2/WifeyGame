@@ -52,7 +52,7 @@
             </requirements>
         </battle>
         <battle key="TEST-PHYS">
-            <name>Athletes Test</name>
+            <name>Athletes Test with a longer name</name>
             <background>testbg</background>
             <energy>2</energy>
             <enemies>

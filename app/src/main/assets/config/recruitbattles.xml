@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <recruitbattles>
     <battle key="TEST-NYRK-BAT">
-        <name>Recruit Battle</name>
+        <name>Recruit Battle with a longer name</name>
         <background>lastation</background>
         <energy>1</energy>
         <enemies>
