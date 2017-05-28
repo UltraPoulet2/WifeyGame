@@ -55,6 +55,10 @@ public class RecruitingScreen extends Screen {
     private static final int REQUIREMENT_BOX_TOP_Y = HEADER_OFFSET + 403;
     private static final int REQUIREMENT_OFFSET_Y = 105;
     private static final int REQUIREMENT_TEXT_OFFSET_X = -35;
+    private static final int REQUIREMENT_WIDTH = 600;
+    private static final int REQUIREMENT_TEXT_CENTER_X = 400 + REQUIREMENT_TEXT_OFFSET_X;
+    private static final int REQUIREMENT_BASE_TEXT_Y = REQUIREMENT_TOP_Y + 65;
+    private static final int TWO_LINE_REQUIREMENT_BASE_TEXT_Y = REQUIREMENT_TOP_Y + 15;
 
     private Screen previousScreen;
 
@@ -83,8 +87,10 @@ public class RecruitingScreen extends Screen {
     private static final int QUOTE_MAX_WIDTH = 550;
     private static final int QUOTE_TEXT_SIZE = 25;
 
-    private Paint reqPaint;
+    private TextPaint reqPaint;
     private static final int REQUIREMENT_TEXT_SIZE = 30;
+
+    int entered = 0;
 
     public RecruitingScreen(Game game, Screen previousScreen, WifeyCharacter inputRecruit){
         super(game);
@@ -113,7 +119,7 @@ public class RecruitingScreen extends Screen {
         quotePaint.setColor(Color.BLACK);
         quotePaint.setTextSize(QUOTE_TEXT_SIZE);
 
-        reqPaint = new Paint();
+        reqPaint = new TextPaint();
         reqPaint.setColor(Color.WHITE);
         reqPaint.setTextAlign(Paint.Align.CENTER);
         reqPaint.setTextSize(REQUIREMENT_TEXT_SIZE);
@@ -171,15 +177,20 @@ public class RecruitingScreen extends Screen {
         g.drawString(recruit.getName(), TITLE_NAME_X, TITLE_NAME_Y, titlePaint, TITLE_TEXT_MAX_WIDTH, TITLE_TEXT_MAX_FONT);
         g.drawScaledImage(displayImage, IMAGE_X, IMAGE_Y, IMAGE_SIZE, IMAGE_SIZE);
 
-        if(recruit.getRecruitingInfo() != null){
+        if (recruit.getRecruitingInfo() != null) {
             g.drawMultiLineString(recruit.getRecruitingInfo().getQuote(), QUOTE_X, QUOTE_Y, QUOTE_MAX_WIDTH, quotePaint);
         }
 
         basicButtons.drawImage(g);
-
-        requirementButtons.drawString(g, reqPaint, REQUIREMENT_TEXT_OFFSET_X, 0);
+        
         ArrayList<RecruitRequirement> reqs = info.getRequirements();
-        for(int i = 0; i < reqs.size(); i++){
+        for (int i = 0; i < reqs.size(); i++) {
+            String desc = reqs.get(i).getDescription();
+            if (reqPaint.breakText(desc, true, REQUIREMENT_WIDTH, null) == desc.length()) {
+                g.drawString(desc, REQUIREMENT_TEXT_CENTER_X, REQUIREMENT_BASE_TEXT_Y + i * REQUIREMENT_OFFSET_Y, reqPaint);
+            } else {
+                g.drawMultiLineString(desc, REQUIREMENT_TEXT_CENTER_X, TWO_LINE_REQUIREMENT_BASE_TEXT_Y + i * REQUIREMENT_OFFSET_Y, REQUIREMENT_WIDTH, reqPaint);
+            }
             Image box = (reqs.get(i).isComplete()) ? Assets.CheckboxComplete : Assets.CheckboxIncomplete;
             g.drawImage(box, REQUIREMENT_BOX_LEFT_X, REQUIREMENT_BOX_TOP_Y + (REQUIREMENT_OFFSET_Y * i));
         }

@@ -43,6 +43,7 @@ public class RecruitingBattleInfoScreen extends AbsBattleInfoScreen {
         namePaint.setColor(Color.BLACK);
         namePaint.setTextAlign(Paint.Align.CENTER);
     }
+
     @Override
     protected void setBackground() {
         this.background = Assets.RecruitBattleInfoScreen;
@@ -64,7 +65,6 @@ public class RecruitingBattleInfoScreen extends AbsBattleInfoScreen {
             namePaint.setTextSize(TWO_LINE_NAME_SIZE);
             g.drawMultiLineString(recruitInfo, NAME_TEXT_X, TWO_LINE_NAME_Y, MAX_NAME_WIDTH, namePaint);
         }
-        //g.drawString(recruitInfo, NAME_TEXT_X, NAME_TEXT_Y, namePaint, MAX_NAME_WIDTH, MAX_NAME_FONT);
         g.drawString(String.valueOf(battleInfo.getEnergyRequirement()), COLUMN_1_X, ROW_2_Y, energyPaint);
         g.drawString(String.valueOf(battleInfo.getCharacterEnemies().size()), COLUMN_3_X, ROW_2_Y, infoPaint);
     }
