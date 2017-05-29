@@ -58,9 +58,23 @@ public class ButtonList {
         }
     }
 
+    public void drawScaledString(Graphics g, Paint p, int maxWidth, int maxFont){
+        for(int i = 0; i < buttons.size(); i++){
+            p.setTextSize(maxFont);
+            buttons.get(i).drawScaledString(g, p, maxWidth, maxFont);
+        }
+    }
+
     public void drawString(Graphics g, Paint p, int offsetX, int offsetY){
         for(int i = 0; i < buttons.size(); i++){
             buttons.get(i).drawString(g, p, offsetX, offsetY);
+        }
+    }
+
+    public void drawScaledString(Graphics g, Paint p, int offsetX, int offsetY, int maxWidth, int maxFont){
+        for(int i = 0; i < buttons.size(); i++){
+            p.setTextSize(maxFont);
+            buttons.get(i).drawScaledString(g, p, offsetX, offsetY, maxWidth, maxFont);
         }
     }
 }

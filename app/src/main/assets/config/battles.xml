@@ -24,7 +24,7 @@
             </drops>
         </battle>
     </area>
-    <area name="Weird Zone">
+    <area name="Weird Zone with a longer name">
         <battle key="TEST-BTWO">
             <name>Small Party</name>
             <background>lastation</background>

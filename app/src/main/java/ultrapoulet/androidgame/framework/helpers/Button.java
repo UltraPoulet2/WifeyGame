@@ -101,6 +101,10 @@ public class Button {
         drawString(g, p, 0, 0);
     }
 
+    public void drawScaledString(Graphics g, Paint p, int maxWidth, int maxFont){
+        drawScaledString(g, p, 0, 0, maxWidth, maxFont);
+    }
+
     //Draw the string, ignoring the active boolean
     public void forceDrawString(Graphics g, Paint p){
         int X = leftX + ((rightX - leftX) / 2);
@@ -113,6 +117,14 @@ public class Button {
             int X = leftX + ((rightX - leftX) / 2) + offsetX;
             int Y = botY - ((botY - topY - (int) p.getTextSize()) / 2) + offsetY;
             g.drawString(this.name, X, Y, p);
+        }
+    }
+
+    public void drawScaledString(Graphics g, Paint p, int offsetX, int offsetY, int maxWidth, int maxFont) {
+        if(!hidden && active) {
+            int X = leftX + ((rightX - leftX) / 2) + offsetX;
+            int Y = botY - ((botY - topY - (int) p.getTextSize()) / 2) + offsetY;
+            g.drawString(this.name, X, Y, p, maxWidth, maxFont);
         }
     }
 }

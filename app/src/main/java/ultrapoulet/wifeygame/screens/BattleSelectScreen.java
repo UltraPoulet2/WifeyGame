@@ -50,6 +50,8 @@ public class BattleSelectScreen extends Screen {
     private static final int BATTLES_OFFSET_Y = BATTLES_BOT_Y - BATTLES_TOP_Y + 10;
 
     private static final int BATTLE_TITLE_OFFSET_Y = -25;
+    private static final int BATTLE_TITLE_MAX_WIDTH = 330;
+    private static final int BATTLE_TITLE_MAX_FONT = 40;
     private static final int BATTLE_ENERGY_IMAGE_OFFSET_X = 5;
     private static final int BATTLE_ENERGY_NUMBER_OFFSET_X = 25;
     private static final int BATTLE_ENERGY_OFFSET_Y = 50;
@@ -126,6 +128,8 @@ public class BattleSelectScreen extends Screen {
 
     private Paint recruitNamePaint;
     private static final int RECRUIT_TITLE_OFFSET_X = 45;
+    private static final int RECRUIT_TITLE_MAX_WIDTH = 590;
+    private static final int RECRUIT_TITLE_MAX_FONT = 50;
 
     private Button partyButton;
     private static final String PARTY_BUTTON_STRING = "PARTY";
@@ -226,12 +230,10 @@ public class BattleSelectScreen extends Screen {
         changeTab();
 
         buttonPaint = new Paint();
-        buttonPaint.setTextSize(40);
         buttonPaint.setTextAlign(Align.CENTER);
         buttonPaint.setColor(Color.BLACK);
 
         recruitNamePaint = new Paint();
-        recruitNamePaint.setTextSize(50);
         recruitNamePaint.setTextAlign(Align.CENTER);
         recruitNamePaint.setColor(Color.BLACK);
     }
@@ -473,11 +475,12 @@ public class BattleSelectScreen extends Screen {
         buttonList.drawImage(g);
 
         storyAreaList.drawImage(g);
-        storyAreaList.drawString(g, buttonPaint);
+        storyAreaList.drawScaledString(g, buttonPaint, BATTLE_TITLE_MAX_WIDTH, BATTLE_TITLE_MAX_FONT);
         storyBattleList.drawImage(g);
-        storyBattleList.drawString(g, buttonPaint, 0, BATTLE_TITLE_OFFSET_Y);
+        storyBattleList.drawScaledString(g, buttonPaint, 0, BATTLE_TITLE_OFFSET_Y, BATTLE_TITLE_MAX_WIDTH, BATTLE_TITLE_MAX_FONT);
         recruitButtonList.drawImage(g);
-        recruitButtonList.drawString(g, recruitNamePaint, RECRUIT_TITLE_OFFSET_X, 0);
+        //recruitButtonList.drawString(g, recruitNamePaint, RECRUIT_TITLE_OFFSET_X, 0);
+        recruitButtonList.drawScaledString(g, recruitNamePaint, RECRUIT_TITLE_OFFSET_X, 0, RECRUIT_TITLE_MAX_WIDTH, RECRUIT_TITLE_MAX_FONT);
 
         if(selectedTab == STORY_BUTTON_STRING){
             g.drawImage(Assets.BattleDivider, DIVIDER_X, DIVIDER_Y);

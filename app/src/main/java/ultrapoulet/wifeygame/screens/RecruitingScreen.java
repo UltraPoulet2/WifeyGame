@@ -182,7 +182,7 @@ public class RecruitingScreen extends Screen {
         }
 
         basicButtons.drawImage(g);
-        
+
         ArrayList<RecruitRequirement> reqs = info.getRequirements();
         for (int i = 0; i < reqs.size(); i++) {
             String desc = reqs.get(i).getDescription();
