@@ -222,11 +222,6 @@ public class BattleSelectScreen extends Screen {
 
         createBattleButtons();
         createRecruitButtons();
-        /*
-        setAreaPageVisible(true);
-        setBattlePageVisible(selectedArea != -1);
-        activatePageAndBattleButtons();
-        */
         changeTab();
 
         buttonPaint = new Paint();
@@ -453,13 +448,6 @@ public class BattleSelectScreen extends Screen {
                     cis.setChar(party.get(selectedChar));
                     game.setScreen(cis);
                 } else if (lastPressedRecruit == recruitButtonList.getIndexPressed(t.x, t.y) && lastPressedRecruit != -1){
-                    //For now, we're just going to recruit the character immediately and recreate the recruit buttons
-                    /*
-                    recruitableWifeys.get(lastPressedRecruit).recruit();
-                    createRecruitButtons();
-                    activateRecruitButtons();
-                    */
-                    //rs.setRecruit(recruit);
                     game.setScreen(new RecruitingScreen(game, this, recruitableWifeys.get(lastPressedRecruit)));
                 }
             }
@@ -479,7 +467,6 @@ public class BattleSelectScreen extends Screen {
         storyBattleList.drawImage(g);
         storyBattleList.drawScaledString(g, buttonPaint, 0, BATTLE_TITLE_OFFSET_Y, BATTLE_TITLE_MAX_WIDTH, BATTLE_TITLE_MAX_FONT);
         recruitButtonList.drawImage(g);
-        //recruitButtonList.drawString(g, recruitNamePaint, RECRUIT_TITLE_OFFSET_X, 0);
         recruitButtonList.drawScaledString(g, recruitNamePaint, RECRUIT_TITLE_OFFSET_X, 0, RECRUIT_TITLE_MAX_WIDTH, RECRUIT_TITLE_MAX_FONT);
 
         if(selectedTab == STORY_BUTTON_STRING){

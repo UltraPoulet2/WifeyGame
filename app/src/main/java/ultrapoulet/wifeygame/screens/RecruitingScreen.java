@@ -19,9 +19,6 @@ import ultrapoulet.wifeygame.character.WifeyCharacter;
 import ultrapoulet.wifeygame.gamestate.PlayerInfo;
 import ultrapoulet.wifeygame.recruiting.RecruitInfo;
 import ultrapoulet.wifeygame.recruiting.RecruitRequirement;
-import ultrapoulet.wifeygame.screens.dialogs.AbsDialog;
-import ultrapoulet.wifeygame.screens.dialogs.AbsYesNoDialog;
-import ultrapoulet.wifeygame.screens.dialogs.InfoDialog;
 
 /**
  * Created by John on 5/2/2017.
@@ -90,8 +87,6 @@ public class RecruitingScreen extends Screen {
     private TextPaint reqPaint;
     private static final int REQUIREMENT_TEXT_SIZE = 30;
 
-    int entered = 0;
-
     public RecruitingScreen(Game game, Screen previousScreen, WifeyCharacter inputRecruit){
         super(game);
         this.previousScreen = previousScreen;
@@ -127,11 +122,6 @@ public class RecruitingScreen extends Screen {
 
     private void checkRecruitAvailable(){
         RecruitInfo info = recruit.getRecruitingInfo();
-        /*
-        for(int i = 0; i < info.getRequirements().size(); i++){
-            //We'll set up images indicating whether or not a requirement is complete or not
-        }
-        */
         recruitButton.setActive(info.isRecruitable());
     }
 
@@ -143,7 +133,6 @@ public class RecruitingScreen extends Screen {
             if (t.type == Input.TouchEvent.TOUCH_DOWN) {
                 lastPressed = basicButtons.getButtonPressed(t.x, t.y);
                 requirementPressed = requirementButtons.getIndexPressed(t.x, t.y);
-                System.out.println(requirementPressed);
                 continue;
             } else if (t.type == Input.TouchEvent.TOUCH_UP) {
                 if(lastPressed == basicButtons.getButtonPressed(t.x, t.y) && lastPressed != null){
