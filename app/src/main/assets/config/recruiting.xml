@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <recruiting>
     <character key="TEST-NYRK">
-        <steps>
-            <step type="battle">TEST-NYRK-BAT</step>
-            <!-- <step type="money">1000</step> -->
-            <!-- <step type="recruit">TEST-PERI</step> -->
-        </steps>
+        <quote>I'm saying wordy things.</quote>
+        <requirements>
+            <requirement type="recruitBattle">TEST-NYRK-BAT</requirement>
+            <requirement type="gold">75</requirement>
+            <requirement type="wifey">TEST-PERI</requirement>
+        </requirements>
+    </character>
+    <character key="TEST-PERI">
+        <quote>Is it time to murder things?</quote>
+        <requirements>
+            <requirement type="battle">TEST-PHYS</requirement>
+            <requirement type="wifeyNumber" skill="MAID">1</requirement>
+        </requirements>
     </character>
 </recruiting>

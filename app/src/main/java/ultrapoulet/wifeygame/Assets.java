@@ -9,7 +9,7 @@ import ultrapoulet.androidgame.framework.Image;
  */
 public class Assets {
 
-    //BattleScreen Stuff
+    //StandardBattleScreen Stuff
     public static Image PowerAttackEnabled, PowerAttackDisabled;
     public static Image ComboAttackEnabled, ComboAttackDisabled;
     public static Image MagicAttackEnabled, MagicAttackDisabled;
@@ -87,6 +87,9 @@ public class Assets {
     public static Image BattleInfoScreen;
     public static Image BattleEnable, BattleDisable;
 
+    //RecruitingBattleInfoScreen Stuff
+    public static Image RecruitBattleInfoScreen;
+
     //BattleResultScreen Stuff
     public static Image BattleResultScreen;
     public static Image BattleResultVictory;
@@ -94,6 +97,17 @@ public class Assets {
     public static Image BattleResultExp;
     public static Image BattleResultGold;
     public static Image LevelUp;
+
+    //RecruitingScreen stuff
+    public static Image RecruitingScreen;
+    public static Image RecruitingButtonEnable, RecruitingButtonDisable;
+    public static Image CheckboxComplete, CheckboxIncomplete;
+
+    //Dialog Stuff
+    public static Image DialogBackground;
+    public static Image OptionYes;
+    public static Image OptionNo;
+    public static Image OptionOk;
 
     //Element Image stuff
     public static List<Image> ElementImages;

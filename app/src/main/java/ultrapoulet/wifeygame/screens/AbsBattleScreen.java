@@ -8,7 +8,7 @@ import java.util.List;
 import ultrapoulet.androidgame.framework.Game;
 import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Image;
-import ultrapoulet.androidgame.framework.Input.TouchEvent;
+import ultrapoulet.androidgame.framework.Input;
 import ultrapoulet.androidgame.framework.Screen;
 import ultrapoulet.androidgame.framework.helpers.Button;
 import ultrapoulet.androidgame.framework.helpers.ButtonList;
@@ -18,14 +18,14 @@ import ultrapoulet.wifeygame.battle.BattleCharacter;
 import ultrapoulet.wifeygame.battle.BattleEnemy;
 import ultrapoulet.wifeygame.battle.BattleInfo;
 import ultrapoulet.wifeygame.battle.BattleWifey;
-import ultrapoulet.wifeygame.battle.enemyai.EnemyAI.EnemyAction;
+import ultrapoulet.wifeygame.battle.enemyai.EnemyAI;
 import ultrapoulet.wifeygame.gamestate.Party;
 
 /**
- * Created by John on 3/5/2016.
+ * Created by John on 5/20/2017.
  */
-public class BattleScreen extends Screen {
 
+public abstract class AbsBattleScreen extends Screen {
     //Determine if it is really necessary to make these Lists of BattleCharacters
     public List<BattleCharacter> party;
     public BattleInfo battleInfo;
@@ -276,7 +276,7 @@ public class BattleScreen extends Screen {
 
     private BattlePhase currentPhase = BattlePhase.BATTLE_START;
 
-    public BattleScreen(Game game, BattleInfo info){
+    public AbsBattleScreen(Game game, BattleInfo info){
         super(game);
 
         charHolder = Assets.charHolder;
@@ -292,6 +292,8 @@ public class BattleScreen extends Screen {
 
         setBattleInfo(info);
     }
+
+    protected abstract Screen getCompletionScreen();
 
     public void createButtonList(){
         buttonList = new ButtonList();
@@ -472,6 +474,8 @@ public class BattleScreen extends Screen {
             case BATTLE_START:
                 //Do anything necessary for battle start
                 if (phaseEntered) {
+                    //On Battle Start, increment the Number attempts in the BattleInfo
+                    battleInfo.incrementNumAttempts();
                     phaseTime = 0;
                     phaseEntered = false;
                     for(int i = 0; i < party.size(); i++){
@@ -557,11 +561,11 @@ public class BattleScreen extends Screen {
                     updateButtons();
                 }
                 else {
-                    List<TouchEvent> touchEvents = game.getInput().getTouchEvents();
+                    List<Input.TouchEvent> touchEvents = game.getInput().getTouchEvents();
 
                     for (int i = 0; i < touchEvents.size(); i++) {
-                        TouchEvent t = touchEvents.get(i);
-                        if (t.type != TouchEvent.TOUCH_UP) {
+                        Input.TouchEvent t = touchEvents.get(i);
+                        if (t.type != Input.TouchEvent.TOUCH_UP) {
                             continue;
                         }
                         Button command = buttonList.getButtonPressed(t.x, t.y);
@@ -763,7 +767,7 @@ public class BattleScreen extends Screen {
                 if (phaseEntered) {
                     phaseTime = 0;
                     phaseEntered = false;
-                    EnemyAction action = ((BattleEnemy) enemies.get(enemyIndex)).getAction();
+                    EnemyAI.EnemyAction action = ((BattleEnemy) enemies.get(enemyIndex)).getAction();
                     int charIndex;
                     int baseDamage;
                     int displayDamage;
@@ -1013,10 +1017,11 @@ public class BattleScreen extends Screen {
                 //If loss, give other stuff, i dunno
                 if (phaseEntered) {
                     phaseEntered = false;
-
-                    //Temporary go back to Select
-                    BattleResultScreen brs = new BattleResultScreen(game, battleInfo, party, enemies);
-                    game.setScreen(brs);
+                    if(!isGameOver()){
+                        //On Battle end, increment the number of completions in BattleInfo if victorious
+                        battleInfo.incrementNumComplete();
+                    }
+                    game.setScreen(getCompletionScreen());
                 }
                 break;
 
@@ -1176,7 +1181,7 @@ public class BattleScreen extends Screen {
         Graphics g = game.getGraphics();
         Double perHealth;
 
-        if(currentPhase == BattlePhase.WAVE_START ){
+        if(currentPhase == AbsBattleScreen.BattlePhase.WAVE_START ){
             if(!phaseEntered) {
                 g.drawImageAlpha(enemies.get(enemyIndex).getImage(), ENEMY_IMAGE_X, ENEMY_IMAGE_Y, (int) (255 * phaseTime) / WAVE_PHASE_WAIT);
             }

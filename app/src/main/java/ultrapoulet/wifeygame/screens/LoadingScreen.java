@@ -27,6 +27,8 @@ import ultrapoulet.wifeygame.gamestate.RecruitedCharacters;
 import ultrapoulet.wifeygame.parsers.BattleParser;
 import ultrapoulet.wifeygame.parsers.CharacterParser;
 import ultrapoulet.wifeygame.parsers.EnemyParser;
+import ultrapoulet.wifeygame.parsers.RecruitingBattleParser;
+import ultrapoulet.wifeygame.parsers.RecruitingParser;
 
 /**
  * Created by John on 3/12/2016.
@@ -72,6 +74,12 @@ public class LoadingScreen extends Screen {
                 return "Creating Battles";
             }
         },
+        CREATE_RECRUITING{
+            @Override
+            protected String getStatus() {
+                return "Creating Recruiting Info";
+            }
+        },
         LOAD_SAVE{
             @Override
             protected String getStatus() {
@@ -112,6 +120,10 @@ public class LoadingScreen extends Screen {
                 break;
             case CREATE_BATTLES:
                 createBattles();
+                currentPhase = LoadingPhase.CREATE_RECRUITING;
+                break;
+            case CREATE_RECRUITING:
+                createRecruiting();
                 currentPhase = LoadingPhase.LOAD_SAVE;
                 break;
             case LOAD_SAVE:
@@ -280,6 +292,7 @@ public class LoadingScreen extends Screen {
         Assets.CharacterInfoScreen = g.newImage("screens/CharacterInfoScreen.png", ImageFormat.RGB565);
         Assets.BattleCharacterInfoScreen = g.newImage("screens/BattleCharacterInfoScreen.png", ImageFormat.RGB565);
         Assets.BattleInfoScreen = g.newImage("screens/BattleInfoScreen.png", ImageFormat.RGB565);
+        Assets.RecruitBattleInfoScreen = g.newImage("screens/RecruitBattleInfoScreen.png", ImageFormat.RGB565);
 
         Assets.BattleResultScreen = g.newImage("screens/BattleResultScreen.png", ImageFormat.ARGB8888);
         Assets.BattleResultVictory = g.newImage("objects/battleResult/BattleResultVictory.png", ImageFormat.ARGB8888);
@@ -287,6 +300,17 @@ public class LoadingScreen extends Screen {
         Assets.BattleResultExp = g.newImage("objects/battleResult/BattleResultExp.png", ImageFormat.ARGB8888);
         Assets.BattleResultGold = g.newImage("objects/battleResult/BattleResultGold.png", ImageFormat.ARGB8888);
         Assets.LevelUp = g.newImage("BattleResult/LevelUpImage.png", ImageFormat.ARGB8888);
+
+        Assets.RecruitingScreen = g.newImage("screens/RecruitingScreen.png", ImageFormat.ARGB8888);
+        Assets.RecruitingButtonEnable = g.newImage("Recruiting/RecruitButtonEnabled.png", ImageFormat.ARGB8888);
+        Assets.RecruitingButtonDisable = g.newImage("Recruiting/RecruitButtonDisabled.png", ImageFormat.ARGB8888);
+        Assets.CheckboxComplete = g.newImage("Recruiting/CheckboxComplete.png", ImageFormat.ARGB8888);
+        Assets.CheckboxIncomplete = g.newImage("Recruiting/CheckboxIncomplete.png", ImageFormat.ARGB8888);
+
+        Assets.DialogBackground = g.newImage("Dialogs/DialogBackground.png", ImageFormat.ARGB8888);
+        Assets.OptionYes = g.newImage("Dialogs/OptionYes.png", ImageFormat.ARGB8888);
+        Assets.OptionNo = g.newImage("Dialogs/OptionNo.png", ImageFormat.ARGB8888);
+        Assets.OptionOk = g.newImage("Dialogs/OptionOK.png", ImageFormat.ARGB8888);
 
         Assets.ElementImages = new ArrayList<>();
         Assets.ElementImages.add(g.newImage("elements/AirElement.png", ImageFormat.ARGB8888));
@@ -405,6 +429,50 @@ public class LoadingScreen extends Screen {
         }
         finally{
             if(in != null){
+                try {
+                    in.close();
+                }
+                catch(IOException e){
+                }
+            }
+        }
+
+        try {
+            in = game.openConfig("config/recruitbattles.xml");
+            SAXParserFactory factory = SAXParserFactory.newInstance();
+            SAXParser saxParser = factory.newSAXParser();
+            RecruitingBattleParser battleParser = new RecruitingBattleParser();
+            saxParser.parse(in, battleParser);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            //Do better error handling
+        }
+        finally{
+            if(in != null){
+                try {
+                    in.close();
+                }
+                catch(IOException e){
+                }
+            }
+        }
+    }
+
+    private void createRecruiting(){
+        InputStream in = null;
+        try {
+            in = game.openConfig("config/recruiting.xml");
+            SAXParserFactory factory = SAXParserFactory.newInstance();
+            SAXParser saxParser = factory.newSAXParser();
+            RecruitingParser recParser = new RecruitingParser();
+            saxParser.parse(in, recParser);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        finally {
+            if (in != null){
                 try {
                     in.close();
                 }

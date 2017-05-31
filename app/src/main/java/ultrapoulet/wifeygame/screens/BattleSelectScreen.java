@@ -50,6 +50,8 @@ public class BattleSelectScreen extends Screen {
     private static final int BATTLES_OFFSET_Y = BATTLES_BOT_Y - BATTLES_TOP_Y + 10;
 
     private static final int BATTLE_TITLE_OFFSET_Y = -25;
+    private static final int BATTLE_TITLE_MAX_WIDTH = 330;
+    private static final int BATTLE_TITLE_MAX_FONT = 40;
     private static final int BATTLE_ENERGY_IMAGE_OFFSET_X = 5;
     private static final int BATTLE_ENERGY_NUMBER_OFFSET_X = 25;
     private static final int BATTLE_ENERGY_OFFSET_Y = 50;
@@ -123,6 +125,11 @@ public class BattleSelectScreen extends Screen {
     private Button recruitPageDownButton;
     private static int selectedRecruitPage = 0;
     private int lastPressedRecruit = -1;
+
+    private Paint recruitNamePaint;
+    private static final int RECRUIT_TITLE_OFFSET_X = 45;
+    private static final int RECRUIT_TITLE_MAX_WIDTH = 590;
+    private static final int RECRUIT_TITLE_MAX_FONT = 50;
 
     private Button partyButton;
     private static final String PARTY_BUTTON_STRING = "PARTY";
@@ -215,17 +222,15 @@ public class BattleSelectScreen extends Screen {
 
         createBattleButtons();
         createRecruitButtons();
-        /*
-        setAreaPageVisible(true);
-        setBattlePageVisible(selectedArea != -1);
-        activatePageAndBattleButtons();
-        */
         changeTab();
 
         buttonPaint = new Paint();
-        buttonPaint.setTextSize(40);
         buttonPaint.setTextAlign(Align.CENTER);
         buttonPaint.setColor(Color.BLACK);
+
+        recruitNamePaint = new Paint();
+        recruitNamePaint.setTextAlign(Align.CENTER);
+        recruitNamePaint.setColor(Color.BLACK);
     }
 
     private void deactivatePageAndBattleButtons(){
@@ -305,8 +310,6 @@ public class BattleSelectScreen extends Screen {
     }
 
     private void createRecruitButtons(){
-        //We set the current page to 0 to not have any issues
-        selectedRecruitPage = 0;
         recruitableWifeys = RecruitableCharacters.getArray();
         recruitableWifeyImages = new ArrayList<>();
         //Sort should be added to make the list consistent
@@ -319,6 +322,10 @@ public class BattleSelectScreen extends Screen {
             int botY = RECRUIT_BUTTON_BOT_Y + RECRUIT_OFFSET_Y * (i % AREA_PAGE_SIZE);
             recruitButtonList.addButton(new Button(leftX, rightX, topY, botY, true, recruitableWifeys.get(i).getName(), Assets.RecruitBattleButton));
             recruitableWifeyImages.add(recruitableWifeys.get(i).getImage(game.getGraphics()));
+        }
+        int maxRecruitPage = (recruitableWifeys.size() - 1) / AREA_PAGE_SIZE;
+        if(selectedRecruitPage > maxRecruitPage){
+            selectedRecruitPage = maxRecruitPage;
         }
     }
 
@@ -441,10 +448,7 @@ public class BattleSelectScreen extends Screen {
                     cis.setChar(party.get(selectedChar));
                     game.setScreen(cis);
                 } else if (lastPressedRecruit == recruitButtonList.getIndexPressed(t.x, t.y) && lastPressedRecruit != -1){
-                    //For now, we're just going to recruit the character immediately and recreate the recruit buttons
-                    recruitableWifeys.get(lastPressedRecruit).recruit();
-                    createRecruitButtons();
-                    activateRecruitButtons();
+                    game.setScreen(new RecruitingScreen(game, this, recruitableWifeys.get(lastPressedRecruit)));
                 }
             }
         }
@@ -459,10 +463,11 @@ public class BattleSelectScreen extends Screen {
         buttonList.drawImage(g);
 
         storyAreaList.drawImage(g);
-        storyAreaList.drawString(g, buttonPaint);
+        storyAreaList.drawScaledString(g, buttonPaint, BATTLE_TITLE_MAX_WIDTH, BATTLE_TITLE_MAX_FONT);
         storyBattleList.drawImage(g);
-        storyBattleList.drawString(g, buttonPaint, 0, BATTLE_TITLE_OFFSET_Y);
+        storyBattleList.drawScaledString(g, buttonPaint, 0, BATTLE_TITLE_OFFSET_Y, BATTLE_TITLE_MAX_WIDTH, BATTLE_TITLE_MAX_FONT);
         recruitButtonList.drawImage(g);
+        recruitButtonList.drawScaledString(g, recruitNamePaint, RECRUIT_TITLE_OFFSET_X, 0, RECRUIT_TITLE_MAX_WIDTH, RECRUIT_TITLE_MAX_FONT);
 
         if(selectedTab == STORY_BUTTON_STRING){
             g.drawImage(Assets.BattleDivider, DIVIDER_X, DIVIDER_Y);
@@ -525,6 +530,14 @@ public class BattleSelectScreen extends Screen {
             else {
                 partyList.get(i).setActiveImage(null);
             }
+        }
+
+        createRecruitButtons();
+        if(selectedTab == RECRUIT_BUTTON_STRING){
+            activateRecruitButtons();
+        }
+        else{
+            deactivateRecruitButtons();
         }
     }
 

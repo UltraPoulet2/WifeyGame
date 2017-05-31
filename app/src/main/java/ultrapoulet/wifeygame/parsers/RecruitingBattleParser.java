@@ -8,15 +8,14 @@ import ultrapoulet.wifeygame.battle.BattleInfo;
 import ultrapoulet.wifeygame.battle.requirements.AbsRequirement;
 import ultrapoulet.wifeygame.battle.requirements.RequirementFactory;
 import ultrapoulet.wifeygame.character.EnemyCharacter;
-import ultrapoulet.wifeygame.gamestate.Characters;
 import ultrapoulet.wifeygame.gamestate.Enemies;
-import ultrapoulet.wifeygame.gamestate.StoryArea;
-import ultrapoulet.wifeygame.gamestate.StoryBattles;
+import ultrapoulet.wifeygame.gamestate.RecruitBattles;
 
 /**
- * Created by John on 6/22/2016.
+ * Created by John on 5/21/2017.
  */
-public class BattleParser extends DefaultHandler {
+
+public class RecruitingBattleParser extends DefaultHandler {
 
     private boolean bName = false;
     private boolean bEnemy = false;
@@ -25,36 +24,20 @@ public class BattleParser extends DefaultHandler {
     private boolean bRValue = false;
     private boolean bBackground = false;
     private boolean bEnergy = false;
-    private boolean bDrop = false;
-    private boolean bWifeyDrop = false;
-    private boolean bChanceDrop = false;
-
-    private boolean error = false;
-
-    private BattleInfo battleBuilder;
-    private AbsRequirement reqBuilder;
-    private StoryArea areaBuilder;
-
-    private String wifeyDrop;
-    private int chanceDrop = 0;
 
     private String battleKey;
+    private BattleInfo battleBuilder;
+    private AbsRequirement reqBuilder;
+
+    private boolean error = false;
 
     @Override
     public void startElement(String uri,
                              String localName,
                              String qName,
                              Attributes attributes) throws SAXException {
-        if(qName.equalsIgnoreCase("battles")){
+        if(qName.equalsIgnoreCase("recruitbattles")){
             //Do nothing, but it's valid
-        }
-        else if(qName.equalsIgnoreCase("area")){
-            String temp = attributes.getValue("name");
-            if(temp == null || temp.length() == 0){
-                System.out.println("BattleParser:startElement(): No area name provided");
-                temp = "Invalid name";
-            }
-            areaBuilder = new StoryArea(temp);
         }
         else if(qName.equalsIgnoreCase("battle")){
             resetValues();
@@ -81,7 +64,7 @@ public class BattleParser extends DefaultHandler {
             //Create a new requirement
             reqBuilder = RequirementFactory.getRequirement(attributes.getValue("type"));
             if(reqBuilder == null){
-                System.out.println("BattleParser:startElement(): Invalid Requirement: " + attributes.getValue("type"));
+                System.out.println("RecruitingBattleParser:startElement(): Invalid Requirement: " + attributes.getValue("type"));
                 bRequirement = false;
             }
             else{
@@ -97,39 +80,20 @@ public class BattleParser extends DefaultHandler {
         else if(qName.equalsIgnoreCase("energy")){
             bEnergy = true;
         }
-        else if(qName.equalsIgnoreCase("drops")){
-            //Do nothing, valid
-        }
-        else if(qName.equalsIgnoreCase("drop")){
-            wifeyDrop = null;
-            chanceDrop = 0;
-        }
-        else if(qName.equalsIgnoreCase("wifey")){
-            bWifeyDrop = true;
-        }
-        else if(qName.equalsIgnoreCase("chance")){
-            bChanceDrop = true;
-        }
-        else{
-            System.out.println("BattleParser:startElement(): Invalid qName: " + qName + " for key " + battleKey);
-        }
     }
 
     @Override
     public void endElement(String uri,
                            String localName,
                            String qName) throws SAXException {
-        if(qName.equalsIgnoreCase("area")){
-            StoryBattles.addArea(areaBuilder);
-            System.out.println("BattleParser:endElement(): Adding area: " + areaBuilder.getAreaName());
-        }
-        else if(qName.equalsIgnoreCase("battle")){
+        if(qName.equalsIgnoreCase("battle")){
             if(validate()){
-                areaBuilder.addBattle(battleBuilder);
-                System.out.println("BattleParser:endElement(): Adding battle: " + battleKey);
+                RecruitBattles.put(battleKey, battleBuilder);
+
+                System.out.println("RecruitingBattleParser:endElement(): Adding battle: " + battleKey);
             }
             else{
-                System.out.println("BattleParser:endElement(): Error parsing for key: " + battleKey);
+                System.out.println("RecruitingBattleParser:endElement(): Error parsing for key: " + battleKey);
             }
         }
         else if(qName.equalsIgnoreCase("requirement")){
@@ -138,14 +102,6 @@ public class BattleParser extends DefaultHandler {
             }
             reqBuilder = null;
             bRequirement = false;
-        }
-        else if(qName.equalsIgnoreCase("drop")){
-            if(wifeyDrop == null || Characters.get(wifeyDrop) == null || chanceDrop <= 0 || chanceDrop > 100){
-                System.out.println("BattleParser:endElement(): Invalid wifey drop provided. Ignoring");
-            }
-            else {
-                battleBuilder.addDrop(Characters.get(wifeyDrop), chanceDrop);
-            }
         }
     }
 
@@ -161,7 +117,7 @@ public class BattleParser extends DefaultHandler {
         else if(bEnemy){
             EnemyCharacter tempEn = Enemies.get(temp);
             if(tempEn == null){
-                System.out.println("BattleParser:characters(): BattleEnemy not found: " + temp);
+                System.out.println("RecruitingBattleParser:characters(): BattleEnemy not found: " + temp);
                 error = true;
             }
             else{
@@ -175,7 +131,7 @@ public class BattleParser extends DefaultHandler {
                 bPartySize = false;
             }
             catch(NumberFormatException e){
-                System.out.println("BattleParser:characters(): NumberFormatException for key: " + battleKey);
+                System.out.println("RecruitingBattleParser:characters(): NumberFormatException for key: " + battleKey);
                 error = true;
                 bPartySize = false;
             }
@@ -196,24 +152,10 @@ public class BattleParser extends DefaultHandler {
                 bEnergy = false;
             }
             catch(NumberFormatException e){
-                System.out.println("BattleParser:characters(): NumberFormatException for key: " + battleKey);
+                System.out.println("RecruitingBattleParser:characters(): NumberFormatException for key: " + battleKey);
                 error = true;
                 bEnergy = false;
             }
-        }
-        else if(bWifeyDrop){
-            wifeyDrop = temp;
-            bWifeyDrop = false;
-        }
-        else if(bChanceDrop){
-            try{
-                chanceDrop = Integer.parseInt(temp);
-            }
-            catch(NumberFormatException e){
-                System.out.println("BattleParser:characters(): NumberFormatException for key: " + battleKey);
-                error = true;
-            }
-            bChanceDrop = false;
         }
     }
 
@@ -224,11 +166,6 @@ public class BattleParser extends DefaultHandler {
         bRValue = false;
         bBackground = false;
         bEnergy = false;
-        bChanceDrop = false;
-        bWifeyDrop = false;
-
-        wifeyDrop = null;
-        chanceDrop = 0;
     }
 
     private boolean validate(){
@@ -253,6 +190,4 @@ public class BattleParser extends DefaultHandler {
 
         return true;
     }
-
-
 }

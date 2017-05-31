@@ -7,8 +7,10 @@
             <energy>1</energy>
             <enemies>
                 <enemy>TEST-NME1</enemy>
+                <!-- We're making this easier for testing
                 <enemy>TEST-NME2</enemy>
                 <enemy>TEST-NME3</enemy>
+                -->
             </enemies>
             <drops>
                 <drop>

@@ -46,6 +46,16 @@ public class PlayerInfo {
         }
     }
 
+    public static void payGold(int paidGold){
+        if(paidGold > gold){
+            gold = 0;
+            System.out.println("PlayerInfo:payGold(): Spent too much gold.");
+        }
+        else {
+            gold -= paidGold;
+        }
+    }
+
     public static int getLevel() {
         return level;
     }

@@ -9,6 +9,7 @@ import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.wifeygame.battle.BattleWifey;
 import ultrapoulet.wifeygame.gamestate.RecruitableCharacters;
 import ultrapoulet.wifeygame.gamestate.RecruitedCharacters;
+import ultrapoulet.wifeygame.recruiting.RecruitInfo;
 
 /**
  * Created by John on 5/5/2016.
@@ -42,6 +43,8 @@ public class WifeyCharacter {
 
     private boolean dropped = false;
     private boolean recruited = false;
+
+    private RecruitInfo recruitingInfo = new RecruitInfo();
 
     public WifeyCharacter(){
         skills = new ArrayList<>();
@@ -105,6 +108,10 @@ public class WifeyCharacter {
         return this.title;
     }
 
+    public RecruitInfo getRecruitingInfo(){
+        return recruitingInfo;
+    }
+
     public boolean isRecruited(){
         return this.recruited;
     }
@@ -143,6 +150,10 @@ public class WifeyCharacter {
 
     public void setTitle(String inTitle){
         this.title = inTitle;
+    }
+
+    public void setRecruitingInfo(RecruitInfo input){
+        this.recruitingInfo = input;
     }
 
     public void recruit(){

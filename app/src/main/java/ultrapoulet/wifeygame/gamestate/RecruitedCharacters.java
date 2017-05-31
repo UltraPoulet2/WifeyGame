@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import ultrapoulet.wifeygame.character.SkillsEnum;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
 
 /**
@@ -19,6 +20,22 @@ public class RecruitedCharacters {
 
     public static WifeyCharacter get(String key){
         return recruits.get(key);
+    }
+
+    //Returns the number of wifeys recruited
+    public static int getNumberRecruited(){
+        return recruits.size();
+    }
+
+    //Returns the number of wifeys with a ceratin skill
+    public static int getNumberRecruited(SkillsEnum skill){
+        int total = 0;
+        for (WifeyCharacter wifey: recruits.values() ) {
+            if(wifey.getSkills().contains(skill)){
+                total++;
+            }
+        }
+        return total;
     }
 
     public static ArrayList<WifeyCharacter> getArray(){
