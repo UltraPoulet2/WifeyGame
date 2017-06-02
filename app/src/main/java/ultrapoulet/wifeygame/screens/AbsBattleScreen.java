@@ -725,10 +725,7 @@ public abstract class AbsBattleScreen extends Screen {
                 } else {
                     phaseTime += deltaTime;
                     if(phaseTime >= WAIT_PHASE_WAIT) {
-                        if (commandSelected == comboAttackButton && hitsPerformed < party.get(partyIndex).getNumHits()) {
-                            currentPhase = BattlePhase.ANIMATE_PLAYER_ACTION;
-                            phaseEntered = true;
-                        } else if (isEndOfRound()) {
+                        if (isEndOfRound()) {
                             currentPhase = BattlePhase.WAIT_ENEMY_ACTION;
                             phaseEntered = true;
                         } else {
@@ -922,7 +919,8 @@ public abstract class AbsBattleScreen extends Screen {
                             break;
                     }
                     if (phaseTime >= phaseWait) {
-                        if (canPreventPartyDeath()) {
+                        //If the party is dead or the enemy is done acting and somebody can be revived...
+                        if ((isGameOver() || hitsPerformed == enemies.get(enemyIndex).getNumHits()) && canPreventPartyDeath()) {
                             currentPhase = BattlePhase.PREVENT_PLAYER_DEFEAT;
                             phaseEntered = true;
                         } else if (isGameOver()) {
@@ -951,13 +949,8 @@ public abstract class AbsBattleScreen extends Screen {
                 } else {
                     phaseTime += deltaTime;
                     if(phaseTime >= HEAL_PHASE_WAIT) {
-                        if (hitsPerformed < enemies.get(enemyIndex).getNumHits()) {
-                            currentPhase = BattlePhase.ANIMATE_ENEMY_ACTION;
-                            phaseEntered = true;
-                        } else {
-                            currentPhase = BattlePhase.ROUND_END;
-                            phaseEntered = true;
-                        }
+                        currentPhase = BattlePhase.ROUND_END;
+                        phaseEntered = true;
                     }
                 }
                 break;

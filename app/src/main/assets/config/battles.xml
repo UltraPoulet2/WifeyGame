@@ -54,7 +54,7 @@
         <battle key="TEST-PHYS">
             <name>Athletes Test</name>
             <background>testbg</background>
-            <energy>2</energy>
+            <energy>1</energy>
             <enemies>
                 <enemy>TEST-NME5</enemy>
                 <enemy>TEST-NME4</enemy>
@@ -64,7 +64,7 @@
         <battle key="TEST-MAGI">
             <name>Magic Test</name>
             <background>testbg</background>
-            <energy>3</energy>
+            <energy>1</energy>
             <enemies>
                 <enemy>TEST-NME6</enemy>
                 <enemy>TEST-NME6</enemy>
