@@ -338,6 +338,7 @@
         <strength>40</strength>
         <magic>40</magic>
         <weapon>PLANT</weapon>
+        <!-- <weaponSkill>KOKO_ROSE</weaponSkill> -->
         <elements>
             <atkElement>EARTH</atkElement>
             <stgElement>EARTH</stgElement>
