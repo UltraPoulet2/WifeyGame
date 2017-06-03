@@ -5,41 +5,41 @@ import java.util.HashMap;
 
 import ultrapoulet.wifeygame.battle.BattleCharacter;
 import ultrapoulet.wifeygame.battle.skills.AbsSkill;
-import ultrapoulet.wifeygame.battle.skills.implementations.AthleteSkill;
-import ultrapoulet.wifeygame.battle.skills.implementations.BikerSkill;
-import ultrapoulet.wifeygame.battle.skills.implementations.ChuuniSkill;
-import ultrapoulet.wifeygame.battle.skills.implementations.DetectiveSkill;
-import ultrapoulet.wifeygame.battle.skills.implementations.DullahanSkill;
-import ultrapoulet.wifeygame.battle.skills.implementations.FujoshiSkill;
-import ultrapoulet.wifeygame.battle.skills.implementations.GhostSkill;
-import ultrapoulet.wifeygame.battle.skills.implementations.HyperSkill;
-import ultrapoulet.wifeygame.battle.skills.implementations.KillerSkill;
-import ultrapoulet.wifeygame.battle.skills.implementations.MagicalGirlSkill;
-import ultrapoulet.wifeygame.battle.skills.implementations.MagicianSkill;
-import ultrapoulet.wifeygame.battle.skills.implementations.MaidSkill;
-import ultrapoulet.wifeygame.battle.skills.implementations.MasochistSkill;
-import ultrapoulet.wifeygame.battle.skills.implementations.MechanicSkill;
-import ultrapoulet.wifeygame.battle.skills.implementations.MediumSkill;
-import ultrapoulet.wifeygame.battle.skills.implementations.MusicianSkill;
-import ultrapoulet.wifeygame.battle.skills.implementations.NurseSkill;
-import ultrapoulet.wifeygame.battle.skills.implementations.PilotSkill;
-import ultrapoulet.wifeygame.battle.skills.implementations.PoliceSkill;
-import ultrapoulet.wifeygame.battle.skills.implementations.PravdaSkill;
-import ultrapoulet.wifeygame.battle.skills.implementations.ProgrammerSkill;
-import ultrapoulet.wifeygame.battle.skills.implementations.ProtagonistSkill;
-import ultrapoulet.wifeygame.battle.skills.implementations.RacerSkill;
-import ultrapoulet.wifeygame.battle.skills.implementations.RemSkill;
-import ultrapoulet.wifeygame.battle.skills.implementations.RobotSkill;
-import ultrapoulet.wifeygame.battle.skills.implementations.SadistSkill;
-import ultrapoulet.wifeygame.battle.skills.implementations.SlugabedSkill;
-import ultrapoulet.wifeygame.battle.skills.implementations.SportsManagerSkill;
-import ultrapoulet.wifeygame.battle.skills.implementations.SurvivalSkill;
-import ultrapoulet.wifeygame.battle.skills.implementations.TeacherSkill;
-import ultrapoulet.wifeygame.battle.skills.implementations.TimeTravelerSkill;
-import ultrapoulet.wifeygame.battle.skills.implementations.TrapSkill;
-import ultrapoulet.wifeygame.battle.skills.implementations.TsundereSkill;
-import ultrapoulet.wifeygame.battle.skills.implementations.VampireSkill;
-import ultrapoulet.wifeygame.battle.skills.implementations.WitchSkill;
+import ultrapoulet.wifeygame.battle.skills.basicskills.AthleteSkill;
+import ultrapoulet.wifeygame.battle.skills.basicskills.BikerSkill;
+import ultrapoulet.wifeygame.battle.skills.basicskills.ChuuniSkill;
+import ultrapoulet.wifeygame.battle.skills.basicskills.DetectiveSkill;
+import ultrapoulet.wifeygame.battle.skills.basicskills.DullahanSkill;
+import ultrapoulet.wifeygame.battle.skills.basicskills.FujoshiSkill;
+import ultrapoulet.wifeygame.battle.skills.basicskills.GhostSkill;
+import ultrapoulet.wifeygame.battle.skills.basicskills.HyperSkill;
+import ultrapoulet.wifeygame.battle.skills.basicskills.KillerSkill;
+import ultrapoulet.wifeygame.battle.skills.basicskills.MagicalGirlSkill;
+import ultrapoulet.wifeygame.battle.skills.basicskills.MagicianSkill;
+import ultrapoulet.wifeygame.battle.skills.basicskills.MaidSkill;
+import ultrapoulet.wifeygame.battle.skills.basicskills.MasochistSkill;
+import ultrapoulet.wifeygame.battle.skills.basicskills.MechanicSkill;
+import ultrapoulet.wifeygame.battle.skills.basicskills.MediumSkill;
+import ultrapoulet.wifeygame.battle.skills.basicskills.MusicianSkill;
+import ultrapoulet.wifeygame.battle.skills.basicskills.NurseSkill;
+import ultrapoulet.wifeygame.battle.skills.basicskills.PilotSkill;
+import ultrapoulet.wifeygame.battle.skills.basicskills.PoliceSkill;
+import ultrapoulet.wifeygame.battle.skills.basicskills.PravdaSkill;
+import ultrapoulet.wifeygame.battle.skills.basicskills.ProgrammerSkill;
+import ultrapoulet.wifeygame.battle.skills.basicskills.ProtagonistSkill;
+import ultrapoulet.wifeygame.battle.skills.basicskills.RacerSkill;
+import ultrapoulet.wifeygame.battle.skills.basicskills.RemSkill;
+import ultrapoulet.wifeygame.battle.skills.basicskills.RobotSkill;
+import ultrapoulet.wifeygame.battle.skills.basicskills.SadistSkill;
+import ultrapoulet.wifeygame.battle.skills.basicskills.SlugabedSkill;
+import ultrapoulet.wifeygame.battle.skills.basicskills.SportsManagerSkill;
+import ultrapoulet.wifeygame.battle.skills.basicskills.SurvivalSkill;
+import ultrapoulet.wifeygame.battle.skills.basicskills.TeacherSkill;
+import ultrapoulet.wifeygame.battle.skills.basicskills.TimeTravelerSkill;
+import ultrapoulet.wifeygame.battle.skills.basicskills.TrapSkill;
+import ultrapoulet.wifeygame.battle.skills.basicskills.TsundereSkill;
+import ultrapoulet.wifeygame.battle.skills.basicskills.VampireSkill;
+import ultrapoulet.wifeygame.battle.skills.basicskills.WitchSkill;
 
 /**
  * Created by John on 7/14/2016.
@@ -147,7 +147,7 @@ public class SkillsEnum {
                 return new RemSkill(owner);
             default:
                 System.out.println("SkillsEnum:getBattleSkill(): Skill not implemented: " + this.skillName);
-                return new AbsSkill(owner);
+                return null;
         }
     }
 

@@ -7,7 +7,7 @@ import ultrapoulet.wifeygame.battle.BattleCharacter;
 /**
  * Created by John on 7/10/2016.
  */
-public class AbsSkill {
+public abstract class AbsSkill {
 
     //The owner of the skill
     protected BattleCharacter owner;

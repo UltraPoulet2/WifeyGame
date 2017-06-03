@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import ultrapoulet.wifeygame.battle.BattleInfo;
-import ultrapoulet.wifeygame.battle.skills.implementations.PoliceSkill;
 
 /**
  * Created by John on 2/10/2017.
