@@ -30,6 +30,7 @@ public class WifeyCharacter {
     private static final int STAT_INCREASE = 2;
 
     private Weapon weapon;
+    private WeaponSkillsEnum weaponSkill;
 
     private Element attackElement;
     private Element strongElement;
@@ -88,6 +89,8 @@ public class WifeyCharacter {
     public Element getWeakElement() { return this.weakElement; }
 
     public ArrayList<SkillsEnum> getSkills() { return this.skills; }
+
+    public WeaponSkillsEnum getWeaponSkill() { return this.weaponSkill; }
 
     public int getLevel() { return this.level; }
 
@@ -174,6 +177,10 @@ public class WifeyCharacter {
             this.skills.add(skill);
         }
         Collections.sort(this.skills, SkillsEnum.SKILLS_ENUM_COMPARATOR);
+    }
+
+    public void setWeaponSkill(WeaponSkillsEnum skill) {
+        this.weaponSkill = skill;
     }
 
     public void addTransformation(TransformWifey t){

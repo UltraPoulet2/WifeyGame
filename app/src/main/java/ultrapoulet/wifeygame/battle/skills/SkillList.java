@@ -6,6 +6,7 @@ import java.util.List;
 import ultrapoulet.wifeygame.battle.BattleCharacter;
 import ultrapoulet.wifeygame.battle.skills.AbsSkill.Multipliers;
 import ultrapoulet.wifeygame.character.SkillsEnum;
+import ultrapoulet.wifeygame.character.WeaponSkillsEnum;
 
 /**
  * Created by John on 7/11/2016.
@@ -13,11 +14,19 @@ import ultrapoulet.wifeygame.character.SkillsEnum;
 public class SkillList {
 
     private ArrayList<AbsSkill> skills;
+    private AbsWeaponSkill weaponSkill;
 
     public SkillList(ArrayList<SkillsEnum> inSkills, BattleCharacter owner){
+        this(inSkills, null, owner);
+    }
+
+    public SkillList(ArrayList<SkillsEnum> inSkills, WeaponSkillsEnum weaponSkill, BattleCharacter owner){
         skills = new ArrayList<>();
         for(int i = 0; i < inSkills.size(); i++){
             addSkill(inSkills.get(i).getBattleSkill(owner));
+        }
+        if(weaponSkill != null) {
+            setWeaponSkill(weaponSkill.getWeaponBattleSkill(owner));
         }
     }
 
@@ -37,6 +46,10 @@ public class SkillList {
         }
     }
 
+    public void setWeaponSkill(AbsWeaponSkill skill){
+        this.weaponSkill = skill;
+    }
+
     public void giveSkillBonus(double multiplier, Class givingSkill, Class receivingSkill){
         if(!AbsSkill.class.isAssignableFrom(givingSkill) || !AbsSkill.class.isAssignableFrom(receivingSkill)){
             System.out.println("SkillList:giveSkillBonus: input " + givingSkill + " and/or " + receivingSkill + " are not AbsSkills");
@@ -46,6 +59,9 @@ public class SkillList {
             if(skills.get(i).getClass() == receivingSkill){
                 skills.get(i).receiveBonus(multiplier, givingSkill);
             }
+        }
+        if(weaponSkill != null && weaponSkill.getClass() == receivingSkill){
+            weaponSkill.receiveBonus(multiplier, givingSkill);
         }
     }
 
@@ -61,11 +77,17 @@ public class SkillList {
         for(int i = 0; i < skills.size(); i++){
             skills.get(i).setOwner(owner);
         }
+        if(weaponSkill != null) {
+            weaponSkill.setOwner(owner);
+        }
     }
 
     public void startBattle(List<BattleCharacter> party) {
         for(int i = 0; i < skills.size(); i++){
             skills.get(i).startBattle(party);
+        }
+        if(weaponSkill != null) {
+            weaponSkill.startBattle(party);
         }
     }
 
@@ -73,6 +95,9 @@ public class SkillList {
         //Do anything that needs to be done at the start of a wave
         for(int i = 0; i < skills.size(); i++){
             skills.get(i).startWave();
+        }
+        if(weaponSkill != null) {
+            weaponSkill.startWave();
         }
     }
 
@@ -82,6 +107,9 @@ public class SkillList {
         for(int i = 0; i < skills.size(); i++){
             displayDamage += skills.get(i).startRound();
         }
+        if(weaponSkill != null) {
+            displayDamage += weaponSkill.startRound();
+        }
         return displayDamage;
     }
 
@@ -89,6 +117,9 @@ public class SkillList {
         //Do anything that needs to be done at the end of a round
         for(int i = 0; i < skills.size(); i++){
             skills.get(i).endRound();
+        }
+        if(weaponSkill != null) {
+            weaponSkill.endRound();
         }
     }
 
@@ -98,17 +129,26 @@ public class SkillList {
         for(int i = 0; i < skills.size(); i++){
             skills.get(i).endWave(enemy);
         }
+        if(weaponSkill != null) {
+            weaponSkill.endWave(enemy);
+        }
     }
 
     public void resetSkills(){
         for(int i = 0; i < skills.size(); i++){
             skills.get(i).resetValues();
         }
+        if(weaponSkill != null) {
+            weaponSkill.resetValues();
+        }
     }
 
     public void updateParty(List<BattleCharacter> party){
         for(int i = 0; i < skills.size(); i++){
             skills.get(i).updateParty(party);
+        }
+        if(weaponSkill != null) {
+            weaponSkill.updateParty(party);
         }
     }
 
@@ -121,6 +161,9 @@ public class SkillList {
         for(int i = 0; i < skills.size(); i++){
             multiplier *= skills.get(i).physicalAttackPercentage(enemy);
         }
+        if(weaponSkill != null) {
+            multiplier *= weaponSkill.physicalAttackPercentage(enemy);
+        }
         return multiplier;
     }
 
@@ -130,6 +173,9 @@ public class SkillList {
         int hits = 0;
         for(int i = 0; i < skills.size(); i++){
             hits += skills.get(i).getBonusHits();
+        }
+        if(weaponSkill != null) {
+            hits += weaponSkill.getBonusHits();
         }
         return hits;
     }
@@ -143,6 +189,9 @@ public class SkillList {
         for(int i = 0; i < skills.size(); i++){
             multiplier *= skills.get(i).magicalAttackPercentage(enemy);
         }
+        if(weaponSkill != null) {
+            multiplier *= weaponSkill.magicalAttackPercentage(enemy);
+        }
         return multiplier;
     }
 
@@ -155,6 +204,9 @@ public class SkillList {
         for(int i = 0; i < skills.size(); i++){
             multiplier *= skills.get(i).specialAttackPercentage(enemy);
         }
+        if(weaponSkill != null) {
+            multiplier *= weaponSkill.specialAttackPercentage(enemy);
+        }
         return multiplier;
     }
 
@@ -165,6 +217,9 @@ public class SkillList {
         for(int i = 0; i < skills.size(); i++){
             multiplier *= skills.get(i).healPercentage(partyMember);
         }
+        if(weaponSkill != null) {
+            multiplier *= weaponSkill.healPercentage(partyMember);
+        }
         return multiplier;
     }
 
@@ -174,6 +229,9 @@ public class SkillList {
         double resistance = 0.0;
         for(int i = 0; i < skills.size(); i++){
             resistance += skills.get(i).receivePhysicalAttackPercentage(enemy) * (1.0 - resistance);
+        }
+        if(weaponSkill != null) {
+            resistance += weaponSkill.receivePhysicalAttackPercentage(enemy) * (1.0 - resistance);
         }
         double multiplier = 1.0 - resistance;
         if(multiplier <= 0.10){
@@ -189,6 +247,9 @@ public class SkillList {
         for(int i = 0; i < skills.size(); i++){
             resistance += skills.get(i).receiveMagicalAttackPercentage(enemy) * (1.0 - resistance);
         }
+        if(weaponSkill != null) {
+            resistance += weaponSkill.receiveMagicalAttackPercentage(enemy) * (1.0 - resistance);
+        }
         double multiplier = 1.0 - resistance;
         if(multiplier <= 0.10){
             multiplier = 0.10;
@@ -202,6 +263,9 @@ public class SkillList {
         double resistance = 0.0;
         for(int i = 0; i < skills.size(); i++){
             resistance += skills.get(i).receiveSpecialAttackPercentage(enemy) * (1.0 - resistance);
+        }
+        if(weaponSkill != null) {
+            resistance += weaponSkill.receiveSpecialAttackPercentage(enemy) * (1.0 - resistance);
         }
         double multiplier = 1.0 - resistance;
         if(multiplier <= 0.10){
@@ -217,6 +281,9 @@ public class SkillList {
         for(int i = 0; i < skills.size(); i++){
             multiplier *= skills.get(i).receiveHealPercentage(partyMember);
         }
+        if(weaponSkill != null) {
+            multiplier *= weaponSkill.receiveHealPercentage(partyMember);
+        }
         return multiplier;
     }
 
@@ -226,12 +293,18 @@ public class SkillList {
         for(int i = 0; i < skills.size(); i++){
             skills.get(i).onDamageDealt(damage);
         }
+        if(weaponSkill != null) {
+            weaponSkill.onDamageDealt(damage);
+        }
     }
 
     public void onEnemyDefeat(BattleCharacter enemy){
         //Do things for when an enemy is defeated
         for(int i = 0; i < skills.size(); i++){
             skills.get(i).onEnemyDefeat(enemy);
+        }
+        if(weaponSkill != null) {
+            weaponSkill.onEnemyDefeat(enemy);
         }
     }
 
@@ -240,12 +313,18 @@ public class SkillList {
         for(int i = 0; i < skills.size(); i++){
             skills.get(i).onDamageReceived(damage);
         }
+        if(weaponSkill != null) {
+            weaponSkill.onDamageReceived(damage);
+        }
     }
 
     public boolean canPreventDeath(){
         boolean returnValue = false;
         for(int i = 0; i < skills.size(); i++){
             returnValue = returnValue || skills.get(i).canPreventDeath();
+        }
+        if(weaponSkill != null) {
+            returnValue = returnValue || weaponSkill.canPreventDeath();
         }
         return returnValue;
     }
@@ -255,6 +334,9 @@ public class SkillList {
         for(int i = 0; i < skills.size(); i++){
             returnValue += skills.get(i).preventDeath();
         }
+        if(weaponSkill != null) {
+            returnValue += weaponSkill.preventDeath();
+        }
         return returnValue;
     }
 
@@ -263,6 +345,9 @@ public class SkillList {
         for(int i = 0; i < skills.size(); i++){
             returnValue += skills.get(i).getBonusExp();
         }
+        if(weaponSkill != null) {
+            returnValue += weaponSkill.getBonusExp();
+        }
         return returnValue;
     }
 
@@ -270,6 +355,9 @@ public class SkillList {
         int returnValue = 0;
         for(int i = 0; i < skills.size(); i++){
             returnValue += skills.get(i).getBonusGold();
+        }
+        if(weaponSkill != null) {
+            returnValue += weaponSkill.getBonusGold();
         }
         return returnValue;
     }
@@ -280,6 +368,9 @@ public class SkillList {
                 return true;
             }
         }
+        if(weaponSkill != null && weaponSkill.getClass() == skillClass){
+            return true;
+        }
         return false;
     }
 
@@ -288,6 +379,15 @@ public class SkillList {
         Multipliers returnValue = new Multipliers();
         for(int i = 0; i < skills.size(); i++){
             Multipliers skillMult = skills.get(i).getMultipliers(enemy);
+            returnValue.setPhysAtk(returnValue.getPhysAtk() * skillMult.getPhysAtk());
+            returnValue.setMagAtk(returnValue.getMagAtk() * skillMult.getMagAtk());
+            returnValue.setSpecAtk(returnValue.getSpecAtk() * skillMult.getSpecAtk());
+            returnValue.setPhysDef(returnValue.getPhysDef() + (skillMult.getPhysDef() * (1.0 - returnValue.getPhysDef())));
+            returnValue.setMagDef(returnValue.getMagDef() + (skillMult.getMagDef() * (1.0 - returnValue.getMagDef())));
+            returnValue.setSpecDef(returnValue.getSpecDef() + (skillMult.getSpecDef() * (1.0 - returnValue.getSpecDef())));
+        }
+        if(weaponSkill != null){
+            Multipliers skillMult = weaponSkill.getMultipliers(enemy);
             returnValue.setPhysAtk(returnValue.getPhysAtk() * skillMult.getPhysAtk());
             returnValue.setMagAtk(returnValue.getMagAtk() * skillMult.getMagAtk());
             returnValue.setSpecAtk(returnValue.getSpecAtk() * skillMult.getSpecAtk());

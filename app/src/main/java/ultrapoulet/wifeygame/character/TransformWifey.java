@@ -19,6 +19,7 @@ public class TransformWifey {
     private ArrayList<SkillsEnum> addSkills;
     private ArrayList<SkillsEnum> removeSkills;
     private Weapon weapon;
+    private WeaponSkillsEnum weaponSkill;
     private Element attackElement;
     private Element strongElement;
     private Element weakElement;
@@ -62,6 +63,8 @@ public class TransformWifey {
 
     public ArrayList<SkillsEnum> getRemoveSkills() { return this.removeSkills; }
 
+    public WeaponSkillsEnum getWeaponSkill() { return this.weaponSkill; }
+
     public void setName(String name){
         this.name = name;
     }
@@ -85,6 +88,8 @@ public class TransformWifey {
     public void setStrongElement(Element element) { this.strongElement = element; }
 
     public void setWeakElement(Element element) { this.weakElement = element; }
+
+    public void setWeaponSkill(WeaponSkillsEnum weaponSkill) { this.weaponSkill = weaponSkill; }
 
     public void addSkill(SkillsEnum skill) {
         if (!this.addSkills.contains(skill)) {

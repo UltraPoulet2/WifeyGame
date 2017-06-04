@@ -17,30 +17,21 @@ public class KokoRoseWeaponSkill extends AbsWeaponSkill {
 
     private class CharacterStatus{
         public boolean attacked;
-        public double multiplier = 1.0;
+        public double multiplier = 0.0;
     }
     private Map<BattleCharacter, CharacterStatus> damageMultipliers = new HashMap<>();
 
     public KokoRoseWeaponSkill(BattleCharacter owner){
         super(owner);
         this.skillName = "Koko's Roses";
+        System.out.println("I got made!");
     }
-
-    //@Override
-    /*
-    public void startWave() {
-        for(CharacterStatus : damageMultipliers.keySet()) {
-            multiplier = startMultiplier;
-            attackUsed = false;
-        }
-    }
-    */
 
     @Override
     public int startRound() {
         for(CharacterStatus status : damageMultipliers.values()) {
-            if (status.attacked && status.multiplier > minDefense) {
-                status.multiplier -= perAttack;
+            if (status.attacked && status.multiplier < minDefense) {
+                status.multiplier += perAttack;
             }
             status.attacked = false;
         }
@@ -48,6 +39,7 @@ public class KokoRoseWeaponSkill extends AbsWeaponSkill {
     }
 
     private void attackCharacter(BattleCharacter enemy){
+        System.out.println("Attacking enemy");
         CharacterStatus status = damageMultipliers.get(enemy);
         if(status == null){
             status = new CharacterStatus();
@@ -76,7 +68,7 @@ public class KokoRoseWeaponSkill extends AbsWeaponSkill {
 
     private double getDefense(BattleCharacter enemy){
         CharacterStatus status = damageMultipliers.get(enemy);
-        return (status == null) ? 1.0 : status.multiplier;
+        return (status == null) ? 0.0 : status.multiplier;
     }
 
     @Override

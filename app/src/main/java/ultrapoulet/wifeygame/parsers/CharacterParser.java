@@ -9,6 +9,7 @@ import ultrapoulet.wifeygame.character.Element;
 import ultrapoulet.wifeygame.character.SkillsEnum;
 import ultrapoulet.wifeygame.character.TransformWifey;
 import ultrapoulet.wifeygame.character.Weapon;
+import ultrapoulet.wifeygame.character.WeaponSkillsEnum;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
 import ultrapoulet.wifeygame.gamestate.Characters;
 
@@ -24,6 +25,7 @@ public class CharacterParser extends DefaultHandler{
     private boolean bStrength;
     private boolean bMagic;
     private boolean bWeapon;
+    private boolean bWeaponSkill;
     private boolean bSkill;
 
     private boolean bTransformSec;
@@ -82,6 +84,9 @@ public class CharacterParser extends DefaultHandler{
         }
         else if(qName.equalsIgnoreCase("weapon")){
             bWeapon = true;
+        }
+        else if(qName.equalsIgnoreCase("weaponSkill")){
+            bWeaponSkill = true;
         }
         else if(qName.equalsIgnoreCase("characters")){
             //Do nothing.
@@ -199,13 +204,27 @@ public class CharacterParser extends DefaultHandler{
                 }
                 bMagic = false;
             } else if (bWeapon) {
-                if(!bTransformSec) {
+                if (!bTransformSec) {
                     charBuilder.setWeapon(Weapon.getWeapon(temp));
-                }
-                else {
+                } else {
                     transformBuilder.setWeapon(Weapon.getWeapon(temp));
                 }
                 bWeapon = false;
+            } else if (bWeaponSkill) {
+                WeaponSkillsEnum skill = WeaponSkillsEnum.getSkill(temp);
+                if (skill == null) {
+                    System.out.println("CharacterParser:charcters(): Could not find skill: " + temp);
+                    error = true;
+                }
+                else {
+                    if(!bTransformSec) {
+                        charBuilder.setWeaponSkill(skill);
+                    }
+                    else {
+                        transformBuilder.setWeaponSkill(skill);
+                    }
+                }
+                bWeaponSkill = false;
             } else if (bSkill) {
                 SkillsEnum skill = SkillsEnum.getSkill(temp);
                 if (skill == null) {
