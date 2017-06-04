@@ -134,7 +134,7 @@ public class BattleResultScreen extends Screen{
         }
         playerLevelUp  = PlayerInfo.addExperience(baseExp + bonusExp);
         List<WifeyCharacter> wifeyList = Party.getParty(party.size());
-        for(int i = 0; i < wifeyList.size(); i++){
+        for(int i = 0; i < party.size(); i++){
             //This will be replaced with a boolean list later
             wifeyLevelUp[i] = wifeyList.get(i).addExperience(baseExp + bonusExp);
         }
