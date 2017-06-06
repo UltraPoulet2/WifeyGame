@@ -73,6 +73,10 @@ public class SkillList {
         return skills.size();
     }
 
+    public AbsWeaponSkill getWeaponSkill(){
+        return weaponSkill;
+    }
+
     public void setOwner(BattleCharacter owner){
         for(int i = 0; i < skills.size(); i++){
             skills.get(i).setOwner(owner);

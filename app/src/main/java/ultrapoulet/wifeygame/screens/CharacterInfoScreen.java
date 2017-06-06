@@ -317,7 +317,12 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
         //Draw image for weapon category
 
         //Draw string for weapon name
-        g.drawString(displayWeapon.getWeaponType(), WEAPON_X, MAX_WEAPON_Y, weaponPaint, MAX_WEAPON_SIZE, MAX_WEAPON_FONT);
+        if(displayChar.getWeaponSkill() != null){
+            g.drawString(displayChar.getWeaponSkill().getSkillName(), WEAPON_X, MAX_WEAPON_Y, weaponPaint, MAX_WEAPON_SIZE, MAX_WEAPON_FONT);
+        }
+        else {
+            g.drawString(displayWeapon.getWeaponType(), WEAPON_X, MAX_WEAPON_Y, weaponPaint, MAX_WEAPON_SIZE, MAX_WEAPON_FONT);
+        }
         //Draw image for number hits
         g.drawString(String.valueOf(displayWeapon.getNumHits()), HITS_X, HITS_Y, hitsPaint);
 
@@ -339,6 +344,13 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
     protected void drawDescription(Graphics g){
         if(displayText != -1 && displaySkills.size() > displayText){
             String desc = displaySkills.get(displayText).getSkillDesc();
+            g.drawMultiLineString(desc, SKILLS_DESC_X, SKILLS_DESC_Y, SKILLS_DESC_WIDTH, descPaint);
+        }
+        else if(displayUnique){
+            //Do nothing
+        }
+        else if(displayWeaponSkill && displayChar.getWeaponSkill() != null){
+            String desc = displayChar.getWeaponSkill().getSkillDesc();
             g.drawMultiLineString(desc, SKILLS_DESC_X, SKILLS_DESC_Y, SKILLS_DESC_WIDTH, descPaint);
         }
     }
