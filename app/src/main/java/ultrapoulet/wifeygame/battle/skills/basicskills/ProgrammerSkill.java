@@ -1,5 +1,8 @@
 package ultrapoulet.wifeygame.battle.skills.basicskills;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import ultrapoulet.wifeygame.battle.BattleCharacter;
 import ultrapoulet.wifeygame.battle.skills.AbsSkill;
 
@@ -13,59 +16,73 @@ public class ProgrammerSkill extends AbsSkill {
         this.skillName = "Programmer";
     }
 
-    private double multiplier;
-    private double perRound = 0.75;
+    private double perAttack = 0.5;
 
-    private boolean attackedRobot = false;
+    private class CharacterStatus{
+        public boolean attackedRobot;
+        public double multiplier = 1.0;
+    }
+    private Map<BattleCharacter, CharacterStatus> damageMultipliers = new HashMap<>();
 
     @Override
-    public void startWave() {
-        multiplier = 1;
+    public int startRound() {
+        for(CharacterStatus status : damageMultipliers.values()) {
+            if (status.attackedRobot) {
+                status.multiplier += perAttack;
+            }
+            status.attackedRobot = false;
+        }
+        return 0;
     }
 
-    @Override
-    public int startRound(){
-        attackedRobot = false;
-        return 0;
+    private void attackCharacter(BattleCharacter enemy) {
+        if(!enemy.hasSkill(RobotSkill.class)){
+            return;
+        }
+        CharacterStatus status = damageMultipliers.get(enemy);
+        if(status == null){
+            status = new CharacterStatus();
+            damageMultipliers.put(enemy, status);
+        }
+        status.attackedRobot = true;
+    }
+
+    private double getDamageMultiplier(BattleCharacter enemy) {
+        if(!enemy.hasSkill(RobotSkill.class)){
+            return 1.0;
+        }
+        else {
+            CharacterStatus status = damageMultipliers.get(enemy);
+            if(status == null) {
+                return 1.0;
+            }
+            else {
+                return status.multiplier;
+            }
+        }
     }
 
     @Override
     public double physicalAttackPercentage(BattleCharacter enemy) {
-        if(enemy.hasSkill(RobotSkill.class)) {
-            attackedRobot = true;
-            return multiplier;
-        }
-        return 1;
+        attackCharacter(enemy);
+        return getDamageMultiplier(enemy);
     }
 
     @Override
     public double magicalAttackPercentage(BattleCharacter enemy) {
-        if(enemy.hasSkill(RobotSkill.class)) {
-            attackedRobot = true;
-            return multiplier;
-        }
-        return 1;
+        attackCharacter(enemy);
+        return getDamageMultiplier(enemy);
     }
 
     @Override
     public double specialAttackPercentage(BattleCharacter enemy) {
-        if(enemy.hasSkill(RobotSkill.class)) {
-            attackedRobot = true;
-            return multiplier;
-        }
-        return 1;
-    }
-
-    @Override
-    public void endRound() {
-        if(attackedRobot){
-            multiplier += perRound;
-        }
+        attackCharacter(enemy);
+        return getDamageMultiplier(enemy);
     }
 
     @Override
     public Multipliers getMultipliers(BattleCharacter enemy) {
-        double mult = enemy.hasSkill(RobotSkill.class) ? multiplier : 1.0;
+        double mult = getDamageMultiplier(enemy);
         Multipliers returnValue = new Multipliers();
         returnValue.setPhysAtk(mult);
         returnValue.setMagAtk(mult);
@@ -76,9 +93,9 @@ public class ProgrammerSkill extends AbsSkill {
     @Override
     public String getDescription(BattleCharacter enemy) {
         StringBuilder desc = new StringBuilder();
-        double mult = enemy.hasSkill(RobotSkill.class) ? multiplier : 1.0;
+        double mult = getDamageMultiplier(enemy);
         desc.append("Attack Multiplier: " + String.format("%1$.2f", mult) + "x\n\n");
-        desc.append("Increases damage dealt multiplier by 0.75x each time this wifey attacks a Robot. Resets at the start of the round.");
+        desc.append("Increases damage dealt multiplier by 0.5x to a Robot for each round that it has been attacked.");
         return desc.toString();
     }
 }

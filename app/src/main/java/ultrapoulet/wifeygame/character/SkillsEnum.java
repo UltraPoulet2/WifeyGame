@@ -183,7 +183,7 @@ public class SkillsEnum {
         skillsList.put("POLICE", new SkillsEnum("Police", "Gives bonus gold by defeating an enemy with a criminal skill."));
         skillsList.put("PRAVDA", new SkillsEnum("Pravda", "Increases damage dealt multiplier by 1.00x for each other Pravda wifey."));
         skillsList.put("PRAVDAPRES", new SkillsEnum("Pravda President", "Increases damage dealt multiplier by 2.00x for each other Pravda wifey."));
-        skillsList.put("PROGRAMMER", new SkillsEnum("Programmer", "Increases damage dealt multiplier by 0.75x each time this wifey attacks a Robot. Resets at the start of the round."));
+        skillsList.put("PROGRAMMER", new SkillsEnum("Programmer", "Increases damage dealt multiplier by 0.5x to a Robot for each round that it has been attacked."));
         skillsList.put("PROTAGONIST", new SkillsEnum("Protagonist", "When this wifey suffers lethal damage the first time, prevent the death and heal self."));
         skillsList.put("RACER", new SkillsEnum("Racer", "Multiplies damage dealt by 4.00x at the start of a wave. Multiplier decreases by 0.50x for each turn the wave lasts, to a minimum of 0.50x."));
         skillsList.put("ROBOT", new SkillsEnum("Robot", "Multiplies physical damage taken by 0.80x. Multiplies magical and special damage taken from WATER sources by 1.50x."));

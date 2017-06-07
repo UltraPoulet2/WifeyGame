@@ -24,7 +24,6 @@ public class KokoRoseWeaponSkill extends AbsWeaponSkill {
     public KokoRoseWeaponSkill(BattleCharacter owner){
         super(owner);
         this.skillName = "Koko's Roses";
-        System.out.println("I got made!");
     }
 
     @Override
@@ -39,7 +38,6 @@ public class KokoRoseWeaponSkill extends AbsWeaponSkill {
     }
 
     private void attackCharacter(BattleCharacter enemy){
-        System.out.println("Attacking enemy");
         CharacterStatus status = damageMultipliers.get(enemy);
         if(status == null){
             status = new CharacterStatus();
