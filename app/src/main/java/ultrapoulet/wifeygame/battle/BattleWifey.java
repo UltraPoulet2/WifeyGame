@@ -36,7 +36,7 @@ public class BattleWifey extends BattleCharacter{
         this.strength = input.getStrength();
         this.magic = input.getMagic();
         this.image = input.getImage(g);
-        this.skills = new SkillList(input.getSkills(), input.getWeaponSkill(), this);
+        this.skills = new SkillList(input.getSkills(), input.getWeaponSkill(), input.getUniqueSkill(), this);
         this.attackElement = input.getAttackElement();
         this.strongElement = input.getStrongElement();
         this.weakElement = input.getWeakElement();

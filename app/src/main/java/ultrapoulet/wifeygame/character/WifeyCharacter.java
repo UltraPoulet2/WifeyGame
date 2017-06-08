@@ -31,6 +31,7 @@ public class WifeyCharacter {
 
     private Weapon weapon;
     private WeaponSkillsEnum weaponSkill;
+    private UniqueSkillsEnum uniqueSkill;
 
     private Element attackElement;
     private Element strongElement;
@@ -91,6 +92,8 @@ public class WifeyCharacter {
     public ArrayList<SkillsEnum> getSkills() { return this.skills; }
 
     public WeaponSkillsEnum getWeaponSkill() { return this.weaponSkill; }
+
+    public UniqueSkillsEnum getUniqueSkill() { return this.uniqueSkill; }
 
     public int getLevel() { return this.level; }
 
@@ -181,6 +184,10 @@ public class WifeyCharacter {
 
     public void setWeaponSkill(WeaponSkillsEnum skill) {
         this.weaponSkill = skill;
+    }
+
+    public void setUniqueSkill(UniqueSkillsEnum skill) {
+        this.uniqueSkill = skill;
     }
 
     public void addTransformation(TransformWifey t){

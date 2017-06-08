@@ -13,16 +13,8 @@ import ultrapoulet.wifeygame.battle.skills.weaponskills.KokoRoseWeaponSkill;
 
 public class WeaponSkillsEnum {
 
-
     private String skillName;
     private String skillDesc;
-
-    public static Comparator<WeaponSkillsEnum> SKILLS_ENUM_COMPARATOR = new Comparator<WeaponSkillsEnum>(){
-        @Override
-        public int compare(WeaponSkillsEnum a, WeaponSkillsEnum b) {
-            return a.getSkillName().compareTo(b.getSkillName());
-        }
-    };
 
     private WeaponSkillsEnum(String skillName, String skillDesc){
         this.skillName = skillName;

@@ -6,6 +6,7 @@ import java.util.List;
 import ultrapoulet.wifeygame.battle.BattleCharacter;
 import ultrapoulet.wifeygame.battle.skills.AbsSkill.Multipliers;
 import ultrapoulet.wifeygame.character.SkillsEnum;
+import ultrapoulet.wifeygame.character.UniqueSkillsEnum;
 import ultrapoulet.wifeygame.character.WeaponSkillsEnum;
 
 /**
@@ -15,18 +16,22 @@ public class SkillList {
 
     private ArrayList<AbsSkill> skills;
     private AbsWeaponSkill weaponSkill;
+    private AbsUniqueSkill uniqueSkill;
 
     public SkillList(ArrayList<SkillsEnum> inSkills, BattleCharacter owner){
-        this(inSkills, null, owner);
+        this(inSkills, null, null, owner);
     }
 
-    public SkillList(ArrayList<SkillsEnum> inSkills, WeaponSkillsEnum weaponSkill, BattleCharacter owner){
+    public SkillList(ArrayList<SkillsEnum> inSkills, WeaponSkillsEnum weaponSkill, UniqueSkillsEnum uniqueSkill, BattleCharacter owner){
         skills = new ArrayList<>();
         for(int i = 0; i < inSkills.size(); i++){
             addSkill(inSkills.get(i).getBattleSkill(owner));
         }
         if(weaponSkill != null) {
             setWeaponSkill(weaponSkill.getWeaponBattleSkill(owner));
+        }
+        if(uniqueSkill != null){
+            setUniqueSkill(uniqueSkill.getUniqueBattleSkill(owner));
         }
     }
 
@@ -50,6 +55,10 @@ public class SkillList {
         this.weaponSkill = skill;
     }
 
+    public void setUniqueSkill(AbsUniqueSkill skill){
+        this.uniqueSkill = skill;
+    }
+
     public void giveSkillBonus(double multiplier, Class givingSkill, Class receivingSkill){
         if(!AbsSkill.class.isAssignableFrom(givingSkill) || !AbsSkill.class.isAssignableFrom(receivingSkill)){
             System.out.println("SkillList:giveSkillBonus: input " + givingSkill + " and/or " + receivingSkill + " are not AbsSkills");
@@ -62,6 +71,9 @@ public class SkillList {
         }
         if(weaponSkill != null && weaponSkill.getClass() == receivingSkill){
             weaponSkill.receiveBonus(multiplier, givingSkill);
+        }
+        if(uniqueSkill != null && uniqueSkill.getClass() == receivingSkill){
+            uniqueSkill.receiveBonus(multiplier, givingSkill);
         }
     }
 
@@ -77,12 +89,19 @@ public class SkillList {
         return weaponSkill;
     }
 
+    public AbsUniqueSkill getUniqueSkill(){
+        return uniqueSkill;
+    }
+
     public void setOwner(BattleCharacter owner){
         for(int i = 0; i < skills.size(); i++){
             skills.get(i).setOwner(owner);
         }
         if(weaponSkill != null) {
             weaponSkill.setOwner(owner);
+        }
+        if(uniqueSkill != null) {
+            uniqueSkill.setOwner(owner);
         }
     }
 
@@ -93,6 +112,9 @@ public class SkillList {
         if(weaponSkill != null) {
             weaponSkill.startBattle(party);
         }
+        if(uniqueSkill != null) {
+            uniqueSkill.startBattle(party);
+        }
     }
 
     public void startWave(){
@@ -102,6 +124,9 @@ public class SkillList {
         }
         if(weaponSkill != null) {
             weaponSkill.startWave();
+        }
+        if(uniqueSkill != null) {
+            uniqueSkill.startWave();
         }
     }
 
@@ -114,6 +139,9 @@ public class SkillList {
         if(weaponSkill != null) {
             displayDamage += weaponSkill.startRound();
         }
+        if(uniqueSkill != null) {
+            displayDamage += uniqueSkill.startRound();
+        }
         return displayDamage;
     }
 
@@ -124,6 +152,9 @@ public class SkillList {
         }
         if(weaponSkill != null) {
             weaponSkill.endRound();
+        }
+        if(uniqueSkill != null) {
+            uniqueSkill.endRound();
         }
     }
 
@@ -136,6 +167,9 @@ public class SkillList {
         if(weaponSkill != null) {
             weaponSkill.endWave(enemy);
         }
+        if(uniqueSkill != null) {
+            uniqueSkill.endWave(enemy);
+        }
     }
 
     public void resetSkills(){
@@ -145,6 +179,9 @@ public class SkillList {
         if(weaponSkill != null) {
             weaponSkill.resetValues();
         }
+        if(uniqueSkill != null) {
+            uniqueSkill.resetValues();
+        }
     }
 
     public void updateParty(List<BattleCharacter> party){
@@ -153,6 +190,9 @@ public class SkillList {
         }
         if(weaponSkill != null) {
             weaponSkill.updateParty(party);
+        }
+        if(uniqueSkill != null) {
+            uniqueSkill.updateParty(party);
         }
     }
 
@@ -168,6 +208,9 @@ public class SkillList {
         if(weaponSkill != null) {
             multiplier *= weaponSkill.physicalAttackPercentage(enemy);
         }
+        if(uniqueSkill != null) {
+            multiplier += uniqueSkill.physicalAttackPercentage(enemy);
+        }
         return multiplier;
     }
 
@@ -180,6 +223,9 @@ public class SkillList {
         }
         if(weaponSkill != null) {
             hits += weaponSkill.getBonusHits();
+        }
+        if(uniqueSkill != null) {
+            hits += uniqueSkill.getBonusHits();
         }
         return hits;
     }
@@ -196,6 +242,9 @@ public class SkillList {
         if(weaponSkill != null) {
             multiplier *= weaponSkill.magicalAttackPercentage(enemy);
         }
+        if(uniqueSkill != null) {
+            multiplier += uniqueSkill.magicalAttackPercentage(enemy);
+        }
         return multiplier;
     }
 
@@ -211,6 +260,9 @@ public class SkillList {
         if(weaponSkill != null) {
             multiplier *= weaponSkill.specialAttackPercentage(enemy);
         }
+        if(uniqueSkill != null) {
+            multiplier *= uniqueSkill.specialAttackPercentage(enemy);
+        }
         return multiplier;
     }
 
@@ -224,6 +276,9 @@ public class SkillList {
         if(weaponSkill != null) {
             multiplier *= weaponSkill.healPercentage(partyMember);
         }
+        if(uniqueSkill != null) {
+            multiplier *= uniqueSkill.healPercentage(partyMember);
+        }
         return multiplier;
     }
 
@@ -236,6 +291,9 @@ public class SkillList {
         }
         if(weaponSkill != null) {
             resistance += weaponSkill.receivePhysicalAttackPercentage(enemy) * (1.0 - resistance);
+        }
+        if(uniqueSkill != null) {
+            resistance += uniqueSkill.receivePhysicalAttackPercentage(enemy) * (1.0 - resistance);
         }
         double multiplier = 1.0 - resistance;
         if(multiplier <= 0.10){
@@ -254,6 +312,9 @@ public class SkillList {
         if(weaponSkill != null) {
             resistance += weaponSkill.receiveMagicalAttackPercentage(enemy) * (1.0 - resistance);
         }
+        if(uniqueSkill != null) {
+            resistance += uniqueSkill.receiveMagicalAttackPercentage(enemy) * (1.0 - resistance);
+        }
         double multiplier = 1.0 - resistance;
         if(multiplier <= 0.10){
             multiplier = 0.10;
@@ -270,6 +331,9 @@ public class SkillList {
         }
         if(weaponSkill != null) {
             resistance += weaponSkill.receiveSpecialAttackPercentage(enemy) * (1.0 - resistance);
+        }
+        if(uniqueSkill != null) {
+            resistance += uniqueSkill.receiveSpecialAttackPercentage(enemy) * (1.0 - resistance);
         }
         double multiplier = 1.0 - resistance;
         if(multiplier <= 0.10){
@@ -288,6 +352,9 @@ public class SkillList {
         if(weaponSkill != null) {
             multiplier *= weaponSkill.receiveHealPercentage(partyMember);
         }
+        if(uniqueSkill != null) {
+            multiplier *= uniqueSkill.receiveHealPercentage(partyMember);
+        }
         return multiplier;
     }
 
@@ -300,6 +367,9 @@ public class SkillList {
         if(weaponSkill != null) {
             weaponSkill.onDamageDealt(damage);
         }
+        if(uniqueSkill != null) {
+            uniqueSkill.onDamageDealt(damage);
+        }
     }
 
     public void onEnemyDefeat(BattleCharacter enemy){
@@ -309,6 +379,9 @@ public class SkillList {
         }
         if(weaponSkill != null) {
             weaponSkill.onEnemyDefeat(enemy);
+        }
+        if(uniqueSkill != null) {
+            uniqueSkill.onEnemyDefeat(enemy);
         }
     }
 
@@ -320,6 +393,9 @@ public class SkillList {
         if(weaponSkill != null) {
             weaponSkill.onDamageReceived(damage);
         }
+        if(uniqueSkill != null) {
+            uniqueSkill.onDamageReceived(damage);
+        }
     }
 
     public boolean canPreventDeath(){
@@ -329,6 +405,9 @@ public class SkillList {
         }
         if(weaponSkill != null) {
             returnValue = returnValue || weaponSkill.canPreventDeath();
+        }
+        if(uniqueSkill != null) {
+            returnValue = returnValue || uniqueSkill.canPreventDeath();
         }
         return returnValue;
     }
@@ -341,6 +420,9 @@ public class SkillList {
         if(weaponSkill != null) {
             returnValue += weaponSkill.preventDeath();
         }
+        if(uniqueSkill != null) {
+            returnValue += uniqueSkill.preventDeath();
+        }
         return returnValue;
     }
 
@@ -351,6 +433,9 @@ public class SkillList {
         }
         if(weaponSkill != null) {
             returnValue += weaponSkill.getBonusExp();
+        }
+        if(uniqueSkill != null) {
+            returnValue += uniqueSkill.getBonusExp();
         }
         return returnValue;
     }
@@ -363,6 +448,9 @@ public class SkillList {
         if(weaponSkill != null) {
             returnValue += weaponSkill.getBonusGold();
         }
+        if(uniqueSkill != null) {
+            returnValue += uniqueSkill.getBonusGold();
+        }
         return returnValue;
     }
 
@@ -373,6 +461,9 @@ public class SkillList {
             }
         }
         if(weaponSkill != null && weaponSkill.getClass() == skillClass){
+            return true;
+        }
+        if(uniqueSkill != null && uniqueSkill.getClass() == skillClass) {
             return true;
         }
         return false;
@@ -392,6 +483,15 @@ public class SkillList {
         }
         if(weaponSkill != null){
             Multipliers skillMult = weaponSkill.getMultipliers(enemy);
+            returnValue.setPhysAtk(returnValue.getPhysAtk() * skillMult.getPhysAtk());
+            returnValue.setMagAtk(returnValue.getMagAtk() * skillMult.getMagAtk());
+            returnValue.setSpecAtk(returnValue.getSpecAtk() * skillMult.getSpecAtk());
+            returnValue.setPhysDef(returnValue.getPhysDef() + (skillMult.getPhysDef() * (1.0 - returnValue.getPhysDef())));
+            returnValue.setMagDef(returnValue.getMagDef() + (skillMult.getMagDef() * (1.0 - returnValue.getMagDef())));
+            returnValue.setSpecDef(returnValue.getSpecDef() + (skillMult.getSpecDef() * (1.0 - returnValue.getSpecDef())));
+        }
+        if(uniqueSkill != null) {
+            Multipliers skillMult = uniqueSkill.getMultipliers(enemy);
             returnValue.setPhysAtk(returnValue.getPhysAtk() * skillMult.getPhysAtk());
             returnValue.setMagAtk(returnValue.getMagAtk() * skillMult.getMagAtk());
             returnValue.setSpecAtk(returnValue.getSpecAtk() * skillMult.getSpecAtk());
