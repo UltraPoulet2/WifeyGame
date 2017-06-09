@@ -8,6 +8,7 @@ import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.wifeygame.character.Element;
 import ultrapoulet.wifeygame.character.SkillsEnum;
 import ultrapoulet.wifeygame.character.TransformWifey;
+import ultrapoulet.wifeygame.character.UniqueSkillsEnum;
 import ultrapoulet.wifeygame.character.Weapon;
 import ultrapoulet.wifeygame.character.WeaponSkillsEnum;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
@@ -26,6 +27,7 @@ public class CharacterParser extends DefaultHandler{
     private boolean bMagic;
     private boolean bWeapon;
     private boolean bWeaponSkill;
+    private boolean bUniqueSkill;
     private boolean bSkill;
 
     private boolean bTransformSec;
@@ -87,6 +89,9 @@ public class CharacterParser extends DefaultHandler{
         }
         else if(qName.equalsIgnoreCase("weaponSkill")){
             bWeaponSkill = true;
+        }
+        else if(qName.equalsIgnoreCase("uniqueSkill")){
+            bUniqueSkill = true;
         }
         else if(qName.equalsIgnoreCase("characters")){
             //Do nothing.
@@ -213,18 +218,30 @@ public class CharacterParser extends DefaultHandler{
             } else if (bWeaponSkill) {
                 WeaponSkillsEnum skill = WeaponSkillsEnum.getSkill(temp);
                 if (skill == null) {
-                    System.out.println("CharacterParser:charcters(): Could not find skill: " + temp);
+                    System.out.println("CharacterParser:characters(): Could not find skill: " + temp);
                     error = true;
-                }
-                else {
-                    if(!bTransformSec) {
+                } else {
+                    if (!bTransformSec) {
                         charBuilder.setWeaponSkill(skill);
-                    }
-                    else {
+                    } else {
                         transformBuilder.setWeaponSkill(skill);
                     }
                 }
                 bWeaponSkill = false;
+            } else if (bUniqueSkill) {
+                UniqueSkillsEnum skill = UniqueSkillsEnum.getSkill(temp);
+                if(skill == null){
+                    System.out.println("CharacterParser:characters(): Could not find skill: " + temp);
+                    error = true;
+                } else {
+                    if (!bTransformSec){
+                        charBuilder.setUniqueSkill(skill);
+                    }
+                    else {
+                        transformBuilder.setUniqueSkill(skill);
+                    }
+                }
+                bUniqueSkill = false;
             } else if (bSkill) {
                 SkillsEnum skill = SkillsEnum.getSkill(temp);
                 if (skill == null) {

@@ -93,6 +93,9 @@ public abstract class AbsCharacterInfoScreen extends Screen {
     protected static final int MAX_WEAPON_SIZE = 197;
     protected static final int WEAPON_X = 345 + BG_X;
     protected static final int MAX_WEAPON_Y = 495 + BG_Y;
+    //Unique Skills will use same info as Weapon
+    protected static final int UNIQUE_X = 32 + BG_X;
+    protected static final int MAX_UNIQUE_SIZE = 303;
 
     //These will be removed when hits images are added
     protected Paint hitsPaint;

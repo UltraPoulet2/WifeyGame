@@ -137,6 +137,10 @@ public class BattleCharacterInfoScreen extends AbsCharacterInfoScreen {
     }
 
     protected void drawSkills(Graphics g){
+        if(displayChar.getSkills().getUniqueSkill() != null){
+            g.drawString(displayChar.getSkills().getUniqueSkill().getSkillName(), UNIQUE_X, MAX_WEAPON_Y, weaponPaint, MAX_UNIQUE_SIZE, MAX_WEAPON_FONT);
+        }
+
         //Draw image for weapon category
 
         //Draw string for weapon name
@@ -169,8 +173,9 @@ public class BattleCharacterInfoScreen extends AbsCharacterInfoScreen {
             String desc = displayChar.getSkills().get(displayText).getDescription(displayEnemy);
             g.drawMultiLineString(desc, SKILLS_DESC_X, SKILLS_DESC_Y, SKILLS_DESC_WIDTH, descPaint);
         }
-        else if(displayUnique){
-            //Do nothing
+        else if(displayUnique && displayChar.getSkills().getUniqueSkill() != null){
+            String desc = displayChar.getSkills().getUniqueSkill().getDescription(displayEnemy);
+            g.drawMultiLineString(desc, SKILLS_DESC_X, SKILLS_DESC_Y, SKILLS_DESC_WIDTH, descPaint);
         }
         else if(displayWeaponSkill && displayChar.getSkills().getWeaponSkill() != null){
             String desc = displayChar.getSkills().getWeaponSkill().getDescription(displayEnemy);
