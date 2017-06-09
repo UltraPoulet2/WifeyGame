@@ -328,7 +328,6 @@ public class LoadingScreen extends Screen {
             SAXParserFactory factory = SAXParserFactory.newInstance();
             SAXParser saxParser = factory.newSAXParser();
             CharacterParser charParser = new CharacterParser();
-            charParser.setGraphics(game.getGraphics());
             saxParser.parse(in, charParser);
 
             //Temporary testing
