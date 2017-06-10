@@ -18,17 +18,6 @@ import ultrapoulet.wifeygame.gamestate.StoryBattles;
  */
 public class BattleParser extends DefaultHandler {
 
-    private boolean bName = false;
-    private boolean bEnemy = false;
-    private boolean bPartySize = false;
-    private boolean bRequirement = false;
-    private boolean bRValue = false;
-    private boolean bBackground = false;
-    private boolean bEnergy = false;
-    private boolean bDrop = false;
-    private boolean bWifeyDrop = false;
-    private boolean bChanceDrop = false;
-
     private boolean error = false;
 
     private BattleInfo battleBuilder;
@@ -39,6 +28,7 @@ public class BattleParser extends DefaultHandler {
     private int chanceDrop = 0;
 
     private String battleKey;
+    private StringBuffer currentText = new StringBuffer();
 
     @Override
     public void startElement(String uri,
@@ -57,22 +47,21 @@ public class BattleParser extends DefaultHandler {
             areaBuilder = new StoryArea(temp);
         }
         else if(qName.equalsIgnoreCase("battle")){
-            resetValues();
             battleKey = attributes.getValue("key");
             battleBuilder = new BattleInfo();
             battleBuilder.setKey(battleKey);
         }
         else if(qName.equalsIgnoreCase("name")){
-            bName = true;
+            currentText = new StringBuffer();
         }
         else if(qName.equalsIgnoreCase("enemies")){
             //Do nothing, but it's valid
         }
         else if(qName.equalsIgnoreCase("enemy")){
-            bEnemy = true;
+            currentText = new StringBuffer();
         }
         else if(qName.equalsIgnoreCase("partysize")){
-            bPartySize = true;
+            currentText = new StringBuffer();
         }
         else if(qName.equalsIgnoreCase("requirements")){
             //Do nothing, but it's valid
@@ -82,20 +71,19 @@ public class BattleParser extends DefaultHandler {
             reqBuilder = RequirementFactory.getRequirement(attributes.getValue("type"));
             if(reqBuilder == null){
                 System.out.println("BattleParser:startElement(): Invalid Requirement: " + attributes.getValue("type"));
-                bRequirement = false;
             }
             else{
-                bRequirement = true;
+                currentText = new StringBuffer();
             }
         }
         else if(qName.equalsIgnoreCase("value")){
-            bRValue = true;
+            currentText = new StringBuffer();
         }
         else if(qName.equalsIgnoreCase("background")){
-            bBackground = true;
+            currentText = new StringBuffer();
         }
         else if(qName.equalsIgnoreCase("energy")){
-            bEnergy = true;
+            currentText = new StringBuffer();
         }
         else if(qName.equalsIgnoreCase("drops")){
             //Do nothing, valid
@@ -105,10 +93,10 @@ public class BattleParser extends DefaultHandler {
             chanceDrop = 0;
         }
         else if(qName.equalsIgnoreCase("wifey")){
-            bWifeyDrop = true;
+            currentText = new StringBuffer();
         }
         else if(qName.equalsIgnoreCase("chance")){
-            bChanceDrop = true;
+            currentText = new StringBuffer();
         }
         else{
             System.out.println("BattleParser:startElement(): Invalid qName: " + qName + " for key " + battleKey);
@@ -137,7 +125,6 @@ public class BattleParser extends DefaultHandler {
                 battleBuilder.addRequirement(reqBuilder);
             }
             reqBuilder = null;
-            bRequirement = false;
         }
         else if(qName.equalsIgnoreCase("drop")){
             if(wifeyDrop == null || Characters.get(wifeyDrop) == null || chanceDrop <= 0 || chanceDrop > 100){
@@ -147,88 +134,64 @@ public class BattleParser extends DefaultHandler {
                 battleBuilder.addDrop(Characters.get(wifeyDrop), chanceDrop);
             }
         }
+        else if(qName.equalsIgnoreCase("name")){
+            battleBuilder.setName(currentText.toString());
+        }
+        else if(qName.equalsIgnoreCase("enemy")){
+            EnemyCharacter tempEn = Enemies.get(currentText.toString());
+            if(tempEn == null){
+                System.out.println("BattleParser:characters(): BattleEnemy not found: " + currentText.toString());
+                error = true;
+            }
+            else{
+                battleBuilder.addEnemy(tempEn);
+            }
+        }
+        else if(qName.equalsIgnoreCase("partysize")){
+            try{
+                battleBuilder.setPartyMax(Integer.parseInt(currentText.toString()));
+            }
+            catch(NumberFormatException e){
+                System.out.println("BattleParser:characters(): NumberFormatException for key: " + battleKey);
+                error = true;
+            }
+        }
+        else if(qName.equalsIgnoreCase("value")){
+            if(reqBuilder != null){
+                reqBuilder.addValue(currentText.toString());
+            }
+        }
+        else if(qName.equalsIgnoreCase("background")){
+            battleBuilder.setBackground(currentText.toString());
+        }
+        else if(qName.equalsIgnoreCase("energy")){
+            try{
+                battleBuilder.setEnergyRequirement(Integer.parseInt(currentText.toString()));
+            }
+            catch(NumberFormatException e){
+                System.out.println("BattleParser:characters(): NumberFormatException for key: " + battleKey);
+                error = true;
+            }
+        }
+        else if(qName.equalsIgnoreCase("wifey")){
+            wifeyDrop = currentText.toString();
+        }
+        else if(qName.equalsIgnoreCase("chance")){
+            try{
+                chanceDrop = Integer.parseInt(currentText.toString());
+            }
+            catch(NumberFormatException e){
+                System.out.println("BattleParser:characters(): NumberFormatException for key: " + battleKey);
+                error = true;
+            }
+        }
     }
 
     @Override
     public void characters(char ch[],
                            int start,
                            int length) throws SAXException {
-        String temp = new String(ch, start, length);
-        if(bName){
-            battleBuilder.setName(temp);
-            bName = false;
-        }
-        else if(bEnemy){
-            EnemyCharacter tempEn = Enemies.get(temp);
-            if(tempEn == null){
-                System.out.println("BattleParser:characters(): BattleEnemy not found: " + temp);
-                error = true;
-            }
-            else{
-                battleBuilder.addEnemy(tempEn);
-            }
-            bEnemy = false;
-        }
-        else if(bPartySize){
-            try{
-                battleBuilder.setPartyMax(Integer.parseInt(temp));
-                bPartySize = false;
-            }
-            catch(NumberFormatException e){
-                System.out.println("BattleParser:characters(): NumberFormatException for key: " + battleKey);
-                error = true;
-                bPartySize = false;
-            }
-        }
-        else if(bRValue){
-            if(reqBuilder != null){
-                reqBuilder.addValue(temp);
-            }
-            bRValue = false;
-        }
-        else if(bBackground){
-            battleBuilder.setBackground(temp);
-            bBackground = false;
-        }
-        else if(bEnergy){
-            try{
-                battleBuilder.setEnergyRequirement(Integer.parseInt(temp));
-                bEnergy = false;
-            }
-            catch(NumberFormatException e){
-                System.out.println("BattleParser:characters(): NumberFormatException for key: " + battleKey);
-                error = true;
-                bEnergy = false;
-            }
-        }
-        else if(bWifeyDrop){
-            wifeyDrop = temp;
-            bWifeyDrop = false;
-        }
-        else if(bChanceDrop){
-            try{
-                chanceDrop = Integer.parseInt(temp);
-            }
-            catch(NumberFormatException e){
-                System.out.println("BattleParser:characters(): NumberFormatException for key: " + battleKey);
-                error = true;
-            }
-            bChanceDrop = false;
-        }
-    }
-
-    private void resetValues(){
-        error = false;
-        bName = false;
-        bEnemy = false;
-        bRValue = false;
-        bBackground = false;
-        bEnergy = false;
-        bChanceDrop = false;
-        bWifeyDrop = false;
-
-        wifeyDrop = null;
-        chanceDrop = 0;
+        currentText.append(new String(ch, start, length));
     }
 
     private boolean validate(){
