@@ -385,7 +385,6 @@ public class LoadingScreen extends Screen {
             SAXParserFactory factory = SAXParserFactory.newInstance();
             SAXParser saxParser = factory.newSAXParser();
             EnemyParser enemyParser = new EnemyParser();
-            enemyParser.setGraphics(game.getGraphics());
             saxParser.parse(in, enemyParser);
 
             //Temporary testing
