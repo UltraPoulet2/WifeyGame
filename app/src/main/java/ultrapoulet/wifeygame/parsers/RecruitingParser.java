@@ -24,15 +24,13 @@ import ultrapoulet.wifeygame.recruiting.RecruitRequirementWifeyNumber;
 
 public class RecruitingParser extends DefaultHandler {
 
-    private boolean bQuote;
-    private boolean bRequirements;
-    private boolean bRequirement;
-
     private boolean error = false;
 
     private RecruitInfo infoBuilder;
     private RecruitRequirement reqBuilder;
     private WifeyCharacter recruit;
+
+    private StringBuffer currentText = new StringBuffer();
 
     @Override
     public void startElement(String uri,
@@ -44,7 +42,7 @@ public class RecruitingParser extends DefaultHandler {
         }
         else if(qName.equalsIgnoreCase("character")){
             String key = attributes.getValue("key");
-            resetValues();
+            currentText = new StringBuffer();
             if(key != null){
                 recruit = Characters.get(key);
             }
@@ -55,18 +53,17 @@ public class RecruitingParser extends DefaultHandler {
             infoBuilder = new RecruitInfo();
         }
         else if(qName.equalsIgnoreCase("quote")){
-            bQuote = true;
+            currentText = new StringBuffer();
         }
         else if(qName.equalsIgnoreCase("requirements")){
             //Do nothing
         }
         else if(qName.equalsIgnoreCase("requirement")){
-            bRequirement = true;
             reqBuilder = null;
             String type = attributes.getValue("type");
+            currentText = new StringBuffer();
             if(type == null){
                 System.out.println("RecruitingParser:startElement(): No requirement type provided.");
-                bRequirement = false;
                 return;
             }
             switch(type){
@@ -92,7 +89,6 @@ public class RecruitingParser extends DefaultHandler {
                     break;
                 default:
                     System.out.println("RecruitingParser:startElement(): Invalid requirement type: " + type);
-                    bRequirement = false;
                     break;
             }
         }
@@ -107,8 +103,52 @@ public class RecruitingParser extends DefaultHandler {
                 recruit.setRecruitingInfo(infoBuilder);
             }
         }
+        else if(qName.equalsIgnoreCase("quote")){
+            infoBuilder.setQuote(currentText.toString());
+        }
         else if(qName.equalsIgnoreCase("requirement")){
-            if(reqBuilder != null && reqBuilder.validate()){
+            if(reqBuilder == null){
+                return;
+            }
+            if(reqBuilder instanceof RecruitRequirementWifey){
+                WifeyCharacter wifey = Characters.get(currentText.toString());
+                ((RecruitRequirementWifey) reqBuilder).setRequiredWifey(wifey);
+            }
+            else if(reqBuilder instanceof RecruitRequirementWifeyNumber){
+                try{
+                    ((RecruitRequirementWifeyNumber) reqBuilder).setNumber(Integer.parseInt(currentText.toString()));
+                }
+                catch(NumberFormatException e) {
+                    if(recruit != null) {
+                        System.out.println("RecruitingParser:characters(): NumberFormatException for key: " + recruit.getHashKey());
+                    }
+                    else {
+                        System.out.println("RecruitingParser:characters(): NumberFormatException for unknown key.");
+                    }
+                }
+            }
+            else if(reqBuilder instanceof RecruitRequirementBattle){
+                BattleInfo info = StoryBattles.getBattle(currentText.toString());
+                ((RecruitRequirementBattle) reqBuilder).setRequiredBattle(info);
+            }
+            else if(reqBuilder instanceof RecruitRequirementRecruitBattle){
+                BattleInfo info = RecruitBattles.getBattle(currentText.toString());
+                ((RecruitRequirementRecruitBattle) reqBuilder).setRequiredBattle(info);
+            }
+            else if(reqBuilder instanceof RecruitRequirementGold){
+                try{
+                    ((RecruitRequirementGold) reqBuilder).setGoldAmount(Integer.parseInt(currentText.toString()));
+                }
+                catch(NumberFormatException e) {
+                    if(recruit != null) {
+                        System.out.println("RecruitingParser:characters(): NumberFormatException for key: " + recruit.getHashKey());
+                    }
+                    else {
+                        System.out.println("RecruitingParser:characters(): NumberFormatException for unknown key.");
+                    }
+                }
+            }
+            if(reqBuilder.validate()){
                 infoBuilder.addRequirement(reqBuilder);
             }
         }
@@ -118,68 +158,6 @@ public class RecruitingParser extends DefaultHandler {
     public void characters(char ch[],
                            int start,
                            int length) throws SAXException {
-        String temp = new String(ch, start, length);
-        if(bQuote){
-            infoBuilder.setQuote(temp);
-            bQuote = false;
-        }
-        else if(bRequirement){
-            if(reqBuilder == null){
-                bRequirement = false;
-                return;
-            }
-            if(reqBuilder instanceof RecruitRequirementWifey){
-                WifeyCharacter wifey = Characters.get(temp);
-                ((RecruitRequirementWifey) reqBuilder).setRequiredWifey(wifey);
-                bRequirement = false;
-            }
-            else if(reqBuilder instanceof RecruitRequirementWifeyNumber){
-                try{
-                    ((RecruitRequirementWifeyNumber) reqBuilder).setNumber(Integer.parseInt(temp));
-                }
-                catch(NumberFormatException e) {
-                    if(recruit != null) {
-                        System.out.println("RecruitingParser:characters(): NumberFormatException for key: " + recruit.getHashKey());
-                    }
-                    else {
-                        System.out.println("RecruitingParser:characters(): NumberFormatException for unknown key.");
-                    }
-                }
-                bRequirement = false;
-            }
-            else if(reqBuilder instanceof RecruitRequirementBattle){
-                BattleInfo info = StoryBattles.getBattle(temp);
-                ((RecruitRequirementBattle) reqBuilder).setRequiredBattle(info);
-                bRequirement = false;
-            }
-            else if(reqBuilder instanceof RecruitRequirementRecruitBattle){
-                BattleInfo info = RecruitBattles.getBattle(temp);
-                ((RecruitRequirementRecruitBattle) reqBuilder).setRequiredBattle(info);
-                bRequirement = false;
-            }
-            else if(reqBuilder instanceof RecruitRequirementGold){
-                try{
-                    ((RecruitRequirementGold) reqBuilder).setGoldAmount(Integer.parseInt(temp));
-                }
-                catch(NumberFormatException e) {
-                    if(recruit != null) {
-                        System.out.println("RecruitingParser:characters(): NumberFormatException for key: " + recruit.getHashKey());
-                    }
-                    else {
-                        System.out.println("RecruitingParser:characters(): NumberFormatException for unknown key.");
-                    }
-                }
-                bRequirement = false;
-            }
-        }
-    }
-
-    private void resetValues(){
-        infoBuilder = null;
-        recruit = null;
-        bQuote = false;
-        bRequirements = false;
-        bRequirement = false;
-        error = false;
+        currentText.append(new String(ch, start, length));
     }
 }
