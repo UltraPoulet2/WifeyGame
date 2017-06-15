@@ -58,8 +58,8 @@ public abstract class AbsCharacterInfoScreen extends Screen {
     protected TextPaint descPaint;
 
     protected int displayText = -1;
-    protected boolean displayUnique = false;
-    protected boolean displayWeaponSkill = false;
+    protected boolean bDisplayUnique = false;
+    protected boolean bDisplayWeaponSkill = false;
 
     protected ButtonList basicButtonList;
 
@@ -173,13 +173,13 @@ public abstract class AbsCharacterInfoScreen extends Screen {
                             break;
                         case UNIQUE_STRING:
                             displayText = -1;
-                            displayUnique = !displayUnique;
-                            displayWeaponSkill = false;
+                            bDisplayUnique = !bDisplayUnique;
+                            bDisplayWeaponSkill = false;
                             break;
                         case WEAPON_STRING:
                             displayText = -1;
-                            displayUnique = false;
-                            displayWeaponSkill = !displayWeaponSkill;
+                            bDisplayUnique = false;
+                            bDisplayWeaponSkill = !bDisplayWeaponSkill;
                             break;
                         default:
                             System.out.println("AbsCharacterInfoScreen:update(): Invalid button selection: " + basicPressed.getName());
@@ -187,8 +187,8 @@ public abstract class AbsCharacterInfoScreen extends Screen {
                 }
                 else if(skillPressed != -1){
                     displayText = (displayText == skillPressed) ? -1 : skillPressed;
-                    displayUnique = false;
-                    displayWeaponSkill = false;
+                    bDisplayUnique = false;
+                    bDisplayWeaponSkill = false;
                 }
             }
             uniqueUpdate(t);

@@ -77,8 +77,8 @@ public class BattleCharacterInfoScreen extends AbsCharacterInfoScreen {
         displayEnemy = enemy;
 
         displayText = -1;
-        displayUnique = false;
-        displayWeaponSkill = false;
+        bDisplayUnique = false;
+        bDisplayWeaponSkill = false;
         multipliers = displayChar.getMultipliers(enemy);
     }
 
@@ -175,11 +175,11 @@ public class BattleCharacterInfoScreen extends AbsCharacterInfoScreen {
             String desc = displayChar.getSkills().get(displayText).getDescription(displayEnemy);
             g.drawMultiLineString(desc, SKILLS_DESC_X, SKILLS_DESC_Y, SKILLS_DESC_WIDTH, descPaint);
         }
-        else if(displayUnique && displayChar.getSkills().getUniqueSkill() != null){
+        else if(bDisplayUnique && displayChar.getSkills().getUniqueSkill() != null){
             String desc = displayChar.getSkills().getUniqueSkill().getDescription(displayEnemy);
             g.drawMultiLineString(desc, SKILLS_DESC_X, SKILLS_DESC_Y, SKILLS_DESC_WIDTH, descPaint);
         }
-        else if(displayWeaponSkill && displayChar.getSkills().getWeaponSkill() != null){
+        else if(bDisplayWeaponSkill && displayChar.getSkills().getWeaponSkill() != null){
             String desc = displayChar.getSkills().getWeaponSkill().getDescription(displayEnemy);
             g.drawMultiLineString(desc, SKILLS_DESC_X, SKILLS_DESC_Y, SKILLS_DESC_WIDTH, descPaint);
         }

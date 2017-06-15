@@ -36,6 +36,9 @@ public class TransformEnemy {
 
     private ArrayList<SkillsEnum> addSkills;
     private ArrayList<SkillsEnum> removeSkills;
+    //Unique/Weapon skills not yet added to enemy
+    //private UniqueSkillsEnum uniqueSkill;
+    //private WeaponSkillsEnum weaponSkill;
 
     private String image;
 
@@ -128,6 +131,16 @@ public class TransformEnemy {
         return this.removeSkills;
     }
 
+    /*
+    public UniqueSkillsEnum getUniqueSkill() {
+        return this.uniqueSkill;
+    }
+
+    public WeaponSkillsEnum getWeaponSkill() {
+        return this.weaponSkill;
+    }
+    */
+
     public void setName(String name){
         this.name = name;
     }
@@ -219,6 +232,16 @@ public class TransformEnemy {
         }
         Collections.sort(this.removeSkills, SkillsEnum.SKILLS_ENUM_COMPARATOR);
     }
+
+    /*
+    public void setUniqueSkill(UniqueSkillsEnum skill){
+        this.uniqueSkill = skill;
+    }
+
+    public void setWeaponSkill(WeaponSkillsEnum skill){
+        this.weaponSkill = skill;
+    }
+    */
 
     public boolean validate(){
         if(name == null || name.length() == 0){

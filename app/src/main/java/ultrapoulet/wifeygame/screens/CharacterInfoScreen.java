@@ -21,7 +21,9 @@ import ultrapoulet.wifeygame.battle.BattleWifey;
 import ultrapoulet.wifeygame.character.Element;
 import ultrapoulet.wifeygame.character.SkillsEnum;
 import ultrapoulet.wifeygame.character.TransformWifey;
+import ultrapoulet.wifeygame.character.UniqueSkillsEnum;
 import ultrapoulet.wifeygame.character.Weapon;
+import ultrapoulet.wifeygame.character.WeaponSkillsEnum;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
 
 /**
@@ -38,6 +40,8 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
     private int displayStrength;
     private int displayMagic;
     private ArrayList<SkillsEnum> displaySkills = new ArrayList<>();
+    private UniqueSkillsEnum displayUniqueSkill;
+    private WeaponSkillsEnum displayWeaponSkill;
     private Weapon displayWeapon;
     private Element displayAttackElement;
     private Element displayStrongElement;
@@ -142,8 +146,8 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
         transformations = displayChar.getTransformations();
 
         displayText = -1;
-        displayUnique = false;
-        displayWeaponSkill = false;
+        bDisplayUnique = false;
+        bDisplayWeaponSkill = false;
 
         displayExp = displayChar.getExperienceString();
 
@@ -186,6 +190,8 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
         else {
             displayTitle = "Wifey";
         }
+        displayUniqueSkill = displayChar.getUniqueSkill();
+        displayWeaponSkill = displayChar.getWeaponSkill();
     }
 
     private void incrementDisplayInfo() {
@@ -212,6 +218,12 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
         for(int i = 0; i < displayForm.getRemoveSkills().size(); i++){
             displaySkills.remove(displayForm.getRemoveSkills().get(i));
         }
+        if(displayForm.getUniqueSkill() != null){
+            displayUniqueSkill = displayForm.getUniqueSkill();
+        }
+        if(displayForm.getWeaponSkill() != null){
+            displayWeaponSkill = displayForm.getWeaponSkill();
+        }
         Collections.sort(displaySkills, SkillsEnum.SKILLS_ENUM_COMPARATOR);
     }
 
@@ -230,6 +242,8 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
             boolean attackElementFound = false;
             boolean strongElementFound = false;
             boolean weakElementFound = false;
+            boolean uniqueSkillFound = false;
+            boolean weaponSkillFound = false;
             for (int i = transformPage - 1; i >= 0; i--) {
                 TransformWifey temp = transformations.get(i);
                 if (!weaponFound && temp.getWeapon() != null) {
@@ -247,6 +261,14 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
                 if (!weakElementFound && temp.getWeakElement() != null) {
                     displayWeakElement = temp.getWeakElement();
                     weakElementFound = true;
+                }
+                if(!uniqueSkillFound && temp.getUniqueSkill() != null) {
+                    displayUniqueSkill = temp.getUniqueSkill();
+                    uniqueSkillFound = true;
+                }
+                if(!weaponSkillFound && temp.getWeaponSkill() != null) {
+                    displayWeaponSkill = temp.getWeaponSkill();
+                    weaponSkillFound = true;
                 }
             }
             if(!weaponFound){
@@ -316,14 +338,14 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
     }
 
     protected void drawSkills(Graphics g){
-        if(displayChar.getUniqueSkill() != null){
-            g.drawString(displayChar.getUniqueSkill().getSkillName(), UNIQUE_X, MAX_WEAPON_Y, weaponPaint, MAX_UNIQUE_SIZE, MAX_WEAPON_FONT);
+        if(displayUniqueSkill != null){
+            g.drawString(displayUniqueSkill.getSkillName(), UNIQUE_X, MAX_WEAPON_Y, weaponPaint, MAX_UNIQUE_SIZE, MAX_WEAPON_FONT);
         }
         //Draw image for weapon category
 
         //Draw string for weapon name
-        if(displayChar.getWeaponSkill() != null){
-            g.drawString(displayChar.getWeaponSkill().getSkillName(), WEAPON_X, MAX_WEAPON_Y, weaponPaint, MAX_WEAPON_SIZE, MAX_WEAPON_FONT);
+        if(displayWeaponSkill != null){
+            g.drawString(displayWeaponSkill.getSkillName(), WEAPON_X, MAX_WEAPON_Y, weaponPaint, MAX_WEAPON_SIZE, MAX_WEAPON_FONT);
         }
         else {
             g.drawString(displayWeapon.getWeaponType(), WEAPON_X, MAX_WEAPON_Y, weaponPaint, MAX_WEAPON_SIZE, MAX_WEAPON_FONT);
@@ -351,12 +373,12 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
             String desc = displaySkills.get(displayText).getSkillDesc();
             g.drawMultiLineString(desc, SKILLS_DESC_X, SKILLS_DESC_Y, SKILLS_DESC_WIDTH, descPaint);
         }
-        else if(displayUnique && displayChar.getUniqueSkill() != null){
-            String desc = displayChar.getUniqueSkill().getSkillDesc();
+        else if(bDisplayUnique && displayUniqueSkill != null){
+            String desc = displayUniqueSkill.getSkillDesc();
             g.drawMultiLineString(desc, SKILLS_DESC_X, SKILLS_DESC_Y, SKILLS_DESC_WIDTH, descPaint);
         }
-        else if(displayWeaponSkill && displayChar.getWeaponSkill() != null){
-            String desc = displayChar.getWeaponSkill().getSkillDesc();
+        else if(bDisplayWeaponSkill && displayWeaponSkill != null){
+            String desc = displayWeaponSkill.getSkillDesc();
             g.drawMultiLineString(desc, SKILLS_DESC_X, SKILLS_DESC_Y, SKILLS_DESC_WIDTH, descPaint);
         }
     }

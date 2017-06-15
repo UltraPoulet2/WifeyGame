@@ -425,6 +425,14 @@ public class BattleEnemy extends BattleCharacter{
         if(form.getWeakElement() != null){
             this.weakElement = form.getWeakElement();
         }
+        /*
+        if(form.getUniqueSkill() != null){
+            this.uniqueSkill = form.getUniqueSkill();
+        }
+        if(form.getWeaponSkill() != null){
+            this.weaponSkill = form.getWeaponSkill();
+        }
+         */
         for(int i = 0; i < form.getAddSkills().size(); i++){
             skills.addSkill(form.getAddSkills().get(i).getBattleSkill(this));
         }

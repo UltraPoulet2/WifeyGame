@@ -214,6 +214,12 @@ public class BattleWifey extends BattleCharacter{
         for(int i = 0; i < form.getRemoveSkills().size(); i++){
             skills.removeSkill(form.getRemoveSkills().get(i).getBattleSkill(this));
         }
+        if(form.getUniqueSkill() != null){
+            skills.setUniqueSkill(form.getUniqueSkill().getUniqueBattleSkill(this));
+        }
+        if(form.getWeaponSkill() != null){
+            skills.setWeaponSkill(form.getWeaponSkill().getWeaponBattleSkill(this));
+        }
     }
 
     public boolean canTransform(){

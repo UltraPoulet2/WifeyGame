@@ -1227,6 +1227,8 @@
                 <strength>150</strength>
                 <magic>150</magic>
                 <weapon>TANK</weapon>
+                <weaponSkill>KOKO_ROSE</weaponSkill>
+                <uniqueSkill>TEST</uniqueSkill>
                 <skills mode="add">
                     <skill>KILLER</skill>
                 </skills>
