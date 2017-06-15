@@ -142,6 +142,8 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
         transformations = displayChar.getTransformations();
 
         displayText = -1;
+        displayUnique = false;
+        displayWeaponSkill = false;
 
         displayExp = displayChar.getExperienceString();
 

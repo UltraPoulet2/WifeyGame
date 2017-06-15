@@ -187,6 +187,8 @@ public abstract class AbsCharacterInfoScreen extends Screen {
                 }
                 else if(skillPressed != -1){
                     displayText = (displayText == skillPressed) ? -1 : skillPressed;
+                    displayUnique = false;
+                    displayWeaponSkill = false;
                 }
             }
             uniqueUpdate(t);
