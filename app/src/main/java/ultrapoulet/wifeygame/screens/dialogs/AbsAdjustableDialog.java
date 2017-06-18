@@ -24,9 +24,13 @@ public abstract class AbsAdjustableDialog extends Screen {
 
     private boolean fadeOut = true;
 
-    public AbsAdjustableDialog(Game game, Screen prevScreen, int height){
+    public AbsAdjustableDialog(Game game, Screen prevScreen){
         super(game);
         this.prevScreen = prevScreen;
+    }
+
+    //setHeights will need to be called by the constructor of an actual implementation
+    protected void setHeights(int height){
         this.midHeight = height - topHeight - botHeight;
         if(this.midHeight < 0) {
             this.midHeight = MIN_HEIGHT;
@@ -49,10 +53,7 @@ public abstract class AbsAdjustableDialog extends Screen {
         g.drawImage(Assets.AbsAdjustableDialogTop, BG_X, startY);
         g.drawScaledImage(Assets.AbsAdjustableDialogMid, BG_X, startY + topHeight, Assets.AbsAdjustableDialogMid.getWidth(), midHeight);
         g.drawImage(Assets.AbsAdjustableDialogBot, BG_X, startY + topHeight + midHeight);
-        drawUnique();
     }
-
-    protected void drawUnique(){}
 
     @Override
     public void pause() {
