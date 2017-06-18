@@ -21,6 +21,7 @@ import ultrapoulet.wifeygame.character.EnemyCharacter;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
 import ultrapoulet.wifeygame.gamestate.Party;
 import ultrapoulet.wifeygame.gamestate.PlayerInfo;
+import ultrapoulet.wifeygame.screens.dialogs.AbsAdjustableDialog;
 
 /**
  * Created by John on 5/23/2017.
@@ -230,6 +231,8 @@ public abstract class AbsBattleInfoScreen extends Screen {
                 else if(selectedReq == requirementList.getIndexPressed(t.x, t.y) && selectedReq != -1){
                     //Set up displaying a requirement
                     System.out.println("Displaying requirement: " + selectedReq + " " + battleInfo.getRequirements().get(selectedReq).getDescription());
+                    //AbsAdjustableDialog testDialog = new AbsAdjustableDialog(game, this, 800);
+                    //game.setScreen(testDialog);
                 }
             }
         }
