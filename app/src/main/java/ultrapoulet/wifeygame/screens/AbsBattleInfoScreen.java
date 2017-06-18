@@ -230,8 +230,6 @@ public abstract class AbsBattleInfoScreen extends Screen {
                     game.setScreen(charInfo);
                 }
                 else if(selectedReq == requirementList.getIndexPressed(t.x, t.y) && selectedReq != -1){
-                    //Set up displaying a requirement
-                    //System.out.println("Displaying requirement: " + selectedReq + " " + battleInfo.getRequirements().get(selectedReq).getDescription());
                     Screen testDialog = new RequirementTextInfoDialog(game, this, battleInfo.getRequirements().get(selectedReq).getDescription());
                     game.setScreen(testDialog);
                 }

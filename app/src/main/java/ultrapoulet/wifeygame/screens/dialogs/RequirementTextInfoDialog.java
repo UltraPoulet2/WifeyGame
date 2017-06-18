@@ -33,12 +33,6 @@ public class RequirementTextInfoDialog extends AbsAdjustableInfoDialog {
 
         StaticLayout textLayout = new StaticLayout(
                 text, infoPaint, TEXT_WIDTH, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
-        /*
-        Rect textBounds = new Rect();
-        infoPaint.getTextBounds(text, 0, text.length(), textBounds);
-        System.out.println(textBounds.height() + " " + textBounds.width());
-        int totalHeight = textBounds.height() + topHeight + botHeight + TOTAL_HEIGHT_OFFSET;
-        */
         int totalHeight = textLayout.getHeight() + topHeight + botHeight + TOTAL_HEIGHT_OFFSET;
 
         //Add in the the necessary functions in super
