@@ -2,8 +2,11 @@ package ultrapoulet.wifeygame.battle.requirements;
 
 import java.util.ArrayList;
 
+import ultrapoulet.androidgame.framework.Game;
+import ultrapoulet.androidgame.framework.Screen;
 import ultrapoulet.wifeygame.character.SkillsEnum;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
+import ultrapoulet.wifeygame.screens.dialogs.RequirementTextInfoDialog;
 
 /**
  * Created by John on 10/8/2016.
@@ -38,6 +41,17 @@ public class RequiredSkillRequirement extends AbsRequirement {
             }
         }
         return false;
+    }
+
+    @Override
+    public Screen getRequirementDialog(Game game, Screen prevScreen) {
+        StringBuilder desc = new StringBuilder();
+        desc.append("All Wifeys required to have one of the following skills:");
+        for(SkillsEnum skill : requiredSkills){
+            desc.append("\n");
+            desc.append(skill.getSkillName());
+        }
+        return new RequirementTextInfoDialog(game, prevScreen, desc.toString());
     }
 
     public String getDescription(){

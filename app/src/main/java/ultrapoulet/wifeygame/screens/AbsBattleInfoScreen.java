@@ -230,8 +230,11 @@ public abstract class AbsBattleInfoScreen extends Screen {
                     game.setScreen(charInfo);
                 }
                 else if(selectedReq == requirementList.getIndexPressed(t.x, t.y) && selectedReq != -1){
-                    Screen testDialog = new RequirementTextInfoDialog(game, this, battleInfo.getRequirements().get(selectedReq).getDescription());
-                    game.setScreen(testDialog);
+                    //Screen testDialog = new RequirementTextInfoDialog(game, this, battleInfo.getRequirements().get(selectedReq).getDescription());
+                    Screen testDialog = battleInfo.getRequirements().get(selectedReq).getRequirementDialog(game, this);
+                    if(testDialog != null) {
+                        game.setScreen(testDialog);
+                    }
                 }
             }
         }

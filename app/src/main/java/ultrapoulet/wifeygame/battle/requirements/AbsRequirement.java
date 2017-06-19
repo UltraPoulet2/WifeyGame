@@ -2,6 +2,8 @@ package ultrapoulet.wifeygame.battle.requirements;
 
 import java.util.List;
 
+import ultrapoulet.androidgame.framework.Game;
+import ultrapoulet.androidgame.framework.Screen;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
 
 /**
@@ -21,6 +23,10 @@ public abstract class AbsRequirement {
     //Returns true if the party is valid for this requirement
     public boolean validateParty(List<WifeyCharacter> party){
         return true;
+    }
+
+    public Screen getRequirementDialog(Game game, Screen prevScreen){
+        return null;
     }
 
     public abstract String getDescription();
