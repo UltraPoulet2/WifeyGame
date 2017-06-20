@@ -2,8 +2,11 @@ package ultrapoulet.wifeygame.battle.requirements;
 
 import java.util.ArrayList;
 
+import ultrapoulet.androidgame.framework.Game;
+import ultrapoulet.androidgame.framework.Screen;
 import ultrapoulet.wifeygame.character.SkillsEnum;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
+import ultrapoulet.wifeygame.screens.dialogs.RequirementTextInfoDialog;
 
 /**
  * Created by John on 10/11/2016.
@@ -38,6 +41,17 @@ public class BannedSkillRequirement extends AbsRequirement {
             }
         }
         return true;
+    }
+
+    @Override
+    public Screen getRequirementDialog(Game game, Screen prevScreen) {
+        StringBuilder desc = new StringBuilder();
+        desc.append("Wifeys are not allowed to have any of the following skills:");
+        for(SkillsEnum skill : bannedSkills){
+            desc.append("\n");
+            desc.append(skill.getSkillName());
+        }
+        return new RequirementTextInfoDialog(game, prevScreen, desc.toString());
     }
 
     public String getDescription(){
