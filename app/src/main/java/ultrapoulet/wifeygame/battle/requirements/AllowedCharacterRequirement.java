@@ -2,8 +2,11 @@ package ultrapoulet.wifeygame.battle.requirements;
 
 import java.util.ArrayList;
 
+import ultrapoulet.androidgame.framework.Game;
+import ultrapoulet.androidgame.framework.Screen;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
 import ultrapoulet.wifeygame.gamestate.Characters;
+import ultrapoulet.wifeygame.screens.dialogs.RequirementWifeyInfoDialog;
 
 /**
  * Created by John on 10/11/2016.
@@ -35,6 +38,11 @@ public class AllowedCharacterRequirement extends AbsRequirement {
     @Override
     public boolean validateCharacter(WifeyCharacter character){
         return allowedWifeys.contains(character);
+    }
+
+    @Override
+    public Screen getRequirementDialog(Game game, Screen prevScreen) {
+        return new RequirementWifeyInfoDialog(game, prevScreen, "The following wifeys are allowed:",  allowedWifeys);
     }
 
     public String getDescription(){
