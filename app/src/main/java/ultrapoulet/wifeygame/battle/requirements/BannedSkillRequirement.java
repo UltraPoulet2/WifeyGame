@@ -1,6 +1,7 @@
 package ultrapoulet.wifeygame.battle.requirements;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import ultrapoulet.androidgame.framework.Game;
 import ultrapoulet.androidgame.framework.Screen;
@@ -34,6 +35,16 @@ public class BannedSkillRequirement extends AbsRequirement {
     }
 
     @Override
+    public boolean validateParty(List<WifeyCharacter> party) {
+        for(WifeyCharacter wifey: party){
+            if(!validateCharacter(wifey)){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
     public boolean validateCharacter(WifeyCharacter character){
         for(int i = 0; i < bannedSkills.size(); i++){
             if(character.getSkills().contains(bannedSkills.get(i))){
@@ -54,7 +65,7 @@ public class BannedSkillRequirement extends AbsRequirement {
         return new RequirementTextInfoDialog(game, prevScreen, desc.toString());
     }
 
-    public String getDescription(){
-        return "Certain skills banned";
+    public String getTitle(){
+        return "Banned Skills";
     }
 }

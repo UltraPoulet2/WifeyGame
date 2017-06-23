@@ -29,5 +29,5 @@ public abstract class AbsRequirement {
         return null;
     }
 
-    public abstract String getDescription();
+    public abstract String getTitle();
 }

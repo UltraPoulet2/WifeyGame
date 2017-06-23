@@ -21,8 +21,6 @@ import ultrapoulet.wifeygame.character.EnemyCharacter;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
 import ultrapoulet.wifeygame.gamestate.Party;
 import ultrapoulet.wifeygame.gamestate.PlayerInfo;
-import ultrapoulet.wifeygame.screens.dialogs.AbsAdjustableDialog;
-import ultrapoulet.wifeygame.screens.dialogs.RequirementTextInfoDialog;
 
 /**
  * Created by John on 5/23/2017.
@@ -230,7 +228,6 @@ public abstract class AbsBattleInfoScreen extends Screen {
                     game.setScreen(charInfo);
                 }
                 else if(selectedReq == requirementList.getIndexPressed(t.x, t.y) && selectedReq != -1){
-                    //Screen testDialog = new RequirementTextInfoDialog(game, this, battleInfo.getRequirements().get(selectedReq).getDescription());
                     Screen testDialog = battleInfo.getRequirements().get(selectedReq).getRequirementDialog(game, this);
                     if(testDialog != null) {
                         game.setScreen(testDialog);
@@ -296,7 +293,13 @@ public abstract class AbsBattleInfoScreen extends Screen {
         drawInfo(g);
 
         for(int i = 0; i < battleInfo.getRequirements().size(); i++){
-            String desc = battleInfo.getRequirements().get(i).getDescription();
+            String desc = battleInfo.getRequirements().get(i).getTitle();
+            if(battleInfo.getRequirements().get(i).validateParty(party)){
+                requirementPaint.setColor(Color.GREEN);
+            }
+            else {
+                requirementPaint.setColor(Color.RED);
+            }
             if(requirementPaint.breakText(desc, true, REQUIREMENT_WIDTH, null) == desc.length() ){
                 g.drawString(desc, REQUIREMENT_CENTER_X, REQUIREMENT_BASE_TEXT_Y + i * REQUIREMENT_OFFSET_Y, requirementPaint);
             }

@@ -1,6 +1,7 @@
 package ultrapoulet.wifeygame.battle.requirements;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import ultrapoulet.androidgame.framework.Game;
 import ultrapoulet.androidgame.framework.Screen;
@@ -34,6 +35,16 @@ public class RequiredSkillRequirement extends AbsRequirement {
     }
 
     @Override
+    public boolean validateParty(List<WifeyCharacter> party) {
+        for(WifeyCharacter wifey: party){
+            if(!validateCharacter(wifey)){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
     public boolean validateCharacter(WifeyCharacter character){
         for(int i = 0; i < requiredSkills.size(); i++){
             if(character.getSkills().contains(requiredSkills.get(i))){
@@ -54,7 +65,7 @@ public class RequiredSkillRequirement extends AbsRequirement {
         return new RequirementTextInfoDialog(game, prevScreen, desc.toString());
     }
 
-    public String getDescription(){
-        return "Wifeys required to have certain skills";
+    public String getTitle(){
+        return "Required Skills";
     }
 }

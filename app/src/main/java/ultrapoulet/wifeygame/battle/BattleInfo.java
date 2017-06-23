@@ -215,21 +215,12 @@ public class BattleInfo {
         return true;
     }
 
-    public boolean allowParty(List<WifeyCharacter> party){
+    public boolean validParty(List<WifeyCharacter> party){
         for(int i = 0; i < restrictionList.size(); i++){
             if(!restrictionList.get(i).validateParty(party)){
                 return false;
             }
         }
         return true;
-    }
-
-    public boolean validParty(List<WifeyCharacter> party){
-        for(int i = 0; i < party.size(); i++){
-            if(party.get(i) != null && allowCharacter(party.get(i)) == false){
-                return false;
-            }
-        }
-        return allowParty(party);
     }
 }

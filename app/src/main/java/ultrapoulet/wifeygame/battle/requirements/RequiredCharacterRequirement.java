@@ -56,7 +56,7 @@ public class RequiredCharacterRequirement extends AbsRequirement {
     }
 
     @Override
-    public String getDescription() {
-        return "Certain Wifeys required";
+    public String getTitle() {
+        return "Required Wifeys";
     }
 }

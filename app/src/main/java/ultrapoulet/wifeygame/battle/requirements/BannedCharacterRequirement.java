@@ -1,6 +1,7 @@
 package ultrapoulet.wifeygame.battle.requirements;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import ultrapoulet.androidgame.framework.Game;
 import ultrapoulet.androidgame.framework.Screen;
@@ -34,6 +35,16 @@ public class BannedCharacterRequirement extends AbsRequirement {
         return true;
     }
 
+    @Override
+    public boolean validateParty(List<WifeyCharacter> party) {
+        for(WifeyCharacter wifey: party){
+            if(!validateCharacter(wifey)){
+                return false;
+            }
+        }
+        return true;
+    }
+
     //Returns true if the character is valid for this requirement
     @Override
     public boolean validateCharacter(WifeyCharacter character){
@@ -45,7 +56,7 @@ public class BannedCharacterRequirement extends AbsRequirement {
         return new RequirementWifeyInfoDialog(game, prevScreen, "The following wifeys are not allowed:",  bannedWifeys);
     }
 
-    public String getDescription(){
-        return "Certain Wifeys banned";
+    public String getTitle(){
+        return "Banned Wifeys";
     }
 }
