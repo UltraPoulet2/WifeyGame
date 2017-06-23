@@ -13,6 +13,7 @@ import ultrapoulet.wifeygame.battle.skills.basicskills.DullahanSkill;
 import ultrapoulet.wifeygame.battle.skills.basicskills.FujoshiSkill;
 import ultrapoulet.wifeygame.battle.skills.basicskills.GhostSkill;
 import ultrapoulet.wifeygame.battle.skills.basicskills.HyperSkill;
+import ultrapoulet.wifeygame.battle.skills.basicskills.IdolSkill;
 import ultrapoulet.wifeygame.battle.skills.basicskills.KillerSkill;
 import ultrapoulet.wifeygame.battle.skills.basicskills.MagicalGirlSkill;
 import ultrapoulet.wifeygame.battle.skills.basicskills.MagicianSkill;
@@ -87,6 +88,8 @@ public class SkillsEnum {
                 return new GhostSkill(owner);
             case "Hyper":
                 return new HyperSkill(owner);
+            case "Idol":
+                return new IdolSkill(owner);
             case "Killer":
                 return new KillerSkill(owner);
             case "Magical Girl":
@@ -170,6 +173,7 @@ public class SkillsEnum {
         skillsList.put("FUJOSHI", new SkillsEnum("Fujoshi", "Increases damage dealt multiplier by 0.33x for each Trap wifey in the party. Damage increased by a bonus 1.00x if there are more than two Trap wifeys."));
         skillsList.put("GHOST", new SkillsEnum("Ghost", "Multiplies physical attack damage taken by 0.50x"));
         skillsList.put("HYPER", new SkillsEnum("Hyper", "Increases combo hits by 1."));
+        skillsList.put("IDOL", new SkillsEnum("Idol", "Defeating an enemy with this wifey increases chance to find a wifey after the battle by 2%."));
         skillsList.put("KILLER", new SkillsEnum("Killer", "Defeating an enemy with this wifey increases damage dealt multiplier by 1.00x for the rest of the battle."));
         skillsList.put("MAGICALGIRL", new SkillsEnum("Magical Girl", "Multiplies magical damage dealt, healing, and special attack damage dealt by 1.50x. Multiplier increases by 0.25x for each other Magical Girl wifey in the party."));
         skillsList.put("MAGICIAN", new SkillsEnum("Magician", "Multiplies magical damage dealt by 3.00x at the start of a wave. Multiplier decreases by 0.50x each time a magical attack is used, to a minimum of 1.00x."));

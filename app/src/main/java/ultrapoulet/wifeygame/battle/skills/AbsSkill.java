@@ -213,6 +213,11 @@ public abstract class AbsSkill {
         return 0;
     }
 
+    public int getBonusRecruiting() {
+        //Return the amount of bonus recruiting percentage
+        return 0;
+    }
+
     //Remove the skill owner at end of battle to garbage collect
     public void endBattle(){
         this.owner = null;

@@ -158,14 +158,14 @@ public class BattleInfo {
     }
 
     //Does the calculations for the drops and returns the list of characters dropped
-    public ArrayList<WifeyCharacter> performDrops(){
+    public ArrayList<WifeyCharacter> performDrops(int bonusRecruiting){
         ArrayList<WifeyCharacter> results = new ArrayList<>();
         for(WifeyDrop drop : dropList){
             if(drop.getWifey().isDropped()){
                 continue;
             }
             Random rng = new Random();
-            if(rng.nextInt(100) < drop.getDropChance()){
+            if(rng.nextInt(100) < drop.getDropChance() + bonusRecruiting){
                 drop.getWifey().drop();
                 results.add(drop.getWifey());
             }

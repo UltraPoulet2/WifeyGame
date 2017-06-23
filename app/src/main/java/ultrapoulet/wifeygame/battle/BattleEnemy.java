@@ -126,6 +126,11 @@ public class BattleEnemy extends BattleCharacter{
         return this.experience;
     }
 
+    //This function is currently not used
+    public int getBonusRecruiting() {
+        return 0;
+    }
+
     public void startBattle(List<BattleCharacter> party) {
         this.currentHP = this.maxHP;
         ai.reset();

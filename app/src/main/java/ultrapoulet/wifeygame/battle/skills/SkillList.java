@@ -454,6 +454,20 @@ public class SkillList {
         return returnValue;
     }
 
+    public int getBonusRecruiting() {
+        int returnValue = 0;
+        for(int i = 0; i < skills.size(); i++){
+            returnValue += skills.get(i).getBonusRecruiting();
+        }
+        if(weaponSkill != null) {
+            returnValue += weaponSkill.getBonusRecruiting();
+        }
+        if(uniqueSkill != null) {
+            returnValue += uniqueSkill.getBonusRecruiting();
+        }
+        return returnValue;
+    }
+
     public boolean hasSkill(Class skillClass){
         for(int i = 0; i < skills.size(); i++){
             if(skills.get(i).getClass() == skillClass){

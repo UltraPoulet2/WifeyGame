@@ -1174,6 +1174,7 @@
         <weapon>SWORD</weapon>
         <skills>
             <skill>TSUNDERE</skill>
+            <skill>IDOL</skill>
         </skills>
         <elements>
             <atkElement>FIRE</atkElement>

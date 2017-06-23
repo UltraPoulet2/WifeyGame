@@ -245,4 +245,8 @@ public class BattleWifey extends BattleCharacter{
     public int getExperience(){
         return skills.getBonusExp();
     }
+
+    public int getBonusRecruiting(){
+        return skills.getBonusRecruiting();
+    }
 }
