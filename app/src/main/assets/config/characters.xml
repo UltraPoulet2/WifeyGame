@@ -1212,9 +1212,9 @@
         <strength>90</strength>
         <magic>110</magic>
         <weapon>BALL</weapon>
+        <uniqueSkill>REM</uniqueSkill>
         <skills>
             <skill>MAID</skill>
-            <skill>REM</skill>
         </skills>
         <elements>
             <atkElement>AIR</atkElement>
@@ -1228,8 +1228,6 @@
                 <strength>150</strength>
                 <magic>150</magic>
                 <weapon>TANK</weapon>
-                <weaponSkill>KOKO_ROSE</weaponSkill>
-                <uniqueSkill>TEST</uniqueSkill>
                 <skills mode="add">
                     <skill>KILLER</skill>
                 </skills>

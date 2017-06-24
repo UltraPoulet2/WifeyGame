@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import ultrapoulet.wifeygame.battle.BattleCharacter;
 import ultrapoulet.wifeygame.battle.skills.AbsUniqueSkill;
+import ultrapoulet.wifeygame.battle.skills.uniqueskills.RemSkill;
 import ultrapoulet.wifeygame.battle.skills.uniqueskills.TestSkill;
 
 /**
@@ -30,8 +31,8 @@ public class UniqueSkillsEnum {
 
     public AbsUniqueSkill getUniqueBattleSkill(BattleCharacter owner){
         switch(this.skillName){
-            case("Test"):
-                return new TestSkill(owner);
+            case "Rem":
+                return new RemSkill(owner);
             default:
                 return null;
         }
@@ -48,6 +49,6 @@ public class UniqueSkillsEnum {
 
     private static void createSkillList() {
         skillsList = new HashMap<>();
-        skillsList.put("TEST", new UniqueSkillsEnum("Test", "I am a testing skill"));
+        skillsList.put("REM", new UniqueSkillsEnum("Rem", "Rem gets a special skill because she is Rem. Multiplies damage dealt and healing by 2.00x."));
     }
 }

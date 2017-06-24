@@ -1,12 +1,12 @@
-package ultrapoulet.wifeygame.battle.skills.basicskills;
+package ultrapoulet.wifeygame.battle.skills.uniqueskills;
 
 import ultrapoulet.wifeygame.battle.BattleCharacter;
-import ultrapoulet.wifeygame.battle.skills.AbsSkill;
+import ultrapoulet.wifeygame.battle.skills.AbsUniqueSkill;
 
 /**
  * Created by John on 8/29/2016.
  */
-public class RemSkill extends AbsSkill {
+public class RemSkill extends AbsUniqueSkill {
 
     private double multiplier = 2.0;
 
