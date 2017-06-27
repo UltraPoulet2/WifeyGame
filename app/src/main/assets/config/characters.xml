@@ -339,7 +339,6 @@
         <magic>40</magic>
         <weapon>PLANT</weapon>
         <weaponSkill>KOKO_ROSE</weaponSkill>
-        <uniqueSkill>TEST</uniqueSkill>
         <elements>
             <atkElement>EARTH</atkElement>
             <stgElement>EARTH</stgElement>

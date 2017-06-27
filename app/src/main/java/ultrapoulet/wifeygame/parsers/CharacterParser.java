@@ -227,7 +227,7 @@ public class CharacterParser extends DefaultHandler{
             }
         }
         else if(qName.equalsIgnoreCase("skill")){
-            SkillsEnum skill = SkillsEnum.getSkill(currentText.toString());
+            SkillsEnum skill = SkillsEnum.valueOf(currentText.toString());
             if (skill == null) {
                 System.out.println("CharacterParser:characters(): Could not find skill: " + currentText.toString());
                 error = true;

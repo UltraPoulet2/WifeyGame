@@ -363,7 +363,7 @@ public class EnemyParser extends DefaultHandler{
             }
         }
         else if(qName.equalsIgnoreCase("skill")){
-            SkillsEnum skill = SkillsEnum.getSkill(currentText.toString());
+            SkillsEnum skill = SkillsEnum.valueOf(currentText.toString());
             if(skill == null){
                 System.out.println("EnemyParser:characters(): Could not find skill: " + currentText.toString());
                 error = true;

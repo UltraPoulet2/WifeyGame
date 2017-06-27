@@ -72,7 +72,7 @@ public class RecruitingParser extends DefaultHandler {
                     break;
                 case "wifeyNumber":
                     String skill = attributes.getValue("skill");
-                    SkillsEnum skillEnum = SkillsEnum.getSkill(skill);
+                    SkillsEnum skillEnum = SkillsEnum.valueOf(skill);
                     if(skill != null && skillEnum == null){
                         System.out.println("RecruitingParser:startElement(): Could not find skill: " + skill);
                     }

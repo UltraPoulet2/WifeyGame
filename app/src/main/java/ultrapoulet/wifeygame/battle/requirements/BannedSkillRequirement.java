@@ -23,7 +23,7 @@ public class BannedSkillRequirement extends AbsRequirement {
     }
 
     public boolean addValue(String input){
-        SkillsEnum skill = SkillsEnum.getSkill(input);
+        SkillsEnum skill = SkillsEnum.valueOf(input);
         if(skill == null) {
             return false;
         }
