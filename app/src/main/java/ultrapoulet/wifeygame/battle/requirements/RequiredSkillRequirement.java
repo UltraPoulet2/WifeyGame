@@ -23,7 +23,13 @@ public class RequiredSkillRequirement extends AbsRequirement {
     }
 
     public boolean addValue(String input){
-        SkillsEnum skill = SkillsEnum.valueOf(input);
+        SkillsEnum skill;
+        try {
+            skill = SkillsEnum.valueOf(input);
+        }
+        catch(IllegalArgumentException e){
+            skill = null;
+        }
         if(skill == null) {
             return false;
         }

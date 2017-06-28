@@ -1,7 +1,6 @@
 package ultrapoulet.wifeygame.character;
 
 import java.util.Comparator;
-import java.util.HashMap;
 
 import ultrapoulet.wifeygame.battle.BattleCharacter;
 import ultrapoulet.wifeygame.battle.skills.AbsSkill;

@@ -200,7 +200,13 @@ public class CharacterParser extends DefaultHandler{
             }
         }
         else if(qName.equalsIgnoreCase("weaponSkill")){
-            WeaponSkillsEnum skill = WeaponSkillsEnum.getSkill(currentText.toString());
+            WeaponSkillsEnum skill;
+            try {
+                skill = WeaponSkillsEnum.valueOf(currentText.toString());
+            }
+            catch(IllegalArgumentException e){
+                skill = null;
+            }
             if (skill == null) {
                 System.out.println("CharacterParser:characters(): Could not find skill: " + currentText.toString());
                 error = true;
@@ -213,7 +219,13 @@ public class CharacterParser extends DefaultHandler{
             }
         }
         else if(qName.equalsIgnoreCase("uniqueSkill")){
-            UniqueSkillsEnum skill = UniqueSkillsEnum.getSkill(currentText.toString());
+            UniqueSkillsEnum skill;
+            try {
+                skill = UniqueSkillsEnum.valueOf(currentText.toString());
+            }
+            catch(IllegalArgumentException e){
+                skill = null;
+            }
             if(skill == null){
                 System.out.println("CharacterParser:characters(): Could not find skill: " + currentText.toString());
                 error = true;
@@ -227,7 +239,13 @@ public class CharacterParser extends DefaultHandler{
             }
         }
         else if(qName.equalsIgnoreCase("skill")){
-            SkillsEnum skill = SkillsEnum.valueOf(currentText.toString());
+            SkillsEnum skill;
+            try {
+                skill = SkillsEnum.valueOf(currentText.toString());
+            }
+            catch(IllegalArgumentException e){
+                skill = null;
+            }
             if (skill == null) {
                 System.out.println("CharacterParser:characters(): Could not find skill: " + currentText.toString());
                 error = true;
