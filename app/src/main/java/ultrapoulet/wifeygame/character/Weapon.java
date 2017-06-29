@@ -5,7 +5,36 @@ import java.util.HashMap;
 /**
  * Created by John on 6/25/2016.
  */
-public class Weapon {
+public enum Weapon {
+    AIRSOFT("Airsoft", 6),
+    ANIMAL("Animal", 5),
+    BALL("Ball", 3),
+    BOOK("Book", 2),
+    CARD("Card", 3),
+    CLAW("Claw", 3),
+    CLUB("Club", 2),
+    COOKING("Cooking", 3),
+    COMPUTER("Computer", 4),
+    FAN("Fan", 3),
+    FISTS("Fists", 3),
+    FOOD("Food", 2),
+    GUN("Gun", 6),
+    INSTRUMENT("Instrument", 6),
+    KNIFE("Knife", 3),
+    LASER("Laser", 6),
+    MAGIC("Magic", 4),
+    MECHA("Mecha", 5),
+    MEDICINE("Medicine", 2),
+    PLANT("Plant", 3),
+    PLUSH("Plush", 5),
+    SCYTHE("Scythe", 2),
+    SPORT("Sport", 6),
+    SWORD("Sword", 5),
+    TAIL("Tail", 3),
+    TANK("Tank", 2),
+    TOOL("Tool", 4),
+    TOY("Toy", 3),
+    VEHICLE("Vehicle", 6);
 
     private String weaponType;
     private int numHits;
@@ -22,48 +51,4 @@ public class Weapon {
     public int getNumHits(){
         return this.numHits;
     }
-
-    private static HashMap<String, Weapon> weaponList;
-
-    public static Weapon getWeapon(String key){
-        if(weaponList == null){
-            createWeaponList();
-        }
-        return weaponList.get(key);
-    }
-
-    private static void createWeaponList(){
-        weaponList = new HashMap<>();
-        weaponList.put("AIRSOFT", new Weapon("Airsoft", 6));
-        weaponList.put("ANIMAL", new Weapon("Animal", 5));
-        weaponList.put("BALL", new Weapon("Ball", 3));
-        weaponList.put("BOOK", new Weapon("Book", 2));
-        weaponList.put("CARD", new Weapon("Card", 3));
-        weaponList.put("CLAW", new Weapon("Claw", 3));
-        weaponList.put("CLUB", new Weapon("Club", 2));
-        weaponList.put("COOKING", new Weapon("Cooking", 3));
-        weaponList.put("COMPUTER", new Weapon("Computer", 4));
-        weaponList.put("FAN", new Weapon("Fan", 3));
-        weaponList.put("FISTS", new Weapon("Fists", 3));
-        weaponList.put("FOOD", new Weapon("Food", 2));
-        weaponList.put("GUN", new Weapon("Gun", 6));
-        weaponList.put("INSTRUMENT", new Weapon("Instrument", 6));
-        weaponList.put("KNIFE", new Weapon("Knife", 3));
-        weaponList.put("LASER", new Weapon("Laser", 6));
-        weaponList.put("MAGIC", new Weapon("Magic", 4));
-        weaponList.put("MECHA", new Weapon("Mecha", 5));
-        weaponList.put("MEDICINE", new Weapon("Medicine", 2));
-        weaponList.put("PLANT", new Weapon("Plant", 3));
-        weaponList.put("PLUSH", new Weapon("Plush", 5));
-        weaponList.put("SCYTHE", new Weapon("Scythe", 2));
-        weaponList.put("SPORT", new Weapon("Sport", 6));
-        weaponList.put("SWORD", new Weapon("Sword", 5));
-        weaponList.put("TAIL", new Weapon("Tail", 3));
-        weaponList.put("TANK", new Weapon("Tank", 2));
-        weaponList.put("TOOL", new Weapon("Tool", 4));
-        weaponList.put("TOY", new Weapon("Toy", 3));
-        weaponList.put("VEHICLE", new Weapon("Vehicle", 6));
-    }
-
-
 }

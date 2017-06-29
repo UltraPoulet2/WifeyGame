@@ -193,10 +193,23 @@ public class CharacterParser extends DefaultHandler{
             }
         }
         else if(qName.equalsIgnoreCase("weapon")){
-            if (!bTransformSec) {
-                charBuilder.setWeapon(Weapon.getWeapon(currentText.toString()));
-            } else {
-                transformBuilder.setWeapon(Weapon.getWeapon(currentText.toString()));
+            Weapon weap;
+            try{
+                weap = Weapon.valueOf(currentText.toString());
+            }
+            catch(IllegalArgumentException e){
+                weap = null;
+            }
+            if(weap == null){
+                System.out.println("CharacterParser:endElement(): Could not find weapon: " + currentText.toString());
+                error = true;
+            }
+            else {
+                if (!bTransformSec) {
+                    charBuilder.setWeapon(weap);
+                } else {
+                    transformBuilder.setWeapon(weap);
+                }
             }
         }
         else if(qName.equalsIgnoreCase("weaponSkill")){
@@ -264,7 +277,13 @@ public class CharacterParser extends DefaultHandler{
             bRemoveSkill = false;
         }
         else if(qName.equalsIgnoreCase("atkElement")){
-            Element elm = Element.getElement(currentText.toString());
+            Element elm;
+            try {
+                elm = Element.valueOf(currentText.toString());
+            }
+            catch(IllegalArgumentException e){
+                elm = null;
+            }
             if (elm == null) {
                 System.out.println("CharacterParser:characters(): Could not find Attack element: " + currentText.toString());
                 error = true;
@@ -277,7 +296,13 @@ public class CharacterParser extends DefaultHandler{
                 }
             }
         } else if (qName.equalsIgnoreCase("stgElement")) {
-            Element elm = Element.getElement(currentText.toString());
+            Element elm;
+            try {
+                elm = Element.valueOf(currentText.toString());
+            }
+            catch(IllegalArgumentException e){
+                elm = null;
+            }
             if (elm == null) {
                 System.out.println("CharacterParser:characters(): Could not find Strong element: " + currentText.toString());
                 error = true;
@@ -290,7 +315,13 @@ public class CharacterParser extends DefaultHandler{
                 }
             }
         } else if (qName.equalsIgnoreCase("wkElement")) {
-            Element elm = Element.getElement(currentText.toString());
+            Element elm;
+            try {
+                elm = Element.valueOf(currentText.toString());
+            }
+            catch(IllegalArgumentException e){
+                elm = null;
+            }
             if (elm == null) {
                 System.out.println("CharacterParser:characters(): Could not find  Weak element: " + currentText.toString());
                 error = true;

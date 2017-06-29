@@ -21,7 +21,7 @@ public class RobotSkill extends AbsSkill {
 
     @Override
     public double receiveMagicalAttackPercentage(BattleCharacter enemy) {
-        if(enemy.getAttackElement() == Element.getElement("WATER")) {
+        if(enemy.getAttackElement() == Element.WATER) {
             return -0.5;
         }
         else {
@@ -31,7 +31,7 @@ public class RobotSkill extends AbsSkill {
 
     @Override
     public double receiveSpecialAttackPercentage(BattleCharacter enemy) {
-        if(enemy.getAttackElement() == Element.getElement("WATER")) {
+        if(enemy.getAttackElement() == Element.WATER) {
             return -0.5;
         }
         else {
@@ -41,7 +41,7 @@ public class RobotSkill extends AbsSkill {
 
     @Override
     public Multipliers getMultipliers(BattleCharacter enemy) {
-        double defense = enemy.getAttackElement() == Element.getElement("WATER") ? -0.5 : 0.0;
+        double defense = enemy.getAttackElement() == Element.WATER ? -0.5 : 0.0;
         Multipliers returnValue = new Multipliers();
         returnValue.setPhysDef(0.2);
         returnValue.setMagDef(defense);
@@ -52,7 +52,7 @@ public class RobotSkill extends AbsSkill {
     @Override
     public String getDescription(BattleCharacter enemy) {
         double defense;
-        if(enemy.getAttackElement() == Element.getElement("WATER")) {
+        if(enemy.getAttackElement() == Element.WATER) {
             defense = 0.5;
         }
         else {

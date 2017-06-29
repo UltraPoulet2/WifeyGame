@@ -389,7 +389,13 @@ public class EnemyParser extends DefaultHandler{
             bRemoveSkill = false;
         }
         else if(qName.equalsIgnoreCase("atkElement")){
-            Element elm = Element.getElement(currentText.toString());
+            Element elm;
+            try {
+                elm = Element.valueOf(currentText.toString());
+            }
+            catch(IllegalArgumentException e){
+                elm = null;
+            }
             if(elm == null){
                 System.out.println("EnemyParser:characters(): Could not find atk element: " + currentText.toString());
                 error = true;
@@ -404,7 +410,13 @@ public class EnemyParser extends DefaultHandler{
             }
         }
         else if(qName.equalsIgnoreCase("stgElement")){
-            Element elm = Element.getElement(currentText.toString());
+            Element elm;
+            try {
+                elm = Element.valueOf(currentText.toString());
+            }
+            catch(IllegalArgumentException e){
+                elm = null;
+            }
             if(elm == null){
                 System.out.println("EnemyParser:characters(): Could not find stg element: " + currentText.toString());
                 error = true;
@@ -419,7 +431,13 @@ public class EnemyParser extends DefaultHandler{
             }
         }
         else if(qName.equalsIgnoreCase("wkElement")){
-            Element elm = Element.getElement(currentText.toString());
+            Element elm;
+            try {
+                elm = Element.valueOf(currentText.toString());
+            }
+            catch(IllegalArgumentException e){
+                elm = null;
+            }
             if(elm == null){
                 System.out.println("EnemyParser:characters(): Could not find wk element: " + currentText.toString());
                 error = true;

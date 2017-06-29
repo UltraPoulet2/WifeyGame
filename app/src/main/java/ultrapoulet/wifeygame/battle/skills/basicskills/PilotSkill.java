@@ -19,7 +19,7 @@ public class PilotSkill extends AbsSkill {
 
     @Override
     public double receivePhysicalAttackPercentage(BattleCharacter enemy) {
-        if(enemy.getAttackElement() == Element.getElement("AIR")) {
+        if(enemy.getAttackElement() == Element.AIR) {
             return multiplier;
         }
         else {
@@ -29,7 +29,7 @@ public class PilotSkill extends AbsSkill {
 
     @Override
     public double receiveMagicalAttackPercentage(BattleCharacter enemy) {
-        if(enemy.getAttackElement() == Element.getElement("AIR")) {
+        if(enemy.getAttackElement() == Element.AIR) {
             return multiplier;
         }
         else {
@@ -39,7 +39,7 @@ public class PilotSkill extends AbsSkill {
 
     @Override
     public double receiveSpecialAttackPercentage(BattleCharacter enemy) {
-        if(enemy.getAttackElement() == Element.getElement("AIR")) {
+        if(enemy.getAttackElement() == Element.AIR) {
             return multiplier;
         }
         else {
@@ -49,7 +49,7 @@ public class PilotSkill extends AbsSkill {
 
     @Override
     public Multipliers getMultipliers(BattleCharacter enemy) {
-        double defense = enemy.getAttackElement() == Element.getElement("AIR") ? multiplier : 0.0;
+        double defense = enemy.getAttackElement() == Element.AIR ? multiplier : 0.0;
         Multipliers returnValue = new Multipliers();
         returnValue.setPhysDef(defense);
         returnValue.setMagDef(defense);
@@ -60,7 +60,7 @@ public class PilotSkill extends AbsSkill {
     @Override
     public String getDescription(BattleCharacter enemy) {
         double defense;
-        if(enemy.getAttackElement() == Element.getElement("AIR")) {
+        if(enemy.getAttackElement() == Element.AIR) {
             defense = multiplier;
         }
         else {
