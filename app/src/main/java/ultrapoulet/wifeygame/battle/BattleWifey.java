@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ultrapoulet.androidgame.framework.Graphics;
-import ultrapoulet.androidgame.framework.Image;
-import ultrapoulet.wifeygame.character.Element;
-import ultrapoulet.wifeygame.character.SkillsEnum;
 import ultrapoulet.wifeygame.character.TransformWifey;
 import ultrapoulet.wifeygame.character.Weapon;
 import ultrapoulet.wifeygame.battle.skills.AbsSkill.Multipliers;

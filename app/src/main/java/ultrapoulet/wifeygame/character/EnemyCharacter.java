@@ -245,9 +245,6 @@ public class EnemyCharacter {
             return false;
         }
         //For now, make every enemy provide gold and experience
-        if(gold == 0 || experience == 0){
-            return false;
-        }
-        return true;
+        return !(gold == 0 || experience == 0);
     }
 }

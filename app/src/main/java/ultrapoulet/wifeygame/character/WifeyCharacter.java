@@ -255,10 +255,7 @@ public class WifeyCharacter {
         if(weapon == null){
             return false;
         }
-        if(attackElement == null || strongElement == null | weakElement == null){
-            return false;
-        }
-        return true;
+        return !(attackElement == null || strongElement == null | weakElement == null);
     }
 
     //Return true if level increased

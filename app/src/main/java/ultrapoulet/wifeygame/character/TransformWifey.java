@@ -125,9 +125,6 @@ public class TransformWifey {
         if(strength <= 0){
             return false;
         }
-        if(magic <= 0){
-            return false;
-        }
-        return true;
+        return magic > 0;
     }
 }

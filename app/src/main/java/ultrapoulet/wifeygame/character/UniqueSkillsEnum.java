@@ -20,7 +20,7 @@ public enum UniqueSkillsEnum {
     private String skillDesc;
     public abstract AbsUniqueSkill getUniqueBattleSkill(BattleCharacter owner);
 
-    private UniqueSkillsEnum(String skillName, String skillDesc){
+    UniqueSkillsEnum(String skillName, String skillDesc){
         this.skillName = skillName;
         this.skillDesc = skillDesc;
     }

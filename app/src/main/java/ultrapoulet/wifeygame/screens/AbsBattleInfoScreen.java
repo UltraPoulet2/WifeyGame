@@ -189,10 +189,7 @@ public abstract class AbsBattleInfoScreen extends Screen {
     }
 
     private boolean canStartBattle(){
-        if(party.get(0) != null && battleInfo.validParty(party) && PlayerInfo.getCurrentEnergy() >= battleInfo.getEnergyRequirement()) {
-            return true;
-        }
-        return false;
+        return party.get(0) != null && battleInfo.validParty(party) && PlayerInfo.getCurrentEnergy() >= battleInfo.getEnergyRequirement();
     }
 
     @Override

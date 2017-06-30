@@ -126,10 +126,10 @@ public class RecruitingParser extends DefaultHandler {
                 }
                 catch(NumberFormatException e) {
                     if(recruit != null) {
-                        System.out.println("RecruitingParser:characters(): NumberFormatException for key: " + recruit.getHashKey());
+                        System.out.println("RecruitingParser:endElement(): NumberFormatException for key: " + recruit.getHashKey());
                     }
                     else {
-                        System.out.println("RecruitingParser:characters(): NumberFormatException for unknown key.");
+                        System.out.println("RecruitingParser:endElement(): NumberFormatException for unknown key.");
                     }
                 }
             }
@@ -147,10 +147,10 @@ public class RecruitingParser extends DefaultHandler {
                 }
                 catch(NumberFormatException e) {
                     if(recruit != null) {
-                        System.out.println("RecruitingParser:characters(): NumberFormatException for key: " + recruit.getHashKey());
+                        System.out.println("RecruitingParser:endElement(): NumberFormatException for key: " + recruit.getHashKey());
                     }
                     else {
-                        System.out.println("RecruitingParser:characters(): NumberFormatException for unknown key.");
+                        System.out.println("RecruitingParser:endElement(): NumberFormatException for unknown key.");
                     }
                 }
             }

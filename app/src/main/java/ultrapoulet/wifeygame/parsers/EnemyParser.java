@@ -4,8 +4,6 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import ultrapoulet.androidgame.framework.Graphics;
-import ultrapoulet.androidgame.framework.Graphics.ImageFormat;
 import ultrapoulet.wifeygame.character.Element;
 import ultrapoulet.wifeygame.character.EnemyCharacter;
 import ultrapoulet.wifeygame.character.SkillsEnum;
@@ -202,7 +200,7 @@ public class EnemyParser extends DefaultHandler{
                 }
             }
             catch(NumberFormatException e){
-                System.out.println("EnemyParser:characters(): NumberFormatException for key: " + enemyKey + " for maxHP");
+                System.out.println("EnemyParser:endElement(): NumberFormatException for key: " + enemyKey + " for maxHP");
                 error = true;
             }
         }
@@ -215,7 +213,7 @@ public class EnemyParser extends DefaultHandler{
                 }
             }
             catch(NumberFormatException e){
-                System.out.println("EnemyParser:characters(): NumberFormatException for key: " + enemyKey + " for powerDamage");
+                System.out.println("EnemyParser:endElement(): NumberFormatException for key: " + enemyKey + " for powerDamage");
                 error = true;
             }
         }
@@ -228,7 +226,7 @@ public class EnemyParser extends DefaultHandler{
                 }
             }
             catch(NumberFormatException e){
-                System.out.println("EnemyParser:characters(): NumberFormatException for key: " + enemyKey + " for powerHits");
+                System.out.println("EnemyParser:endElement(): NumberFormatException for key: " + enemyKey + " for powerHits");
                 error = true;
             }
         }
@@ -241,7 +239,7 @@ public class EnemyParser extends DefaultHandler{
                 }
             }
             catch(NumberFormatException e){
-                System.out.println("EnemyParser:characters(): NumberFormatException for key: " + enemyKey + " for comboDamage");
+                System.out.println("EnemyParser:endElement(): NumberFormatException for key: " + enemyKey + " for comboDamage");
                 error = true;
             }
         }
@@ -254,7 +252,7 @@ public class EnemyParser extends DefaultHandler{
                 }
             }
             catch(NumberFormatException e){
-                System.out.println("EnemyParser:characters(): NumberFormatException for key: " + enemyKey + " for comboHits");
+                System.out.println("EnemyParser:endElement(): NumberFormatException for key: " + enemyKey + " for comboHits");
                 error = true;
             }
         }
@@ -267,7 +265,7 @@ public class EnemyParser extends DefaultHandler{
                 }
             }
             catch(NumberFormatException e){
-                System.out.println("EnemyParser:characters(): NumberFormatException for key: " + enemyKey + " for magicDamage");
+                System.out.println("EnemyParser:endElement(): NumberFormatException for key: " + enemyKey + " for magicDamage");
                 error = true;
             }
         }
@@ -280,7 +278,7 @@ public class EnemyParser extends DefaultHandler{
                 }
             }
             catch(NumberFormatException e){
-                System.out.println("EnemyParser:characters(): NumberFormatException for key: " + enemyKey + " for healAmount");
+                System.out.println("EnemyParser:endElement(): NumberFormatException for key: " + enemyKey + " for healAmount");
                 error = true;
             }
         }
@@ -293,7 +291,7 @@ public class EnemyParser extends DefaultHandler{
                 }
             }
             catch(NumberFormatException e){
-                System.out.println("EnemyParser:characters(): NumberFormatException for key: " + enemyKey + " for powerUp");
+                System.out.println("EnemyParser:endElement(): NumberFormatException for key: " + enemyKey + " for powerUp");
                 error = true;
             }
         }
@@ -306,7 +304,7 @@ public class EnemyParser extends DefaultHandler{
                 }
             }
             catch(NumberFormatException e){
-                System.out.println("EnemyParser:characters(): NumberFormatException for key: " + enemyKey + " for powerDown");
+                System.out.println("EnemyParser:endElement(): NumberFormatException for key: " + enemyKey + " for powerDown");
                 error = true;
             }
         }
@@ -319,7 +317,7 @@ public class EnemyParser extends DefaultHandler{
                 }
             }
             catch(NumberFormatException e){
-                System.out.println("EnemyParser:characters(): NumberFormatException for key: " + enemyKey + " for defend");
+                System.out.println("EnemyParser:endElement(): NumberFormatException for key: " + enemyKey + " for defend");
                 error = true;
             }
         }
@@ -332,7 +330,7 @@ public class EnemyParser extends DefaultHandler{
                 }
             }
             catch(NumberFormatException e){
-                System.out.println("EnemyParser:characters(): NumberFormatException for key: " + enemyKey + " for weakne");
+                System.out.println("EnemyParser:endElement(): NumberFormatException for key: " + enemyKey + " for weakne");
                 error = true;
             }
         }
@@ -345,7 +343,7 @@ public class EnemyParser extends DefaultHandler{
                 }
             }
             catch(NumberFormatException e){
-                System.out.println("EnemyParser:characters(): NumberFormatException for key: " + enemyKey + " for specialDamage");
+                System.out.println("EnemyParser:endElement(): NumberFormatException for key: " + enemyKey + " for specialDamage");
                 error = true;
             }
         }
@@ -358,7 +356,7 @@ public class EnemyParser extends DefaultHandler{
                 }
             }
             catch(NumberFormatException e){
-                System.out.println("EnemyParser:characters(): NumberFormatException for key: " + enemyKey + " for specialHits");
+                System.out.println("EnemyParser:endElement(): NumberFormatException for key: " + enemyKey + " for specialHits");
                 error = true;
             }
         }
@@ -371,7 +369,7 @@ public class EnemyParser extends DefaultHandler{
                 skill = null;
             }
             if(skill == null){
-                System.out.println("EnemyParser:characters(): Could not find skill: " + currentText.toString());
+                System.out.println("EnemyParser:endElement(): Could not find skill: " + currentText.toString());
                 error = true;
             }
             else{
@@ -397,7 +395,7 @@ public class EnemyParser extends DefaultHandler{
                 elm = null;
             }
             if(elm == null){
-                System.out.println("EnemyParser:characters(): Could not find atk element: " + currentText.toString());
+                System.out.println("EnemyParser:endElement(): Could not find atk element: " + currentText.toString());
                 error = true;
             }
             else{
@@ -418,7 +416,7 @@ public class EnemyParser extends DefaultHandler{
                 elm = null;
             }
             if(elm == null){
-                System.out.println("EnemyParser:characters(): Could not find stg element: " + currentText.toString());
+                System.out.println("EnemyParser:endElement(): Could not find stg element: " + currentText.toString());
                 error = true;
             }
             else{
@@ -439,7 +437,7 @@ public class EnemyParser extends DefaultHandler{
                 elm = null;
             }
             if(elm == null){
-                System.out.println("EnemyParser:characters(): Could not find wk element: " + currentText.toString());
+                System.out.println("EnemyParser:endElement(): Could not find wk element: " + currentText.toString());
                 error = true;
             }
             else{
@@ -456,7 +454,7 @@ public class EnemyParser extends DefaultHandler{
                 enemyBuilder.setGold(Integer.parseInt(currentText.toString()));
             }
             catch(NumberFormatException e){
-                System.out.println("EnemyParser:characters(): NumberFormatException for key: " + enemyKey + " for gold");
+                System.out.println("EnemyParser:endElement(): NumberFormatException for key: " + enemyKey + " for gold");
                 error = true;
             }
         }
@@ -465,7 +463,7 @@ public class EnemyParser extends DefaultHandler{
                 enemyBuilder.setExperience(Integer.parseInt(currentText.toString()));
             }
             catch(NumberFormatException e){
-                System.out.println("EnemyParser:characters(): NumberFormatException for key: " + enemyKey + " for exp");
+                System.out.println("EnemyParser:endElement(): NumberFormatException for key: " + enemyKey + " for exp");
                 error = true;
             }
         }

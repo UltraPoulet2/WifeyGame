@@ -17,7 +17,7 @@ public enum Element {
     private String elementType;
     private Image elementImage;
 
-    private Element(String elem, Image image){
+    Element(String elem, Image image){
         this.elementType = elem;
         this.elementImage = image;
     }

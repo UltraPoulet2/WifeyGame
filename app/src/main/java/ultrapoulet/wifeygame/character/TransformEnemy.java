@@ -250,9 +250,6 @@ public class TransformEnemy {
         if(image == null){
             return false;
         }
-        if(ai == null || ai.length() == 0){
-            return false;
-        }
-        return true;
+        return !(ai == null || ai.length() == 0);
     }
 }

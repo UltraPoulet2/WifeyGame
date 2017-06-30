@@ -279,7 +279,7 @@ public enum SkillsEnum {
         }
     };
 
-    private SkillsEnum(String skillName, String skillDesc){
+    SkillsEnum(String skillName, String skillDesc){
         this.skillName = skillName;
         this.skillDesc = skillDesc;
     }
@@ -291,4 +291,4 @@ public enum SkillsEnum {
     public String getSkillDesc(){
         return this.skillDesc;
     }
-};
+}

@@ -140,7 +140,7 @@ public class BattleParser extends DefaultHandler {
         else if(qName.equalsIgnoreCase("enemy")){
             EnemyCharacter tempEn = Enemies.get(currentText.toString());
             if(tempEn == null){
-                System.out.println("BattleParser:characters(): BattleEnemy not found: " + currentText.toString());
+                System.out.println("BattleParser:endElement(): BattleEnemy not found: " + currentText.toString());
                 error = true;
             }
             else{
@@ -152,7 +152,7 @@ public class BattleParser extends DefaultHandler {
                 battleBuilder.setPartyMax(Integer.parseInt(currentText.toString()));
             }
             catch(NumberFormatException e){
-                System.out.println("BattleParser:characters(): NumberFormatException for key: " + battleKey);
+                System.out.println("BattleParser:endElement(): NumberFormatException for key: " + battleKey);
                 error = true;
             }
         }
@@ -169,7 +169,7 @@ public class BattleParser extends DefaultHandler {
                 battleBuilder.setEnergyRequirement(Integer.parseInt(currentText.toString()));
             }
             catch(NumberFormatException e){
-                System.out.println("BattleParser:characters(): NumberFormatException for key: " + battleKey);
+                System.out.println("BattleParser:endElement(): NumberFormatException for key: " + battleKey);
                 error = true;
             }
         }
@@ -181,7 +181,7 @@ public class BattleParser extends DefaultHandler {
                 chanceDrop = Integer.parseInt(currentText.toString());
             }
             catch(NumberFormatException e){
-                System.out.println("BattleParser:characters(): NumberFormatException for key: " + battleKey);
+                System.out.println("BattleParser:endElement(): NumberFormatException for key: " + battleKey);
                 error = true;
             }
         }
@@ -210,11 +210,8 @@ public class BattleParser extends DefaultHandler {
         if(battleBuilder.getBackgroundName() == null){
             return false;
         }
-        if(battleBuilder.getEnergyRequirement() == 0){
-            return false;
-        }
+        return battleBuilder.getEnergyRequirement() != 0;
 
-        return true;
     }
 
 

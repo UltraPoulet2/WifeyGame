@@ -4,7 +4,6 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.wifeygame.character.Element;
 import ultrapoulet.wifeygame.character.SkillsEnum;
 import ultrapoulet.wifeygame.character.TransformWifey;
@@ -175,7 +174,7 @@ public class CharacterParser extends DefaultHandler{
                 }
             }
             catch(NumberFormatException e){
-                System.out.println("CharacterParser:characters(): NumberFormatException for key: " + charKey);
+                System.out.println("CharacterParser:endElement(): NumberFormatException for key: " + charKey);
                 error = true;
             }
         }
@@ -188,7 +187,7 @@ public class CharacterParser extends DefaultHandler{
                 }
             }
             catch(NumberFormatException e){
-                System.out.println("CharacterParser:characters(): NumberFormatException for key: " + charKey);
+                System.out.println("CharacterParser:endElement(): NumberFormatException for key: " + charKey);
                 error = true;
             }
         }
@@ -221,7 +220,7 @@ public class CharacterParser extends DefaultHandler{
                 skill = null;
             }
             if (skill == null) {
-                System.out.println("CharacterParser:characters(): Could not find skill: " + currentText.toString());
+                System.out.println("CharacterParser:endElement(): Could not find skill: " + currentText.toString());
                 error = true;
             } else {
                 if (!bTransformSec) {
@@ -240,7 +239,7 @@ public class CharacterParser extends DefaultHandler{
                 skill = null;
             }
             if(skill == null){
-                System.out.println("CharacterParser:characters(): Could not find skill: " + currentText.toString());
+                System.out.println("CharacterParser:endElement(): Could not find skill: " + currentText.toString());
                 error = true;
             } else {
                 if (!bTransformSec){
@@ -260,7 +259,7 @@ public class CharacterParser extends DefaultHandler{
                 skill = null;
             }
             if (skill == null) {
-                System.out.println("CharacterParser:characters(): Could not find skill: " + currentText.toString());
+                System.out.println("CharacterParser:endElement(): Could not find skill: " + currentText.toString());
                 error = true;
             } else {
                 if(!bTransformSec) {
@@ -285,7 +284,7 @@ public class CharacterParser extends DefaultHandler{
                 elm = null;
             }
             if (elm == null) {
-                System.out.println("CharacterParser:characters(): Could not find Attack element: " + currentText.toString());
+                System.out.println("CharacterParser:endElement(): Could not find Attack element: " + currentText.toString());
                 error = true;
             } else {
                 if(!bTransformSec) {
@@ -304,7 +303,7 @@ public class CharacterParser extends DefaultHandler{
                 elm = null;
             }
             if (elm == null) {
-                System.out.println("CharacterParser:characters(): Could not find Strong element: " + currentText.toString());
+                System.out.println("CharacterParser:endElement(): Could not find Strong element: " + currentText.toString());
                 error = true;
             } else {
                 if(!bTransformSec) {
@@ -323,7 +322,7 @@ public class CharacterParser extends DefaultHandler{
                 elm = null;
             }
             if (elm == null) {
-                System.out.println("CharacterParser:characters(): Could not find  Weak element: " + currentText.toString());
+                System.out.println("CharacterParser:endElement(): Could not find  Weak element: " + currentText.toString());
                 error = true;
             } else {
                 if(!bTransformSec) {

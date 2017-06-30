@@ -107,7 +107,7 @@ public class RecruitingBattleParser extends DefaultHandler {
         else if(qName.equalsIgnoreCase("enemy")){
             EnemyCharacter tempEn = Enemies.get(currentText.toString());
             if(tempEn == null){
-                System.out.println("RecruitingBattleParser:characters(): BattleEnemy not found: " + currentText.toString());
+                System.out.println("RecruitingBattleParser:endElement(): BattleEnemy not found: " + currentText.toString());
                 error = true;
             }
             else{
@@ -119,7 +119,7 @@ public class RecruitingBattleParser extends DefaultHandler {
                 battleBuilder.setPartyMax(Integer.parseInt(currentText.toString()));
             }
             catch(NumberFormatException e){
-                System.out.println("RecruitingBattleParser:characters(): NumberFormatException for key: " + battleKey);
+                System.out.println("RecruitingBattleParser:endElement(): NumberFormatException for key: " + battleKey);
                 error = true;
             }
         }
@@ -136,7 +136,7 @@ public class RecruitingBattleParser extends DefaultHandler {
                 battleBuilder.setEnergyRequirement(Integer.parseInt(currentText.toString()));
             }
             catch(NumberFormatException e){
-                System.out.println("RecruitingBattleParser:characters(): NumberFormatException for key: " + battleKey);
+                System.out.println("RecruitingBattleParser:endElement(): NumberFormatException for key: " + battleKey);
                 error = true;
             }
         }
@@ -165,10 +165,7 @@ public class RecruitingBattleParser extends DefaultHandler {
         if(battleBuilder.getBackgroundName() == null){
             return false;
         }
-        if(battleBuilder.getEnergyRequirement() == 0){
-            return false;
-        }
+        return battleBuilder.getEnergyRequirement() != 0;
 
-        return true;
     }
 }

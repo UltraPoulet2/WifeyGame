@@ -7,6 +7,7 @@ import android.graphics.Paint.Align;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import ultrapoulet.androidgame.framework.Game;
 import ultrapoulet.androidgame.framework.Graphics;
@@ -469,13 +470,13 @@ public class BattleSelectScreen extends Screen {
         recruitButtonList.drawImage(g);
         recruitButtonList.drawScaledString(g, recruitNamePaint, RECRUIT_TITLE_OFFSET_X, 0, RECRUIT_TITLE_MAX_WIDTH, RECRUIT_TITLE_MAX_FONT);
 
-        if(selectedTab == STORY_BUTTON_STRING){
+        if(STORY_BUTTON_STRING.equals(selectedTab)){
             g.drawImage(Assets.BattleDivider, DIVIDER_X, DIVIDER_Y);
         }
 
         partyList.drawImage(g);
 
-        if(selectedTab == STORY_BUTTON_STRING && selectedArea != -1){
+        if(STORY_BUTTON_STRING.equals(selectedTab) && selectedArea != -1){
             for(int i = 0; i < storyBattleList.size(); i++){
                 if(storyBattleList.get(i).isActive()){
                     int imageX = STORY_BATTLE_LEFT_X + BATTLE_ENERGY_IMAGE_OFFSET_X;
@@ -501,7 +502,7 @@ public class BattleSelectScreen extends Screen {
                 }
             }
         }
-        else if(selectedTab == RECRUIT_BUTTON_STRING){
+        else if(RECRUIT_BUTTON_STRING.equals(selectedTab)){
             for(int i = 0; i < recruitableWifeys.size(); i++){
                 if(recruitButtonList.get(i).isActive()){
                     int imageX = RECRUIT_BUTTON_LEFT_X + RECRUIT_BUTTON_IMAGE_OFFSET_X;
@@ -533,7 +534,7 @@ public class BattleSelectScreen extends Screen {
         }
 
         createRecruitButtons();
-        if(selectedTab == RECRUIT_BUTTON_STRING){
+        if(RECRUIT_BUTTON_STRING.equals(selectedTab)){
             activateRecruitButtons();
         }
         else{

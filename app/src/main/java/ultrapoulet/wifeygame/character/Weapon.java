@@ -1,7 +1,5 @@
 package ultrapoulet.wifeygame.character;
 
-import java.util.HashMap;
-
 /**
  * Created by John on 6/25/2016.
  */
@@ -39,7 +37,7 @@ public enum Weapon {
     private String weaponType;
     private int numHits;
 
-    private Weapon(String weaponType, int numHits){
+    Weapon(String weaponType, int numHits){
         this.weaponType = weaponType;
         this.numHits = numHits;
     }

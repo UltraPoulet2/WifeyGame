@@ -99,7 +99,7 @@ public class LoadingScreen extends Screen {
             }
         };
         protected abstract String getStatus();
-    };
+    }
 
     private LoadingPhase currentPhase = LoadingPhase.CREATE_IMAGES;
 

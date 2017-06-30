@@ -9,21 +9,21 @@ import java.io.InputStream;
  */
 public interface Game {
 
-    public Audio getAudio();
+    Audio getAudio();
 
-    public Input getInput();
+    Input getInput();
 
-    public FileIO getFileIO();
+    FileIO getFileIO();
 
-    public Graphics getGraphics();
+    Graphics getGraphics();
 
-    public void setScreen(Screen screen);
+    void setScreen(Screen screen);
 
-    public Screen getCurrentScreen();
+    Screen getCurrentScreen();
 
-    public Screen getInitScreen();
+    Screen getInitScreen();
 
-    public InputStream openConfig(String filename);
+    InputStream openConfig(String filename);
 
-    public SharedPreferences getGamePreferences(String name, int mode);
+    SharedPreferences getGamePreferences(String name, int mode);
 }

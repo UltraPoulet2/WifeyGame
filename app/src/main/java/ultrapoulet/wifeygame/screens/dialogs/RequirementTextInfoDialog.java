@@ -1,7 +1,6 @@
 package ultrapoulet.wifeygame.screens.dialogs;
 
 import android.graphics.Color;
-import android.graphics.Rect;
 import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;

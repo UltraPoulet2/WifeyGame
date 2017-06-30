@@ -477,10 +477,7 @@ public class SkillList {
         if(weaponSkill != null && weaponSkill.getClass() == skillClass){
             return true;
         }
-        if(uniqueSkill != null && uniqueSkill.getClass() == skillClass) {
-            return true;
-        }
-        return false;
+        return uniqueSkill != null && uniqueSkill.getClass() == skillClass;
     }
 
 
