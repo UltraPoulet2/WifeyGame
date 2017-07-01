@@ -210,7 +210,10 @@ public class BattleParser extends DefaultHandler {
         if(battleBuilder.getBackgroundName() == null){
             return false;
         }
-        return battleBuilder.getEnergyRequirement() != 0;
+        if(battleBuilder.getEnergyRequirement() <= 0){
+            return false;
+        }
+        return true;
 
     }
 
