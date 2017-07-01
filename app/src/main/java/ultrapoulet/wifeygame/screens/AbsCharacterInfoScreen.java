@@ -58,6 +58,8 @@ public abstract class AbsCharacterInfoScreen extends Screen {
     protected TextPaint descPaint;
 
     protected int displayText = -1;
+    protected boolean bDisplayUnique = false;
+    protected boolean bDisplayWeaponSkill = false;
 
     protected ButtonList basicButtonList;
 
@@ -66,6 +68,15 @@ public abstract class AbsCharacterInfoScreen extends Screen {
     protected static final int CLOSE_TOP_Y = BG_Y + 10;
     protected static final int CLOSE_BOT_Y = CLOSE_TOP_Y + 75;
     protected static final String CLOSE_STRING = "Close";
+
+    protected static final int UNIQUE_SKILL_LEFT_X = BG_X + 30;
+    protected static final int UNIQUE_SKILL_RIGHT_X = UNIQUE_SKILL_LEFT_X + 307;
+    protected static final int WEAPON_SKILL_LEFT_X = BG_X + 343;
+    protected static final int WEAPON_SKILL_RIGHT_X = BG_X + 540;
+    protected static final int TOP_SKILLS_TOP_Y = BG_Y + 455;
+    protected static final int TOP_SKILLS_BOT_Y = TOP_SKILLS_TOP_Y + 50;
+    protected static final String UNIQUE_STRING = "Unique";
+    protected static final String WEAPON_STRING = "Weapon";
 
     protected ButtonList skillsButtonList;
     protected static final int SKILLS_BUTTON_LEFT_X = 30 + BG_X;
@@ -82,6 +93,9 @@ public abstract class AbsCharacterInfoScreen extends Screen {
     protected static final int MAX_WEAPON_SIZE = 197;
     protected static final int WEAPON_X = 345 + BG_X;
     protected static final int MAX_WEAPON_Y = 495 + BG_Y;
+    //Unique Skills will use same info as Weapon
+    protected static final int UNIQUE_X = 32 + BG_X;
+    protected static final int MAX_UNIQUE_SIZE = 303;
 
     //These will be removed when hits images are added
     protected Paint hitsPaint;
@@ -125,6 +139,8 @@ public abstract class AbsCharacterInfoScreen extends Screen {
     protected void createButtons(){
         basicButtonList = new ButtonList();
         basicButtonList.addButton(new Button(CLOSE_LEFT_X, CLOSE_RIGHT_X, CLOSE_TOP_Y, CLOSE_BOT_Y, true, CLOSE_STRING));
+        basicButtonList.addButton(new Button(UNIQUE_SKILL_LEFT_X, UNIQUE_SKILL_RIGHT_X, TOP_SKILLS_TOP_Y, TOP_SKILLS_BOT_Y, true, UNIQUE_STRING));
+        basicButtonList.addButton(new Button(WEAPON_SKILL_LEFT_X, WEAPON_SKILL_RIGHT_X, TOP_SKILLS_TOP_Y, TOP_SKILLS_BOT_Y, true, WEAPON_STRING));
 
         skillsButtonList = new ButtonList();
         for(int i = 0; i < 4; i++) {
@@ -155,12 +171,24 @@ public abstract class AbsCharacterInfoScreen extends Screen {
                         case CLOSE_STRING:
                             backButton();
                             break;
+                        case UNIQUE_STRING:
+                            displayText = -1;
+                            bDisplayUnique = !bDisplayUnique;
+                            bDisplayWeaponSkill = false;
+                            break;
+                        case WEAPON_STRING:
+                            displayText = -1;
+                            bDisplayUnique = false;
+                            bDisplayWeaponSkill = !bDisplayWeaponSkill;
+                            break;
                         default:
                             System.out.println("AbsCharacterInfoScreen:update(): Invalid button selection: " + basicPressed.getName());
                     }
                 }
                 else if(skillPressed != -1){
                     displayText = (displayText == skillPressed) ? -1 : skillPressed;
+                    bDisplayUnique = false;
+                    bDisplayWeaponSkill = false;
                 }
             }
             uniqueUpdate(t);

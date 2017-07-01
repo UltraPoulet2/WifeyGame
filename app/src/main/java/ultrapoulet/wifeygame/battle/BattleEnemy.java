@@ -6,13 +6,10 @@ import java.util.List;
 import java.util.Map;
 
 import ultrapoulet.androidgame.framework.Graphics;
-import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.wifeygame.battle.enemyai.EnemyAI;
 import ultrapoulet.wifeygame.battle.enemyai.EnemyAI.EnemyAction;
 import ultrapoulet.wifeygame.battle.skills.SkillList;
-import ultrapoulet.wifeygame.character.Element;
 import ultrapoulet.wifeygame.character.EnemyCharacter;
-import ultrapoulet.wifeygame.character.SkillsEnum;
 import ultrapoulet.wifeygame.character.TransformEnemy;
 
 /**
@@ -124,6 +121,11 @@ public class BattleEnemy extends BattleCharacter{
 
     public int getExperience(){
         return this.experience;
+    }
+
+    //This function is currently not used
+    public int getBonusRecruiting() {
+        return 0;
     }
 
     public void startBattle(List<BattleCharacter> party) {
@@ -425,6 +427,14 @@ public class BattleEnemy extends BattleCharacter{
         if(form.getWeakElement() != null){
             this.weakElement = form.getWeakElement();
         }
+        /*
+        if(form.getUniqueSkill() != null){
+            this.uniqueSkill = form.getUniqueSkill();
+        }
+        if(form.getWeaponSkill() != null){
+            this.weaponSkill = form.getWeaponSkill();
+        }
+         */
         for(int i = 0; i < form.getAddSkills().size(); i++){
             skills.addSkill(form.getAddSkills().get(i).getBattleSkill(this));
         }

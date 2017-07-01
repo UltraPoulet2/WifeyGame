@@ -104,6 +104,9 @@ public class Assets {
     public static Image CheckboxComplete, CheckboxIncomplete;
 
     //Dialog Stuff
+    public static Image AbsAdjustableDialogTop;
+    public static Image AbsAdjustableDialogMid;
+    public static Image AbsAdjustableDialogBot;
     public static Image DialogBackground;
     public static Image OptionYes;
     public static Image OptionNo;

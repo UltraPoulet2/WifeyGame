@@ -7,7 +7,7 @@ import ultrapoulet.wifeygame.battle.BattleCharacter;
 /**
  * Created by John on 7/10/2016.
  */
-public class AbsSkill {
+public abstract class AbsSkill {
 
     //The owner of the skill
     protected BattleCharacter owner;
@@ -210,6 +210,11 @@ public class AbsSkill {
 
     public int getBonusGold(){
         //Return the amount of bonus gold received from battle
+        return 0;
+    }
+
+    public int getBonusRecruiting() {
+        //Return the amount of bonus recruiting percentage
         return 0;
     }
 

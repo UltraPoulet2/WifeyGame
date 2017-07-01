@@ -3,7 +3,6 @@ package ultrapoulet.wifeygame.gamestate;
 import android.content.SharedPreferences;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -16,7 +15,7 @@ import ultrapoulet.wifeygame.character.WifeyCharacter;
  */
 public class Party {
 
-    private static ArrayList<WifeyCharacter> party = new ArrayList<WifeyCharacter>(Collections.nCopies(7, (WifeyCharacter) null));
+    private static ArrayList<WifeyCharacter> party = new ArrayList<>(Collections.nCopies(7, (WifeyCharacter) null));
 
     private static SharedPreferences prefs;
 

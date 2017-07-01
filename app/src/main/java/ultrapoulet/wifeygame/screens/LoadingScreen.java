@@ -99,7 +99,7 @@ public class LoadingScreen extends Screen {
             }
         };
         protected abstract String getStatus();
-    };
+    }
 
     private LoadingPhase currentPhase = LoadingPhase.CREATE_IMAGES;
 
@@ -307,6 +307,9 @@ public class LoadingScreen extends Screen {
         Assets.CheckboxComplete = g.newImage("Recruiting/CheckboxComplete.png", ImageFormat.ARGB8888);
         Assets.CheckboxIncomplete = g.newImage("Recruiting/CheckboxIncomplete.png", ImageFormat.ARGB8888);
 
+        Assets.AbsAdjustableDialogTop = g.newImage("Dialogs/AbsAdjustableDialogTop.png", ImageFormat.ARGB8888);
+        Assets.AbsAdjustableDialogMid = g.newImage("Dialogs/AbsAdjustableDialogMid.png", ImageFormat.ARGB8888);
+        Assets.AbsAdjustableDialogBot = g.newImage("Dialogs/AbsAdjustableDialogBottom.png", ImageFormat.ARGB8888);
         Assets.DialogBackground = g.newImage("Dialogs/DialogBackground.png", ImageFormat.ARGB8888);
         Assets.OptionYes = g.newImage("Dialogs/OptionYes.png", ImageFormat.ARGB8888);
         Assets.OptionNo = g.newImage("Dialogs/OptionNo.png", ImageFormat.ARGB8888);
@@ -328,7 +331,6 @@ public class LoadingScreen extends Screen {
             SAXParserFactory factory = SAXParserFactory.newInstance();
             SAXParser saxParser = factory.newSAXParser();
             CharacterParser charParser = new CharacterParser();
-            charParser.setGraphics(game.getGraphics());
             saxParser.parse(in, charParser);
 
             //Temporary testing
@@ -386,7 +388,6 @@ public class LoadingScreen extends Screen {
             SAXParserFactory factory = SAXParserFactory.newInstance();
             SAXParser saxParser = factory.newSAXParser();
             EnemyParser enemyParser = new EnemyParser();
-            enemyParser.setGraphics(game.getGraphics());
             saxParser.parse(in, enemyParser);
 
             //Temporary testing

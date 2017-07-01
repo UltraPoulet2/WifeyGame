@@ -140,4 +140,5 @@ public abstract class BattleCharacter {
     //For BattleEnemys, this will return the amount of gold/experience dropped
     public abstract int getGold();
     public abstract int getExperience();
+    public abstract int getBonusRecruiting();
 }

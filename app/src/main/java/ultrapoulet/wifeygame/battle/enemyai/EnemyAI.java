@@ -17,7 +17,7 @@ public abstract class EnemyAI {
         TRANSFORM,
         SPECIAL_ATTACK,
         WAIT
-    };
+    }
 
     public EnemyAction selectedAction = null;
 

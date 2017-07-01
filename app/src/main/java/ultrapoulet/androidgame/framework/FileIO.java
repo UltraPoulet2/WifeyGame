@@ -11,11 +11,11 @@ import java.io.OutputStream;
  */
 public interface FileIO {
 
-    public InputStream readFile(String file) throws IOException;
+    InputStream readFile(String file) throws IOException;
 
-    public OutputStream writeFile(String file) throws IOException;
+    OutputStream writeFile(String file) throws IOException;
 
-    public InputStream readAsset(String file) throws IOException;
+    InputStream readAsset(String file) throws IOException;
 
-    public SharedPreferences getSharedPref();
+    SharedPreferences getSharedPref();
 }

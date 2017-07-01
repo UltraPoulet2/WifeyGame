@@ -80,6 +80,8 @@ public class BattleResultScreen extends Screen{
     private int baseGold;
     private int bonusGold;
 
+    private int bonusRecruit;
+
     private boolean printed = false;
 
     private boolean playerLevelUp = false;
@@ -130,11 +132,12 @@ public class BattleResultScreen extends Screen{
             int exp = party.get(i).getExperience();
             bonusGold += gold;
             bonusExp += exp;
+            bonusRecruit += party.get(i).getBonusRecruiting();
             gains.add(new BonusGains(gold, exp));
         }
         playerLevelUp  = PlayerInfo.addExperience(baseExp + bonusExp);
         List<WifeyCharacter> wifeyList = Party.getParty(party.size());
-        for(int i = 0; i < wifeyList.size(); i++){
+        for(int i = 0; i < party.size(); i++){
             //This will be replaced with a boolean list later
             wifeyLevelUp[i] = wifeyList.get(i).addExperience(baseExp + bonusExp);
         }
@@ -142,7 +145,7 @@ public class BattleResultScreen extends Screen{
 
         if(victory){
             info.incrementNumComplete();
-            ArrayList<WifeyCharacter> droppedWifeys = info.performDrops();
+            ArrayList<WifeyCharacter> droppedWifeys = info.performDrops(bonusRecruit);
             Graphics g = game.getGraphics();
             for(WifeyCharacter wifey : droppedWifeys){
                 drops.add(wifey.getImage(g));

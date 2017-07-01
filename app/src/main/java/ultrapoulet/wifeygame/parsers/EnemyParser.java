@@ -4,8 +4,6 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import ultrapoulet.androidgame.framework.Graphics;
-import ultrapoulet.androidgame.framework.Graphics.ImageFormat;
 import ultrapoulet.wifeygame.character.Element;
 import ultrapoulet.wifeygame.character.EnemyCharacter;
 import ultrapoulet.wifeygame.character.SkillsEnum;
@@ -17,35 +15,9 @@ import ultrapoulet.wifeygame.gamestate.Enemies;
  */
 public class EnemyParser extends DefaultHandler{
 
-    private Graphics g;
-
-    private boolean bName = false;
-    private boolean bAi = false;
-    private boolean bMaxHp = false;
-    private boolean bPowerDamage = false;
-    private boolean bPowerHits = false;
-    private boolean bComboDamage = false;
-    private boolean bComboHits = false;
-    private boolean bMagicDamage = false;
-    private boolean bHealAmount = false;
-    private boolean bPowerUp = false;
-    private boolean bPowerDown = false;
-    private boolean bDefend = false;
-    private boolean bWeaken = false;
-    private boolean bSpecialDamage = false;
-    private boolean bSpecialHits = false;
-    private boolean bSkill = false;
-    private boolean bGold = false;
-    private boolean bExp = false;
-
     private boolean bTransformSec;
-    private boolean bTransform;
     private boolean bAddSkill;
     private boolean bRemoveSkill;
-
-    private boolean bAtkElement;
-    private boolean bStgElement;
-    private boolean bWkElement;
 
     private boolean error = false;
 
@@ -55,9 +27,7 @@ public class EnemyParser extends DefaultHandler{
 
     private int tNumber = 0;
 
-    public void setGraphics(Graphics g){
-        this.g = g;
-    }
+    private StringBuffer currentText = new StringBuffer();
 
     @Override
     public void startElement(String uri,
@@ -78,49 +48,49 @@ public class EnemyParser extends DefaultHandler{
 
         }
         else if(qName.equalsIgnoreCase("name")){
-            bName = true;
+            currentText = new StringBuffer();
         }
         else if(qName.equalsIgnoreCase("ai")){
-            bAi = true;
+            currentText = new StringBuffer();
         }
         else if(qName.equalsIgnoreCase("maxHP")){
-            bMaxHp = true;
+            currentText = new StringBuffer();
         }
         else if(qName.equalsIgnoreCase("powerDamage")){
-            bPowerDamage = true;
+            currentText = new StringBuffer();
         }
         else if(qName.equalsIgnoreCase("powerHits")){
-            bPowerHits = true;
+            currentText = new StringBuffer();
         }
         else if(qName.equalsIgnoreCase("comboDamage")){
-            bComboDamage = true;
+            currentText = new StringBuffer();
         }
         else if(qName.equalsIgnoreCase("comboHits")){
-            bComboHits = true;
+            currentText = new StringBuffer();
         }
         else if(qName.equalsIgnoreCase("magicDamage")){
-            bMagicDamage = true;
+            currentText = new StringBuffer();
         }
         else if(qName.equalsIgnoreCase("healAmount")){
-            bHealAmount = true;
+            currentText = new StringBuffer();
         }
         else if(qName.equalsIgnoreCase("powerUp")){
-            bPowerUp = true;
+            currentText = new StringBuffer();
         }
         else if(qName.equalsIgnoreCase("powerDown")){
-            bPowerDown = true;
+            currentText = new StringBuffer();
         }
         else if(qName.equalsIgnoreCase("defend")){
-            bDefend = true;
+            currentText = new StringBuffer();
         }
         else if(qName.equalsIgnoreCase("weaken")){
-            bWeaken = true;
+            currentText = new StringBuffer();
         }
         else if(qName.equalsIgnoreCase("specialDamage")){
-            bSpecialDamage = true;
+            currentText = new StringBuffer();
         }
         else if(qName.equalsIgnoreCase("specialHits")){
-            bSpecialHits = true;
+            currentText = new StringBuffer();
         }
         else if(qName.equalsIgnoreCase("enemies")){
             //Do nothing
@@ -141,33 +111,33 @@ public class EnemyParser extends DefaultHandler{
             }
         }
         else if(qName.equalsIgnoreCase("skill")){
-            bSkill = true;
+            currentText = new StringBuffer();
         }
         else if(qName.equalsIgnoreCase("elements")){
             //Do nothing.
         }
         else if(qName.equalsIgnoreCase("atkElement")){
-            bAtkElement = true;
+            currentText = new StringBuffer();
         }
         else if(qName.equalsIgnoreCase("stgElement")){
-            bStgElement = true;
+            currentText = new StringBuffer();
         }
         else if(qName.equalsIgnoreCase("wkElement")){
-            bWkElement = true;
+            currentText = new StringBuffer();
         }
         else if(qName.equalsIgnoreCase("transformations")){
-            bTransformSec = true;
+            currentText = new StringBuffer();
         }
         else if(qName.equalsIgnoreCase("transformation")){
             transformBuilder = new TransformEnemy();
             transformBuilder.setImage(enemyKey + "-T" + tNumber);
-            bTransform = true;
+            bTransformSec = true;
         }
         else if(qName.equalsIgnoreCase("gold")){
-            bGold = true;
+            currentText = new StringBuffer();
         }
         else if(qName.equalsIgnoreCase("exp")){
-            bExp = true;
+            currentText = new StringBuffer();
         }
         else{
             System.out.println("EnemyParser:startElement(): Invalid qName: " + qName + " for key: " + enemyKey);
@@ -196,7 +166,6 @@ public class EnemyParser extends DefaultHandler{
                 error = true;
                 System.out.println("EnemyParser:endElement(): Error adding transformation: " + tNumber);
             }
-            bTransform = false;
         }
         else if(qName.equalsIgnoreCase("transformations")){
             bTransformSec = false;
@@ -206,233 +175,305 @@ public class EnemyParser extends DefaultHandler{
             bAddSkill = false;
             bRemoveSkill = false;
         }
+        else if(qName.equalsIgnoreCase("name")){
+            if(!bTransformSec) {
+                enemyBuilder.setName(currentText.toString());
+            }
+            else {
+                transformBuilder.setName(currentText.toString());
+            }
+        }
+        else if(qName.equalsIgnoreCase("ai")){
+            if(!bTransformSec) {
+                enemyBuilder.setAI(currentText.toString());
+            }
+            else {
+                transformBuilder.setAi(currentText.toString());
+            }
+        }
+        else if(qName.equalsIgnoreCase("maxHP")){
+            try {
+                if (!bTransformSec) {
+                    enemyBuilder.setMaxHP(Integer.parseInt(currentText.toString()));
+                } else {
+                    transformBuilder.setHP(Integer.parseInt(currentText.toString()));
+                }
+            }
+            catch(NumberFormatException e){
+                System.out.println("EnemyParser:endElement(): NumberFormatException for key: " + enemyKey + " for maxHP");
+                error = true;
+            }
+        }
+        else if(qName.equalsIgnoreCase("powerDamage")){
+            try {
+                if (!bTransformSec) {
+                    enemyBuilder.setPowerDamage(Integer.parseInt(currentText.toString()));
+                } else {
+                    transformBuilder.setPowerDamage(Integer.parseInt(currentText.toString()));
+                }
+            }
+            catch(NumberFormatException e){
+                System.out.println("EnemyParser:endElement(): NumberFormatException for key: " + enemyKey + " for powerDamage");
+                error = true;
+            }
+        }
+        else if(qName.equalsIgnoreCase("powerHits")){
+            try {
+                if (!bTransformSec) {
+                    enemyBuilder.setPowerHits(Integer.parseInt(currentText.toString()));
+                } else {
+                    transformBuilder.setPowerHits(Integer.parseInt(currentText.toString()));
+                }
+            }
+            catch(NumberFormatException e){
+                System.out.println("EnemyParser:endElement(): NumberFormatException for key: " + enemyKey + " for powerHits");
+                error = true;
+            }
+        }
+        else if(qName.equalsIgnoreCase("comboDamage")){
+            try {
+                if (!bTransformSec) {
+                    enemyBuilder.setComboDamage(Integer.parseInt(currentText.toString()));
+                } else {
+                    transformBuilder.setComboDamage(Integer.parseInt(currentText.toString()));
+                }
+            }
+            catch(NumberFormatException e){
+                System.out.println("EnemyParser:endElement(): NumberFormatException for key: " + enemyKey + " for comboDamage");
+                error = true;
+            }
+        }
+        else if(qName.equalsIgnoreCase("comboHits")){
+            try {
+                if (!bTransformSec) {
+                    enemyBuilder.setComboHits(Integer.parseInt(currentText.toString()));
+                } else {
+                    transformBuilder.setComboHits(Integer.parseInt(currentText.toString()));
+                }
+            }
+            catch(NumberFormatException e){
+                System.out.println("EnemyParser:endElement(): NumberFormatException for key: " + enemyKey + " for comboHits");
+                error = true;
+            }
+        }
+        else if(qName.equalsIgnoreCase("magicDamage")){
+            try {
+                if (!bTransformSec) {
+                    enemyBuilder.setMagicDamage(Integer.parseInt(currentText.toString()));
+                } else {
+                    transformBuilder.setMagicDamage(Integer.parseInt(currentText.toString()));
+                }
+            }
+            catch(NumberFormatException e){
+                System.out.println("EnemyParser:endElement(): NumberFormatException for key: " + enemyKey + " for magicDamage");
+                error = true;
+            }
+        }
+        else if(qName.equalsIgnoreCase("healAmount")){
+            try {
+                if (!bTransformSec) {
+                    enemyBuilder.setHealAmount(Integer.parseInt(currentText.toString()));
+                } else {
+                    transformBuilder.setHealAmount(Integer.parseInt(currentText.toString()));
+                }
+            }
+            catch(NumberFormatException e){
+                System.out.println("EnemyParser:endElement(): NumberFormatException for key: " + enemyKey + " for healAmount");
+                error = true;
+            }
+        }
+        else if(qName.equalsIgnoreCase("powerUp")){
+            try {
+                if (!bTransformSec) {
+                    enemyBuilder.setPowerUpPercentage(Double.parseDouble(currentText.toString()));
+                } else {
+                    transformBuilder.setPowerUpPercentage(Double.parseDouble(currentText.toString()));
+                }
+            }
+            catch(NumberFormatException e){
+                System.out.println("EnemyParser:endElement(): NumberFormatException for key: " + enemyKey + " for powerUp");
+                error = true;
+            }
+        }
+        else if(qName.equalsIgnoreCase("powerDown")){
+            try {
+                if (!bTransformSec) {
+                    enemyBuilder.setPowerDownPercentage(Double.parseDouble(currentText.toString()));
+                } else {
+                    transformBuilder.setPowerDownPercentage(Double.parseDouble(currentText.toString()));
+                }
+            }
+            catch(NumberFormatException e){
+                System.out.println("EnemyParser:endElement(): NumberFormatException for key: " + enemyKey + " for powerDown");
+                error = true;
+            }
+        }
+        else if(qName.equalsIgnoreCase("defend")){
+            try {
+                if (!bTransformSec) {
+                    enemyBuilder.setDefendPercentage(Double.parseDouble(currentText.toString()));
+                } else {
+                    transformBuilder.setDefendPercentage(Double.parseDouble(currentText.toString()));
+                }
+            }
+            catch(NumberFormatException e){
+                System.out.println("EnemyParser:endElement(): NumberFormatException for key: " + enemyKey + " for defend");
+                error = true;
+            }
+        }
+        else if(qName.equalsIgnoreCase("weaken")){
+            try {
+                if (!bTransformSec) {
+                    enemyBuilder.setWeakenPercentage(Double.parseDouble(currentText.toString()));
+                } else {
+                    transformBuilder.setWeakenPercentage(Double.parseDouble(currentText.toString()));
+                }
+            }
+            catch(NumberFormatException e){
+                System.out.println("EnemyParser:endElement(): NumberFormatException for key: " + enemyKey + " for weakne");
+                error = true;
+            }
+        }
+        else if(qName.equalsIgnoreCase("specialDamage")){
+            try {
+                if (!bTransformSec) {
+                    enemyBuilder.setSpecialDamage(Integer.parseInt(currentText.toString()));
+                } else {
+                    transformBuilder.setSpecialDamage(Integer.parseInt(currentText.toString()));
+                }
+            }
+            catch(NumberFormatException e){
+                System.out.println("EnemyParser:endElement(): NumberFormatException for key: " + enemyKey + " for specialDamage");
+                error = true;
+            }
+        }
+        else if(qName.equalsIgnoreCase("specialHits")){
+            try {
+                if (!bTransformSec) {
+                    enemyBuilder.setSpecialHits(Integer.parseInt(currentText.toString()));
+                } else {
+                    transformBuilder.setSpecialHits(Integer.parseInt(currentText.toString()));
+                }
+            }
+            catch(NumberFormatException e){
+                System.out.println("EnemyParser:endElement(): NumberFormatException for key: " + enemyKey + " for specialHits");
+                error = true;
+            }
+        }
+        else if(qName.equalsIgnoreCase("skill")){
+            SkillsEnum skill;
+            try {
+                skill = SkillsEnum.valueOf(currentText.toString());
+            }
+            catch(IllegalArgumentException e){
+                skill = null;
+            }
+            if(skill == null){
+                System.out.println("EnemyParser:endElement(): Could not find skill: " + currentText.toString());
+                error = true;
+            }
+            else{
+                if(!bTransformSec) {
+                    enemyBuilder.addSkill(skill);
+                }
+                else if(bAddSkill) {
+                    transformBuilder.addSkill(skill);
+                }
+                else if(bRemoveSkill) {
+                    transformBuilder.removeSkill(skill);
+                }
+            }
+            bAddSkill = false;
+            bRemoveSkill = false;
+        }
+        else if(qName.equalsIgnoreCase("atkElement")){
+            Element elm;
+            try {
+                elm = Element.valueOf(currentText.toString());
+            }
+            catch(IllegalArgumentException e){
+                elm = null;
+            }
+            if(elm == null){
+                System.out.println("EnemyParser:endElement(): Could not find atk element: " + currentText.toString());
+                error = true;
+            }
+            else{
+                if(!bTransformSec) {
+                    enemyBuilder.setAttackElement(elm);
+                }
+                else {
+                    transformBuilder.setAttackElement(elm);
+                }
+            }
+        }
+        else if(qName.equalsIgnoreCase("stgElement")){
+            Element elm;
+            try {
+                elm = Element.valueOf(currentText.toString());
+            }
+            catch(IllegalArgumentException e){
+                elm = null;
+            }
+            if(elm == null){
+                System.out.println("EnemyParser:endElement(): Could not find stg element: " + currentText.toString());
+                error = true;
+            }
+            else{
+                if(!bTransformSec) {
+                    enemyBuilder.setStrongElement(elm);
+                }
+                else {
+                    transformBuilder.setStrongElement(elm);
+                }
+            }
+        }
+        else if(qName.equalsIgnoreCase("wkElement")){
+            Element elm;
+            try {
+                elm = Element.valueOf(currentText.toString());
+            }
+            catch(IllegalArgumentException e){
+                elm = null;
+            }
+            if(elm == null){
+                System.out.println("EnemyParser:endElement(): Could not find wk element: " + currentText.toString());
+                error = true;
+            }
+            else{
+                if(!bTransformSec) {
+                    enemyBuilder.setWeakElement(elm);
+                }
+                else {
+                    transformBuilder.setWeakElement(elm);
+                }
+            }
+        }
+        else if(qName.equalsIgnoreCase("gold")){
+            try {
+                enemyBuilder.setGold(Integer.parseInt(currentText.toString()));
+            }
+            catch(NumberFormatException e){
+                System.out.println("EnemyParser:endElement(): NumberFormatException for key: " + enemyKey + " for gold");
+                error = true;
+            }
+        }
+        else if(qName.equalsIgnoreCase("exp")){
+            try {
+                enemyBuilder.setExperience(Integer.parseInt(currentText.toString()));
+            }
+            catch(NumberFormatException e){
+                System.out.println("EnemyParser:endElement(): NumberFormatException for key: " + enemyKey + " for exp");
+                error = true;
+            }
+        }
     }
 
     @Override
     public void characters(char ch[],
                            int start,
                            int length) throws SAXException {
-        String temp = new String(ch, start, length);
-        try {
-            if (bName) {
-                if(!bTransformSec) {
-                    enemyBuilder.setName(temp);
-                }
-                else {
-                    transformBuilder.setName(temp);
-                }
-                bName = false;
-            } else if (bAi) {
-                if(!bTransformSec) {
-                    enemyBuilder.setAI(temp);
-                }
-                else {
-                    transformBuilder.setAi(temp);
-                }
-                bAi = false;
-            } else if (bMaxHp) {
-                if(!bTransformSec) {
-                    enemyBuilder.setMaxHP(Integer.parseInt(temp));
-                }
-                else {
-                    transformBuilder.setHP(Integer.parseInt(temp));
-                }
-                bMaxHp = false;
-            } else if (bPowerDamage) {
-                if(!bTransformSec) {
-                    enemyBuilder.setPowerDamage(Integer.parseInt(temp));
-                }
-                else {
-                    transformBuilder.setPowerDamage(Integer.parseInt(temp));
-                }
-                bPowerDamage = false;
-            } else if (bPowerHits) {
-                if(!bTransformSec) {
-                    enemyBuilder.setPowerHits(Integer.parseInt(temp));
-                }
-                else {
-                    transformBuilder.setPowerHits(Integer.parseInt(temp));
-                }
-                bPowerHits = false;
-            } else if (bComboDamage) {
-                if(!bTransformSec) {
-                    enemyBuilder.setComboDamage(Integer.parseInt(temp));
-                }
-                else {
-                    transformBuilder.setComboDamage(Integer.parseInt(temp));
-                }
-                bComboDamage = false;
-            } else if (bComboHits) {
-                if(!bTransformSec) {
-                    enemyBuilder.setComboHits(Integer.parseInt(temp));
-                }
-                else {
-                    transformBuilder.setComboHits(Integer.parseInt(temp));
-                }
-                bComboHits = false;
-            } else if (bMagicDamage) {
-                if(!bTransformSec) {
-                    enemyBuilder.setMagicDamage(Integer.parseInt(temp));
-                }
-                else {
-                    transformBuilder.setMagicDamage(Integer.parseInt(temp));
-                }
-                bMagicDamage = false;
-            } else if (bHealAmount) {
-                if(!bTransformSec) {
-                    enemyBuilder.setHealAmount(Integer.parseInt(temp));
-                }
-                else {
-                    transformBuilder.setHealAmount(Integer.parseInt(temp));
-                }
-                bHealAmount = false;
-            } else if (bPowerUp) {
-                if(!bTransformSec) {
-                    enemyBuilder.setPowerUpPercentage(Double.parseDouble(temp));
-                }
-                else {
-                    transformBuilder.setPowerUpPercentage(Double.parseDouble(temp));
-                }
-                bPowerUp = false;
-            } else if (bPowerDown) {
-                if(!bTransformSec) {
-                    enemyBuilder.setPowerDownPercentage(Double.parseDouble(temp));
-                }
-                else {
-                    transformBuilder.setPowerDownPercentage(Double.parseDouble(temp));
-                }
-                bPowerDown = false;
-            } else if (bDefend) {
-                if(!bTransformSec) {
-                    enemyBuilder.setDefendPercentage(Double.parseDouble(temp));
-                }
-                else {
-                    transformBuilder.setDefendPercentage(Double.parseDouble(temp));
-                }
-                bDefend = false;
-            } else if (bWeaken) {
-                if(!bTransformSec) {
-                    enemyBuilder.setWeakenPercentage(Double.parseDouble(temp));
-                }
-                else {
-                    transformBuilder.setWeakenPercentage(Double.parseDouble(temp));
-                }
-                bWeaken = false;
-            } else if (bSpecialDamage) {
-                if(!bTransformSec) {
-                    enemyBuilder.setSpecialDamage(Integer.parseInt(temp));
-                }
-                else {
-                    transformBuilder.setSpecialDamage(Integer.parseInt(temp));
-                }
-                bSpecialDamage = false;
-            } else if (bSpecialHits) {
-                if(!bTransformSec) {
-                    enemyBuilder.setSpecialHits(Integer.parseInt(temp));
-                }
-                else {
-                    transformBuilder.setSpecialHits(Integer.parseInt(temp));
-                }
-                bSpecialHits = false;
-            } else if (bSkill) {
-                SkillsEnum skill = SkillsEnum.getSkill(temp);
-                if(skill == null){
-                    System.out.println("EnemyParser:characters(): Could not find skill: " + temp);
-                    error = true;
-                }
-                else{
-                    if(!bTransformSec) {
-                        enemyBuilder.addSkill(skill);
-                    }
-                    else if(bAddSkill) {
-                        transformBuilder.addSkill(skill);
-                    }
-                    else if(bRemoveSkill) {
-                        transformBuilder.removeSkill(skill);
-                    }
-                }
-                bSkill = false;
-                bAddSkill = false;
-                bRemoveSkill = false;
-            }
-            else if(bAtkElement){
-                Element elm = Element.getElement(temp);
-                if(elm == null){
-                    System.out.println("EnemyParser:characters(): Could not find element: " + temp);
-                    error = true;
-                }
-                else{
-                    if(!bTransformSec) {
-                        enemyBuilder.setAttackElement(elm);
-                    }
-                    else {
-                        transformBuilder.setAttackElement(elm);
-                    }
-                }
-                bAtkElement = false;
-            }
-            else if(bStgElement){
-                Element elm = Element.getElement(temp);
-                if(elm == null){
-                    System.out.println("EnemyParser:characters(): Could not find element: " + temp);
-                    error = true;
-                }
-                else{
-                    if(!bTransformSec) {
-                        enemyBuilder.setStrongElement(elm);
-                    }
-                    else {
-                        transformBuilder.setStrongElement(elm);
-                    }
-                }
-                bStgElement = false;
-            }
-            else if(bWkElement){
-                Element elm = Element.getElement(temp);
-                if(elm == null){
-                    System.out.println("EnemyParser:characters(): Could not find element: " + temp);
-                    error = true;
-                }
-                else{
-                    if(!bTransformSec) {
-                        enemyBuilder.setWeakElement(elm);
-                    }
-                    else {
-                        transformBuilder.setWeakElement(elm);
-                    }
-                }
-                bWkElement = false;
-            }
-            else if(bGold){
-                enemyBuilder.setGold(Integer.parseInt(temp));
-                bGold = false;
-            }
-            else if(bExp){
-                enemyBuilder.setExperience(Integer.parseInt(temp));
-                bExp = false;
-            }
-
-        }
-        catch(NumberFormatException e){
-            System.out.println("EnemyParser:characters(): NumberFormatException for key: " + enemyKey);
-            error = true;
-            bMaxHp = false;
-            bPowerDamage = false;
-            bPowerHits = false;
-            bComboDamage = false;
-            bComboHits = false;
-            bMagicDamage = false;
-            bHealAmount = false;
-            bPowerUp = false;
-            bPowerDown = false;
-            bDefend = false;
-            bWeaken = false;
-            bSpecialDamage = false;
-            bSpecialHits = false;
-            bGold = false;
-            bExp = false;
-        }
-
+        currentText.append(new String(ch, start, length));
     }
 
     private boolean validate(){

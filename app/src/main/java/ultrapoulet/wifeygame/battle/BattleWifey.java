@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ultrapoulet.androidgame.framework.Graphics;
-import ultrapoulet.androidgame.framework.Image;
-import ultrapoulet.wifeygame.character.Element;
-import ultrapoulet.wifeygame.character.SkillsEnum;
 import ultrapoulet.wifeygame.character.TransformWifey;
 import ultrapoulet.wifeygame.character.Weapon;
 import ultrapoulet.wifeygame.battle.skills.AbsSkill.Multipliers;
@@ -36,7 +33,7 @@ public class BattleWifey extends BattleCharacter{
         this.strength = input.getStrength();
         this.magic = input.getMagic();
         this.image = input.getImage(g);
-        this.skills = new SkillList(input.getSkills(), this);
+        this.skills = new SkillList(input.getSkills(), input.getWeaponSkill(), input.getUniqueSkill(), this);
         this.attackElement = input.getAttackElement();
         this.strongElement = input.getStrongElement();
         this.weakElement = input.getWeakElement();
@@ -214,6 +211,12 @@ public class BattleWifey extends BattleCharacter{
         for(int i = 0; i < form.getRemoveSkills().size(); i++){
             skills.removeSkill(form.getRemoveSkills().get(i).getBattleSkill(this));
         }
+        if(form.getUniqueSkill() != null){
+            skills.setUniqueSkill(form.getUniqueSkill().getUniqueBattleSkill(this));
+        }
+        if(form.getWeaponSkill() != null){
+            skills.setWeaponSkill(form.getWeaponSkill().getWeaponBattleSkill(this));
+        }
     }
 
     public boolean canTransform(){
@@ -238,5 +241,9 @@ public class BattleWifey extends BattleCharacter{
 
     public int getExperience(){
         return skills.getBonusExp();
+    }
+
+    public int getBonusRecruiting(){
+        return skills.getBonusRecruiting();
     }
 }

@@ -11,7 +11,6 @@ import ultrapoulet.wifeygame.battle.requirements.AbsRequirement;
 import ultrapoulet.wifeygame.battle.requirements.RequiredCharacterRequirement;
 import ultrapoulet.wifeygame.character.EnemyCharacter;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
-import ultrapoulet.wifeygame.gamestate.Characters;
 
 /**
  * Created by John on 6/19/2016.
@@ -158,14 +157,14 @@ public class BattleInfo {
     }
 
     //Does the calculations for the drops and returns the list of characters dropped
-    public ArrayList<WifeyCharacter> performDrops(){
+    public ArrayList<WifeyCharacter> performDrops(int bonusRecruiting){
         ArrayList<WifeyCharacter> results = new ArrayList<>();
         for(WifeyDrop drop : dropList){
             if(drop.getWifey().isDropped()){
                 continue;
             }
             Random rng = new Random();
-            if(rng.nextInt(100) < drop.getDropChance()){
+            if(rng.nextInt(100) < drop.getDropChance() + bonusRecruiting){
                 drop.getWifey().drop();
                 results.add(drop.getWifey());
             }
@@ -215,21 +214,12 @@ public class BattleInfo {
         return true;
     }
 
-    public boolean allowParty(List<WifeyCharacter> party){
+    public boolean validParty(List<WifeyCharacter> party){
         for(int i = 0; i < restrictionList.size(); i++){
             if(!restrictionList.get(i).validateParty(party)){
                 return false;
             }
         }
         return true;
-    }
-
-    public boolean validParty(List<WifeyCharacter> party){
-        for(int i = 0; i < party.size(); i++){
-            if(party.get(i) != null && allowCharacter(party.get(i)) == false){
-                return false;
-            }
-        }
-        return allowParty(party);
     }
 }

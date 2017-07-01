@@ -77,6 +77,8 @@ public class BattleCharacterInfoScreen extends AbsCharacterInfoScreen {
         displayEnemy = enemy;
 
         displayText = -1;
+        bDisplayUnique = false;
+        bDisplayWeaponSkill = false;
         multipliers = displayChar.getMultipliers(enemy);
     }
 
@@ -137,10 +139,19 @@ public class BattleCharacterInfoScreen extends AbsCharacterInfoScreen {
     }
 
     protected void drawSkills(Graphics g){
+        if(displayChar.getSkills().getUniqueSkill() != null){
+            g.drawString(displayChar.getSkills().getUniqueSkill().getSkillName(), UNIQUE_X, MAX_WEAPON_Y, weaponPaint, MAX_UNIQUE_SIZE, MAX_WEAPON_FONT);
+        }
+
         //Draw image for weapon category
 
         //Draw string for weapon name
-        g.drawString(displayChar.getWeapon().getWeaponType(), WEAPON_X, MAX_WEAPON_Y, weaponPaint, MAX_WEAPON_SIZE, MAX_WEAPON_FONT);
+        if(displayChar.getSkills().getWeaponSkill() != null){
+            g.drawString(displayChar.getSkills().getWeaponSkill().getSkillName(), WEAPON_X, MAX_WEAPON_Y, weaponPaint, MAX_WEAPON_SIZE, MAX_WEAPON_FONT);
+        }
+        else {
+            g.drawString(displayChar.getWeapon().getWeaponType(), WEAPON_X, MAX_WEAPON_Y, weaponPaint, MAX_WEAPON_SIZE, MAX_WEAPON_FONT);
+        }
         //Draw image for number hits
         g.drawString(String.valueOf(displayChar.getNumHits()), HITS_X, HITS_Y, hitsPaint);
 
@@ -162,6 +173,14 @@ public class BattleCharacterInfoScreen extends AbsCharacterInfoScreen {
     protected void drawDescription(Graphics g){
         if(displayText != -1 && displayChar.getSkills().size() > displayText){
             String desc = displayChar.getSkills().get(displayText).getDescription(displayEnemy);
+            g.drawMultiLineString(desc, SKILLS_DESC_X, SKILLS_DESC_Y, SKILLS_DESC_WIDTH, descPaint);
+        }
+        else if(bDisplayUnique && displayChar.getSkills().getUniqueSkill() != null){
+            String desc = displayChar.getSkills().getUniqueSkill().getDescription(displayEnemy);
+            g.drawMultiLineString(desc, SKILLS_DESC_X, SKILLS_DESC_Y, SKILLS_DESC_WIDTH, descPaint);
+        }
+        else if(bDisplayWeaponSkill && displayChar.getSkills().getWeaponSkill() != null){
+            String desc = displayChar.getSkills().getWeaponSkill().getDescription(displayEnemy);
             g.drawMultiLineString(desc, SKILLS_DESC_X, SKILLS_DESC_Y, SKILLS_DESC_WIDTH, descPaint);
         }
     }

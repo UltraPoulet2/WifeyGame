@@ -189,10 +189,7 @@ public abstract class AbsBattleInfoScreen extends Screen {
     }
 
     private boolean canStartBattle(){
-        if(party.get(0) != null && battleInfo.validParty(party) && PlayerInfo.getCurrentEnergy() >= battleInfo.getEnergyRequirement()) {
-            return true;
-        }
-        return false;
+        return party.get(0) != null && battleInfo.validParty(party) && PlayerInfo.getCurrentEnergy() >= battleInfo.getEnergyRequirement();
     }
 
     @Override
@@ -228,8 +225,10 @@ public abstract class AbsBattleInfoScreen extends Screen {
                     game.setScreen(charInfo);
                 }
                 else if(selectedReq == requirementList.getIndexPressed(t.x, t.y) && selectedReq != -1){
-                    //Set up displaying a requirement
-                    System.out.println("Displaying requirement: " + selectedReq + " " + battleInfo.getRequirements().get(selectedReq).getDescription());
+                    Screen testDialog = battleInfo.getRequirements().get(selectedReq).getRequirementDialog(game, this);
+                    if(testDialog != null) {
+                        game.setScreen(testDialog);
+                    }
                 }
             }
         }
@@ -291,7 +290,13 @@ public abstract class AbsBattleInfoScreen extends Screen {
         drawInfo(g);
 
         for(int i = 0; i < battleInfo.getRequirements().size(); i++){
-            String desc = battleInfo.getRequirements().get(i).getDescription();
+            String desc = battleInfo.getRequirements().get(i).getTitle();
+            if(battleInfo.getRequirements().get(i).validateParty(party)){
+                requirementPaint.setColor(Color.GREEN);
+            }
+            else {
+                requirementPaint.setColor(Color.RED);
+            }
             if(requirementPaint.breakText(desc, true, REQUIREMENT_WIDTH, null) == desc.length() ){
                 g.drawString(desc, REQUIREMENT_CENTER_X, REQUIREMENT_BASE_TEXT_Y + i * REQUIREMENT_OFFSET_Y, requirementPaint);
             }

@@ -338,6 +338,7 @@
         <strength>40</strength>
         <magic>40</magic>
         <weapon>PLANT</weapon>
+        <weaponSkill>KOKOROSE</weaponSkill>
         <elements>
             <atkElement>EARTH</atkElement>
             <stgElement>EARTH</stgElement>
@@ -1172,6 +1173,7 @@
         <weapon>SWORD</weapon>
         <skills>
             <skill>TSUNDERE</skill>
+            <skill>IDOL</skill>
         </skills>
         <elements>
             <atkElement>FIRE</atkElement>
@@ -1209,9 +1211,9 @@
         <strength>90</strength>
         <magic>110</magic>
         <weapon>BALL</weapon>
+        <uniqueSkill>REM</uniqueSkill>
         <skills>
             <skill>MAID</skill>
-            <skill>REM</skill>
         </skills>
         <elements>
             <atkElement>AIR</atkElement>

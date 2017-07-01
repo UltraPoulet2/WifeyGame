@@ -17,19 +17,15 @@ import ultrapoulet.wifeygame.gamestate.RecruitBattles;
 
 public class RecruitingBattleParser extends DefaultHandler {
 
-    private boolean bName = false;
-    private boolean bEnemy = false;
-    private boolean bPartySize = false;
     private boolean bRequirement = false;
-    private boolean bRValue = false;
-    private boolean bBackground = false;
-    private boolean bEnergy = false;
 
     private String battleKey;
     private BattleInfo battleBuilder;
     private AbsRequirement reqBuilder;
 
     private boolean error = false;
+
+    private StringBuffer currentText = new StringBuffer();
 
     @Override
     public void startElement(String uri,
@@ -40,22 +36,22 @@ public class RecruitingBattleParser extends DefaultHandler {
             //Do nothing, but it's valid
         }
         else if(qName.equalsIgnoreCase("battle")){
-            resetValues();
+            error = false;
             battleKey = attributes.getValue("key");
             battleBuilder = new BattleInfo();
             battleBuilder.setKey(battleKey);
         }
         else if(qName.equalsIgnoreCase("name")){
-            bName = true;
+            currentText = new StringBuffer();
         }
         else if(qName.equalsIgnoreCase("enemies")){
             //Do nothing, but it's valid
         }
         else if(qName.equalsIgnoreCase("enemy")){
-            bEnemy = true;
+            currentText = new StringBuffer();
         }
         else if(qName.equalsIgnoreCase("partysize")){
-            bPartySize = true;
+            currentText = new StringBuffer();
         }
         else if(qName.equalsIgnoreCase("requirements")){
             //Do nothing, but it's valid
@@ -72,13 +68,13 @@ public class RecruitingBattleParser extends DefaultHandler {
             }
         }
         else if(qName.equalsIgnoreCase("value")){
-            bRValue = true;
+            currentText = new StringBuffer();
         }
         else if(qName.equalsIgnoreCase("background")){
-            bBackground = true;
+            currentText = new StringBuffer();
         }
         else if(qName.equalsIgnoreCase("energy")){
-            bEnergy = true;
+            currentText = new StringBuffer();
         }
     }
 
@@ -97,11 +93,52 @@ public class RecruitingBattleParser extends DefaultHandler {
             }
         }
         else if(qName.equalsIgnoreCase("requirement")){
-            if(reqBuilder != null){
-                battleBuilder.addRequirement(reqBuilder);
+            if(bRequirement) {
+                if (reqBuilder != null) {
+                    battleBuilder.addRequirement(reqBuilder);
+                }
+                reqBuilder = null;
+                bRequirement = false;
             }
-            reqBuilder = null;
-            bRequirement = false;
+        }
+        if(qName.equalsIgnoreCase("name")){
+            battleBuilder.setName(currentText.toString());
+        }
+        else if(qName.equalsIgnoreCase("enemy")){
+            EnemyCharacter tempEn = Enemies.get(currentText.toString());
+            if(tempEn == null){
+                System.out.println("RecruitingBattleParser:endElement(): BattleEnemy not found: " + currentText.toString());
+                error = true;
+            }
+            else{
+                battleBuilder.addEnemy(tempEn);
+            }
+        }
+        else if(qName.equalsIgnoreCase("partysize")){
+            try{
+                battleBuilder.setPartyMax(Integer.parseInt(currentText.toString()));
+            }
+            catch(NumberFormatException e){
+                System.out.println("RecruitingBattleParser:endElement(): NumberFormatException for key: " + battleKey);
+                error = true;
+            }
+        }
+        else if(qName.equalsIgnoreCase("value")){
+            if(reqBuilder != null){
+                reqBuilder.addValue(currentText.toString());
+            }
+        }
+        else if(qName.equalsIgnoreCase("background")){
+            battleBuilder.setBackground(currentText.toString());
+        }
+        else if(qName.equalsIgnoreCase("energy")){
+            try{
+                battleBuilder.setEnergyRequirement(Integer.parseInt(currentText.toString()));
+            }
+            catch(NumberFormatException e){
+                System.out.println("RecruitingBattleParser:endElement(): NumberFormatException for key: " + battleKey);
+                error = true;
+            }
         }
     }
 
@@ -109,63 +146,7 @@ public class RecruitingBattleParser extends DefaultHandler {
     public void characters(char ch[],
                            int start,
                            int length) throws SAXException {
-        String temp = new String(ch, start, length);
-        if(bName){
-            battleBuilder.setName(temp);
-            bName = false;
-        }
-        else if(bEnemy){
-            EnemyCharacter tempEn = Enemies.get(temp);
-            if(tempEn == null){
-                System.out.println("RecruitingBattleParser:characters(): BattleEnemy not found: " + temp);
-                error = true;
-            }
-            else{
-                battleBuilder.addEnemy(tempEn);
-            }
-            bEnemy = false;
-        }
-        else if(bPartySize){
-            try{
-                battleBuilder.setPartyMax(Integer.parseInt(temp));
-                bPartySize = false;
-            }
-            catch(NumberFormatException e){
-                System.out.println("RecruitingBattleParser:characters(): NumberFormatException for key: " + battleKey);
-                error = true;
-                bPartySize = false;
-            }
-        }
-        else if(bRValue){
-            if(reqBuilder != null){
-                reqBuilder.addValue(temp);
-            }
-            bRValue = false;
-        }
-        else if(bBackground){
-            battleBuilder.setBackground(temp);
-            bBackground = false;
-        }
-        else if(bEnergy){
-            try{
-                battleBuilder.setEnergyRequirement(Integer.parseInt(temp));
-                bEnergy = false;
-            }
-            catch(NumberFormatException e){
-                System.out.println("RecruitingBattleParser:characters(): NumberFormatException for key: " + battleKey);
-                error = true;
-                bEnergy = false;
-            }
-        }
-    }
-
-    private void resetValues(){
-        error = false;
-        bName = false;
-        bEnemy = false;
-        bRValue = false;
-        bBackground = false;
-        bEnergy = false;
+        currentText.append(new String(ch, start, length));
     }
 
     private boolean validate(){
@@ -184,10 +165,10 @@ public class RecruitingBattleParser extends DefaultHandler {
         if(battleBuilder.getBackgroundName() == null){
             return false;
         }
-        if(battleBuilder.getEnergyRequirement() == 0){
+        if(battleBuilder.getEnergyRequirement() <= 0) {
             return false;
         }
-
         return true;
+
     }
 }

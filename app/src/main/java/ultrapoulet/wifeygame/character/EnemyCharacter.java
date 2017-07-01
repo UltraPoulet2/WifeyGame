@@ -244,10 +244,10 @@ public class EnemyCharacter {
         if(attackElement == null || strongElement == null | weakElement == null){
             return false;
         }
-        //For now, make every enemy provide gold and experience
         if(gold == 0 || experience == 0){
             return false;
         }
+        //For now, make every enemy provide gold and experience
         return true;
     }
 }

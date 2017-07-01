@@ -4,11 +4,12 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.wifeygame.character.Element;
 import ultrapoulet.wifeygame.character.SkillsEnum;
 import ultrapoulet.wifeygame.character.TransformWifey;
+import ultrapoulet.wifeygame.character.UniqueSkillsEnum;
 import ultrapoulet.wifeygame.character.Weapon;
+import ultrapoulet.wifeygame.character.WeaponSkillsEnum;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
 import ultrapoulet.wifeygame.gamestate.Characters;
 
@@ -17,24 +18,9 @@ import ultrapoulet.wifeygame.gamestate.Characters;
  */
 public class CharacterParser extends DefaultHandler{
 
-    private Graphics g;
-
-    private boolean bName;
-    private boolean bTitle;
-    private boolean bStrength;
-    private boolean bMagic;
-    private boolean bWeapon;
-    private boolean bSkill;
-
     private boolean bTransformSec;
-    private boolean bTransform;
     private boolean bAddSkill;
     private boolean bRemoveSkill;
-    private boolean bNum;
-
-    private boolean bAtkElement;
-    private boolean bStgElement;
-    private boolean bWkElement;
 
     private boolean error;
 
@@ -45,9 +31,7 @@ public class CharacterParser extends DefaultHandler{
     private int charNumber = 0;
     private int tNumber = 0;
 
-    public void setGraphics(Graphics g){
-        this.g = g;
-    }
+    private StringBuffer currentText = new StringBuffer();
 
     @Override
     public void startElement(String uri,
@@ -69,19 +53,25 @@ public class CharacterParser extends DefaultHandler{
             charNumber++;
         }
         else if(qName.equalsIgnoreCase("name")){
-            bName = true;
+            currentText = new StringBuffer();
         }
         else if(qName.equalsIgnoreCase("title")){
-            bTitle = true;
+            currentText = new StringBuffer();
         }
         else if(qName.equalsIgnoreCase("strength")){
-            bStrength = true;
+            currentText = new StringBuffer();
         }
         else if(qName.equalsIgnoreCase("magic")){
-            bMagic = true;
+            currentText = new StringBuffer();
         }
         else if(qName.equalsIgnoreCase("weapon")){
-            bWeapon = true;
+            currentText = new StringBuffer();
+        }
+        else if(qName.equalsIgnoreCase("weaponSkill")){
+            currentText = new StringBuffer();
+        }
+        else if(qName.equalsIgnoreCase("uniqueSkill")){
+            currentText = new StringBuffer();
         }
         else if(qName.equalsIgnoreCase("characters")){
             //Do nothing.
@@ -91,9 +81,11 @@ public class CharacterParser extends DefaultHandler{
             if(mode != null){
                 if(mode.equalsIgnoreCase("add")){
                     bAddSkill = true;
+                    currentText = new StringBuffer();
                 }
                 else if(mode.equalsIgnoreCase("remove")){
                     bRemoveSkill = true;
+                    currentText = new StringBuffer();
                 }
                 else{
                     error = true;
@@ -102,27 +94,27 @@ public class CharacterParser extends DefaultHandler{
             }
         }
         else if(qName.equalsIgnoreCase("skill")){
-            bSkill = true;
+            currentText = new StringBuffer();
         }
         else if(qName.equalsIgnoreCase("elements")){
             //Do nothing.
         }
         else if(qName.equalsIgnoreCase("atkElement")){
-            bAtkElement = true;
+            currentText = new StringBuffer();
         }
         else if(qName.equalsIgnoreCase("stgElement")){
-            bStgElement = true;
+            currentText = new StringBuffer();
         }
         else if(qName.equalsIgnoreCase("wkElement")){
-            bWkElement = true;
+            currentText = new StringBuffer();
         }
         else if(qName.equalsIgnoreCase("transformations")){
             bTransformSec = true;
+            currentText = new StringBuffer();
         }
         else if(qName.equalsIgnoreCase("transformation")){
             transformBuilder = new TransformWifey();
             transformBuilder.setImage(charKey + "-T" + tNumber);
-            bTransform = true;
         }
         else{
             System.out.println("CharacterParser:startElement(): Invalid qName: " + qName + " for key " + charKey);
@@ -153,7 +145,6 @@ public class CharacterParser extends DefaultHandler{
                 error = true;
                 System.out.println("CharacterParser:endElement(): Error adding transformation: " + tNumber);
             }
-            bTransform = false;
         }
         else if(qName.equalsIgnoreCase("transformations")){
             bTransformSec = false;
@@ -163,118 +154,192 @@ public class CharacterParser extends DefaultHandler{
             bAddSkill = false;
             bRemoveSkill = false;
         }
+        else if(qName.equalsIgnoreCase("name")){
+            if (!bTransformSec) {
+                charBuilder.setName(currentText.toString());
+            } else {
+                transformBuilder.setName(currentText.toString());
+            }
+        }
+        else if(qName.equalsIgnoreCase("title")){
+            //For now, we are not changing the title for transformations, this could change later
+            charBuilder.setTitle(currentText.toString());
+        }
+        else if(qName.equalsIgnoreCase("strength")){
+            try {
+                if (!bTransformSec) {
+                    charBuilder.setStrength(Integer.parseInt(currentText.toString()));
+                } else {
+                    transformBuilder.setStrength(Integer.parseInt(currentText.toString()));
+                }
+            }
+            catch(NumberFormatException e){
+                System.out.println("CharacterParser:endElement(): NumberFormatException for key: " + charKey);
+                error = true;
+            }
+        }
+        else if(qName.equalsIgnoreCase("magic")){
+            try {
+                if (!bTransformSec) {
+                    charBuilder.setMagic(Integer.parseInt(currentText.toString()));
+                } else {
+                    transformBuilder.setMagic(Integer.parseInt(currentText.toString()));
+                }
+            }
+            catch(NumberFormatException e){
+                System.out.println("CharacterParser:endElement(): NumberFormatException for key: " + charKey);
+                error = true;
+            }
+        }
+        else if(qName.equalsIgnoreCase("weapon")){
+            Weapon weap;
+            try{
+                weap = Weapon.valueOf(currentText.toString());
+            }
+            catch(IllegalArgumentException e){
+                weap = null;
+            }
+            if(weap == null){
+                System.out.println("CharacterParser:endElement(): Could not find weapon: " + currentText.toString());
+                error = true;
+            }
+            else {
+                if (!bTransformSec) {
+                    charBuilder.setWeapon(weap);
+                } else {
+                    transformBuilder.setWeapon(weap);
+                }
+            }
+        }
+        else if(qName.equalsIgnoreCase("weaponSkill")){
+            WeaponSkillsEnum skill;
+            try {
+                skill = WeaponSkillsEnum.valueOf(currentText.toString());
+            }
+            catch(IllegalArgumentException e){
+                skill = null;
+            }
+            if (skill == null) {
+                System.out.println("CharacterParser:endElement(): Could not find skill: " + currentText.toString());
+                error = true;
+            } else {
+                if (!bTransformSec) {
+                    charBuilder.setWeaponSkill(skill);
+                } else {
+                    transformBuilder.setWeaponSkill(skill);
+                }
+            }
+        }
+        else if(qName.equalsIgnoreCase("uniqueSkill")){
+            UniqueSkillsEnum skill;
+            try {
+                skill = UniqueSkillsEnum.valueOf(currentText.toString());
+            }
+            catch(IllegalArgumentException e){
+                skill = null;
+            }
+            if(skill == null){
+                System.out.println("CharacterParser:endElement(): Could not find skill: " + currentText.toString());
+                error = true;
+            } else {
+                if (!bTransformSec){
+                    charBuilder.setUniqueSkill(skill);
+                }
+                else {
+                    transformBuilder.setUniqueSkill(skill);
+                }
+            }
+        }
+        else if(qName.equalsIgnoreCase("skill")){
+            SkillsEnum skill;
+            try {
+                skill = SkillsEnum.valueOf(currentText.toString());
+            }
+            catch(IllegalArgumentException e){
+                skill = null;
+            }
+            if (skill == null) {
+                System.out.println("CharacterParser:endElement(): Could not find skill: " + currentText.toString());
+                error = true;
+            } else {
+                if(!bTransformSec) {
+                    charBuilder.addSkill(skill);
+                }
+                else if(bAddSkill) {
+                    transformBuilder.addSkill(skill);
+                }
+                else if(bRemoveSkill) {
+                    transformBuilder.removeSkill(skill);
+                }
+            }
+            bAddSkill = false;
+            bRemoveSkill = false;
+        }
+        else if(qName.equalsIgnoreCase("atkElement")){
+            Element elm;
+            try {
+                elm = Element.valueOf(currentText.toString());
+            }
+            catch(IllegalArgumentException e){
+                elm = null;
+            }
+            if (elm == null) {
+                System.out.println("CharacterParser:endElement(): Could not find Attack element: " + currentText.toString());
+                error = true;
+            } else {
+                if(!bTransformSec) {
+                    charBuilder.setAttackElement(elm);
+                }
+                else {
+                    transformBuilder.setAttackElement(elm);
+                }
+            }
+        } else if (qName.equalsIgnoreCase("stgElement")) {
+            Element elm;
+            try {
+                elm = Element.valueOf(currentText.toString());
+            }
+            catch(IllegalArgumentException e){
+                elm = null;
+            }
+            if (elm == null) {
+                System.out.println("CharacterParser:endElement(): Could not find Strong element: " + currentText.toString());
+                error = true;
+            } else {
+                if(!bTransformSec) {
+                    charBuilder.setStrongElement(elm);
+                }
+                else {
+                    transformBuilder.setStrongElement(elm);
+                }
+            }
+        } else if (qName.equalsIgnoreCase("wkElement")) {
+            Element elm;
+            try {
+                elm = Element.valueOf(currentText.toString());
+            }
+            catch(IllegalArgumentException e){
+                elm = null;
+            }
+            if (elm == null) {
+                System.out.println("CharacterParser:endElement(): Could not find  Weak element: " + currentText.toString());
+                error = true;
+            } else {
+                if(!bTransformSec) {
+                    charBuilder.setWeakElement(elm);
+                }
+                else {
+                    transformBuilder.setWeakElement(elm);
+                }
+            }
+        }
     }
 
     @Override
     public void characters(char ch[],
                            int start,
                            int length) throws SAXException {
-        String temp = new String(ch, start, length);
-        try {
-            if (bName) {
-                if (!bTransformSec) {
-                    charBuilder.setName(temp);
-                } else {
-                    transformBuilder.setName(temp);
-                }
-                bName = false;
-            } else if (bTitle) {
-                //For now, we are not changing the title for transformations, this could change later
-                charBuilder.setTitle(temp);
-                bTitle = false;
-            } else if (bStrength) {
-                if(!bTransformSec) {
-                    charBuilder.setStrength(Integer.parseInt(temp));
-                }
-                else {
-                    transformBuilder.setStrength(Integer.parseInt(temp));
-                }
-                bStrength = false;
-            } else if (bMagic) {
-                if(!bTransformSec) {
-                    charBuilder.setMagic(Integer.parseInt(temp));
-                }
-                else {
-                    transformBuilder.setMagic(Integer.parseInt(temp));
-                }
-                bMagic = false;
-            } else if (bWeapon) {
-                if(!bTransformSec) {
-                    charBuilder.setWeapon(Weapon.getWeapon(temp));
-                }
-                else {
-                    transformBuilder.setWeapon(Weapon.getWeapon(temp));
-                }
-                bWeapon = false;
-            } else if (bSkill) {
-                SkillsEnum skill = SkillsEnum.getSkill(temp);
-                if (skill == null) {
-                    System.out.println("CharacterParser:characters(): Could not find skill: " + temp);
-                    error = true;
-                } else {
-                    if(!bTransformSec) {
-                        charBuilder.addSkill(skill);
-                    }
-                    else if(bAddSkill) {
-                        transformBuilder.addSkill(skill);
-                    }
-                    else if(bRemoveSkill) {
-                        transformBuilder.removeSkill(skill);
-                    }
-                }
-                bSkill = false;
-                bAddSkill = false;
-                bRemoveSkill = false;
-            } else if (bAtkElement) {
-                Element elm = Element.getElement(temp);
-                if (elm == null) {
-                    System.out.println("CharacterParser:characters(): Could not find element: " + temp);
-                    error = true;
-                } else {
-                    if(!bTransformSec) {
-                        charBuilder.setAttackElement(elm);
-                    }
-                    else {
-                        transformBuilder.setAttackElement(elm);
-                    }
-                }
-                bAtkElement = false;
-            } else if (bStgElement) {
-                Element elm = Element.getElement(temp);
-                if (elm == null) {
-                    System.out.println("CharacterParser:characters(): Could not find element: " + temp);
-                    error = true;
-                } else {
-                    if(!bTransformSec) {
-                        charBuilder.setStrongElement(elm);
-                    }
-                    else {
-                        transformBuilder.setStrongElement(elm);
-                    }
-                }
-                bStgElement = false;
-            } else if (bWkElement) {
-                Element elm = Element.getElement(temp);
-                if (elm == null) {
-                    System.out.println("CharacterParser:characters(): Could not find element: " + temp);
-                    error = true;
-                } else {
-                    if(!bTransformSec) {
-                        charBuilder.setWeakElement(elm);
-                    }
-                    else {
-                        transformBuilder.setWeakElement(elm);
-                    }
-                }
-                bWkElement = false;
-            }
-        }
-        catch(NumberFormatException e){
-            System.out.println("CharacterParser:characters(): NumberFormatException for key: " + charKey);
-            error = true;
-            bStrength = false;
-            bMagic = false;
-        }
+        currentText.append(new String(ch, start, length));
     }
 
     private boolean validate(){

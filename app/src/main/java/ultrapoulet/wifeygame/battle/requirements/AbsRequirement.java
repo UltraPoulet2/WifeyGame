@@ -2,6 +2,8 @@ package ultrapoulet.wifeygame.battle.requirements;
 
 import java.util.List;
 
+import ultrapoulet.androidgame.framework.Game;
+import ultrapoulet.androidgame.framework.Screen;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
 
 /**
@@ -23,5 +25,9 @@ public abstract class AbsRequirement {
         return true;
     }
 
-    public abstract String getDescription();
+    public Screen getRequirementDialog(Game game, Screen prevScreen){
+        return null;
+    }
+
+    public abstract String getTitle();
 }

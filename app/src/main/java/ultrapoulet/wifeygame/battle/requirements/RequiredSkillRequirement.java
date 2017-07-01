@@ -1,9 +1,13 @@
 package ultrapoulet.wifeygame.battle.requirements;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import ultrapoulet.androidgame.framework.Game;
+import ultrapoulet.androidgame.framework.Screen;
 import ultrapoulet.wifeygame.character.SkillsEnum;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
+import ultrapoulet.wifeygame.screens.dialogs.RequirementTextInfoDialog;
 
 /**
  * Created by John on 10/8/2016.
@@ -19,7 +23,13 @@ public class RequiredSkillRequirement extends AbsRequirement {
     }
 
     public boolean addValue(String input){
-        SkillsEnum skill = SkillsEnum.getSkill(input);
+        SkillsEnum skill;
+        try {
+            skill = SkillsEnum.valueOf(input);
+        }
+        catch(IllegalArgumentException e){
+            skill = null;
+        }
         if(skill == null) {
             return false;
         }
@@ -27,6 +37,16 @@ public class RequiredSkillRequirement extends AbsRequirement {
             return false;
         }
         requiredSkills.add(skill);
+        return true;
+    }
+
+    @Override
+    public boolean validateParty(List<WifeyCharacter> party) {
+        for(WifeyCharacter wifey: party){
+            if(!validateCharacter(wifey)){
+                return false;
+            }
+        }
         return true;
     }
 
@@ -40,7 +60,18 @@ public class RequiredSkillRequirement extends AbsRequirement {
         return false;
     }
 
-    public String getDescription(){
-        return "Wifeys required to have certain skills";
+    @Override
+    public Screen getRequirementDialog(Game game, Screen prevScreen) {
+        StringBuilder desc = new StringBuilder();
+        desc.append("All Wifeys required to have one of the following skills:");
+        for(SkillsEnum skill : requiredSkills){
+            desc.append("\n");
+            desc.append(skill.getSkillName());
+        }
+        return new RequirementTextInfoDialog(game, prevScreen, desc.toString());
+    }
+
+    public String getTitle(){
+        return "Required Skills";
     }
 }
