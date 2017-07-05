@@ -341,6 +341,9 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
         if(displayUniqueSkill != null){
             g.drawString(displayUniqueSkill.getSkillName(), UNIQUE_X, MAX_WEAPON_Y, weaponPaint, MAX_UNIQUE_SIZE, MAX_WEAPON_FONT);
         }
+        else {
+            g.drawString("--NONE--", UNIQUE_X, MAX_WEAPON_Y, weaponPaint, MAX_UNIQUE_SIZE, MAX_WEAPON_FONT);
+        }
         //Draw image for weapon category
 
         //Draw string for weapon name
@@ -348,7 +351,9 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
             g.drawString(displayWeaponSkill.getSkillName(), WEAPON_X, MAX_WEAPON_Y, weaponPaint, MAX_WEAPON_SIZE, MAX_WEAPON_FONT);
         }
         else {
-            g.drawString(displayWeapon.getWeaponType(), WEAPON_X, MAX_WEAPON_Y, weaponPaint, MAX_WEAPON_SIZE, MAX_WEAPON_FONT);
+            //We'll print default weapon and let the image describe the weapon
+            g.drawString("--Default Weapon--", WEAPON_X, MAX_WEAPON_Y, weaponPaint, MAX_WEAPON_SIZE, MAX_WEAPON_FONT);
+            //g.drawString(displayWeapon.getWeaponType(), WEAPON_X, MAX_WEAPON_Y, weaponPaint, MAX_WEAPON_SIZE, MAX_WEAPON_FONT);
         }
         //Draw image for number hits
         g.drawString(String.valueOf(displayWeapon.getNumHits()), HITS_X, HITS_Y, hitsPaint);

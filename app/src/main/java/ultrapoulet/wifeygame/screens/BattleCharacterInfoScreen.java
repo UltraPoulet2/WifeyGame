@@ -142,6 +142,9 @@ public class BattleCharacterInfoScreen extends AbsCharacterInfoScreen {
         if(displayChar.getSkills().getUniqueSkill() != null){
             g.drawString(displayChar.getSkills().getUniqueSkill().getSkillName(), UNIQUE_X, MAX_WEAPON_Y, weaponPaint, MAX_UNIQUE_SIZE, MAX_WEAPON_FONT);
         }
+        else {
+            g.drawString("--NONE--", UNIQUE_X, MAX_WEAPON_Y, weaponPaint, MAX_UNIQUE_SIZE, MAX_WEAPON_FONT);
+        }
 
         //Draw image for weapon category
 
@@ -150,7 +153,9 @@ public class BattleCharacterInfoScreen extends AbsCharacterInfoScreen {
             g.drawString(displayChar.getSkills().getWeaponSkill().getSkillName(), WEAPON_X, MAX_WEAPON_Y, weaponPaint, MAX_WEAPON_SIZE, MAX_WEAPON_FONT);
         }
         else {
-            g.drawString(displayChar.getWeapon().getWeaponType(), WEAPON_X, MAX_WEAPON_Y, weaponPaint, MAX_WEAPON_SIZE, MAX_WEAPON_FONT);
+            //We'll print default weapon and let the image describe the weapon
+            g.drawString("--Default Weapon--", WEAPON_X, MAX_WEAPON_Y, weaponPaint, MAX_WEAPON_SIZE, MAX_WEAPON_FONT);
+            //g.drawString(displayWeapon.getWeaponType(), WEAPON_X, MAX_WEAPON_Y, weaponPaint, MAX_WEAPON_SIZE, MAX_WEAPON_FONT);
         }
         //Draw image for number hits
         g.drawString(String.valueOf(displayChar.getNumHits()), HITS_X, HITS_Y, hitsPaint);
