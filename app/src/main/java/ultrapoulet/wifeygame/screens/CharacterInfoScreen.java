@@ -54,13 +54,13 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
     private int transformPage;
     private int maxTransformPage;
     private static final int TRANSFORM_PAGE_WIDTH = 50;
-    private static final int TRANSFORM_PREV_PAGE_LEFT_X = 30 + BG_X;
+    private static final int TRANSFORM_PREV_PAGE_LEFT_X = 40 + BG_X;
     private static final int TRANSFORM_PREV_PAGE_RIGHT_X = TRANSFORM_PREV_PAGE_LEFT_X + TRANSFORM_PAGE_WIDTH;
     private static final int TRANSFORM_NEXT_PAGE_LEFT_X = TRANSFORM_PREV_PAGE_LEFT_X + 270;
     private static final int TRANSFORM_NEXT_PAGE_RIGHT_X = TRANSFORM_NEXT_PAGE_LEFT_X + TRANSFORM_PAGE_WIDTH;
     private static final int TRANSFORM_PAGE_TOP_Y = 100 + BG_Y;
     private static final int TRANSFORM_PAGE_BOT_Y = TRANSFORM_PAGE_TOP_Y + 320;
-    private static final int FAVORITE_LEFT_X = BG_X + 600;
+    private static final int FAVORITE_LEFT_X = BG_X + 610;
     private static final int FAVORITE_RIGHT_X = FAVORITE_LEFT_X + 50;
     private static final int FAVORITE_TOP_Y = BG_Y + 115;
     private static final int FAVORITE_BOT_Y = FAVORITE_TOP_Y + 50;
@@ -74,29 +74,29 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
     private static final int MIN_TITLE_FONT = 20;
     private static final int MAX_TITLE_SIZE = 236;
     private static final int TWO_LINE_TITLE_FONT = 20;
-    private static final int TITLE_X = 402 + BG_X;
+    private static final int TITLE_X = 412 + BG_X;
     private static final int MAX_TITLE_Y = 240 + BG_Y;
     private static final int TWO_LINE_TITLE_Y = 200 + BG_Y;
 
     private Paint levelPaint;
     private static final int LEVEL_SIZE = 34;
-    private static final int LEVEL_X = 425 + BG_X;
+    private static final int LEVEL_X = 435 + BG_X;
     private static final int LEVEL_Y = 322 + BG_Y;
 
     private Paint expPaint;
     private static final int MAX_EXP_FONT = 34;
     private static final int MAX_EXP_SIZE = 195;
-    private static final int EXP_X = 552 + BG_X;
+    private static final int EXP_X = 562 + BG_X;
     private static final int EXP_Y = 322 + BG_Y;
 
-    private static final int EXP_BAR_X = 455 + BG_X;
+    private static final int EXP_BAR_X = 465 + BG_X;
     private static final int EXP_BAR_Y = 285 + BG_Y;
     private static final int EXP_BAR_MAX_WIDTH = 195;
     private static final int EXP_BAR_HEIGHT = 50;
 
     private Paint statPaint;
     private static final int STAT_SIZE = 34;
-    private static final int HP_X = 440 + BG_X;
+    private static final int HP_X = 450 + BG_X;
     private static final int STR_X = 85 + HP_X;
     private static final int MAG_X = 85 + STR_X;
     private static final int STAT_Y = 407 + BG_Y;

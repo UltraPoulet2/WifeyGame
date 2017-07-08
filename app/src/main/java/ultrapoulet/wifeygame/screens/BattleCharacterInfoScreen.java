@@ -28,7 +28,7 @@ public class BattleCharacterInfoScreen extends AbsCharacterInfoScreen {
     private static final int SKILLS_DESC_SIZE = 25;
     private static final int MAX_NAME_SIZE = 236;
 
-    private static final int TRANSFORM_HOLDER_X = 25 + BG_X;
+    private static final int TRANSFORM_HOLDER_X = 35 + BG_X;
     private static final int TRANSFORM_HOLDER_Y = 95 + BG_Y;
     private static final int TRANSFORM_NUMBER_LEFT_X = CHAR_X;
     private static final int TRANSFORM_NUMBER_RIGHT_X = TRANSFORM_NUMBER_LEFT_X + 40;
@@ -36,7 +36,7 @@ public class BattleCharacterInfoScreen extends AbsCharacterInfoScreen {
     private static final int TRANSFORM_WIDTH = 20;
     private static final int TRANSFORM_HEIGHT = 40;
 
-    private static final int HEALTH_BAR_X = 400 + BG_X;
+    private static final int HEALTH_BAR_X = 410 + BG_X;
     private static final int HEALTH_BAR_Y = 200 + BG_Y;
     private static final double HEALTH_BAR_SCALE_X = 156.25;
     private static final int HEALTH_BAR_SCALE_Y = 250;
@@ -51,7 +51,7 @@ public class BattleCharacterInfoScreen extends AbsCharacterInfoScreen {
 
     private Paint multPaint;
     private static final int STAT_SIZE = 34;
-    private static final int PHYS_X = 440 + BG_X;
+    private static final int PHYS_X = 450 + BG_X;
     private static final int MAG_X = 85 + PHYS_X;
     private static final int SPEC_X = 85 + MAG_X;
     private static final int ATK_Y = 322 + BG_Y;
