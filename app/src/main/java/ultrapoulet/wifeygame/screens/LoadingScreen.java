@@ -293,6 +293,9 @@ public class LoadingScreen extends Screen {
         Assets.BattleCharacterInfoScreen = g.newImage("screens/BattleCharacterInfoScreen.png", ImageFormat.RGB565);
         Assets.BattleInfoScreen = g.newImage("screens/BattleInfoScreen.png", ImageFormat.RGB565);
         Assets.RecruitBattleInfoScreen = g.newImage("screens/RecruitBattleInfoScreen.png", ImageFormat.RGB565);
+        Assets.EnemyInfoScreenTop = g.newImage("screens/EnemyInfoScreenTop.png", ImageFormat.RGB565);
+        Assets.EnemyInfoScreenMid = g.newImage("screens/EnemyInfoScreenMid.png", ImageFormat.RGB565);
+        Assets.EnemyInfoScreenBot = g.newImage("screens/EnemyInfoScreenBot.png", ImageFormat.RGB565);
 
         Assets.BattleResultScreen = g.newImage("screens/BattleResultScreen.png", ImageFormat.ARGB8888);
         Assets.BattleResultVictory = g.newImage("objects/battleResult/BattleResultVictory.png", ImageFormat.ARGB8888);

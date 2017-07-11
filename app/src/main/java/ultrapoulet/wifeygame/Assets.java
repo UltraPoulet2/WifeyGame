@@ -83,6 +83,11 @@ public class Assets {
     public static Image TransformHolder;
     public static Image Favorite;
 
+    //EnemyInfoScreen
+    public static Image EnemyInfoScreenTop;
+    public static Image EnemyInfoScreenMid;
+    public static Image EnemyInfoScreenBot;
+
     //BattleInfoScreen Stuff
     public static Image BattleInfoScreen;
     public static Image BattleEnable, BattleDisable;
