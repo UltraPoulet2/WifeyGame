@@ -245,6 +245,15 @@ public abstract class AbsBattleScreen extends Screen {
     private static final int SPECIAL_BOT_Y = ROW_1_BOT_Y;
     private static final String SPECIAL_STRING = "Special Attack";
 
+    private Button enemyButton;
+    private static final int ENEMY_BUTTON_LEFT_X = ENEMY_IMAGE_X;
+    private static final int ENEMY_BUTTON_RIGHT_X = ENEMY_BUTTON_LEFT_X + 400;
+    private static final int ENEMY_BUTTON_TOP_Y = ENEMY_IMAGE_Y;
+    private static final int ENEMY_BUTTON_BOT_Y = ENEMY_BUTTON_TOP_Y + 400;
+    private static final String ENEMY_STRING = "Enemy";
+
+    private EnemyInfoScreen enemyInfoScreen;
+
     private Button commandSelected;
 
     private ButtonList partyList;
@@ -291,6 +300,9 @@ public abstract class AbsBattleScreen extends Screen {
         charInfo = new BattleCharacterInfoScreen(game, this);
 
         setBattleInfo(info);
+
+        //The party is set now
+        enemyInfoScreen = new EnemyInfoScreen(game, this, party);
     }
 
     protected abstract Screen getCompletionScreen();
@@ -311,6 +323,8 @@ public abstract class AbsBattleScreen extends Screen {
         buttonList.addButton(transformButton);
         specialAttackButton = new Button(SPECIAL_LEFT_X, SPECIAL_RIGHT_X, SPECIAL_TOP_Y, SPECIAL_BOT_Y, false, SPECIAL_STRING, Assets.SpecialAttackEnabled, Assets.SpecialAttackDisabled);
         buttonList.addButton(specialAttackButton);
+        enemyButton = new Button(ENEMY_BUTTON_LEFT_X, ENEMY_BUTTON_RIGHT_X, ENEMY_BUTTON_TOP_Y, ENEMY_BUTTON_BOT_Y, true, ENEMY_STRING);
+        buttonList.addButton(enemyButton);
     }
 
     public void createPaint(){
@@ -576,6 +590,11 @@ public abstract class AbsBattleScreen extends Screen {
                             continue;
                         }
                         if (command == null) {
+                            continue;
+                        }
+                        if(command == enemyButton){
+                            enemyInfoScreen.setEnemy((BattleEnemy) enemies.get(enemyIndex));
+                            game.setScreen(enemyInfoScreen);
                             continue;
                         }
 
