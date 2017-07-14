@@ -14,6 +14,7 @@ import ultrapoulet.androidgame.framework.helpers.NumberPrinter;
 import ultrapoulet.wifeygame.Assets;
 import ultrapoulet.wifeygame.battle.BattleCharacter;
 import ultrapoulet.wifeygame.battle.BattleEnemy;
+import ultrapoulet.wifeygame.battle.skills.AbsSkill.Multipliers;
 
 /**
  * Created by John on 7/11/2017.
@@ -55,6 +56,21 @@ public class EnemyInfoScreen extends Screen {
     private static final int HEALTH_NUMBER_HEIGHT = 40;
     private static final int HEALTH_OFFSET_X = -4;
 
+    private static final int IMAGE_OFFSET_X = 70;
+    private static final int IMAGE_OFFSET_Y = 20;
+    private static final int IMAGE_SIZE = 50;
+
+    private Paint multPaint;
+    private static final int STAT_SIZE = 34;
+    private static final int PHYS_ATK_X = 165 + BG_X;
+    private static final int MAG_ATK_X = 85 + PHYS_ATK_X;
+    private static final int SPEC_ATK_X = 85 + MAG_ATK_X;
+    private static final int PHYS_DEF_X = 85 + SPEC_ATK_X;
+    private static final int MAG_DEF_X = 85 + PHYS_DEF_X;
+    private static final int SPEC_DEF_X = 85 + MAG_DEF_X;
+    private static final int MULT_OFFSET_Y = 57;
+
+
     public EnemyInfoScreen(Game game, Screen prevScreen, List<BattleCharacter> party) {
         super(game);
         this.prevScreen = prevScreen;
@@ -65,6 +81,11 @@ public class EnemyInfoScreen extends Screen {
         namePaint = new TextPaint();
         namePaint.setTextAlign(Paint.Align.LEFT);
         namePaint.setColor(Color.BLACK);
+
+        multPaint = new Paint();
+        multPaint.setTextAlign(Paint.Align.CENTER);
+        multPaint.setColor(Color.BLACK);
+        multPaint.setTextSize(STAT_SIZE);
     }
 
     public void setEnemy(BattleEnemy enemy){
@@ -81,7 +102,17 @@ public class EnemyInfoScreen extends Screen {
         Graphics g = game.getGraphics();
         g.drawImage(Assets.EnemyInfoScreenTop, BG_X, topY);
         for(int i = 0; i < party.size(); i++){
-            g.drawImage(Assets.EnemyInfoScreenMid, BG_X, topY + TOP_HEIGHT + (MID_HEIGHT * i));
+            int baseY = topY + TOP_HEIGHT + (MID_HEIGHT * i);
+            g.drawImage(Assets.EnemyInfoScreenMid, BG_X, baseY);
+            g.drawScaledImage(party.get(i).getImage(), BG_X + IMAGE_OFFSET_X, baseY + IMAGE_OFFSET_Y, IMAGE_SIZE, IMAGE_SIZE);
+
+            Multipliers multipliers = displayEnemy.getMultipliers(party.get(i));
+            g.drawString(format(multipliers.getPhysAtk()) + "x", PHYS_ATK_X, baseY + MULT_OFFSET_Y, multPaint);
+            g.drawString(format(multipliers.getMagAtk()) + "x", MAG_ATK_X,  baseY + MULT_OFFSET_Y, multPaint);
+            g.drawString(format(multipliers.getSpecAtk()) + "x", SPEC_ATK_X,  baseY + MULT_OFFSET_Y, multPaint);
+            g.drawString(format(multipliers.getPhysDef()) + "x", PHYS_DEF_X,  baseY + MULT_OFFSET_Y, multPaint);
+            g.drawString(format(multipliers.getMagDef()) + "x", MAG_DEF_X,  baseY + MULT_OFFSET_Y, multPaint);
+            g.drawString(format(multipliers.getSpecDef()) + "x", SPEC_DEF_X,  baseY + MULT_OFFSET_Y, multPaint);
         }
         g.drawImage(Assets.EnemyInfoScreenBot, BG_X, topY + TOP_HEIGHT + (MID_HEIGHT * party.size()));
 
@@ -113,6 +144,18 @@ public class EnemyInfoScreen extends Screen {
         }
         else{
             return Assets.pHealthR;
+        }
+    }
+
+    private String format(double number){
+        if(number >= 100.0){
+            return String.format("%1$.0f", number);
+        }
+        else if(number >= 10.0){
+            return String.format("%1$.1f", number);
+        }
+        else{
+            return String.format("%1$.2f", number);
         }
     }
 
