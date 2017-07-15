@@ -129,6 +129,8 @@ public class BattleEnemy extends BattleCharacter{
         return 0;
     }
 
+    public SkillList getSkills() { return this.skills; }
+
     public void startBattle(List<BattleCharacter> party) {
         this.currentHP = this.maxHP;
         ai.reset();
