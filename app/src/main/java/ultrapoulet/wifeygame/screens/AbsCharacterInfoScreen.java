@@ -24,7 +24,7 @@ public abstract class AbsCharacterInfoScreen extends Screen {
 
     protected Image background;
     protected static final int BG_X = 50;
-    protected static final int BG_Y = 75;
+    protected static final int BG_Y = 170;
 
     protected static final int CHAR_X = 40 + BG_X;
     protected static final int CHAR_Y = 100 + BG_Y;
