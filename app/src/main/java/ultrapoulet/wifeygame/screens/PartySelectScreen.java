@@ -33,6 +33,9 @@ public class PartySelectScreen extends Screen {
     private List<WifeyCharacter> validCharacters;
     private List<WifeyCharacter> currentParty;
     private List<WifeyCharacter> requiredCharacters;
+    private ArrayList<Image> partyImages;
+    private ArrayList<Image> recruitImages;
+
     private int maxPartySize;
     private BattleInfo battleInfo;
 
@@ -136,9 +139,6 @@ public class PartySelectScreen extends Screen {
     private static final int CHAR_REQUIRED_HOLDER_BASE_X = CHAR_IMAGE_BASE_LEFT_X - 3;
     private static final int CHAR_REQUIRED_HOLDER_BASE_Y = CHAR_IMAGE_BASE_TOP_Y - 12;
     private static final int CHAR_REQUIRED_OFFSET = 90;
-
-    private ArrayList<Image> partyImages;
-    private ArrayList<Image> recruitImages;
 
     private static final int DRAGGING_OFFSET = 60;
 
@@ -438,6 +438,24 @@ public class PartySelectScreen extends Screen {
         }
     }
 
+    private void performSort(){
+        ArrayList<WifeyCharacter> preSort = new ArrayList<>();
+        for(int i = 0; i < PER_PAGE; i++){
+            preSort.add(validCharacters.get((currentPage * PER_PAGE) + i));
+        }
+        Collections.sort(validCharacters, getSort());
+        boolean pageChanged = false;
+        for(int i = 0; i < PER_PAGE; i++){
+            if(preSort.get(i) != validCharacters.get((currentPage * PER_PAGE) + i)){
+                pageChanged = true;
+            }
+        }
+        if(pageChanged) {
+            updateRecruitImages();
+        }
+        sortDropdown.setTitle(currentSort.getSortTitle());
+    }
+
     @Override
     public void update(float deltaTime){
         List<Input.TouchEvent> touchEvents = game.getInput().getTouchEvents();
@@ -476,9 +494,7 @@ public class PartySelectScreen extends Screen {
                                 currentSort = SortMethod.FAVORITE;
                         }
                         if(result != null){
-                            Collections.sort(validCharacters, getSort());
-                            updateRecruitImages();
-                            sortDropdown.setTitle(currentSort.getSortTitle());
+                            performSort();
                         }
                     }
                     sortDropdown.deactivateMenu();
@@ -709,9 +725,7 @@ public class PartySelectScreen extends Screen {
 
     @Override
     public void resume() {
-        Collections.sort(validCharacters, getSort());
-        updateRecruitImages();
-        sortDropdown.setTitle(currentSort.getSortTitle());
+        performSort();
     }
 
     @Override
