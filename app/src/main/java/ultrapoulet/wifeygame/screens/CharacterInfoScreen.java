@@ -356,7 +356,7 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
             //g.drawString(displayWeapon.getWeaponType(), WEAPON_X, MAX_WEAPON_Y, weaponPaint, MAX_WEAPON_SIZE, MAX_WEAPON_FONT);
         }
         //Draw image for number hits
-        g.drawString(String.valueOf(displayWeapon.getNumHits()), HITS_X, HITS_Y, hitsPaint);
+        g.drawImage(getHitsImage(displayWeapon.getNumHits()), HITS_X, HITS_Y);
 
         //List out names for the skills
         for(int i = 0; i < 4 && i < displaySkills.size(); i++){

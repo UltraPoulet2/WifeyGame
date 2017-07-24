@@ -286,6 +286,11 @@ public class LoadingScreen extends Screen {
         Assets.DropdownMenuOption = g.newImage("buttons/DropdownMenuOption.png", ImageFormat.ARGB8888);
         Assets.Favorite = g.newImage("buttons/FavoriteButton.png", ImageFormat.ARGB8888);
 
+        Assets.NumberHits = new ArrayList<>();
+        for(int i = 2; i < 10; i++){
+            Assets.NumberHits.add(g.newImage("objects/numberHits/" + i + "hits.png", ImageFormat.RGB565));
+        }
+
         Assets.InvalidChar = g.newImage("objects/holders/InvalidChar.png", ImageFormat.ARGB8888);
         Assets.RequiredCharHolder = g.newImage("objects/holders/RequiredCharHolder.png", ImageFormat.ARGB8888);
 

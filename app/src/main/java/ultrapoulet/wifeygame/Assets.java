@@ -82,6 +82,7 @@ public class Assets {
     public static Image TransformPrevEnable, TransformPrevDisable;
     public static Image TransformHolder;
     public static Image Favorite;
+    public static List<Image> NumberHits;
 
     //EnemyInfoScreen
     public static Image EnemyInfoScreenTop;

@@ -13,6 +13,7 @@ import ultrapoulet.androidgame.framework.Input;
 import ultrapoulet.androidgame.framework.Screen;
 import ultrapoulet.androidgame.framework.helpers.Button;
 import ultrapoulet.androidgame.framework.helpers.ButtonList;
+import ultrapoulet.wifeygame.Assets;
 
 /**
  * Created by John on 11/10/2016.
@@ -97,11 +98,8 @@ public abstract class AbsCharacterInfoScreen extends Screen {
     protected static final int UNIQUE_X = 42 + BG_X;
     protected static final int MAX_UNIQUE_SIZE = 303;
 
-    //These will be removed when hits images are added
-    protected Paint hitsPaint;
-    protected static final int HITS_SIZE = 40;
-    protected static final int HITS_X = 635 + BG_X;
-    protected static final int HITS_Y = 495 + BG_Y;
+    protected static final int HITS_X = 555 + BG_X;
+    protected static final int HITS_Y = 455 + BG_Y;
 
     public AbsCharacterInfoScreen(Game game, Screen previousScreen) {
         super(game);
@@ -127,11 +125,6 @@ public abstract class AbsCharacterInfoScreen extends Screen {
         weaponPaint = new Paint();
         weaponPaint.setTextAlign(Paint.Align.LEFT);
         weaponPaint.setColor(Color.BLACK);
-
-        hitsPaint = new Paint();
-        hitsPaint.setTextAlign(Paint.Align.CENTER);
-        hitsPaint.setColor(Color.BLACK);
-        hitsPaint.setTextSize(HITS_SIZE);
 
         createUniquePaints();
     }
@@ -197,6 +190,10 @@ public abstract class AbsCharacterInfoScreen extends Screen {
 
     protected void uniqueUpdate(Input.TouchEvent t){
         //Do nothing. This will be overriden in each class
+    }
+
+    protected Image getHitsImage(int i){
+        return Assets.NumberHits.get(i-2);
     }
 
     @Override
