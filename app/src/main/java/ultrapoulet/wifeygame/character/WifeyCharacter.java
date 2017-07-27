@@ -105,6 +105,14 @@ public class WifeyCharacter {
         return 1.0 * experience / nextLevelExp;
     }
 
+    public int getExp() {
+        return experience;
+    }
+
+    public int getNextLevelExp() {
+        return nextLevelExp;
+    }
+
     public ArrayList<TransformWifey> getTransformations(){
         return this.transformations;
     }

@@ -308,6 +308,7 @@ public class LoadingScreen extends Screen {
         Assets.BattleResultExp = g.newImage("objects/battleResult/BattleResultExp.png", ImageFormat.ARGB8888);
         Assets.BattleResultGold = g.newImage("objects/battleResult/BattleResultGold.png", ImageFormat.ARGB8888);
         Assets.LevelUp = g.newImage("BattleResult/LevelUpImage.png", ImageFormat.ARGB8888);
+        Assets.BattleResultCharHolder = g.newImage("BattleResult/BattleResultCharHolder.png", ImageFormat.ARGB8888);
 
         Assets.RecruitingScreen = g.newImage("screens/RecruitingScreen.png", ImageFormat.ARGB8888);
         Assets.RecruitingButtonEnable = g.newImage("Recruiting/RecruitButtonEnabled.png", ImageFormat.ARGB8888);

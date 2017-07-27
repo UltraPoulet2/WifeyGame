@@ -49,6 +49,11 @@ public class BattleResultScreen extends Screen{
     private static final int PARTY_SPACING = 10;
     private static final int PARTY_ROW_1_Y = 750;
     private static final int PARTY_ROW_2_Y = 920;
+    private static final int PARTY_HOLDER_OFFSET_X = -5;
+    private static final int PARTY_HOLDER_OFFSET_Y = -2;
+    private static final int PARTY_EXP_OFFSET_Y = 140;
+    private static final int EXP_BAR_MAX_WIDTH = 195;
+    private static final int EXP_BAR_HEIGHT = 20;
 
     private static final int BONUS_EXP_OFFSET_Y = 0;
     private static final int BONUS_GOLD_OFFSET_Y = 30;
@@ -242,9 +247,23 @@ public class BattleResultScreen extends Screen{
         //Draw Party Images
         int topRowSize = party.size() - (party.size() / 2);
         int baseX = CENTER_X - ((PARTY_WIDTH * topRowSize) + (PARTY_SPACING * (topRowSize - 1))) / 2;
+        List<WifeyCharacter> wifeyList = Party.getParty(party.size());
         for(int i = 0; i < topRowSize; i++){
             int x = baseX + (PARTY_WIDTH + PARTY_SPACING) * i;
             g.drawScaledImage(party.get(i).getImage(), x, PARTY_ROW_1_Y, PARTY_WIDTH, PARTY_HEIGHT);
+            g.drawImage(Assets.BattleResultCharHolder, x + PARTY_HOLDER_OFFSET_X, PARTY_ROW_1_Y + PARTY_HOLDER_OFFSET_Y);
+            if(wifeyLevelUp[i]){
+                int wifeyExpWidth = (int) (EXP_BAR_MAX_WIDTH * wifeyList.get(i).getExperiencePercent());
+                g.drawScaledImage(Assets.pHealthY, x, PARTY_ROW_1_Y + PARTY_EXP_OFFSET_Y, wifeyExpWidth, EXP_BAR_HEIGHT);
+            }
+            else{
+                int originalExp = wifeyList.get(i).getExp() - (baseExp + bonusExp);
+                int nextExp = wifeyList.get(i).getNextLevelExp();
+                int originalExpWidth = (int) (EXP_BAR_MAX_WIDTH * (1.0 * originalExp / nextExp));
+                int gainedExpWidth = (int) (EXP_BAR_MAX_WIDTH * (1.0 * (baseExp + bonusExp) / nextExp));
+                g.drawScaledImage(Assets.pHealthG, x, PARTY_ROW_1_Y + PARTY_EXP_OFFSET_Y, originalExpWidth, EXP_BAR_HEIGHT);
+                g.drawScaledImage(Assets.pHealthY, x + originalExpWidth, PARTY_ROW_1_Y + PARTY_EXP_OFFSET_Y, gainedExpWidth, EXP_BAR_HEIGHT);
+            }
             if(gains.get(i).getExp() > 0){
                 int exp = gains.get(i).getExp();
                 int numDigits = Integer.toString(exp).length();
@@ -270,6 +289,19 @@ public class BattleResultScreen extends Screen{
         for(int i = topRowSize; i < party.size(); i++){
             int x = baseX + (PARTY_WIDTH + PARTY_SPACING) * (i - topRowSize);
             g.drawScaledImage(party.get(i).getImage(), x, PARTY_ROW_2_Y, PARTY_WIDTH, PARTY_HEIGHT);
+            g.drawImage(Assets.BattleResultCharHolder, x + PARTY_HOLDER_OFFSET_X, PARTY_ROW_2_Y + PARTY_HOLDER_OFFSET_Y);
+            if(wifeyLevelUp[i]){
+                int wifeyExpWidth = (int) (EXP_BAR_MAX_WIDTH * wifeyList.get(i).getExperiencePercent());
+                g.drawScaledImage(Assets.pHealthY, x, PARTY_ROW_2_Y + PARTY_EXP_OFFSET_Y, wifeyExpWidth, EXP_BAR_HEIGHT);
+            }
+            else{
+                int originalExp = wifeyList.get(i).getExp() - (baseExp + bonusExp);
+                int nextExp = wifeyList.get(i).getNextLevelExp();
+                int originalExpWidth = (int) (EXP_BAR_MAX_WIDTH * (1.0 * originalExp / nextExp));
+                int gainedExpWidth = (int) (EXP_BAR_MAX_WIDTH * (1.0 * (baseExp + bonusExp) / nextExp));
+                g.drawScaledImage(Assets.pHealthG, x, PARTY_ROW_2_Y + PARTY_EXP_OFFSET_Y, originalExpWidth, EXP_BAR_HEIGHT);
+                g.drawScaledImage(Assets.pHealthY, x + originalExpWidth, PARTY_ROW_2_Y + PARTY_EXP_OFFSET_Y, gainedExpWidth, EXP_BAR_HEIGHT);
+            }
             if(gains.get(i).getExp() > 0){
                 int exp = gains.get(i).getExp();
                 int numDigits = Integer.toString(exp).length();

@@ -103,6 +103,7 @@ public class Assets {
     public static Image BattleResultExp;
     public static Image BattleResultGold;
     public static Image LevelUp;
+    public static Image BattleResultCharHolder;
 
     //RecruitingScreen stuff
     public static Image RecruitingScreen;
