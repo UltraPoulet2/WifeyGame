@@ -47,11 +47,11 @@ public class BattleResultScreen extends Screen{
     private static final int PARTY_HEIGHT = 160;
     private static final int PARTY_WIDTH = 160;
     private static final int PARTY_SPACING = 10;
-    private static final int PARTY_ROW_1_Y = 750;
-    private static final int PARTY_ROW_2_Y = 920;
+    private static final int PARTY_ROW_1_Y = 738;
+    private static final int PARTY_ROW_2_Y = 932;
     private static final int PARTY_HOLDER_OFFSET_X = -5;
     private static final int PARTY_HOLDER_OFFSET_Y = -2;
-    private static final int PARTY_EXP_OFFSET_Y = 140;
+    private static final int PARTY_EXP_OFFSET_Y = 162;
     private static final int EXP_BAR_MAX_WIDTH = 195;
     private static final int EXP_BAR_HEIGHT = 20;
 
