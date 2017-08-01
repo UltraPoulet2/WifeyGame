@@ -13,6 +13,7 @@ import ultrapoulet.androidgame.framework.Input;
 import ultrapoulet.androidgame.framework.Screen;
 import ultrapoulet.androidgame.framework.helpers.Button;
 import ultrapoulet.androidgame.framework.helpers.ButtonList;
+import ultrapoulet.wifeygame.Assets;
 
 /**
  * Created by John on 11/10/2016.
@@ -24,13 +25,13 @@ public abstract class AbsCharacterInfoScreen extends Screen {
 
     protected Image background;
     protected static final int BG_X = 50;
-    protected static final int BG_Y = 75;
+    protected static final int BG_Y = 170;
 
-    protected static final int CHAR_X = 30 + BG_X;
+    protected static final int CHAR_X = 40 + BG_X;
     protected static final int CHAR_Y = 100 + BG_Y;
     protected static final int DOUBLE_SCALE = 200;
 
-    protected static final int ELEMENT_X = 357 + BG_X;
+    protected static final int ELEMENT_X = 367 + BG_X;
     protected static final int ATK_ELEMENT_Y = 158 + BG_Y;
     protected static final int RES_ELEMENT_Y = 269 + BG_Y;
     protected static final int WEAK_ELEMENT_Y = 380 + BG_Y;
@@ -40,19 +41,19 @@ public abstract class AbsCharacterInfoScreen extends Screen {
     protected static final int MAX_NAME_FONT = 40;
     protected static final int MIN_NAME_FONT = 20;
     protected static final int TWO_LINE_NAME_FONT = 20;
-    protected static final int NAME_X = 402 + BG_X;
+    protected static final int NAME_X = 412 + BG_X;
     protected static final int MAX_NAME_Y = 155 + BG_Y;
     protected static final int TWO_LINE_NAME_Y = 115 + BG_Y;
 
     protected Paint skillsPaint;
     protected static final int SKILLS_TEXT_FONT = 40;
     protected static final int SKILLS_TEXT_SIZE = 303;
-    protected static final int SKILLS_TEXT_LEFT_X = 32 + BG_X;
+    protected static final int SKILLS_TEXT_LEFT_X = 42 + BG_X;
     protected static final int SKILLS_TEXT_RIGHT_X = SKILLS_TEXT_LEFT_X + 313;
     protected static final int SKILLS_TEXT_BASE_Y = 580 + BG_Y;
     protected static final int SKILLS_TEXT_OFFSET_Y = 55;
 
-    protected static final int SKILLS_DESC_X = 32 + BG_X;
+    protected static final int SKILLS_DESC_X = 42 + BG_X;
     protected static final int SKILLS_DESC_Y = 680 + BG_Y;
     protected static final int SKILLS_DESC_WIDTH = 616;
     protected TextPaint descPaint;
@@ -69,9 +70,9 @@ public abstract class AbsCharacterInfoScreen extends Screen {
     protected static final int CLOSE_BOT_Y = CLOSE_TOP_Y + 75;
     protected static final String CLOSE_STRING = "Close";
 
-    protected static final int UNIQUE_SKILL_LEFT_X = BG_X + 30;
+    protected static final int UNIQUE_SKILL_LEFT_X = BG_X + 40;
     protected static final int UNIQUE_SKILL_RIGHT_X = UNIQUE_SKILL_LEFT_X + 307;
-    protected static final int WEAPON_SKILL_LEFT_X = BG_X + 343;
+    protected static final int WEAPON_SKILL_LEFT_X = BG_X + 353;
     protected static final int WEAPON_SKILL_RIGHT_X = BG_X + 540;
     protected static final int TOP_SKILLS_TOP_Y = BG_Y + 455;
     protected static final int TOP_SKILLS_BOT_Y = TOP_SKILLS_TOP_Y + 50;
@@ -79,7 +80,7 @@ public abstract class AbsCharacterInfoScreen extends Screen {
     protected static final String WEAPON_STRING = "Weapon";
 
     protected ButtonList skillsButtonList;
-    protected static final int SKILLS_BUTTON_LEFT_X = 30 + BG_X;
+    protected static final int SKILLS_BUTTON_LEFT_X = 40 + BG_X;
     protected static final int SKILLS_BUTTON_WIDTH = 307;
     protected static final int SKILLS_BUTTON_RIGHT_X = SKILLS_BUTTON_LEFT_X + SKILLS_BUTTON_WIDTH;
     protected static final int SKILLS_BUTTON_OFFSET_X = 6;
@@ -91,17 +92,14 @@ public abstract class AbsCharacterInfoScreen extends Screen {
     protected Paint weaponPaint;
     protected static final int MAX_WEAPON_FONT = 40;
     protected static final int MAX_WEAPON_SIZE = 197;
-    protected static final int WEAPON_X = 345 + BG_X;
+    protected static final int WEAPON_X = 355 + BG_X;
     protected static final int MAX_WEAPON_Y = 495 + BG_Y;
     //Unique Skills will use same info as Weapon
-    protected static final int UNIQUE_X = 32 + BG_X;
+    protected static final int UNIQUE_X = 42 + BG_X;
     protected static final int MAX_UNIQUE_SIZE = 303;
 
-    //These will be removed when hits images are added
-    protected Paint hitsPaint;
-    protected static final int HITS_SIZE = 40;
-    protected static final int HITS_X = 625 + BG_X;
-    protected static final int HITS_Y = 495 + BG_Y;
+    protected static final int HITS_X = 555 + BG_X;
+    protected static final int HITS_Y = 455 + BG_Y;
 
     public AbsCharacterInfoScreen(Game game, Screen previousScreen) {
         super(game);
@@ -127,11 +125,6 @@ public abstract class AbsCharacterInfoScreen extends Screen {
         weaponPaint = new Paint();
         weaponPaint.setTextAlign(Paint.Align.LEFT);
         weaponPaint.setColor(Color.BLACK);
-
-        hitsPaint = new Paint();
-        hitsPaint.setTextAlign(Paint.Align.CENTER);
-        hitsPaint.setColor(Color.BLACK);
-        hitsPaint.setTextSize(HITS_SIZE);
 
         createUniquePaints();
     }
@@ -197,6 +190,10 @@ public abstract class AbsCharacterInfoScreen extends Screen {
 
     protected void uniqueUpdate(Input.TouchEvent t){
         //Do nothing. This will be overriden in each class
+    }
+
+    protected Image getHitsImage(int i){
+        return Assets.NumberHits.get(i-2);
     }
 
     @Override

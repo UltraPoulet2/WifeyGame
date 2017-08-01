@@ -286,6 +286,11 @@ public class LoadingScreen extends Screen {
         Assets.DropdownMenuOption = g.newImage("buttons/DropdownMenuOption.png", ImageFormat.ARGB8888);
         Assets.Favorite = g.newImage("buttons/FavoriteButton.png", ImageFormat.ARGB8888);
 
+        Assets.NumberHits = new ArrayList<>();
+        for(int i = 2; i < 10; i++){
+            Assets.NumberHits.add(g.newImage("objects/numberHits/" + i + "hits.png", ImageFormat.RGB565));
+        }
+
         Assets.InvalidChar = g.newImage("objects/holders/InvalidChar.png", ImageFormat.ARGB8888);
         Assets.RequiredCharHolder = g.newImage("objects/holders/RequiredCharHolder.png", ImageFormat.ARGB8888);
 
@@ -293,6 +298,9 @@ public class LoadingScreen extends Screen {
         Assets.BattleCharacterInfoScreen = g.newImage("screens/BattleCharacterInfoScreen.png", ImageFormat.RGB565);
         Assets.BattleInfoScreen = g.newImage("screens/BattleInfoScreen.png", ImageFormat.RGB565);
         Assets.RecruitBattleInfoScreen = g.newImage("screens/RecruitBattleInfoScreen.png", ImageFormat.RGB565);
+        Assets.EnemyInfoScreenTop = g.newImage("screens/EnemyInfoScreenTop.png", ImageFormat.RGB565);
+        Assets.EnemyInfoScreenMid = g.newImage("screens/EnemyInfoScreenMid.png", ImageFormat.RGB565);
+        Assets.EnemyInfoScreenBot = g.newImage("screens/EnemyInfoScreenBot.png", ImageFormat.RGB565);
 
         Assets.BattleResultScreen = g.newImage("screens/BattleResultScreen.png", ImageFormat.ARGB8888);
         Assets.BattleResultVictory = g.newImage("objects/battleResult/BattleResultVictory.png", ImageFormat.ARGB8888);
@@ -300,6 +308,7 @@ public class LoadingScreen extends Screen {
         Assets.BattleResultExp = g.newImage("objects/battleResult/BattleResultExp.png", ImageFormat.ARGB8888);
         Assets.BattleResultGold = g.newImage("objects/battleResult/BattleResultGold.png", ImageFormat.ARGB8888);
         Assets.LevelUp = g.newImage("BattleResult/LevelUpImage.png", ImageFormat.ARGB8888);
+        Assets.BattleResultCharHolder = g.newImage("BattleResult/BattleResultCharHolder.png", ImageFormat.ARGB8888);
 
         Assets.RecruitingScreen = g.newImage("screens/RecruitingScreen.png", ImageFormat.ARGB8888);
         Assets.RecruitingButtonEnable = g.newImage("Recruiting/RecruitButtonEnabled.png", ImageFormat.ARGB8888);

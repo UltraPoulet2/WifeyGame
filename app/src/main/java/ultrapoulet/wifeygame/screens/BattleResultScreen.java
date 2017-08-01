@@ -47,8 +47,13 @@ public class BattleResultScreen extends Screen{
     private static final int PARTY_HEIGHT = 160;
     private static final int PARTY_WIDTH = 160;
     private static final int PARTY_SPACING = 10;
-    private static final int PARTY_ROW_1_Y = 750;
-    private static final int PARTY_ROW_2_Y = 920;
+    private static final int PARTY_ROW_1_Y = 738;
+    private static final int PARTY_ROW_2_Y = 932;
+    private static final int PARTY_HOLDER_OFFSET_X = -5;
+    private static final int PARTY_HOLDER_OFFSET_Y = -2;
+    private static final int PARTY_EXP_OFFSET_Y = 162;
+    private static final int EXP_BAR_MAX_WIDTH = 195;
+    private static final int EXP_BAR_HEIGHT = 20;
 
     private static final int BONUS_EXP_OFFSET_Y = 0;
     private static final int BONUS_GOLD_OFFSET_Y = 30;
@@ -244,51 +249,50 @@ public class BattleResultScreen extends Screen{
         int baseX = CENTER_X - ((PARTY_WIDTH * topRowSize) + (PARTY_SPACING * (topRowSize - 1))) / 2;
         for(int i = 0; i < topRowSize; i++){
             int x = baseX + (PARTY_WIDTH + PARTY_SPACING) * i;
-            g.drawScaledImage(party.get(i).getImage(), x, PARTY_ROW_1_Y, PARTY_WIDTH, PARTY_HEIGHT);
-            if(gains.get(i).getExp() > 0){
-                int exp = gains.get(i).getExp();
-                int numDigits = Integer.toString(exp).length();
-                int totalWidth = (numDigits + 1) * BONUS_TEXT_WIDTH;
-                int plusX = x + ((PARTY_WIDTH - totalWidth) / 2);
-                g.drawScaledImage(Assets.BluePlus, plusX, PARTY_ROW_1_Y + BONUS_EXP_OFFSET_Y, BONUS_TEXT_WIDTH, BONUS_TEXT_HEIGHT);
-                NumberPrinter.drawNumber(g, exp, plusX + BONUS_TEXT_WIDTH, PARTY_ROW_1_Y + BONUS_EXP_OFFSET_Y, BONUS_TEXT_WIDTH, BONUS_TEXT_HEIGHT, BONUS_TEXT_OFFSET, Assets.BlueNumbers, Align.LEFT);
-            }
-            if(gains.get(i).getGold() > 0){
-                int gold = gains.get(i).getGold();
-                int numDigits = Integer.toString(gold).length();
-                int totalWidth = (numDigits + 1) * BONUS_TEXT_WIDTH;
-                int plusX = x + ((PARTY_WIDTH - totalWidth) / 2);
-                g.drawScaledImage(Assets.YellowPlus, plusX, PARTY_ROW_1_Y + BONUS_GOLD_OFFSET_Y, BONUS_TEXT_WIDTH, BONUS_TEXT_HEIGHT);
-                NumberPrinter.drawNumber(g, gold, plusX + BONUS_TEXT_WIDTH, PARTY_ROW_1_Y + BONUS_GOLD_OFFSET_Y, BONUS_TEXT_WIDTH, BONUS_TEXT_HEIGHT, BONUS_TEXT_OFFSET, Assets.YellowNumbers, Align.LEFT);
-            }
-            if(wifeyLevelUp[i]){
-                g.drawImage(Assets.LevelUp, x + WIFEY_LEVEL_OFFSET_X, PARTY_ROW_1_Y + WIFEY_LEVEL_OFFSET_Y);
-            }
+            drawPartyMember(g, i, x, PARTY_ROW_1_Y);
         }
         int botRowSize = party.size() / 2;
         baseX = CENTER_X - ((PARTY_WIDTH * botRowSize) + (PARTY_SPACING * (botRowSize - 1))) / 2;
         for(int i = topRowSize; i < party.size(); i++){
             int x = baseX + (PARTY_WIDTH + PARTY_SPACING) * (i - topRowSize);
-            g.drawScaledImage(party.get(i).getImage(), x, PARTY_ROW_2_Y, PARTY_WIDTH, PARTY_HEIGHT);
-            if(gains.get(i).getExp() > 0){
-                int exp = gains.get(i).getExp();
-                int numDigits = Integer.toString(exp).length();
-                int totalWidth = (numDigits + 1) * BONUS_TEXT_WIDTH;
-                int plusX = x + ((PARTY_WIDTH - totalWidth) / 2);
-                g.drawScaledImage(Assets.BluePlus, plusX, PARTY_ROW_2_Y + BONUS_EXP_OFFSET_Y, BONUS_TEXT_WIDTH, BONUS_TEXT_HEIGHT);
-                NumberPrinter.drawNumber(g, exp, plusX + BONUS_TEXT_WIDTH, PARTY_ROW_2_Y + BONUS_EXP_OFFSET_Y, BONUS_TEXT_WIDTH, BONUS_TEXT_HEIGHT, BONUS_TEXT_OFFSET, Assets.BlueNumbers, Align.LEFT);
-            }
-            if(gains.get(i).getGold() > 0){
-                int gold = gains.get(i).getGold();
-                int numDigits = Integer.toString(gold).length();
-                int totalWidth = (numDigits + 1) * BONUS_TEXT_WIDTH;
-                int plusX = x + ((PARTY_WIDTH - totalWidth) / 2);
-                g.drawScaledImage(Assets.YellowPlus, plusX, PARTY_ROW_2_Y + BONUS_GOLD_OFFSET_Y, BONUS_TEXT_WIDTH, BONUS_TEXT_HEIGHT);
-                NumberPrinter.drawNumber(g, gold, plusX + BONUS_TEXT_WIDTH, PARTY_ROW_2_Y + BONUS_GOLD_OFFSET_Y, BONUS_TEXT_WIDTH, BONUS_TEXT_HEIGHT, BONUS_TEXT_OFFSET, Assets.YellowNumbers, Align.LEFT);
-            }
-            if(wifeyLevelUp[i]){
-                g.drawImage(Assets.LevelUp, x + WIFEY_LEVEL_OFFSET_X, PARTY_ROW_2_Y + WIFEY_LEVEL_OFFSET_Y);
-            }
+            drawPartyMember(g, i, x, PARTY_ROW_2_Y);
+        }
+    }
+
+    private void drawPartyMember(Graphics g, int partyMember, int baseX, int baseY){
+        List<WifeyCharacter> wifeyList = Party.getParty(party.size());
+        g.drawScaledImage(party.get(partyMember).getImage(), baseX, baseY, PARTY_WIDTH, PARTY_HEIGHT);
+        g.drawImage(Assets.BattleResultCharHolder, baseX + PARTY_HOLDER_OFFSET_X, baseY + PARTY_HOLDER_OFFSET_Y);
+        if(wifeyLevelUp[partyMember]){
+            int wifeyExpWidth = (int) (EXP_BAR_MAX_WIDTH * wifeyList.get(partyMember).getExperiencePercent());
+            g.drawScaledImage(Assets.pHealthY, baseX, baseY + PARTY_EXP_OFFSET_Y, wifeyExpWidth, EXP_BAR_HEIGHT);
+        }
+        else{
+            int originalExp = wifeyList.get(partyMember).getExp() - (baseExp + bonusExp);
+            int nextExp = wifeyList.get(partyMember).getNextLevelExp();
+            int originalExpWidth = (int) (EXP_BAR_MAX_WIDTH * (1.0 * originalExp / nextExp));
+            int gainedExpWidth = (int) (EXP_BAR_MAX_WIDTH * (1.0 * (baseExp + bonusExp) / nextExp));
+            g.drawScaledImage(Assets.pHealthG, baseX, baseY + PARTY_EXP_OFFSET_Y, originalExpWidth, EXP_BAR_HEIGHT);
+            g.drawScaledImage(Assets.pHealthY, baseX + originalExpWidth, baseY + PARTY_EXP_OFFSET_Y, gainedExpWidth, EXP_BAR_HEIGHT);
+        }
+        if(gains.get(partyMember).getExp() > 0){
+            int exp = gains.get(partyMember).getExp();
+            int numDigits = Integer.toString(exp).length();
+            int totalWidth = (numDigits + 1) * BONUS_TEXT_WIDTH;
+            int plusX = baseX + ((PARTY_WIDTH - totalWidth) / 2);
+            g.drawScaledImage(Assets.BluePlus, plusX, baseY + BONUS_EXP_OFFSET_Y, BONUS_TEXT_WIDTH, BONUS_TEXT_HEIGHT);
+            NumberPrinter.drawNumber(g, exp, plusX + BONUS_TEXT_WIDTH, baseY + BONUS_EXP_OFFSET_Y, BONUS_TEXT_WIDTH, BONUS_TEXT_HEIGHT, BONUS_TEXT_OFFSET, Assets.BlueNumbers, Align.LEFT);
+        }
+        if(gains.get(partyMember).getGold() > 0){
+            int gold = gains.get(partyMember).getGold();
+            int numDigits = Integer.toString(gold).length();
+            int totalWidth = (numDigits + 1) * BONUS_TEXT_WIDTH;
+            int plusX = baseX + ((PARTY_WIDTH - totalWidth) / 2);
+            g.drawScaledImage(Assets.YellowPlus, plusX, baseY + BONUS_GOLD_OFFSET_Y, BONUS_TEXT_WIDTH, BONUS_TEXT_HEIGHT);
+            NumberPrinter.drawNumber(g, gold, plusX + BONUS_TEXT_WIDTH, baseY + BONUS_GOLD_OFFSET_Y, BONUS_TEXT_WIDTH, BONUS_TEXT_HEIGHT, BONUS_TEXT_OFFSET, Assets.YellowNumbers, Align.LEFT);
+        }
+        if(wifeyLevelUp[partyMember]){
+            g.drawImage(Assets.LevelUp, baseX + WIFEY_LEVEL_OFFSET_X, baseY + WIFEY_LEVEL_OFFSET_Y);
         }
     }
 

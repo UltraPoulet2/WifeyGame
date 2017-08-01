@@ -8,6 +8,7 @@ import java.util.Map;
 import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.wifeygame.battle.enemyai.EnemyAI;
 import ultrapoulet.wifeygame.battle.enemyai.EnemyAI.EnemyAction;
+import ultrapoulet.wifeygame.battle.skills.AbsSkill.Multipliers;
 import ultrapoulet.wifeygame.battle.skills.SkillList;
 import ultrapoulet.wifeygame.character.EnemyCharacter;
 import ultrapoulet.wifeygame.character.TransformEnemy;
@@ -127,6 +128,8 @@ public class BattleEnemy extends BattleCharacter{
     public int getBonusRecruiting() {
         return 0;
     }
+
+    public SkillList getSkills() { return this.skills; }
 
     public void startBattle(List<BattleCharacter> party) {
         this.currentHP = this.maxHP;
@@ -441,6 +444,10 @@ public class BattleEnemy extends BattleCharacter{
         for(int i = 0; i < form.getRemoveSkills().size(); i++){
             skills.removeSkill(form.getRemoveSkills().get(i).getBattleSkill(this));
         }
+    }
+
+    public Multipliers getMultipliers(BattleCharacter enemy){
+        return skills.getMultipliers(enemy);
     }
 
 }

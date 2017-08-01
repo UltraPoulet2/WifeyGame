@@ -231,7 +231,7 @@ public class BattleWifey extends BattleCharacter{
         return transformWifeys.size() + 1;
     }
 
-    public Multipliers getMultipliers(BattleEnemy enemy){
+    public Multipliers getMultipliers(BattleCharacter enemy){
         return skills.getMultipliers(enemy);
     }
 
