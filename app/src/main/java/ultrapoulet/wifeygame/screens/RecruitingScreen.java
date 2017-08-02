@@ -16,7 +16,7 @@ import ultrapoulet.androidgame.framework.helpers.Button;
 import ultrapoulet.androidgame.framework.helpers.ButtonList;
 import ultrapoulet.wifeygame.Assets;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
-import ultrapoulet.wifeygame.gamestate.PlayerInfo;
+import ultrapoulet.wifeygame.gamestate.PlayerInfo.HeaderBar;
 import ultrapoulet.wifeygame.recruiting.RecruitInfo;
 import ultrapoulet.wifeygame.recruiting.RecruitRequirement;
 
@@ -26,6 +26,7 @@ import ultrapoulet.wifeygame.recruiting.RecruitRequirement;
 
 public class RecruitingScreen extends Screen {
 
+    private HeaderBar header = new HeaderBar();
     private static final int HEADER_OFFSET = 60;
 
     private static final int IMAGE_X = 30;
@@ -160,7 +161,7 @@ public class RecruitingScreen extends Screen {
     @Override
     public void paint(float deltaTime) {
         Graphics g = game.getGraphics();
-        PlayerInfo.drawHeader(g);
+        header.draw(g);
         g.drawImage(Assets.RecruitingScreen, 0, HEADER_OFFSET);
 
         g.drawString(recruit.getName(), TITLE_NAME_X, TITLE_NAME_Y, titlePaint, TITLE_TEXT_MAX_WIDTH, TITLE_TEXT_MAX_FONT);

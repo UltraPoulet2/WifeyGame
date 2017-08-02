@@ -21,12 +21,15 @@ import ultrapoulet.wifeygame.character.EnemyCharacter;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
 import ultrapoulet.wifeygame.gamestate.Party;
 import ultrapoulet.wifeygame.gamestate.PlayerInfo;
+import ultrapoulet.wifeygame.gamestate.PlayerInfo.HeaderBar;
 
 /**
  * Created by John on 5/23/2017.
  */
 
 public abstract class AbsBattleInfoScreen extends Screen {
+
+    protected HeaderBar header = new HeaderBar();
 
     protected Screen prevScreen;
 
@@ -281,7 +284,7 @@ public abstract class AbsBattleInfoScreen extends Screen {
         Graphics g = game.getGraphics();
         g.clearScreen(0xFFFFFFFF);
 
-        PlayerInfo.drawHeader(g);
+        header.draw(g);
 
         g.drawImage(background, 0, BACKGROUND_OFFSET);
 

@@ -7,7 +7,6 @@ import android.graphics.Paint.Align;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 import ultrapoulet.androidgame.framework.Game;
 import ultrapoulet.androidgame.framework.Graphics;
@@ -22,6 +21,7 @@ import ultrapoulet.wifeygame.battle.BattleInfo;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
 import ultrapoulet.wifeygame.gamestate.Party;
 import ultrapoulet.wifeygame.gamestate.PlayerInfo;
+import ultrapoulet.wifeygame.gamestate.PlayerInfo.HeaderBar;
 import ultrapoulet.wifeygame.gamestate.RecruitableCharacters;
 import ultrapoulet.wifeygame.gamestate.StoryArea;
 import ultrapoulet.wifeygame.gamestate.StoryBattles;
@@ -31,6 +31,7 @@ import ultrapoulet.wifeygame.gamestate.StoryBattles;
  */
 public class BattleSelectScreen extends Screen {
 
+    private HeaderBar header = new HeaderBar();
     private static final int HEADER_OFFSET = 60;
 
     private static final int STORY_LEFT_X = 42;
@@ -458,7 +459,7 @@ public class BattleSelectScreen extends Screen {
     @Override
     public void paint(float deltaTime) {
         Graphics g = game.getGraphics();
-        PlayerInfo.drawHeader(g);
+        header.draw(g);
         g.drawImage(Assets.BattleSelectScreen, 0, HEADER_OFFSET);
 
         buttonList.drawImage(g);

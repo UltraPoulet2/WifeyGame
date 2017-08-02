@@ -3,6 +3,7 @@ package ultrapoulet.wifeygame.gamestate;
 import android.content.SharedPreferences;
 
 import ultrapoulet.androidgame.framework.Graphics;
+import ultrapoulet.androidgame.framework.Input.TouchEvent;
 import ultrapoulet.androidgame.framework.helpers.NumberPrinter;
 import ultrapoulet.androidgame.framework.helpers.NumberPrinter.Align;
 import ultrapoulet.wifeygame.Assets;
@@ -133,36 +134,42 @@ public class PlayerInfo {
         }
     }
 
-    public static int getMaxEnergy() {
-        return maxEnergy;
-    }
-
-    //Objects for printing the holder
-    private static final int EXP_BAR_WIDTH = 160;
-    private static final int EXP_BAR_HEIGHT = 10;
-
-    public static void drawHeader(Graphics g) {
-        g.drawImage(Assets.StatusHolder, 0, 0);
-        NumberPrinter.drawNumber(g, gold, 60, 0, 30, 60, 0, Assets.YellowNumbers, Align.LEFT);
-        NumberPrinter.drawNumber(g, level, 340, 24, 15, 30, 0, Assets.WhiteNumbers, Align.LEFT);
-        NumberPrinter.drawNumber(g, currentEnergy, 635, 0, 20, 40, 0, Assets.WhiteNumbers, Align.RIGHT);
-        NumberPrinter.drawNumber(g, maxEnergy, 655, 0, 20, 40, 0, Assets.WhiteNumbers, Align.LEFT);
-
-        g.drawScaledImage(Assets.pHealthG, 390, 35, (int) (EXP_BAR_WIDTH * getLevelPercentage()), EXP_BAR_HEIGHT);
-
-        if(currentEnergy != maxEnergy) {
-            //Minutes
-            g.drawImage(Assets.Hourglass, 715, 0);
-            NumberPrinter.drawNumber(g, getNextEnergyMinutes(), 730, 0, 15, 30, 0, Assets.WhiteNumbers, Align.LEFT);
-            g.drawImage(Assets.Colon, 747, 10);
-            NumberPrinter.drawNumberPadded(g, getNextEnergySeconds(), 2, 750, 0, 15, 30, 0, Assets.WhiteNumbers, Align.LEFT);
-        }
-    }
-
     private static void saveEnergy() {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putLong("next_energy", nextEnergyTime);
         editor.putInt("current_energy", currentEnergy);
         editor.commit();
+    }
+
+    public static int getMaxEnergy() {
+        return maxEnergy;
+    }
+
+    public static class HeaderBar {
+        //Objects for printing the holder
+        private static final int EXP_BAR_WIDTH = 160;
+        private static final int EXP_BAR_HEIGHT = 10;
+
+        public void draw(Graphics g) {
+            g.drawImage(Assets.StatusHolder, 0, 0);
+            NumberPrinter.drawNumber(g, PlayerInfo.getGold(), 60, 0, 30, 60, 0, Assets.YellowNumbers, Align.LEFT);
+            NumberPrinter.drawNumber(g, PlayerInfo.getLevel(), 340, 24, 15, 30, 0, Assets.WhiteNumbers, Align.LEFT);
+            NumberPrinter.drawNumber(g, PlayerInfo.getCurrentEnergy(), 635, 0, 20, 40, 0, Assets.WhiteNumbers, Align.RIGHT);
+            NumberPrinter.drawNumber(g, PlayerInfo.getMaxEnergy(), 655, 0, 20, 40, 0, Assets.WhiteNumbers, Align.LEFT);
+
+            g.drawScaledImage(Assets.pHealthG, 390, 35, (int) (EXP_BAR_WIDTH * PlayerInfo.getLevelPercentage()), EXP_BAR_HEIGHT);
+
+            if (PlayerInfo.getCurrentEnergy() != PlayerInfo.getMaxEnergy()) {
+                //Minutes
+                g.drawImage(Assets.Hourglass, 715, 0);
+                NumberPrinter.drawNumber(g, PlayerInfo.getNextEnergyMinutes(), 730, 0, 15, 30, 0, Assets.WhiteNumbers, Align.LEFT);
+                g.drawImage(Assets.Colon, 747, 10);
+                NumberPrinter.drawNumberPadded(g, PlayerInfo.getNextEnergySeconds(), 2, 750, 0, 15, 30, 0, Assets.WhiteNumbers, Align.LEFT);
+            }
+        }
+
+        public void update(TouchEvent t){
+            //For now, nothing.
+        }
     }
 }
