@@ -376,6 +376,9 @@ public class BattleSelectScreen extends Screen {
         List<TouchEvent> touchEvents = game.getInput().getTouchEvents();
         for(int i = 0; i < touchEvents.size(); i++){
             TouchEvent t = touchEvents.get(i);
+            //Perform update for HeaderBar
+            header.update(t);
+
             if(t.type == TouchEvent.TOUCH_DOWN){
                 lastPressedGeneral = buttonList.getButtonPressed(t.x, t.y);
                 lastPressedArea = storyAreaList.getIndexPressed(t.x, t.y);
@@ -459,7 +462,6 @@ public class BattleSelectScreen extends Screen {
     @Override
     public void paint(float deltaTime) {
         Graphics g = game.getGraphics();
-        header.draw(g);
         g.drawImage(Assets.BattleSelectScreen, 0, HEADER_OFFSET);
 
         buttonList.drawImage(g);
@@ -512,6 +514,8 @@ public class BattleSelectScreen extends Screen {
                 }
             }
         }
+
+        header.draw(g);
     }
 
     @Override

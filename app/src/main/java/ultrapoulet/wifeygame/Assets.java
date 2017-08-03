@@ -61,6 +61,8 @@ public class Assets {
     //PartyInfo Holder Stuff
     public static Image StatusHolder;
     public static Image Hourglass;
+    public static Image NextLevel;
+    public static Image NextLevelDialogLeft, NextLevelDialogCenter, NextLevelDialogRight;
 
     //PartySelectScreen Stuff
     public static Image PartySelectScreen;

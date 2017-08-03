@@ -131,6 +131,9 @@ public class RecruitingScreen extends Screen {
         List<Input.TouchEvent> touchEvents = game.getInput().getTouchEvents();
         for(int i = 0; i < touchEvents.size(); i++) {
             Input.TouchEvent t = touchEvents.get(i);
+            //Perform update for HeaderBar
+            header.update(t);
+
             if (t.type == Input.TouchEvent.TOUCH_DOWN) {
                 lastPressed = basicButtons.getButtonPressed(t.x, t.y);
                 requirementPressed = requirementButtons.getIndexPressed(t.x, t.y);
@@ -161,7 +164,6 @@ public class RecruitingScreen extends Screen {
     @Override
     public void paint(float deltaTime) {
         Graphics g = game.getGraphics();
-        header.draw(g);
         g.drawImage(Assets.RecruitingScreen, 0, HEADER_OFFSET);
 
         g.drawString(recruit.getName(), TITLE_NAME_X, TITLE_NAME_Y, titlePaint, TITLE_TEXT_MAX_WIDTH, TITLE_TEXT_MAX_FONT);
@@ -184,6 +186,8 @@ public class RecruitingScreen extends Screen {
             Image box = (reqs.get(i).isComplete()) ? Assets.CheckboxComplete : Assets.CheckboxIncomplete;
             g.drawImage(box, REQUIREMENT_BOX_LEFT_X, REQUIREMENT_BOX_TOP_Y + (REQUIREMENT_OFFSET_Y * i));
         }
+
+        header.draw(g);
     }
 
     @Override

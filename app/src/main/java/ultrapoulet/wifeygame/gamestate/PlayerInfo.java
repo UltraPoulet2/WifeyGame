@@ -3,7 +3,9 @@ package ultrapoulet.wifeygame.gamestate;
 import android.content.SharedPreferences;
 
 import ultrapoulet.androidgame.framework.Graphics;
+import ultrapoulet.androidgame.framework.Input;
 import ultrapoulet.androidgame.framework.Input.TouchEvent;
+import ultrapoulet.androidgame.framework.helpers.Button;
 import ultrapoulet.androidgame.framework.helpers.NumberPrinter;
 import ultrapoulet.androidgame.framework.helpers.NumberPrinter.Align;
 import ultrapoulet.wifeygame.Assets;
@@ -63,6 +65,10 @@ public class PlayerInfo {
 
     public static int getExperience() {
         return experience;
+    }
+
+    public static int getNextLevelExp() {
+        return nextLevelExp;
     }
 
     public static double getLevelPercentage() {
@@ -150,6 +156,36 @@ public class PlayerInfo {
         private static final int EXP_BAR_WIDTH = 160;
         private static final int EXP_BAR_HEIGHT = 10;
 
+        private static final int EXP_BUTTON_LEFT_X = 338;
+        private static final int EXP_BUTTON_RIGHT_X = 554;
+        private static final int EXP_BUTTON_TOP_Y = 0;
+        private static final int EXP_BUTTON_BOT_Y = 60;
+        private static final String EXP_STRING = "EXP";
+        private Button expButton;
+
+        private boolean displayExp = false;
+        private boolean buttonPressed = false;
+
+        private static final int EXP_CENTER = EXP_BUTTON_RIGHT_X - ((EXP_BUTTON_RIGHT_X - EXP_BUTTON_LEFT_X) / 2);
+        private static final int EXP_CENTER_MIN_SIZE = Assets.NextLevel.getWidth();
+        private static final int EXP_DIALOG_Y = 60;
+        private static final int EXP_DIALOG_HEIGHT = Assets.NextLevelDialogCenter.getHeight();
+        private static final int EXP_DIALOG_SIDE_WIDTH = Assets.NextLevelDialogLeft.getWidth();
+        private static final int NEXT_LEVEL_X_OFFSET = Assets.NextLevel.getWidth() / 2;
+        private static final int NEXT_LEVEL_Y_OFFSET = 19;
+        private static final int EXP_WIDTH = 30;
+        private static final int EXP_HEIGHT = 60;
+
+        private int centerWidth;
+
+        public HeaderBar(){
+            expButton = new Button(EXP_BUTTON_LEFT_X, EXP_BUTTON_RIGHT_X, EXP_BUTTON_TOP_Y, EXP_BUTTON_BOT_Y, true, EXP_STRING);
+
+            int nextLevelLength = String.valueOf(PlayerInfo.getNextLevelExp()).length();
+            int numberWidth = ((nextLevelLength * 2) + 1) * EXP_WIDTH;
+            centerWidth = (numberWidth > EXP_CENTER_MIN_SIZE) ? numberWidth : EXP_CENTER_MIN_SIZE;
+        }
+
         public void draw(Graphics g) {
             g.drawImage(Assets.StatusHolder, 0, 0);
             NumberPrinter.drawNumber(g, PlayerInfo.getGold(), 60, 0, 30, 60, 0, Assets.YellowNumbers, Align.LEFT);
@@ -163,13 +199,28 @@ public class PlayerInfo {
                 //Minutes
                 g.drawImage(Assets.Hourglass, 715, 0);
                 NumberPrinter.drawNumber(g, PlayerInfo.getNextEnergyMinutes(), 730, 0, 15, 30, 0, Assets.WhiteNumbers, Align.LEFT);
+                //Seconds
                 g.drawImage(Assets.Colon, 747, 10);
                 NumberPrinter.drawNumberPadded(g, PlayerInfo.getNextEnergySeconds(), 2, 750, 0, 15, 30, 0, Assets.WhiteNumbers, Align.LEFT);
+            }
+
+            if(displayExp){
+                int centerLeftX = EXP_CENTER - (centerWidth/2);
+                g.drawScaledImage(Assets.NextLevelDialogCenter, centerLeftX, EXP_DIALOG_Y, centerWidth, EXP_DIALOG_HEIGHT);
+                g.drawImage(Assets.NextLevelDialogLeft, centerLeftX - EXP_DIALOG_SIDE_WIDTH, EXP_DIALOG_Y);
+                g.drawImage(Assets.NextLevelDialogRight, centerLeftX + centerWidth, EXP_DIALOG_Y);
+                g.drawImage(Assets.NextLevel, EXP_CENTER - NEXT_LEVEL_X_OFFSET, EXP_DIALOG_Y + NEXT_LEVEL_Y_OFFSET);
             }
         }
 
         public void update(TouchEvent t){
             //For now, nothing.
+            if (t.type == TouchEvent.TOUCH_DOWN) {
+                buttonPressed = expButton.isPressed(t.x, t.y);
+            }
+            else if(t.type == TouchEvent.TOUCH_UP){
+                displayExp = buttonPressed && expButton.isPressed(t.x, t.y) && !displayExp;
+            }
         }
     }
 }

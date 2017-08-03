@@ -237,6 +237,10 @@ public class LoadingScreen extends Screen {
 
         Assets.StatusHolder = g.newImage("objects/status/StatusHolder.png", ImageFormat.ARGB8888);
         Assets.Hourglass = g.newImage("objects/status/Hourglass.png", ImageFormat.ARGB8888);
+        Assets.NextLevel = g.newImage("objects/status/NextLevel.png", ImageFormat.ARGB8888);
+        Assets.NextLevelDialogLeft = g.newImage("objects/status/NextLevelDialogLeft.png", ImageFormat.ARGB8888);
+        Assets.NextLevelDialogCenter = g.newImage("objects/status/NextLevelDialogCenter.png", ImageFormat.ARGB8888);
+        Assets.NextLevelDialogRight = g.newImage("objects/status/NextLevelDialogRight.png", ImageFormat.ARGB8888);
 
         //BattleSelectScreen stuff
         Assets.BattleSelectScreen = g.newImage("BattleSelect/BattleSelectScreen.png", ImageFormat.ARGB8888);
