@@ -98,8 +98,10 @@ public abstract class AbsCharacterInfoScreen extends Screen {
     protected static final int UNIQUE_X = 42 + BG_X;
     protected static final int MAX_UNIQUE_SIZE = 303;
 
-    protected static final int HITS_X = 555 + BG_X;
-    protected static final int HITS_Y = 455 + BG_Y;
+    protected static final int WEAPONS_IMAGE_X = 555 + BG_X;
+    protected static final int WEAPONS_IMAGE_Y = 455 + BG_Y;
+    protected static final int HITS_X = 610 + BG_X;
+    protected static final int HITS_Y = WEAPONS_IMAGE_Y;
 
     public AbsCharacterInfoScreen(Game game, Screen previousScreen) {
         super(game);

@@ -19,6 +19,7 @@ import ultrapoulet.androidgame.framework.Graphics.ImageFormat;
 import ultrapoulet.androidgame.framework.Input.TouchEvent;
 import ultrapoulet.androidgame.framework.Screen;
 import ultrapoulet.wifeygame.Assets;
+import ultrapoulet.wifeygame.character.Weapon;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
 import ultrapoulet.wifeygame.gamestate.Characters;
 import ultrapoulet.wifeygame.gamestate.Party;
@@ -335,6 +336,9 @@ public class LoadingScreen extends Screen {
         Assets.ElementImages.add(g.newImage("elements/FireElement.png", ImageFormat.ARGB8888));
         Assets.ElementImages.add(g.newImage("elements/LightElement.png", ImageFormat.ARGB8888));
         Assets.ElementImages.add(g.newImage("elements/WaterElement.png", ImageFormat.ARGB8888));
+
+        //Setup the images for Weapons
+        Weapon.setupImages(g);
     }
 
     private void createRecruits(){

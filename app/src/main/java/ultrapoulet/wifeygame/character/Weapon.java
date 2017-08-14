@@ -1,5 +1,9 @@
 package ultrapoulet.wifeygame.character;
 
+import ultrapoulet.androidgame.framework.Graphics;
+import ultrapoulet.androidgame.framework.Graphics.ImageFormat;
+import ultrapoulet.androidgame.framework.Image;
+
 /**
  * Created by John on 6/25/2016.
  */
@@ -28,7 +32,7 @@ public enum Weapon {
     SCYTHE("Scythe", 2),
     SPORT("Sport", 6),
     SWORD("Sword", 5),
-    TAIL("Tail", 3),
+    //TAIL("Tail", 3),
     TANK("Tank", 2),
     TOOL("Tool", 4),
     TOY("Toy", 3),
@@ -36,6 +40,7 @@ public enum Weapon {
 
     private String weaponType;
     private int numHits;
+    private Image image;
 
     Weapon(String weaponType, int numHits){
         this.weaponType = weaponType;
@@ -48,5 +53,15 @@ public enum Weapon {
 
     public int getNumHits(){
         return this.numHits;
+    }
+
+    public Image getImage(){
+        return this.image;
+    }
+
+    public static void setupImages(Graphics g){
+        for(Weapon weapon : Weapon.values()) {
+            weapon.image = g.newImage("Weapons/" + weapon.toString() + ".png", ImageFormat.ARGB8888);
+        }
     }
 }

@@ -529,7 +529,8 @@
         <title>Snek</title>
         <strength>100</strength>
         <magic>30</magic>
-        <weapon>TAIL</weapon>
+        <!-- <weapon>TAIL</weapon> -->
+        <weapon>FIST</weapon>
         <elements>
             <atkElement>EARTH</atkElement>
             <stgElement>FIRE</stgElement>

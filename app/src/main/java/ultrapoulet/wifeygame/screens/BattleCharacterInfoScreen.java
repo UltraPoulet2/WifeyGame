@@ -157,6 +157,9 @@ public class BattleCharacterInfoScreen extends AbsCharacterInfoScreen {
             g.drawString("--Default Weapon--", WEAPON_X, MAX_WEAPON_Y, weaponPaint, MAX_WEAPON_SIZE, MAX_WEAPON_FONT);
             //g.drawString(displayWeapon.getWeaponType(), WEAPON_X, MAX_WEAPON_Y, weaponPaint, MAX_WEAPON_SIZE, MAX_WEAPON_FONT);
         }
+        //Draw image for weapon
+        g.drawImage(displayChar.getWeapon().getImage(), WEAPONS_IMAGE_X, WEAPONS_IMAGE_Y);
+
         //Draw image for number hits
         g.drawImage(getHitsImage(displayChar.getNumHits()), HITS_X, HITS_Y);
 
