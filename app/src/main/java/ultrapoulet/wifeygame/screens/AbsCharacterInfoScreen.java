@@ -98,10 +98,13 @@ public abstract class AbsCharacterInfoScreen extends Screen {
     protected static final int UNIQUE_X = 42 + BG_X;
     protected static final int MAX_UNIQUE_SIZE = 303;
 
-    protected static final int WEAPONS_IMAGE_X = 555 + BG_X;
-    protected static final int WEAPONS_IMAGE_Y = 455 + BG_Y;
+    protected static final int WEAPONS_IMAGE_LEFT_X = 555 + BG_X;
+    protected static final int WEAPONS_IMAGE_RIGHT_X = WEAPONS_IMAGE_LEFT_X + 50;
+    protected static final int WEAPONS_IMAGE_TOP_Y = 455 + BG_Y;
+    protected static final int WEAPONS_IMAGE_BOT_Y = WEAPONS_IMAGE_TOP_Y + 50;
+    protected static final String WEAPON_IMAGE_STRING = "Weapon Image";
     protected static final int HITS_X = 610 + BG_X;
-    protected static final int HITS_Y = WEAPONS_IMAGE_Y;
+    protected static final int HITS_Y = WEAPONS_IMAGE_TOP_Y;
 
     public AbsCharacterInfoScreen(Game game, Screen previousScreen) {
         super(game);
@@ -136,6 +139,7 @@ public abstract class AbsCharacterInfoScreen extends Screen {
         basicButtonList.addButton(new Button(CLOSE_LEFT_X, CLOSE_RIGHT_X, CLOSE_TOP_Y, CLOSE_BOT_Y, true, CLOSE_STRING));
         basicButtonList.addButton(new Button(UNIQUE_SKILL_LEFT_X, UNIQUE_SKILL_RIGHT_X, TOP_SKILLS_TOP_Y, TOP_SKILLS_BOT_Y, true, UNIQUE_STRING));
         basicButtonList.addButton(new Button(WEAPON_SKILL_LEFT_X, WEAPON_SKILL_RIGHT_X, TOP_SKILLS_TOP_Y, TOP_SKILLS_BOT_Y, true, WEAPON_STRING));
+        basicButtonList.addButton(new Button(WEAPONS_IMAGE_LEFT_X, WEAPONS_IMAGE_RIGHT_X, WEAPONS_IMAGE_TOP_Y, WEAPONS_IMAGE_BOT_Y, true, WEAPON_IMAGE_STRING));
 
         skillsButtonList = new ButtonList();
         for(int i = 0; i < 4; i++) {
@@ -152,6 +156,8 @@ public abstract class AbsCharacterInfoScreen extends Screen {
     }
 
     abstract protected void createUniquePaints();
+
+    abstract protected void displayWeaponType();
 
     @Override
     public void update(float deltaTime) {
@@ -175,6 +181,9 @@ public abstract class AbsCharacterInfoScreen extends Screen {
                             displayText = -1;
                             bDisplayUnique = false;
                             bDisplayWeaponSkill = !bDisplayWeaponSkill;
+                            break;
+                        case WEAPON_IMAGE_STRING:
+                            displayWeaponType();
                             break;
                         default:
                             System.out.println("AbsCharacterInfoScreen:update(): Invalid button selection: " + basicPressed.getName());
