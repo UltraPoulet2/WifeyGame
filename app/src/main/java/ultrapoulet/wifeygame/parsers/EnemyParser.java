@@ -8,6 +8,8 @@ import ultrapoulet.wifeygame.character.Element;
 import ultrapoulet.wifeygame.character.EnemyCharacter;
 import ultrapoulet.wifeygame.character.SkillsEnum;
 import ultrapoulet.wifeygame.character.TransformEnemy;
+import ultrapoulet.wifeygame.character.UniqueSkillsEnum;
+import ultrapoulet.wifeygame.character.WeaponSkillsEnum;
 import ultrapoulet.wifeygame.gamestate.Enemies;
 
 /**
@@ -111,6 +113,12 @@ public class EnemyParser extends DefaultHandler{
             }
         }
         else if(qName.equalsIgnoreCase("skill")){
+            currentText = new StringBuffer();
+        }
+        else if(qName.equalsIgnoreCase("weaponSkill")){
+            currentText = new StringBuffer();
+        }
+        else if(qName.equalsIgnoreCase("uniqueSkill")){
             currentText = new StringBuffer();
         }
         else if(qName.equalsIgnoreCase("elements")){
@@ -385,6 +393,45 @@ public class EnemyParser extends DefaultHandler{
             }
             bAddSkill = false;
             bRemoveSkill = false;
+        }
+        else if(qName.equalsIgnoreCase("weaponSkill")){
+            WeaponSkillsEnum skill;
+            try {
+                skill = WeaponSkillsEnum.valueOf(currentText.toString());
+            }
+            catch(IllegalArgumentException e){
+                skill = null;
+            }
+            if (skill == null) {
+                System.out.println("CharacterParser:endElement(): Could not find skill: " + currentText.toString());
+                error = true;
+            } else {
+                if (!bTransformSec) {
+                    enemyBuilder.setWeaponSkill(skill);
+                } else {
+                    transformBuilder.setWeaponSkill(skill);
+                }
+            }
+        }
+        else if(qName.equalsIgnoreCase("uniqueSkill")){
+            UniqueSkillsEnum skill;
+            try {
+                skill = UniqueSkillsEnum.valueOf(currentText.toString());
+            }
+            catch(IllegalArgumentException e){
+                skill = null;
+            }
+            if(skill == null){
+                System.out.println("CharacterParser:endElement(): Could not find skill: " + currentText.toString());
+                error = true;
+            } else {
+                if (!bTransformSec){
+                    enemyBuilder.setUniqueSkill(skill);
+                }
+                else {
+                    transformBuilder.setUniqueSkill(skill);
+                }
+            }
         }
         else if(qName.equalsIgnoreCase("atkElement")){
             Element elm;

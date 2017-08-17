@@ -13,6 +13,10 @@
         <skills>
             <skill>GHOST</skill>
         </skills>
+        <!-- Test Unique/Weapon skills
+        <uniqueSkill>REM</uniqueSkill>
+        <weaponSkill>KOKOROSE</weaponSkill>
+        -->
         <elements>
             <atkElement>AIR</atkElement>
             <stgElement>FIRE</stgElement>

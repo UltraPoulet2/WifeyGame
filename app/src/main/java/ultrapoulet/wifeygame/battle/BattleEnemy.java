@@ -73,7 +73,7 @@ public class BattleEnemy extends BattleCharacter{
         this.weakenPercentage = input.getWeakenPercentage();
         this.specialDamage = input.getSpecialDamage();
         this.specialHits = input.getSpecialHits();
-        this.skills = new SkillList(input.getSkills(), this);
+        this.skills = new SkillList(input.getSkills(), input.getWeaponSkill(), input.getUniqueSkill(), this);
         this.attackElement = input.getAttackElement();
         this.strongElement = input.getStrongElement();
         this.weakElement = input.getWeakElement();
@@ -430,14 +430,12 @@ public class BattleEnemy extends BattleCharacter{
         if(form.getWeakElement() != null){
             this.weakElement = form.getWeakElement();
         }
-        /*
         if(form.getUniqueSkill() != null){
-            this.uniqueSkill = form.getUniqueSkill();
+            skills.setUniqueSkill(form.getUniqueSkill().getUniqueBattleSkill(this));
         }
         if(form.getWeaponSkill() != null){
-            this.weaponSkill = form.getWeaponSkill();
+            skills.setWeaponSkill(form.getWeaponSkill().getWeaponBattleSkill(this));
         }
-         */
         for(int i = 0; i < form.getAddSkills().size(); i++){
             skills.addSkill(form.getAddSkills().get(i).getBattleSkill(this));
         }
