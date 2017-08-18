@@ -98,6 +98,12 @@ public class BattleParser extends DefaultHandler {
         else if(qName.equalsIgnoreCase("chance")){
             currentText = new StringBuffer();
         }
+        else if(qName.equalsIgnoreCase("unlocks")){
+            //Do nothing, valid
+        }
+        else if(qName.equalsIgnoreCase("unlock")){
+            currentText = new StringBuffer();
+        }
         else{
             System.out.println("BattleParser:startElement(): Invalid qName: " + qName + " for key " + battleKey);
         }
@@ -184,6 +190,9 @@ public class BattleParser extends DefaultHandler {
                 System.out.println("BattleParser:endElement(): NumberFormatException for key: " + battleKey);
                 error = true;
             }
+        }
+        else if(qName.equalsIgnoreCase("unlock")){
+            battleBuilder.addUnlock(currentText.toString());
         }
     }
 

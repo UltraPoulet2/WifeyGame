@@ -11,6 +11,7 @@ import ultrapoulet.wifeygame.battle.requirements.AbsRequirement;
 import ultrapoulet.wifeygame.battle.requirements.RequiredCharacterRequirement;
 import ultrapoulet.wifeygame.character.EnemyCharacter;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
+import ultrapoulet.wifeygame.gamestate.StoryBattles;
 
 /**
  * Created by John on 6/19/2016.
@@ -33,6 +34,9 @@ public class BattleInfo {
 
     private int numAttempts = 0;
     private int numComplete = 0;
+
+    private boolean unlocked = false;
+    private ArrayList<String> unlockList = new ArrayList<>();
 
     private class WifeyDrop{
         private WifeyCharacter wifey;
@@ -172,6 +176,34 @@ public class BattleInfo {
         return results;
     }
 
+    public void addUnlock(String value){
+        this.unlockList.add(value);
+    }
+
+    public void validateUnlocks(){
+        ArrayList<String> validList = new ArrayList<>();
+        for(String value : unlockList){
+            if(StoryBattles.getBattle(value) != null){
+                validList.add(value);
+                System.out.println("Battle found: " + value);
+            }
+            else {
+                System.out.println("BattleInfo::validateUnlocks(): " + "Could not find battle: " + value);
+            }
+        }
+        unlockList = validList;
+    }
+
+    public void performUnlocks(){
+        for(String value : unlockList){
+            StoryBattles.getBattle(value).unlock();
+        }
+    }
+
+    public void unlock(){
+        this.unlocked = true;
+    }
+
     public int getNumAttempts(){
         return numAttempts;
     }
@@ -194,6 +226,9 @@ public class BattleInfo {
 
     public void incrementNumComplete(){
         numComplete++;
+        if(numComplete == 1){
+            performUnlocks();
+        }
     }
 
 

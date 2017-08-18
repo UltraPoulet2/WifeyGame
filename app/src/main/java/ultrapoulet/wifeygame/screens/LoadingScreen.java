@@ -25,6 +25,7 @@ import ultrapoulet.wifeygame.gamestate.Characters;
 import ultrapoulet.wifeygame.gamestate.Party;
 import ultrapoulet.wifeygame.gamestate.PlayerInfo;
 import ultrapoulet.wifeygame.gamestate.RecruitedCharacters;
+import ultrapoulet.wifeygame.gamestate.StoryBattles;
 import ultrapoulet.wifeygame.parsers.BattleParser;
 import ultrapoulet.wifeygame.parsers.CharacterParser;
 import ultrapoulet.wifeygame.parsers.EnemyParser;
@@ -454,6 +455,7 @@ public class LoadingScreen extends Screen {
                 }
             }
         }
+        StoryBattles.validateUnlocks();
 
         try {
             in = game.openConfig("config/recruitbattles.xml");

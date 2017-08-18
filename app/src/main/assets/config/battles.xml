@@ -22,6 +22,9 @@
                     <chance>100</chance>
                 </drop>
             </drops>
+            <unlocks>
+                <unlock>TEST-BTWO</unlock>
+            </unlocks>
         </battle>
     </area>
     <area name="Weird Zone">
