@@ -104,6 +104,9 @@ public class BattleParser extends DefaultHandler {
         else if(qName.equalsIgnoreCase("unlock")){
             currentText = new StringBuffer();
         }
+        else if(qName.equalsIgnoreCase("startUnlocked")){
+            battleBuilder.unlock();
+        }
         else{
             System.out.println("BattleParser:startElement(): Invalid qName: " + qName + " for key " + battleKey);
         }

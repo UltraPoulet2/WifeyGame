@@ -204,6 +204,10 @@ public class BattleInfo {
         this.unlocked = true;
     }
 
+    public boolean isUnlocked() {
+        return unlocked;
+    }
+
     public int getNumAttempts(){
         return numAttempts;
     }

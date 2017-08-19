@@ -12,7 +12,6 @@ import ultrapoulet.wifeygame.battle.BattleInfo;
 public class StoryArea {
     private String areaName;
     private List<BattleInfo> battles;
-    private boolean unlocked = true;
 
     public StoryArea(String name){
         this.areaName = name;
@@ -35,11 +34,12 @@ public class StoryArea {
         return battles.get(index);
     }
 
-    public void unlock(){
-        unlocked = true;
-    }
-
     public boolean isUnlocked() {
-        return unlocked;
+        for(BattleInfo battle : battles){
+            if(battle.isUnlocked()){
+                return true;
+            }
+        }
+        return false;
     }
 }

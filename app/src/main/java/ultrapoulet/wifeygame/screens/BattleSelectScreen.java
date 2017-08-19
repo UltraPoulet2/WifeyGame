@@ -300,13 +300,17 @@ public class BattleSelectScreen extends Screen {
         if(selectedArea != -1 && selectedArea < unlockedAreas.size()){
             StoryArea area = unlockedAreas.get(selectedArea);
             selectedBattlePage = 0;
+            int unlockedBattles = 0;
             for(int i = 0; i < area.getBattles().size(); i++){
                 //An additional check later will need to be added to make sure the battle is unlocked
-                int leftX = STORY_BATTLE_LEFT_X;
-                int rightX = STORY_BATTLE_RIGHT_X;
-                int topY = BATTLES_TOP_Y + BATTLES_OFFSET_Y * (i % AREA_PAGE_SIZE);
-                int botY = BATTLES_BOT_Y + BATTLES_OFFSET_Y * (i % AREA_PAGE_SIZE);
-                storyBattleList.addButton(new Button(leftX, rightX, topY, botY, true, area.getBattle(i).getName(), Assets.StoryBattleEnabled));
+                if(area.getBattle(i).isUnlocked()) {
+                    int leftX = STORY_BATTLE_LEFT_X;
+                    int rightX = STORY_BATTLE_RIGHT_X;
+                    int topY = BATTLES_TOP_Y + BATTLES_OFFSET_Y * (unlockedBattles % AREA_PAGE_SIZE);
+                    int botY = BATTLES_BOT_Y + BATTLES_OFFSET_Y * (unlockedBattles % AREA_PAGE_SIZE);
+                    storyBattleList.addButton(new Button(leftX, rightX, topY, botY, true, area.getBattle(i).getName(), Assets.StoryBattleEnabled));
+                    unlockedBattles++;
+                }
             }
         }
     }
