@@ -42,4 +42,22 @@ public class StoryArea {
         }
         return false;
     }
+
+    public boolean isNew() {
+        for(BattleInfo battle: battles){
+            if(battle.getNumAttempts() > 0){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean isCompleted() {
+        for(BattleInfo battle: battles){
+            if(battle.getNumComplete() == 0){
+                return false;
+            }
+        }
+        return true;
+    }
 }
