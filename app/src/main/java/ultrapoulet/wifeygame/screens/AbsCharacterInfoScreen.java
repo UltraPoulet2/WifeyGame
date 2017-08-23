@@ -106,6 +106,14 @@ public abstract class AbsCharacterInfoScreen extends Screen {
     protected static final int HITS_X = 610 + BG_X;
     protected static final int HITS_Y = WEAPONS_IMAGE_TOP_Y;
 
+    protected static final int WEAPON_TYPE_TEXT_CENTER_X = 580 + BG_X;
+    protected static final int WEAPON_TYPE_TEXT_HOLDER_Y = 509 + BG_Y;
+    protected static final int WEAPON_TYPE_TEXT_Y = 526 + BG_Y;
+    protected static final int WEAPON_TYPE_SIDE_WIDTH = Assets.WeaponTypeLeft.getWidth();
+    protected Paint weaponTypePaint;
+    protected static final int WEAPON_TYPE_FONT = 20;
+    protected boolean bDisplayWeaponType = false;
+
     public AbsCharacterInfoScreen(Game game, Screen previousScreen) {
         super(game);
         setPreviousScreen(previousScreen);
@@ -130,6 +138,11 @@ public abstract class AbsCharacterInfoScreen extends Screen {
         weaponPaint = new Paint();
         weaponPaint.setTextAlign(Paint.Align.LEFT);
         weaponPaint.setColor(Color.BLACK);
+
+        weaponTypePaint = new Paint();
+        weaponTypePaint.setTextAlign(Paint.Align.CENTER);
+        weaponTypePaint.setColor(Color.BLACK);
+        weaponTypePaint.setTextSize(WEAPON_TYPE_FONT);
 
         createUniquePaints();
     }
@@ -157,7 +170,7 @@ public abstract class AbsCharacterInfoScreen extends Screen {
 
     abstract protected void createUniquePaints();
 
-    abstract protected void displayWeaponType();
+    abstract protected String getWeaponType();
 
     @Override
     public void update(float deltaTime) {
@@ -183,7 +196,7 @@ public abstract class AbsCharacterInfoScreen extends Screen {
                             bDisplayWeaponSkill = !bDisplayWeaponSkill;
                             break;
                         case WEAPON_IMAGE_STRING:
-                            displayWeaponType();
+                            bDisplayWeaponType = !bDisplayWeaponType;
                             break;
                         default:
                             System.out.println("AbsCharacterInfoScreen:update(): Invalid button selection: " + basicPressed.getName());
@@ -218,6 +231,16 @@ public abstract class AbsCharacterInfoScreen extends Screen {
         drawTopRows(g);
         drawSkills(g);
         drawDescription(g);
+
+        if(bDisplayWeaponType){
+            String weaponType = getWeaponType();
+            int width = (int) weaponTypePaint.measureText(weaponType);
+            int baseX = WEAPON_TYPE_TEXT_CENTER_X - (width/2) - WEAPON_TYPE_SIDE_WIDTH;
+            g.drawImage(Assets.WeaponTypeLeft, baseX, WEAPON_TYPE_TEXT_HOLDER_Y);
+            g.drawScaledImage(Assets.WeaponTypeCenter, baseX + WEAPON_TYPE_SIDE_WIDTH, WEAPON_TYPE_TEXT_HOLDER_Y, width, Assets.WeaponTypeCenter.getHeight());
+            g.drawImage(Assets.WeaponTypeRight, WEAPON_TYPE_TEXT_CENTER_X + (width/2), WEAPON_TYPE_TEXT_HOLDER_Y);
+            g.drawString(weaponType, WEAPON_TYPE_TEXT_CENTER_X, WEAPON_TYPE_TEXT_Y, weaponTypePaint);
+        }
     }
 
     abstract protected void drawPortrait(Graphics g);

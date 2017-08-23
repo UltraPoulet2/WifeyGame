@@ -85,6 +85,7 @@ public class Assets {
     public static Image TransformHolder;
     public static Image Favorite;
     public static List<Image> NumberHits;
+    public static Image WeaponTypeLeft, WeaponTypeCenter, WeaponTypeRight;
 
     //EnemyInfoScreen
     public static Image EnemyInfoScreenTop;

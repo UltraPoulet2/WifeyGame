@@ -72,9 +72,8 @@ public class BattleCharacterInfoScreen extends AbsCharacterInfoScreen {
         descPaint.setTextSize(SKILLS_DESC_SIZE);
     }
 
-    protected void displayWeaponType(){
-        //For now, we're just printing the name
-        System.out.println(displayChar.getWeapon().getWeaponType());
+    protected String getWeaponType(){
+        return displayChar.getWeapon().getWeaponType();
     }
 
     public void setChars(BattleWifey input, BattleEnemy enemy){
@@ -84,6 +83,7 @@ public class BattleCharacterInfoScreen extends AbsCharacterInfoScreen {
         displayText = -1;
         bDisplayUnique = false;
         bDisplayWeaponSkill = false;
+        bDisplayWeaponType = false;
         multipliers = displayChar.getMultipliers(enemy);
     }
 

@@ -131,9 +131,8 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
         namePaint.setColor(Color.BLACK);
     }
 
-    protected void displayWeaponType(){
-        //For now, we're just printing the name
-        System.out.println(displayChar.getWeapon().getWeaponType());
+    protected String getWeaponType(){
+        return displayChar.getWeapon().getWeaponType();
     }
 
     public void createUniqueButtons(){
@@ -153,6 +152,7 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
         displayText = -1;
         bDisplayUnique = false;
         bDisplayWeaponSkill = false;
+        bDisplayWeaponType = false;
 
         displayExp = displayChar.getExperienceString();
 

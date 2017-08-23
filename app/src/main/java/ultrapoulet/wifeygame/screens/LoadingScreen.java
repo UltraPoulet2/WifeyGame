@@ -297,6 +297,10 @@ public class LoadingScreen extends Screen {
             Assets.NumberHits.add(g.newImage("objects/numberHits/" + i + "hits.png", ImageFormat.RGB565));
         }
 
+        Assets.WeaponTypeLeft = g.newImage("CharacterInfo/WeaponTypeLeft.png", ImageFormat.ARGB8888);
+        Assets.WeaponTypeCenter = g.newImage("CharacterInfo/WeaponTypeCenter.png", ImageFormat.ARGB8888);
+        Assets.WeaponTypeRight = g.newImage("CharacterInfo/WeaponTypeRight.png", ImageFormat.ARGB8888);
+
         Assets.InvalidChar = g.newImage("objects/holders/InvalidChar.png", ImageFormat.ARGB8888);
         Assets.RequiredCharHolder = g.newImage("objects/holders/RequiredCharHolder.png", ImageFormat.ARGB8888);
 
