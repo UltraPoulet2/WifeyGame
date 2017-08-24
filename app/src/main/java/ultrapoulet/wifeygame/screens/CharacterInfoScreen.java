@@ -152,7 +152,6 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
         displayText = -1;
         bDisplayUnique = false;
         bDisplayWeaponSkill = false;
-        bDisplayWeaponType = false;
 
         displayExp = displayChar.getExperienceString();
 

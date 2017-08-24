@@ -83,7 +83,6 @@ public class BattleCharacterInfoScreen extends AbsCharacterInfoScreen {
         displayText = -1;
         bDisplayUnique = false;
         bDisplayWeaponSkill = false;
-        bDisplayWeaponType = false;
         multipliers = displayChar.getMultipliers(enemy);
     }
 
