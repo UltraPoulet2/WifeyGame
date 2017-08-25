@@ -530,7 +530,7 @@
         <strength>100</strength>
         <magic>30</magic>
         <!-- <weapon>TAIL</weapon> -->
-        <weapon>FIST</weapon>
+        <weapon>FISTS</weapon>
         <elements>
             <atkElement>EARTH</atkElement>
             <stgElement>FIRE</stgElement>

@@ -27,6 +27,8 @@ public class RecruitingBattleParser extends DefaultHandler {
 
     private StringBuffer currentText = new StringBuffer();
 
+    private int numberErrors = 0;
+
     @Override
     public void startElement(String uri,
                              String localName,
@@ -90,6 +92,7 @@ public class RecruitingBattleParser extends DefaultHandler {
             }
             else{
                 System.out.println("RecruitingBattleParser:endElement(): Error parsing for key: " + battleKey);
+                numberErrors++;
             }
         }
         else if(qName.equalsIgnoreCase("requirement")){
@@ -169,6 +172,9 @@ public class RecruitingBattleParser extends DefaultHandler {
             return false;
         }
         return true;
+    }
 
+    public int getNumberErrors(){
+        return numberErrors;
     }
 }

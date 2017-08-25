@@ -31,6 +31,8 @@ public class EnemyParser extends DefaultHandler{
 
     private StringBuffer currentText = new StringBuffer();
 
+    private int numberErrors = 0;
+
     @Override
     public void startElement(String uri,
                              String localName,
@@ -163,6 +165,7 @@ public class EnemyParser extends DefaultHandler{
             }
             else{
                 System.out.println("EnemyParser:endElement(): Error parsing: " + enemyKey);
+                numberErrors++;
             }
         }
         else if(qName.equalsIgnoreCase("transformation")){
@@ -173,6 +176,7 @@ public class EnemyParser extends DefaultHandler{
             else{
                 error = true;
                 System.out.println("EnemyParser:endElement(): Error adding transformation: " + tNumber);
+                numberErrors++;
             }
         }
         else if(qName.equalsIgnoreCase("transformations")){
@@ -528,5 +532,9 @@ public class EnemyParser extends DefaultHandler{
             return false;
         }
         return enemyBuilder.validate();
+    }
+
+    public int getNumberErrors(){
+        return numberErrors;
     }
 }

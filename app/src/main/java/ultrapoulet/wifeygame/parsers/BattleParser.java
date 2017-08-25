@@ -30,6 +30,8 @@ public class BattleParser extends DefaultHandler {
     private String battleKey;
     private StringBuffer currentText = new StringBuffer();
 
+    private int numberErrors = 0;
+
     @Override
     public void startElement(String uri,
                              String localName,
@@ -208,26 +210,34 @@ public class BattleParser extends DefaultHandler {
 
     private boolean validate(){
         if(error == true){
+            numberErrors++;
             return false;
         }
         if(battleBuilder.getName().length() == 0){
+            numberErrors++;
             return false;
         }
         if(battleBuilder.getCharacterEnemies().size() == 0){
+            numberErrors++;
             return false;
         }
         if(battleBuilder.getPartyMax() <= 0 || battleBuilder.getPartyMax() > 7){
+            numberErrors++;
             return false;
         }
         if(battleBuilder.getBackgroundName() == null){
+            numberErrors++;
             return false;
         }
         if(battleBuilder.getEnergyRequirement() <= 0){
+            numberErrors++;
             return false;
         }
         return true;
 
     }
 
-
+    public int getNumberErrors(){
+        return numberErrors;
+    }
 }

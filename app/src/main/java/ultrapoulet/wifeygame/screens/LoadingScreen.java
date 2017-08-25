@@ -293,7 +293,7 @@ public class LoadingScreen extends Screen {
         Assets.Favorite = g.newImage("buttons/FavoriteButton.png", ImageFormat.ARGB8888);
 
         Assets.NumberHits = new ArrayList<>();
-        for(int i = 2; i < 10; i++){
+        for(int i = 2; i <= 10; i++){
             Assets.NumberHits.add(g.newImage("objects/numberHits/" + i + "hits.png", ImageFormat.RGB565));
         }
 
@@ -354,6 +354,7 @@ public class LoadingScreen extends Screen {
             SAXParser saxParser = factory.newSAXParser();
             CharacterParser charParser = new CharacterParser();
             saxParser.parse(in, charParser);
+            System.out.println("LoadingScreen:createRecruits(): Recruit Parsing complete. Number errors: " + charParser.getNumberErrors());
 
             //Temporary testing
             /*
@@ -411,6 +412,7 @@ public class LoadingScreen extends Screen {
             SAXParser saxParser = factory.newSAXParser();
             EnemyParser enemyParser = new EnemyParser();
             saxParser.parse(in, enemyParser);
+            System.out.println("LoadingScreen:createEnemies(): Enemy Parsing complete. Number errors: " + enemyParser.getNumberErrors());
 
             //Temporary testing
             /*
@@ -445,6 +447,7 @@ public class LoadingScreen extends Screen {
             SAXParser saxParser = factory.newSAXParser();
             BattleParser battleParser = new BattleParser();
             saxParser.parse(in, battleParser);
+            System.out.println("LoadingScreen:createBattles(): Battle Parsing complete. Number errors: " + battleParser.getNumberErrors());
         }
         catch (Exception e){
             e.printStackTrace();
@@ -467,6 +470,7 @@ public class LoadingScreen extends Screen {
             SAXParser saxParser = factory.newSAXParser();
             RecruitingBattleParser battleParser = new RecruitingBattleParser();
             saxParser.parse(in, battleParser);
+            System.out.println("LoadingScreen:createBattles(): Recruiting Battle Parsing complete. Number errors: " + battleParser.getNumberErrors());
         }
         catch (Exception e){
             e.printStackTrace();
@@ -491,6 +495,7 @@ public class LoadingScreen extends Screen {
             SAXParser saxParser = factory.newSAXParser();
             RecruitingParser recParser = new RecruitingParser();
             saxParser.parse(in, recParser);
+            System.out.println("LoadingScreen:createRecruiting(): Recruiting Parsing complete. Number errors: " + recParser.getNumberErrors());
         }
         catch (Exception e){
             e.printStackTrace();

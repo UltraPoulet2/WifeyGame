@@ -33,6 +33,8 @@ public class CharacterParser extends DefaultHandler{
 
     private StringBuffer currentText = new StringBuffer();
 
+    private int numberErrors = 0;
+
     @Override
     public void startElement(String uri,
                              String localName,
@@ -133,6 +135,7 @@ public class CharacterParser extends DefaultHandler{
             }
             else{
                 System.out.println("CharacterParser:endElement(): Error parsing for key: " + charKey);
+                numberErrors++;
             }
         }
         else if(qName.equalsIgnoreCase("transformation")){
@@ -144,6 +147,7 @@ public class CharacterParser extends DefaultHandler{
             else{
                 error = true;
                 System.out.println("CharacterParser:endElement(): Error adding transformation: " + tNumber);
+                numberErrors++;
             }
         }
         else if(qName.equalsIgnoreCase("transformations")){
@@ -348,5 +352,9 @@ public class CharacterParser extends DefaultHandler{
             return false;
         }
         return charBuilder.validate();
+    }
+
+    public int getNumberErrors() {
+        return numberErrors;
     }
 }

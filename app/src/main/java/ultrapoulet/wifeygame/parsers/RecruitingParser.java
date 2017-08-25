@@ -32,6 +32,8 @@ public class RecruitingParser extends DefaultHandler {
 
     private StringBuffer currentText = new StringBuffer();
 
+    private int numberErrors = 0;
+
     @Override
     public void startElement(String uri,
                              String localName,
@@ -108,6 +110,9 @@ public class RecruitingParser extends DefaultHandler {
             if(infoBuilder != null && !error){
                 recruit.setRecruitingInfo(infoBuilder);
             }
+            if(error){
+                numberErrors++;
+            }
         }
         else if(qName.equalsIgnoreCase("quote")){
             infoBuilder.setQuote(currentText.toString());
@@ -165,5 +170,9 @@ public class RecruitingParser extends DefaultHandler {
                            int start,
                            int length) throws SAXException {
         currentText.append(new String(ch, start, length));
+    }
+
+    public int getNumberErrors(){
+        return numberErrors;
     }
 }
