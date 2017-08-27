@@ -4,6 +4,8 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import java.util.ArrayList;
+
 import ultrapoulet.wifeygame.battle.BattleInfo;
 import ultrapoulet.wifeygame.battle.requirements.AbsRequirement;
 import ultrapoulet.wifeygame.battle.requirements.RequirementFactory;
@@ -30,7 +32,7 @@ public class BattleParser extends DefaultHandler {
     private String battleKey;
     private StringBuffer currentText = new StringBuffer();
 
-    private int numberErrors = 0;
+    private ArrayList<String> errorKeys = new ArrayList<>();
 
     @Override
     public void startElement(String uri,
@@ -129,6 +131,7 @@ public class BattleParser extends DefaultHandler {
             }
             else{
                 System.out.println("BattleParser:endElement(): Error parsing for key: " + battleKey);
+                errorKeys.add(battleKey != null ? battleKey : "INV-KEY");
             }
         }
         else if(qName.equalsIgnoreCase("requirement")){
@@ -210,27 +213,21 @@ public class BattleParser extends DefaultHandler {
 
     private boolean validate(){
         if(error == true){
-            numberErrors++;
             return false;
         }
         if(battleBuilder.getName().length() == 0){
-            numberErrors++;
             return false;
         }
         if(battleBuilder.getCharacterEnemies().size() == 0){
-            numberErrors++;
             return false;
         }
         if(battleBuilder.getPartyMax() <= 0 || battleBuilder.getPartyMax() > 7){
-            numberErrors++;
             return false;
         }
         if(battleBuilder.getBackgroundName() == null){
-            numberErrors++;
             return false;
         }
         if(battleBuilder.getEnergyRequirement() <= 0){
-            numberErrors++;
             return false;
         }
         return true;
@@ -238,6 +235,15 @@ public class BattleParser extends DefaultHandler {
     }
 
     public int getNumberErrors(){
-        return numberErrors;
+        return errorKeys.size();
+    }
+
+    public String getErrorString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("There was an error parsing the following Battles:\n");
+        for (String key : errorKeys) {
+            builder.append(key + "\n");
+        }
+        return builder.toString();
     }
 }

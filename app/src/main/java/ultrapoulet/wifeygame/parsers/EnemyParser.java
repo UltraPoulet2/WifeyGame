@@ -4,6 +4,8 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import java.util.ArrayList;
+
 import ultrapoulet.wifeygame.character.Element;
 import ultrapoulet.wifeygame.character.EnemyCharacter;
 import ultrapoulet.wifeygame.character.SkillsEnum;
@@ -31,7 +33,8 @@ public class EnemyParser extends DefaultHandler{
 
     private StringBuffer currentText = new StringBuffer();
 
-    private int numberErrors = 0;
+    //private int numberErrors = 0;
+    private ArrayList<String> errorKeys = new ArrayList<>();
 
     @Override
     public void startElement(String uri,
@@ -165,7 +168,7 @@ public class EnemyParser extends DefaultHandler{
             }
             else{
                 System.out.println("EnemyParser:endElement(): Error parsing: " + enemyKey);
-                numberErrors++;
+                errorKeys.add(enemyKey != null ? enemyKey : "INV-KEY");
             }
         }
         else if(qName.equalsIgnoreCase("transformation")){
@@ -176,7 +179,7 @@ public class EnemyParser extends DefaultHandler{
             else{
                 error = true;
                 System.out.println("EnemyParser:endElement(): Error adding transformation: " + tNumber);
-                numberErrors++;
+                errorKeys.add(enemyKey != null ? enemyKey : "INV-KEY");
             }
         }
         else if(qName.equalsIgnoreCase("transformations")){
@@ -535,6 +538,15 @@ public class EnemyParser extends DefaultHandler{
     }
 
     public int getNumberErrors(){
-        return numberErrors;
+        return errorKeys.size();
+    }
+
+    public String getErrorString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("There was an error parsing the following Enemies:\n");
+        for(String key : errorKeys){
+            builder.append(key + "\n");
+        }
+        return builder.toString();
     }
 }

@@ -4,6 +4,8 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import java.util.ArrayList;
+
 import ultrapoulet.wifeygame.battle.BattleInfo;
 import ultrapoulet.wifeygame.character.SkillsEnum;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
@@ -30,9 +32,11 @@ public class RecruitingParser extends DefaultHandler {
     private RecruitRequirement reqBuilder;
     private WifeyCharacter recruit;
 
+    private String recKey;
+
     private StringBuffer currentText = new StringBuffer();
 
-    private int numberErrors = 0;
+    private ArrayList<String> errorKeys = new ArrayList<>();
 
     @Override
     public void startElement(String uri,
@@ -43,14 +47,14 @@ public class RecruitingParser extends DefaultHandler {
             //Valid. Do nothing
         }
         else if(qName.equalsIgnoreCase("character")){
-            String key = attributes.getValue("key");
+            recKey = attributes.getValue("key");
             currentText = new StringBuffer();
-            if(key != null){
-                recruit = Characters.get(key);
+            if(recKey != null){
+                recruit = Characters.get(recKey);
             }
             if(recruit == null){
                 error = true;
-                System.out.println("RecruitingParser:startElement(): Invalid character key: " + key);
+                System.out.println("RecruitingParser:startElement(): Invalid character key: " + recKey);
             }
             infoBuilder = new RecruitInfo();
         }
@@ -111,7 +115,7 @@ public class RecruitingParser extends DefaultHandler {
                 recruit.setRecruitingInfo(infoBuilder);
             }
             if(error){
-                numberErrors++;
+                errorKeys.add(recKey != null ? recKey : "INV-KEY");
             }
         }
         else if(qName.equalsIgnoreCase("quote")){
@@ -162,6 +166,9 @@ public class RecruitingParser extends DefaultHandler {
             if(reqBuilder.validate()){
                 infoBuilder.addRequirement(reqBuilder);
             }
+            else {
+                errorKeys.add(recKey != null ? recKey : "INV-KEY");
+            }
         }
     }
 
@@ -173,6 +180,15 @@ public class RecruitingParser extends DefaultHandler {
     }
 
     public int getNumberErrors(){
-        return numberErrors;
+        return errorKeys.size();
+    }
+
+    public String getErrorString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("There was an error parsing the following Recruiting Requirements:\n");
+        for (String key : errorKeys) {
+            builder.append(key + "\n");
+        }
+        return builder.toString();
     }
 }

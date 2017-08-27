@@ -44,6 +44,7 @@ public class LoadingScreen extends Screen {
     private boolean pressDown = false;
 
     private boolean error = false;
+    private String errorString = "";
     private boolean displayedError = false;
 
     public LoadingScreen(Game game){
@@ -199,7 +200,7 @@ public class LoadingScreen extends Screen {
                 break;
             case ERROR:
                 if(!displayedError) {
-                    Screen infoScreen = new InfoDialog(game, this, "There was an error during game setup.");
+                    Screen infoScreen = new InfoDialog(game, this, errorString);
                     game.setScreen(infoScreen);
                     displayedError = true;
                 }
@@ -407,6 +408,9 @@ public class LoadingScreen extends Screen {
             saxParser.parse(in, charParser);
             System.out.println("LoadingScreen:createRecruits(): Recruit Parsing complete. Number errors: " + charParser.getNumberErrors());
             error = charParser.getNumberErrors() > 0;
+            if(error){
+                errorString = charParser.getErrorString();
+            }
 
             //Temporary testing
             /*
@@ -466,6 +470,9 @@ public class LoadingScreen extends Screen {
             saxParser.parse(in, enemyParser);
             System.out.println("LoadingScreen:createEnemies(): Enemy Parsing complete. Number errors: " + enemyParser.getNumberErrors());
             error = enemyParser.getNumberErrors() > 0;
+            if(error) {
+                errorString = enemyParser.getErrorString();
+            }
 
             //Temporary testing
             /*
@@ -502,6 +509,10 @@ public class LoadingScreen extends Screen {
             saxParser.parse(in, battleParser);
             System.out.println("LoadingScreen:createBattles(): Battle Parsing complete. Number errors: " + battleParser.getNumberErrors());
             error = battleParser.getNumberErrors() > 0;
+            if(error){
+                errorString = battleParser.getErrorString();
+                return;
+            }
         }
         catch (Exception e){
             e.printStackTrace();
@@ -525,7 +536,11 @@ public class LoadingScreen extends Screen {
             RecruitingBattleParser battleParser = new RecruitingBattleParser();
             saxParser.parse(in, battleParser);
             System.out.println("LoadingScreen:createBattles(): Recruiting Battle Parsing complete. Number errors: " + battleParser.getNumberErrors());
-            error = error || battleParser.getNumberErrors() > 0;
+            error = battleParser.getNumberErrors() > 0;
+            if(error) {
+                errorString = battleParser.getErrorString();
+                return;
+            }
         }
         catch (Exception e){
             e.printStackTrace();
@@ -552,6 +567,9 @@ public class LoadingScreen extends Screen {
             saxParser.parse(in, recParser);
             System.out.println("LoadingScreen:createRecruiting(): Recruiting Parsing complete. Number errors: " + recParser.getNumberErrors());
             error = recParser.getNumberErrors() > 0;
+            if(error) {
+                errorString = recParser.getErrorString();
+            }
         }
         catch (Exception e){
             e.printStackTrace();

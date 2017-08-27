@@ -4,6 +4,8 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import java.util.ArrayList;
+
 import ultrapoulet.wifeygame.battle.BattleInfo;
 import ultrapoulet.wifeygame.battle.requirements.AbsRequirement;
 import ultrapoulet.wifeygame.battle.requirements.RequirementFactory;
@@ -27,7 +29,7 @@ public class RecruitingBattleParser extends DefaultHandler {
 
     private StringBuffer currentText = new StringBuffer();
 
-    private int numberErrors = 0;
+    private ArrayList<String> errorKeys = new ArrayList<>();
 
     @Override
     public void startElement(String uri,
@@ -92,7 +94,7 @@ public class RecruitingBattleParser extends DefaultHandler {
             }
             else{
                 System.out.println("RecruitingBattleParser:endElement(): Error parsing for key: " + battleKey);
-                numberErrors++;
+                errorKeys.add(battleKey != null ? battleKey : "INV-KEY");
             }
         }
         else if(qName.equalsIgnoreCase("requirement")){
@@ -175,6 +177,15 @@ public class RecruitingBattleParser extends DefaultHandler {
     }
 
     public int getNumberErrors(){
-        return numberErrors;
+        return errorKeys.size();
+    }
+
+    public String getErrorString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("There was an error parsing the following Recruiting Battles:\n");
+        for (String key : errorKeys) {
+            builder.append(key + "\n");
+        }
+        return builder.toString();
     }
 }

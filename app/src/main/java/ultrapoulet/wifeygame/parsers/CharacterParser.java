@@ -4,6 +4,8 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import java.util.ArrayList;
+
 import ultrapoulet.wifeygame.character.Element;
 import ultrapoulet.wifeygame.character.SkillsEnum;
 import ultrapoulet.wifeygame.character.TransformWifey;
@@ -33,7 +35,7 @@ public class CharacterParser extends DefaultHandler{
 
     private StringBuffer currentText = new StringBuffer();
 
-    private int numberErrors = 0;
+    private ArrayList<String> errorKeys = new ArrayList<>();
 
     @Override
     public void startElement(String uri,
@@ -50,6 +52,7 @@ public class CharacterParser extends DefaultHandler{
             }
             else{
                 System.out.println("CharacterParser:startElement(): Error parsing character key #" + charNumber);
+                charBuilder = new WifeyCharacter();
                 error = true;
             }
             charNumber++;
@@ -135,7 +138,7 @@ public class CharacterParser extends DefaultHandler{
             }
             else{
                 System.out.println("CharacterParser:endElement(): Error parsing for key: " + charKey);
-                numberErrors++;
+                errorKeys.add(charKey != null ? charKey : "INV-KEY");
             }
         }
         else if(qName.equalsIgnoreCase("transformation")){
@@ -147,7 +150,7 @@ public class CharacterParser extends DefaultHandler{
             else{
                 error = true;
                 System.out.println("CharacterParser:endElement(): Error adding transformation: " + tNumber);
-                numberErrors++;
+                errorKeys.add(charKey != null ? charKey : "INV-KEY");
             }
         }
         else if(qName.equalsIgnoreCase("transformations")){
@@ -355,6 +358,15 @@ public class CharacterParser extends DefaultHandler{
     }
 
     public int getNumberErrors() {
-        return numberErrors;
+        return errorKeys.size();
+    }
+
+    public String getErrorString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("There was an error parsing the following Characters:\n");
+        for(String key : errorKeys){
+            builder.append(key + "\n");
+        }
+        return builder.toString();
     }
 }
