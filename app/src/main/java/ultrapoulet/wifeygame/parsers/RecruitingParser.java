@@ -47,6 +47,7 @@ public class RecruitingParser extends DefaultHandler {
             //Valid. Do nothing
         }
         else if(qName.equalsIgnoreCase("character")){
+            error = false;
             recKey = attributes.getValue("key");
             currentText = new StringBuffer();
             if(recKey != null){
@@ -70,6 +71,7 @@ public class RecruitingParser extends DefaultHandler {
             currentText = new StringBuffer();
             if(type == null){
                 System.out.println("RecruitingParser:startElement(): No requirement type provided.");
+                error = true;
                 return;
             }
             switch(type){
@@ -78,17 +80,7 @@ public class RecruitingParser extends DefaultHandler {
                     break;
                 case "wifeyNumber":
                     String skill = attributes.getValue("skill");
-                    SkillsEnum skillEnum;
-                    try {
-                        skillEnum = SkillsEnum.valueOf(skill);
-                    }
-                    catch(IllegalArgumentException e){
-                        skillEnum = null;
-                    }
-                    if(skill != null && skillEnum == null){
-                        System.out.println("RecruitingParser:startElement(): Could not find skill: " + skill);
-                    }
-                    reqBuilder = new RecruitRequirementWifeyNumber(skillEnum);
+                    reqBuilder = new RecruitRequirementWifeyNumber(skill);
                     break;
                 case "battle":
                     reqBuilder = new RecruitRequirementBattle();
@@ -101,6 +93,7 @@ public class RecruitingParser extends DefaultHandler {
                     break;
                 default:
                     System.out.println("RecruitingParser:startElement(): Invalid requirement type: " + type);
+                    error = true;
                     break;
             }
         }
