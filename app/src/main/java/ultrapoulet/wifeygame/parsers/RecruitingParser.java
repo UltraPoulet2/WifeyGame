@@ -185,9 +185,9 @@ public class RecruitingParser extends DefaultHandler {
 
     public String getErrorString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("There was an error parsing the following Recruiting Requirements:\n");
+        builder.append("There was an error parsing the following Recruiting Requirements:");
         for (String key : errorKeys) {
-            builder.append(key + "\n");
+            builder.append("\n" + key);
         }
         return builder.toString();
     }

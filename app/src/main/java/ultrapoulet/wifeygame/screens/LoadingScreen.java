@@ -31,7 +31,7 @@ import ultrapoulet.wifeygame.parsers.CharacterParser;
 import ultrapoulet.wifeygame.parsers.EnemyParser;
 import ultrapoulet.wifeygame.parsers.RecruitingBattleParser;
 import ultrapoulet.wifeygame.parsers.RecruitingParser;
-import ultrapoulet.wifeygame.screens.dialogs.InfoDialog;
+import ultrapoulet.wifeygame.screens.dialogs.AdjustableTextInfoDialog;
 
 /**
  * Created by John on 3/12/2016.
@@ -200,7 +200,7 @@ public class LoadingScreen extends Screen {
                 break;
             case ERROR:
                 if(!displayedError) {
-                    Screen infoScreen = new InfoDialog(game, this, errorString);
+                    Screen infoScreen = new AdjustableTextInfoDialog(game, this, errorString);
                     game.setScreen(infoScreen);
                     displayedError = true;
                 }

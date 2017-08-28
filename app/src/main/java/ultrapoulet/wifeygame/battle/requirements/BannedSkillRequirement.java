@@ -7,7 +7,7 @@ import ultrapoulet.androidgame.framework.Game;
 import ultrapoulet.androidgame.framework.Screen;
 import ultrapoulet.wifeygame.character.SkillsEnum;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
-import ultrapoulet.wifeygame.screens.dialogs.RequirementTextInfoDialog;
+import ultrapoulet.wifeygame.screens.dialogs.AdjustableTextInfoDialog;
 
 /**
  * Created by John on 10/11/2016.
@@ -68,7 +68,7 @@ public class BannedSkillRequirement extends AbsRequirement {
             desc.append("\n");
             desc.append(skill.getSkillName());
         }
-        return new RequirementTextInfoDialog(game, prevScreen, desc.toString());
+        return new AdjustableTextInfoDialog(game, prevScreen, desc.toString());
     }
 
     public String getTitle(){
