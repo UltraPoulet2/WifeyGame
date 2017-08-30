@@ -1,5 +1,7 @@
 package ultrapoulet.wifeygame.battle;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,8 +82,10 @@ public class BattleWifey extends BattleCharacter{
     public int PowerAttackDamage(BattleCharacter enemy){
         int baseDamage = this.strength * 5;
         //Do checks on skills to determine bonus damage
-        int modDamage = (int) (baseDamage * skills.physicalAttackPercentage(enemy) * getElementDamage(enemy));
-        System.out.println("Multiplying damage by: " + skills.physicalAttackPercentage(enemy));
+        double multiplier = skills.physicalAttackPercentage(enemy) * getElementDamage(enemy);
+        int modDamage = (int) (baseDamage * multiplier);
+        //System.out.println("Multiplying damage by: " + skills.physicalAttackPercentage(enemy));
+        Log.d("PowerAttackDamage", "Multiplying physical damage from: " + this.getName() + " by: " + multiplier);
         modDamage = modDamage + (int) ((modDamage / 10) * Math.random());
         return modDamage;
     }
@@ -99,8 +103,10 @@ public class BattleWifey extends BattleCharacter{
     public int MagicAttackDamage(BattleCharacter enemy){
         int baseDamage = this.magic * 5;
         //Do checks on skills to determine bonus damage
-        int modDamage = (int) (baseDamage * skills.magicalAttackPercentage(enemy) * getElementDamage(enemy));
-        System.out.println("Multiplying damage by: " + skills.magicalAttackPercentage(enemy) * getElementDamage(enemy));
+        double multiplier = skills.physicalAttackPercentage(enemy) * getElementDamage(enemy);
+        int modDamage = (int) (baseDamage * multiplier);
+        //System.out.println("Multiplying damage by: " + skills.magicalAttackPercentage(enemy) * getElementDamage(enemy));
+        Log.d("MagicAttackDamage", "Multiplying magical damage from: " + this.getName() + " by: " + multiplier);
         modDamage = modDamage + (int) ((modDamage / 10) * Math.random());
         return modDamage;
     }
@@ -108,8 +114,10 @@ public class BattleWifey extends BattleCharacter{
     public int HealAmount(BattleCharacter target){
         int baseHeal = this.magic * 2;
         //Do checks on skills to determine bonus healing
-        int modHeal = (int) (baseHeal * skills.healPercentage(target));
-        System.out.println("Base heal multiplied by: " + skills.healPercentage(target));
+        double multiplier = skills.healPercentage(target);
+        int modHeal = (int) (baseHeal * multiplier);
+        //System.out.println("Base heal multiplied by: " + skills.healPercentage(target));
+        Log.d("HealAmount", "Heal to " + target.getName() + " from " + this.getName() + " multiplied by: " + multiplier);
         modHeal = modHeal + (int) ((modHeal / 10) * Math.random());
         return modHeal;
     }
@@ -117,8 +125,10 @@ public class BattleWifey extends BattleCharacter{
     public int SpecialAttackDamage(BattleCharacter enemy){
         int baseDamage = this.strength * 10 + this.magic * 10;
         //Do checks on skills to determine bonus damage
-        int modDamage = (int) (baseDamage * skills.specialAttackPercentage(enemy) * getElementDamage(enemy));
-        System.out.println("Multiplying damage by: " + skills.specialAttackPercentage(enemy) * getElementDamage(enemy));
+        double multiplier = skills.specialAttackPercentage(enemy) * getElementDamage(enemy);
+        int modDamage = (int) (baseDamage * multiplier);
+        //System.out.println("Multiplying damage by: " + skills.specialAttackPercentage(enemy) * getElementDamage(enemy));
+        Log.d("SpecialAttackDamage", "Multiplying special damage from: " + this.getName() + " by: " + multiplier);
         modDamage = modDamage + (int) ((modDamage / 10) * Math.random());
         return modDamage;
 
@@ -132,8 +142,10 @@ public class BattleWifey extends BattleCharacter{
         //Check skills for anything to reduce damage taken
         int displayDamage = damage;
         if(this.isDefending){ displayDamage = displayDamage/2; }
-        displayDamage = (int) (displayDamage * skills.receivePhysicalAttackPercentage(enemy));
-        System.out.println("Multiplying damage taken by: " + skills.receivePhysicalAttackPercentage(enemy));
+        double multiplier = skills.receivePhysicalAttackPercentage(enemy);
+        displayDamage = (int) (displayDamage * multiplier);
+        //System.out.println("Multiplying damage taken by: " + skills.receivePhysicalAttackPercentage(enemy));
+        Log.d("takePhysicalDamage", this.getName() + " multiplying physical damage received by: " + multiplier);
         this.currentHP = this.currentHP - displayDamage;
         skills.onDamageReceived(displayDamage);
         if(this.currentHP <= 0){
@@ -147,8 +159,10 @@ public class BattleWifey extends BattleCharacter{
         //Check skills for anything to reduce damage taken
         int displayDamage = damage;
         if(this.isDefending){ displayDamage = displayDamage/2; }
-        displayDamage = (int) (displayDamage * skills.receiveMagicalAttackPercentage(enemy));
-        System.out.println("Multiplying damage taken by: " + skills.receiveMagicalAttackPercentage(enemy));
+        double multiplier = skills.receiveMagicalAttackPercentage(enemy);
+        displayDamage = (int) (displayDamage * multiplier);
+        //System.out.println("Multiplying damage taken by: " + skills.receiveMagicalAttackPercentage(enemy));
+        Log.d("takeMagicalDamage", this.getName() + " multiplying magical damage received by: " + multiplier);
         this.currentHP = this.currentHP - displayDamage;
         skills.onDamageReceived(displayDamage);
         if(this.currentHP <= 0){
@@ -162,8 +176,10 @@ public class BattleWifey extends BattleCharacter{
         //Check skills for anything to reduce damage taken
         int displayDamage = damage;
         if(this.isDefending){ displayDamage = displayDamage/2; }
-        displayDamage = (int) (displayDamage * skills.receiveSpecialAttackPercentage(enemy));
-        System.out.println("Multiplying damage taken by: " + skills.receiveSpecialAttackPercentage(enemy));
+        double multiplier = skills.receiveSpecialAttackPercentage(enemy);
+        displayDamage = (int) (displayDamage * multiplier);
+        //System.out.println("Multiplying damage taken by: " + skills.receiveSpecialAttackPercentage(enemy));
+        Log.d("takeSpecialDamage", this.getName() + " multiplying special damage received by: " + multiplier);
         this.currentHP = this.currentHP - displayDamage;
         skills.onDamageReceived(displayDamage);
         if(this.currentHP <= 0){
@@ -176,9 +192,11 @@ public class BattleWifey extends BattleCharacter{
     public int healDamage(int heal, BattleCharacter healer){
         //Check skills for anything to increase healing
         int displayHeal = heal;
-        displayHeal = (int) (displayHeal * skills.receiveHealPercentage(healer));
+        double multiplier = skills.receiveHealPercentage(healer);
+        displayHeal = (int) (displayHeal * multiplier);
         this.currentHP = this.currentHP + displayHeal;
-        System.out.println("Heal multiplied by: " + skills.receiveHealPercentage(healer));
+        //System.out.println("Heal multiplied by: " + skills.receiveHealPercentage(healer));
+        Log.d("healDamage", this.getName() + " multiplying heal received from: " + healer.getName() + " by: " + multiplier);
         if(this.currentHP > this.maxHP){
             displayHeal = displayHeal - (this.currentHP - this.maxHP);
             this.currentHP = this.maxHP;
