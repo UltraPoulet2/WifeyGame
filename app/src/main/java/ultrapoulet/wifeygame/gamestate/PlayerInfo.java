@@ -1,6 +1,7 @@
 package ultrapoulet.wifeygame.gamestate;
 
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Input;
@@ -52,7 +53,8 @@ public class PlayerInfo {
     public static void payGold(int paidGold){
         if(paidGold > gold){
             gold = 0;
-            System.out.println("PlayerInfo:payGold(): Spent too much gold.");
+            //System.out.println("PlayerInfo:payGold(): Spent too much gold.");
+            Log.e("PlayerInfo", "Gold became negative. Setting to 0.");
         }
         else {
             gold -= paidGold;
@@ -82,7 +84,8 @@ public class PlayerInfo {
         while(experience > nextLevelExp){
             leveled = true;
             level++;
-            System.out.println("Level " + level + " Next exp: " + nextLevelExp);
+            //System.out.println("Level " + level + " Next exp: " + nextLevelExp);
+            Log.d("PlayerInfo", "Player Level Up. Level " + level + " Next exp: " + nextLevelExp);
             experience -= nextLevelExp;
             nextLevelExp *= NEXT_LEVEL_MULT;
         }

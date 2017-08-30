@@ -1,5 +1,7 @@
 package ultrapoulet.wifeygame.battle.enemyai;
 
+import android.util.Log;
+
 /**
  * Created by John on 4/16/2016.
  */
@@ -43,7 +45,8 @@ public abstract class EnemyAI {
             return new BasicTransformEnemyAI();
         }
 
-        System.out.println("EnemyAI:getAI(): No AI found for: " + name);
+        //System.out.println("EnemyAI:getAI(): No AI found for: " + name);
+        Log.e("EnemyAI", "No AI found for: " + name);
         return null;
     }
 }

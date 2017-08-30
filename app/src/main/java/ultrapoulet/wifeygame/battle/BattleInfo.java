@@ -1,5 +1,7 @@
 package ultrapoulet.wifeygame.battle;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -142,7 +144,8 @@ public class BattleInfo {
         }
         if(addWifey) {
             dropList.add(new WifeyDrop(input, dropChance));
-            System.out.println("Added a drop: " + input.getHashKey());
+            //System.out.println("Added a drop: " + input.getHashKey());
+            Log.d("BattleInfo", "Added a drop: " + input.getHashKey() + " to battle: " + this.getName());
         }
     }
 
@@ -185,10 +188,12 @@ public class BattleInfo {
         for(String value : unlockList){
             if(StoryBattles.getBattle(value) != null){
                 validList.add(value);
-                System.out.println("Battle found: " + value);
+                //System.out.println("Battle found: " + value);
+                Log.d("BattleInfo", "Battle found: " + value);
             }
             else {
-                System.out.println("BattleInfo::validateUnlocks(): " + "Could not find battle: " + value);
+                //System.out.println("BattleInfo::validateUnlocks(): " + "Could not find battle: " + value);
+                Log.e("BattleInfo", "Could not find battle: " + value);
             }
         }
         unlockList = validList;
