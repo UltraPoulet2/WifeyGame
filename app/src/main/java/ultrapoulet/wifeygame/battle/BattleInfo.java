@@ -145,7 +145,7 @@ public class BattleInfo {
         if(addWifey) {
             dropList.add(new WifeyDrop(input, dropChance));
             //System.out.println("Added a drop: " + input.getHashKey());
-            Log.d("BattleInfo", "Added a drop: " + input.getHashKey() + " to battle: " + this.getName());
+            Log.i("BattleInfo", "Added a drop: " + input.getHashKey() + " to battle: " + this.getName());
         }
     }
 
@@ -189,7 +189,7 @@ public class BattleInfo {
             if(StoryBattles.getBattle(value) != null){
                 validList.add(value);
                 //System.out.println("Battle found: " + value);
-                Log.d("BattleInfo", "Battle found: " + value);
+                Log.i("BattleInfo", "Battle found: " + value);
             }
             else {
                 //System.out.println("BattleInfo::validateUnlocks(): " + "Could not find battle: " + value);

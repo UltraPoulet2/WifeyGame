@@ -140,7 +140,7 @@ public class CharacterParser extends DefaultHandler{
             if(validate()) {
                 Characters.put(charKey, charBuilder);
                 //System.out.println("CharacterParser:endElement(): Adding character: " + charKey);
-                Log.d("CharacterParser", "Adding character: " + charKey);
+                Log.i("CharacterParser", "Adding character: " + charKey);
             }
             else{
                 //System.out.println("CharacterParser:endElement(): Error parsing for key: " + charKey);

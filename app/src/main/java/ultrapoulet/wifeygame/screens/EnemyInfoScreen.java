@@ -3,6 +3,7 @@ package ultrapoulet.wifeygame.screens;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.text.TextPaint;
+import android.util.Log;
 
 import java.util.List;
 
@@ -208,7 +209,8 @@ public class EnemyInfoScreen extends Screen {
                             bDisplayWeaponSkill = !bDisplayWeaponSkill;
                             break;
                         default:
-                            System.out.println("EnemyInfoScreen:update(): Invalid button selection: " + basicPressed.getName());
+                            //System.out.println("EnemyInfoScreen:update(): Invalid button selection: " + basicPressed.getName());
+                            Log.e("EnemyInfoScreen", "Invalid button selection: " + basicPressed.getName());
                     }
                 }
                 else if(skillPressed != -1){

@@ -129,13 +129,13 @@ public class BattleParser extends DefaultHandler {
         if(qName.equalsIgnoreCase("area")){
             StoryBattles.addArea(areaBuilder);
             //System.out.println("BattleParser:endElement(): Adding area: " + areaBuilder.getAreaName());
-            Log.d("BattleParser", "Adding area: " + areaBuilder.getAreaName());
+            Log.i("BattleParser", "Adding area: " + areaBuilder.getAreaName());
         }
         else if(qName.equalsIgnoreCase("battle")){
             if(validate()){
                 areaBuilder.addBattle(battleBuilder);
                 //System.out.println("BattleParser:endElement(): Adding battle: " + battleKey);
-                Log.d("BattleParser", "Adding battle: " + battleKey);
+                Log.i("BattleParser", "Adding battle: " + battleKey);
             }
             else{
                 //System.out.println("BattleParser:endElement(): Error parsing for key: " + battleKey);

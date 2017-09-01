@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.util.Log;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -406,10 +407,14 @@ public class LoadingScreen extends Screen {
             SAXParser saxParser = factory.newSAXParser();
             CharacterParser charParser = new CharacterParser();
             saxParser.parse(in, charParser);
-            System.out.println("LoadingScreen:createRecruits(): Recruit Parsing complete. Number errors: " + charParser.getNumberErrors());
+            //System.out.println("LoadingScreen:createRecruits(): Recruit Parsing complete. Number errors: " + charParser.getNumberErrors());
             error = charParser.getNumberErrors() > 0;
             if(error){
                 errorString = charParser.getErrorString();
+                Log.e("LoadingScreen", "Recruiting Parsing incomplete. Number errors: " + charParser.getNumberErrors());
+            }
+            else {
+                Log.i("LoadingScreen", "Recruiting Parsing complete.");
             }
 
             //Temporary testing
@@ -468,10 +473,14 @@ public class LoadingScreen extends Screen {
             SAXParser saxParser = factory.newSAXParser();
             EnemyParser enemyParser = new EnemyParser();
             saxParser.parse(in, enemyParser);
-            System.out.println("LoadingScreen:createEnemies(): Enemy Parsing complete. Number errors: " + enemyParser.getNumberErrors());
+            //System.out.println("LoadingScreen:createEnemies(): Enemy Parsing complete. Number errors: " + enemyParser.getNumberErrors());
             error = enemyParser.getNumberErrors() > 0;
             if(error) {
                 errorString = enemyParser.getErrorString();
+                Log.e("LoadingScreen", "Enemy Parsing incomplete. Number errors: " + enemyParser.getNumberErrors());
+            }
+            else {
+                Log.i("LoadingScreen", "Enemy Parsing complete.");
             }
 
             //Temporary testing
@@ -507,11 +516,15 @@ public class LoadingScreen extends Screen {
             SAXParser saxParser = factory.newSAXParser();
             BattleParser battleParser = new BattleParser();
             saxParser.parse(in, battleParser);
-            System.out.println("LoadingScreen:createBattles(): Battle Parsing complete. Number errors: " + battleParser.getNumberErrors());
+            //System.out.println("LoadingScreen:createBattles(): Battle Parsing complete. Number errors: " + battleParser.getNumberErrors());
             error = battleParser.getNumberErrors() > 0;
             if(error){
+                Log.e("LoadingScreen", "Battle Parsing incomplete. Number errors: " + battleParser.getNumberErrors());
                 errorString = battleParser.getErrorString();
                 return;
+            }
+            else {
+                Log.i("LoadingScreen", "Battle Parsing complete.");
             }
         }
         catch (Exception e){
@@ -535,11 +548,15 @@ public class LoadingScreen extends Screen {
             SAXParser saxParser = factory.newSAXParser();
             RecruitingBattleParser battleParser = new RecruitingBattleParser();
             saxParser.parse(in, battleParser);
-            System.out.println("LoadingScreen:createBattles(): Recruiting Battle Parsing complete. Number errors: " + battleParser.getNumberErrors());
+            //System.out.println("LoadingScreen:createBattles(): Recruiting Battle Parsing complete. Number errors: " + battleParser.getNumberErrors());
             error = battleParser.getNumberErrors() > 0;
             if(error) {
                 errorString = battleParser.getErrorString();
+                Log.e("LoadingScreen", "Recruiting Battle Parsing incomplete. Number errors: " + battleParser.getNumberErrors());
                 return;
+            }
+            else{
+                Log.i("LoadingScreen", "Recruiting Battle Parsing complete.");
             }
         }
         catch (Exception e){
@@ -565,10 +582,14 @@ public class LoadingScreen extends Screen {
             SAXParser saxParser = factory.newSAXParser();
             RecruitingParser recParser = new RecruitingParser();
             saxParser.parse(in, recParser);
-            System.out.println("LoadingScreen:createRecruiting(): Recruiting Parsing complete. Number errors: " + recParser.getNumberErrors());
+            //System.out.println("LoadingScreen:createRecruiting(): Recruiting Parsing complete. Number errors: " + recParser.getNumberErrors());
             error = recParser.getNumberErrors() > 0;
             if(error) {
                 errorString = recParser.getErrorString();
+                Log.e("LoadingScreen", "Recruiting Parsing incomplete. Number errors: " + recParser.getNumberErrors());
+            }
+            else {
+                Log.i("LoadingScreen", "Recruiting Parsing complete.");
             }
         }
         catch (Exception e){
@@ -599,7 +620,8 @@ public class LoadingScreen extends Screen {
             if(key.equals("TEST-NYRK") || key.equals("TEST-PERI")){
                 continue;
             }
-            System.out.println("Character recruited: " + key);
+            //System.out.println("Character recruited: " + key);
+            Log.i("LoadingScreen", "Wifey recruited: " + key);
             Characters.get(key).recruit();
         }
     }

@@ -1,5 +1,7 @@
 package ultrapoulet.wifeygame.parsers;
 
+import android.util.Log;
+
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -55,7 +57,8 @@ public class RecruitingParser extends DefaultHandler {
             }
             if(recruit == null){
                 error = true;
-                System.out.println("RecruitingParser:startElement(): Invalid character key: " + recKey);
+                //System.out.println("RecruitingParser:startElement(): Invalid character key: " + recKey);
+                Log.e("RecruitingParser", "Invalid character key: " + recKey);
             }
             infoBuilder = new RecruitInfo();
         }
@@ -70,7 +73,8 @@ public class RecruitingParser extends DefaultHandler {
             String type = attributes.getValue("type");
             currentText = new StringBuffer();
             if(type == null){
-                System.out.println("RecruitingParser:startElement(): No requirement type provided.");
+                //System.out.println("RecruitingParser:startElement(): No requirement type provided.");
+                Log.e("RecruitingParser", "No requirement type provided.");
                 error = true;
                 return;
             }
@@ -92,7 +96,8 @@ public class RecruitingParser extends DefaultHandler {
                     reqBuilder = new RecruitRequirementRecruitBattle();
                     break;
                 default:
-                    System.out.println("RecruitingParser:startElement(): Invalid requirement type: " + type);
+                    //System.out.println("RecruitingParser:startElement(): Invalid requirement type: " + type);
+                    Log.e("RecruitingParser", "Invalid requirement type: " + type);
                     error = true;
                     break;
             }
@@ -128,10 +133,12 @@ public class RecruitingParser extends DefaultHandler {
                 }
                 catch(NumberFormatException e) {
                     if(recruit != null) {
-                        System.out.println("RecruitingParser:endElement(): NumberFormatException for key: " + recruit.getHashKey());
+                        //System.out.println("RecruitingParser:endElement(): NumberFormatException for key: " + recruit.getHashKey());
+                        Log.e("RecruitingParser", "NumberFormatException for key: " + recruit.getHashKey());
                     }
                     else {
-                        System.out.println("RecruitingParser:endElement(): NumberFormatException for unknown key.");
+                        //System.out.println("RecruitingParser:endElement(): NumberFormatException for unknown key.");
+                        Log.e("RecruitingParser", "NumberFormatException for unknown key.");
                     }
                 }
             }
@@ -149,10 +156,12 @@ public class RecruitingParser extends DefaultHandler {
                 }
                 catch(NumberFormatException e) {
                     if(recruit != null) {
-                        System.out.println("RecruitingParser:endElement(): NumberFormatException for key: " + recruit.getHashKey());
+                        //System.out.println("RecruitingParser:endElement(): NumberFormatException for key: " + recruit.getHashKey());
+                        Log.e("RecruitingParser", "NumberFormatException for key: " + recruit.getHashKey());
                     }
                     else {
-                        System.out.println("RecruitingParser:endElement(): NumberFormatException for unknown key.");
+                        //System.out.println("RecruitingParser:endElement(): NumberFormatException for unknown key.");
+                        Log.e("RecruitingParser", "NumberFormatException for unknown key.");
                     }
                 }
             }

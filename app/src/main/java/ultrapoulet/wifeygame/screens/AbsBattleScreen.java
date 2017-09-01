@@ -2,6 +2,7 @@ package ultrapoulet.wifeygame.screens;
 
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.util.Log;
 
 import java.util.List;
 
@@ -909,7 +910,8 @@ public abstract class AbsBattleScreen extends Screen {
                             break;
                         default:
                             hitsPerformed++;
-                            System.out.println("Not supported yet");
+                            //System.out.println("Not supported yet");
+                            Log.e("AbsBattleScreen", "Invalid enemy battle action selection");
                             break;
                     }
                 } else {

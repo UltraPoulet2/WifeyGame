@@ -1,5 +1,7 @@
 package ultrapoulet.wifeygame.recruiting;
 
+import android.util.Log;
+
 import ultrapoulet.androidgame.framework.Game;
 import ultrapoulet.androidgame.framework.Screen;
 import ultrapoulet.wifeygame.character.SkillsEnum;
@@ -26,7 +28,8 @@ public class RecruitRequirementWifeyNumber extends RecruitRequirement {
                 skill = null;
             }
             if(inSkill != null && skill  == null){
-                System.out.println("RecruitRequirementWifeyNumber(): Could not find skill: " + skill);
+                //System.out.println("RecruitRequirementWifeyNumber(): Could not find skill: " + skill);
+                Log.e("RecruitRe...WifeyNumber", "Could not find skill: " + skill);
                 error = true;
             }
         }

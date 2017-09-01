@@ -165,7 +165,7 @@ public class BattleEnemy extends BattleCharacter{
             multiplier -= powerDownPercentage;
         }
         //System.out.println("Enemy's multiplying damage by: " + multiplier * getElementDamage(enemy));
-        Log.d("PowerAttackDamage", "Enemy multiplying physical damage to: " + enemy.getName() + " by: " + multiplier * getElementDamage(enemy));
+        Log.i("PowerAttackDamage", "Enemy multiplying physical damage to: " + enemy.getName() + " by: " + multiplier * getElementDamage(enemy));
         int modDamage = (int) (baseDamage * multiplier * getElementDamage(enemy));
         modDamage = modDamage + (int) ((modDamage / 10) * Math.random());
         return modDamage;
@@ -182,7 +182,7 @@ public class BattleEnemy extends BattleCharacter{
             multiplier -= powerDownPercentage;
         }
         //System.out.println("Enemy's multiplying damage by: " + multiplier * getElementDamage(enemy));
-        Log.d("ComboAttackDamage", "Enemy multiplying physical damage to: " + enemy.getName() + " by: " + multiplier * getElementDamage(enemy));
+        Log.i("ComboAttackDamage", "Enemy multiplying physical damage to: " + enemy.getName() + " by: " + multiplier * getElementDamage(enemy));
         int modDamage = (int) (baseDamage * multiplier * getElementDamage(enemy));
         modDamage = modDamage + (int) ((modDamage / 10) * Math.random());
         return modDamage;
@@ -199,7 +199,7 @@ public class BattleEnemy extends BattleCharacter{
             multiplier -= powerDownPercentage;
         }
         //System.out.println("Enemy's multiplying damage by: " + multiplier * getElementDamage(enemy));
-        Log.d("MagicAttackDamage", "Enemy multiplying magic damage to: " + enemy.getName() + " by: " + multiplier * getElementDamage(enemy));
+        Log.i("MagicAttackDamage", "Enemy multiplying magic damage to: " + enemy.getName() + " by: " + multiplier * getElementDamage(enemy));
         int modDamage = (int) (baseDamage * multiplier * getElementDamage(enemy));
         modDamage = modDamage + (int) ((modDamage / 10) * Math.random());
         return modDamage;
@@ -209,7 +209,7 @@ public class BattleEnemy extends BattleCharacter{
         //Returns the amount that will be healed
         int baseHeal = (int) (this.healAmount * skills.healPercentage(target));
         //System.out.println("Enemy's multiplying heal by: " + skills.healPercentage(target));
-        Log.d("HealAmount", "Enemy multiplying heal by: " + skills.healPercentage(target));
+        Log.i("HealAmount", "Enemy multiplying heal by: " + skills.healPercentage(target));
         int modHeal = baseHeal + (int) ((baseHeal / 10) * Math.random());
         return modHeal;
     }
@@ -225,7 +225,7 @@ public class BattleEnemy extends BattleCharacter{
             multiplier -= powerDownPercentage;
         }
         //System.out.println("Enemy's multiplying damage by: " + multiplier * getElementDamage(enemy));
-        Log.d("SpecialAttackDamage", "Enemy multiplying special damage to: " + enemy.getName() + " by: " + multiplier * getElementDamage(enemy));
+        Log.i("SpecialAttackDamage", "Enemy multiplying special damage to: " + enemy.getName() + " by: " + multiplier * getElementDamage(enemy));
         int modDamage = (int) (baseDamage * multiplier * getElementDamage(enemy));
         modDamage = modDamage + (int) ((modDamage / 10) * Math.random());
         return modDamage;
@@ -243,7 +243,7 @@ public class BattleEnemy extends BattleCharacter{
         }
         displayDamage = (int) (displayDamage * multiplier);
         //System.out.println("Enemy's multiplying damage taken by: " + multiplier);
-        Log.d("takePhysicalDamage", "Enemy multiplying physical damage taken from: " + enemy.getName() + " by: " + multiplier);
+        Log.i("takePhysicalDamage", "Enemy multiplying physical damage taken from: " + enemy.getName() + " by: " + multiplier);
         this.currentHP = this.currentHP - displayDamage;
         skills.onDamageReceived(displayDamage);
         if(this.currentHP <= 0){
@@ -264,7 +264,7 @@ public class BattleEnemy extends BattleCharacter{
         }
         displayDamage = (int) (displayDamage * multiplier);
         //System.out.println("Enemy's multiplying damage taken by: " + multiplier);
-        Log.d("takeMagicalDamage", "Enemy multiplying magical damage taken from: " + enemy.getName() + " by: " + multiplier);
+        Log.i("takeMagicalDamage", "Enemy multiplying magical damage taken from: " + enemy.getName() + " by: " + multiplier);
         this.currentHP = this.currentHP - displayDamage;
         skills.onDamageReceived(displayDamage);
         if(this.currentHP <= 0){
@@ -285,7 +285,7 @@ public class BattleEnemy extends BattleCharacter{
         }
         displayDamage = (int) (displayDamage * multiplier);
         //System.out.println("Enemy's multiplying damage taken by: " + multiplier);
-        Log.d("takeSpecialDamage", "Enemy multiplying special damage from: " + enemy.getName() + " by: " + multiplier);
+        Log.i("takeSpecialDamage", "Enemy multiplying special damage from: " + enemy.getName() + " by: " + multiplier);
         this.currentHP = this.currentHP - displayDamage;
         skills.onDamageReceived(displayDamage);
         if(this.currentHP <= 0){
@@ -300,7 +300,7 @@ public class BattleEnemy extends BattleCharacter{
         double multiplier = skills.receiveHealPercentage(healer);
         displayHeal = (int) (displayHeal * multiplier);
         //System.out.println("Enemy's multiplying heal received by: " + skills.receiveHealPercentage(healer));
-        Log.d("healDamage", "Enemy multiplying heal received by: " + multiplier);
+        Log.i("healDamage", "Enemy multiplying heal received by: " + multiplier);
         this.currentHP = this.currentHP + displayHeal;
         if(this.currentHP > this.maxHP){
             displayHeal = displayHeal - (this.currentHP - this.maxHP);

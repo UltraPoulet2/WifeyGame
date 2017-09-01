@@ -85,7 +85,7 @@ public class PlayerInfo {
             leveled = true;
             level++;
             //System.out.println("Level " + level + " Next exp: " + nextLevelExp);
-            Log.d("PlayerInfo", "Player Level Up. Level " + level + " Next exp: " + nextLevelExp);
+            Log.i("PlayerInfo", "Player Level Up. Level " + level + " Next exp: " + nextLevelExp);
             experience -= nextLevelExp;
             nextLevelExp *= NEXT_LEVEL_MULT;
         }

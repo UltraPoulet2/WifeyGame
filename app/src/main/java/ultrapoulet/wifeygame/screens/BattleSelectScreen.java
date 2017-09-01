@@ -3,6 +3,7 @@ package ultrapoulet.wifeygame.screens;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -371,7 +372,8 @@ public class BattleSelectScreen extends Screen {
                 specialButton.setActive(false);
                 break;
         }
-        System.out.println("Tab has been changed to: " + selectedTab);
+        //System.out.println("Tab has been changed to: " + selectedTab);
+        Log.i("BattleSelectScreen", "Tab has been changed to: " + selectedTab);
     }
 
     @Override
@@ -434,7 +436,8 @@ public class BattleSelectScreen extends Screen {
                             activateRecruitButtons();
                             break;
                         default:
-                            System.out.println("Not yet implemented");
+                            //System.out.println("Not yet implemented");
+                            Log.e("BattleSelectScreen", "Unimplemented button pressed");
                     }
                 }
                 else if(lastPressedArea == storyAreaList.getIndexPressed(t.x, t.y) && lastPressedArea != -1){

@@ -3,6 +3,7 @@ package ultrapoulet.wifeygame.screens;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.text.TextPaint;
+import android.util.Log;
 
 import java.util.List;
 
@@ -191,7 +192,8 @@ public abstract class AbsCharacterInfoScreen extends Screen {
                             bDisplayWeaponSkill = !bDisplayWeaponSkill;
                             break;
                         default:
-                            System.out.println("AbsCharacterInfoScreen:update(): Invalid button selection: " + basicPressed.getName());
+                            //System.out.println("AbsCharacterInfoScreen:update(): Invalid button selection: " + basicPressed.getName());
+                            Log.e("AbsChar...InfoScreen", "Invalid button selection: " + basicPressed.getName());
                     }
                 }
                 else if(skillPressed != -1){

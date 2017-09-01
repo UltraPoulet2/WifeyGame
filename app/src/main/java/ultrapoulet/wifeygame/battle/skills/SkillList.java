@@ -1,5 +1,7 @@
 package ultrapoulet.wifeygame.battle.skills;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,7 +63,8 @@ public class SkillList {
 
     public void giveSkillBonus(double multiplier, Class givingSkill, Class receivingSkill){
         if(!AbsSkill.class.isAssignableFrom(givingSkill) || !AbsSkill.class.isAssignableFrom(receivingSkill)){
-            System.out.println("SkillList:giveSkillBonus: input " + givingSkill + " and/or " + receivingSkill + " are not AbsSkills");
+            //System.out.println("SkillList:giveSkillBonus: input " + givingSkill + " and/or " + receivingSkill + " are not AbsSkills");
+            Log.e("SkillList", "GiveSkillBonus Input: " + givingSkill + " and/or " + receivingSkill + " are not AbsSkills");
             return;
         }
         for(int i = 0; i < skills.size(); i++){
