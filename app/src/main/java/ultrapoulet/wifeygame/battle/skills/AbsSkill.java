@@ -1,5 +1,7 @@
 package ultrapoulet.wifeygame.battle.skills;
 
+import android.util.Log;
+
 import java.util.List;
 
 import ultrapoulet.wifeygame.battle.BattleCharacter;
@@ -76,7 +78,8 @@ public abstract class AbsSkill {
 
     public String getSkillName(){
         if(this.skillName == null){
-            System.out.println("Skill name has not been set");
+            //System.out.println("Skill name has not been set");
+            Log.e("AbsSkill", "Skill name has not been set");
             return "";
         }
         return this.skillName;

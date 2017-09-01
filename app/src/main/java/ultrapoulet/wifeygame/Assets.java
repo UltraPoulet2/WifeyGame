@@ -61,6 +61,8 @@ public class Assets {
     //PartyInfo Holder Stuff
     public static Image StatusHolder;
     public static Image Hourglass;
+    public static Image NextLevel;
+    public static Image NextLevelDialogLeft, NextLevelDialogCenter, NextLevelDialogRight;
 
     //PartySelectScreen Stuff
     public static Image PartySelectScreen;
@@ -83,6 +85,7 @@ public class Assets {
     public static Image TransformHolder;
     public static Image Favorite;
     public static List<Image> NumberHits;
+    public static Image WeaponTypeLeft, WeaponTypeCenter, WeaponTypeRight;
 
     //EnemyInfoScreen
     public static Image EnemyInfoScreenTop;

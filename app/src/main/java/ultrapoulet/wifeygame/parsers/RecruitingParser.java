@@ -1,8 +1,12 @@
 package ultrapoulet.wifeygame.parsers;
 
+import android.util.Log;
+
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
+
+import java.util.ArrayList;
 
 import ultrapoulet.wifeygame.battle.BattleInfo;
 import ultrapoulet.wifeygame.character.SkillsEnum;
@@ -30,7 +34,11 @@ public class RecruitingParser extends DefaultHandler {
     private RecruitRequirement reqBuilder;
     private WifeyCharacter recruit;
 
+    private String recKey;
+
     private StringBuffer currentText = new StringBuffer();
+
+    private ArrayList<String> errorKeys = new ArrayList<>();
 
     @Override
     public void startElement(String uri,
@@ -41,14 +49,16 @@ public class RecruitingParser extends DefaultHandler {
             //Valid. Do nothing
         }
         else if(qName.equalsIgnoreCase("character")){
-            String key = attributes.getValue("key");
+            error = false;
+            recKey = attributes.getValue("key");
             currentText = new StringBuffer();
-            if(key != null){
-                recruit = Characters.get(key);
+            if(recKey != null){
+                recruit = Characters.get(recKey);
             }
             if(recruit == null){
                 error = true;
-                System.out.println("RecruitingParser:startElement(): Invalid character key: " + key);
+                //System.out.println("RecruitingParser:startElement(): Invalid character key: " + recKey);
+                Log.e("RecruitingParser", "Invalid character key: " + recKey);
             }
             infoBuilder = new RecruitInfo();
         }
@@ -63,7 +73,9 @@ public class RecruitingParser extends DefaultHandler {
             String type = attributes.getValue("type");
             currentText = new StringBuffer();
             if(type == null){
-                System.out.println("RecruitingParser:startElement(): No requirement type provided.");
+                //System.out.println("RecruitingParser:startElement(): No requirement type provided.");
+                Log.e("RecruitingParser", "No requirement type provided.");
+                error = true;
                 return;
             }
             switch(type){
@@ -72,17 +84,7 @@ public class RecruitingParser extends DefaultHandler {
                     break;
                 case "wifeyNumber":
                     String skill = attributes.getValue("skill");
-                    SkillsEnum skillEnum;
-                    try {
-                        skillEnum = SkillsEnum.valueOf(skill);
-                    }
-                    catch(IllegalArgumentException e){
-                        skillEnum = null;
-                    }
-                    if(skill != null && skillEnum == null){
-                        System.out.println("RecruitingParser:startElement(): Could not find skill: " + skill);
-                    }
-                    reqBuilder = new RecruitRequirementWifeyNumber(skillEnum);
+                    reqBuilder = new RecruitRequirementWifeyNumber(skill);
                     break;
                 case "battle":
                     reqBuilder = new RecruitRequirementBattle();
@@ -94,7 +96,9 @@ public class RecruitingParser extends DefaultHandler {
                     reqBuilder = new RecruitRequirementRecruitBattle();
                     break;
                 default:
-                    System.out.println("RecruitingParser:startElement(): Invalid requirement type: " + type);
+                    //System.out.println("RecruitingParser:startElement(): Invalid requirement type: " + type);
+                    Log.e("RecruitingParser", "Invalid requirement type: " + type);
+                    error = true;
                     break;
             }
         }
@@ -107,6 +111,9 @@ public class RecruitingParser extends DefaultHandler {
         if(qName.equalsIgnoreCase("character")){
             if(infoBuilder != null && !error){
                 recruit.setRecruitingInfo(infoBuilder);
+            }
+            if(error){
+                errorKeys.add(recKey != null ? recKey : "INV-KEY");
             }
         }
         else if(qName.equalsIgnoreCase("quote")){
@@ -126,10 +133,12 @@ public class RecruitingParser extends DefaultHandler {
                 }
                 catch(NumberFormatException e) {
                     if(recruit != null) {
-                        System.out.println("RecruitingParser:endElement(): NumberFormatException for key: " + recruit.getHashKey());
+                        //System.out.println("RecruitingParser:endElement(): NumberFormatException for key: " + recruit.getHashKey());
+                        Log.e("RecruitingParser", "NumberFormatException for key: " + recruit.getHashKey());
                     }
                     else {
-                        System.out.println("RecruitingParser:endElement(): NumberFormatException for unknown key.");
+                        //System.out.println("RecruitingParser:endElement(): NumberFormatException for unknown key.");
+                        Log.e("RecruitingParser", "NumberFormatException for unknown key.");
                     }
                 }
             }
@@ -147,15 +156,20 @@ public class RecruitingParser extends DefaultHandler {
                 }
                 catch(NumberFormatException e) {
                     if(recruit != null) {
-                        System.out.println("RecruitingParser:endElement(): NumberFormatException for key: " + recruit.getHashKey());
+                        //System.out.println("RecruitingParser:endElement(): NumberFormatException for key: " + recruit.getHashKey());
+                        Log.e("RecruitingParser", "NumberFormatException for key: " + recruit.getHashKey());
                     }
                     else {
-                        System.out.println("RecruitingParser:endElement(): NumberFormatException for unknown key.");
+                        //System.out.println("RecruitingParser:endElement(): NumberFormatException for unknown key.");
+                        Log.e("RecruitingParser", "NumberFormatException for unknown key.");
                     }
                 }
             }
             if(reqBuilder.validate()){
                 infoBuilder.addRequirement(reqBuilder);
+            }
+            else {
+                errorKeys.add(recKey != null ? recKey : "INV-KEY");
             }
         }
     }
@@ -165,5 +179,18 @@ public class RecruitingParser extends DefaultHandler {
                            int start,
                            int length) throws SAXException {
         currentText.append(new String(ch, start, length));
+    }
+
+    public int getNumberErrors(){
+        return errorKeys.size();
+    }
+
+    public String getErrorString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("There was an error parsing the following Recruiting Requirements:");
+        for (String key : errorKeys) {
+            builder.append("\n" + key);
+        }
+        return builder.toString();
     }
 }

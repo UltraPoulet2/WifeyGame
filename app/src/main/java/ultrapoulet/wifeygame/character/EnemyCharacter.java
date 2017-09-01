@@ -33,6 +33,8 @@ public class EnemyCharacter {
     private Element weakElement;
 
     private ArrayList<SkillsEnum> skills;
+    private WeaponSkillsEnum weaponSkill;
+    private UniqueSkillsEnum uniqueSkill;
 
     private int gold;
     private int experience;
@@ -106,6 +108,10 @@ public class EnemyCharacter {
 
     public ArrayList<SkillsEnum> getSkills(){ return this.skills; }
 
+    public WeaponSkillsEnum getWeaponSkill() { return this.weaponSkill; }
+
+    public UniqueSkillsEnum getUniqueSkill() { return this.uniqueSkill; }
+
     public Image getImage(Graphics g) {
         return g.newImage("enemies/" + this.image + ".png", Graphics.ImageFormat.ARGB8888);
     }
@@ -170,6 +176,14 @@ public class EnemyCharacter {
             this.skills.add(skill);
         }
         Collections.sort(this.skills, SkillsEnum.SKILLS_ENUM_COMPARATOR);
+    }
+
+    public void setWeaponSkill(WeaponSkillsEnum skill) {
+        this.weaponSkill = skill;
+    }
+
+    public void setUniqueSkill(UniqueSkillsEnum skill) {
+        this.uniqueSkill = skill;
     }
 
     public void setPowerUpPercentage(double powerUpPercentage){

@@ -72,6 +72,10 @@ public class BattleCharacterInfoScreen extends AbsCharacterInfoScreen {
         descPaint.setTextSize(SKILLS_DESC_SIZE);
     }
 
+    protected String getWeaponType(){
+        return displayChar.getWeapon().getWeaponType();
+    }
+
     public void setChars(BattleWifey input, BattleEnemy enemy){
         displayChar = input;
         displayEnemy = enemy;
@@ -157,6 +161,9 @@ public class BattleCharacterInfoScreen extends AbsCharacterInfoScreen {
             g.drawString("--Default Weapon--", WEAPON_X, MAX_WEAPON_Y, weaponPaint, MAX_WEAPON_SIZE, MAX_WEAPON_FONT);
             //g.drawString(displayWeapon.getWeaponType(), WEAPON_X, MAX_WEAPON_Y, weaponPaint, MAX_WEAPON_SIZE, MAX_WEAPON_FONT);
         }
+        //Draw image for weapon
+        g.drawImage(displayChar.getWeapon().getImage(), WEAPONS_IMAGE_LEFT_X, WEAPONS_IMAGE_TOP_Y);
+
         //Draw image for number hits
         g.drawImage(getHitsImage(displayChar.getNumHits()), HITS_X, HITS_Y);
 

@@ -1,13 +1,19 @@
 package ultrapoulet.wifeygame.parsers;
 
+import android.util.Log;
+
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
+
+import java.util.ArrayList;
 
 import ultrapoulet.wifeygame.character.Element;
 import ultrapoulet.wifeygame.character.EnemyCharacter;
 import ultrapoulet.wifeygame.character.SkillsEnum;
 import ultrapoulet.wifeygame.character.TransformEnemy;
+import ultrapoulet.wifeygame.character.UniqueSkillsEnum;
+import ultrapoulet.wifeygame.character.WeaponSkillsEnum;
 import ultrapoulet.wifeygame.gamestate.Enemies;
 
 /**
@@ -29,6 +35,9 @@ public class EnemyParser extends DefaultHandler{
 
     private StringBuffer currentText = new StringBuffer();
 
+    //private int numberErrors = 0;
+    private ArrayList<String> errorKeys = new ArrayList<>();
+
     @Override
     public void startElement(String uri,
                              String localName,
@@ -42,7 +51,8 @@ public class EnemyParser extends DefaultHandler{
                 enemyBuilder.setImage(enemyKey);
             }
             else{
-                System.out.println("EnemyParser:startElement(): Error parsing enemy key");
+                //System.out.println("EnemyParser:startElement(): Error parsing enemy key");
+                Log.e("EnemyParser", "Error parsing enemy key");
                 error = true;
             }
 
@@ -106,11 +116,18 @@ public class EnemyParser extends DefaultHandler{
                 }
                 else {
                     error = true;
-                    System.out.println("EnemyParser:startElement(): Invalid skill mode: " + mode + " for key " + enemyKey);
+                    //System.out.println("EnemyParser:startElement(): Invalid skill mode: " + mode + " for key " + enemyKey);
+                    Log.e("EnemyParser", "Invalid skill mode: " + mode + " for key " + enemyKey);
                 }
             }
         }
         else if(qName.equalsIgnoreCase("skill")){
+            currentText = new StringBuffer();
+        }
+        else if(qName.equalsIgnoreCase("weaponSkill")){
+            currentText = new StringBuffer();
+        }
+        else if(qName.equalsIgnoreCase("uniqueSkill")){
             currentText = new StringBuffer();
         }
         else if(qName.equalsIgnoreCase("elements")){
@@ -140,7 +157,8 @@ public class EnemyParser extends DefaultHandler{
             currentText = new StringBuffer();
         }
         else{
-            System.out.println("EnemyParser:startElement(): Invalid qName: " + qName + " for key: " + enemyKey);
+            //System.out.println("EnemyParser:startElement(): Invalid qName: " + qName + " for key: " + enemyKey);
+            Log.e("EnemyParser", "Invalid qName: " + qName + " for key: " + enemyKey);
             error = true;
         }
     }
@@ -154,7 +172,9 @@ public class EnemyParser extends DefaultHandler{
                 Enemies.put(enemyKey, enemyBuilder);
             }
             else{
-                System.out.println("EnemyParser:endElement(): Error parsing: " + enemyKey);
+                //System.out.println("EnemyParser:endElement(): Error parsing: " + enemyKey);
+                Log.e("EnemyParser", "Error parsing: " + enemyKey);
+                errorKeys.add(enemyKey != null ? enemyKey : "INV-KEY");
             }
         }
         else if(qName.equalsIgnoreCase("transformation")){
@@ -164,7 +184,9 @@ public class EnemyParser extends DefaultHandler{
             }
             else{
                 error = true;
-                System.out.println("EnemyParser:endElement(): Error adding transformation: " + tNumber);
+                //System.out.println("EnemyParser:endElement(): Error adding transformation: " + tNumber);
+                Log.e("EnemyParser", "Error adding transformation: " + tNumber);
+                errorKeys.add(enemyKey != null ? enemyKey : "INV-KEY");
             }
         }
         else if(qName.equalsIgnoreCase("transformations")){
@@ -200,7 +222,8 @@ public class EnemyParser extends DefaultHandler{
                 }
             }
             catch(NumberFormatException e){
-                System.out.println("EnemyParser:endElement(): NumberFormatException for key: " + enemyKey + " for maxHP");
+                //System.out.println("EnemyParser:endElement(): NumberFormatException for key: " + enemyKey + " for maxHP");
+                Log.e("EnemyParser", "NumberFormatException for key: " + enemyKey + " for maxHP");
                 error = true;
             }
         }
@@ -213,7 +236,8 @@ public class EnemyParser extends DefaultHandler{
                 }
             }
             catch(NumberFormatException e){
-                System.out.println("EnemyParser:endElement(): NumberFormatException for key: " + enemyKey + " for powerDamage");
+                //System.out.println("EnemyParser:endElement(): NumberFormatException for key: " + enemyKey + " for powerDamage");
+                Log.e("EnemyParser", "NumberFormatException for key: " + enemyKey + " for powerDamage");
                 error = true;
             }
         }
@@ -226,7 +250,8 @@ public class EnemyParser extends DefaultHandler{
                 }
             }
             catch(NumberFormatException e){
-                System.out.println("EnemyParser:endElement(): NumberFormatException for key: " + enemyKey + " for powerHits");
+                //System.out.println("EnemyParser:endElement(): NumberFormatException for key: " + enemyKey + " for powerHits");
+                Log.e("EnemyParser", "NumberFormatException for key: " + enemyKey + " for powerHits");
                 error = true;
             }
         }
@@ -239,7 +264,8 @@ public class EnemyParser extends DefaultHandler{
                 }
             }
             catch(NumberFormatException e){
-                System.out.println("EnemyParser:endElement(): NumberFormatException for key: " + enemyKey + " for comboDamage");
+                //System.out.println("EnemyParser:endElement(): NumberFormatException for key: " + enemyKey + " for comboDamage");
+                Log.e("EnemyParser", "NumberFormatException for key: " + enemyKey + " for comboDamage");
                 error = true;
             }
         }
@@ -252,7 +278,8 @@ public class EnemyParser extends DefaultHandler{
                 }
             }
             catch(NumberFormatException e){
-                System.out.println("EnemyParser:endElement(): NumberFormatException for key: " + enemyKey + " for comboHits");
+                //System.out.println("EnemyParser:endElement(): NumberFormatException for key: " + enemyKey + " for comboHits");
+                Log.e("EnemyParser", "NumberFormatException for key: " + enemyKey + " for comboHits");
                 error = true;
             }
         }
@@ -265,7 +292,8 @@ public class EnemyParser extends DefaultHandler{
                 }
             }
             catch(NumberFormatException e){
-                System.out.println("EnemyParser:endElement(): NumberFormatException for key: " + enemyKey + " for magicDamage");
+                //System.out.println("EnemyParser:endElement(): NumberFormatException for key: " + enemyKey + " for magicDamage");
+                Log.e("EnemyParser", "NumberFormatException for key: " + enemyKey + " for magicDamage");
                 error = true;
             }
         }
@@ -278,7 +306,8 @@ public class EnemyParser extends DefaultHandler{
                 }
             }
             catch(NumberFormatException e){
-                System.out.println("EnemyParser:endElement(): NumberFormatException for key: " + enemyKey + " for healAmount");
+                //System.out.println("EnemyParser:endElement(): NumberFormatException for key: " + enemyKey + " for healAmount");
+                Log.e("EnemyParser", "NumberFormatException for key: " + enemyKey + " for healAmount");
                 error = true;
             }
         }
@@ -291,7 +320,8 @@ public class EnemyParser extends DefaultHandler{
                 }
             }
             catch(NumberFormatException e){
-                System.out.println("EnemyParser:endElement(): NumberFormatException for key: " + enemyKey + " for powerUp");
+                //System.out.println("EnemyParser:endElement(): NumberFormatException for key: " + enemyKey + " for powerUp");
+                Log.e("EnemyParser", "NumberFormatException for key: " + enemyKey + " for powerUp");
                 error = true;
             }
         }
@@ -304,7 +334,8 @@ public class EnemyParser extends DefaultHandler{
                 }
             }
             catch(NumberFormatException e){
-                System.out.println("EnemyParser:endElement(): NumberFormatException for key: " + enemyKey + " for powerDown");
+                //System.out.println("EnemyParser:endElement(): NumberFormatException for key: " + enemyKey + " for powerDown");
+                Log.e("EnemyParser", "NumberFormatException for key: " + enemyKey + " for powerDown");
                 error = true;
             }
         }
@@ -317,7 +348,8 @@ public class EnemyParser extends DefaultHandler{
                 }
             }
             catch(NumberFormatException e){
-                System.out.println("EnemyParser:endElement(): NumberFormatException for key: " + enemyKey + " for defend");
+                //System.out.println("EnemyParser:endElement(): NumberFormatException for key: " + enemyKey + " for defend");
+                Log.e("EnemyParser", "NumberFormatException for key: " + enemyKey + " for defend");
                 error = true;
             }
         }
@@ -330,7 +362,8 @@ public class EnemyParser extends DefaultHandler{
                 }
             }
             catch(NumberFormatException e){
-                System.out.println("EnemyParser:endElement(): NumberFormatException for key: " + enemyKey + " for weakne");
+                //System.out.println("EnemyParser:endElement(): NumberFormatException for key: " + enemyKey + " for weakne");
+                Log.e("EnemyParser", "NumberFormatException for key: " + enemyKey + " for weaken");
                 error = true;
             }
         }
@@ -343,7 +376,8 @@ public class EnemyParser extends DefaultHandler{
                 }
             }
             catch(NumberFormatException e){
-                System.out.println("EnemyParser:endElement(): NumberFormatException for key: " + enemyKey + " for specialDamage");
+                //System.out.println("EnemyParser:endElement(): NumberFormatException for key: " + enemyKey + " for specialDamage");
+                Log.e("EnemyParser", "NumberFormatException for key: " + enemyKey + " for specialDamage");
                 error = true;
             }
         }
@@ -356,7 +390,8 @@ public class EnemyParser extends DefaultHandler{
                 }
             }
             catch(NumberFormatException e){
-                System.out.println("EnemyParser:endElement(): NumberFormatException for key: " + enemyKey + " for specialHits");
+                //System.out.println("EnemyParser:endElement(): NumberFormatException for key: " + enemyKey + " for specialHits");
+                Log.e("EnemyParser", "NumberFormatException for key: " + enemyKey + " for specialHits");
                 error = true;
             }
         }
@@ -369,7 +404,8 @@ public class EnemyParser extends DefaultHandler{
                 skill = null;
             }
             if(skill == null){
-                System.out.println("EnemyParser:endElement(): Could not find skill: " + currentText.toString());
+                //System.out.println("EnemyParser:endElement(): Could not find skill: " + currentText.toString());
+                Log.e("EnemyParser", "Could not find skill: " + currentText.toString());
                 error = true;
             }
             else{
@@ -386,6 +422,47 @@ public class EnemyParser extends DefaultHandler{
             bAddSkill = false;
             bRemoveSkill = false;
         }
+        else if(qName.equalsIgnoreCase("weaponSkill")){
+            WeaponSkillsEnum skill;
+            try {
+                skill = WeaponSkillsEnum.valueOf(currentText.toString());
+            }
+            catch(IllegalArgumentException e){
+                skill = null;
+            }
+            if (skill == null) {
+                //System.out.println("CharacterParser:endElement(): Could not find skill: " + currentText.toString());
+                Log.e("EnemyParser", "Could not find skill: " + currentText.toString());
+                error = true;
+            } else {
+                if (!bTransformSec) {
+                    enemyBuilder.setWeaponSkill(skill);
+                } else {
+                    transformBuilder.setWeaponSkill(skill);
+                }
+            }
+        }
+        else if(qName.equalsIgnoreCase("uniqueSkill")){
+            UniqueSkillsEnum skill;
+            try {
+                skill = UniqueSkillsEnum.valueOf(currentText.toString());
+            }
+            catch(IllegalArgumentException e){
+                skill = null;
+            }
+            if(skill == null){
+                //System.out.println("CharacterParser:endElement(): Could not find skill: " + currentText.toString());
+                Log.e("EnemyParser", "Could not find skill: " + currentText.toString());
+                error = true;
+            } else {
+                if (!bTransformSec){
+                    enemyBuilder.setUniqueSkill(skill);
+                }
+                else {
+                    transformBuilder.setUniqueSkill(skill);
+                }
+            }
+        }
         else if(qName.equalsIgnoreCase("atkElement")){
             Element elm;
             try {
@@ -395,7 +472,8 @@ public class EnemyParser extends DefaultHandler{
                 elm = null;
             }
             if(elm == null){
-                System.out.println("EnemyParser:endElement(): Could not find atk element: " + currentText.toString());
+                //System.out.println("EnemyParser:endElement(): Could not find atk element: " + currentText.toString());
+                Log.e("EnemyParser", "Could not find atk element: " + currentText.toString());
                 error = true;
             }
             else{
@@ -416,7 +494,8 @@ public class EnemyParser extends DefaultHandler{
                 elm = null;
             }
             if(elm == null){
-                System.out.println("EnemyParser:endElement(): Could not find stg element: " + currentText.toString());
+                //System.out.println("EnemyParser:endElement(): Could not find stg element: " + currentText.toString());
+                Log.e("EnemyParser", "Could not find stg element: " + currentText.toString());
                 error = true;
             }
             else{
@@ -437,7 +516,8 @@ public class EnemyParser extends DefaultHandler{
                 elm = null;
             }
             if(elm == null){
-                System.out.println("EnemyParser:endElement(): Could not find wk element: " + currentText.toString());
+                //System.out.println("EnemyParser:endElement(): Could not find wk element: " + currentText.toString());
+                Log.e("EnemyParser", "Could not find wk element: " + currentText.toString());
                 error = true;
             }
             else{
@@ -454,7 +534,8 @@ public class EnemyParser extends DefaultHandler{
                 enemyBuilder.setGold(Integer.parseInt(currentText.toString()));
             }
             catch(NumberFormatException e){
-                System.out.println("EnemyParser:endElement(): NumberFormatException for key: " + enemyKey + " for gold");
+                //System.out.println("EnemyParser:endElement(): NumberFormatException for key: " + enemyKey + " for gold");
+                Log.e("EnemyParser", "NumberFormatException for key: " + enemyKey + " for gold");
                 error = true;
             }
         }
@@ -463,7 +544,8 @@ public class EnemyParser extends DefaultHandler{
                 enemyBuilder.setExperience(Integer.parseInt(currentText.toString()));
             }
             catch(NumberFormatException e){
-                System.out.println("EnemyParser:endElement(): NumberFormatException for key: " + enemyKey + " for exp");
+                //System.out.println("EnemyParser:endElement(): NumberFormatException for key: " + enemyKey + " for exp");
+                Log.e("EnemyParser", "NumberFormatException for key: " + enemyKey + " for exp");
                 error = true;
             }
         }
@@ -481,5 +563,18 @@ public class EnemyParser extends DefaultHandler{
             return false;
         }
         return enemyBuilder.validate();
+    }
+
+    public int getNumberErrors(){
+        return errorKeys.size();
+    }
+
+    public String getErrorString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("There was an error parsing the following Enemies:");
+        for(String key : errorKeys){
+            builder.append("\n" + key);
+        }
+        return builder.toString();
     }
 }

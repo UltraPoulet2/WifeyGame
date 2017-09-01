@@ -12,7 +12,7 @@ import ultrapoulet.androidgame.framework.Screen;
  * Created by John on 6/18/2017.
  */
 
-public class RequirementTextInfoDialog extends AbsAdjustableInfoDialog {
+public class AdjustableTextInfoDialog extends AbsAdjustableInfoDialog {
 
     private String text;
     private TextPaint infoPaint;
@@ -21,7 +21,7 @@ public class RequirementTextInfoDialog extends AbsAdjustableInfoDialog {
     private static final int TEXT_WIDTH = 570;
     private static final int TOTAL_HEIGHT_OFFSET = 3;
 
-    public RequirementTextInfoDialog(Game game, Screen prevScreen, String text){
+    public AdjustableTextInfoDialog(Game game, Screen prevScreen, String text){
         super(game, prevScreen);
 
         infoPaint = new TextPaint();

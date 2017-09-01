@@ -1,5 +1,7 @@
 package ultrapoulet.wifeygame.recruiting;
 
+import android.util.Log;
+
 import ultrapoulet.androidgame.framework.Game;
 import ultrapoulet.androidgame.framework.Screen;
 import ultrapoulet.wifeygame.character.SkillsEnum;
@@ -15,9 +17,23 @@ public class RecruitRequirementWifeyNumber extends RecruitRequirement {
 
     private SkillsEnum skill;
     private int number;
+    private boolean error = false;
 
-    public RecruitRequirementWifeyNumber(SkillsEnum inSkill){
-        this.skill = inSkill;
+    public RecruitRequirementWifeyNumber(String inSkill){
+        if(inSkill != null){
+            try {
+                skill = SkillsEnum.valueOf(inSkill);
+            }
+            catch(IllegalArgumentException e){
+                skill = null;
+            }
+            if(inSkill != null && skill  == null){
+                //System.out.println("RecruitRequirementWifeyNumber(): Could not find skill: " + skill);
+                Log.e("RecruitRe...WifeyNumber", "Could not find skill: " + skill);
+                error = true;
+            }
+        }
+
     }
 
     public void setNumber(int inNumber){
@@ -43,7 +59,7 @@ public class RecruitRequirementWifeyNumber extends RecruitRequirement {
 
     @Override
     public boolean validate() {
-        return number > 0;
+        return number > 0 && !error;
     }
 
     public Screen getScreen(Game game, Screen prevScreen, WifeyCharacter recruit) {

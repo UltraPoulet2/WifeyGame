@@ -1,8 +1,12 @@
 package ultrapoulet.wifeygame.parsers;
 
+import android.util.Log;
+
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
+
+import java.util.ArrayList;
 
 import ultrapoulet.wifeygame.battle.BattleInfo;
 import ultrapoulet.wifeygame.battle.requirements.AbsRequirement;
@@ -26,6 +30,8 @@ public class RecruitingBattleParser extends DefaultHandler {
     private boolean error = false;
 
     private StringBuffer currentText = new StringBuffer();
+
+    private ArrayList<String> errorKeys = new ArrayList<>();
 
     @Override
     public void startElement(String uri,
@@ -60,7 +66,8 @@ public class RecruitingBattleParser extends DefaultHandler {
             //Create a new requirement
             reqBuilder = RequirementFactory.getRequirement(attributes.getValue("type"));
             if(reqBuilder == null){
-                System.out.println("RecruitingBattleParser:startElement(): Invalid Requirement: " + attributes.getValue("type"));
+                //System.out.println("RecruitingBattleParser:startElement(): Invalid Requirement: " + attributes.getValue("type"));
+                Log.e("RecruitingBattleParser", "Invalid Requirement: " + attributes.getValue("type"));
                 bRequirement = false;
             }
             else{
@@ -86,10 +93,13 @@ public class RecruitingBattleParser extends DefaultHandler {
             if(validate()){
                 RecruitBattles.put(battleKey, battleBuilder);
 
-                System.out.println("RecruitingBattleParser:endElement(): Adding battle: " + battleKey);
+                //System.out.println("RecruitingBattleParser:endElement(): Adding battle: " + battleKey);
+                Log.i("RecruitingBattleParser", "Adding battle: " + battleKey);
             }
             else{
-                System.out.println("RecruitingBattleParser:endElement(): Error parsing for key: " + battleKey);
+                //System.out.println("RecruitingBattleParser:endElement(): Error parsing for key: " + battleKey);
+                Log.e("RecruitingBattleParser", "Error parsing for key: " + battleKey);
+                errorKeys.add(battleKey != null ? battleKey : "INV-KEY");
             }
         }
         else if(qName.equalsIgnoreCase("requirement")){
@@ -107,7 +117,8 @@ public class RecruitingBattleParser extends DefaultHandler {
         else if(qName.equalsIgnoreCase("enemy")){
             EnemyCharacter tempEn = Enemies.get(currentText.toString());
             if(tempEn == null){
-                System.out.println("RecruitingBattleParser:endElement(): BattleEnemy not found: " + currentText.toString());
+                //System.out.println("RecruitingBattleParser:endElement(): BattleEnemy not found: " + currentText.toString());
+                Log.e("RecruitingBattleParser", "BattleEnemy not found: " + currentText.toString());
                 error = true;
             }
             else{
@@ -119,7 +130,8 @@ public class RecruitingBattleParser extends DefaultHandler {
                 battleBuilder.setPartyMax(Integer.parseInt(currentText.toString()));
             }
             catch(NumberFormatException e){
-                System.out.println("RecruitingBattleParser:endElement(): NumberFormatException for key: " + battleKey);
+                //System.out.println("RecruitingBattleParser:endElement(): NumberFormatException for key: " + battleKey);
+                Log.e("RecruitingBattleParser", "NumberFormatException for key: " + battleKey);
                 error = true;
             }
         }
@@ -136,7 +148,8 @@ public class RecruitingBattleParser extends DefaultHandler {
                 battleBuilder.setEnergyRequirement(Integer.parseInt(currentText.toString()));
             }
             catch(NumberFormatException e){
-                System.out.println("RecruitingBattleParser:endElement(): NumberFormatException for key: " + battleKey);
+                //System.out.println("RecruitingBattleParser:endElement(): NumberFormatException for key: " + battleKey);
+                Log.e("RecruitingBattleParser", "NumberFormatException for key: " + battleKey);
                 error = true;
             }
         }
@@ -169,6 +182,18 @@ public class RecruitingBattleParser extends DefaultHandler {
             return false;
         }
         return true;
+    }
 
+    public int getNumberErrors(){
+        return errorKeys.size();
+    }
+
+    public String getErrorString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("There was an error parsing the following Recruiting Battles:");
+        for (String key : errorKeys) {
+            builder.append("\n" + key);
+        }
+        return builder.toString();
     }
 }

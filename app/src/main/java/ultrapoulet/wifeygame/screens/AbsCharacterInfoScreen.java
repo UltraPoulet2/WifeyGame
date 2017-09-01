@@ -3,6 +3,7 @@ package ultrapoulet.wifeygame.screens;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.text.TextPaint;
+import android.util.Log;
 
 import java.util.List;
 
@@ -98,8 +99,17 @@ public abstract class AbsCharacterInfoScreen extends Screen {
     protected static final int UNIQUE_X = 42 + BG_X;
     protected static final int MAX_UNIQUE_SIZE = 303;
 
-    protected static final int HITS_X = 555 + BG_X;
-    protected static final int HITS_Y = 455 + BG_Y;
+    protected static final int WEAPONS_IMAGE_LEFT_X = 555 + BG_X;
+    protected static final int WEAPONS_IMAGE_TOP_Y = 455 + BG_Y;
+    protected static final int HITS_X = 610 + BG_X;
+    protected static final int HITS_Y = WEAPONS_IMAGE_TOP_Y;
+
+    protected static final int WEAPON_TYPE_TEXT_CENTER_X = 580 + BG_X;
+    protected static final int WEAPON_TYPE_TEXT_HOLDER_Y = 509 + BG_Y;
+    protected static final int WEAPON_TYPE_TEXT_Y = 526 + BG_Y;
+    protected static final int WEAPON_TYPE_SIDE_WIDTH = Assets.WeaponTypeLeft.getWidth();
+    protected Paint weaponTypePaint;
+    protected static final int WEAPON_TYPE_FONT = 20;
 
     public AbsCharacterInfoScreen(Game game, Screen previousScreen) {
         super(game);
@@ -126,6 +136,11 @@ public abstract class AbsCharacterInfoScreen extends Screen {
         weaponPaint.setTextAlign(Paint.Align.LEFT);
         weaponPaint.setColor(Color.BLACK);
 
+        weaponTypePaint = new Paint();
+        weaponTypePaint.setTextAlign(Paint.Align.CENTER);
+        weaponTypePaint.setColor(Color.BLACK);
+        weaponTypePaint.setTextSize(WEAPON_TYPE_FONT);
+
         createUniquePaints();
     }
 
@@ -151,6 +166,8 @@ public abstract class AbsCharacterInfoScreen extends Screen {
 
     abstract protected void createUniquePaints();
 
+    abstract protected String getWeaponType();
+
     @Override
     public void update(float deltaTime) {
         List<Input.TouchEvent> touchEvents = game.getInput().getTouchEvents();
@@ -175,7 +192,8 @@ public abstract class AbsCharacterInfoScreen extends Screen {
                             bDisplayWeaponSkill = !bDisplayWeaponSkill;
                             break;
                         default:
-                            System.out.println("AbsCharacterInfoScreen:update(): Invalid button selection: " + basicPressed.getName());
+                            //System.out.println("AbsCharacterInfoScreen:update(): Invalid button selection: " + basicPressed.getName());
+                            Log.e("AbsChar...InfoScreen", "Invalid button selection: " + basicPressed.getName());
                     }
                 }
                 else if(skillPressed != -1){
@@ -207,6 +225,14 @@ public abstract class AbsCharacterInfoScreen extends Screen {
         drawTopRows(g);
         drawSkills(g);
         drawDescription(g);
+
+        String weaponType = getWeaponType();
+        int width = (int) weaponTypePaint.measureText(weaponType);
+        int baseX = WEAPON_TYPE_TEXT_CENTER_X - (width/2) - WEAPON_TYPE_SIDE_WIDTH;
+        g.drawImage(Assets.WeaponTypeLeft, baseX, WEAPON_TYPE_TEXT_HOLDER_Y);
+        g.drawScaledImage(Assets.WeaponTypeCenter, baseX + WEAPON_TYPE_SIDE_WIDTH, WEAPON_TYPE_TEXT_HOLDER_Y, width, Assets.WeaponTypeCenter.getHeight());
+        g.drawImage(Assets.WeaponTypeRight, WEAPON_TYPE_TEXT_CENTER_X + (width/2), WEAPON_TYPE_TEXT_HOLDER_Y);
+        g.drawString(weaponType, WEAPON_TYPE_TEXT_CENTER_X, WEAPON_TYPE_TEXT_Y, weaponTypePaint);
     }
 
     abstract protected void drawPortrait(Graphics g);

@@ -21,12 +21,15 @@ import ultrapoulet.wifeygame.character.EnemyCharacter;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
 import ultrapoulet.wifeygame.gamestate.Party;
 import ultrapoulet.wifeygame.gamestate.PlayerInfo;
+import ultrapoulet.wifeygame.gamestate.PlayerInfo.HeaderBar;
 
 /**
  * Created by John on 5/23/2017.
  */
 
 public abstract class AbsBattleInfoScreen extends Screen {
+
+    protected HeaderBar header = new HeaderBar();
 
     protected Screen prevScreen;
 
@@ -197,6 +200,9 @@ public abstract class AbsBattleInfoScreen extends Screen {
         List<Input.TouchEvent> touchEvents = game.getInput().getTouchEvents();
         for(int i = 0; i < touchEvents.size(); i++) {
             Input.TouchEvent t = touchEvents.get(i);
+            //Perform update for HeaderBar
+            header.update(t);
+
             if(t.type == Input.TouchEvent.TOUCH_DOWN){
                 lastPressed = buttonList.getButtonPressed(t.x, t.y);
                 selectedChar = partyList.getIndexPressed(t.x, t.y);
@@ -281,8 +287,6 @@ public abstract class AbsBattleInfoScreen extends Screen {
         Graphics g = game.getGraphics();
         g.clearScreen(0xFFFFFFFF);
 
-        PlayerInfo.drawHeader(g);
-
         g.drawImage(background, 0, BACKGROUND_OFFSET);
 
         g.drawString(battleInfo.getName(), BATTLE_NAME_X, BATTLE_NAME_Y, battlePaint, MAX_BATTLE_WIDTH, MAX_BATTLE_FONT);
@@ -316,6 +320,8 @@ public abstract class AbsBattleInfoScreen extends Screen {
         }
 
         buttonList.drawImage(g);
+
+        header.draw(g);
     }
 
     @Override

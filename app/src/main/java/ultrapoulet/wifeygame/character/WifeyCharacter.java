@@ -1,5 +1,7 @@
 package ultrapoulet.wifeygame.character;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -280,7 +282,8 @@ public class WifeyCharacter {
             nextLevelExp *= NEXT_LEVEL_MULT;
             strength += STAT_INCREASE;
             magic += STAT_INCREASE;
-            System.out.println(name + " Level " + level + " Next exp: " + nextLevelExp);
+            //System.out.println(name + " Level " + level + " Next exp: " + nextLevelExp);
+            Log.i("WifeyCharacter", name + " Level " + level + " Next exp: " + nextLevelExp);
             for(int i = 0; i < transformations.size(); i++){
                 TransformWifey transformation = transformations.get(i);
                 transformation.levelUp();

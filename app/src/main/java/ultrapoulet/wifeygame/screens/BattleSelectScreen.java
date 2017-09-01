@@ -3,11 +3,11 @@ package ultrapoulet.wifeygame.screens;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 import ultrapoulet.androidgame.framework.Game;
 import ultrapoulet.androidgame.framework.Graphics;
@@ -22,6 +22,7 @@ import ultrapoulet.wifeygame.battle.BattleInfo;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
 import ultrapoulet.wifeygame.gamestate.Party;
 import ultrapoulet.wifeygame.gamestate.PlayerInfo;
+import ultrapoulet.wifeygame.gamestate.PlayerInfo.HeaderBar;
 import ultrapoulet.wifeygame.gamestate.RecruitableCharacters;
 import ultrapoulet.wifeygame.gamestate.StoryArea;
 import ultrapoulet.wifeygame.gamestate.StoryBattles;
@@ -31,6 +32,7 @@ import ultrapoulet.wifeygame.gamestate.StoryBattles;
  */
 public class BattleSelectScreen extends Screen {
 
+    private HeaderBar header = new HeaderBar();
     private static final int HEADER_OFFSET = 60;
 
     private static final int STORY_LEFT_X = 42;
@@ -299,13 +301,17 @@ public class BattleSelectScreen extends Screen {
         if(selectedArea != -1 && selectedArea < unlockedAreas.size()){
             StoryArea area = unlockedAreas.get(selectedArea);
             selectedBattlePage = 0;
+            int unlockedBattles = 0;
             for(int i = 0; i < area.getBattles().size(); i++){
                 //An additional check later will need to be added to make sure the battle is unlocked
-                int leftX = STORY_BATTLE_LEFT_X;
-                int rightX = STORY_BATTLE_RIGHT_X;
-                int topY = BATTLES_TOP_Y + BATTLES_OFFSET_Y * (i % AREA_PAGE_SIZE);
-                int botY = BATTLES_BOT_Y + BATTLES_OFFSET_Y * (i % AREA_PAGE_SIZE);
-                storyBattleList.addButton(new Button(leftX, rightX, topY, botY, true, area.getBattle(i).getName(), Assets.StoryBattleEnabled));
+                if(area.getBattle(i).isUnlocked()) {
+                    int leftX = STORY_BATTLE_LEFT_X;
+                    int rightX = STORY_BATTLE_RIGHT_X;
+                    int topY = BATTLES_TOP_Y + BATTLES_OFFSET_Y * (unlockedBattles % AREA_PAGE_SIZE);
+                    int botY = BATTLES_BOT_Y + BATTLES_OFFSET_Y * (unlockedBattles % AREA_PAGE_SIZE);
+                    storyBattleList.addButton(new Button(leftX, rightX, topY, botY, true, area.getBattle(i).getName(), Assets.StoryBattleEnabled));
+                    unlockedBattles++;
+                }
             }
         }
     }
@@ -366,7 +372,8 @@ public class BattleSelectScreen extends Screen {
                 specialButton.setActive(false);
                 break;
         }
-        System.out.println("Tab has been changed to: " + selectedTab);
+        //System.out.println("Tab has been changed to: " + selectedTab);
+        Log.i("BattleSelectScreen", "Tab has been changed to: " + selectedTab);
     }
 
     @Override
@@ -375,6 +382,9 @@ public class BattleSelectScreen extends Screen {
         List<TouchEvent> touchEvents = game.getInput().getTouchEvents();
         for(int i = 0; i < touchEvents.size(); i++){
             TouchEvent t = touchEvents.get(i);
+            //Perform update for HeaderBar
+            header.update(t);
+
             if(t.type == TouchEvent.TOUCH_DOWN){
                 lastPressedGeneral = buttonList.getButtonPressed(t.x, t.y);
                 lastPressedArea = storyAreaList.getIndexPressed(t.x, t.y);
@@ -426,7 +436,8 @@ public class BattleSelectScreen extends Screen {
                             activateRecruitButtons();
                             break;
                         default:
-                            System.out.println("Not yet implemented");
+                            //System.out.println("Not yet implemented");
+                            Log.e("BattleSelectScreen", "Unimplemented button pressed");
                     }
                 }
                 else if(lastPressedArea == storyAreaList.getIndexPressed(t.x, t.y) && lastPressedArea != -1){
@@ -458,13 +469,12 @@ public class BattleSelectScreen extends Screen {
     @Override
     public void paint(float deltaTime) {
         Graphics g = game.getGraphics();
-        PlayerInfo.drawHeader(g);
         g.drawImage(Assets.BattleSelectScreen, 0, HEADER_OFFSET);
 
         buttonList.drawImage(g);
 
         storyAreaList.drawImage(g);
-        storyAreaList.drawScaledString(g, buttonPaint, BATTLE_TITLE_MAX_WIDTH, BATTLE_TITLE_MAX_FONT);
+        storyAreaList.drawScaledString(g, buttonPaint, 0, BATTLE_TITLE_OFFSET_Y, BATTLE_TITLE_MAX_WIDTH, BATTLE_TITLE_MAX_FONT);
         storyBattleList.drawImage(g);
         storyBattleList.drawScaledString(g, buttonPaint, 0, BATTLE_TITLE_OFFSET_Y, BATTLE_TITLE_MAX_WIDTH, BATTLE_TITLE_MAX_FONT);
         recruitButtonList.drawImage(g);
@@ -476,28 +486,39 @@ public class BattleSelectScreen extends Screen {
 
         partyList.drawImage(g);
 
-        if(STORY_BUTTON_STRING.equals(selectedTab) && selectedArea != -1){
-            for(int i = 0; i < storyBattleList.size(); i++){
-                if(storyBattleList.get(i).isActive()){
-                    int imageX = STORY_BATTLE_LEFT_X + BATTLE_ENERGY_IMAGE_OFFSET_X;
-                    int numberX = STORY_BATTLE_LEFT_X + BATTLE_ENERGY_NUMBER_OFFSET_X;
-                    int imageY =  BATTLES_TOP_Y + BATTLES_OFFSET_Y * (i % AREA_PAGE_SIZE) + BATTLE_ENERGY_OFFSET_Y;
-                    g.drawImage(Assets.EnergyImage, imageX, imageY);
-                    List<Image> numberList;
-                    BattleInfo battle = unlockedAreas.get(selectedArea).getBattle(i);
-                    if(PlayerInfo.getCurrentEnergy() >= battle.getEnergyRequirement()){
-                        numberList = Assets.WhiteNumbers;
-                    }
-                    else{
-                        numberList = Assets.RedNumbers;
-                    }
-                    NumberPrinter.drawNumber(g, battle.getEnergyRequirement(), numberX, imageY, BATTLE_ENERGY_WIDTH, BATTLE_ENERGY_HEIGHT, BATTLE_ENERGY_OFFSET, numberList, NumberPrinter.Align.LEFT);
-                    int indicatorX = STORY_BATTLE_LEFT_X + BATTLE_INDICATOR_OFFSET_X;
-                    if(battle.getNumAttempts() == 0){
-                        g.drawImage(Assets.NewBattleIndicator, indicatorX, imageY);
-                    }
-                    else if(battle.getNumComplete() > 0){
-                        g.drawImage(Assets.CompletedBattleIndicator, indicatorX, imageY);
+        if(STORY_BUTTON_STRING.equals(selectedTab)){
+            for(int i = AREA_PAGE_SIZE * selectedAreaPage; i < storyAreaList.size() && i < AREA_PAGE_SIZE + (1 * selectedAreaPage); i++){
+                StoryArea area = unlockedAreas.get(i);
+                int imageX = AREA_LEFT_X + BATTLE_INDICATOR_OFFSET_X;
+                int imageY = BATTLES_TOP_Y + BATTLES_OFFSET_Y * (i % AREA_PAGE_SIZE) + BATTLE_ENERGY_OFFSET_Y;
+                if(area.isNew()){
+                    g.drawImage(Assets.NewBattleIndicator, imageX, imageY);
+                }
+                else if(area.isCompleted()){
+                    g.drawImage(Assets.CompletedBattleIndicator, imageX, imageY);
+                }
+            }
+            if(selectedArea != -1) {
+                for (int i = AREA_PAGE_SIZE * selectedBattlePage; i < storyBattleList.size() && i < AREA_PAGE_SIZE + (1 * selectedBattlePage); i++) {
+                    if (storyBattleList.get(i).isActive()) {
+                        int imageX = STORY_BATTLE_LEFT_X + BATTLE_ENERGY_IMAGE_OFFSET_X;
+                        int numberX = STORY_BATTLE_LEFT_X + BATTLE_ENERGY_NUMBER_OFFSET_X;
+                        int imageY = BATTLES_TOP_Y + BATTLES_OFFSET_Y * (i % AREA_PAGE_SIZE) + BATTLE_ENERGY_OFFSET_Y;
+                        g.drawImage(Assets.EnergyImage, imageX, imageY);
+                        List<Image> numberList;
+                        BattleInfo battle = unlockedAreas.get(selectedArea).getBattle(i);
+                        if (PlayerInfo.getCurrentEnergy() >= battle.getEnergyRequirement()) {
+                            numberList = Assets.WhiteNumbers;
+                        } else {
+                            numberList = Assets.RedNumbers;
+                        }
+                        NumberPrinter.drawNumber(g, battle.getEnergyRequirement(), numberX, imageY, BATTLE_ENERGY_WIDTH, BATTLE_ENERGY_HEIGHT, BATTLE_ENERGY_OFFSET, numberList, NumberPrinter.Align.LEFT);
+                        int indicatorX = STORY_BATTLE_LEFT_X + BATTLE_INDICATOR_OFFSET_X;
+                        if (battle.getNumAttempts() == 0) {
+                            g.drawImage(Assets.NewBattleIndicator, indicatorX, imageY);
+                        } else if (battle.getNumComplete() > 0) {
+                            g.drawImage(Assets.CompletedBattleIndicator, indicatorX, imageY);
+                        }
                     }
                 }
             }
@@ -511,6 +532,8 @@ public class BattleSelectScreen extends Screen {
                 }
             }
         }
+
+        header.draw(g);
     }
 
     @Override

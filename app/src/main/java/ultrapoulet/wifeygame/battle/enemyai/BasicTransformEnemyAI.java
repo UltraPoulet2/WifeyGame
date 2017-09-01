@@ -1,5 +1,7 @@
 package ultrapoulet.wifeygame.battle.enemyai;
 
+import android.util.Log;
+
 /**
  * Created by John on 9/22/2016.
  */
@@ -20,7 +22,8 @@ public class BasicTransformEnemyAI extends EnemyAI {
                 selectedAction = EnemyAction.TRANSFORM;
                 break;
             default:
-                System.out.println("BasicTransformEnemyAI: Transform did not work");
+                //System.out.println("BasicTransformEnemyAI: Transform did not work");
+                Log.e("BasicTansformEnemyAI", "Transform did not work");
                 selectedAction = EnemyAction.MAGIC_ATTACK;
                 break;
         }

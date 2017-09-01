@@ -440,12 +440,12 @@ public class PartySelectScreen extends Screen {
 
     private void performSort(){
         ArrayList<WifeyCharacter> preSort = new ArrayList<>();
-        for(int i = 0; i < PER_PAGE; i++){
+        for(int i = 0; i < PER_PAGE && ((currentPage * PER_PAGE) + i) < validCharacters.size(); i++){
             preSort.add(validCharacters.get((currentPage * PER_PAGE) + i));
         }
         Collections.sort(validCharacters, getSort());
         boolean pageChanged = false;
-        for(int i = 0; i < PER_PAGE; i++){
+        for(int i = 0; i < PER_PAGE && ((currentPage * PER_PAGE) + i) < validCharacters.size(); i++){
             if(preSort.get(i) != validCharacters.get((currentPage * PER_PAGE) + i)){
                 pageChanged = true;
             }

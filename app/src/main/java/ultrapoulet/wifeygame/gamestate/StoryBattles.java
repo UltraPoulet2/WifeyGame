@@ -31,4 +31,10 @@ public class StoryBattles {
     public static BattleInfo getBattle(String key){
         return storyBattleMap.get(key);
     }
+
+    public static void validateUnlocks(){
+        for(BattleInfo battle: storyBattleMap.values()){
+            battle.validateUnlocks();
+        }
+    }
 }

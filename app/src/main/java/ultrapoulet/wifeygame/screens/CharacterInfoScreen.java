@@ -131,6 +131,10 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
         namePaint.setColor(Color.BLACK);
     }
 
+    protected String getWeaponType(){
+        return displayChar.getWeapon().getWeaponType();
+    }
+
     public void createUniqueButtons(){
         uniqueButtons = new ButtonList();
         prevTransform = new Button(TRANSFORM_PREV_PAGE_LEFT_X, TRANSFORM_PREV_PAGE_RIGHT_X, TRANSFORM_PAGE_TOP_Y, TRANSFORM_PAGE_BOT_Y, false, "TRANS_PREV", Assets.TransformPrevEnable, Assets.TransformPrevDisable);
@@ -355,6 +359,9 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
             g.drawString("--Default Weapon--", WEAPON_X, MAX_WEAPON_Y, weaponPaint, MAX_WEAPON_SIZE, MAX_WEAPON_FONT);
             //g.drawString(displayWeapon.getWeaponType(), WEAPON_X, MAX_WEAPON_Y, weaponPaint, MAX_WEAPON_SIZE, MAX_WEAPON_FONT);
         }
+        //Draw image for weapon
+        g.drawImage(displayChar.getWeapon().getImage(), WEAPONS_IMAGE_LEFT_X, WEAPONS_IMAGE_TOP_Y);
+
         //Draw image for number hits
         g.drawImage(getHitsImage(displayWeapon.getNumHits()), HITS_X, HITS_Y);
 
