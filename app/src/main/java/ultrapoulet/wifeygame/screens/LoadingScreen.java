@@ -19,6 +19,8 @@ import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Graphics.ImageFormat;
 import ultrapoulet.androidgame.framework.Input.TouchEvent;
 import ultrapoulet.androidgame.framework.Screen;
+import ultrapoulet.androidgame.framework.helpers.AnimationImages;
+import ultrapoulet.wifeygame.AnimationAssets;
 import ultrapoulet.wifeygame.Assets;
 import ultrapoulet.wifeygame.character.Weapon;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
@@ -397,6 +399,12 @@ public class LoadingScreen extends Screen {
 
         //Setup the images for Weapons
         Weapon.setupImages(g);
+
+        //Setup Animations here for now
+        AnimationAssets.TestAnimation = new AnimationImages();
+        for(int i = 0; i < 10; i++){
+            AnimationAssets.TestAnimation.addFrame(g.newImage("BattleAnimations/TestAnimation/TestAnimationFrame" + i + ".png", ImageFormat.ARGB8888));
+        }
     }
 
     private void createRecruits(){
