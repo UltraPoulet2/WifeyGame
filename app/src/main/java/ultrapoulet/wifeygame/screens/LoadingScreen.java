@@ -19,6 +19,7 @@ import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Graphics.ImageFormat;
 import ultrapoulet.androidgame.framework.Input.TouchEvent;
 import ultrapoulet.androidgame.framework.Screen;
+import ultrapoulet.androidgame.framework.helpers.Animation;
 import ultrapoulet.androidgame.framework.helpers.AnimationImages;
 import ultrapoulet.wifeygame.AnimationAssets;
 import ultrapoulet.wifeygame.Assets;
@@ -118,6 +119,7 @@ public class LoadingScreen extends Screen {
     }
 
     private LoadingPhase currentPhase = LoadingPhase.CREATE_IMAGES;
+    //private Animation testAnimation;
 
     @Override
     public void update(float deltaTime) {
@@ -183,6 +185,7 @@ public class LoadingScreen extends Screen {
                 }
                 else {
                     currentPhase = LoadingPhase.COMPLETE;
+                    //testAnimation = new Animation(AnimationAssets.TestAnimation, 60, true);
                 }
                 //Clear the touch input buffer
                 game.getInput().getTouchEvents();
@@ -640,6 +643,13 @@ public class LoadingScreen extends Screen {
 
         g.clearScreen(Color.BLACK);
         g.drawString(currentPhase.getStatus(), STATUS_X, STATUS_Y, statusPaint);
+
+        /*
+        if(currentPhase == LoadingPhase.COMPLETE){
+            g.drawImage(testAnimation.getFrame(), 350, 400);
+            testAnimation.update(deltaTime);
+        }
+        */
 
     }
 

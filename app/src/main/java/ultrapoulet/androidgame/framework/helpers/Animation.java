@@ -9,17 +9,17 @@ import ultrapoulet.androidgame.framework.Image;
 public class Animation {
 
     private AnimationImages frames;
-    private long currentDuration;
-    private long totalDuration;
+    private float currentDuration;
+    private float totalDuration;
     private boolean repeat;
 
-    public Animation(AnimationImages inputFrames, long duration, boolean repeat){
+    public Animation(AnimationImages inputFrames, float duration, boolean repeat){
         this.frames = inputFrames;
         this.totalDuration = duration;
         this.repeat = repeat;
     }
 
-    public void update(long deltaTime){
+    public void update(float deltaTime){
         this.currentDuration += deltaTime;
         if(currentDuration >= totalDuration){
             if(repeat){
