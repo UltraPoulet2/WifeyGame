@@ -11,9 +11,12 @@ import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.androidgame.framework.Input;
 import ultrapoulet.androidgame.framework.Screen;
+import ultrapoulet.androidgame.framework.helpers.Animation;
+import ultrapoulet.androidgame.framework.helpers.AnimationImages;
 import ultrapoulet.androidgame.framework.helpers.Button;
 import ultrapoulet.androidgame.framework.helpers.ButtonList;
 import ultrapoulet.androidgame.framework.helpers.NumberPrinter;
+import ultrapoulet.wifeygame.AnimationAssets;
 import ultrapoulet.wifeygame.Assets;
 import ultrapoulet.wifeygame.battle.BattleCharacter;
 import ultrapoulet.wifeygame.battle.BattleEnemy;
@@ -55,8 +58,14 @@ public abstract class AbsBattleScreen extends Screen {
 
     private static Image enemyHolder;
 
+    private Animation battleAnimation = null;
+
     private static final int ENEMY_IMAGE_X = 200;
     private static final int ENEMY_IMAGE_Y = 100;
+
+    private static final int ENEMY_BATTLE_ANIMATION_BASE_OFFSET_X = 100;
+    private static final int ENEMY_BATTLE_ANIMATION_BASE_OFFSET_Y = 100;
+    private static final int ENEMY_BATTLE_ANIMATION_SIZE = 200;
 
     private static final int CHAR_HOLDER_X_DISTANCE = 100;
     private static final int CHAR_HOLDER_SMALL_Y = 745;
@@ -268,6 +277,10 @@ public abstract class AbsBattleScreen extends Screen {
 
     private static final int CHAR_IMAGE_SMALL_SIZE = 80;
     private static final int CHAR_IMAGE_LARGE_SIZE = 160;
+
+    private static final int CHAR_BATTLE_ANIMATION_SIZE = 100;
+    private static final int CHAR_BATTLE_ANIMATION_BASE_OFFSET_X = (CHAR_IMAGE_SMALL_SIZE - CHAR_BATTLE_ANIMATION_SIZE) / 2;
+    private static final int CHAR_BATTLE_ANIMATION_BASE_OFFSET_Y = (CHAR_IMAGE_SMALL_SIZE - CHAR_BATTLE_ANIMATION_SIZE) / 2;
 
     private enum BattlePhase{
         BATTLE_START,
@@ -696,8 +709,29 @@ public abstract class AbsBattleScreen extends Screen {
                             break;
                         default:
                     }
+                    //This should be modified to not copy/paste
+                    int phaseWait;
+                    switch(commandSelected.getName()){
+                        case POWER_STRING:
+                        case COMBO_STRING:
+                        case MAGIC_STRING:
+                        case SPECIAL_STRING:
+                            phaseWait = ATTACK_PHASE_WAIT;
+                            break;
+                        case HEAL_STRING:
+                            phaseWait = HEAL_PHASE_WAIT;
+                            break;
+                        case DEFEND_STRING:
+                        case TRANSFORM_STRING:
+                            phaseWait = WAIT_PHASE_WAIT;
+                            break;
+                        default:
+                            phaseWait = OTHER_PHASE_WAIT;
+                    }
+                    battleAnimation = new Animation(AnimationAssets.TestAnimation, phaseWait, false);
                 } else {
                     phaseTime += deltaTime;
+                    battleAnimation.update(deltaTime);
                     int phaseWait;
                     switch(commandSelected.getName()){
                         case POWER_STRING:
@@ -914,8 +948,34 @@ public abstract class AbsBattleScreen extends Screen {
                             Log.e("AbsBattleScreen", "Invalid enemy battle action selection");
                             break;
                     }
+                    //This should be modified to not be copy/paste
+                    int phaseWait;
+                    switch(((BattleEnemy) enemies.get(enemyIndex)).getAction()){
+                        case POWER_ATTACK:
+                        case COMBO_ATTACK:
+                        case MAGIC_ATTACK:
+                        case SPECIAL_ATTACK:
+                            phaseWait = ATTACK_PHASE_WAIT;
+                            break;
+                        case HEALING_MAGIC:
+                            phaseWait = HEAL_PHASE_WAIT;
+                            break;
+                        case POWER_UP:
+                        case POWER_DOWN:
+                        case DEFEND:
+                        case WEAKEN:
+                        case WAIT:
+                        case TRANSFORM:
+                            phaseWait = WAIT_PHASE_WAIT;
+                            break;
+                        default:
+                            phaseWait = OTHER_PHASE_WAIT;
+                            break;
+                    }
+                    battleAnimation = new Animation(AnimationAssets.TestAnimation, phaseWait, false);
                 } else {
                     phaseTime += deltaTime;
+                    battleAnimation.update(deltaTime);
                     int phaseWait;
                     switch(((BattleEnemy) enemies.get(enemyIndex)).getAction()){
                         case POWER_ATTACK:
@@ -1077,14 +1137,16 @@ public abstract class AbsBattleScreen extends Screen {
         }
         drawSpecial();
         drawCombo();
-        drawPlayerDamage();
-        drawEnemyDamage();
         if(currentPhase == BattlePhase.ANIMATE_PLAYER_ACTION){
             drawPlayerCommand();
+            drawEnemyAnimation();
         }
         if(currentPhase == BattlePhase.ANIMATE_ENEMY_ACTION){
             drawEnemyCommand();
+            drawPartyAnimation();
         }
+        drawPlayerDamage();
+        drawEnemyDamage();
         if(currentPhase == BattlePhase.WAVE_START){
             drawWaveStart();
         }
@@ -1332,6 +1394,19 @@ public abstract class AbsBattleScreen extends Screen {
         }
     }
 
+    //This function draws the battleAnimation on party members being hit
+    private void drawPartyAnimation() {
+        Graphics g = game.getGraphics();
+        for(int i = 0; i < party.size(); i++) {
+            if(partyDamage[i] > 0) {
+                int x = CHAR_INTERIOR_SMALL_X + CHAR_BATTLE_ANIMATION_BASE_OFFSET_X + (CHAR_HOLDER_X_DISTANCE * i);
+                int y = CHAR_IMAGE_SMALL_Y + CHAR_BATTLE_ANIMATION_BASE_OFFSET_Y;
+                //g.drawScaledImage(battleAnimation.getFrame(), x, y, CHAR_BATTLE_ANIMATION_SIZE, CHAR_BATTLE_ANIMATION_SIZE);
+                g.drawImage(battleAnimation.getFrame(), x, y);
+            }
+        }
+    }
+
     private void drawEnemyDamage() {
         Graphics g = game.getGraphics();
         if(enemyDamage == 0) {
@@ -1357,6 +1432,16 @@ public abstract class AbsBattleScreen extends Screen {
         }
 
         NumberPrinter.drawNumber(g, Math.abs(enemyDamage), ENEMY_DAMAGE_BASE_X, y, DAMAGE_WIDTH, DAMAGE_HEIGHT, DAMAGE_OFFSET, numbers, NumberPrinter.Align.CENTER);
+    }
+
+    //This function draws the battleAnimation on enemy being hit
+    private void drawEnemyAnimation(){
+        Graphics g = game.getGraphics();
+        if(enemyDamage > 0){
+            int x = ENEMY_IMAGE_X + ENEMY_BATTLE_ANIMATION_BASE_OFFSET_X;
+            int y = ENEMY_IMAGE_Y + ENEMY_BATTLE_ANIMATION_BASE_OFFSET_Y;
+            g.drawScaledImage(battleAnimation.getFrame(), x, y, ENEMY_BATTLE_ANIMATION_SIZE, ENEMY_BATTLE_ANIMATION_SIZE);
+        }
     }
 
     private void drawWaveStart() {
