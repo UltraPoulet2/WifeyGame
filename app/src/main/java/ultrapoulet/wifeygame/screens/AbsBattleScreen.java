@@ -59,6 +59,8 @@ public abstract class AbsBattleScreen extends Screen {
     private static Image enemyHolder;
 
     private Animation battleAnimation = null;
+    private int battleAnimationOffsetX = 0;
+    private int battleAnimationOffsetY = 0;
 
     private static final int ENEMY_IMAGE_X = 200;
     private static final int ENEMY_IMAGE_Y = 100;
@@ -66,6 +68,7 @@ public abstract class AbsBattleScreen extends Screen {
     private static final int ENEMY_BATTLE_ANIMATION_BASE_OFFSET_X = 100;
     private static final int ENEMY_BATTLE_ANIMATION_BASE_OFFSET_Y = 100;
     private static final int ENEMY_BATTLE_ANIMATION_SIZE = 200;
+    private static final int ENEMY_BATTLE_ANIMATION_MAX_OFFSET = 50;
 
     private static final int CHAR_HOLDER_X_DISTANCE = 100;
     private static final int CHAR_HOLDER_SMALL_Y = 745;
@@ -281,6 +284,7 @@ public abstract class AbsBattleScreen extends Screen {
     private static final int CHAR_BATTLE_ANIMATION_SIZE = 100;
     private static final int CHAR_BATTLE_ANIMATION_BASE_OFFSET_X = (CHAR_IMAGE_SMALL_SIZE - CHAR_BATTLE_ANIMATION_SIZE) / 2;
     private static final int CHAR_BATTLE_ANIMATION_BASE_OFFSET_Y = (CHAR_IMAGE_SMALL_SIZE - CHAR_BATTLE_ANIMATION_SIZE) / 2;
+    private static final int CHAR_BATTLE_ANIMATION_MAX_OFFSET = 25;
 
     private enum BattlePhase{
         BATTLE_START,
@@ -729,6 +733,10 @@ public abstract class AbsBattleScreen extends Screen {
                             phaseWait = OTHER_PHASE_WAIT;
                     }
                     battleAnimation = new Animation(AnimationAssets.TestAnimation, phaseWait, false);
+                    int multiplier = Math.random() > 0.5 ? 1 : -1;
+                    battleAnimationOffsetX = (int) (multiplier * Math.random() * ENEMY_BATTLE_ANIMATION_MAX_OFFSET);
+                    multiplier = Math.random() > 0.5 ? 1 : -1;
+                    battleAnimationOffsetY = (int) (multiplier * Math.random() * ENEMY_BATTLE_ANIMATION_MAX_OFFSET);
                 } else {
                     phaseTime += deltaTime;
                     battleAnimation.update(deltaTime);
@@ -973,6 +981,10 @@ public abstract class AbsBattleScreen extends Screen {
                             break;
                     }
                     battleAnimation = new Animation(AnimationAssets.TestAnimation, phaseWait, false);
+                    int multiplier = Math.random() > 0.5 ? 1 : -1;
+                    battleAnimationOffsetX = (int) (multiplier * Math.random() * CHAR_BATTLE_ANIMATION_MAX_OFFSET);
+                    multiplier = Math.random() > 0.5 ? 1 : -1;
+                    battleAnimationOffsetY = (int) (multiplier * Math.random() * CHAR_BATTLE_ANIMATION_MAX_OFFSET);
                 } else {
                     phaseTime += deltaTime;
                     battleAnimation.update(deltaTime);
@@ -1399,8 +1411,8 @@ public abstract class AbsBattleScreen extends Screen {
         Graphics g = game.getGraphics();
         for(int i = 0; i < party.size(); i++) {
             if(partyDamage[i] > 0) {
-                int x = CHAR_INTERIOR_SMALL_X + CHAR_BATTLE_ANIMATION_BASE_OFFSET_X + (CHAR_HOLDER_X_DISTANCE * i);
-                int y = CHAR_IMAGE_SMALL_Y + CHAR_BATTLE_ANIMATION_BASE_OFFSET_Y;
+                int x = CHAR_INTERIOR_SMALL_X + CHAR_BATTLE_ANIMATION_BASE_OFFSET_X + (CHAR_HOLDER_X_DISTANCE * i) + battleAnimationOffsetX;
+                int y = CHAR_IMAGE_SMALL_Y + CHAR_BATTLE_ANIMATION_BASE_OFFSET_Y + battleAnimationOffsetY;
                 //g.drawScaledImage(battleAnimation.getFrame(), x, y, CHAR_BATTLE_ANIMATION_SIZE, CHAR_BATTLE_ANIMATION_SIZE);
                 g.drawImage(battleAnimation.getFrame(), x, y);
             }
@@ -1438,8 +1450,8 @@ public abstract class AbsBattleScreen extends Screen {
     private void drawEnemyAnimation(){
         Graphics g = game.getGraphics();
         if(enemyDamage > 0){
-            int x = ENEMY_IMAGE_X + ENEMY_BATTLE_ANIMATION_BASE_OFFSET_X;
-            int y = ENEMY_IMAGE_Y + ENEMY_BATTLE_ANIMATION_BASE_OFFSET_Y;
+            int x = ENEMY_IMAGE_X + ENEMY_BATTLE_ANIMATION_BASE_OFFSET_X + battleAnimationOffsetX;
+            int y = ENEMY_IMAGE_Y + ENEMY_BATTLE_ANIMATION_BASE_OFFSET_Y + battleAnimationOffsetY;
             g.drawScaledImage(battleAnimation.getFrame(), x, y, ENEMY_BATTLE_ANIMATION_SIZE, ENEMY_BATTLE_ANIMATION_SIZE);
         }
     }
