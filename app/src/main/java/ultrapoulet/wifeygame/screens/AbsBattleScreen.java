@@ -12,11 +12,9 @@ import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.androidgame.framework.Input;
 import ultrapoulet.androidgame.framework.Screen;
 import ultrapoulet.androidgame.framework.helpers.Animation;
-import ultrapoulet.androidgame.framework.helpers.AnimationImages;
 import ultrapoulet.androidgame.framework.helpers.Button;
 import ultrapoulet.androidgame.framework.helpers.ButtonList;
 import ultrapoulet.androidgame.framework.helpers.NumberPrinter;
-import ultrapoulet.wifeygame.AnimationAssets;
 import ultrapoulet.wifeygame.Assets;
 import ultrapoulet.wifeygame.battle.BattleCharacter;
 import ultrapoulet.wifeygame.battle.BattleEnemy;
@@ -732,7 +730,7 @@ public abstract class AbsBattleScreen extends Screen {
                         default:
                             phaseWait = OTHER_PHASE_WAIT;
                     }
-                    battleAnimation = new Animation(AnimationAssets.TestAnimation, phaseWait, false);
+                    battleAnimation = new Animation(party.get(partyIndex).getBattleAnimation(), phaseWait, false);
                     int multiplier = Math.random() > 0.5 ? 1 : -1;
                     battleAnimationOffsetX = (int) (multiplier * Math.random() * ENEMY_BATTLE_ANIMATION_MAX_OFFSET);
                     multiplier = Math.random() > 0.5 ? 1 : -1;
@@ -980,7 +978,7 @@ public abstract class AbsBattleScreen extends Screen {
                             phaseWait = OTHER_PHASE_WAIT;
                             break;
                     }
-                    battleAnimation = new Animation(AnimationAssets.TestAnimation, phaseWait, false);
+                    battleAnimation = new Animation(enemies.get(enemyIndex).getBattleAnimation(), phaseWait, false);
                     int multiplier = Math.random() > 0.5 ? 1 : -1;
                     battleAnimationOffsetX = (int) (multiplier * Math.random() * CHAR_BATTLE_ANIMATION_MAX_OFFSET);
                     multiplier = Math.random() > 0.5 ? 1 : -1;

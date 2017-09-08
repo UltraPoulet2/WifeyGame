@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ultrapoulet.androidgame.framework.Graphics;
+import ultrapoulet.androidgame.framework.helpers.AnimationImages;
+import ultrapoulet.wifeygame.AnimationAssets;
 import ultrapoulet.wifeygame.character.TransformWifey;
 import ultrapoulet.wifeygame.character.Weapon;
 import ultrapoulet.wifeygame.battle.skills.AbsSkill.Multipliers;
@@ -65,6 +67,10 @@ public class BattleWifey extends BattleCharacter{
     }
 
     public SkillList getSkills() { return this.skills; }
+
+    public AnimationImages getBattleAnimation(){
+        return AnimationAssets.TestAnimation;
+    }
 
     public void startBattle(List<BattleCharacter> party){
         this.currentHP = this.maxHP;

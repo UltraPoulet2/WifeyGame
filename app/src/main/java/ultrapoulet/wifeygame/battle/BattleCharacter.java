@@ -4,6 +4,7 @@ import java.util.List;
 
 import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Image;
+import ultrapoulet.androidgame.framework.helpers.AnimationImages;
 import ultrapoulet.wifeygame.battle.skills.SkillList;
 import ultrapoulet.wifeygame.character.Element;
 
@@ -64,6 +65,8 @@ public abstract class BattleCharacter {
     public Element getWeakElement(){
         return this.weakElement;
     }
+
+    public abstract AnimationImages getBattleAnimation();
 
     public abstract void startBattle(List<BattleCharacter> party);
     public abstract void startTurn();

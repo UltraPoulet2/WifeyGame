@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 
 import ultrapoulet.androidgame.framework.Graphics;
+import ultrapoulet.androidgame.framework.helpers.AnimationImages;
+import ultrapoulet.wifeygame.AnimationAssets;
 import ultrapoulet.wifeygame.battle.enemyai.EnemyAI;
 import ultrapoulet.wifeygame.battle.enemyai.EnemyAI.EnemyAction;
 import ultrapoulet.wifeygame.battle.skills.AbsSkill.Multipliers;
@@ -132,6 +134,10 @@ public class BattleEnemy extends BattleCharacter{
     }
 
     public SkillList getSkills() { return this.skills; }
+
+    public AnimationImages getBattleAnimation(){
+        return AnimationAssets.TestAnimation;
+    }
 
     public void startBattle(List<BattleCharacter> party) {
         this.currentHP = this.maxHP;
