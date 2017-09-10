@@ -9,4 +9,9 @@ import ultrapoulet.androidgame.framework.helpers.AnimationImages;
 public class AnimationAssets {
 
     public static AnimationImages TestAnimation;
+
+    public static AnimationImages getAnimation(String input){
+        //Function that maps weapon type to an animation
+        return TestAnimation;
+    }
 }

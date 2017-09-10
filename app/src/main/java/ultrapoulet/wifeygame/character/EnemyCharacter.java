@@ -5,6 +5,8 @@ import java.util.Collections;
 
 import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Image;
+import ultrapoulet.androidgame.framework.helpers.AnimationImages;
+import ultrapoulet.wifeygame.AnimationAssets;
 import ultrapoulet.wifeygame.battle.BattleEnemy;
 import ultrapoulet.wifeygame.battle.enemyai.EnemyAI;
 
@@ -44,6 +46,8 @@ public class EnemyCharacter {
     private String ai;
 
     private ArrayList<TransformEnemy> transformations;
+
+    private AnimationImages battleAnimation = AnimationAssets.TestAnimation;
 
     public EnemyCharacter() {
         skills = new ArrayList<>();
@@ -136,6 +140,10 @@ public class EnemyCharacter {
 
     public int getExperience() {
         return this.experience;
+    }
+
+    public AnimationImages getBattleAnimation() {
+        return this.battleAnimation;
     }
 
 
@@ -232,6 +240,10 @@ public class EnemyCharacter {
 
     public void setExperience(int exp){
         this.experience = exp;
+    }
+
+    public void setBattleAnimation(AnimationImages input){
+        this.battleAnimation = input;
     }
 
     public void addTransformation(TransformEnemy t){

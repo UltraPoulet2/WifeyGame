@@ -39,6 +39,7 @@ public class BattleEnemy extends BattleCharacter{
     private double weakenPercentage;
     private int specialDamage;
     private int specialHits;
+    private AnimationImages battleAnimation;
 
     private int gold;
     private int experience;
@@ -86,6 +87,7 @@ public class BattleEnemy extends BattleCharacter{
         this.transformations = input.getTransformations();
         this.gold = input.getGold();
         this.experience = input.getExperience();
+        this.battleAnimation = input.getBattleAnimation();
 
         //As clean up at some point, remove all this, put in the enum
         actionStrings = new HashMap<>();
@@ -136,7 +138,7 @@ public class BattleEnemy extends BattleCharacter{
     public SkillList getSkills() { return this.skills; }
 
     public AnimationImages getBattleAnimation(){
-        return AnimationAssets.TestAnimation;
+        return this.battleAnimation;
     }
 
     public void startBattle(List<BattleCharacter> party) {

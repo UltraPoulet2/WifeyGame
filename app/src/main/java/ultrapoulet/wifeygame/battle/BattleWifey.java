@@ -69,7 +69,7 @@ public class BattleWifey extends BattleCharacter{
     public SkillList getSkills() { return this.skills; }
 
     public AnimationImages getBattleAnimation(){
-        return AnimationAssets.TestAnimation;
+        return this.weapon.getBattleAnimation();
     }
 
     public void startBattle(List<BattleCharacter> party){
