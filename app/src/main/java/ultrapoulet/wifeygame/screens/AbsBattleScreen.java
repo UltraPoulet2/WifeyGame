@@ -497,6 +497,44 @@ public abstract class AbsBattleScreen extends Screen {
         }
     }
 
+    private int getPlayerPhaseWait(){
+        switch(commandSelected.getName()){
+            case POWER_STRING:
+            case COMBO_STRING:
+            case MAGIC_STRING:
+            case SPECIAL_STRING:
+                return ATTACK_PHASE_WAIT;
+            case HEAL_STRING:
+                return HEAL_PHASE_WAIT;
+            case DEFEND_STRING:
+            case TRANSFORM_STRING:
+                return WAIT_PHASE_WAIT;
+            default:
+                return OTHER_PHASE_WAIT;
+        }
+    }
+
+    private int getEnemyPhaseWait() {
+        switch(((BattleEnemy) enemies.get(enemyIndex)).getAction()){
+            case POWER_ATTACK:
+            case COMBO_ATTACK:
+            case MAGIC_ATTACK:
+            case SPECIAL_ATTACK:
+                return ATTACK_PHASE_WAIT;
+            case HEALING_MAGIC:
+                return HEAL_PHASE_WAIT;
+            case POWER_UP:
+            case POWER_DOWN:
+            case DEFEND:
+            case WEAKEN:
+            case WAIT:
+            case TRANSFORM:
+                return WAIT_PHASE_WAIT;
+            default:
+                return OTHER_PHASE_WAIT;
+        }
+    }
+
     @Override
     public void update(float deltaTime) {
 
@@ -711,26 +749,7 @@ public abstract class AbsBattleScreen extends Screen {
                             break;
                         default:
                     }
-                    //This should be modified to not copy/paste
-                    int phaseWait;
-                    switch(commandSelected.getName()){
-                        case POWER_STRING:
-                        case COMBO_STRING:
-                        case MAGIC_STRING:
-                        case SPECIAL_STRING:
-                            phaseWait = ATTACK_PHASE_WAIT;
-                            break;
-                        case HEAL_STRING:
-                            phaseWait = HEAL_PHASE_WAIT;
-                            break;
-                        case DEFEND_STRING:
-                        case TRANSFORM_STRING:
-                            phaseWait = WAIT_PHASE_WAIT;
-                            break;
-                        default:
-                            phaseWait = OTHER_PHASE_WAIT;
-                    }
-                    battleAnimation = new Animation(party.get(partyIndex).getBattleAnimation(), phaseWait, false);
+                    battleAnimation = new Animation(party.get(partyIndex).getBattleAnimation(), getPlayerPhaseWait(), false);
                     int multiplier = Math.random() > 0.5 ? 1 : -1;
                     battleAnimationOffsetX = (int) (multiplier * Math.random() * ENEMY_BATTLE_ANIMATION_MAX_OFFSET);
                     multiplier = Math.random() > 0.5 ? 1 : -1;
@@ -738,25 +757,7 @@ public abstract class AbsBattleScreen extends Screen {
                 } else {
                     phaseTime += deltaTime;
                     battleAnimation.update(deltaTime);
-                    int phaseWait;
-                    switch(commandSelected.getName()){
-                        case POWER_STRING:
-                        case COMBO_STRING:
-                        case MAGIC_STRING:
-                        case SPECIAL_STRING:
-                            phaseWait = ATTACK_PHASE_WAIT;
-                            break;
-                        case HEAL_STRING:
-                            phaseWait = HEAL_PHASE_WAIT;
-                            break;
-                        case DEFEND_STRING:
-                        case TRANSFORM_STRING:
-                            phaseWait = WAIT_PHASE_WAIT;
-                            break;
-                        default:
-                            phaseWait = OTHER_PHASE_WAIT;
-                    }
-                    if (phaseTime >= phaseWait) {
+                    if (phaseTime >= getPlayerPhaseWait()) {
                         if (enemies.get(enemyIndex).getCurrentHP() == 0 && enemies.get(enemyIndex).canPreventDeath()) {
                             currentPhase = BattlePhase.PREVENT_ENEMY_DEFEAT;
                             phaseEntered = true;
@@ -954,31 +955,7 @@ public abstract class AbsBattleScreen extends Screen {
                             Log.e("AbsBattleScreen", "Invalid enemy battle action selection");
                             break;
                     }
-                    //This should be modified to not be copy/paste
-                    int phaseWait;
-                    switch(((BattleEnemy) enemies.get(enemyIndex)).getAction()){
-                        case POWER_ATTACK:
-                        case COMBO_ATTACK:
-                        case MAGIC_ATTACK:
-                        case SPECIAL_ATTACK:
-                            phaseWait = ATTACK_PHASE_WAIT;
-                            break;
-                        case HEALING_MAGIC:
-                            phaseWait = HEAL_PHASE_WAIT;
-                            break;
-                        case POWER_UP:
-                        case POWER_DOWN:
-                        case DEFEND:
-                        case WEAKEN:
-                        case WAIT:
-                        case TRANSFORM:
-                            phaseWait = WAIT_PHASE_WAIT;
-                            break;
-                        default:
-                            phaseWait = OTHER_PHASE_WAIT;
-                            break;
-                    }
-                    battleAnimation = new Animation(enemies.get(enemyIndex).getBattleAnimation(), phaseWait, false);
+                    battleAnimation = new Animation(enemies.get(enemyIndex).getBattleAnimation(), getEnemyPhaseWait(), false);
                     int multiplier = Math.random() > 0.5 ? 1 : -1;
                     battleAnimationOffsetX = (int) (multiplier * Math.random() * CHAR_BATTLE_ANIMATION_MAX_OFFSET);
                     multiplier = Math.random() > 0.5 ? 1 : -1;
@@ -986,30 +963,7 @@ public abstract class AbsBattleScreen extends Screen {
                 } else {
                     phaseTime += deltaTime;
                     battleAnimation.update(deltaTime);
-                    int phaseWait;
-                    switch(((BattleEnemy) enemies.get(enemyIndex)).getAction()){
-                        case POWER_ATTACK:
-                        case COMBO_ATTACK:
-                        case MAGIC_ATTACK:
-                        case SPECIAL_ATTACK:
-                            phaseWait = ATTACK_PHASE_WAIT;
-                            break;
-                        case HEALING_MAGIC:
-                            phaseWait = HEAL_PHASE_WAIT;
-                            break;
-                        case POWER_UP:
-                        case POWER_DOWN:
-                        case DEFEND:
-                        case WEAKEN:
-                        case WAIT:
-                        case TRANSFORM:
-                            phaseWait = WAIT_PHASE_WAIT;
-                            break;
-                        default:
-                            phaseWait = OTHER_PHASE_WAIT;
-                            break;
-                    }
-                    if (phaseTime >= phaseWait) {
+                    if (phaseTime >= getEnemyPhaseWait()) {
                         //If the party is dead or the enemy is done acting and somebody can be revived...
                         if ((isGameOver() || hitsPerformed == enemies.get(enemyIndex).getNumHits()) && canPreventPartyDeath()) {
                             currentPhase = BattlePhase.PREVENT_PLAYER_DEFEAT;
