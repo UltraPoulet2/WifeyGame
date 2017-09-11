@@ -143,7 +143,7 @@ public abstract class AbsBattleScreen extends Screen {
     private boolean phaseEntered = true;
 
     private static final int ENEMY_DAMAGE_BASE_X = 400;
-    private static final int ENEMY_DAMAGE_START_Y = 260;
+    private static final int ENEMY_DAMAGE_START_Y = 240;
     private static final int ENEMY_DAMAGE_INCREASE_Y = 80;
 
     private static final int CHAR_DAMAGE_BASE_X = 50;
@@ -152,8 +152,10 @@ public abstract class AbsBattleScreen extends Screen {
     private static final int CHAR_DAMAGE_SMALL_INCREASE_Y = 80;
     private static final int CHAR_DAMAGE_LARGE_INCREASE_Y = 160;
 
-    private static final int DAMAGE_WIDTH = 20;
-    private static final int DAMAGE_HEIGHT = 40;
+    private static final int PLAYER_DAMAGE_WIDTH = 20;
+    private static final int PLAYER_DAMAGE_HEIGHT = 40;
+    private static final int ENEMY_DAMAGE_WIDTH = 30;
+    private static final int ENEMY_DAMAGE_HEIGHT = 60;
     private static final int DAMAGE_OFFSET = 0;
 
     private static final int COMBO_NUMBER_X = 690;
@@ -1354,7 +1356,7 @@ public abstract class AbsBattleScreen extends Screen {
                 numbers = Assets.GreenNumbers;
             }
 
-            NumberPrinter.drawNumber(g, Math.abs(partyDamage[i]), x, y, DAMAGE_WIDTH, DAMAGE_HEIGHT, DAMAGE_OFFSET, numbers, NumberPrinter.Align.CENTER);
+            NumberPrinter.drawNumber(g, Math.abs(partyDamage[i]), x, y, PLAYER_DAMAGE_WIDTH, PLAYER_DAMAGE_HEIGHT, DAMAGE_OFFSET, numbers, NumberPrinter.Align.CENTER);
         }
     }
 
@@ -1395,7 +1397,7 @@ public abstract class AbsBattleScreen extends Screen {
             numbers = Assets.GreenNumbers;
         }
 
-        NumberPrinter.drawNumber(g, Math.abs(enemyDamage), ENEMY_DAMAGE_BASE_X, y, DAMAGE_WIDTH, DAMAGE_HEIGHT, DAMAGE_OFFSET, numbers, NumberPrinter.Align.CENTER);
+        NumberPrinter.drawNumber(g, Math.abs(enemyDamage), ENEMY_DAMAGE_BASE_X, y, ENEMY_DAMAGE_WIDTH, ENEMY_DAMAGE_HEIGHT, DAMAGE_OFFSET, numbers, NumberPrinter.Align.CENTER);
     }
 
     //This function draws the battleAnimation on enemy being hit
