@@ -69,7 +69,67 @@ public enum Weapon {
     }
 
     public AnimationImages getBattleAnimation() {
-        return AnimationAssets.getAnimation(this.weaponType);
+        switch(this){
+            case AIRSOFT:
+                return AnimationAssets.TestAnimation;
+            case ANIMAL:
+                return AnimationAssets.TestAnimation;
+            case BALL:
+                return AnimationAssets.TestAnimation;
+            case BOOK:
+                return AnimationAssets.TestAnimation;
+            case CARD:
+                return AnimationAssets.TestAnimation;
+            case CLAW:
+                return AnimationAssets.TestAnimation;
+            case CLUB:
+                return AnimationAssets.TestAnimation;
+            case COOKING:
+                return AnimationAssets.TestAnimation;
+            case COMPUTER:
+                return AnimationAssets.TestAnimation;
+            case FAN:
+                return AnimationAssets.TestAnimation;
+            case FISTS:
+                return AnimationAssets.TestAnimation;
+            case FOOD:
+                return AnimationAssets.TestAnimation;
+            case GUN:
+                return AnimationAssets.TestAnimation;
+            case INSTRUMENT:
+                return AnimationAssets.TestAnimation;
+            case KNIFE:
+                return AnimationAssets.TestAnimation;
+            case LASER:
+                return AnimationAssets.TestAnimation;
+            case MAGIC:
+                return AnimationAssets.TestAnimation;
+            case MECHA:
+                return AnimationAssets.TestAnimation;
+            case MEDICINE:
+                return AnimationAssets.TestAnimation;
+            case PLANT:
+                return AnimationAssets.TestAnimation;
+            case PLUSH:
+                return AnimationAssets.TestAnimation;
+            case SCYTHE:
+                return AnimationAssets.TestAnimation;
+            case SPORT:
+                return AnimationAssets.TestAnimation;
+            case SWORD:
+                return AnimationAssets.TestAnimation;
+            case TANK:
+                return AnimationAssets.TestAnimation;
+            case TOOL:
+                return AnimationAssets.TestAnimation;
+            case TOY:
+                return AnimationAssets.TestAnimation;
+            case VEHICLE:
+                return AnimationAssets.TestAnimation;
+            default:
+                Log.e("Weapon", "Missing animation for: " + this.getWeaponType());
+                return null;
+        }
     }
 
     public static void setupImages(Graphics g){
