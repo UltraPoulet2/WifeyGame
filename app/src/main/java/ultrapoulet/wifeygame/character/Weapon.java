@@ -101,7 +101,7 @@ public enum Weapon {
             case KNIFE:
                 return AnimationAssets.TestAnimation;
             case LASER:
-                return AnimationAssets.TestAnimation;
+                return AnimationAssets.LaserAnimation;
             case MAGIC:
                 return AnimationAssets.TestAnimation;
             case MECHA:

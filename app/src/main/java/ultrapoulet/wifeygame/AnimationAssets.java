@@ -10,5 +10,5 @@ import ultrapoulet.wifeygame.character.Weapon;
 public class AnimationAssets {
 
     public static AnimationImages TestAnimation;
-
+    public static AnimationImages LaserAnimation;
 }
