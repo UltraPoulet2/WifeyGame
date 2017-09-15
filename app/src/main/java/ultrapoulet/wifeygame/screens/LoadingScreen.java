@@ -409,8 +409,10 @@ public class LoadingScreen extends Screen {
             AnimationAssets.TestAnimation.addFrame(g.newImage("BattleAnimations/TestAnimation/TestAnimationFrame" + i + ".png", ImageFormat.ARGB8888));
         }
         AnimationAssets.LaserAnimation = new AnimationImages();
+        AnimationAssets.MechaAnimation = new AnimationImages();
         for(int i = 0; i < 10; i++){
             AnimationAssets.LaserAnimation.addFrame(g.newImage("BattleAnimations/LASER/LASER" + i + ".png", ImageFormat.ARGB8888));
+            AnimationAssets.MechaAnimation.addFrame(g.newImage("BattleAnimations/MECHA/MECHA" + i + ".png", ImageFormat.ARGB8888));
         }
     }
 
