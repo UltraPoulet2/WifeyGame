@@ -13,4 +13,5 @@ public class AnimationAssets {
     public static AnimationImages InstrumentAnimation;
     public static AnimationImages LaserAnimation;
     public static AnimationImages MechaAnimation;
+    public static AnimationImages ScytheAnimation;
 }
