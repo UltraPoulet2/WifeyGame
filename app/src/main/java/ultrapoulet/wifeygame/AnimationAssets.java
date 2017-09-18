@@ -9,9 +9,10 @@ import ultrapoulet.wifeygame.character.Weapon;
 
 public class AnimationAssets {
 
-    public static AnimationImages TestAnimation;
-    public static AnimationImages InstrumentAnimation;
-    public static AnimationImages LaserAnimation;
-    public static AnimationImages MechaAnimation;
-    public static AnimationImages ScytheAnimation;
+    public static AnimationImages TestAnimation = new AnimationImages();
+    public static AnimationImages InstrumentAnimation = new AnimationImages();
+    public static AnimationImages LaserAnimation = new AnimationImages();
+    public static AnimationImages MechaAnimation = new AnimationImages();
+    public static AnimationImages PlantAnimation = new AnimationImages();
+    public static AnimationImages ScytheAnimation = new AnimationImages();
 }

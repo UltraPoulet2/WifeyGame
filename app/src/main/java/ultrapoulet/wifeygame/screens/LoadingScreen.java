@@ -404,18 +404,14 @@ public class LoadingScreen extends Screen {
         Weapon.setupImages(g);
 
         //Setup Animations here for now
-        AnimationAssets.TestAnimation = new AnimationImages();
         for(int i = 0; i < 10; i++){
             AnimationAssets.TestAnimation.addFrame(g.newImage("BattleAnimations/TestAnimation/TestAnimationFrame" + i + ".png", ImageFormat.ARGB8888));
         }
-        AnimationAssets.InstrumentAnimation = new AnimationImages();
-        AnimationAssets.LaserAnimation = new AnimationImages();
-        AnimationAssets.MechaAnimation = new AnimationImages();
-        AnimationAssets.ScytheAnimation = new AnimationImages();
         for(int i = 0; i < 10; i++){
             AnimationAssets.InstrumentAnimation.addFrame(g.newImage("BattleAnimations/INSTRUMENT/INSTRUMENT" + i + ".png", ImageFormat.ARGB8888));
             AnimationAssets.LaserAnimation.addFrame(g.newImage("BattleAnimations/LASER/LASER" + i + ".png", ImageFormat.ARGB8888));
             AnimationAssets.MechaAnimation.addFrame(g.newImage("BattleAnimations/MECHA/MECHA" + i + ".png", ImageFormat.ARGB8888));
+            AnimationAssets.PlantAnimation.addFrame(g.newImage("BattleAnimations/PLANT/PLANT" + i + ".png", ImageFormat.ARGB8888));
             AnimationAssets.ScytheAnimation.addFrame(g.newImage("BattleAnimations/SCYTHE/SCYTHE" + i + ".png", ImageFormat.ARGB8888));
         }
     }
