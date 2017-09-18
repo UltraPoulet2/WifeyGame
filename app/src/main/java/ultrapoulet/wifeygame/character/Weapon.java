@@ -109,7 +109,7 @@ public enum Weapon {
             case MEDICINE:
                 return AnimationAssets.TestAnimation;
             case PLANT:
-                return AnimationAssets.TestAnimation;
+                return AnimationAssets.PlantAnimation;
             case PLUSH:
                 return AnimationAssets.TestAnimation;
             case SCYTHE:
