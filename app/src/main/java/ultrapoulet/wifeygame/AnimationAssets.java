@@ -16,4 +16,12 @@ public class AnimationAssets {
     public static AnimationImages MechaAnimation = new AnimationImages();
     public static AnimationImages PlantAnimation = new AnimationImages();
     public static AnimationImages ScytheAnimation = new AnimationImages();
+
+    //Element AnimationImages
+    public static AnimationImages DarkAnimation = new AnimationImages();
+    public static AnimationImages EarthAnimation = new AnimationImages();
+    public static AnimationImages FireAnimation = new AnimationImages();
+    public static AnimationImages LightAnimation = new AnimationImages();
+    public static AnimationImages WaterAnimation = new AnimationImages();
+    public static AnimationImages WindAnimation = new AnimationImages();
 }
