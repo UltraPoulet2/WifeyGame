@@ -24,4 +24,8 @@ public class AnimationAssets {
     public static AnimationImages LightAnimation = new AnimationImages();
     public static AnimationImages WaterAnimation = new AnimationImages();
     public static AnimationImages WindAnimation = new AnimationImages();
+
+    //Healing AnimationImages
+    public static AnimationImages HealAnimation = new AnimationImages();
+    public static AnimationImages ReviveAnimation = new AnimationImages();
 }

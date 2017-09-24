@@ -34,8 +34,8 @@ public class Animation {
 
     public Image getFrame(){
         int numFrames = frames.getNumFrames();
-        int timePerFrame = (int) totalDuration / numFrames;
-        int currentFrame = (int) currentDuration / timePerFrame;
+        float timePerFrame = totalDuration / numFrames;
+        int currentFrame = (int) (currentDuration / timePerFrame);
         return frames.getFrame(currentFrame);
     }
 }

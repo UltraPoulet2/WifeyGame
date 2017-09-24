@@ -421,6 +421,9 @@ public class LoadingScreen extends Screen {
             AnimationAssets.LightAnimation.addFrame(g.newImage("BattleAnimations/LIGHT/LIGHT" + i + ".png", ImageFormat.ARGB8888));
             AnimationAssets.WaterAnimation.addFrame(g.newImage("BattleAnimations/WATER/WATER" + i + ".png", ImageFormat.ARGB8888));
             AnimationAssets.WindAnimation.addFrame(g.newImage("BattleAnimations/WIND/WIND" + i + ".png", ImageFormat.ARGB8888));
+
+            AnimationAssets.HealAnimation.addFrame(g.newImage("BattleAnimations/HEAL/HEAL" + i + ".png", ImageFormat.ARGB8888));
+            AnimationAssets.ReviveAnimation.addFrame(g.newImage("BattleAnimations/REVIVE/REVIVE" + i + ".png", ImageFormat.ARGB8888));
         }
     }
 
