@@ -73,7 +73,7 @@ public enum Weapon {
             case AIRSOFT:
                 return AnimationAssets.TestAnimation;
             case ANIMAL:
-                return AnimationAssets.TestAnimation;
+                return AnimationAssets.AnimalAnimation;
             case BALL:
                 return AnimationAssets.TestAnimation;
             case BOOK:
