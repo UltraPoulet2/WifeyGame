@@ -111,7 +111,7 @@ public enum Weapon {
             case PLANT:
                 return AnimationAssets.PlantAnimation;
             case PLUSH:
-                return AnimationAssets.TestAnimation;
+                return AnimationAssets.PlushAnimation;
             case SCYTHE:
                 return AnimationAssets.ScytheAnimation;
             case SPORT:
