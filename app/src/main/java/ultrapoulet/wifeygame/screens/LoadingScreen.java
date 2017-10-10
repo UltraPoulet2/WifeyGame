@@ -412,6 +412,7 @@ public class LoadingScreen extends Screen {
             AnimationAssets.ClawAnimation.addFrame(g.newImage("BattleAnimations/CLAW/CLAW" + i + ".png", ImageFormat.ARGB8888));
             AnimationAssets.ComputerAnimation.addFrame(g.newImage("BattleAnimations/COMPUTER/COMPUTER" + i + ".png", ImageFormat.ARGB8888));
             AnimationAssets.FoodAnimation.addFrame(g.newImage("BattleAnimations/FOOD/FOOD" + i + ".png", ImageFormat.ARGB8888));
+            AnimationAssets.HammerAnimation.addFrame(g.newImage("BattleAnimations/HAMMER/HAMMER" + i + ".png", ImageFormat.ARGB8888));
             AnimationAssets.InstrumentAnimation.addFrame(g.newImage("BattleAnimations/INSTRUMENT/INSTRUMENT" + i + ".png", ImageFormat.ARGB8888));
             AnimationAssets.KnifeAnimation.addFrame(g.newImage("BattleAnimations/KNIFE/KNIFE" + i + ".png", ImageFormat.ARGB8888));
             AnimationAssets.LaserAnimation.addFrame(g.newImage("BattleAnimations/LASER/LASER" + i + ".png", ImageFormat.ARGB8888));

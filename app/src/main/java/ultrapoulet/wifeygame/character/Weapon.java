@@ -25,6 +25,7 @@ public enum Weapon {
     FISTS("Fists", 3),
     FOOD("Food", 2),
     GUN("Gun", 6),
+    HAMMER("Hammer", 2),
     INSTRUMENT("Instrument", 6),
     KNIFE("Knife", 3),
     LASER("Laser", 6),
@@ -96,6 +97,8 @@ public enum Weapon {
                 return AnimationAssets.FoodAnimation;
             case GUN:
                 return AnimationAssets.TestAnimation;
+            case HAMMER:
+                return AnimationAssets.HammerAnimation;
             case INSTRUMENT:
                 return AnimationAssets.InstrumentAnimation;
             case KNIFE:
@@ -134,7 +137,13 @@ public enum Weapon {
 
     public static void setupImages(Graphics g){
         for(Weapon weapon : Weapon.values()) {
-            weapon.image = g.newImage("Weapons/" + weapon.toString() + ".png", ImageFormat.ARGB8888);
+            if(weapon == Weapon.HAMMER) {
+                //Hammer not completely prepared
+                weapon.image = CLUB.getImage();
+            }
+            else {
+                weapon.image = g.newImage("Weapons/" + weapon.toString() + ".png", ImageFormat.ARGB8888);
+            }
         }
     }
 }
