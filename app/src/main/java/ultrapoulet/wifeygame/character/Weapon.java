@@ -96,7 +96,7 @@ public enum Weapon {
             case FOOD:
                 return AnimationAssets.FoodAnimation;
             case GUN:
-                return AnimationAssets.TestAnimation;
+                return AnimationAssets.GunAnimation;
             case HAMMER:
                 return AnimationAssets.HammerAnimation;
             case INSTRUMENT:
