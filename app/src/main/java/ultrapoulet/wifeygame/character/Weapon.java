@@ -80,7 +80,7 @@ public enum Weapon {
             case BOOK:
                 return AnimationAssets.BookAnimation;
             case CARD:
-                return AnimationAssets.TestAnimation;
+                return AnimationAssets.CardAnimation;
             case CLAW:
                 return AnimationAssets.ClawAnimation;
             case CLUB:

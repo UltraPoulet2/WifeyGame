@@ -410,6 +410,7 @@ public class LoadingScreen extends Screen {
         for(int i = 0; i < 10; i++){
             AnimationAssets.AnimalAnimation.addFrame(g.newImage("BattleAnimations/ANIMAL/ANIMAL" + i + ".png", ImageFormat.ARGB8888));
             AnimationAssets.BookAnimation.addFrame(g.newImage("BattleAnimations/BOOK/BOOK" + i + ".png", ImageFormat.ARGB8888));
+            AnimationAssets.CardAnimation.addFrame(g.newImage("BattleAnimations/CARD/CARD" + i + ".png", ImageFormat.ARGB8888));
             AnimationAssets.ClawAnimation.addFrame(g.newImage("BattleAnimations/CLAW/CLAW" + i + ".png", ImageFormat.ARGB8888));
             AnimationAssets.ComputerAnimation.addFrame(g.newImage("BattleAnimations/COMPUTER/COMPUTER" + i + ".png", ImageFormat.ARGB8888));
             AnimationAssets.FoodAnimation.addFrame(g.newImage("BattleAnimations/FOOD/FOOD" + i + ".png", ImageFormat.ARGB8888));
