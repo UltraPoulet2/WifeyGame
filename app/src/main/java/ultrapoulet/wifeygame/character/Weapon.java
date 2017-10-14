@@ -128,7 +128,7 @@ public enum Weapon {
             case TOY:
                 return AnimationAssets.TestAnimation;
             case VEHICLE:
-                return AnimationAssets.TestAnimation;
+                return AnimationAssets.VehicleAnimation;
             default:
                 Log.e("Weapon", "Missing animation for: " + this.getWeaponType());
                 return null;
