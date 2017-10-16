@@ -34,6 +34,8 @@ public class EnemyCharacter {
     private Element strongElement;
     private Element weakElement;
 
+    //For now, just set weapon to CLAW
+    private Weapon weapon = Weapon.CLAW;
     private ArrayList<SkillsEnum> skills;
     private WeaponSkillsEnum weaponSkill;
     private UniqueSkillsEnum uniqueSkill;
@@ -46,8 +48,6 @@ public class EnemyCharacter {
     private String ai;
 
     private ArrayList<TransformEnemy> transformations;
-
-    private AnimationImages battleAnimation = AnimationAssets.TestAnimation;
 
     public EnemyCharacter() {
         skills = new ArrayList<>();
@@ -142,8 +142,8 @@ public class EnemyCharacter {
         return this.experience;
     }
 
-    public AnimationImages getBattleAnimation() {
-        return this.battleAnimation;
+    public Weapon getWeapon() {
+        return this.weapon;
     }
 
 
@@ -242,8 +242,8 @@ public class EnemyCharacter {
         this.experience = exp;
     }
 
-    public void setBattleAnimation(AnimationImages input){
-        this.battleAnimation = input;
+    public void setWeapon(Weapon weapon) {
+        this.weapon = weapon;
     }
 
     public void addTransformation(TransformEnemy t){
@@ -270,10 +270,13 @@ public class EnemyCharacter {
         if(attackElement == null || strongElement == null | weakElement == null){
             return false;
         }
+        //For now, make every enemy provide gold and experience
         if(gold == 0 || experience == 0){
             return false;
         }
-        //For now, make every enemy provide gold and experience
+        if(weapon == null){
+            return false;
+        }
         return true;
     }
 }

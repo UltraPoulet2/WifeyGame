@@ -20,7 +20,7 @@ import ultrapoulet.wifeygame.character.WifeyCharacter;
 public class BattleWifey extends BattleCharacter{
 
     private int numHits;
-    private Weapon weapon;
+    //private Weapon weapon;
     private int strength;
     private int magic;
 
@@ -48,8 +48,6 @@ public class BattleWifey extends BattleCharacter{
         return 10 * strength;
     }
 
-    public Weapon getWeapon() { return this.weapon; }
-
     public int getNumHits(){
         int temp = this.numHits + this.skills.getBonusHits();
         if(temp > 10){
@@ -67,10 +65,6 @@ public class BattleWifey extends BattleCharacter{
     }
 
     public SkillList getSkills() { return this.skills; }
-
-    public AnimationImages getBattleAnimation(){
-        return this.weapon.getBattleAnimation();
-    }
 
     public void startBattle(List<BattleCharacter> party){
         this.currentHP = this.maxHP;

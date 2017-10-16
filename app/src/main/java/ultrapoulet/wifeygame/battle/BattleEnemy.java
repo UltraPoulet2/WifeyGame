@@ -39,7 +39,6 @@ public class BattleEnemy extends BattleCharacter{
     private double weakenPercentage;
     private int specialDamage;
     private int specialHits;
-    private AnimationImages battleAnimation;
 
     private int gold;
     private int experience;
@@ -78,6 +77,7 @@ public class BattleEnemy extends BattleCharacter{
         this.weakenPercentage = input.getWeakenPercentage();
         this.specialDamage = input.getSpecialDamage();
         this.specialHits = input.getSpecialHits();
+        this.weapon = input.getWeapon();
         this.skills = new SkillList(input.getSkills(), input.getWeaponSkill(), input.getUniqueSkill(), this);
         this.attackElement = input.getAttackElement();
         this.strongElement = input.getStrongElement();
@@ -87,7 +87,6 @@ public class BattleEnemy extends BattleCharacter{
         this.transformations = input.getTransformations();
         this.gold = input.getGold();
         this.experience = input.getExperience();
-        this.battleAnimation = input.getBattleAnimation();
 
         //As clean up at some point, remove all this, put in the enum
         actionStrings = new HashMap<>();
@@ -136,10 +135,6 @@ public class BattleEnemy extends BattleCharacter{
     }
 
     public SkillList getSkills() { return this.skills; }
-
-    public AnimationImages getBattleAnimation(){
-        return this.battleAnimation;
-    }
 
     public void startBattle(List<BattleCharacter> party) {
         this.currentHP = this.maxHP;
