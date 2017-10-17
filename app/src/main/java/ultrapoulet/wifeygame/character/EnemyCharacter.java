@@ -34,8 +34,7 @@ public class EnemyCharacter {
     private Element strongElement;
     private Element weakElement;
 
-    //For now, just set weapon to CLAW
-    private Weapon weapon = Weapon.CLAW;
+    private Weapon weapon;
     private ArrayList<SkillsEnum> skills;
     private WeaponSkillsEnum weaponSkill;
     private UniqueSkillsEnum uniqueSkill;

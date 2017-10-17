@@ -13,6 +13,7 @@ import ultrapoulet.wifeygame.character.EnemyCharacter;
 import ultrapoulet.wifeygame.character.SkillsEnum;
 import ultrapoulet.wifeygame.character.TransformEnemy;
 import ultrapoulet.wifeygame.character.UniqueSkillsEnum;
+import ultrapoulet.wifeygame.character.Weapon;
 import ultrapoulet.wifeygame.character.WeaponSkillsEnum;
 import ultrapoulet.wifeygame.gamestate.Enemies;
 
@@ -128,6 +129,9 @@ public class EnemyParser extends DefaultHandler{
             currentText = new StringBuffer();
         }
         else if(qName.equalsIgnoreCase("uniqueSkill")){
+            currentText = new StringBuffer();
+        }
+        else if(qName.equalsIgnoreCase("weapon")){
             currentText = new StringBuffer();
         }
         else if(qName.equalsIgnoreCase("elements")){
@@ -460,6 +464,26 @@ public class EnemyParser extends DefaultHandler{
                 }
                 else {
                     transformBuilder.setUniqueSkill(skill);
+                }
+            }
+        }
+        else if(qName.equalsIgnoreCase("weapon")){
+            Weapon weap;
+            try{
+                weap = Weapon.valueOf(currentText.toString());
+            }
+            catch(IllegalArgumentException e){
+                weap = null;
+            }
+            if(weap == null){
+                Log.e("EnemyParser", "Could not find weapon: " + currentText.toString());
+                error = true;
+            }
+            else {
+                if (!bTransformSec) {
+                    enemyBuilder.setWeapon(weap);
+                } else {
+                    transformBuilder.setWeapon(weap);
                 }
             }
         }

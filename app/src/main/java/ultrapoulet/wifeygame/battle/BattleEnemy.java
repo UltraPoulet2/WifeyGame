@@ -457,6 +457,9 @@ public class BattleEnemy extends BattleCharacter{
         for(int i = 0; i < form.getRemoveSkills().size(); i++){
             skills.removeSkill(form.getRemoveSkills().get(i).getBattleSkill(this));
         }
+        if(form.getWeapon() != null){
+            this.weapon = form.getWeapon();
+        }
     }
 
     public Multipliers getMultipliers(BattleCharacter enemy){
