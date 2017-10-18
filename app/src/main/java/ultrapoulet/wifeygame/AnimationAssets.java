@@ -12,6 +12,7 @@ public class AnimationAssets {
     public static AnimationImages TestAnimation = new AnimationImages();
 
     public static AnimationImages AnimalAnimation = new AnimationImages();
+    public static AnimationImages BallAnimation = new AnimationImages();
     public static AnimationImages BookAnimation = new AnimationImages();
     public static AnimationImages CardAnimation = new AnimationImages();
     public static AnimationImages ClawAnimation = new AnimationImages();

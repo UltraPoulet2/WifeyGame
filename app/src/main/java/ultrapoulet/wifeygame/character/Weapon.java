@@ -76,7 +76,7 @@ public enum Weapon {
             case ANIMAL:
                 return AnimationAssets.AnimalAnimation;
             case BALL:
-                return AnimationAssets.TestAnimation;
+                return AnimationAssets.BallAnimation;
             case BOOK:
                 return AnimationAssets.BookAnimation;
             case CARD:
