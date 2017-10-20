@@ -86,7 +86,7 @@ public enum Weapon {
             case CLUB:
                 return AnimationAssets.TestAnimation;
             case COOKING:
-                return AnimationAssets.TestAnimation;
+                return AnimationAssets.CookingAnimation;
             case COMPUTER:
                 return AnimationAssets.ComputerAnimation;
             case FAN:
