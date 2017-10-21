@@ -18,6 +18,7 @@ public class AnimationAssets {
     public static AnimationImages ClawAnimation = new AnimationImages();
     public static AnimationImages ComputerAnimation = new AnimationImages();
     public static AnimationImages CookingAnimation = new AnimationImages();
+    public static AnimationImages FanAnimation = new AnimationImages();
     public static AnimationImages FoodAnimation = new AnimationImages();
     public static AnimationImages GunAnimation = new AnimationImages();
     public static AnimationImages HammerAnimation = new AnimationImages();
