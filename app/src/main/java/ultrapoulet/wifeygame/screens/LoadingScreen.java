@@ -424,6 +424,7 @@ public class LoadingScreen extends Screen {
             AnimationAssets.LaserAnimation.addFrame(g.newImage("BattleAnimations/LASER/LASER" + i + ".png", ImageFormat.ARGB8888));
             AnimationAssets.MagicAnimation.addFrame(g.newImage("BattleAnimations/MAGIC/MAGIC" + i + ".png", ImageFormat.ARGB8888));
             AnimationAssets.MechaAnimation.addFrame(g.newImage("BattleAnimations/MECHA/MECHA" + i + ".png", ImageFormat.ARGB8888));
+            AnimationAssets.MedicineAnimation.addFrame(g.newImage("BattleAnimations/MEDICINE/MEDICINE" + i + ".png", ImageFormat.ARGB8888));
             AnimationAssets.PlantAnimation.addFrame(g.newImage("BattleAnimations/PLANT/PLANT" + i + ".png", ImageFormat.ARGB8888));
             AnimationAssets.PlushAnimation.addFrame(g.newImage("BattleAnimations/PLUSH/PLUSH" + i + ".png", ImageFormat.ARGB8888));
             AnimationAssets.ScytheAnimation.addFrame(g.newImage("BattleAnimations/SCYTHE/SCYTHE" + i + ".png", ImageFormat.ARGB8888));

@@ -27,6 +27,7 @@ public class AnimationAssets {
     public static AnimationImages LaserAnimation = new AnimationImages();
     public static AnimationImages MagicAnimation = new AnimationImages();
     public static AnimationImages MechaAnimation = new AnimationImages();
+    public static AnimationImages MedicineAnimation = new AnimationImages();
     public static AnimationImages PlantAnimation = new AnimationImages();
     public static AnimationImages PlushAnimation = new AnimationImages();
     public static AnimationImages ScytheAnimation = new AnimationImages();
