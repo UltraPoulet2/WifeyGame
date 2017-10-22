@@ -428,6 +428,7 @@ public class LoadingScreen extends Screen {
             AnimationAssets.PlantAnimation.addFrame(g.newImage("BattleAnimations/PLANT/PLANT" + i + ".png", ImageFormat.ARGB8888));
             AnimationAssets.PlushAnimation.addFrame(g.newImage("BattleAnimations/PLUSH/PLUSH" + i + ".png", ImageFormat.ARGB8888));
             AnimationAssets.ScytheAnimation.addFrame(g.newImage("BattleAnimations/SCYTHE/SCYTHE" + i + ".png", ImageFormat.ARGB8888));
+            AnimationAssets.SportAnimation.addFrame(g.newImage("BattleAnimations/SPORT/SPORT" + i + ".png", ImageFormat.ARGB8888));
             AnimationAssets.SwordAnimation.addFrame(g.newImage("BattleAnimations/SWORD/SWORD" + i + ".png", ImageFormat.ARGB8888));
             AnimationAssets.TankAnimation.addFrame(g.newImage("BattleAnimations/TANK/TANK" + i + ".png", ImageFormat.ARGB8888));
             AnimationAssets.VehicleAnimation.addFrame(g.newImage("BattleAnimations/VEHICLE/VEHICLE" + i + ".png", ImageFormat.ARGB8888));
