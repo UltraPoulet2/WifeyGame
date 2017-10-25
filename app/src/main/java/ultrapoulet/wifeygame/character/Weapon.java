@@ -126,7 +126,7 @@ public enum Weapon {
             case TOOL:
                 return AnimationAssets.ToolAnimation;
             case TOY:
-                return AnimationAssets.TestAnimation;
+                return AnimationAssets.ToyAnimation;
             case VEHICLE:
                 return AnimationAssets.VehicleAnimation;
             default:

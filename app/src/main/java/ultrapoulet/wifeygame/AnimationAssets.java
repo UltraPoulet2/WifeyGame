@@ -35,6 +35,7 @@ public class AnimationAssets {
     public static AnimationImages SwordAnimation = new AnimationImages();
     public static AnimationImages TankAnimation = new AnimationImages();
     public static AnimationImages ToolAnimation = new AnimationImages();
+    public static AnimationImages ToyAnimation = new AnimationImages();
     public static AnimationImages VehicleAnimation = new AnimationImages();
 
     //Element AnimationImages
