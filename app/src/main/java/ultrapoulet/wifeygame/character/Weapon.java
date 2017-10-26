@@ -72,7 +72,7 @@ public enum Weapon {
     public AnimationImages getBattleAnimation() {
         switch(this){
             case AIRSOFT:
-                return AnimationAssets.TestAnimation;
+                return AnimationAssets.AirsoftAnimation;
             case ANIMAL:
                 return AnimationAssets.AnimalAnimation;
             case BALL:

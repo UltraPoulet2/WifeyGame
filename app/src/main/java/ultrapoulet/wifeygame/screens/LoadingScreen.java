@@ -408,6 +408,7 @@ public class LoadingScreen extends Screen {
             AnimationAssets.TestAnimation.addFrame(g.newImage("BattleAnimations/TestAnimation/TestAnimationFrame" + i + ".png", ImageFormat.ARGB8888));
         }
         for(int i = 0; i < 10; i++){
+            AnimationAssets.AirsoftAnimation.addFrame(g.newImage("BattleAnimations/AIRSOFT/AIRSOFT" + i + ".png", ImageFormat.ARGB8888));
             AnimationAssets.AnimalAnimation.addFrame(g.newImage("BattleAnimations/ANIMAL/ANIMAL" + i + ".png", ImageFormat.ARGB8888));
             AnimationAssets.BallAnimation.addFrame(g.newImage("BattleAnimations/BALL/BALL" + i + ".png", ImageFormat.ARGB8888));
             AnimationAssets.BookAnimation.addFrame(g.newImage("BattleAnimations/BOOK/BOOK" + i + ".png", ImageFormat.ARGB8888));
