@@ -92,7 +92,7 @@ public enum Weapon {
             case FAN:
                 return AnimationAssets.FanAnimation;
             case FISTS:
-                return AnimationAssets.TestAnimation;
+                return AnimationAssets.FistsAnimation;
             case FOOD:
                 return AnimationAssets.FoodAnimation;
             case GUN:
