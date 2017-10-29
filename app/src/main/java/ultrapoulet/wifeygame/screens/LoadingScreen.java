@@ -414,6 +414,7 @@ public class LoadingScreen extends Screen {
             AnimationAssets.BookAnimation.addFrame(g.newImage("BattleAnimations/BOOK/BOOK" + i + ".png", ImageFormat.ARGB8888));
             AnimationAssets.CardAnimation.addFrame(g.newImage("BattleAnimations/CARD/CARD" + i + ".png", ImageFormat.ARGB8888));
             AnimationAssets.ClawAnimation.addFrame(g.newImage("BattleAnimations/CLAW/CLAW" + i + ".png", ImageFormat.ARGB8888));
+            AnimationAssets.ClubAnimation.addFrame(g.newImage("BattleAnimations/CLUB/CLUB" + i + ".png", ImageFormat.ARGB8888));
             AnimationAssets.ComputerAnimation.addFrame(g.newImage("BattleAnimations/COMPUTER/COMPUTER" + i + ".png", ImageFormat.ARGB8888));
             AnimationAssets.CookingAnimation.addFrame(g.newImage("BattleAnimations/COOKING/COOKING" + i + ".png", ImageFormat.ARGB8888));
             AnimationAssets.FanAnimation.addFrame(g.newImage("BattleAnimations/FAN/FAN" + i + ".png", ImageFormat.ARGB8888));
