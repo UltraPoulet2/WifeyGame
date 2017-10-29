@@ -9,8 +9,11 @@ import ultrapoulet.wifeygame.character.Weapon;
 
 public class AnimationAssets {
 
+    /*
     public static AnimationImages TestAnimation = new AnimationImages();
+    */
 
+    /*
     public static AnimationImages AirsoftAnimation = new AnimationImages();
     public static AnimationImages AnimalAnimation = new AnimationImages();
     public static AnimationImages BallAnimation = new AnimationImages();
@@ -40,14 +43,17 @@ public class AnimationAssets {
     public static AnimationImages ToolAnimation = new AnimationImages();
     public static AnimationImages ToyAnimation = new AnimationImages();
     public static AnimationImages VehicleAnimation = new AnimationImages();
+    */
 
     //Element AnimationImages
+    /*
     public static AnimationImages DarkAnimation = new AnimationImages();
     public static AnimationImages EarthAnimation = new AnimationImages();
     public static AnimationImages FireAnimation = new AnimationImages();
     public static AnimationImages LightAnimation = new AnimationImages();
     public static AnimationImages WaterAnimation = new AnimationImages();
     public static AnimationImages WindAnimation = new AnimationImages();
+    */
 
     //Healing AnimationImages
     public static AnimationImages HealAnimation = new AnimationImages();

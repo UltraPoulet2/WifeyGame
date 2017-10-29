@@ -46,13 +46,9 @@ public enum Weapon {
     private String weaponType;
     private int numHits;
     private Image image;
+    private AnimationImages animation;
 
     Weapon(String weaponType, int numHits){
-        this.weaponType = weaponType;
-        this.numHits = numHits;
-    }
-
-    Weapon(String weaponType, int numHits, AnimationImages animationImages){
         this.weaponType = weaponType;
         this.numHits = numHits;
     }
@@ -69,70 +65,21 @@ public enum Weapon {
         return this.image;
     }
 
-    public AnimationImages getBattleAnimation() {
-        switch(this){
-            case AIRSOFT:
-                return AnimationAssets.AirsoftAnimation;
-            case ANIMAL:
-                return AnimationAssets.AnimalAnimation;
-            case BALL:
-                return AnimationAssets.BallAnimation;
-            case BOOK:
-                return AnimationAssets.BookAnimation;
-            case CARD:
-                return AnimationAssets.CardAnimation;
-            case CLAW:
-                return AnimationAssets.ClawAnimation;
-            case CLUB:
-                return AnimationAssets.ClubAnimation;
-            case COOKING:
-                return AnimationAssets.CookingAnimation;
-            case COMPUTER:
-                return AnimationAssets.ComputerAnimation;
-            case FAN:
-                return AnimationAssets.FanAnimation;
-            case FISTS:
-                return AnimationAssets.FistsAnimation;
-            case FOOD:
-                return AnimationAssets.FoodAnimation;
-            case GUN:
-                return AnimationAssets.GunAnimation;
-            case HAMMER:
-                return AnimationAssets.HammerAnimation;
-            case INSTRUMENT:
-                return AnimationAssets.InstrumentAnimation;
-            case KNIFE:
-                return AnimationAssets.KnifeAnimation;
-            case LASER:
-                return AnimationAssets.LaserAnimation;
-            case MAGIC:
-                return AnimationAssets.MagicAnimation;
-            case MECHA:
-                return AnimationAssets.MechaAnimation;
-            case MEDICINE:
-                return AnimationAssets.MedicineAnimation;
-            case PLANT:
-                return AnimationAssets.PlantAnimation;
-            case PLUSH:
-                return AnimationAssets.PlushAnimation;
-            case SCYTHE:
-                return AnimationAssets.ScytheAnimation;
-            case SPORT:
-                return AnimationAssets.SportAnimation;
-            case SWORD:
-                return AnimationAssets.SwordAnimation;
-            case TANK:
-                return AnimationAssets.TankAnimation;
-            case TOOL:
-                return AnimationAssets.ToolAnimation;
-            case TOY:
-                return AnimationAssets.ToyAnimation;
-            case VEHICLE:
-                return AnimationAssets.VehicleAnimation;
-            default:
-                Log.e("Weapon", "Missing animation for: " + this.getWeaponType());
-                return null;
+    public void loadAnimation(Graphics g){
+        if(this.animation == null) {
+            animation = new AnimationImages();
+            for(int i = 0; i < 10; i++){
+                animation.addFrame(g.newImage("BattleAnimations/" + this.name() + "/" + this.name() + i + ".png", ImageFormat.ARGB8888));
+            }
         }
+    }
+
+    public void unloadAnimation() {
+        this.animation = null;
+    }
+
+    public AnimationImages getBattleAnimation() {
+        return animation;
     }
 
     public static void setupImages(Graphics g){

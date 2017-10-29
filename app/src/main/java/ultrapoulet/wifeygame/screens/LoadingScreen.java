@@ -23,6 +23,7 @@ import ultrapoulet.androidgame.framework.helpers.Animation;
 import ultrapoulet.androidgame.framework.helpers.AnimationImages;
 import ultrapoulet.wifeygame.AnimationAssets;
 import ultrapoulet.wifeygame.Assets;
+import ultrapoulet.wifeygame.character.Element;
 import ultrapoulet.wifeygame.character.Weapon;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
 import ultrapoulet.wifeygame.gamestate.Characters;
@@ -404,47 +405,14 @@ public class LoadingScreen extends Screen {
         Weapon.setupImages(g);
 
         //Setup Animations here for now
-        for(int i = 0; i < 10; i++){
-            AnimationAssets.TestAnimation.addFrame(g.newImage("BattleAnimations/TestAnimation/TestAnimationFrame" + i + ".png", ImageFormat.ARGB8888));
+        //This will be moved into its own loading screen in future
+        for(Weapon weapon : Weapon.values()){
+            weapon.loadAnimation(g);
+        }
+        for(Element element : Element.values()) {
+            element.loadAnimation(g);
         }
         for(int i = 0; i < 10; i++){
-            AnimationAssets.AirsoftAnimation.addFrame(g.newImage("BattleAnimations/AIRSOFT/AIRSOFT" + i + ".png", ImageFormat.ARGB8888));
-            AnimationAssets.AnimalAnimation.addFrame(g.newImage("BattleAnimations/ANIMAL/ANIMAL" + i + ".png", ImageFormat.ARGB8888));
-            AnimationAssets.BallAnimation.addFrame(g.newImage("BattleAnimations/BALL/BALL" + i + ".png", ImageFormat.ARGB8888));
-            AnimationAssets.BookAnimation.addFrame(g.newImage("BattleAnimations/BOOK/BOOK" + i + ".png", ImageFormat.ARGB8888));
-            AnimationAssets.CardAnimation.addFrame(g.newImage("BattleAnimations/CARD/CARD" + i + ".png", ImageFormat.ARGB8888));
-            AnimationAssets.ClawAnimation.addFrame(g.newImage("BattleAnimations/CLAW/CLAW" + i + ".png", ImageFormat.ARGB8888));
-            AnimationAssets.ClubAnimation.addFrame(g.newImage("BattleAnimations/CLUB/CLUB" + i + ".png", ImageFormat.ARGB8888));
-            AnimationAssets.ComputerAnimation.addFrame(g.newImage("BattleAnimations/COMPUTER/COMPUTER" + i + ".png", ImageFormat.ARGB8888));
-            AnimationAssets.CookingAnimation.addFrame(g.newImage("BattleAnimations/COOKING/COOKING" + i + ".png", ImageFormat.ARGB8888));
-            AnimationAssets.FanAnimation.addFrame(g.newImage("BattleAnimations/FAN/FAN" + i + ".png", ImageFormat.ARGB8888));
-            AnimationAssets.FistsAnimation.addFrame(g.newImage("BattleAnimations/FISTS/FISTS" + i + ".png", ImageFormat.ARGB8888));
-            AnimationAssets.FoodAnimation.addFrame(g.newImage("BattleAnimations/FOOD/FOOD" + i + ".png", ImageFormat.ARGB8888));
-            AnimationAssets.GunAnimation.addFrame(g.newImage("BattleAnimations/GUN/GUN" + i + ".png", ImageFormat.ARGB8888));
-            AnimationAssets.HammerAnimation.addFrame(g.newImage("BattleAnimations/HAMMER/HAMMER" + i + ".png", ImageFormat.ARGB8888));
-            AnimationAssets.InstrumentAnimation.addFrame(g.newImage("BattleAnimations/INSTRUMENT/INSTRUMENT" + i + ".png", ImageFormat.ARGB8888));
-            AnimationAssets.KnifeAnimation.addFrame(g.newImage("BattleAnimations/KNIFE/KNIFE" + i + ".png", ImageFormat.ARGB8888));
-            AnimationAssets.LaserAnimation.addFrame(g.newImage("BattleAnimations/LASER/LASER" + i + ".png", ImageFormat.ARGB8888));
-            AnimationAssets.MagicAnimation.addFrame(g.newImage("BattleAnimations/MAGIC/MAGIC" + i + ".png", ImageFormat.ARGB8888));
-            AnimationAssets.MechaAnimation.addFrame(g.newImage("BattleAnimations/MECHA/MECHA" + i + ".png", ImageFormat.ARGB8888));
-            AnimationAssets.MedicineAnimation.addFrame(g.newImage("BattleAnimations/MEDICINE/MEDICINE" + i + ".png", ImageFormat.ARGB8888));
-            AnimationAssets.PlantAnimation.addFrame(g.newImage("BattleAnimations/PLANT/PLANT" + i + ".png", ImageFormat.ARGB8888));
-            AnimationAssets.PlushAnimation.addFrame(g.newImage("BattleAnimations/PLUSH/PLUSH" + i + ".png", ImageFormat.ARGB8888));
-            AnimationAssets.ScytheAnimation.addFrame(g.newImage("BattleAnimations/SCYTHE/SCYTHE" + i + ".png", ImageFormat.ARGB8888));
-            AnimationAssets.SportAnimation.addFrame(g.newImage("BattleAnimations/SPORT/SPORT" + i + ".png", ImageFormat.ARGB8888));
-            AnimationAssets.SwordAnimation.addFrame(g.newImage("BattleAnimations/SWORD/SWORD" + i + ".png", ImageFormat.ARGB8888));
-            AnimationAssets.TankAnimation.addFrame(g.newImage("BattleAnimations/TANK/TANK" + i + ".png", ImageFormat.ARGB8888));
-            AnimationAssets.ToolAnimation.addFrame(g.newImage("BattleAnimations/TOOL/TOOL" + i +".png", ImageFormat.ARGB8888));
-            AnimationAssets.ToyAnimation.addFrame(g.newImage("BattleAnimations/TOY/TOY" + i + ".png", ImageFormat.ARGB8888));
-            AnimationAssets.VehicleAnimation.addFrame(g.newImage("BattleAnimations/VEHICLE/VEHICLE" + i + ".png", ImageFormat.ARGB8888));
-
-            AnimationAssets.DarkAnimation.addFrame(g.newImage("BattleAnimations/DARK/DARK" + i + ".png", ImageFormat.ARGB8888));
-            AnimationAssets.EarthAnimation.addFrame(g.newImage("BattleAnimations/EARTH/EARTH" + i + ".png", ImageFormat.ARGB8888));
-            AnimationAssets.FireAnimation.addFrame(g.newImage("BattleAnimations/FIRE/FIRE" + i + ".png", ImageFormat.ARGB8888));
-            AnimationAssets.LightAnimation.addFrame(g.newImage("BattleAnimations/LIGHT/LIGHT" + i + ".png", ImageFormat.ARGB8888));
-            AnimationAssets.WaterAnimation.addFrame(g.newImage("BattleAnimations/WATER/WATER" + i + ".png", ImageFormat.ARGB8888));
-            AnimationAssets.WindAnimation.addFrame(g.newImage("BattleAnimations/WIND/WIND" + i + ".png", ImageFormat.ARGB8888));
-
             AnimationAssets.HealAnimation.addFrame(g.newImage("BattleAnimations/HEAL/HEAL" + i + ".png", ImageFormat.ARGB8888));
             AnimationAssets.ReviveAnimation.addFrame(g.newImage("BattleAnimations/REVIVE/REVIVE" + i + ".png", ImageFormat.ARGB8888));
         }
