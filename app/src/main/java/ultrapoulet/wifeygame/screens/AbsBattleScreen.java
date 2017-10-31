@@ -23,6 +23,8 @@ import ultrapoulet.wifeygame.battle.BattleEnemy;
 import ultrapoulet.wifeygame.battle.BattleInfo;
 import ultrapoulet.wifeygame.battle.BattleWifey;
 import ultrapoulet.wifeygame.battle.enemyai.EnemyAI;
+import ultrapoulet.wifeygame.character.Element;
+import ultrapoulet.wifeygame.character.Weapon;
 import ultrapoulet.wifeygame.gamestate.Party;
 
 /**
@@ -1133,6 +1135,9 @@ public abstract class AbsBattleScreen extends Screen {
                         //On Battle end, increment the number of completions in BattleInfo if victorious
                         battleInfo.incrementNumComplete();
                     }
+                    //Here we'll unload the animations created for the battle
+                    Weapon.unloadAllAnimations();
+                    Element.unloadAllAnimations();
                     game.setScreen(getCompletionScreen());
                 }
                 break;

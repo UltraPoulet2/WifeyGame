@@ -47,6 +47,12 @@ public enum Element {
         this.animation = null;
     }
 
+    public static void unloadAllAnimations() {
+        for(Element element : Element.values()){
+            element.unloadAnimation();
+        }
+    }
+
     public AnimationImages getBattleAnimation() {
         return animation;
     }

@@ -78,6 +78,12 @@ public enum Weapon {
         this.animation = null;
     }
 
+    public static void unloadAllAnimations() {
+        for(Weapon weapon : Weapon.values()) {
+            weapon.unloadAnimation();
+        }
+    }
+
     public AnimationImages getBattleAnimation() {
         return animation;
     }
