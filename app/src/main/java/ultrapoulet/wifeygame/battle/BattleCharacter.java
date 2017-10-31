@@ -4,8 +4,10 @@ import java.util.List;
 
 import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Image;
+import ultrapoulet.androidgame.framework.helpers.AnimationImages;
 import ultrapoulet.wifeygame.battle.skills.SkillList;
 import ultrapoulet.wifeygame.character.Element;
+import ultrapoulet.wifeygame.character.Weapon;
 
 /**
  * Created by John on 7/13/2016.
@@ -14,6 +16,7 @@ public abstract class BattleCharacter {
     protected String name;
     protected int maxHP;
     protected int currentHP;
+    protected Weapon weapon;
     protected SkillList skills;
     protected Image image;
 
@@ -53,6 +56,8 @@ public abstract class BattleCharacter {
         skills.giveSkillBonus(multiplier, givingSkill, receivingSkill);
     }
 
+    public Weapon getWeapon() { return this.weapon; }
+
     public Element getAttackElement(){
         return this.attackElement;
     }
@@ -63,6 +68,10 @@ public abstract class BattleCharacter {
 
     public Element getWeakElement(){
         return this.weakElement;
+    }
+
+    public AnimationImages getBattleAnimation(){
+        return this.weapon.getBattleAnimation();
     }
 
     public abstract void startBattle(List<BattleCharacter> party);

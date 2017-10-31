@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 
 import ultrapoulet.androidgame.framework.Graphics;
+import ultrapoulet.androidgame.framework.helpers.AnimationImages;
+import ultrapoulet.wifeygame.AnimationAssets;
 import ultrapoulet.wifeygame.battle.enemyai.EnemyAI;
 import ultrapoulet.wifeygame.battle.enemyai.EnemyAI.EnemyAction;
 import ultrapoulet.wifeygame.battle.skills.AbsSkill.Multipliers;
@@ -75,6 +77,7 @@ public class BattleEnemy extends BattleCharacter{
         this.weakenPercentage = input.getWeakenPercentage();
         this.specialDamage = input.getSpecialDamage();
         this.specialHits = input.getSpecialHits();
+        this.weapon = input.getWeapon();
         this.skills = new SkillList(input.getSkills(), input.getWeaponSkill(), input.getUniqueSkill(), this);
         this.attackElement = input.getAttackElement();
         this.strongElement = input.getStrongElement();
@@ -453,6 +456,9 @@ public class BattleEnemy extends BattleCharacter{
         }
         for(int i = 0; i < form.getRemoveSkills().size(); i++){
             skills.removeSkill(form.getRemoveSkills().get(i).getBattleSkill(this));
+        }
+        if(form.getWeapon() != null){
+            this.weapon = form.getWeapon();
         }
     }
 

@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ultrapoulet.androidgame.framework.Graphics;
+import ultrapoulet.androidgame.framework.helpers.AnimationImages;
+import ultrapoulet.wifeygame.AnimationAssets;
 import ultrapoulet.wifeygame.character.TransformWifey;
 import ultrapoulet.wifeygame.character.Weapon;
 import ultrapoulet.wifeygame.battle.skills.AbsSkill.Multipliers;
@@ -18,7 +20,7 @@ import ultrapoulet.wifeygame.character.WifeyCharacter;
 public class BattleWifey extends BattleCharacter{
 
     private int numHits;
-    private Weapon weapon;
+    //private Weapon weapon;
     private int strength;
     private int magic;
 
@@ -45,8 +47,6 @@ public class BattleWifey extends BattleCharacter{
     public static int calculateHP(int strength){
         return 10 * strength;
     }
-
-    public Weapon getWeapon() { return this.weapon; }
 
     public int getNumHits(){
         int temp = this.numHits + this.skills.getBonusHits();

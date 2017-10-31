@@ -24,6 +24,8 @@
             </drops>
             <unlocks>
                 <unlock>TEST-BTWO</unlock>
+                <unlock>TEST-PHYS</unlock>
+                <unlock>TEST-MAGI</unlock>
             </unlocks>
             <startUnlocked />
         </battle>
@@ -54,9 +56,6 @@
                     <value>TEST-NYRK</value>
                 </requirement>
             </requirements>
-            <unlocks>
-                <unlock>TEST-PHYS</unlock>
-            </unlocks>
         </battle>
         <battle key="TEST-PHYS">
             <name>Athletes Test</name>
@@ -67,9 +66,6 @@
                 <enemy>TEST-NME4</enemy>
                 <enemy>TEST-NME4</enemy>
             </enemies>
-            <unlocks>
-                <unlock>TEST-MAGI</unlock>
-            </unlocks>
         </battle>
         <battle key="TEST-MAGI">
             <name>Magic Test</name>

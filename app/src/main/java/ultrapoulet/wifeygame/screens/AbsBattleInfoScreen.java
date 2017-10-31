@@ -222,7 +222,8 @@ public abstract class AbsBattleInfoScreen extends Screen {
                         case START_BUTTON_STRING:
                             PlayerInfo.decrementEnergy(battleInfo.getEnergyRequirement());
                             AbsBattleScreen abs = getBattleScreen();
-                            game.setScreen(abs);
+                            BattleLoadingScreen bls = new BattleLoadingScreen(this.game, battleInfo, abs);
+                            game.setScreen(bls);
                             break;
                     }
                 }
@@ -231,9 +232,9 @@ public abstract class AbsBattleInfoScreen extends Screen {
                     game.setScreen(charInfo);
                 }
                 else if(selectedReq == requirementList.getIndexPressed(t.x, t.y) && selectedReq != -1){
-                    Screen testDialog = battleInfo.getRequirements().get(selectedReq).getRequirementDialog(game, this);
-                    if(testDialog != null) {
-                        game.setScreen(testDialog);
+                    Screen reqDialog = battleInfo.getRequirements().get(selectedReq).getRequirementDialog(game, this);
+                    if(reqDialog != null) {
+                        game.setScreen(reqDialog);
                     }
                 }
             }

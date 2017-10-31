@@ -19,7 +19,11 @@ import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Graphics.ImageFormat;
 import ultrapoulet.androidgame.framework.Input.TouchEvent;
 import ultrapoulet.androidgame.framework.Screen;
+import ultrapoulet.androidgame.framework.helpers.Animation;
+import ultrapoulet.androidgame.framework.helpers.AnimationImages;
+import ultrapoulet.wifeygame.AnimationAssets;
 import ultrapoulet.wifeygame.Assets;
+import ultrapoulet.wifeygame.character.Element;
 import ultrapoulet.wifeygame.character.Weapon;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
 import ultrapoulet.wifeygame.gamestate.Characters;
@@ -116,6 +120,7 @@ public class LoadingScreen extends Screen {
     }
 
     private LoadingPhase currentPhase = LoadingPhase.CREATE_IMAGES;
+    //private Animation testAnimation;
 
     @Override
     public void update(float deltaTime) {
@@ -181,6 +186,7 @@ public class LoadingScreen extends Screen {
                 }
                 else {
                     currentPhase = LoadingPhase.COMPLETE;
+                    //testAnimation = new Animation(AnimationAssets.TestAnimation, 60, true);
                 }
                 //Clear the touch input buffer
                 game.getInput().getTouchEvents();
@@ -397,6 +403,19 @@ public class LoadingScreen extends Screen {
 
         //Setup the images for Weapons
         Weapon.setupImages(g);
+
+        //Setup Animations here for now
+        //This will be moved into its own loading screen in future
+        for(Weapon weapon : Weapon.values()){
+            weapon.loadAnimation(g);
+        }
+        for(Element element : Element.values()) {
+            element.loadAnimation(g);
+        }
+        for(int i = 0; i < 10; i++){
+            AnimationAssets.HealAnimation.addFrame(g.newImage("BattleAnimations/HEAL/HEAL" + i + ".png", ImageFormat.ARGB8888));
+            AnimationAssets.ReviveAnimation.addFrame(g.newImage("BattleAnimations/REVIVE/REVIVE" + i + ".png", ImageFormat.ARGB8888));
+        }
     }
 
     private void createRecruits(){
@@ -632,6 +651,13 @@ public class LoadingScreen extends Screen {
 
         g.clearScreen(Color.BLACK);
         g.drawString(currentPhase.getStatus(), STATUS_X, STATUS_Y, statusPaint);
+
+        /*
+        if(currentPhase == LoadingPhase.COMPLETE){
+            g.drawImage(testAnimation.getFrame(), 350, 400);
+            testAnimation.update(deltaTime);
+        }
+        */
 
     }
 

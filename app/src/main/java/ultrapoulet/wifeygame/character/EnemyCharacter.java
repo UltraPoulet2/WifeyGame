@@ -5,6 +5,8 @@ import java.util.Collections;
 
 import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Image;
+import ultrapoulet.androidgame.framework.helpers.AnimationImages;
+import ultrapoulet.wifeygame.AnimationAssets;
 import ultrapoulet.wifeygame.battle.BattleEnemy;
 import ultrapoulet.wifeygame.battle.enemyai.EnemyAI;
 
@@ -32,6 +34,7 @@ public class EnemyCharacter {
     private Element strongElement;
     private Element weakElement;
 
+    private Weapon weapon;
     private ArrayList<SkillsEnum> skills;
     private WeaponSkillsEnum weaponSkill;
     private UniqueSkillsEnum uniqueSkill;
@@ -138,6 +141,10 @@ public class EnemyCharacter {
         return this.experience;
     }
 
+    public Weapon getWeapon() {
+        return this.weapon;
+    }
+
 
     public void setName(String name){
         this.name = name;
@@ -234,6 +241,10 @@ public class EnemyCharacter {
         this.experience = exp;
     }
 
+    public void setWeapon(Weapon weapon) {
+        this.weapon = weapon;
+    }
+
     public void addTransformation(TransformEnemy t){
         this.transformations.add(t);
     }
@@ -258,10 +269,13 @@ public class EnemyCharacter {
         if(attackElement == null || strongElement == null | weakElement == null){
             return false;
         }
+        //For now, make every enemy provide gold and experience
         if(gold == 0 || experience == 0){
             return false;
         }
-        //For now, make every enemy provide gold and experience
+        if(weapon == null){
+            return false;
+        }
         return true;
     }
 }

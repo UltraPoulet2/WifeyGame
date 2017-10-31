@@ -1,6 +1,9 @@
 package ultrapoulet.wifeygame.character;
 
+import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Image;
+import ultrapoulet.androidgame.framework.helpers.AnimationImages;
+import ultrapoulet.wifeygame.AnimationAssets;
 import ultrapoulet.wifeygame.Assets;
 
 /**
@@ -16,6 +19,7 @@ public enum Element {
 
     private String elementType;
     private Image elementImage;
+    private AnimationImages animation;
 
     Element(String elem, Image image){
         this.elementType = elem;
@@ -28,5 +32,28 @@ public enum Element {
 
     public Image getElementImage(){
         return elementImage;
+    }
+
+    public void loadAnimation(Graphics g){
+        if(this.animation == null) {
+            animation = new AnimationImages();
+            for(int i = 0; i < 10; i++){
+                animation.addFrame(g.newImage("BattleAnimations/" + this.name() + "/" + this.name() + i + ".png", Graphics.ImageFormat.ARGB8888));
+            }
+        }
+    }
+
+    public void unloadAnimation() {
+        this.animation = null;
+    }
+
+    public static void unloadAllAnimations() {
+        for(Element element : Element.values()){
+            element.unloadAnimation();
+        }
+    }
+
+    public AnimationImages getBattleAnimation() {
+        return animation;
     }
 }

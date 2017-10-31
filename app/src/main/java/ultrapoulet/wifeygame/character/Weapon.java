@@ -1,8 +1,12 @@
 package ultrapoulet.wifeygame.character;
 
+import android.util.Log;
+
 import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Graphics.ImageFormat;
 import ultrapoulet.androidgame.framework.Image;
+import ultrapoulet.androidgame.framework.helpers.AnimationImages;
+import ultrapoulet.wifeygame.AnimationAssets;
 
 /**
  * Created by John on 6/25/2016.
@@ -21,6 +25,7 @@ public enum Weapon {
     FISTS("Fists", 3),
     FOOD("Food", 2),
     GUN("Gun", 6),
+    HAMMER("Hammer", 2),
     INSTRUMENT("Instrument", 6),
     KNIFE("Knife", 3),
     LASER("Laser", 6),
@@ -41,6 +46,7 @@ public enum Weapon {
     private String weaponType;
     private int numHits;
     private Image image;
+    private AnimationImages animation;
 
     Weapon(String weaponType, int numHits){
         this.weaponType = weaponType;
@@ -59,9 +65,38 @@ public enum Weapon {
         return this.image;
     }
 
+    public void loadAnimation(Graphics g){
+        if(this.animation == null) {
+            animation = new AnimationImages();
+            for(int i = 0; i < 10; i++){
+                animation.addFrame(g.newImage("BattleAnimations/" + this.name() + "/" + this.name() + i + ".png", ImageFormat.ARGB8888));
+            }
+        }
+    }
+
+    public void unloadAnimation() {
+        this.animation = null;
+    }
+
+    public static void unloadAllAnimations() {
+        for(Weapon weapon : Weapon.values()) {
+            weapon.unloadAnimation();
+        }
+    }
+
+    public AnimationImages getBattleAnimation() {
+        return animation;
+    }
+
     public static void setupImages(Graphics g){
         for(Weapon weapon : Weapon.values()) {
-            weapon.image = g.newImage("Weapons/" + weapon.toString() + ".png", ImageFormat.ARGB8888);
+            if(weapon == Weapon.HAMMER) {
+                //Hammer not completely prepared
+                weapon.image = CLUB.getImage();
+            }
+            else {
+                weapon.image = g.newImage("Weapons/" + weapon.toString() + ".png", ImageFormat.ARGB8888);
+            }
         }
     }
 }

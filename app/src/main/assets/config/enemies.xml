@@ -13,6 +13,7 @@
         <skills>
             <skill>GHOST</skill>
         </skills>
+        <weapon>SCYTHE</weapon>
         <!-- Test Unique/Weapon skills
         <uniqueSkill>REM</uniqueSkill>
         <weaponSkill>KOKOROSE</weaponSkill>
@@ -31,6 +32,7 @@
         <maxHP>20000</maxHP>
         <magicDamage>50</magicDamage>
         <healAmount>1000</healAmount>
+        <weapon>MAGIC</weapon>
         <elements>
             <atkElement>DARK</atkElement>
             <stgElement>DARK</stgElement>
@@ -52,6 +54,7 @@
         <skills>
             <skill>SADIST</skill>
         </skills>
+        <weapon>LASER</weapon>
         <elements>
             <atkElement>FIRE</atkElement>
             <stgElement>FIRE</stgElement>
@@ -74,6 +77,7 @@
             <skill>BIKER</skill>
             <skill>KILLER</skill>
         </skills>
+        <weapon>VEHICLE</weapon>
         <elements>
             <atkElement>AIR</atkElement>
             <stgElement>AIR</stgElement>
@@ -93,6 +97,7 @@
         <skills>
             <skill>SPORTSMANAGER</skill>
         </skills>
+        <weapon>SPORT</weapon>
         <elements>
             <atkElement>EARTH</atkElement>
             <stgElement>EARTH</stgElement>
@@ -113,6 +118,7 @@
             <skill>MASOCHIST</skill>
             <skill>SADIST</skill>
         </skills>
+        <weapon>LASER</weapon>
         <elements>
             <atkElement>LIGHT</atkElement>
             <stgElement>LIGHT</stgElement>
