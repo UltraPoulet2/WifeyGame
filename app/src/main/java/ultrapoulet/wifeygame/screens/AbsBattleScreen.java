@@ -1207,91 +1207,98 @@ public abstract class AbsBattleScreen extends Screen {
 
         //Workaround to prevent the one frame issue
         int index = partyIndex == -1 ? getFirstIndex() : partyIndex;
+        
+        for(int i = 0; i < party.size(); i++) {
+            int charScale = (i == index) ? FULL_SCALE : HALF_SCALE;
 
-        int i = 0;
-        Image healthBar;
-        Double perHealth;
-        //Draw party members before the current member
-        for( ; i < index && i < party.size(); i++){
-            //Draw the character holder and character image
-            g.drawPercentageImage(charHolder, CHAR_HOLDER_X_DISTANCE * i, CHAR_HOLDER_SMALL_Y, HALF_SCALE, HALF_SCALE);
-            g.drawPercentageImage(party.get(i).getImage(), CHAR_HOLDER_X_DISTANCE * i + CHAR_INTERIOR_SMALL_X, CHAR_IMAGE_SMALL_Y, HALF_SCALE, HALF_SCALE);
+            //Draw the character holder background
+            int charHolderX = (i <= index) ? CHAR_HOLDER_X_DISTANCE * i : CHAR_HOLDER_X_DISTANCE * (i + 1);
+            int charHolderY = (i == index) ? CHAR_HOLDER_LARGE_Y : CHAR_HOLDER_SMALL_Y;
+            g.drawPercentageImage(charHolder, charHolderX, charHolderY, charScale, charScale);
+
+            //Draw the character image
+            int charImageX;
+            if(i < index) {
+                charImageX = CHAR_HOLDER_X_DISTANCE * i + CHAR_INTERIOR_SMALL_X;
+            }
+            else if (i == index) {
+                charImageX = CHAR_HOLDER_X_DISTANCE * i + CHAR_INTERIOR_LARGE_X;
+            }
+            else {
+                charImageX = CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_INTERIOR_SMALL_X;
+            }
+            int charImageY = (i == index) ? CHAR_IMAGE_LARGE_Y : CHAR_IMAGE_SMALL_Y;
+            g.drawPercentageImage(party.get(i).getImage(), charImageX, charImageY, charScale, charScale);
 
             //Draw the elements
-            g.drawPercentageImage(party.get(i).getAttackElement().getElementImage(), CHAR_HOLDER_X_DISTANCE * i + CHAR_SMALL_BASE_ELEM_ATK_X, CHAR_SMALL_ELEM_Y, CHAR_SMALL_ELEM_SCALE, CHAR_SMALL_ELEM_SCALE);
-            g.drawPercentageImage(party.get(i).getStrongElement().getElementImage(), CHAR_HOLDER_X_DISTANCE * i + CHAR_SMALL_BASE_ELEM_RES_X, CHAR_SMALL_ELEM_Y, CHAR_SMALL_ELEM_SCALE, CHAR_SMALL_ELEM_SCALE);
-            g.drawPercentageImage(party.get(i).getWeakElement().getElementImage(), CHAR_HOLDER_X_DISTANCE * i + CHAR_SMALL_BASE_ELEM_WEAK_X, CHAR_SMALL_ELEM_Y, CHAR_SMALL_ELEM_SCALE, CHAR_SMALL_ELEM_SCALE);
+            int atkX, stgX, weakX;
+            if(i < index) {
+                atkX = CHAR_HOLDER_X_DISTANCE * i + CHAR_SMALL_BASE_ELEM_ATK_X;
+                stgX = CHAR_HOLDER_X_DISTANCE * i + CHAR_SMALL_BASE_ELEM_RES_X;
+                weakX = CHAR_HOLDER_X_DISTANCE * i + CHAR_SMALL_BASE_ELEM_WEAK_X;
+            }
+            else if(i == index) {
+                atkX = CHAR_HOLDER_X_DISTANCE * i + CHAR_LARGE_BASE_ELEM_ATK_X;
+                stgX = CHAR_HOLDER_X_DISTANCE * i + CHAR_LARGE_BASE_ELEM_RES_X;
+                weakX = CHAR_HOLDER_X_DISTANCE * i + CHAR_LARGE_BASE_ELEM_WEAK_X;
+            }
+            else {
+                atkX = CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_SMALL_BASE_ELEM_ATK_X;
+                stgX = CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_SMALL_BASE_ELEM_RES_X;
+                weakX = CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_SMALL_BASE_ELEM_WEAK_X;
+            }
+            int elemY = (i == index) ? CHAR_LARGE_ELEM_Y : CHAR_SMALL_ELEM_Y;
+            int elemScale = (i == index) ? CHAR_LARGE_ELEM_SCALE : CHAR_SMALL_ELEM_SCALE;
+            g.drawPercentageImage(party.get(i).getAttackElement().getElementImage(), atkX, elemY, elemScale, elemScale);
+            g.drawPercentageImage(party.get(i).getStrongElement().getElementImage(), stgX, elemY, elemScale, elemScale);
+            g.drawPercentageImage(party.get(i).getWeakElement().getElementImage(), weakX, elemY, elemScale, elemScale);
 
             //Draw the health bar
-            healthBar = getPlayerHealthBar(party.get(i).getCurrentHP(), party.get(i).getMaxHP());
-            perHealth = (party.get(i).getCurrentHP() * 1.0)/(party.get(i).getMaxHP());
-            g.drawPercentageImage(healthBar, CHAR_HOLDER_X_DISTANCE * i + CHAR_INTERIOR_SMALL_X, CHAR_HEALTH_SMALL_Y, (int) Math.ceil(perHealth * HALF_SCALE), HALF_SCALE);
+            Image healthBar = getPlayerHealthBar(party.get(i).getCurrentHP(), party.get(i).getMaxHP());
+            Double perHealth = (party.get(i).getCurrentHP() * 1.0) / (party.get(i).getMaxHP());
+            int healthX;
+            if(i < index) {
+                healthX = CHAR_HOLDER_X_DISTANCE * i + CHAR_INTERIOR_SMALL_X;
+            }
+            else if(i == index) {
+                healthX = CHAR_HOLDER_X_DISTANCE * i + CHAR_INTERIOR_LARGE_X;
+            }
+            else {
+                healthX = CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_INTERIOR_SMALL_X;
+            }
+            int healthY = (i == index) ? CHAR_HEALTH_LARGE_Y : CHAR_HEALTH_SMALL_Y;
+            g.drawPercentageImage(healthBar, healthX, healthY, (int) Math.ceil(perHealth * charScale), charScale);
 
             //Draw the CurrentHP / MaxHP
-            int curX = CHAR_HOLDER_X_DISTANCE * i + CHAR_CUR_HP_SMALL_X;
-            NumberPrinter.drawNumber(g, party.get(i).getCurrentHP(), curX, CHAR_HP_SMALL_Y, CHAR_HP_SMALL_WIDTH, CHAR_HP_SMALL_HEIGHT, CHAR_HP_SMALL_OFFSET, Assets.WhiteNumbers, NumberPrinter.Align.RIGHT);
-            int slashX = CHAR_HOLDER_X_DISTANCE * i + CHAR_HP_SLASH_SMALL_X;
-            g.drawPercentageImage(Assets.HPSlash, slashX, CHAR_HP_SMALL_Y, HALF_SCALE, HALF_SCALE);
-            int maxX = CHAR_HOLDER_X_DISTANCE * i + CHAR_MAX_HP_SMALL_X;
-            NumberPrinter.drawNumber(g, party.get(i).getMaxHP(), maxX, CHAR_HP_SMALL_Y, CHAR_HP_SMALL_WIDTH, CHAR_HP_SMALL_HEIGHT, CHAR_HP_SMALL_OFFSET, Assets.WhiteNumbers, NumberPrinter.Align.LEFT);
-
-            //If the party member is defeated, overlay the KO Image
-            if(party.get(i).getCurrentHP() == 0){
-                g.drawPercentageImage(Assets.KOImages.get(i), CHAR_HOLDER_X_DISTANCE * i, CHAR_HOLDER_KO_SMALL_Y, HALF_SCALE, HALF_SCALE);
+            int curX, slashX, maxX;
+            if(i < index) {
+                curX = CHAR_HOLDER_X_DISTANCE * i + CHAR_CUR_HP_SMALL_X;
+                slashX = CHAR_HOLDER_X_DISTANCE * i + CHAR_HP_SLASH_SMALL_X;
+                maxX = CHAR_HOLDER_X_DISTANCE * i + CHAR_MAX_HP_SMALL_X;
             }
-
-        }
-        //Draw the current acting character
-        if(i == index && i < party.size()) {
-            g.drawImage(charHolder, CHAR_HOLDER_X_DISTANCE * i, CHAR_HOLDER_LARGE_Y);
-            g.drawImage(party.get(i).getImage(), CHAR_HOLDER_X_DISTANCE * i + CHAR_INTERIOR_LARGE_X, CHAR_IMAGE_LARGE_Y);
-
-            //Draw the elements
-            g.drawPercentageImage(party.get(i).getAttackElement().getElementImage(), CHAR_HOLDER_X_DISTANCE * i + CHAR_LARGE_BASE_ELEM_ATK_X, CHAR_LARGE_ELEM_Y, CHAR_LARGE_ELEM_SCALE, CHAR_LARGE_ELEM_SCALE);
-            g.drawPercentageImage(party.get(i).getStrongElement().getElementImage(), CHAR_HOLDER_X_DISTANCE * i + CHAR_LARGE_BASE_ELEM_RES_X, CHAR_LARGE_ELEM_Y, CHAR_LARGE_ELEM_SCALE, CHAR_LARGE_ELEM_SCALE);
-            g.drawPercentageImage(party.get(i).getWeakElement().getElementImage(), CHAR_HOLDER_X_DISTANCE * i + CHAR_LARGE_BASE_ELEM_WEAK_X, CHAR_LARGE_ELEM_Y, CHAR_LARGE_ELEM_SCALE, CHAR_LARGE_ELEM_SCALE);
-
-            healthBar = getPlayerHealthBar(party.get(i).getCurrentHP(), party.get(i).getMaxHP());
-            perHealth = (party.get(i).getCurrentHP() * 1.0) / (party.get(i).getMaxHP());
-            g.drawPercentageImage(healthBar, CHAR_HOLDER_X_DISTANCE * i + CHAR_INTERIOR_LARGE_X, CHAR_HEALTH_LARGE_Y, (int) Math.ceil(perHealth * FULL_SCALE), FULL_SCALE);
-
-            //Display CURRENTHP/MAXHP
-            int curX = CHAR_HOLDER_X_DISTANCE * i + CHAR_CUR_HP_LARGE_X;
-            NumberPrinter.drawNumber(g, party.get(i).getCurrentHP(), curX, CHAR_HP_LARGE_Y, CHAR_HP_LARGE_WIDTH, CHAR_HP_LARGE_HEIGHT, CHAR_HP_LARGE_OFFSET, Assets.WhiteNumbers, NumberPrinter.Align.RIGHT);
-            int slashX = CHAR_HOLDER_X_DISTANCE * i + CHAR_HP_SLASH_LARGE_X;
-            g.drawImage(Assets.HPSlash, slashX, CHAR_HP_LARGE_Y);
-            int maxX = CHAR_HOLDER_X_DISTANCE * i + CHAR_MAX_HP_LARGE_X;
-            NumberPrinter.drawNumber(g, party.get(i).getMaxHP(), maxX, CHAR_HP_LARGE_Y, CHAR_HP_LARGE_WIDTH, CHAR_HP_LARGE_HEIGHT, CHAR_HP_LARGE_OFFSET, Assets.WhiteNumbers, NumberPrinter.Align.LEFT);
-
-
-            if (party.get(i).getCurrentHP() == 0) {
-                g.drawImage(Assets.KOImages.get(i), CHAR_HOLDER_X_DISTANCE * i, CHAR_HOLDER_KO_LARGE_Y);
+            else if (i == index) {
+                curX = CHAR_HOLDER_X_DISTANCE * i + CHAR_CUR_HP_LARGE_X;
+                slashX = CHAR_HOLDER_X_DISTANCE * i + CHAR_HP_SLASH_LARGE_X;
+                maxX = CHAR_HOLDER_X_DISTANCE * i + CHAR_MAX_HP_LARGE_X;
             }
-            i++;
-        }
-        //Draw the characters after the current member
-        for ( ; i < party.size(); i++) {
-            g.drawPercentageImage(charHolder, CHAR_HOLDER_X_DISTANCE * (i + 1), CHAR_HOLDER_SMALL_Y, HALF_SCALE, HALF_SCALE);
-            g.drawPercentageImage(party.get(i).getImage(), CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_INTERIOR_SMALL_X, CHAR_IMAGE_SMALL_Y, HALF_SCALE, HALF_SCALE);
+            else {
+                curX = CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_CUR_HP_SMALL_X;
+                slashX = CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_HP_SLASH_SMALL_X;
+                maxX = CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_MAX_HP_SMALL_X;
+            }
+            int hpY = (i == index) ? CHAR_HP_LARGE_Y : CHAR_HP_SMALL_Y;
+            int hpWidth = (i == index) ? CHAR_HP_LARGE_WIDTH : CHAR_HP_SMALL_WIDTH;
+            int hpHeight = (i == index) ? CHAR_HP_LARGE_HEIGHT : CHAR_HP_SMALL_HEIGHT;
+            int hpOffset = (i == index) ? CHAR_HP_LARGE_OFFSET : CHAR_HP_SMALL_OFFSET;
+            NumberPrinter.drawNumber(g, party.get(i).getCurrentHP(), curX, hpY, hpWidth, hpHeight, hpOffset, Assets.WhiteNumbers, NumberPrinter.Align.RIGHT);
+            g.drawPercentageImage(Assets.HPSlash, slashX, hpY, charScale, charScale);
+            NumberPrinter.drawNumber(g, party.get(i).getMaxHP(), maxX, hpY, hpWidth, hpHeight, hpOffset, Assets.WhiteNumbers, NumberPrinter.Align.LEFT);
 
-            //Draw the elements
-            g.drawPercentageImage(party.get(i).getAttackElement().getElementImage(), CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_SMALL_BASE_ELEM_ATK_X, CHAR_SMALL_ELEM_Y, CHAR_SMALL_ELEM_SCALE, CHAR_SMALL_ELEM_SCALE);
-            g.drawPercentageImage(party.get(i).getStrongElement().getElementImage(), CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_SMALL_BASE_ELEM_RES_X, CHAR_SMALL_ELEM_Y, CHAR_SMALL_ELEM_SCALE, CHAR_SMALL_ELEM_SCALE);
-            g.drawPercentageImage(party.get(i).getWeakElement().getElementImage(), CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_SMALL_BASE_ELEM_WEAK_X, CHAR_SMALL_ELEM_Y, CHAR_SMALL_ELEM_SCALE, CHAR_SMALL_ELEM_SCALE);
-
-            healthBar = getPlayerHealthBar(party.get(i).getCurrentHP(), party.get(i).getMaxHP());
-            perHealth = (party.get(i).getCurrentHP() * 1.0)/(party.get(i).getMaxHP());
-            g.drawPercentageImage(healthBar, CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_INTERIOR_SMALL_X, CHAR_HEALTH_SMALL_Y, (int) Math.ceil(perHealth * HALF_SCALE) , HALF_SCALE);
-
-            //Display CURRENTHP/MAXHP
-            int curX = CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_CUR_HP_SMALL_X;
-            NumberPrinter.drawNumber(g, party.get(i).getCurrentHP(), curX, CHAR_HP_SMALL_Y, CHAR_HP_SMALL_WIDTH, CHAR_HP_SMALL_HEIGHT, CHAR_HP_SMALL_OFFSET, Assets.WhiteNumbers, NumberPrinter.Align.RIGHT);
-            int slashX = CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_HP_SLASH_SMALL_X;
-            g.drawPercentageImage(Assets.HPSlash, slashX, CHAR_HP_SMALL_Y, HALF_SCALE, HALF_SCALE);
-            int maxX = CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_MAX_HP_SMALL_X;
-            NumberPrinter.drawNumber(g, party.get(i).getMaxHP(), maxX, CHAR_HP_SMALL_Y, CHAR_HP_SMALL_WIDTH, CHAR_HP_SMALL_HEIGHT, CHAR_HP_SMALL_OFFSET, Assets.WhiteNumbers, NumberPrinter.Align.LEFT);
-            if(party.get(i).getCurrentHP() == 0){
-                g.drawPercentageImage(Assets.KOImages.get(i), CHAR_HOLDER_X_DISTANCE * (i + 1), CHAR_HOLDER_KO_SMALL_Y, HALF_SCALE, HALF_SCALE);
+            //Draw the KO Overlay
+            if(party.get(i).getCurrentHP() == 0) {
+                int koX = (i <= index) ? CHAR_HOLDER_X_DISTANCE * i : CHAR_HOLDER_X_DISTANCE * (i + 1);
+                int koY = (i == index) ? CHAR_HOLDER_KO_LARGE_Y : CHAR_HOLDER_KO_SMALL_Y;
+                g.drawPercentageImage(Assets.KOImages.get(i), koX, koY, charScale, charScale);
             }
         }
     }
