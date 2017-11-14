@@ -16,6 +16,7 @@ public abstract class BattleCharacter {
     protected String name;
     protected int maxHP;
     protected int currentHP;
+    protected int displayDamage;
     protected Weapon weapon;
     protected SkillList skills;
     protected Image image;
@@ -42,6 +43,18 @@ public abstract class BattleCharacter {
         else{
             this.currentHP = this.maxHP;
         }
+    }
+
+    public int getDisplayDamage() {
+        return this.displayDamage;
+    }
+
+    public void setDisplayDamage(int damage) {
+        this.displayDamage = damage;
+    }
+
+    public void resetDisplayDamage() {
+        this.displayDamage = 0;
     }
 
     public Image getImage(){
