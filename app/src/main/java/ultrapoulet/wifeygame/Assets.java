@@ -17,18 +17,19 @@ public class Assets {
     public static Image SpecialAttackEnabled, SpecialAttackDisabled;
     public static Image TransformEnabled, TransformDisabled;
     public static Image DefendEnabled, DefendDisabled;
-    public static Image attackBox;
-    public static Image charHolder;
+
+    //public static Image attackBox;
+    //public static Image charHolder;
     public static Image pHealthG, pHealthY, pHealthR;
     public static Image eHealthG, eHealthY, eHealthR;
-    public static Image enemyHolder;
-    public static Image specialBar, specialBarBase, specialBarTop;
-    public static Image hitsText, hitText, damageText;
-    public static Image AttackUp, AttackDown;
-    public static Image DefenseUp, DefenseDown;
-    public static Image WaveText, FinalWaveText;
+    //public static Image enemyHolder;
+    //public static Image specialBar, specialBarBase, specialBarTop;
+    //public static Image hitsText, hitText, damageText;
+    //public static Image AttackUp, AttackDown;
+    //public static Image DefenseUp, DefenseDown;
+    //public static Image WaveText, FinalWaveText;
 
-    public static List<Image> KOImages;
+    //public static List<Image> KOImages;
     public static Image HPSlash;
     public static Image Colon;
     public static Image YellowPlus;

@@ -18,6 +18,7 @@ import ultrapoulet.androidgame.framework.helpers.ButtonList;
 import ultrapoulet.androidgame.framework.helpers.NumberPrinter;
 import ultrapoulet.wifeygame.AnimationAssets;
 import ultrapoulet.wifeygame.Assets;
+import ultrapoulet.wifeygame.BattleAssets;
 import ultrapoulet.wifeygame.battle.BattleCharacter;
 import ultrapoulet.wifeygame.battle.BattleEnemy;
 import ultrapoulet.wifeygame.battle.BattleInfo;
@@ -49,16 +50,10 @@ public abstract class AbsBattleScreen extends Screen {
 
     private Image background;
 
-    private static Image specialBar, specialBarBase, specialBarTop;
-
     private int comboHolder;
     private int damageHolder;
 
     private Paint textPaint;
-
-    private static Image charHolder;
-
-    private static Image enemyHolder;
 
     private Animation battleAnimation = null;
     private int battleAnimationOffsetX = 0;
@@ -311,12 +306,6 @@ public abstract class AbsBattleScreen extends Screen {
 
     public AbsBattleScreen(Game game, BattleInfo info){
         super(game);
-
-        charHolder = Assets.charHolder;
-        enemyHolder = Assets.enemyHolder;
-        specialBar = Assets.specialBar;
-        specialBarBase = Assets.specialBarBase;
-        specialBarTop = Assets.specialBarTop;
 
         createButtonList();
         createPaint();
@@ -1177,6 +1166,7 @@ public abstract class AbsBattleScreen extends Screen {
                     //Here we'll unload the animations created for the battle
                     Weapon.unloadAllAnimations();
                     Element.unloadAllAnimations();
+                    BattleAssets.unload();
                     game.setScreen(getCompletionScreen());
                 }
                 break;
@@ -1253,7 +1243,7 @@ public abstract class AbsBattleScreen extends Screen {
             //Draw the character holder background
             int charHolderX = (i <= index) ? CHAR_HOLDER_X_DISTANCE * i : CHAR_HOLDER_X_DISTANCE * (i + 1);
             int charHolderY = (i == index) ? CHAR_HOLDER_LARGE_Y : CHAR_HOLDER_SMALL_Y;
-            g.drawPercentageImage(charHolder, charHolderX, charHolderY, charScale, charScale);
+            g.drawPercentageImage(BattleAssets.CharHolder, charHolderX, charHolderY, charScale, charScale);
 
             //Draw the character image
             int charImageX;
@@ -1337,7 +1327,7 @@ public abstract class AbsBattleScreen extends Screen {
             if(party.get(i).getCurrentHP() == 0) {
                 int koX = (i <= index) ? CHAR_HOLDER_X_DISTANCE * i : CHAR_HOLDER_X_DISTANCE * (i + 1);
                 int koY = (i == index) ? CHAR_HOLDER_KO_LARGE_Y : CHAR_HOLDER_KO_SMALL_Y;
-                g.drawPercentageImage(Assets.KOImages.get(i), koX, koY, charScale, charScale);
+                g.drawPercentageImage(BattleAssets.KOImages.get(i), koX, koY, charScale, charScale);
             }
         }
     }
@@ -1360,7 +1350,7 @@ public abstract class AbsBattleScreen extends Screen {
         else {
             g.drawImage(enemies.get(enemyIndex).getImage(), ENEMY_IMAGE_X, ENEMY_IMAGE_Y);
         }
-        g.drawImage(enemyHolder, ENEMY_HEALTH_HOLDER_X, ENEMY_HEALTH_HOLDER_Y);
+        g.drawImage(BattleAssets.EnemyHolder, ENEMY_HEALTH_HOLDER_X, ENEMY_HEALTH_HOLDER_Y);
         Image enemyHealth = getEnemyHealthBar(enemies.get(enemyIndex).getCurrentHP(), enemies.get(enemyIndex).getMaxHP());
         perHealth = (enemies.get(enemyIndex).getCurrentHP() * 1.0)/enemies.get(enemyIndex).getMaxHP();
         g.drawPercentageImage(enemyHealth, ENEMY_HEALTH_BAR_X, ENEMY_HEALTH_BAR_Y, (int) Math.ceil(FULL_SCALE * perHealth), FULL_SCALE);
@@ -1377,25 +1367,25 @@ public abstract class AbsBattleScreen extends Screen {
         BattleEnemy enemy = (BattleEnemy) enemies.get(enemyIndex);
         boolean defense = enemy.isDefendActive() || enemy.isWeakenActive();
         if(enemy.isDefendActive()) {
-            g.drawImage(Assets.DefenseUp, ENEMY_STATUS_X, ENEMY_STATUS_Y_1);
+            g.drawImage(BattleAssets.DefenseUp, ENEMY_STATUS_X, ENEMY_STATUS_Y_1);
         }
         else if(enemy.isWeakenActive()) {
-            g.drawImage(Assets.DefenseDown, ENEMY_STATUS_X, ENEMY_STATUS_Y_1);
+            g.drawImage(BattleAssets.DefenseDown, ENEMY_STATUS_X, ENEMY_STATUS_Y_1);
         }
         int atkY = defense ? ENEMY_STATUS_Y_2 : ENEMY_STATUS_Y_1;
         if(enemy.isPowerUpActive()) {
-            g.drawImage(Assets.AttackUp, ENEMY_STATUS_X, atkY);
+            g.drawImage(BattleAssets.AttackUp, ENEMY_STATUS_X, atkY);
         }
         else if(enemy.isPowerDownActive()) {
-            g.drawImage(Assets.AttackDown, ENEMY_STATUS_X, atkY);
+            g.drawImage(BattleAssets.AttackDown, ENEMY_STATUS_X, atkY);
         }
     }
 
     private void drawSpecial(){
         Graphics g = game.getGraphics();
-        g.drawImage(specialBarBase, SPECIAL_BAR_BASE_X, SPECIAL_BAR_BASE_Y);
-        g.drawPercentageImage(specialBar, SPECIAL_BAR_X, SPECIAL_BAR_Y, (int) ((numHits * 100.0) / MAX_HITS) , FULL_SCALE);
-        g.drawImage(specialBarTop, SPECIAL_BAR_X, SPECIAL_BAR_TOP_Y);
+        g.drawImage(BattleAssets.SpecialBarBase, SPECIAL_BAR_BASE_X, SPECIAL_BAR_BASE_Y);
+        g.drawPercentageImage(BattleAssets.SpecialBar, SPECIAL_BAR_X, SPECIAL_BAR_Y, (int) ((numHits * 100.0) / MAX_HITS) , FULL_SCALE);
+        g.drawImage(BattleAssets.SpecialBarTop, SPECIAL_BAR_X, SPECIAL_BAR_TOP_Y);
         int specialCount = numHits / SPECIAL_HITS;
         NumberPrinter.drawNumber(g, specialCount, SPECIAL_BAR_NUMBER_X, SPECIAL_BAR_NUMBER_Y, SPECIAL_NUMBER_WIDTH, SPECIAL_NUMBER_HEIGHT, SPECIAL_NUMBER_OFFSET, Assets.WhiteNumbers, NumberPrinter.Align.LEFT);
     }
@@ -1405,28 +1395,28 @@ public abstract class AbsBattleScreen extends Screen {
         if(comboHolder > 0){
             NumberPrinter.drawNumber(g, comboHolder, COMBO_NUMBER_X, COMBO_NUMBER_Y, COMBO_NUMBER_WIDTH, COMBO_NUMBER_HEIGHT, COMBO_NUMBER_OFFSET, Assets.YellowNumbers, NumberPrinter.Align.RIGHT);
             if(comboHolder > 1) {
-                g.drawImage(Assets.hitsText, COMBO_TEXT_X, COMBO_TEXT_Y);
+                g.drawImage(BattleAssets.HitsText, COMBO_TEXT_X, COMBO_TEXT_Y);
             }
             else{
-                g.drawImage(Assets.hitText, COMBO_TEXT_X, COMBO_TEXT_Y);
+                g.drawImage(BattleAssets.HitText, COMBO_TEXT_X, COMBO_TEXT_Y);
             }
         }
         //Damage Counter
         if(damageHolder > 0){
             NumberPrinter.drawNumber(g, damageHolder, DAMAGE_HOLDER_NUMBER_X, DAMAGE_HOLDER_NUMBER_Y, DAMAGE_HOLDER_WIDTH, DAMAGE_HOLDER_HEIGHT, DAMAGE_HOLDER_OFFSET, Assets.RedNumbers, NumberPrinter.Align.RIGHT);
-            g.drawImage(Assets.damageText, DAMAGE_TEXT_X, DAMAGE_TEXT_Y);
+            g.drawImage(BattleAssets.DamageText, DAMAGE_TEXT_X, DAMAGE_TEXT_Y);
         }
     }
 
     private void drawPlayerCommand() {
         Graphics g = game.getGraphics();
-        g.drawImage(Assets.attackBox, 0, 0);
+        g.drawImage(BattleAssets.AttackBox, 0, 0);
         g.drawString(commandSelected.getName(), 400, 70, textPaint);
     }
 
     private void drawEnemyCommand() {
         Graphics g = game.getGraphics();
-        g.drawImage(Assets.attackBox, 0, 0);
+        g.drawImage(BattleAssets.AttackBox, 0, 0);
         g.drawString(((BattleEnemy) enemies.get(enemyIndex)).getActionString(), 400, 70, textPaint);
     }
 
@@ -1584,15 +1574,15 @@ public abstract class AbsBattleScreen extends Screen {
     private void drawWaveStart() {
         Graphics g = game.getGraphics();
         if(enemyIndex == enemies.size() - 1){
-            g.drawImage(Assets.FinalWaveText, WAVE_FINAL_TEXT_X, WAVE_TEXT_Y);
+            g.drawImage(BattleAssets.FinalWaveText, WAVE_FINAL_TEXT_X, WAVE_TEXT_Y);
         }
         else{
             if(enemyIndex + 1 >= 10) {
-                g.drawImage(Assets.WaveText, WAVE_TEXT_LARGE_X, WAVE_TEXT_Y);
+                g.drawImage(BattleAssets.WaveText, WAVE_TEXT_LARGE_X, WAVE_TEXT_Y);
                 NumberPrinter.drawNumber(g, enemyIndex + 1, WAVE_NUMBER_LARGE_X, WAVE_TEXT_Y, WAVE_WIDTH, WAVE_HEIGHT, 0, Assets.YellowNumbers, NumberPrinter.Align.LEFT);
             }
             else {
-                g.drawImage(Assets.WaveText, WAVE_TEXT_SMALL_X, WAVE_TEXT_Y);
+                g.drawImage(BattleAssets.WaveText, WAVE_TEXT_SMALL_X, WAVE_TEXT_Y);
                 NumberPrinter.drawNumber(g, enemyIndex + 1, WAVE_NUMBER_SMALL_X, WAVE_TEXT_Y, WAVE_WIDTH, WAVE_HEIGHT, 0, Assets.YellowNumbers, NumberPrinter.Align.LEFT);
             }
         }
