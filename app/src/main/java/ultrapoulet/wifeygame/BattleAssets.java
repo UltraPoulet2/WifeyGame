@@ -24,6 +24,7 @@ public class BattleAssets {
     public static Image CharHolder;
     public static Image EnemyHolder;
     public static Image SpecialBar, SpecialBarBase, SpecialBarTop;
+    public static Image EnemyHealthGreen, EnemyHealthYellow, EnemyHealthRed;
 
     public static void load(Graphics g) {
         WaveText = g.newImage("objects/battleMisc/WaveText.png", ImageFormat.RGB565);
@@ -41,6 +42,9 @@ public class BattleAssets {
         SpecialBar = g.newImage("objects/bars/SpecialBar.png", ImageFormat.RGB565);
         SpecialBarBase = g.newImage("objects/bars/SpecialBarBase.png", ImageFormat.ARGB8888);
         SpecialBarTop = g.newImage("objects/bars/SpecialBarTop.png", ImageFormat.ARGB8888);
+        EnemyHealthGreen = g.newImage("objects/bars/EnemyHealthBarGreen.png", ImageFormat.RGB565);
+        EnemyHealthYellow = g.newImage("objects/bars/EnemyHealthBarYellow.png", ImageFormat.RGB565);
+        EnemyHealthRed = g.newImage("objects/bars/EnemyHealthBarRed.png", ImageFormat.RGB565);
 
         KOImages = new ArrayList<>();
         for(int i = 0; i < 7; i++){
@@ -64,6 +68,9 @@ public class BattleAssets {
         SpecialBar = null;
         SpecialBarBase = null;
         SpecialBarTop = null;
+        EnemyHealthGreen = null;
+        EnemyHealthYellow = null;
+        EnemyHealthRed = null;
         KOImages = null;
     }
 }

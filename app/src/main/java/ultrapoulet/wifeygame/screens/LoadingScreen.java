@@ -19,8 +19,6 @@ import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Graphics.ImageFormat;
 import ultrapoulet.androidgame.framework.Input.TouchEvent;
 import ultrapoulet.androidgame.framework.Screen;
-import ultrapoulet.androidgame.framework.helpers.Animation;
-import ultrapoulet.androidgame.framework.helpers.AnimationImages;
 import ultrapoulet.wifeygame.AnimationAssets;
 import ultrapoulet.wifeygame.Assets;
 import ultrapoulet.wifeygame.character.Element;
@@ -239,12 +237,12 @@ public class LoadingScreen extends Screen {
         //Assets.attackBox = g.newImage("objects/battleMisc/AttackBox.png", ImageFormat.ARGB8888);
         //Assets.charHolder = g.newImage("objects/holders/CharacterHolder.png", ImageFormat.ARGB8888);
 
-        Assets.pHealthG = g.newImage("objects/bars/HealthBarGreen.png", ImageFormat.RGB565);
-        Assets.pHealthY = g.newImage("objects/bars/HealthBarYellow.png", ImageFormat.RGB565);
-        Assets.pHealthR = g.newImage("objects/bars/HealthBarRed.png", ImageFormat.RGB565);
-        Assets.eHealthG = g.newImage("objects/bars/EnemyHealthBarGreen.png", ImageFormat.RGB565);
-        Assets.eHealthY = g.newImage("objects/bars/EnemyHealthBarYellow.png", ImageFormat.RGB565);
-        Assets.eHealthR = g.newImage("objects/bars/EnemyHealthBarRed.png", ImageFormat.RGB565);
+        Assets.SmallGreenBar = g.newImage("objects/bars/HealthBarGreen.png", ImageFormat.RGB565);
+        Assets.SmallYellowBar = g.newImage("objects/bars/HealthBarYellow.png", ImageFormat.RGB565);
+        Assets.SmallRedBar = g.newImage("objects/bars/HealthBarRed.png", ImageFormat.RGB565);
+        //Assets.eHealthG = g.newImage("objects/bars/EnemyHealthBarGreen.png", ImageFormat.RGB565);
+        //Assets.eHealthY = g.newImage("objects/bars/EnemyHealthBarYellow.png", ImageFormat.RGB565);
+        //Assets.eHealthR = g.newImage("objects/bars/EnemyHealthBarRed.png", ImageFormat.RGB565);
         //Assets.enemyHolder = g.newImage("objects/bars/EnemyHealthHolder.png", ImageFormat.ARGB8888);
         /*
         Assets.specialBar = g.newImage("objects/bars/SpecialBar.png", ImageFormat.RGB565);

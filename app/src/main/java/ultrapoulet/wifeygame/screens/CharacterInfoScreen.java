@@ -333,7 +333,7 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
         }
         g.drawString(String.valueOf(displayChar.getLevel()), LEVEL_X, LEVEL_Y, levelPaint);
         int expWidth = (int) (EXP_BAR_MAX_WIDTH * displayChar.getExperiencePercent());
-        g.drawScaledImage(Assets.pHealthY, EXP_BAR_X, EXP_BAR_Y, expWidth, EXP_BAR_HEIGHT);
+        g.drawScaledImage(Assets.SmallYellowBar, EXP_BAR_X, EXP_BAR_Y, expWidth, EXP_BAR_HEIGHT);
         g.drawString(displayExp, EXP_X, EXP_Y, expPaint, MAX_EXP_SIZE, MAX_EXP_FONT);
 
         g.drawString(String.valueOf(BattleWifey.calculateHP(displayStrength)), HP_X, STAT_Y, statPaint);

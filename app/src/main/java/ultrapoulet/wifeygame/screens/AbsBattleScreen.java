@@ -186,6 +186,12 @@ public abstract class AbsBattleScreen extends Screen {
     private static final int WAVE_TEXT_Y = 270;
     private static final int WAVE_WIDTH = 30;
     private static final int WAVE_HEIGHT = 60;
+    private static final int WAVE_OFFSET = 0;
+
+    private static final int ATTACK_BOX_X = 0;
+    private static final int ATTACK_BOX_Y = 0;
+    private static final int ATTACK_BOX_TEXT_X = 400;
+    private static final int ATTACK_BOX_TEXT_Y = 70;
 
     private int hitsPerformed = 0;
     //private int enemyDamage;
@@ -1177,26 +1183,26 @@ public abstract class AbsBattleScreen extends Screen {
     private Image getPlayerHealthBar(int currentHealth, int maxHealth){
         Double percent = (100.0 * currentHealth)/maxHealth;
         if(percent >= 50.0){
-            return Assets.pHealthG;
+            return Assets.SmallGreenBar;
         }
         else if(percent >= 25.0){
-            return Assets.pHealthY;
+            return Assets.SmallYellowBar;
         }
         else{
-            return Assets.pHealthR;
+            return Assets.SmallRedBar;
         }
     }
 
     private Image getEnemyHealthBar(int currentHealth, int maxHealth){
         Double percent = (100.0 * currentHealth) / maxHealth;
         if(percent >= 50.0){
-            return Assets.eHealthG;
+            return BattleAssets.EnemyHealthGreen;
         }
         else if(percent >= 25.0){
-            return Assets.eHealthY;
+            return BattleAssets.EnemyHealthYellow;
         }
         else{
-            return Assets.eHealthR;
+            return BattleAssets.EnemyHealthRed;
         }
     }
 
@@ -1410,14 +1416,14 @@ public abstract class AbsBattleScreen extends Screen {
 
     private void drawPlayerCommand() {
         Graphics g = game.getGraphics();
-        g.drawImage(BattleAssets.AttackBox, 0, 0);
-        g.drawString(commandSelected.getName(), 400, 70, textPaint);
+        g.drawImage(BattleAssets.AttackBox, ATTACK_BOX_X, ATTACK_BOX_Y);
+        g.drawString(commandSelected.getName(), ATTACK_BOX_TEXT_X, ATTACK_BOX_TEXT_Y, textPaint);
     }
 
     private void drawEnemyCommand() {
         Graphics g = game.getGraphics();
-        g.drawImage(BattleAssets.AttackBox, 0, 0);
-        g.drawString(((BattleEnemy) enemies.get(enemyIndex)).getActionString(), 400, 70, textPaint);
+        g.drawImage(BattleAssets.AttackBox, ATTACK_BOX_X, ATTACK_BOX_Y);
+        g.drawString(((BattleEnemy) enemies.get(enemyIndex)).getActionString(), ATTACK_BOX_TEXT_X, ATTACK_BOX_TEXT_Y, textPaint);
     }
 
     private void drawPlayerDamage() {
@@ -1579,11 +1585,11 @@ public abstract class AbsBattleScreen extends Screen {
         else{
             if(enemyIndex + 1 >= 10) {
                 g.drawImage(BattleAssets.WaveText, WAVE_TEXT_LARGE_X, WAVE_TEXT_Y);
-                NumberPrinter.drawNumber(g, enemyIndex + 1, WAVE_NUMBER_LARGE_X, WAVE_TEXT_Y, WAVE_WIDTH, WAVE_HEIGHT, 0, Assets.YellowNumbers, NumberPrinter.Align.LEFT);
+                NumberPrinter.drawNumber(g, enemyIndex + 1, WAVE_NUMBER_LARGE_X, WAVE_TEXT_Y, WAVE_WIDTH, WAVE_HEIGHT, WAVE_OFFSET, Assets.YellowNumbers, NumberPrinter.Align.LEFT);
             }
             else {
                 g.drawImage(BattleAssets.WaveText, WAVE_TEXT_SMALL_X, WAVE_TEXT_Y);
-                NumberPrinter.drawNumber(g, enemyIndex + 1, WAVE_NUMBER_SMALL_X, WAVE_TEXT_Y, WAVE_WIDTH, WAVE_HEIGHT, 0, Assets.YellowNumbers, NumberPrinter.Align.LEFT);
+                NumberPrinter.drawNumber(g, enemyIndex + 1, WAVE_NUMBER_SMALL_X, WAVE_TEXT_Y, WAVE_WIDTH, WAVE_HEIGHT, WAVE_OFFSET, Assets.YellowNumbers, NumberPrinter.Align.LEFT);
             }
         }
     }

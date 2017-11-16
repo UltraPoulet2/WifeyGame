@@ -306,13 +306,13 @@ public class EnemyInfoScreen extends Screen {
     private Image getHealthBar(int currentHealth, int maxHealth){
         Double percent = (100.0 * currentHealth)/maxHealth;
         if(percent >= 50.0){
-            return Assets.pHealthG;
+            return Assets.SmallGreenBar;
         }
         else if(percent >= 25.0){
-            return Assets.pHealthY;
+            return Assets.SmallYellowBar;
         }
         else{
-            return Assets.pHealthR;
+            return Assets.SmallRedBar;
         }
     }
 

@@ -4,7 +4,6 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 import ultrapoulet.androidgame.framework.Graphics;
-import ultrapoulet.androidgame.framework.Input;
 import ultrapoulet.androidgame.framework.Input.TouchEvent;
 import ultrapoulet.androidgame.framework.helpers.Button;
 import ultrapoulet.androidgame.framework.helpers.NumberPrinter;
@@ -201,7 +200,7 @@ public class PlayerInfo {
             NumberPrinter.drawNumber(g, PlayerInfo.getCurrentEnergy(), 635, 0, 20, 40, 0, Assets.WhiteNumbers, Align.RIGHT);
             NumberPrinter.drawNumber(g, PlayerInfo.getMaxEnergy(), 655, 0, 20, 40, 0, Assets.WhiteNumbers, Align.LEFT);
 
-            g.drawScaledImage(Assets.pHealthG, 390, 35, (int) (EXP_BAR_WIDTH * PlayerInfo.getLevelPercentage()), EXP_BAR_HEIGHT);
+            g.drawScaledImage(Assets.SmallGreenBar, 390, 35, (int) (EXP_BAR_WIDTH * PlayerInfo.getLevelPercentage()), EXP_BAR_HEIGHT);
 
             if (PlayerInfo.getCurrentEnergy() != PlayerInfo.getMaxEnergy()) {
                 //Minutes

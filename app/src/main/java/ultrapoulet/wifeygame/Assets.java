@@ -20,8 +20,8 @@ public class Assets {
 
     //public static Image attackBox;
     //public static Image charHolder;
-    public static Image pHealthG, pHealthY, pHealthR;
-    public static Image eHealthG, eHealthY, eHealthR;
+    public static Image SmallGreenBar, SmallYellowBar, SmallRedBar;
+    //public static Image eHealthG, eHealthY, eHealthR;
     //public static Image enemyHolder;
     //public static Image specialBar, specialBarBase, specialBarTop;
     //public static Image hitsText, hitText, damageText;
