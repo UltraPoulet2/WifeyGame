@@ -391,28 +391,28 @@ public abstract class AbsBattleScreen extends Screen {
             specialAttackButton.setActive(false);
             transformButton.setActive(false);
         }
-        int i = 0;
-        for( ; i < partyIndex && i < party.size(); i++){
-            int leftX = CHAR_HOLDER_X_DISTANCE * i + CHAR_INTERIOR_SMALL_X;
-            int rightX = leftX + CHAR_IMAGE_SMALL_SIZE;
-            int topY = CHAR_IMAGE_SMALL_Y;
-            int botY = topY + CHAR_IMAGE_SMALL_SIZE;
-            partyList.get(i).setCoordinates(leftX, rightX, topY, botY);
-        }
-        if(i == partyIndex && i < party.size()){
-            int leftX = CHAR_HOLDER_X_DISTANCE * i + CHAR_INTERIOR_LARGE_X;
-            int rightX = leftX + CHAR_IMAGE_LARGE_SIZE;
-            int topY = CHAR_IMAGE_LARGE_Y;
-            int botY = topY + CHAR_IMAGE_LARGE_SIZE;
-            partyList.get(i).setCoordinates(leftX, rightX, topY, botY);
-            i++;
-        }
-        for( ; i < party.size(); i++){
-            int leftX = CHAR_HOLDER_X_DISTANCE * (i + 1);
-            int rightX = leftX + CHAR_IMAGE_SMALL_SIZE;
-            int topY = CHAR_IMAGE_SMALL_Y;
-            int botY = topY + CHAR_IMAGE_SMALL_SIZE;
-            partyList.get(i).setCoordinates(leftX, rightX, topY, botY);
+        for(int i = 0; i < party.size(); i++){
+            if(i < partyIndex) {
+                int leftX = CHAR_HOLDER_X_DISTANCE * i + CHAR_INTERIOR_SMALL_X;
+                int rightX = leftX + CHAR_IMAGE_SMALL_SIZE;
+                int topY = CHAR_IMAGE_SMALL_Y;
+                int botY = topY + CHAR_IMAGE_SMALL_SIZE;
+                partyList.get(i).setCoordinates(leftX, rightX, topY, botY);
+            }
+            else if(i == partyIndex) {
+                int leftX = CHAR_HOLDER_X_DISTANCE * i + CHAR_INTERIOR_LARGE_X;
+                int rightX = leftX + CHAR_IMAGE_LARGE_SIZE;
+                int topY = CHAR_IMAGE_LARGE_Y;
+                int botY = topY + CHAR_IMAGE_LARGE_SIZE;
+                partyList.get(i).setCoordinates(leftX, rightX, topY, botY);
+            }
+            else {
+                int leftX = CHAR_HOLDER_X_DISTANCE * (i + 1);
+                int rightX = leftX + CHAR_IMAGE_SMALL_SIZE;
+                int topY = CHAR_IMAGE_SMALL_Y;
+                int botY = topY + CHAR_IMAGE_SMALL_SIZE;
+                partyList.get(i).setCoordinates(leftX, rightX, topY, botY);
+            }
         }
     }
 
@@ -606,11 +606,11 @@ public abstract class AbsBattleScreen extends Screen {
                     AnimationImages animation = null;
                     for(int i = 0; i < party.size(); i++){
                         if(party.get(i).getDisplayDamage() != 0) {
-                            animation = AnimationAssets.HealAnimation;
+                            animation = BattleAssets.HealAnimation;
                         }
                     }
                     if(enemies.get(enemyIndex).getDisplayDamage() != 0) {
-                        animation = AnimationAssets.HealAnimation;
+                        animation = BattleAssets.HealAnimation;
                     }
                     if(animation != null){
                         healAnimation = new Animation(animation, HEAL_PHASE_WAIT, false);
@@ -754,7 +754,7 @@ public abstract class AbsBattleScreen extends Screen {
                                     party.get(j).setDisplayDamage(0);
                                 }
                             }
-                            healingAnimation = AnimationAssets.HealAnimation;
+                            healingAnimation = BattleAssets.HealAnimation;
                             break;
                         case SPECIAL_STRING:
                             baseDamage = party.get(partyIndex).SpecialAttackDamage(enemies.get(enemyIndex));
@@ -826,7 +826,7 @@ public abstract class AbsBattleScreen extends Screen {
                     resetDamage();
                     clearAnimations();
                     enemies.get(enemyIndex).setDisplayDamage(HEAL_DAMAGE * enemies.get(enemyIndex).preventDeath());
-                    healAnimation = new Animation(AnimationAssets.ReviveAnimation, WAIT_PHASE_WAIT, false);
+                    healAnimation = new Animation(BattleAssets.ReviveAnimation, WAIT_PHASE_WAIT, false);
                 } else {
                     phaseTime += deltaTime;
                     healAnimation.update(deltaTime);
@@ -950,7 +950,7 @@ public abstract class AbsBattleScreen extends Screen {
                             enemies.get(enemyIndex).setDisplayDamage(HEAL_DAMAGE * enemies.get(enemyIndex).healDamage(baseDamage, enemies.get(enemyIndex)));
                             hitsPerformed++;
                             //Change to heal animation
-                            healingAnimation = AnimationAssets.HealAnimation;
+                            healingAnimation = BattleAssets.HealAnimation;
                             break;
                         case SPECIAL_ATTACK:
                             for(int i = 0; i < party.size(); i++){
@@ -1057,7 +1057,7 @@ public abstract class AbsBattleScreen extends Screen {
                             party.get(i).setDisplayDamage(HEAL_DAMAGE * party.get(i).preventDeath());
                         }
                     }
-                    healAnimation = new Animation(AnimationAssets.ReviveAnimation, HEAL_PHASE_WAIT, false);
+                    healAnimation = new Animation(BattleAssets.ReviveAnimation, HEAL_PHASE_WAIT, false);
                 } else {
                     phaseTime += deltaTime;
                     healAnimation.update(deltaTime);

@@ -8,6 +8,7 @@ import java.util.List;
 import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Graphics.ImageFormat;
 import ultrapoulet.androidgame.framework.Image;
+import ultrapoulet.androidgame.framework.helpers.AnimationImages;
 
 /**
  * Created by John on 11/14/2017.
@@ -25,6 +26,9 @@ public class BattleAssets {
     public static Image EnemyHolder;
     public static Image SpecialBar, SpecialBarBase, SpecialBarTop;
     public static Image EnemyHealthGreen, EnemyHealthYellow, EnemyHealthRed;
+
+    public static AnimationImages HealAnimation = new AnimationImages();
+    public static AnimationImages ReviveAnimation = new AnimationImages();
 
     public static void load(Graphics g) {
         WaveText = g.newImage("objects/battleMisc/WaveText.png", ImageFormat.RGB565);
@@ -50,6 +54,13 @@ public class BattleAssets {
         for(int i = 0; i < 7; i++){
             KOImages.add(g.newImage("objects/battleMisc/KOImage" + i + ".png", ImageFormat.ARGB8888));
         }
+
+        HealAnimation = new AnimationImages();
+        ReviveAnimation = new AnimationImages();
+        for(int i = 0 ; i < 10; i++){
+            HealAnimation.addFrame(g.newImage("BattleAnimations/HEAL/HEAL" + i + ".png", Graphics.ImageFormat.ARGB8888));
+            ReviveAnimation.addFrame(g.newImage("BattleAnimations/REVIVE/REVIVE" + i + ".png", Graphics.ImageFormat.ARGB8888));
+        }
     }
 
     public static void unload() {
@@ -72,5 +83,7 @@ public class BattleAssets {
         EnemyHealthYellow = null;
         EnemyHealthRed = null;
         KOImages = null;
+        HealAnimation = null;
+        ReviveAnimation = null;
     }
 }
