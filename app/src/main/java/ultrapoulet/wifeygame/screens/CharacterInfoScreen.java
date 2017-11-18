@@ -357,7 +357,6 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
         else {
             //We'll print default weapon and let the image describe the weapon
             g.drawString("--Default Weapon--", WEAPON_X, MAX_WEAPON_Y, weaponPaint, MAX_WEAPON_SIZE, MAX_WEAPON_FONT);
-            //g.drawString(displayWeapon.getWeaponType(), WEAPON_X, MAX_WEAPON_Y, weaponPaint, MAX_WEAPON_SIZE, MAX_WEAPON_FONT);
         }
         //Draw image for weapon
         g.drawImage(displayChar.getWeapon().getImage(), WEAPONS_IMAGE_LEFT_X, WEAPONS_IMAGE_TOP_Y);

@@ -209,7 +209,6 @@ public class EnemyInfoScreen extends Screen {
                             bDisplayWeaponSkill = !bDisplayWeaponSkill;
                             break;
                         default:
-                            //System.out.println("EnemyInfoScreen:update(): Invalid button selection: " + basicPressed.getName());
                             Log.e("EnemyInfoScreen", "Invalid button selection: " + basicPressed.getName());
                     }
                 }
@@ -264,8 +263,6 @@ public class EnemyInfoScreen extends Screen {
         else {
             g.drawString("--NONE--", UNIQUE_X, skillsY + MAX_WEAPON_Y, weaponPaint, MAX_UNIQUE_SIZE, MAX_WEAPON_FONT);
         }
-
-        //Draw image for weapon category
 
         //Draw string for weapon name
         if(displayEnemy.getSkills().getWeaponSkill() != null){

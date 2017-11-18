@@ -16,7 +16,6 @@ import ultrapoulet.androidgame.framework.helpers.AnimationImages;
 import ultrapoulet.androidgame.framework.helpers.Button;
 import ultrapoulet.androidgame.framework.helpers.ButtonList;
 import ultrapoulet.androidgame.framework.helpers.NumberPrinter;
-import ultrapoulet.wifeygame.AnimationAssets;
 import ultrapoulet.wifeygame.Assets;
 import ultrapoulet.wifeygame.BattleAssets;
 import ultrapoulet.wifeygame.battle.BattleCharacter;
@@ -1006,7 +1005,6 @@ public abstract class AbsBattleScreen extends Screen {
                             break;
                         default:
                             hitsPerformed++;
-                            //System.out.println("Not supported yet");
                             Log.e("AbsBattleScreen", "Invalid enemy battle action selection");
                             break;
                     }

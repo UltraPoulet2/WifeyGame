@@ -372,7 +372,6 @@ public class BattleSelectScreen extends Screen {
                 specialButton.setActive(false);
                 break;
         }
-        //System.out.println("Tab has been changed to: " + selectedTab);
         Log.i("BattleSelectScreen", "Tab has been changed to: " + selectedTab);
     }
 
@@ -436,7 +435,6 @@ public class BattleSelectScreen extends Screen {
                             activateRecruitButtons();
                             break;
                         default:
-                            //System.out.println("Not yet implemented");
                             Log.e("BattleSelectScreen", "Unimplemented button pressed");
                     }
                 }

@@ -117,7 +117,6 @@ public class LoadingScreen extends Screen {
     }
 
     private LoadingPhase currentPhase = LoadingPhase.CREATE_IMAGES;
-    //private Animation testAnimation;
 
     @Override
     public void update(float deltaTime) {
@@ -183,7 +182,6 @@ public class LoadingScreen extends Screen {
                 }
                 else {
                     currentPhase = LoadingPhase.COMPLETE;
-                    //testAnimation = new Animation(AnimationAssets.TestAnimation, 60, true);
                 }
                 //Clear the touch input buffer
                 game.getInput().getTouchEvents();
@@ -375,15 +373,6 @@ public class LoadingScreen extends Screen {
 
         //Setup the images for Weapons
         Weapon.setupImages(g);
-
-        //Setup Animations here for now
-        //This will be moved into its own loading screen in future
-        for(Weapon weapon : Weapon.values()){
-            weapon.loadAnimation(g);
-        }
-        for(Element element : Element.values()) {
-            element.loadAnimation(g);
-        }
     }
 
     private void createRecruits(){
@@ -394,7 +383,6 @@ public class LoadingScreen extends Screen {
             SAXParser saxParser = factory.newSAXParser();
             CharacterParser charParser = new CharacterParser();
             saxParser.parse(in, charParser);
-            //System.out.println("LoadingScreen:createRecruits(): Recruit Parsing complete. Number errors: " + charParser.getNumberErrors());
             error = charParser.getNumberErrors() > 0;
             if(error){
                 errorString = charParser.getErrorString();
@@ -403,22 +391,6 @@ public class LoadingScreen extends Screen {
             else {
                 Log.i("LoadingScreen", "Recruiting Parsing complete.");
             }
-
-            //Temporary testing
-            /*
-            for(int i = 0; i < 1000; i++){
-                WifeyCharacter newChar = new WifeyCharacter();
-                newChar.setImage("test/" + i);
-                newChar.setName(String.valueOf(i));
-                newChar.setStrength(1);
-                newChar.setMagic(1);
-                newChar.setWeapon(Weapon.getWeapon("BALL"));
-                newChar.setAttackElement(Element.getElement("FIRE"));
-                newChar.setStrongElement(Element.getElement("FIRE"));
-                newChar.setWeakElement(Element.getElement("FIRE"));
-                RecruitedCharacters.put(String.valueOf(i), newChar);
-            }
-            */
         }
         catch (Exception e){
             e.printStackTrace();
@@ -460,7 +432,6 @@ public class LoadingScreen extends Screen {
             SAXParser saxParser = factory.newSAXParser();
             EnemyParser enemyParser = new EnemyParser();
             saxParser.parse(in, enemyParser);
-            //System.out.println("LoadingScreen:createEnemies(): Enemy Parsing complete. Number errors: " + enemyParser.getNumberErrors());
             error = enemyParser.getNumberErrors() > 0;
             if(error) {
                 errorString = enemyParser.getErrorString();
@@ -469,16 +440,6 @@ public class LoadingScreen extends Screen {
             else {
                 Log.i("LoadingScreen", "Enemy Parsing complete.");
             }
-
-            //Temporary testing
-            /*
-            for(int i = 0; i < 1000; i++){
-                EnemyCharacter newEnemy = new EnemyCharacter();
-                newEnemy.setImage("test/" + i);
-                newEnemy.setName(String.valueOf(i));
-                Enemies.put(String.valueOf(i), newEnemy);
-            }
-            */
         }
         catch (Exception e){
             e.printStackTrace();
@@ -503,7 +464,6 @@ public class LoadingScreen extends Screen {
             SAXParser saxParser = factory.newSAXParser();
             BattleParser battleParser = new BattleParser();
             saxParser.parse(in, battleParser);
-            //System.out.println("LoadingScreen:createBattles(): Battle Parsing complete. Number errors: " + battleParser.getNumberErrors());
             error = battleParser.getNumberErrors() > 0;
             if(error){
                 Log.e("LoadingScreen", "Battle Parsing incomplete. Number errors: " + battleParser.getNumberErrors());
@@ -535,7 +495,6 @@ public class LoadingScreen extends Screen {
             SAXParser saxParser = factory.newSAXParser();
             RecruitingBattleParser battleParser = new RecruitingBattleParser();
             saxParser.parse(in, battleParser);
-            //System.out.println("LoadingScreen:createBattles(): Recruiting Battle Parsing complete. Number errors: " + battleParser.getNumberErrors());
             error = battleParser.getNumberErrors() > 0;
             if(error) {
                 errorString = battleParser.getErrorString();
@@ -569,7 +528,6 @@ public class LoadingScreen extends Screen {
             SAXParser saxParser = factory.newSAXParser();
             RecruitingParser recParser = new RecruitingParser();
             saxParser.parse(in, recParser);
-            //System.out.println("LoadingScreen:createRecruiting(): Recruiting Parsing complete. Number errors: " + recParser.getNumberErrors());
             error = recParser.getNumberErrors() > 0;
             if(error) {
                 errorString = recParser.getErrorString();
@@ -619,14 +577,6 @@ public class LoadingScreen extends Screen {
 
         g.clearScreen(Color.BLACK);
         g.drawString(currentPhase.getStatus(), STATUS_X, STATUS_Y, statusPaint);
-
-        /*
-        if(currentPhase == LoadingPhase.COMPLETE){
-            g.drawImage(testAnimation.getFrame(), 350, 400);
-            testAnimation.update(deltaTime);
-        }
-        */
-
     }
 
     @Override

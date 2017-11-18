@@ -5,8 +5,6 @@ import java.util.Collections;
 
 import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Image;
-import ultrapoulet.androidgame.framework.helpers.AnimationImages;
-import ultrapoulet.wifeygame.AnimationAssets;
 import ultrapoulet.wifeygame.battle.BattleEnemy;
 import ultrapoulet.wifeygame.battle.enemyai.EnemyAI;
 
