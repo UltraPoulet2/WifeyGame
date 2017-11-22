@@ -368,7 +368,7 @@ public class CharacterParser extends DefaultHandler{
 
     private boolean validate(){
 
-        if(error == true){
+        if(error){
             return false;
         }
         return charBuilder.validate();

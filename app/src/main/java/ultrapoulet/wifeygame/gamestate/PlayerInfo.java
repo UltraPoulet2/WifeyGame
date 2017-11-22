@@ -146,7 +146,7 @@ public class PlayerInfo {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putLong("next_energy", nextEnergyTime);
         editor.putInt("current_energy", currentEnergy);
-        editor.commit();
+        editor.apply();
     }
 
     public static int getMaxEnergy() {

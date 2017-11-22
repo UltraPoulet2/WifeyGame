@@ -163,7 +163,7 @@ public class RecruitingBattleParser extends DefaultHandler {
     }
 
     private boolean validate(){
-        if(error == true){
+        if(error){
             return false;
         }
         if(battleBuilder.getName().length() == 0){

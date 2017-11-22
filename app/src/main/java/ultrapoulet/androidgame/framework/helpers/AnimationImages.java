@@ -13,7 +13,7 @@ public class AnimationImages {
     private ArrayList<Image> frames;
 
     public AnimationImages(){
-        frames = new ArrayList();
+        frames = new ArrayList<>();
     }
 
     public void addFrame(Image image){

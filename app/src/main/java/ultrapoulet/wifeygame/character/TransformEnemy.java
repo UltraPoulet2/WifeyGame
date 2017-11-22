@@ -44,8 +44,8 @@ public class TransformEnemy {
     private String image;
 
     public TransformEnemy(){
-        addSkills = new ArrayList();
-        removeSkills = new ArrayList();
+        addSkills = new ArrayList<>();
+        removeSkills = new ArrayList<>();
     }
 
     public String getName(){
