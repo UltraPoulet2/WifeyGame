@@ -28,9 +28,8 @@ public class GhostSkill extends AbsSkill {
 
     @Override
     public String getDescription(BattleCharacter enemy) {
-        StringBuilder desc = new StringBuilder();
-        desc.append("Physical Defense Multiplier: 0.50x\n\n");
-        desc.append("Multiplies physical attack damage taken by 0.50x");
-        return desc.toString();
+        String desc = "Physical Defense Multiplier: 0.50x\n\n" +
+                "Multiplies physical attack damage taken by 0.50x";
+        return desc;
     }
 }

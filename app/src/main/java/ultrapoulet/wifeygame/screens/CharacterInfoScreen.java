@@ -181,9 +181,7 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
         displayStrength = displayChar.getStrength();
         displayMagic = displayChar.getMagic();
         displaySkills.clear();
-        for(int i = 0; i < displayChar.getSkills().size(); i++){
-            displaySkills.add(displayChar.getSkills().get(i));
-        }
+        displaySkills.addAll(displayChar.getSkills());
         displayWeapon = displayChar.getWeapon();
         displayAttackElement = displayChar.getAttackElement();
         displayStrongElement = displayChar.getStrongElement();
@@ -216,12 +214,8 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
         if(displayForm.getWeakElement() != null){
             displayWeakElement = displayForm.getWeakElement();
         }
-        for(int i = 0; i < displayForm.getAddSkills().size(); i++){
-            displaySkills.add(displayForm.getAddSkills().get(i));
-        }
-        for(int i = 0; i < displayForm.getRemoveSkills().size(); i++){
-            displaySkills.remove(displayForm.getRemoveSkills().get(i));
-        }
+        displaySkills.addAll(displayForm.getAddSkills());
+        displaySkills.removeAll(displayForm.getRemoveSkills());
         if(displayForm.getUniqueSkill() != null){
             displayUniqueSkill = displayForm.getUniqueSkill();
         }
@@ -289,14 +283,10 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
             }
 
             TransformWifey prevForm = transformations.get(transformPage);
-            for (int i = 0; i < prevForm.getAddSkills().size(); i++) {
-                //Since decrementing, remove the skills previously added
-                displaySkills.remove(prevForm.getAddSkills().get(i));
-            }
-            for (int i = 0; i < prevForm.getRemoveSkills().size(); i++) {
-                //Since decrementing, add skills previously removed
-                displaySkills.add(prevForm.getRemoveSkills().get(i));
-            }
+            //Since decrementing, remove the skills previously added
+            displaySkills.removeAll(prevForm.getAddSkills());
+            //Since decrementing, add skills previously removed
+            displaySkills.addAll(prevForm.getRemoveSkills());
             Collections.sort(displaySkills, SkillsEnum.SKILLS_ENUM_COMPARATOR);
         }
     }

@@ -52,9 +52,8 @@ public class SportsManagerSkill extends AbsSkill {
 
     @Override
     public String getDescription(BattleCharacter enemy) {
-        StringBuilder desc = new StringBuilder();
-        desc.append("Physical Attack Multiplier: " + String.format("%1$.2f", multiplier) + "x\n\n");
-        desc.append("Increases physical damage dealt multiplier by 0.05x for each Athlete wifey. Increases the physical damage multiplier of each Athlete wifey by 1.00x. This does not stack.");
-        return desc.toString();
+        String desc = "Physical Attack Multiplier: " + String.format("%1$.2f", multiplier) + "x\n\n" +
+                "Increases physical damage dealt multiplier by 0.05x for each Athlete wifey. Increases the physical damage multiplier of each Athlete wifey by 1.00x. This does not stack.";
+        return desc;
     }
 }

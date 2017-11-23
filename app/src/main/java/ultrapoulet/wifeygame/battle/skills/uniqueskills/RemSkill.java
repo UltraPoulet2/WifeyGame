@@ -46,10 +46,9 @@ public class RemSkill extends AbsUniqueSkill {
 
     @Override
     public String getDescription(BattleCharacter enemy) {
-        StringBuilder desc = new StringBuilder();
-        desc.append("Attack Multiplier: " + String.format("%1$.2f", multiplier) + "x\n");
-        desc.append("Healing Multiplier: " + String.format("%1$.2f", multiplier) + "x\n\n");
-        desc.append("Rem gets a special skill because she is Rem. Multiplies damage dealt and healing by 2.00x.");
-        return desc.toString();
+        String desc = "Attack Multiplier: " + String.format("%1$.2f", multiplier) + "x\n" +
+                "Healing Multiplier: " + String.format("%1$.2f", multiplier) + "x\n\n" +
+                "Rem gets a special skill because she is Rem. Multiplies damage dealt and healing by 2.00x.";
+        return desc;
     }
 }

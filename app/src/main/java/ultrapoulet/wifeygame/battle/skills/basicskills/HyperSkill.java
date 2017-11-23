@@ -20,9 +20,8 @@ public class HyperSkill extends AbsSkill {
 
     @Override
     public String getDescription(BattleCharacter enemy) {
-        StringBuilder desc = new StringBuilder();
-        desc.append("Bonus Combo Hits: 1\n\n");
-        desc.append("Increases combo hits by 1.");
-        return desc.toString();
+        String desc = "Bonus Combo Hits: 1\n\n" +
+                "Increases combo hits by 1.";
+        return desc;
     }
 }

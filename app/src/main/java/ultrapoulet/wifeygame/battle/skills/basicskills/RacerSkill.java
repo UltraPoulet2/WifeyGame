@@ -57,9 +57,8 @@ public class RacerSkill extends AbsSkill {
 
     @Override
     public String getDescription(BattleCharacter enemy) {
-        StringBuilder desc = new StringBuilder();
-        desc.append("Attack Multiplier: " + String.format("%1$.2f", multiplier) + "x\n\n");
-        desc.append("Multiplies damage dealt by 4.00x at the start of a wave. Multiplier decreases by 0.50x for each turn the wave lasts, to a minimum of 0.50x.");
-        return desc.toString();
+        String desc = "Attack Multiplier: " + String.format("%1$.2f", multiplier) + "x\n\n" +
+                "Multiplies damage dealt by 4.00x at the start of a wave. Multiplier decreases by 0.50x for each turn the wave lasts, to a minimum of 0.50x.";
+        return desc;
     }
 }

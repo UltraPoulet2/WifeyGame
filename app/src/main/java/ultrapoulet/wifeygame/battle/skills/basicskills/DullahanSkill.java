@@ -49,9 +49,8 @@ public class DullahanSkill extends AbsSkill {
 
     @Override
     public String getDescription(BattleCharacter enemy) {
-        StringBuilder desc = new StringBuilder();
-        desc.append("Attack Multiplier: " + String.format("%1$.2f", getMult(enemy)) + "x\n\n");
-        desc.append("Multiplies damage dealt by 0.50x. Each percentage point below 75% the enemy's health is at increases the multiplier by 0.40x.");
-        return desc.toString();
+        String desc = "Attack Multiplier: " + String.format("%1$.2f", getMult(enemy)) + "x\n\n" +
+                "Multiplies damage dealt by 0.50x. Each percentage point below 75% the enemy's health is at increases the multiplier by 0.40x.";
+        return desc;
     }
 }

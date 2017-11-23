@@ -52,9 +52,8 @@ public class MagicianSkill extends AbsSkill {
 
     @Override
     public String getDescription(BattleCharacter enemy) {
-        StringBuilder desc = new StringBuilder();
-        desc.append("Magical Attack Multiplier: " + String.format("%1$.2f",multiplier) + "x\n\n");
-        desc.append("Multiplies magical damage dealt by 3.00x at the start of a wave. Multiplier decreases by 0.50x each time a magical attack is used, to a minimum of 1.00x.");
-        return desc.toString();
+        String desc = "Magical Attack Multiplier: " + String.format("%1$.2f", multiplier) + "x\n\n" +
+                "Multiplies magical damage dealt by 3.00x at the start of a wave. Multiplier decreases by 0.50x each time a magical attack is used, to a minimum of 1.00x.";
+        return desc;
     }
 }

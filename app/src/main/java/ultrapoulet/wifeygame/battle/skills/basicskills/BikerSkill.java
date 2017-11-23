@@ -43,9 +43,8 @@ public class BikerSkill extends AbsSkill {
 
     @Override
     public String getDescription(BattleCharacter enemy) {
-        StringBuilder desc = new StringBuilder();
-        desc.append("Bonus Combo Hits: " + extraHits + "\n\n");
-        desc.append("Increases combo hits by 1 for each other Biker wifey in the party.");
-        return desc.toString();
+        String desc = "Bonus Combo Hits: " + extraHits + "\n\n" +
+                "Increases combo hits by 1 for each other Biker wifey in the party.";
+        return desc;
     }
 }
