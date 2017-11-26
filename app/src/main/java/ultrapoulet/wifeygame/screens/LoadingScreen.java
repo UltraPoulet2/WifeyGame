@@ -223,7 +223,7 @@ public class LoadingScreen extends Screen {
             in = game.openConfig("config/characters.xml");
             SAXParserFactory factory = SAXParserFactory.newInstance();
             SAXParser saxParser = factory.newSAXParser();
-            CharacterParser charParser = new CharacterParser();
+            CharacterParser charParser = new CharacterParser(this.game);
             saxParser.parse(in, charParser);
             error = charParser.getNumberErrors() > 0;
             if(error){

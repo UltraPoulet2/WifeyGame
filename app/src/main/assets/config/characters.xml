@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <characters>
+    <include file="characters_rem.xml"/>
     <character key="TEST-ANGE">
         <name>Angelise Ikaruga Misurugi</name>
         <strength>70</strength>
@@ -1207,6 +1208,7 @@
             <wkElement>FIRE</wkElement>
         </elements>
     </character>
+    <!--
     <character key="TEST-RREM">
         <name>Rem</name>
         <strength>90</strength>
@@ -1221,7 +1223,6 @@
             <stgElement>AIR</stgElement>
             <wkElement>DARK</wkElement>
         </elements>
-        <!-- Commented out test transformation -->
         <transformations>
             <transformation>
                 <name>Rem Transformed</name>
@@ -1241,6 +1242,6 @@
                 </elements>
             </transformation>
         </transformations>
-        <!---->
     </character>
+    -->
 </characters>
