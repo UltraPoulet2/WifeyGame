@@ -28,6 +28,7 @@ import ultrapoulet.wifeygame.gamestate.RecruitedCharacters;
 import ultrapoulet.wifeygame.gamestate.StoryBattles;
 import ultrapoulet.wifeygame.parsers.BattleParser;
 import ultrapoulet.wifeygame.parsers.CharacterParser;
+import ultrapoulet.wifeygame.parsers.ConfigParser;
 import ultrapoulet.wifeygame.parsers.EnemyParser;
 import ultrapoulet.wifeygame.parsers.RecruitingBattleParser;
 import ultrapoulet.wifeygame.parsers.RecruitingParser;
@@ -219,24 +220,39 @@ public class LoadingScreen extends Screen {
 
     private void createRecruits(){
         InputStream in = null;
+        String currentFile = null;
         try {
-            in = game.openConfig("config/characters.xml");
             SAXParserFactory factory = SAXParserFactory.newInstance();
             SAXParser saxParser = factory.newSAXParser();
-            CharacterParser charParser = new CharacterParser(this.game);
-            saxParser.parse(in, charParser);
-            error = charParser.getNumberErrors() > 0;
-            if(error){
-                errorString = charParser.getErrorString();
-                Log.e("LoadingScreen", "Recruiting Parsing incomplete. Number errors: " + charParser.getNumberErrors());
-            }
-            else {
-                Log.i("LoadingScreen", "Recruiting Parsing complete.");
+            currentFile = "config/config_characters.xml";
+
+            in = game.openConfig(currentFile);
+            ConfigParser configParser = new ConfigParser();
+            saxParser.parse(in, configParser);
+            List<String> configFiles = configParser.getConfigList();
+            for(int i = 0; i < configFiles.size(); i++) {
+                currentFile = configFiles.get(i);
+                Log.i("LoadingScreen", "Starting parsing of: " + currentFile);
+                in = game.openConfig(currentFile);
+                CharacterParser charParser = new CharacterParser();
+                saxParser.parse(in, charParser);
+                error = charParser.getNumberErrors() > 0;
+                if (error) {
+                    errorString = charParser.getErrorString();
+                    Log.e("LoadingScreen", "Recruiting Parsing incomplete for file: " + currentFile + " Number errors: " + charParser.getNumberErrors());
+                } else {
+                    Log.i("LoadingScreen", "Recruiting Parsing complete for file: " + currentFile);
+                }
             }
         }
         catch (Exception e){
             e.printStackTrace();
             //Do better error handling
+            if(currentFile != null) {
+                Log.e("LoadingScreen", "Error opening file: " +  currentFile);
+            }
+            error = true;
+            errorString = "Error opening file: " + currentFile;
         }
         finally{
             if(in != null){
@@ -268,24 +284,41 @@ public class LoadingScreen extends Screen {
 
     private void createEnemies(){
         InputStream in = null;
+        String currentFile = null;
         try {
-            in = game.openConfig("config/enemies.xml");
             SAXParserFactory factory = SAXParserFactory.newInstance();
             SAXParser saxParser = factory.newSAXParser();
-            EnemyParser enemyParser = new EnemyParser();
-            saxParser.parse(in, enemyParser);
-            error = enemyParser.getNumberErrors() > 0;
-            if(error) {
-                errorString = enemyParser.getErrorString();
-                Log.e("LoadingScreen", "Enemy Parsing incomplete. Number errors: " + enemyParser.getNumberErrors());
+            currentFile = "config/config_enemies.xml";
+
+            in = game.openConfig(currentFile);
+            ConfigParser configParser = new ConfigParser();
+            saxParser.parse(in, configParser);
+            List<String> configFiles = configParser.getConfigList();
+            for(int i = 0; i < configFiles.size(); i++) {
+                currentFile = configFiles.get(i);
+                Log.i("LoadingScreen", "Starting parsing of: " + currentFile);
+                in = game.openConfig(currentFile);
+                EnemyParser enemyParser = new EnemyParser();
+                saxParser.parse(in, enemyParser);
+                error = enemyParser.getNumberErrors() > 0;
+                if(error) {
+                    errorString = enemyParser.getErrorString();
+                    Log.e("LoadingScreen", "Enemy Parsing incomplete for file: " + currentFile + " Number errors: " + enemyParser.getNumberErrors());
+                }
+                else {
+                    Log.i("LoadingScreen", "Enemy Parsing complete for file: " + currentFile);
+                }
             }
-            else {
-                Log.i("LoadingScreen", "Enemy Parsing complete.");
-            }
+
         }
         catch (Exception e){
             e.printStackTrace();
             //Do better error handling
+            if(currentFile != null) {
+                Log.e("LoadingScreen", "Error opening file: " +  currentFile);
+            }
+            error = true;
+            errorString = "Error opening file: " + currentFile;
         }
         finally{
             if(in != null){
@@ -300,25 +333,41 @@ public class LoadingScreen extends Screen {
 
     private void createBattles(){
         InputStream in = null;
+        String currentFile = null;
         try {
-            in = game.openConfig("config/battles.xml");
             SAXParserFactory factory = SAXParserFactory.newInstance();
             SAXParser saxParser = factory.newSAXParser();
-            BattleParser battleParser = new BattleParser();
-            saxParser.parse(in, battleParser);
-            error = battleParser.getNumberErrors() > 0;
-            if(error){
-                Log.e("LoadingScreen", "Battle Parsing incomplete. Number errors: " + battleParser.getNumberErrors());
-                errorString = battleParser.getErrorString();
-                return;
-            }
-            else {
-                Log.i("LoadingScreen", "Battle Parsing complete.");
+            currentFile = "config/config_battles.xml";
+
+            in = game.openConfig(currentFile);
+            ConfigParser configParser = new ConfigParser();
+            saxParser.parse(in, configParser);
+            List<String> configFiles = configParser.getConfigList();
+            for(int i = 0; i < configFiles.size(); i++) {
+                currentFile = configFiles.get(i);
+                Log.i("LoadingScreen", "Starting parsing of: " + currentFile);
+                in = game.openConfig(currentFile);
+
+                BattleParser battleParser = new BattleParser();
+                saxParser.parse(in, battleParser);
+                error = battleParser.getNumberErrors() > 0;
+                if (error) {
+                    Log.e("LoadingScreen", "Battle Parsing incomplete for file: " + currentFile + " Number errors: " + battleParser.getNumberErrors());
+                    errorString = battleParser.getErrorString();
+                    return;
+                } else {
+                    Log.i("LoadingScreen", "Battle Parsing complete for file: " + currentFile);
+                }
             }
         }
         catch (Exception e){
             e.printStackTrace();
             //Do better error handling
+            if(currentFile != null) {
+                Log.e("LoadingScreen", "Error opening file: " +  currentFile);
+            }
+            error = true;
+            errorString = "Error opening file: " + currentFile;
         }
         finally{
             if(in != null){
@@ -332,24 +381,38 @@ public class LoadingScreen extends Screen {
         StoryBattles.validateUnlocks();
 
         try {
-            in = game.openConfig("config/recruitbattles.xml");
             SAXParserFactory factory = SAXParserFactory.newInstance();
             SAXParser saxParser = factory.newSAXParser();
-            RecruitingBattleParser battleParser = new RecruitingBattleParser();
-            saxParser.parse(in, battleParser);
-            error = battleParser.getNumberErrors() > 0;
-            if(error) {
-                errorString = battleParser.getErrorString();
-                Log.e("LoadingScreen", "Recruiting Battle Parsing incomplete. Number errors: " + battleParser.getNumberErrors());
-                return;
-            }
-            else{
-                Log.i("LoadingScreen", "Recruiting Battle Parsing complete.");
+            currentFile = "config/config_recruitbattles.xml";
+
+            in = game.openConfig(currentFile);
+            ConfigParser configParser = new ConfigParser();
+            saxParser.parse(in, configParser);
+            List<String> configFiles = configParser.getConfigList();
+            for(int i = 0; i < configFiles.size(); i++) {
+                currentFile = configFiles.get(i);
+                Log.i("LoadingScreen", "Starting parsing of: " + currentFile);
+                in = game.openConfig(currentFile);
+                RecruitingBattleParser battleParser = new RecruitingBattleParser();
+                saxParser.parse(in, battleParser);
+                error = battleParser.getNumberErrors() > 0;
+                if (error) {
+                    errorString = battleParser.getErrorString();
+                    Log.e("LoadingScreen", "Recruiting Battle Parsing incomplete for file: " + currentFile + " Number errors: " + battleParser.getNumberErrors());
+                    return;
+                } else {
+                    Log.i("LoadingScreen", "Recruiting Battle Parsing complete for file: " + currentFile);
+                }
             }
         }
         catch (Exception e){
             e.printStackTrace();
             //Do better error handling
+            if(currentFile != null) {
+                Log.e("LoadingScreen", "Error opening file: " +  currentFile);
+            }
+            error = true;
+            errorString = "Error opening file: " + currentFile;
         }
         finally{
             if(in != null){
@@ -364,23 +427,38 @@ public class LoadingScreen extends Screen {
 
     private void createRecruiting(){
         InputStream in = null;
+        String currentFile = null;
         try {
-            in = game.openConfig("config/recruiting.xml");
             SAXParserFactory factory = SAXParserFactory.newInstance();
             SAXParser saxParser = factory.newSAXParser();
-            RecruitingParser recParser = new RecruitingParser();
-            saxParser.parse(in, recParser);
-            error = recParser.getNumberErrors() > 0;
-            if(error) {
-                errorString = recParser.getErrorString();
-                Log.e("LoadingScreen", "Recruiting Parsing incomplete. Number errors: " + recParser.getNumberErrors());
-            }
-            else {
-                Log.i("LoadingScreen", "Recruiting Parsing complete.");
+            currentFile = "config/config_recruiting.xml";
+
+            in = game.openConfig(currentFile);
+            ConfigParser configParser = new ConfigParser();
+            saxParser.parse(in, configParser);
+            List<String> configFiles = configParser.getConfigList();
+            for(int i = 0; i < configFiles.size(); i++) {
+                currentFile = configFiles.get(i);
+                Log.i("LoadingScreen", "Starting parsing of: " + currentFile);
+                in = game.openConfig(currentFile);
+                RecruitingParser recParser = new RecruitingParser();
+                saxParser.parse(in, recParser);
+                error = recParser.getNumberErrors() > 0;
+                if (error) {
+                    errorString = recParser.getErrorString();
+                    Log.e("LoadingScreen", "Recruiting Parsing incomplete for file " + currentFile + " Number errors: " + recParser.getNumberErrors());
+                } else {
+                    Log.i("LoadingScreen", "Recruiting Parsing complete for file " + currentFile);
+                }
             }
         }
         catch (Exception e){
             e.printStackTrace();
+            if(currentFile != null) {
+                Log.e("LoadingScreen", "Error opening file: " +  currentFile);
+            }
+            error = true;
+            errorString = "Error opening file: " + currentFile;
         }
         finally {
             if (in != null){

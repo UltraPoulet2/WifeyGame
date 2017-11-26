@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <characters>
-    <include file="characters_rem.xml"/>
     <character key="TEST-ANGE">
         <name>Angelise Ikaruga Misurugi</name>
         <strength>70</strength>

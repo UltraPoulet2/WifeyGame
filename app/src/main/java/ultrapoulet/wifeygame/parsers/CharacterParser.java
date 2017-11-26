@@ -45,19 +45,12 @@ public class CharacterParser extends DefaultHandler{
 
     private ArrayList<String> errorKeys = new ArrayList<>();
 
-    //For use to open new config files
-    private Game game;
-
-    public CharacterParser(Game game) {
-        super();
-        this.game = game;
-    }
-
     @Override
     public void startElement(String uri,
                              String localName,
                              String qName,
                              Attributes attributes) throws SAXException {
+        /*
         if (qName.equalsIgnoreCase("include")) {
             InputStream in = null;
             String file = "config/" + attributes.getValue("file");
@@ -90,7 +83,8 @@ public class CharacterParser extends DefaultHandler{
                 }
             }
         }
-        else if (qName.equalsIgnoreCase("character")) {
+        */
+        if (qName.equalsIgnoreCase("character")) {
             error = false;
             charKey = attributes.getValue("key");
             if(charKey != null) {
