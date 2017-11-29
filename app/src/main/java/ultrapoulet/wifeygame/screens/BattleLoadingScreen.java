@@ -76,8 +76,10 @@ public class BattleLoadingScreen extends Screen {
         loadingElements = new ArrayList<>();
 
         for(WifeyCharacter wifey : party){
-            loadingWeapons.add(wifey.getWeapon());
-            loadingElements.add(wifey.getAttackElement());
+            if(wifey != null) {
+                loadingWeapons.add(wifey.getWeapon());
+                loadingElements.add(wifey.getAttackElement());
+            }
         }
         for(EnemyCharacter enemy : enemies) {
             loadingWeapons.add(enemy.getWeapon());
