@@ -136,6 +136,16 @@ public class AndroidGraphics implements Graphics {
 
     @Override
     public void drawMultiLineString(String text, int x, int y, int width, TextPaint paint){
+        /* Do not question this. For some reason, the first time a Screen calls this function, the
+         * text written out would be different than any other frame. This was causing a 'flicker'.
+         * By drawing an empty string, the flicker is removed. Somehow.
+         */
+        StaticLayout blank = new StaticLayout("", paint, width, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
+        canvas.save();
+        canvas.translate(x,y);
+        blank.draw(canvas);
+        canvas.restore();
+
         StaticLayout textLayout = new StaticLayout(
                 text, paint, width, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
         canvas.save();
