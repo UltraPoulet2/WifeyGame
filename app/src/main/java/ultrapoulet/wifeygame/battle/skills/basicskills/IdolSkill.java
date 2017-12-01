@@ -29,9 +29,8 @@ public class IdolSkill extends AbsSkill {
 
     @Override
     public String getDescription(BattleCharacter enemy) {
-        StringBuilder desc = new StringBuilder();
-        desc.append("Bonus Recruiting Percentage: " + bonusRecruiting + "%\n\n");
-        desc.append("Defeating an enemy with this wifey increases chance to find a wifey after the battle by 2%.");
-        return desc.toString();
+        String desc = "Bonus Recruiting Percentage: " + bonusRecruiting + "%\n\n" +
+                "Defeating an enemy with this wifey increases chance to find a wifey after the battle by 2%.";
+        return desc;
     }
 }

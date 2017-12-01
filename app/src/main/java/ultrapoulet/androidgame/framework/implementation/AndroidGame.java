@@ -1,7 +1,6 @@
 package ultrapoulet.androidgame.framework.implementation;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;

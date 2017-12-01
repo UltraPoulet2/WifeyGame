@@ -70,11 +70,10 @@ public class PravdaSkill extends AbsSkill {
 
     @Override
     public String getDescription(BattleCharacter enemy) {
-        StringBuilder desc = new StringBuilder();
-        desc.append("Attack Multiplier: " + String.format("%1$.2f", multiplier) + "x\n\n");
-        desc.append("Increases damage dealt multiplier by ");
-        desc.append(this.isPresident ? "2.00x" : "1.00x");
-        desc.append(" for each other Pravda wifey.");
-        return desc.toString();
+        String desc = "Attack Multiplier: " + String.format("%1$.2f", multiplier) + "x\n\n" +
+                "Increases damage dealt multiplier by " +
+                (this.isPresident ? "2.00x" : "1.00x") +
+                " for each other Pravda wifey.";
+        return desc;
     }
 }

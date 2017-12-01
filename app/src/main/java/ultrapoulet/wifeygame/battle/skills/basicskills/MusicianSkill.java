@@ -57,11 +57,10 @@ public class MusicianSkill extends AbsSkill {
 
     @Override
     public String getDescription(BattleCharacter enemy) {
-        StringBuilder desc = new StringBuilder();
         double mult = (attackNum == 7) ? multiplier : 1.0;
-        desc.append("Attack Multiplier: " + String.format("%1$.2f", mult) + "x\n");
-        desc.append("Hit Counter: " + attackNum + "\n\n");
-        desc.append("Multiplies damage dealt by 4.00x every eighth hit.");
-        return desc.toString();
+        String desc = "Attack Multiplier: " + String.format("%1$.2f", mult) + "x\n" +
+                "Hit Counter: " + attackNum + "\n\n" +
+                "Multiplies damage dealt by 4.00x every eighth hit.";
+        return desc;
     }
 }

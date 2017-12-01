@@ -16,8 +16,8 @@ import ultrapoulet.androidgame.framework.helpers.AnimationImages;
 import ultrapoulet.androidgame.framework.helpers.Button;
 import ultrapoulet.androidgame.framework.helpers.ButtonList;
 import ultrapoulet.androidgame.framework.helpers.NumberPrinter;
-import ultrapoulet.wifeygame.AnimationAssets;
 import ultrapoulet.wifeygame.Assets;
+import ultrapoulet.wifeygame.BattleAssets;
 import ultrapoulet.wifeygame.battle.BattleCharacter;
 import ultrapoulet.wifeygame.battle.BattleEnemy;
 import ultrapoulet.wifeygame.battle.BattleInfo;
@@ -49,16 +49,10 @@ public abstract class AbsBattleScreen extends Screen {
 
     private Image background;
 
-    private static Image specialBar, specialBarBase, specialBarTop;
-
     private int comboHolder;
     private int damageHolder;
 
     private Paint textPaint;
-
-    private static Image charHolder;
-
-    private static Image enemyHolder;
 
     private Animation battleAnimation = null;
     private int battleAnimationOffsetX = 0;
@@ -145,7 +139,6 @@ public abstract class AbsBattleScreen extends Screen {
     private static final int OTHER_PHASE_WAIT = 5;
     private static final int WAVE_PHASE_WAIT = 60;
     private float phaseTime = 0;
-    private boolean phaseEntered = true;
 
     private static final int ENEMY_DAMAGE_BASE_X = 400;
     private static final int ENEMY_DAMAGE_START_Y = 240;
@@ -191,10 +184,14 @@ public abstract class AbsBattleScreen extends Screen {
     private static final int WAVE_TEXT_Y = 270;
     private static final int WAVE_WIDTH = 30;
     private static final int WAVE_HEIGHT = 60;
+    private static final int WAVE_OFFSET = 0;
+
+    private static final int ATTACK_BOX_X = 0;
+    private static final int ATTACK_BOX_Y = 0;
+    private static final int ATTACK_BOX_TEXT_X = 400;
+    private static final int ATTACK_BOX_TEXT_Y = 70;
 
     private int hitsPerformed = 0;
-    private int enemyDamage;
-    private int partyDamage[] = new int[7];
     private static final int HEAL_DAMAGE = -1;
 
     private BattleCharacterInfoScreen charInfo;
@@ -305,18 +302,13 @@ public abstract class AbsBattleScreen extends Screen {
         ROUND_END,
         WAVE_END,
         BATTLE_END
+
     }
 
     private BattlePhase currentPhase = BattlePhase.BATTLE_START;
 
     public AbsBattleScreen(Game game, BattleInfo info){
         super(game);
-
-        charHolder = Assets.charHolder;
-        enemyHolder = Assets.enemyHolder;
-        specialBar = Assets.specialBar;
-        specialBarBase = Assets.specialBarBase;
-        specialBarTop = Assets.specialBarTop;
 
         createButtonList();
         createPaint();
@@ -398,28 +390,28 @@ public abstract class AbsBattleScreen extends Screen {
             specialAttackButton.setActive(false);
             transformButton.setActive(false);
         }
-        int i = 0;
-        for( ; i < partyIndex && i < party.size(); i++){
-            int leftX = CHAR_HOLDER_X_DISTANCE * i + CHAR_INTERIOR_SMALL_X;
-            int rightX = leftX + CHAR_IMAGE_SMALL_SIZE;
-            int topY = CHAR_IMAGE_SMALL_Y;
-            int botY = topY + CHAR_IMAGE_SMALL_SIZE;
-            partyList.get(i).setCoordinates(leftX, rightX, topY, botY);
-        }
-        if(i == partyIndex && i < party.size()){
-            int leftX = CHAR_HOLDER_X_DISTANCE * i + CHAR_INTERIOR_LARGE_X;
-            int rightX = leftX + CHAR_IMAGE_LARGE_SIZE;
-            int topY = CHAR_IMAGE_LARGE_Y;
-            int botY = topY + CHAR_IMAGE_LARGE_SIZE;
-            partyList.get(i).setCoordinates(leftX, rightX, topY, botY);
-            i++;
-        }
-        for( ; i < party.size(); i++){
-            int leftX = CHAR_HOLDER_X_DISTANCE * (i + 1);
-            int rightX = leftX + CHAR_IMAGE_SMALL_SIZE;
-            int topY = CHAR_IMAGE_SMALL_Y;
-            int botY = topY + CHAR_IMAGE_SMALL_SIZE;
-            partyList.get(i).setCoordinates(leftX, rightX, topY, botY);
+        for(int i = 0; i < party.size(); i++){
+            if(i < partyIndex) {
+                int leftX = CHAR_HOLDER_X_DISTANCE * i + CHAR_INTERIOR_SMALL_X;
+                int rightX = leftX + CHAR_IMAGE_SMALL_SIZE;
+                int topY = CHAR_IMAGE_SMALL_Y;
+                int botY = topY + CHAR_IMAGE_SMALL_SIZE;
+                partyList.get(i).setCoordinates(leftX, rightX, topY, botY);
+            }
+            else if(i == partyIndex) {
+                int leftX = CHAR_HOLDER_X_DISTANCE * i + CHAR_INTERIOR_LARGE_X;
+                int rightX = leftX + CHAR_IMAGE_LARGE_SIZE;
+                int topY = CHAR_IMAGE_LARGE_Y;
+                int botY = topY + CHAR_IMAGE_LARGE_SIZE;
+                partyList.get(i).setCoordinates(leftX, rightX, topY, botY);
+            }
+            else {
+                int leftX = CHAR_HOLDER_X_DISTANCE * (i + 1);
+                int rightX = leftX + CHAR_IMAGE_SMALL_SIZE;
+                int topY = CHAR_IMAGE_SMALL_Y;
+                int botY = topY + CHAR_IMAGE_SMALL_SIZE;
+                partyList.get(i).setCoordinates(leftX, rightX, topY, botY);
+            }
         }
     }
 
@@ -499,9 +491,9 @@ public abstract class AbsBattleScreen extends Screen {
     }
 
     private void resetDamage() {
-        enemyDamage = 0;
-        for(int i = 0; i < partyDamage.length; i++){
-            partyDamage[i] = 0;
+        enemies.get(enemyIndex).resetDisplayDamage();
+        for(int i = 0; i < party.size(); i++) {
+            party.get(i).resetDisplayDamage();
         }
     }
 
@@ -548,626 +540,590 @@ public abstract class AbsBattleScreen extends Screen {
         healAnimation = null;
     }
 
-    @Override
-    public void update(float deltaTime) {
-
-        switch (currentPhase) {
+    private boolean shouldGoToNextPhase() {
+        switch(currentPhase) {
             case BATTLE_START:
-                //Do anything necessary for battle start
-                if (phaseEntered) {
-                    //On Battle Start, increment the Number attempts in the BattleInfo
-                    battleInfo.incrementNumAttempts();
-                    phaseTime = 0;
-                    phaseEntered = false;
-                    for(int i = 0; i < party.size(); i++){
-                        if(party.get(i).getCurrentHP() != 0) {
-                            party.get(i).startBattle(party);
-                        }
+                return phaseTime >= OTHER_PHASE_WAIT;
+            case WAVE_START:
+                return phaseTime >= WAVE_PHASE_WAIT;
+            case ROUND_START:
+                int waitTime = OTHER_PHASE_WAIT;
+                for(int i = 0; i < party.size(); i++){
+                    if(party.get(i).getDisplayDamage() != 0) {
+                        waitTime = HEAL_PHASE_WAIT;
                     }
-                    for(int i = 0; i < enemies.size(); i++){
-                        enemies.get(i).startBattle(enemies);
-                    }
+                }
+                if(enemies.get(enemyIndex).getDisplayDamage() != 0) {
+                    waitTime = HEAL_PHASE_WAIT;
+                }
+                return phaseTime >= waitTime;
+            case WAIT_PLAYER_ACTION:
+                //Make sure to set commandSelected to null at entrance of WAIT_PLAYER_ACTION
+                return commandSelected != null;
+            case ANIMATE_PLAYER_ACTION:
+                return phaseTime >= getPlayerPhaseWait();
+            case PREVENT_ENEMY_DEFEAT:
+                return phaseTime >= WAIT_PHASE_WAIT;
+            case WAIT_ENEMY_ACTION:
+                return phaseTime >= WAIT_PHASE_WAIT;
+            case ANIMATE_ENEMY_ACTION:
+                return phaseTime >= getEnemyPhaseWait();
+            case PREVENT_PLAYER_DEFEAT:
+                return phaseTime >= HEAL_PHASE_WAIT;
+            case ROUND_END:
+                return phaseTime >= WAIT_PHASE_WAIT;
+            case WAVE_END:
+                return phaseTime >= WAVE_PHASE_WAIT;
+            case BATTLE_END:
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    public BattlePhase getNextPhase() {
+        switch(currentPhase) {
+            case BATTLE_START:
+                return BattlePhase.WAVE_START;
+            case WAVE_START:
+                return BattlePhase.ROUND_START;
+            case ROUND_START:
+                return BattlePhase.WAIT_PLAYER_ACTION;
+            case WAIT_PLAYER_ACTION:
+                return BattlePhase.ANIMATE_PLAYER_ACTION;
+            case ANIMATE_PLAYER_ACTION:
+                if (enemies.get(enemyIndex).getCurrentHP() == 0 && enemies.get(enemyIndex).canPreventDeath()) {
+                    return BattlePhase.PREVENT_ENEMY_DEFEAT;
+                } else if (commandSelected == comboAttackButton && hitsPerformed < party.get(partyIndex).getNumHits()) {
+                    return BattlePhase.ANIMATE_PLAYER_ACTION;
+                } else if (enemies.get(enemyIndex).getCurrentHP() == 0) {
+                    return BattlePhase.WAVE_END;
+                } else if (isEndOfRound()) {
+                    return BattlePhase.WAIT_ENEMY_ACTION;
                 } else {
-                    phaseTime += deltaTime;
-                    if (phaseTime >= OTHER_PHASE_WAIT) {
-                        currentPhase = BattlePhase.WAVE_START;
-                        phaseEntered = true;
+                    return BattlePhase.WAIT_PLAYER_ACTION;
+                }
+            case PREVENT_ENEMY_DEFEAT:
+                if (isEndOfRound()) {
+                    return BattlePhase.WAIT_ENEMY_ACTION;
+                } else {
+                    return BattlePhase.WAIT_PLAYER_ACTION;
+                }
+            case WAIT_ENEMY_ACTION:
+                return BattlePhase.ANIMATE_ENEMY_ACTION;
+            case ANIMATE_ENEMY_ACTION:
+                if ((isGameOver() || hitsPerformed == enemies.get(enemyIndex).getNumHits()) && canPreventPartyDeath()) {
+                    return BattlePhase.PREVENT_PLAYER_DEFEAT;
+                } else if (isGameOver()) {
+                    return BattlePhase.BATTLE_END;
+                } else if(hitsPerformed < enemies.get(enemyIndex).getNumHits()){
+                    return BattlePhase.ANIMATE_ENEMY_ACTION;
+                }  else{
+                    return BattlePhase.ROUND_END;
+                }
+            case PREVENT_PLAYER_DEFEAT:
+                return BattlePhase.ROUND_END;
+            case ROUND_END:
+                return BattlePhase.ROUND_START;
+            case WAVE_END:
+                if (enemyIndex + 1 == enemies.size()) {
+                    return BattlePhase.BATTLE_END;
+                } else {
+                    enemyIndex++;
+                    return BattlePhase.WAVE_START;
+                }
+            case BATTLE_END:
+                return BattlePhase.BATTLE_END;
+            default:
+                return BattlePhase.BATTLE_END;
+        }
+    }
+
+    public void enterPhase() {
+        switch(currentPhase) {
+            case BATTLE_START:
+                battleInfo.incrementNumAttempts();
+                for(int i = 0; i < party.size(); i++){
+                    if(party.get(i).getCurrentHP() != 0) {
+                        party.get(i).startBattle(party);
                     }
+                }
+                for(int i = 0; i < enemies.size(); i++){
+                    enemies.get(i).startBattle(enemies);
                 }
                 break;
             case WAVE_START:
-                //Do anything necessary for Start of Wave
-                if (phaseEntered) {
-                    resetPartyIndex();
-                    for(int i = 0; i < party.size(); i++){
-                        if(party.get(i).getCurrentHP() != 0){
-                            party.get(i).startWave();
-                        }
-                    }
-                    enemies.get(enemyIndex).startWave();
-                    resetDamage();
-                    clearAnimations();
-                    phaseTime = 0;
-                    phaseEntered = false;
-                    comboHolder = 0;
-                    damageHolder = 0;
-                } else {
-                    phaseTime += deltaTime;
-                    if (phaseTime >= WAVE_PHASE_WAIT) {
-                        currentPhase = BattlePhase.ROUND_START;
-                        phaseEntered = true;
+                resetPartyIndex();
+                for(int i = 0; i < party.size(); i++){
+                    if(party.get(i).getCurrentHP() != 0){
+                        party.get(i).startWave();
                     }
                 }
+                enemies.get(enemyIndex).startWave();
+                resetDamage();
+                clearAnimations();
                 break;
             case ROUND_START:
-                //Do things for Start of Round
-                if (phaseEntered) {
-                    resetPartyIndex();
-                    clearAnimations();
-                    for(int i = 0; i < party.size(); i++){
-                        if(party.get(i).getCurrentHP() != 0) {
-                            partyDamage[i] = party.get(i).startRound();
-                        }
+                resetPartyIndex();
+                clearAnimations();
+                for(int i = 0; i < party.size(); i++){
+                    if(party.get(i).getCurrentHP() != 0) {
+                        party.get(i).setDisplayDamage(party.get(i).startRound());
                     }
-                    enemyDamage = enemies.get(enemyIndex).startRound();
-                    AnimationImages animation = null;
-                    for(int i = 0; i < party.size(); i++){
-                        if(partyDamage[i] != 0) {
-                            animation = AnimationAssets.HealAnimation;
-                        }
+                }
+                enemies.get(enemyIndex).setDisplayDamage(enemies.get(enemyIndex).startRound());
+                AnimationImages roundStartAnimation = null;
+                for(int i = 0; i < party.size(); i++){
+                    if(party.get(i).getDisplayDamage() != 0) {
+                        roundStartAnimation = BattleAssets.HealAnimation;
                     }
-                    if(enemyDamage != 0) {
-                        animation = AnimationAssets.HealAnimation;
-                    }
-                    if(animation != null){
-                        healAnimation = new Animation(animation, HEAL_PHASE_WAIT, false);
-                    }
-                    //resetDamage();
-                    comboHolder = 0;
-                    damageHolder = 0;
-                    phaseTime = 0;
-                    phaseEntered = false;
-                } else {
-                    phaseTime += deltaTime;
-                    if(healAnimation != null){
-                        healAnimation.update(deltaTime);
-                    }
-                    int waitTime = OTHER_PHASE_WAIT;
-                    for(int i = 0; i < party.size(); i++){
-                        if(partyDamage[i] != 0) {
-                            waitTime = HEAL_PHASE_WAIT;
-                        }
-                    }
-                    if(enemyDamage != 0) {
-                        waitTime = HEAL_PHASE_WAIT;
-                    }
-                    if (phaseTime >= waitTime) {
-                        currentPhase = BattlePhase.WAIT_PLAYER_ACTION;
-                        phaseEntered = true;
-                    }
+                }
+                if(enemies.get(enemyIndex).getDisplayDamage() != 0) {
+                    roundStartAnimation = BattleAssets.HealAnimation;
+                }
+                if(roundStartAnimation != null){
+                    healAnimation = new Animation(roundStartAnimation, HEAL_PHASE_WAIT, false);
+                }
+                comboHolder = 0;
+                damageHolder = 0;
+                break;
+            case WAIT_PLAYER_ACTION:
+                //Clear the touch input buffer
+                game.getInput().getTouchEvents();
 
+                nextPartyIndex();
+                clearAnimations();
+                party.get(partyIndex).startTurn();
+                resetDamage();
+                updateButtons();
+                hitsPerformed = 0;
+                commandSelected = null;
+                break;
+            case ANIMATE_PLAYER_ACTION:
+                clearAnimations();
+
+                int playerBaseDamage;
+                int playerDisplayDamage;
+                AnimationImages playerActionAnimation = null;
+                AnimationImages playerActionHealingAnimation = null;
+                switch (commandSelected.getName()) {
+                    case POWER_STRING:
+                        playerBaseDamage = party.get(partyIndex).PowerAttackDamage(enemies.get(enemyIndex));
+                        playerDisplayDamage = enemies.get(enemyIndex).takePhysicalDamage(playerBaseDamage, party.get(partyIndex));
+                        enemies.get(enemyIndex).setDisplayDamage(playerDisplayDamage);
+                        party.get(partyIndex).onDamageDealt(playerDisplayDamage);
+                        incrementHits();
+                        comboHolder++;
+                        damageHolder += playerDisplayDamage;
+                        playerActionAnimation = party.get(partyIndex).getBattleAnimation();
+                        break;
+                    case COMBO_STRING:
+                        playerBaseDamage = party.get(partyIndex).ComboAttackDamage(enemies.get(enemyIndex));
+                        playerDisplayDamage = enemies.get(enemyIndex).takePhysicalDamage(playerBaseDamage, party.get(partyIndex));
+                        enemies.get(enemyIndex).setDisplayDamage(playerDisplayDamage);
+                        party.get(partyIndex).onDamageDealt(playerDisplayDamage);
+                        incrementHits();
+                        hitsPerformed++;
+                        comboHolder++;
+                        damageHolder += playerDisplayDamage;
+                        playerActionAnimation = party.get(partyIndex).getBattleAnimation();
+                        break;
+                    case MAGIC_STRING:
+                        playerBaseDamage = party.get(partyIndex).MagicAttackDamage(enemies.get(enemyIndex));
+                        playerDisplayDamage = enemies.get(enemyIndex).takeMagicalDamage(playerBaseDamage, party.get(partyIndex));
+                        enemies.get(enemyIndex).setDisplayDamage(playerDisplayDamage);
+                        party.get(partyIndex).onDamageDealt(playerDisplayDamage);
+                        incrementHits();
+                        comboHolder++;
+                        damageHolder += playerDisplayDamage;
+                        playerActionAnimation = party.get(partyIndex).getAttackElement().getBattleAnimation();
+                        break;
+                    case HEAL_STRING:
+                        for (int j = 0; j < party.size(); j++) {
+                            if (party.get(j).getCurrentHP() > 0) {
+                                playerBaseDamage = party.get(partyIndex).HealAmount(party.get(j));
+                                playerDisplayDamage = party.get(j).healDamage(playerBaseDamage, party.get(partyIndex));
+                                party.get(j).setDisplayDamage(HEAL_DAMAGE * playerDisplayDamage);
+                            }
+                            else{
+                                party.get(j).setDisplayDamage(0);
+                            }
+                        }
+                        playerActionHealingAnimation = BattleAssets.HealAnimation;
+                        break;
+                    case SPECIAL_STRING:
+                        playerBaseDamage = party.get(partyIndex).SpecialAttackDamage(enemies.get(enemyIndex));
+                        playerDisplayDamage = enemies.get(enemyIndex).takeSpecialDamage(playerBaseDamage, party.get(partyIndex));
+                        enemies.get(enemyIndex).setDisplayDamage(playerDisplayDamage);
+                        party.get(partyIndex).onDamageDealt(playerDisplayDamage);
+                        incrementHits();
+                        comboHolder++;
+                        damageHolder += playerDisplayDamage;
+                        playerActionAnimation = party.get(partyIndex).getBattleAnimation();
+                        break;
+                    case TRANSFORM_STRING:
+                        party.get(partyIndex).transform(game.getGraphics());
+                        for(int i = 0; i < party.size(); i++){
+                            party.get(i).resetSkills();
+                        }
+                        for(int i = 0; i < party.size(); i++){
+                            party.get(i).updateParty(party);
+                        }
+                        break;
+                    case DEFEND_STRING:
+                        ((BattleWifey) party.get(partyIndex)).Defend();
+                        enemies.get(enemyIndex).setDisplayDamage(0);
+                        break;
+                    default:
+                }
+                if(playerActionAnimation != null) {
+                    battleAnimation = new Animation(playerActionAnimation, getPlayerPhaseWait(), false);
+                    int multiplier = Math.random() > 0.5 ? 1 : -1;
+                    battleAnimationOffsetX = (int) (multiplier * Math.random() * ENEMY_BATTLE_ANIMATION_MAX_OFFSET);
+                    multiplier = Math.random() > 0.5 ? 1 : -1;
+                    battleAnimationOffsetY = (int) (multiplier * Math.random() * ENEMY_BATTLE_ANIMATION_MAX_OFFSET);
+                }
+                if(playerActionHealingAnimation != null){
+                    healAnimation = new Animation(playerActionHealingAnimation, getPlayerPhaseWait(), false);
+                }
+                break;
+            case PREVENT_ENEMY_DEFEAT:
+                resetDamage();
+                clearAnimations();
+                enemies.get(enemyIndex).setDisplayDamage(HEAL_DAMAGE * enemies.get(enemyIndex).preventDeath());
+                healAnimation = new Animation(BattleAssets.ReviveAnimation, WAIT_PHASE_WAIT, false);
+                break;
+            case WAIT_ENEMY_ACTION:
+                noPartyIndex();
+                comboHolder = 0;
+                damageHolder = 0;
+                resetDamage();
+                clearAnimations();
+                updateButtons();
+                enemies.get(enemyIndex).startTurn();
+                ((BattleEnemy) enemies.get(enemyIndex)).determineAction();
+                hitsPerformed = 0;
+                break;
+            case ANIMATE_ENEMY_ACTION:
+                clearAnimations();
+                EnemyAI.EnemyAction action = ((BattleEnemy) enemies.get(enemyIndex)).getAction();
+                int charIndex;
+                int enemyBaseDamage;
+                int enemyDisplayDamage;
+                AnimationImages enemyActionAnimation = null;
+                AnimationImages enemyActionHealingAnimation = null;
+                switch(action){
+                    case POWER_ATTACK:
+                        charIndex = chooseRandomChar();
+                        enemyBaseDamage = (int) (enemies.get(enemyIndex).PowerAttackDamage(party.get(charIndex)) * enemyMultiplier);
+                        enemyDisplayDamage = party.get(charIndex).takePhysicalDamage(enemyBaseDamage, enemies.get(enemyIndex));
+                        for(int i = 0; i < party.size(); i++){
+                            if(i == charIndex){
+                                party.get(i).setDisplayDamage(enemyDisplayDamage);
+                            }
+                            else{
+                                party.get(i).setDisplayDamage(0);
+                            }
+                        }
+                        hitsPerformed++;
+                        if(enemyDisplayDamage > 0) {
+                            enemies.get(enemyIndex).onDamageDealt(enemyDisplayDamage);
+                        }
+                        if(party.get(charIndex).getCurrentHP() == 0){
+                            enemies.get(enemyIndex).onEnemyDefeat(party.get(charIndex));
+                        }
+                        enemyActionAnimation = enemies.get(enemyIndex).getBattleAnimation();
+                        break;
+                    case COMBO_ATTACK:
+                        charIndex = chooseRandomChar();
+                        enemyBaseDamage = (int) (enemies.get(enemyIndex).ComboAttackDamage(party.get(charIndex)) * enemyMultiplier);
+                        enemyDisplayDamage = party.get(charIndex).takePhysicalDamage(enemyBaseDamage, enemies.get(enemyIndex));
+                        for(int i = 0; i < party.size(); i++){
+                            if(i == charIndex){
+                                party.get(i).setDisplayDamage(enemyDisplayDamage);
+                            }
+                            else{
+                                party.get(i).setDisplayDamage(0);
+                            }
+                        }
+                        hitsPerformed++;
+                        if(enemyDisplayDamage > 0) {
+                            enemies.get(enemyIndex).onDamageDealt(enemyDisplayDamage);
+                        }
+                        if(party.get(charIndex).getCurrentHP() == 0){
+                            enemies.get(enemyIndex).onEnemyDefeat(party.get(charIndex));
+                        }
+                        enemyActionAnimation = enemies.get(enemyIndex).getBattleAnimation();
+                        break;
+                    case MAGIC_ATTACK:
+                        for(int i = 0; i < party.size(); i++){
+                            if(party.get(i).getCurrentHP() > 0){
+                                enemyBaseDamage = (int) (enemies.get(enemyIndex).MagicAttackDamage(party.get(i)) * enemyMultiplier);
+                                enemyDisplayDamage = party.get(i).takeMagicalDamage(enemyBaseDamage, enemies.get(enemyIndex));
+                                party.get(i).setDisplayDamage(enemyDisplayDamage);
+                            }
+                            else{
+                                party.get(i).setDisplayDamage(0);
+                            }
+                        }
+                        hitsPerformed++;
+                        for(int i = 0; i < party.size(); i++){
+                            if(party.get(i).getDisplayDamage() > 0) {
+                                enemies.get(enemyIndex).onDamageDealt(party.get(i).getDisplayDamage());
+                            }
+                        }
+                        for(int i = 0; i < party.size(); i++){
+                            if(party.get(i).getDisplayDamage() > 0 && party.get(i).getCurrentHP() == 0){
+                                enemies.get(enemyIndex).onEnemyDefeat(party.get(i));
+                            }
+                        }
+                        enemyActionAnimation = enemies.get(enemyIndex).getAttackElement().getBattleAnimation();
+                        break;
+                    case HEALING_MAGIC:
+                        enemyBaseDamage = (int) (enemies.get(enemyIndex).HealAmount(enemies.get(enemyIndex)) * enemyMultiplier);
+                        enemies.get(enemyIndex).setDisplayDamage(HEAL_DAMAGE * enemies.get(enemyIndex).healDamage(enemyBaseDamage, enemies.get(enemyIndex)));
+                        hitsPerformed++;
+                        //Change to heal animation
+                        enemyActionHealingAnimation = BattleAssets.HealAnimation;
+                        break;
+                    case SPECIAL_ATTACK:
+                        for(int i = 0; i < party.size(); i++){
+                            if(party.get(i).getCurrentHP() > 0){
+                                enemyBaseDamage = (int) (enemies.get(enemyIndex).SpecialAttackDamage(party.get(i)) * enemyMultiplier);
+                                party.get(i).setDisplayDamage(party.get(i).takeSpecialDamage(enemyBaseDamage, enemies.get(enemyIndex)));
+                            }
+                            else{
+                                party.get(i).setDisplayDamage(0);
+                            }
+                        }
+                        hitsPerformed++;
+                        for(int i = 0; i < party.size(); i++){
+                            if(party.get(i).getDisplayDamage() > 0) {
+                                enemies.get(enemyIndex).onDamageDealt(party.get(i).getDisplayDamage());
+                            }
+                        }
+                        for(int i = 0; i < party.size(); i++){
+                            if(party.get(i).getDisplayDamage() > 0 && party.get(i).getCurrentHP() == 0) {
+                                enemies.get(enemyIndex).onEnemyDefeat(party.get(i));
+                            }
+                        }
+                        enemyActionAnimation = enemies.get(enemyIndex).getBattleAnimation();
+                        break;
+                    case TRANSFORM:
+                        enemies.get(enemyIndex).transform(game.getGraphics());
+                        for(int i = 0; i < enemies.size(); i++){
+                            enemies.get(i).resetSkills();
+                        }
+                        for(int i = 0; i < enemies.size(); i++){
+                            enemies.get(i).updateParty(party);
+                        }
+                        hitsPerformed++;
+                        break;
+                    case POWER_UP:
+                        ((BattleEnemy) enemies.get(enemyIndex)).powerUp();
+                        hitsPerformed++;
+                        break;
+                    case POWER_DOWN:
+                        ((BattleEnemy) enemies.get(enemyIndex)).powerDown();
+                        hitsPerformed++;
+                        break;
+                    case DEFEND:
+                        ((BattleEnemy) enemies.get(enemyIndex)).defend();
+                        hitsPerformed++;
+                        break;
+                    case WEAKEN:
+                        ((BattleEnemy) enemies.get(enemyIndex)).weaken();
+                        hitsPerformed++;
+                        break;
+                    case WAIT:
+                        hitsPerformed++;
+                        break;
+                    default:
+                        hitsPerformed++;
+                        Log.e("AbsBattleScreen", "Invalid enemy battle action selection");
+                        break;
+                }
+                if(enemyActionAnimation != null) {
+                    battleAnimation = new Animation(enemyActionAnimation, getEnemyPhaseWait(), false);
+                    int multiplier = Math.random() > 0.5 ? 1 : -1;
+                    battleAnimationOffsetX = (int) (multiplier * Math.random() * CHAR_BATTLE_ANIMATION_MAX_OFFSET);
+                    multiplier = Math.random() > 0.5 ? 1 : -1;
+                    battleAnimationOffsetY = (int) (multiplier * Math.random() * CHAR_BATTLE_ANIMATION_MAX_OFFSET);
+                }
+                if(enemyActionHealingAnimation != null){
+                    healAnimation = new Animation(enemyActionHealingAnimation, getEnemyPhaseWait(), false);
+                }
+                break;
+            case PREVENT_PLAYER_DEFEAT:
+                resetDamage();
+                clearAnimations();
+                for(int i = 0; i < party.size(); i++) {
+                    if(party.get(i).getCurrentHP() == 0 && party.get(i).canPreventDeath()){
+                        party.get(i).setDisplayDamage(HEAL_DAMAGE * party.get(i).preventDeath());
+                    }
+                }
+                healAnimation = new Animation(BattleAssets.ReviveAnimation, HEAL_PHASE_WAIT, false);
+                break;
+            case ROUND_END:
+                for(int i = 0; i < party.size(); i++){
+                    if(party.get(i).getCurrentHP() != 0){
+                        party.get(i).endRound();
+                    }
+                }
+                enemies.get(enemyIndex).endRound();
+                resetDamage();
+                clearAnimations();
+                enemyMultiplier += roundMultiplier;
+                break;
+            case WAVE_END:
+                resetDamage();
+                break;
+            case BATTLE_END:
+                if(!isGameOver()){
+                    //On Battle end, increment the number of completions in BattleInfo if victorious
+                    battleInfo.incrementNumComplete();
+                }
+                //Here we'll unload the animations created for the battle
+                Weapon.unloadAllAnimations();
+                Element.unloadAllAnimations();
+                BattleAssets.unload();
+                game.setScreen(getCompletionScreen());
+                break;
+        }
+    }
+
+    public void updatePhase(float deltaTime) {
+        switch(currentPhase) {
+            case BATTLE_START:
+                phaseTime += deltaTime;
+                break;
+            case WAVE_START:
+                phaseTime += deltaTime;
+                break;
+            case ROUND_START:
+                phaseTime += deltaTime;
+                if(healAnimation != null){
+                    healAnimation.update(deltaTime);
                 }
                 break;
             case WAIT_PLAYER_ACTION:
-                //If player has made a selection, get it ready for animating
-                if(phaseEntered){
-                    nextPartyIndex();
-                    clearAnimations();
-                    phaseEntered = false;
-                    //Clear the touch input buffer
-                    game.getInput().getTouchEvents();
-                    party.get(partyIndex).startTurn();
-                    resetDamage();
-                    updateButtons();
-                }
-                else {
-                    List<Input.TouchEvent> touchEvents = game.getInput().getTouchEvents();
+                List<Input.TouchEvent> touchEvents = game.getInput().getTouchEvents();
 
-                    for (int i = 0; i < touchEvents.size(); i++) {
-                        Input.TouchEvent t = touchEvents.get(i);
-                        if (t.type != Input.TouchEvent.TOUCH_UP) {
-                            continue;
-                        }
-                        Button command = buttonList.getButtonPressed(t.x, t.y);
-                        int charPressed = partyList.getIndexPressed(t.x, t.y);
-                        if(charPressed != -1){
-                            charInfo.setChars(((BattleWifey) party.get(charPressed)), (BattleEnemy) enemies.get(enemyIndex));
-                            game.setScreen(charInfo);
-                            continue;
-                        }
-                        if (command == null) {
-                            continue;
-                        }
-                        if(command == enemyButton){
-                            enemyInfoScreen.setEnemy((BattleEnemy) enemies.get(enemyIndex));
-                            game.setScreen(enemyInfoScreen);
-                            continue;
-                        }
+                for (int i = 0; i < touchEvents.size(); i++) {
+                    Input.TouchEvent t = touchEvents.get(i);
+                    if (t.type != Input.TouchEvent.TOUCH_UP) {
+                        continue;
+                    }
+                    Button command = buttonList.getButtonPressed(t.x, t.y);
+                    int charPressed = partyList.getIndexPressed(t.x, t.y);
+                    if(charPressed != -1){
+                        charInfo.setChars(((BattleWifey) party.get(charPressed)), (BattleEnemy) enemies.get(enemyIndex));
+                        game.setScreen(charInfo);
+                        continue;
+                    }
+                    if (command == null) {
+                        continue;
+                    }
+                    if(command == enemyButton){
+                        enemyInfoScreen.setEnemy((BattleEnemy) enemies.get(enemyIndex));
+                        game.setScreen(enemyInfoScreen);
+                        continue;
+                    }
 
-                        switch (command.getName()) {
-                            case TRANSFORM_STRING:
-                            case SPECIAL_STRING:
-                                numHits -= SPECIAL_HITS;
-                            case POWER_STRING:
-                            case COMBO_STRING:
-                            case MAGIC_STRING:
-                            case DEFEND_STRING:
-                            case HEAL_STRING:
-                                commandSelected = command;
-                                break;
-                            default:
-                                continue;
-                        }
-                        currentPhase = BattlePhase.ANIMATE_PLAYER_ACTION;
-                        phaseEntered = true;
-                        hitsPerformed = 0;
+                    switch (command.getName()) {
+                        case TRANSFORM_STRING:
+                        case SPECIAL_STRING:
+                            numHits -= SPECIAL_HITS;
+                        case POWER_STRING:
+                        case COMBO_STRING:
+                        case MAGIC_STRING:
+                        case DEFEND_STRING:
+                        case HEAL_STRING:
+                            commandSelected = command;
+                            break;
+                        default:
+                            continue;
                     }
                 }
                 break;
             case ANIMATE_PLAYER_ACTION:
-                //Calculate damage/healing
-                //If a combo attack was used, stay in ANIMATE_PLAYER_ACTION
-                //If the enemy was defeated, go to WAVE_END
-                //If the player needs to do another action for next char, go back to WAIT_PLAYER_ACTION
-                //If the player doesn't have more actions, go to WAIT_ENEMY_ACTION
-                if (phaseEntered) {
-                    phaseTime = 0;
-                    phaseEntered = false;
-                    clearAnimations();
-
-                    int baseDamage;
-                    int displayDamage;
-                    AnimationImages animation = null;
-                    AnimationImages healingAnimation = null;
-                    switch (commandSelected.getName()) {
-                        case POWER_STRING:
-                            baseDamage = party.get(partyIndex).PowerAttackDamage(enemies.get(enemyIndex));
-                            displayDamage = enemies.get(enemyIndex).takePhysicalDamage(baseDamage, party.get(partyIndex));
-                            enemyDamage = displayDamage;
-                            party.get(partyIndex).onDamageDealt(displayDamage);
-                            incrementHits();
-                            comboHolder++;
-                            damageHolder += enemyDamage;
-                            animation = party.get(partyIndex).getBattleAnimation();
-                            break;
-                        case COMBO_STRING:
-                            baseDamage = party.get(partyIndex).ComboAttackDamage(enemies.get(enemyIndex));
-                            displayDamage = enemies.get(enemyIndex).takePhysicalDamage(baseDamage, party.get(partyIndex));
-                            enemyDamage = displayDamage;
-                            party.get(partyIndex).onDamageDealt(displayDamage);
-                            incrementHits();
-                            hitsPerformed++;
-                            comboHolder++;
-                            damageHolder += enemyDamage;
-                            animation = party.get(partyIndex).getBattleAnimation();
-                            break;
-                        case MAGIC_STRING:
-                            baseDamage = party.get(partyIndex).MagicAttackDamage(enemies.get(enemyIndex));
-                            displayDamage = enemies.get(enemyIndex).takeMagicalDamage(baseDamage, party.get(partyIndex));
-                            enemyDamage = displayDamage;
-                            party.get(partyIndex).onDamageDealt(displayDamage);
-                            incrementHits();
-                            comboHolder++;
-                            damageHolder += enemyDamage;
-                            animation = party.get(partyIndex).getAttackElement().getBattleAnimation();
-                            break;
-                        case HEAL_STRING:
-                            for (int j = 0; j < party.size(); j++) {
-                                if (party.get(j).getCurrentHP() > 0) {
-                                    baseDamage = party.get(partyIndex).HealAmount(party.get(j));
-                                    displayDamage = party.get(j).healDamage(baseDamage, party.get(partyIndex));
-                                    partyDamage[j] = HEAL_DAMAGE * displayDamage;
-                                }
-                                else{
-                                    partyDamage[j] = 0;
-                                }
-                            }
-                            healingAnimation = AnimationAssets.HealAnimation;
-                            break;
-                        case SPECIAL_STRING:
-                            baseDamage = party.get(partyIndex).SpecialAttackDamage(enemies.get(enemyIndex));
-                            displayDamage = enemies.get(enemyIndex).takeSpecialDamage(baseDamage, party.get(partyIndex));
-                            enemyDamage = displayDamage;
-                            party.get(partyIndex).onDamageDealt(displayDamage);
-                            incrementHits();
-                            comboHolder++;
-                            damageHolder += enemyDamage;
-                            animation = party.get(partyIndex).getBattleAnimation();
-                            break;
-                        case TRANSFORM_STRING:
-                            party.get(partyIndex).transform(game.getGraphics());
-                            for(int i = 0; i < party.size(); i++){
-                                party.get(i).resetSkills();
-                            }
-                            for(int i = 0; i < party.size(); i++){
-                                party.get(i).updateParty(party);
-                            }
-                            break;
-                        case DEFEND_STRING:
-                            ((BattleWifey) party.get(partyIndex)).Defend();
-                            enemyDamage = 0;
-                            break;
-                        default:
-                    }
-                    if(animation != null) {
-                        battleAnimation = new Animation(animation, getPlayerPhaseWait(), false);
-                        int multiplier = Math.random() > 0.5 ? 1 : -1;
-                        battleAnimationOffsetX = (int) (multiplier * Math.random() * ENEMY_BATTLE_ANIMATION_MAX_OFFSET);
-                        multiplier = Math.random() > 0.5 ? 1 : -1;
-                        battleAnimationOffsetY = (int) (multiplier * Math.random() * ENEMY_BATTLE_ANIMATION_MAX_OFFSET);
-                    }
-                    if(healingAnimation != null){
-                        healAnimation = new Animation(healingAnimation, getPlayerPhaseWait(), false);
-                    }
-                } else {
-                    phaseTime += deltaTime;
-                    if(battleAnimation != null) {
-                        battleAnimation.update(deltaTime);
-                    }
-                    if(healAnimation != null) {
-                        healAnimation.update(deltaTime);
-                    }
-                    if (phaseTime >= getPlayerPhaseWait()) {
-                        if (enemies.get(enemyIndex).getCurrentHP() == 0 && enemies.get(enemyIndex).canPreventDeath()) {
-                            currentPhase = BattlePhase.PREVENT_ENEMY_DEFEAT;
-                            phaseEntered = true;
-                        } else if (commandSelected == comboAttackButton && hitsPerformed < party.get(partyIndex).getNumHits()) {
-                            currentPhase = BattlePhase.ANIMATE_PLAYER_ACTION;
-                            phaseEntered = true;
-                        } else if (enemies.get(enemyIndex).getCurrentHP() == 0) {
-                            currentPhase = BattlePhase.WAVE_END;
-                            phaseEntered = true;
-                        } else if (isEndOfRound()) {
-                            currentPhase = BattlePhase.WAIT_ENEMY_ACTION;
-                            phaseEntered = true;
-                        } else {
-                            currentPhase = BattlePhase.WAIT_PLAYER_ACTION;
-                            phaseEntered = true;
-                        }
-                    }
+                phaseTime += deltaTime;
+                if(battleAnimation != null) {
+                    battleAnimation.update(deltaTime);
+                }
+                if(healAnimation != null) {
+                    healAnimation.update(deltaTime);
                 }
                 break;
             case PREVENT_ENEMY_DEFEAT:
-                if(phaseEntered) {
-                    phaseTime = 0;
-                    phaseEntered = false;
-                    resetDamage();
-                    clearAnimations();
-                    enemyDamage = HEAL_DAMAGE * enemies.get(enemyIndex).preventDeath();
-                    healAnimation = new Animation(AnimationAssets.ReviveAnimation, WAIT_PHASE_WAIT, false);
-                } else {
-                    phaseTime += deltaTime;
-                    healAnimation.update(deltaTime);
-                    if(phaseTime >= WAIT_PHASE_WAIT) {
-                        if (isEndOfRound()) {
-                            currentPhase = BattlePhase.WAIT_ENEMY_ACTION;
-                            phaseEntered = true;
-                        } else {
-                            currentPhase = BattlePhase.WAIT_PLAYER_ACTION;
-                            phaseEntered = true;
-                        }
-                    }
-                }
+                phaseTime += deltaTime;
+                healAnimation.update(deltaTime);
                 break;
             case WAIT_ENEMY_ACTION:
-                //Select the enemy action
-                if (phaseEntered) {
-                    phaseTime = 0;
-                    phaseEntered = false;
-                    noPartyIndex();
-                    comboHolder = 0;
-                    damageHolder = 0;
-                    resetDamage();
-                    clearAnimations();
-                    updateButtons();
-                    enemies.get(enemyIndex).startTurn();
-                    ((BattleEnemy) enemies.get(enemyIndex)).determineAction();
-                } else {
-                    phaseTime += deltaTime;
-                    if (phaseTime >= WAIT_PHASE_WAIT) {
-                        currentPhase = BattlePhase.ANIMATE_ENEMY_ACTION;
-                        phaseEntered = true;
-                        hitsPerformed = 0;
-                    }
-                }
+                phaseTime += deltaTime;
                 break;
             case ANIMATE_ENEMY_ACTION:
-                //Calculate damage/healing
-                //If multiple attacks, stay in ANIMATE_ENEMY_ACTION
-                //If all characters defeated, go to BATTLE_END
-                //Else, go to ROUND_END
-                if (phaseEntered) {
-                    phaseTime = 0;
-                    phaseEntered = false;
-                    clearAnimations();
-                    EnemyAI.EnemyAction action = ((BattleEnemy) enemies.get(enemyIndex)).getAction();
-                    int charIndex;
-                    int baseDamage;
-                    int displayDamage;
-                    AnimationImages animation = null;
-                    AnimationImages healingAnimation = null;
-                    switch(action){
-                        case POWER_ATTACK:
-                            charIndex = chooseRandomChar();
-                            baseDamage = (int) (enemies.get(enemyIndex).PowerAttackDamage(party.get(charIndex)) * enemyMultiplier);
-                            displayDamage = party.get(charIndex).takePhysicalDamage(baseDamage, enemies.get(enemyIndex));
-                            for(int i = 0; i < party.size(); i++){
-                                if(i == charIndex){
-                                    partyDamage[i] = displayDamage;
-                                }
-                                else{
-                                    partyDamage[i] = 0;
-                                }
-                            }
-                            hitsPerformed++;
-                            if(displayDamage > 0) {
-                                enemies.get(enemyIndex).onDamageDealt(displayDamage);
-                            }
-                            if(party.get(charIndex).getCurrentHP() == 0){
-                                enemies.get(enemyIndex).onEnemyDefeat(party.get(charIndex));
-                            }
-                            animation = enemies.get(enemyIndex).getBattleAnimation();
-                            break;
-                        case COMBO_ATTACK:
-                            charIndex = chooseRandomChar();
-                            baseDamage = (int) (enemies.get(enemyIndex).ComboAttackDamage(party.get(charIndex)) * enemyMultiplier);
-                            displayDamage = party.get(charIndex).takePhysicalDamage(baseDamage, enemies.get(enemyIndex));
-                            for(int i = 0; i < party.size(); i++){
-                                if(i == charIndex){
-                                    partyDamage[i] = displayDamage;
-                                }
-                                else{
-                                    partyDamage[i] = 0;
-                                }
-                            }
-                            hitsPerformed++;
-                            if(displayDamage > 0) {
-                                enemies.get(enemyIndex).onDamageDealt(displayDamage);
-                            }
-                            if(party.get(charIndex).getCurrentHP() == 0){
-                                enemies.get(enemyIndex).onEnemyDefeat(party.get(charIndex));
-                            }
-                            animation = enemies.get(enemyIndex).getBattleAnimation();
-                            break;
-                        case MAGIC_ATTACK:
-                            for(int i = 0; i < party.size(); i++){
-                                if(party.get(i).getCurrentHP() > 0){
-                                    baseDamage = (int) (enemies.get(enemyIndex).MagicAttackDamage(party.get(i)) * enemyMultiplier);
-                                    displayDamage = party.get(i).takeMagicalDamage(baseDamage, enemies.get(enemyIndex));
-                                    partyDamage[i] = displayDamage;
-                                }
-                                else{
-                                    partyDamage[i] = 0;
-                                }
-                            }
-                            hitsPerformed++;
-                            for(int i = 0; i < party.size(); i++){
-                                if(partyDamage[i] > 0){
-                                    enemies.get(enemyIndex).onDamageDealt(partyDamage[i]);
-                                }
-                            }
-                            for(int i = 0; i < party.size(); i++){
-                                if(partyDamage[i] > 0 && party.get(i).getCurrentHP() == 0){
-                                    enemies.get(enemyIndex).onEnemyDefeat(party.get(i));
-                                }
-                            }
-                            animation = enemies.get(enemyIndex).getAttackElement().getBattleAnimation();
-                            break;
-                        case HEALING_MAGIC:
-                            baseDamage = (int) (enemies.get(enemyIndex).HealAmount(enemies.get(enemyIndex)) * enemyMultiplier);
-                            enemyDamage = HEAL_DAMAGE * enemies.get(enemyIndex).healDamage(baseDamage, enemies.get(enemyIndex));
-                            hitsPerformed++;//Change to heal animation
-                            healingAnimation = AnimationAssets.HealAnimation;
-                            break;
-                        case SPECIAL_ATTACK:
-                            for(int i = 0; i < party.size(); i++){
-                                if(party.get(i).getCurrentHP() > 0){
-                                    baseDamage = (int) (enemies.get(enemyIndex).SpecialAttackDamage(party.get(i)) * enemyMultiplier);
-                                    partyDamage[i] = party.get(i).takeSpecialDamage(baseDamage, enemies.get(enemyIndex));
-                                }
-                                else{
-                                    partyDamage[i] = 0;
-                                }
-                            }
-                            hitsPerformed++;
-                            for(int i = 0; i < party.size(); i++){
-                                if(partyDamage[i] > 0){
-                                    enemies.get(enemyIndex).onDamageDealt(partyDamage[i]);
-                                }
-                            }
-                            for(int i = 0; i < party.size(); i++){
-                                if(partyDamage[i] > 0 && party.get(i).getCurrentHP() == 0){
-                                    enemies.get(enemyIndex).onEnemyDefeat(party.get(i));
-                                }
-                            }
-                            animation = enemies.get(enemyIndex).getBattleAnimation();
-                            break;
-                        case TRANSFORM:
-                            enemies.get(enemyIndex).transform(game.getGraphics());
-                            for(int i = 0; i < enemies.size(); i++){
-                                enemies.get(i).resetSkills();
-                            }
-                            for(int i = 0; i < enemies.size(); i++){
-                                enemies.get(i).updateParty(party);
-                            }
-                            hitsPerformed++;
-                            break;
-                        case POWER_UP:
-                            ((BattleEnemy) enemies.get(enemyIndex)).powerUp();
-                            hitsPerformed++;
-                            break;
-                        case POWER_DOWN:
-                            ((BattleEnemy) enemies.get(enemyIndex)).powerDown();
-                            hitsPerformed++;
-                            break;
-                        case DEFEND:
-                            ((BattleEnemy) enemies.get(enemyIndex)).defend();
-                            hitsPerformed++;
-                            break;
-                        case WEAKEN:
-                            ((BattleEnemy) enemies.get(enemyIndex)).weaken();
-                            hitsPerformed++;
-                            break;
-                        case WAIT:
-                            hitsPerformed++;
-                            break;
-                        default:
-                            hitsPerformed++;
-                            //System.out.println("Not supported yet");
-                            Log.e("AbsBattleScreen", "Invalid enemy battle action selection");
-                            break;
-                    }
-                    if(animation != null) {
-                        battleAnimation = new Animation(animation, getEnemyPhaseWait(), false);
-                        int multiplier = Math.random() > 0.5 ? 1 : -1;
-                        battleAnimationOffsetX = (int) (multiplier * Math.random() * CHAR_BATTLE_ANIMATION_MAX_OFFSET);
-                        multiplier = Math.random() > 0.5 ? 1 : -1;
-                        battleAnimationOffsetY = (int) (multiplier * Math.random() * CHAR_BATTLE_ANIMATION_MAX_OFFSET);
-                    }
-                    if(healingAnimation != null){
-                        healAnimation = new Animation(healingAnimation, getEnemyPhaseWait(), false);
-                    }
-                } else {
-                    phaseTime += deltaTime;
-                    if(battleAnimation != null) {
-                        battleAnimation.update(deltaTime);
-                    }
-                    if(healAnimation != null) {
-                        healAnimation.update(deltaTime);
-                    }
-                    if (phaseTime >= getEnemyPhaseWait()) {
-                        //If the party is dead or the enemy is done acting and somebody can be revived...
-                        if ((isGameOver() || hitsPerformed == enemies.get(enemyIndex).getNumHits()) && canPreventPartyDeath()) {
-                            currentPhase = BattlePhase.PREVENT_PLAYER_DEFEAT;
-                            phaseEntered = true;
-                        } else if (isGameOver()) {
-                            currentPhase = BattlePhase.BATTLE_END;
-                            phaseEntered = true;
-                        } else if(hitsPerformed < enemies.get(enemyIndex).getNumHits()){
-                            currentPhase = BattlePhase.ANIMATE_ENEMY_ACTION;
-                            phaseEntered = true;
-                        }  else{
-                            currentPhase = BattlePhase.ROUND_END;
-                            phaseEntered = true;
-                        }
-                    }
+                phaseTime += deltaTime;
+                if(battleAnimation != null) {
+                    battleAnimation.update(deltaTime);
+                }
+                if(healAnimation != null) {
+                    healAnimation.update(deltaTime);
                 }
                 break;
             case PREVENT_PLAYER_DEFEAT:
-                if(phaseEntered) {
-                    phaseTime = 0;
-                    phaseEntered = false;
-                    resetDamage();
-                    clearAnimations();
-                    for(int i = 0; i < party.size(); i++) {
-                        if(party.get(i).getCurrentHP() == 0 && party.get(i).canPreventDeath()){
-                            partyDamage[i] = HEAL_DAMAGE * party.get(i).preventDeath();
-                        }
-                    }
-                    healAnimation = new Animation(AnimationAssets.ReviveAnimation, HEAL_PHASE_WAIT, false);
-                } else {
-                    phaseTime += deltaTime;
-                    healAnimation.update(deltaTime);
-                    if(phaseTime >= HEAL_PHASE_WAIT) {
-                        currentPhase = BattlePhase.ROUND_END;
-                        phaseEntered = true;
-                    }
-                }
+                phaseTime += deltaTime;
+                healAnimation.update(deltaTime);
                 break;
             case ROUND_END:
-                //Perform end of round things
-                //Go back to ROUND_START
-                if (phaseEntered) {
-                    phaseTime = 0;
-                    phaseEntered = false;
-                    for(int i = 0; i < party.size(); i++){
-                        if(party.get(i).getCurrentHP() != 0){
-                            party.get(i).endRound();
-                        }
-                    }
-                    enemies.get(enemyIndex).endRound();
-                    resetDamage();
-                    clearAnimations();
-                    enemyMultiplier += roundMultiplier;
-                } else {
-                    phaseTime += deltaTime;
-                    if (phaseTime >= WAIT_PHASE_WAIT) {
-                        currentPhase = BattlePhase.ROUND_START;
-                        phaseEntered = true;
-                    }
-                }
+                phaseTime += deltaTime;
                 break;
             case WAVE_END:
-                //Tally experience and gold
-                //WifeyCharacter end of wave bonuses
-                //If more enemies, go to WAVE_START
-                //If no more enemies, go to BATTLE_END
-                if (phaseEntered) {
-                    phaseTime = 0;
-                    resetDamage();
-                    phaseEntered = false;
-                } else {
-                    phaseTime += deltaTime;
-                    if (phaseTime >= WAVE_PHASE_WAIT) {
-                        party.get(partyIndex).onEnemyDefeat(enemies.get(enemyIndex));
-                        for(int i = 0; i < party.size(); i++){
-                            party.get(i).endWave(enemies.get(enemyIndex));
-                        }
-                        enemyIndex++;
-                        if (enemyIndex == enemies.size()) {
-                            enemyIndex--;
-                            currentPhase = BattlePhase.BATTLE_END;
-                            phaseEntered = true;
-                        } else {
-                            currentPhase = BattlePhase.WAVE_START;
-                            phaseEntered = true;
-                        }
-                    }
-                }
+                phaseTime += deltaTime;
                 break;
             case BATTLE_END:
-                //Give out rewards
-                //If win, do stuff
-                //If loss, give other stuff, i dunno
-                if (phaseEntered) {
-                    phaseEntered = false;
-                    if(!isGameOver()){
-                        //On Battle end, increment the number of completions in BattleInfo if victorious
-                        battleInfo.incrementNumComplete();
-                    }
-                    //Here we'll unload the animations created for the battle
-                    Weapon.unloadAllAnimations();
-                    Element.unloadAllAnimations();
-                    game.setScreen(getCompletionScreen());
-                }
+                phaseTime += deltaTime;
                 break;
+            default:
+                break;
+        }
+    }
 
+    @Override
+    public void update(float deltaTime) {
+        if(shouldGoToNextPhase()) {
+            currentPhase = getNextPhase();
+            phaseTime = 0;
+            enterPhase();
+        }
+        else {
+            updatePhase(deltaTime);
         }
     }
 
     private Image getPlayerHealthBar(int currentHealth, int maxHealth){
         Double percent = (100.0 * currentHealth)/maxHealth;
         if(percent >= 50.0){
-            return Assets.pHealthG;
+            return Assets.SmallGreenBar;
         }
         else if(percent >= 25.0){
-            return Assets.pHealthY;
+            return Assets.SmallYellowBar;
         }
         else{
-            return Assets.pHealthR;
+            return Assets.SmallRedBar;
         }
     }
 
     private Image getEnemyHealthBar(int currentHealth, int maxHealth){
         Double percent = (100.0 * currentHealth) / maxHealth;
         if(percent >= 50.0){
-            return Assets.eHealthG;
+            return BattleAssets.EnemyHealthGreen;
         }
         else if(percent >= 25.0){
-            return Assets.eHealthY;
+            return BattleAssets.EnemyHealthYellow;
         }
         else{
-            return Assets.eHealthR;
+            return BattleAssets.EnemyHealthRed;
         }
     }
 
@@ -1205,93 +1161,100 @@ public abstract class AbsBattleScreen extends Screen {
     private void drawParty(){
         Graphics g = game.getGraphics();
 
-        //Workaround to prevent the one frame issue
+        //If the current partyIndex is -1, set it to the first actual index
         int index = partyIndex == -1 ? getFirstIndex() : partyIndex;
 
-        int i = 0;
-        Image healthBar;
-        Double perHealth;
-        //Draw party members before the current member
-        for( ; i < index && i < party.size(); i++){
-            //Draw the character holder and character image
-            g.drawPercentageImage(charHolder, CHAR_HOLDER_X_DISTANCE * i, CHAR_HOLDER_SMALL_Y, HALF_SCALE, HALF_SCALE);
-            g.drawPercentageImage(party.get(i).getImage(), CHAR_HOLDER_X_DISTANCE * i + CHAR_INTERIOR_SMALL_X, CHAR_IMAGE_SMALL_Y, HALF_SCALE, HALF_SCALE);
+        for(int i = 0; i < party.size(); i++) {
+            int charScale = (i == index) ? FULL_SCALE : HALF_SCALE;
+
+            //Draw the character holder background
+            int charHolderX = (i <= index) ? CHAR_HOLDER_X_DISTANCE * i : CHAR_HOLDER_X_DISTANCE * (i + 1);
+            int charHolderY = (i == index) ? CHAR_HOLDER_LARGE_Y : CHAR_HOLDER_SMALL_Y;
+            g.drawPercentageImage(BattleAssets.CharHolder, charHolderX, charHolderY, charScale, charScale);
+
+            //Draw the character image
+            int charImageX;
+            if(i < index) {
+                charImageX = CHAR_HOLDER_X_DISTANCE * i + CHAR_INTERIOR_SMALL_X;
+            }
+            else if (i == index) {
+                charImageX = CHAR_HOLDER_X_DISTANCE * i + CHAR_INTERIOR_LARGE_X;
+            }
+            else {
+                charImageX = CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_INTERIOR_SMALL_X;
+            }
+            int charImageY = (i == index) ? CHAR_IMAGE_LARGE_Y : CHAR_IMAGE_SMALL_Y;
+            g.drawPercentageImage(party.get(i).getImage(), charImageX, charImageY, charScale, charScale);
 
             //Draw the elements
-            g.drawPercentageImage(party.get(i).getAttackElement().getElementImage(), CHAR_HOLDER_X_DISTANCE * i + CHAR_SMALL_BASE_ELEM_ATK_X, CHAR_SMALL_ELEM_Y, CHAR_SMALL_ELEM_SCALE, CHAR_SMALL_ELEM_SCALE);
-            g.drawPercentageImage(party.get(i).getStrongElement().getElementImage(), CHAR_HOLDER_X_DISTANCE * i + CHAR_SMALL_BASE_ELEM_RES_X, CHAR_SMALL_ELEM_Y, CHAR_SMALL_ELEM_SCALE, CHAR_SMALL_ELEM_SCALE);
-            g.drawPercentageImage(party.get(i).getWeakElement().getElementImage(), CHAR_HOLDER_X_DISTANCE * i + CHAR_SMALL_BASE_ELEM_WEAK_X, CHAR_SMALL_ELEM_Y, CHAR_SMALL_ELEM_SCALE, CHAR_SMALL_ELEM_SCALE);
+            int atkX, stgX, weakX;
+            if(i < index) {
+                atkX = CHAR_HOLDER_X_DISTANCE * i + CHAR_SMALL_BASE_ELEM_ATK_X;
+                stgX = CHAR_HOLDER_X_DISTANCE * i + CHAR_SMALL_BASE_ELEM_RES_X;
+                weakX = CHAR_HOLDER_X_DISTANCE * i + CHAR_SMALL_BASE_ELEM_WEAK_X;
+            }
+            else if(i == index) {
+                atkX = CHAR_HOLDER_X_DISTANCE * i + CHAR_LARGE_BASE_ELEM_ATK_X;
+                stgX = CHAR_HOLDER_X_DISTANCE * i + CHAR_LARGE_BASE_ELEM_RES_X;
+                weakX = CHAR_HOLDER_X_DISTANCE * i + CHAR_LARGE_BASE_ELEM_WEAK_X;
+            }
+            else {
+                atkX = CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_SMALL_BASE_ELEM_ATK_X;
+                stgX = CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_SMALL_BASE_ELEM_RES_X;
+                weakX = CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_SMALL_BASE_ELEM_WEAK_X;
+            }
+            int elemY = (i == index) ? CHAR_LARGE_ELEM_Y : CHAR_SMALL_ELEM_Y;
+            int elemScale = (i == index) ? CHAR_LARGE_ELEM_SCALE : CHAR_SMALL_ELEM_SCALE;
+            g.drawPercentageImage(party.get(i).getAttackElement().getElementImage(), atkX, elemY, elemScale, elemScale);
+            g.drawPercentageImage(party.get(i).getStrongElement().getElementImage(), stgX, elemY, elemScale, elemScale);
+            g.drawPercentageImage(party.get(i).getWeakElement().getElementImage(), weakX, elemY, elemScale, elemScale);
 
             //Draw the health bar
-            healthBar = getPlayerHealthBar(party.get(i).getCurrentHP(), party.get(i).getMaxHP());
-            perHealth = (party.get(i).getCurrentHP() * 1.0)/(party.get(i).getMaxHP());
-            g.drawPercentageImage(healthBar, CHAR_HOLDER_X_DISTANCE * i + CHAR_INTERIOR_SMALL_X, CHAR_HEALTH_SMALL_Y, (int) Math.ceil(perHealth * HALF_SCALE), HALF_SCALE);
+            Image healthBar = getPlayerHealthBar(party.get(i).getCurrentHP(), party.get(i).getMaxHP());
+            Double perHealth = (party.get(i).getCurrentHP() * 1.0) / (party.get(i).getMaxHP());
+            int healthX;
+            if(i < index) {
+                healthX = CHAR_HOLDER_X_DISTANCE * i + CHAR_INTERIOR_SMALL_X;
+            }
+            else if(i == index) {
+                healthX = CHAR_HOLDER_X_DISTANCE * i + CHAR_INTERIOR_LARGE_X;
+            }
+            else {
+                healthX = CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_INTERIOR_SMALL_X;
+            }
+            int healthY = (i == index) ? CHAR_HEALTH_LARGE_Y : CHAR_HEALTH_SMALL_Y;
+            g.drawPercentageImage(healthBar, healthX, healthY, (int) Math.ceil(perHealth * charScale), charScale);
 
             //Draw the CurrentHP / MaxHP
-            int curX = CHAR_HOLDER_X_DISTANCE * i + CHAR_CUR_HP_SMALL_X;
-            NumberPrinter.drawNumber(g, party.get(i).getCurrentHP(), curX, CHAR_HP_SMALL_Y, CHAR_HP_SMALL_WIDTH, CHAR_HP_SMALL_HEIGHT, CHAR_HP_SMALL_OFFSET, Assets.WhiteNumbers, NumberPrinter.Align.RIGHT);
-            int slashX = CHAR_HOLDER_X_DISTANCE * i + CHAR_HP_SLASH_SMALL_X;
-            g.drawPercentageImage(Assets.HPSlash, slashX, CHAR_HP_SMALL_Y, HALF_SCALE, HALF_SCALE);
-            int maxX = CHAR_HOLDER_X_DISTANCE * i + CHAR_MAX_HP_SMALL_X;
-            NumberPrinter.drawNumber(g, party.get(i).getMaxHP(), maxX, CHAR_HP_SMALL_Y, CHAR_HP_SMALL_WIDTH, CHAR_HP_SMALL_HEIGHT, CHAR_HP_SMALL_OFFSET, Assets.WhiteNumbers, NumberPrinter.Align.LEFT);
-
-            //If the party member is defeated, overlay the KO Image
-            if(party.get(i).getCurrentHP() == 0){
-                g.drawPercentageImage(Assets.KOImages.get(i), CHAR_HOLDER_X_DISTANCE * i, CHAR_HOLDER_KO_SMALL_Y, HALF_SCALE, HALF_SCALE);
+            int curX, slashX, maxX;
+            if(i < index) {
+                curX = CHAR_HOLDER_X_DISTANCE * i + CHAR_CUR_HP_SMALL_X;
+                slashX = CHAR_HOLDER_X_DISTANCE * i + CHAR_HP_SLASH_SMALL_X;
+                maxX = CHAR_HOLDER_X_DISTANCE * i + CHAR_MAX_HP_SMALL_X;
             }
-
-        }
-        //Draw the current acting character
-        if(i == index && i < party.size()) {
-            g.drawImage(charHolder, CHAR_HOLDER_X_DISTANCE * i, CHAR_HOLDER_LARGE_Y);
-            g.drawImage(party.get(i).getImage(), CHAR_HOLDER_X_DISTANCE * i + CHAR_INTERIOR_LARGE_X, CHAR_IMAGE_LARGE_Y);
-
-            //Draw the elements
-            g.drawPercentageImage(party.get(i).getAttackElement().getElementImage(), CHAR_HOLDER_X_DISTANCE * i + CHAR_LARGE_BASE_ELEM_ATK_X, CHAR_LARGE_ELEM_Y, CHAR_LARGE_ELEM_SCALE, CHAR_LARGE_ELEM_SCALE);
-            g.drawPercentageImage(party.get(i).getStrongElement().getElementImage(), CHAR_HOLDER_X_DISTANCE * i + CHAR_LARGE_BASE_ELEM_RES_X, CHAR_LARGE_ELEM_Y, CHAR_LARGE_ELEM_SCALE, CHAR_LARGE_ELEM_SCALE);
-            g.drawPercentageImage(party.get(i).getWeakElement().getElementImage(), CHAR_HOLDER_X_DISTANCE * i + CHAR_LARGE_BASE_ELEM_WEAK_X, CHAR_LARGE_ELEM_Y, CHAR_LARGE_ELEM_SCALE, CHAR_LARGE_ELEM_SCALE);
-
-            healthBar = getPlayerHealthBar(party.get(i).getCurrentHP(), party.get(i).getMaxHP());
-            perHealth = (party.get(i).getCurrentHP() * 1.0) / (party.get(i).getMaxHP());
-            g.drawPercentageImage(healthBar, CHAR_HOLDER_X_DISTANCE * i + CHAR_INTERIOR_LARGE_X, CHAR_HEALTH_LARGE_Y, (int) Math.ceil(perHealth * FULL_SCALE), FULL_SCALE);
-
-            //Display CURRENTHP/MAXHP
-            int curX = CHAR_HOLDER_X_DISTANCE * i + CHAR_CUR_HP_LARGE_X;
-            NumberPrinter.drawNumber(g, party.get(i).getCurrentHP(), curX, CHAR_HP_LARGE_Y, CHAR_HP_LARGE_WIDTH, CHAR_HP_LARGE_HEIGHT, CHAR_HP_LARGE_OFFSET, Assets.WhiteNumbers, NumberPrinter.Align.RIGHT);
-            int slashX = CHAR_HOLDER_X_DISTANCE * i + CHAR_HP_SLASH_LARGE_X;
-            g.drawImage(Assets.HPSlash, slashX, CHAR_HP_LARGE_Y);
-            int maxX = CHAR_HOLDER_X_DISTANCE * i + CHAR_MAX_HP_LARGE_X;
-            NumberPrinter.drawNumber(g, party.get(i).getMaxHP(), maxX, CHAR_HP_LARGE_Y, CHAR_HP_LARGE_WIDTH, CHAR_HP_LARGE_HEIGHT, CHAR_HP_LARGE_OFFSET, Assets.WhiteNumbers, NumberPrinter.Align.LEFT);
-
-
-            if (party.get(i).getCurrentHP() == 0) {
-                g.drawImage(Assets.KOImages.get(i), CHAR_HOLDER_X_DISTANCE * i, CHAR_HOLDER_KO_LARGE_Y);
+            else if (i == index) {
+                curX = CHAR_HOLDER_X_DISTANCE * i + CHAR_CUR_HP_LARGE_X;
+                slashX = CHAR_HOLDER_X_DISTANCE * i + CHAR_HP_SLASH_LARGE_X;
+                maxX = CHAR_HOLDER_X_DISTANCE * i + CHAR_MAX_HP_LARGE_X;
             }
-            i++;
-        }
-        //Draw the characters after the current member
-        for ( ; i < party.size(); i++) {
-            g.drawPercentageImage(charHolder, CHAR_HOLDER_X_DISTANCE * (i + 1), CHAR_HOLDER_SMALL_Y, HALF_SCALE, HALF_SCALE);
-            g.drawPercentageImage(party.get(i).getImage(), CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_INTERIOR_SMALL_X, CHAR_IMAGE_SMALL_Y, HALF_SCALE, HALF_SCALE);
+            else {
+                curX = CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_CUR_HP_SMALL_X;
+                slashX = CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_HP_SLASH_SMALL_X;
+                maxX = CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_MAX_HP_SMALL_X;
+            }
+            int hpY = (i == index) ? CHAR_HP_LARGE_Y : CHAR_HP_SMALL_Y;
+            int hpWidth = (i == index) ? CHAR_HP_LARGE_WIDTH : CHAR_HP_SMALL_WIDTH;
+            int hpHeight = (i == index) ? CHAR_HP_LARGE_HEIGHT : CHAR_HP_SMALL_HEIGHT;
+            int hpOffset = (i == index) ? CHAR_HP_LARGE_OFFSET : CHAR_HP_SMALL_OFFSET;
+            NumberPrinter.drawNumber(g, party.get(i).getCurrentHP(), curX, hpY, hpWidth, hpHeight, hpOffset, Assets.WhiteNumbers, NumberPrinter.Align.RIGHT);
+            g.drawPercentageImage(Assets.HPSlash, slashX, hpY, charScale, charScale);
+            NumberPrinter.drawNumber(g, party.get(i).getMaxHP(), maxX, hpY, hpWidth, hpHeight, hpOffset, Assets.WhiteNumbers, NumberPrinter.Align.LEFT);
 
-            //Draw the elements
-            g.drawPercentageImage(party.get(i).getAttackElement().getElementImage(), CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_SMALL_BASE_ELEM_ATK_X, CHAR_SMALL_ELEM_Y, CHAR_SMALL_ELEM_SCALE, CHAR_SMALL_ELEM_SCALE);
-            g.drawPercentageImage(party.get(i).getStrongElement().getElementImage(), CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_SMALL_BASE_ELEM_RES_X, CHAR_SMALL_ELEM_Y, CHAR_SMALL_ELEM_SCALE, CHAR_SMALL_ELEM_SCALE);
-            g.drawPercentageImage(party.get(i).getWeakElement().getElementImage(), CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_SMALL_BASE_ELEM_WEAK_X, CHAR_SMALL_ELEM_Y, CHAR_SMALL_ELEM_SCALE, CHAR_SMALL_ELEM_SCALE);
-
-            healthBar = getPlayerHealthBar(party.get(i).getCurrentHP(), party.get(i).getMaxHP());
-            perHealth = (party.get(i).getCurrentHP() * 1.0)/(party.get(i).getMaxHP());
-            g.drawPercentageImage(healthBar, CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_INTERIOR_SMALL_X, CHAR_HEALTH_SMALL_Y, (int) Math.ceil(perHealth * HALF_SCALE) , HALF_SCALE);
-
-            //Display CURRENTHP/MAXHP
-            int curX = CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_CUR_HP_SMALL_X;
-            NumberPrinter.drawNumber(g, party.get(i).getCurrentHP(), curX, CHAR_HP_SMALL_Y, CHAR_HP_SMALL_WIDTH, CHAR_HP_SMALL_HEIGHT, CHAR_HP_SMALL_OFFSET, Assets.WhiteNumbers, NumberPrinter.Align.RIGHT);
-            int slashX = CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_HP_SLASH_SMALL_X;
-            g.drawPercentageImage(Assets.HPSlash, slashX, CHAR_HP_SMALL_Y, HALF_SCALE, HALF_SCALE);
-            int maxX = CHAR_HOLDER_X_DISTANCE * (i + 1) + CHAR_MAX_HP_SMALL_X;
-            NumberPrinter.drawNumber(g, party.get(i).getMaxHP(), maxX, CHAR_HP_SMALL_Y, CHAR_HP_SMALL_WIDTH, CHAR_HP_SMALL_HEIGHT, CHAR_HP_SMALL_OFFSET, Assets.WhiteNumbers, NumberPrinter.Align.LEFT);
-            if(party.get(i).getCurrentHP() == 0){
-                g.drawPercentageImage(Assets.KOImages.get(i), CHAR_HOLDER_X_DISTANCE * (i + 1), CHAR_HOLDER_KO_SMALL_Y, HALF_SCALE, HALF_SCALE);
+            //Draw the KO Overlay
+            if(party.get(i).getCurrentHP() == 0) {
+                int koX = (i <= index) ? CHAR_HOLDER_X_DISTANCE * i : CHAR_HOLDER_X_DISTANCE * (i + 1);
+                int koY = (i == index) ? CHAR_HOLDER_KO_LARGE_Y : CHAR_HOLDER_KO_SMALL_Y;
+                g.drawPercentageImage(BattleAssets.KOImages.get(i), koX, koY, charScale, charScale);
             }
         }
     }
@@ -1300,13 +1263,13 @@ public abstract class AbsBattleScreen extends Screen {
         Graphics g = game.getGraphics();
         Double perHealth;
 
-        if(currentPhase == AbsBattleScreen.BattlePhase.WAVE_START ){
-            if(!phaseEntered) {
-                g.drawImageAlpha(enemies.get(enemyIndex).getImage(), ENEMY_IMAGE_X, ENEMY_IMAGE_Y, (int) (255 * phaseTime) / WAVE_PHASE_WAIT);
-            }
+        if(currentPhase == BattlePhase.WAVE_START ){
+            int startAlpha = phaseTime >= WAVE_PHASE_WAIT ? 255 : (int) (255 * phaseTime) / WAVE_PHASE_WAIT;
+            g.drawImageAlpha(enemies.get(enemyIndex).getImage(), ENEMY_IMAGE_X, ENEMY_IMAGE_Y, startAlpha);
         }
-        else if(currentPhase == BattlePhase.WAVE_END && !phaseEntered) {
-            g.drawImageAlpha(enemies.get(enemyIndex).getImage(), ENEMY_IMAGE_X, ENEMY_IMAGE_Y, (int) (255 * (WAVE_PHASE_WAIT - phaseTime) / WAVE_PHASE_WAIT));
+        else if(currentPhase == BattlePhase.WAVE_END) {
+            int endAlpha = phaseTime >= WAVE_PHASE_WAIT ? 0 : (int) (255 * (WAVE_PHASE_WAIT - phaseTime) / WAVE_PHASE_WAIT);
+            g.drawImageAlpha(enemies.get(enemyIndex).getImage(), ENEMY_IMAGE_X, ENEMY_IMAGE_Y, endAlpha);
         }
         else if(currentPhase == BattlePhase.BATTLE_END){
             //Draw nothing
@@ -1314,7 +1277,7 @@ public abstract class AbsBattleScreen extends Screen {
         else {
             g.drawImage(enemies.get(enemyIndex).getImage(), ENEMY_IMAGE_X, ENEMY_IMAGE_Y);
         }
-        g.drawImage(enemyHolder, ENEMY_HEALTH_HOLDER_X, ENEMY_HEALTH_HOLDER_Y);
+        g.drawImage(BattleAssets.EnemyHolder, ENEMY_HEALTH_HOLDER_X, ENEMY_HEALTH_HOLDER_Y);
         Image enemyHealth = getEnemyHealthBar(enemies.get(enemyIndex).getCurrentHP(), enemies.get(enemyIndex).getMaxHP());
         perHealth = (enemies.get(enemyIndex).getCurrentHP() * 1.0)/enemies.get(enemyIndex).getMaxHP();
         g.drawPercentageImage(enemyHealth, ENEMY_HEALTH_BAR_X, ENEMY_HEALTH_BAR_Y, (int) Math.ceil(FULL_SCALE * perHealth), FULL_SCALE);
@@ -1331,25 +1294,25 @@ public abstract class AbsBattleScreen extends Screen {
         BattleEnemy enemy = (BattleEnemy) enemies.get(enemyIndex);
         boolean defense = enemy.isDefendActive() || enemy.isWeakenActive();
         if(enemy.isDefendActive()) {
-            g.drawImage(Assets.DefenseUp, ENEMY_STATUS_X, ENEMY_STATUS_Y_1);
+            g.drawImage(BattleAssets.DefenseUp, ENEMY_STATUS_X, ENEMY_STATUS_Y_1);
         }
         else if(enemy.isWeakenActive()) {
-            g.drawImage(Assets.DefenseDown, ENEMY_STATUS_X, ENEMY_STATUS_Y_1);
+            g.drawImage(BattleAssets.DefenseDown, ENEMY_STATUS_X, ENEMY_STATUS_Y_1);
         }
         int atkY = defense ? ENEMY_STATUS_Y_2 : ENEMY_STATUS_Y_1;
         if(enemy.isPowerUpActive()) {
-            g.drawImage(Assets.AttackUp, ENEMY_STATUS_X, atkY);
+            g.drawImage(BattleAssets.AttackUp, ENEMY_STATUS_X, atkY);
         }
         else if(enemy.isPowerDownActive()) {
-            g.drawImage(Assets.AttackDown, ENEMY_STATUS_X, atkY);
+            g.drawImage(BattleAssets.AttackDown, ENEMY_STATUS_X, atkY);
         }
     }
 
     private void drawSpecial(){
         Graphics g = game.getGraphics();
-        g.drawImage(specialBarBase, SPECIAL_BAR_BASE_X, SPECIAL_BAR_BASE_Y);
-        g.drawPercentageImage(specialBar, SPECIAL_BAR_X, SPECIAL_BAR_Y, (int) ((numHits * 100.0) / MAX_HITS) , FULL_SCALE);
-        g.drawImage(specialBarTop, SPECIAL_BAR_X, SPECIAL_BAR_TOP_Y);
+        g.drawImage(BattleAssets.SpecialBarBase, SPECIAL_BAR_BASE_X, SPECIAL_BAR_BASE_Y);
+        g.drawPercentageImage(BattleAssets.SpecialBar, SPECIAL_BAR_X, SPECIAL_BAR_Y, (int) ((numHits * 100.0) / MAX_HITS) , FULL_SCALE);
+        g.drawImage(BattleAssets.SpecialBarTop, SPECIAL_BAR_X, SPECIAL_BAR_TOP_Y);
         int specialCount = numHits / SPECIAL_HITS;
         NumberPrinter.drawNumber(g, specialCount, SPECIAL_BAR_NUMBER_X, SPECIAL_BAR_NUMBER_Y, SPECIAL_NUMBER_WIDTH, SPECIAL_NUMBER_HEIGHT, SPECIAL_NUMBER_OFFSET, Assets.WhiteNumbers, NumberPrinter.Align.LEFT);
     }
@@ -1359,29 +1322,29 @@ public abstract class AbsBattleScreen extends Screen {
         if(comboHolder > 0){
             NumberPrinter.drawNumber(g, comboHolder, COMBO_NUMBER_X, COMBO_NUMBER_Y, COMBO_NUMBER_WIDTH, COMBO_NUMBER_HEIGHT, COMBO_NUMBER_OFFSET, Assets.YellowNumbers, NumberPrinter.Align.RIGHT);
             if(comboHolder > 1) {
-                g.drawImage(Assets.hitsText, COMBO_TEXT_X, COMBO_TEXT_Y);
+                g.drawImage(BattleAssets.HitsText, COMBO_TEXT_X, COMBO_TEXT_Y);
             }
             else{
-                g.drawImage(Assets.hitText, COMBO_TEXT_X, COMBO_TEXT_Y);
+                g.drawImage(BattleAssets.HitText, COMBO_TEXT_X, COMBO_TEXT_Y);
             }
         }
         //Damage Counter
         if(damageHolder > 0){
             NumberPrinter.drawNumber(g, damageHolder, DAMAGE_HOLDER_NUMBER_X, DAMAGE_HOLDER_NUMBER_Y, DAMAGE_HOLDER_WIDTH, DAMAGE_HOLDER_HEIGHT, DAMAGE_HOLDER_OFFSET, Assets.RedNumbers, NumberPrinter.Align.RIGHT);
-            g.drawImage(Assets.damageText, DAMAGE_TEXT_X, DAMAGE_TEXT_Y);
+            g.drawImage(BattleAssets.DamageText, DAMAGE_TEXT_X, DAMAGE_TEXT_Y);
         }
     }
 
     private void drawPlayerCommand() {
         Graphics g = game.getGraphics();
-        g.drawImage(Assets.attackBox, 0, 0);
-        g.drawString(commandSelected.getName(), 400, 70, textPaint);
+        g.drawImage(BattleAssets.AttackBox, ATTACK_BOX_X, ATTACK_BOX_Y);
+        g.drawString(commandSelected.getName(), ATTACK_BOX_TEXT_X, ATTACK_BOX_TEXT_Y, textPaint);
     }
 
     private void drawEnemyCommand() {
         Graphics g = game.getGraphics();
-        g.drawImage(Assets.attackBox, 0, 0);
-        g.drawString(((BattleEnemy) enemies.get(enemyIndex)).getActionString(), 400, 70, textPaint);
+        g.drawImage(BattleAssets.AttackBox, ATTACK_BOX_X, ATTACK_BOX_Y);
+        g.drawString(((BattleEnemy) enemies.get(enemyIndex)).getActionString(), ATTACK_BOX_TEXT_X, ATTACK_BOX_TEXT_Y, textPaint);
     }
 
     private void drawPlayerDamage() {
@@ -1391,7 +1354,7 @@ public abstract class AbsBattleScreen extends Screen {
         int index = partyIndex == -1 ? getFirstIndex() : partyIndex;
 
         for(int i = 0; i < party.size(); i++) {
-            if(partyDamage[i] == 0) {
+            if(party.get(i).getDisplayDamage() == 0) {
                 continue;
             }
             int x;
@@ -1406,7 +1369,7 @@ public abstract class AbsBattleScreen extends Screen {
                 x = CHAR_DAMAGE_BASE_X + CHAR_HOLDER_X_DISTANCE * (i + 1);
             }
             List<Image> numbers;
-            if(partyDamage[i] > 0) {
+            if(party.get(i).getDisplayDamage() > 0) {
                 if(i == index){
                     y = CHAR_DAMAGE_LARGE_START_Y - (int) (CHAR_DAMAGE_LARGE_INCREASE_Y * phaseTime / ATTACK_PHASE_WAIT);
                 }
@@ -1433,7 +1396,7 @@ public abstract class AbsBattleScreen extends Screen {
                 numbers = Assets.GreenNumbers;
             }
 
-            NumberPrinter.drawNumber(g, Math.abs(partyDamage[i]), x, y, PLAYER_DAMAGE_WIDTH, PLAYER_DAMAGE_HEIGHT, DAMAGE_OFFSET, numbers, NumberPrinter.Align.CENTER);
+            NumberPrinter.drawNumber(g, Math.abs(party.get(i).getDisplayDamage()), x, y, PLAYER_DAMAGE_WIDTH, PLAYER_DAMAGE_HEIGHT, DAMAGE_OFFSET, numbers, NumberPrinter.Align.CENTER);
         }
     }
 
@@ -1442,10 +1405,9 @@ public abstract class AbsBattleScreen extends Screen {
         Graphics g = game.getGraphics();
         if(battleAnimation != null) {
             for (int i = 0; i < party.size(); i++) {
-                if (partyDamage[i] > 0) {
+                if(party.get(i).getDisplayDamage() > 0) {
                     int x = CHAR_INTERIOR_SMALL_X + CHAR_BATTLE_ANIMATION_BASE_OFFSET_X + (CHAR_HOLDER_X_DISTANCE * i) + battleAnimationOffsetX;
                     int y = CHAR_IMAGE_SMALL_Y + CHAR_BATTLE_ANIMATION_BASE_OFFSET_Y + battleAnimationOffsetY;
-                    //g.drawScaledImage(battleAnimation.getFrame(), x, y, CHAR_BATTLE_ANIMATION_SIZE, CHAR_BATTLE_ANIMATION_SIZE);
                     g.drawImage(battleAnimation.getFrame(), x, y);
                 }
             }
@@ -1455,7 +1417,7 @@ public abstract class AbsBattleScreen extends Screen {
             int index = partyIndex == -1 ? getFirstIndex() : partyIndex;
 
             for (int i = 0; i < party.size(); i++) {
-                if (partyDamage[i] < 0) {
+                if(party.get(i).getDisplayDamage() < 0) {
                     int x;
                     int y;
                     if(i < index) {
@@ -1473,7 +1435,6 @@ public abstract class AbsBattleScreen extends Screen {
                     else {
                         y = CHAR_IMAGE_SMALL_Y + CHAR_BATTLE_ANIMATION_BASE_OFFSET_Y;
                     }
-                    //g.drawScaledImage(battleAnimation.getFrame(), x, y, CHAR_BATTLE_ANIMATION_SIZE, CHAR_BATTLE_ANIMATION_SIZE);
                     if(i != index){
                         g.drawImage(healAnimation.getFrame(), x, y);
                     }
@@ -1487,12 +1448,12 @@ public abstract class AbsBattleScreen extends Screen {
 
     private void drawEnemyDamage() {
         Graphics g = game.getGraphics();
-        if(enemyDamage == 0) {
+        if(enemies.get(enemyIndex).getDisplayDamage() == 0) {
             return;
         }
         int y;
         List<Image> numbers;
-        if(enemyDamage > 0) {
+        if(enemies.get(enemyIndex).getDisplayDamage() > 0) {
             y = ENEMY_DAMAGE_START_Y - (int) (ENEMY_DAMAGE_INCREASE_Y * phaseTime / ATTACK_PHASE_WAIT);
             if(party.get(partyIndex).isWeaknessAttack(enemies.get(enemyIndex))){
                 numbers = Assets.RedNumbers;
@@ -1509,18 +1470,18 @@ public abstract class AbsBattleScreen extends Screen {
             numbers = Assets.GreenNumbers;
         }
 
-        NumberPrinter.drawNumber(g, Math.abs(enemyDamage), ENEMY_DAMAGE_BASE_X, y, ENEMY_DAMAGE_WIDTH, ENEMY_DAMAGE_HEIGHT, DAMAGE_OFFSET, numbers, NumberPrinter.Align.CENTER);
+        NumberPrinter.drawNumber(g, Math.abs(enemies.get(enemyIndex).getDisplayDamage()), ENEMY_DAMAGE_BASE_X, y, ENEMY_DAMAGE_WIDTH, ENEMY_DAMAGE_HEIGHT, DAMAGE_OFFSET, numbers, NumberPrinter.Align.CENTER);
     }
 
     //This function draws the battleAnimation on enemy being hit
     private void drawEnemyAnimation(){
         Graphics g = game.getGraphics();
-        if(battleAnimation != null && enemyDamage > 0){
+        if(battleAnimation != null && enemies.get(enemyIndex).getDisplayDamage() > 0) {
             int x = ENEMY_IMAGE_X + ENEMY_BATTLE_ANIMATION_BASE_OFFSET_X + battleAnimationOffsetX;
             int y = ENEMY_IMAGE_Y + ENEMY_BATTLE_ANIMATION_BASE_OFFSET_Y + battleAnimationOffsetY;
             g.drawScaledImage(battleAnimation.getFrame(), x, y, ENEMY_BATTLE_ANIMATION_SIZE, ENEMY_BATTLE_ANIMATION_SIZE);
         }
-        if(healAnimation != null && enemyDamage < 0){
+        if(healAnimation != null && enemies.get(enemyIndex).getDisplayDamage() < 0) {
             int x = ENEMY_IMAGE_X + ENEMY_BATTLE_ANIMATION_BASE_OFFSET_X;
             int y = ENEMY_IMAGE_Y + ENEMY_BATTLE_ANIMATION_BASE_OFFSET_Y;
             g.drawScaledImage(healAnimation.getFrame(), x, y, ENEMY_BATTLE_ANIMATION_SIZE, ENEMY_BATTLE_ANIMATION_SIZE);
@@ -1530,16 +1491,16 @@ public abstract class AbsBattleScreen extends Screen {
     private void drawWaveStart() {
         Graphics g = game.getGraphics();
         if(enemyIndex == enemies.size() - 1){
-            g.drawImage(Assets.FinalWaveText, WAVE_FINAL_TEXT_X, WAVE_TEXT_Y);
+            g.drawImage(BattleAssets.FinalWaveText, WAVE_FINAL_TEXT_X, WAVE_TEXT_Y);
         }
         else{
             if(enemyIndex + 1 >= 10) {
-                g.drawImage(Assets.WaveText, WAVE_TEXT_LARGE_X, WAVE_TEXT_Y);
-                NumberPrinter.drawNumber(g, enemyIndex + 1, WAVE_NUMBER_LARGE_X, WAVE_TEXT_Y, WAVE_WIDTH, WAVE_HEIGHT, 0, Assets.YellowNumbers, NumberPrinter.Align.LEFT);
+                g.drawImage(BattleAssets.WaveText, WAVE_TEXT_LARGE_X, WAVE_TEXT_Y);
+                NumberPrinter.drawNumber(g, enemyIndex + 1, WAVE_NUMBER_LARGE_X, WAVE_TEXT_Y, WAVE_WIDTH, WAVE_HEIGHT, WAVE_OFFSET, Assets.YellowNumbers, NumberPrinter.Align.LEFT);
             }
             else {
-                g.drawImage(Assets.WaveText, WAVE_TEXT_SMALL_X, WAVE_TEXT_Y);
-                NumberPrinter.drawNumber(g, enemyIndex + 1, WAVE_NUMBER_SMALL_X, WAVE_TEXT_Y, WAVE_WIDTH, WAVE_HEIGHT, 0, Assets.YellowNumbers, NumberPrinter.Align.LEFT);
+                g.drawImage(BattleAssets.WaveText, WAVE_TEXT_SMALL_X, WAVE_TEXT_Y);
+                NumberPrinter.drawNumber(g, enemyIndex + 1, WAVE_NUMBER_SMALL_X, WAVE_TEXT_Y, WAVE_WIDTH, WAVE_HEIGHT, WAVE_OFFSET, Assets.YellowNumbers, NumberPrinter.Align.LEFT);
             }
         }
     }

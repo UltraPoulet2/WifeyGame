@@ -9,7 +9,6 @@ import org.xml.sax.helpers.DefaultHandler;
 import java.util.ArrayList;
 
 import ultrapoulet.wifeygame.battle.BattleInfo;
-import ultrapoulet.wifeygame.character.SkillsEnum;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
 import ultrapoulet.wifeygame.gamestate.Characters;
 import ultrapoulet.wifeygame.gamestate.RecruitBattles;

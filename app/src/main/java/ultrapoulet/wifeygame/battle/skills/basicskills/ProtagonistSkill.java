@@ -32,10 +32,9 @@ public class ProtagonistSkill extends AbsSkill {
 
     @Override
     public String getDescription(BattleCharacter enemy) {
-        StringBuilder desc = new StringBuilder();
-        desc.append("Lethal Damage Prevented: ");
-        desc.append(this.revived ? "Yes\n\n" : "No\n\n");
-        desc.append("When this wifey suffers lethal damage the first time, prevent the death and heal self.");
-        return desc.toString();
+        String desc = "Lethal Damage Prevented: " +
+                (this.revived ? "Yes\n\n" : "No\n\n") +
+                "When this wifey suffers lethal damage the first time, prevent the death and heal self.";
+        return desc;
     }
 }

@@ -209,7 +209,6 @@ public class EnemyInfoScreen extends Screen {
                             bDisplayWeaponSkill = !bDisplayWeaponSkill;
                             break;
                         default:
-                            //System.out.println("EnemyInfoScreen:update(): Invalid button selection: " + basicPressed.getName());
                             Log.e("EnemyInfoScreen", "Invalid button selection: " + basicPressed.getName());
                     }
                 }
@@ -265,8 +264,6 @@ public class EnemyInfoScreen extends Screen {
             g.drawString("--NONE--", UNIQUE_X, skillsY + MAX_WEAPON_Y, weaponPaint, MAX_UNIQUE_SIZE, MAX_WEAPON_FONT);
         }
 
-        //Draw image for weapon category
-
         //Draw string for weapon name
         if(displayEnemy.getSkills().getWeaponSkill() != null){
             g.drawString(displayEnemy.getSkills().getWeaponSkill().getSkillName(), WEAPON_X, skillsY + MAX_WEAPON_Y, weaponPaint, MAX_WEAPON_SIZE, MAX_WEAPON_FONT);
@@ -306,13 +303,13 @@ public class EnemyInfoScreen extends Screen {
     private Image getHealthBar(int currentHealth, int maxHealth){
         Double percent = (100.0 * currentHealth)/maxHealth;
         if(percent >= 50.0){
-            return Assets.pHealthG;
+            return Assets.SmallGreenBar;
         }
         else if(percent >= 25.0){
-            return Assets.pHealthY;
+            return Assets.SmallYellowBar;
         }
         else{
-            return Assets.pHealthR;
+            return Assets.SmallRedBar;
         }
     }
 

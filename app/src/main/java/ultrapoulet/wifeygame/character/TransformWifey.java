@@ -28,8 +28,8 @@ public class TransformWifey {
     private static final int STAT_INCREASE = 2;
 
     public TransformWifey(){
-        addSkills = new ArrayList();
-        removeSkills = new ArrayList();
+        addSkills = new ArrayList<>();
+        removeSkills = new ArrayList<>();
     }
 
     public String getName(){

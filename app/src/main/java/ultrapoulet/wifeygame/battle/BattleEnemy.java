@@ -8,8 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 import ultrapoulet.androidgame.framework.Graphics;
-import ultrapoulet.androidgame.framework.helpers.AnimationImages;
-import ultrapoulet.wifeygame.AnimationAssets;
 import ultrapoulet.wifeygame.battle.enemyai.EnemyAI;
 import ultrapoulet.wifeygame.battle.enemyai.EnemyAI.EnemyAction;
 import ultrapoulet.wifeygame.battle.skills.AbsSkill.Multipliers;

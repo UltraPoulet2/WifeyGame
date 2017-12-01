@@ -115,7 +115,7 @@ public class Party {
                 editor.putString("party_" + i, party.get(i).getHashKey());
             }
         }
-        editor.commit();
+        editor.apply();
     }
 
     //For debugging purposes

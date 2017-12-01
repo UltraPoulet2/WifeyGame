@@ -1,7 +1,6 @@
 package ultrapoulet.androidgame.framework.implementation;
 
 import android.content.Context;
-import android.os.Build.VERSION;
 import android.view.View;
 
 import java.util.List;

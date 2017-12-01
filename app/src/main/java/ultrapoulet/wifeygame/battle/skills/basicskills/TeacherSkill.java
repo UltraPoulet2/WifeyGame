@@ -29,9 +29,8 @@ public class TeacherSkill extends AbsSkill {
 
     @Override
     public String getDescription(BattleCharacter enemy) {
-        StringBuilder desc = new StringBuilder();
-        desc.append("Current Bonus EXP: " + totalBonusExp + "\n\n");
-        desc.append("Increases experience received by party by 10%");
-        return desc.toString();
+        String desc = "Current Bonus EXP: " + totalBonusExp + "\n\n" +
+                "Increases experience received by party by 10%";
+        return desc;
     }
 }

@@ -181,9 +181,7 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
         displayStrength = displayChar.getStrength();
         displayMagic = displayChar.getMagic();
         displaySkills.clear();
-        for(int i = 0; i < displayChar.getSkills().size(); i++){
-            displaySkills.add(displayChar.getSkills().get(i));
-        }
+        displaySkills.addAll(displayChar.getSkills());
         displayWeapon = displayChar.getWeapon();
         displayAttackElement = displayChar.getAttackElement();
         displayStrongElement = displayChar.getStrongElement();
@@ -216,12 +214,8 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
         if(displayForm.getWeakElement() != null){
             displayWeakElement = displayForm.getWeakElement();
         }
-        for(int i = 0; i < displayForm.getAddSkills().size(); i++){
-            displaySkills.add(displayForm.getAddSkills().get(i));
-        }
-        for(int i = 0; i < displayForm.getRemoveSkills().size(); i++){
-            displaySkills.remove(displayForm.getRemoveSkills().get(i));
-        }
+        displaySkills.addAll(displayForm.getAddSkills());
+        displaySkills.removeAll(displayForm.getRemoveSkills());
         if(displayForm.getUniqueSkill() != null){
             displayUniqueSkill = displayForm.getUniqueSkill();
         }
@@ -289,14 +283,10 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
             }
 
             TransformWifey prevForm = transformations.get(transformPage);
-            for (int i = 0; i < prevForm.getAddSkills().size(); i++) {
-                //Since decrementing, remove the skills previously added
-                displaySkills.remove(prevForm.getAddSkills().get(i));
-            }
-            for (int i = 0; i < prevForm.getRemoveSkills().size(); i++) {
-                //Since decrementing, add skills previously removed
-                displaySkills.add(prevForm.getRemoveSkills().get(i));
-            }
+            //Since decrementing, remove the skills previously added
+            displaySkills.removeAll(prevForm.getAddSkills());
+            //Since decrementing, add skills previously removed
+            displaySkills.addAll(prevForm.getRemoveSkills());
             Collections.sort(displaySkills, SkillsEnum.SKILLS_ENUM_COMPARATOR);
         }
     }
@@ -333,7 +323,7 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
         }
         g.drawString(String.valueOf(displayChar.getLevel()), LEVEL_X, LEVEL_Y, levelPaint);
         int expWidth = (int) (EXP_BAR_MAX_WIDTH * displayChar.getExperiencePercent());
-        g.drawScaledImage(Assets.pHealthY, EXP_BAR_X, EXP_BAR_Y, expWidth, EXP_BAR_HEIGHT);
+        g.drawScaledImage(Assets.SmallYellowBar, EXP_BAR_X, EXP_BAR_Y, expWidth, EXP_BAR_HEIGHT);
         g.drawString(displayExp, EXP_X, EXP_Y, expPaint, MAX_EXP_SIZE, MAX_EXP_FONT);
 
         g.drawString(String.valueOf(BattleWifey.calculateHP(displayStrength)), HP_X, STAT_Y, statPaint);
@@ -357,7 +347,6 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
         else {
             //We'll print default weapon and let the image describe the weapon
             g.drawString("--Default Weapon--", WEAPON_X, MAX_WEAPON_Y, weaponPaint, MAX_WEAPON_SIZE, MAX_WEAPON_FONT);
-            //g.drawString(displayWeapon.getWeaponType(), WEAPON_X, MAX_WEAPON_Y, weaponPaint, MAX_WEAPON_SIZE, MAX_WEAPON_FONT);
         }
         //Draw image for weapon
         g.drawImage(displayChar.getWeapon().getImage(), WEAPONS_IMAGE_LEFT_X, WEAPONS_IMAGE_TOP_Y);

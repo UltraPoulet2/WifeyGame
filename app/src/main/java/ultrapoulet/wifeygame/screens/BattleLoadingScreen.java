@@ -2,6 +2,7 @@ package ultrapoulet.wifeygame.screens;
 
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +11,7 @@ import ultrapoulet.androidgame.framework.Game;
 import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Input.TouchEvent;
 import ultrapoulet.androidgame.framework.Screen;
+import ultrapoulet.wifeygame.BattleAssets;
 import ultrapoulet.wifeygame.battle.BattleInfo;
 import ultrapoulet.wifeygame.character.Element;
 import ultrapoulet.wifeygame.character.EnemyCharacter;
@@ -39,6 +41,10 @@ public class BattleLoadingScreen extends Screen {
             protected String getStatus() {
                 return "Creating Animations";
             }
+        },
+        CREATE_IMAGES{
+            @Override
+            protected String getStatus() { return "Creating Images"; }
         },
         COMPLETE{
             @Override
@@ -70,8 +76,10 @@ public class BattleLoadingScreen extends Screen {
         loadingElements = new ArrayList<>();
 
         for(WifeyCharacter wifey : party){
-            loadingWeapons.add(wifey.getWeapon());
-            loadingElements.add(wifey.getAttackElement());
+            if(wifey != null) {
+                loadingWeapons.add(wifey.getWeapon());
+                loadingElements.add(wifey.getAttackElement());
+            }
         }
         for(EnemyCharacter enemy : enemies) {
             loadingWeapons.add(enemy.getWeapon());
@@ -93,9 +101,17 @@ public class BattleLoadingScreen extends Screen {
                     currentPhase = LoadingPhase.ERROR;
                 }
                 else {
-                    currentPhase = LoadingPhase.COMPLETE;
+                    currentPhase = LoadingPhase.CREATE_IMAGES;
                 }
                 break;
+            case CREATE_IMAGES:
+                createImages();
+                if(error) {
+                    currentPhase = LoadingPhase.ERROR;
+                }
+                else {
+                    currentPhase = LoadingPhase.COMPLETE;
+                }
             case COMPLETE:
                 List<TouchEvent> touchEvents = game.getInput().getTouchEvents();
 
@@ -148,6 +164,18 @@ public class BattleLoadingScreen extends Screen {
             errorString = builder.toString();
         }
 
+    }
+
+    private void createImages() {
+        Graphics g = game.getGraphics();
+        try {
+            BattleAssets.load(g);
+        }
+        catch (Exception e) {
+            error = true;
+            errorString = "Could not load all battle images";
+            Log.e("BattleLoading", e.getMessage());
+        }
     }
 
     @Override

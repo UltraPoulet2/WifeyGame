@@ -72,10 +72,9 @@ public class MaidSkill extends AbsSkill {
 
     @Override
     public String getDescription(BattleCharacter enemy) {
-        StringBuilder desc = new StringBuilder();
-        desc.append("Attack Multiplier: ");
-        desc.append(healLastTurn ? "2.00x\n\n" : "1.00x\n\n");
-        desc.append("Multiplies damage dealt by 2.00x if this wifey healed the previous turn.");
-        return desc.toString();
+        String desc = "Attack Multiplier: " +
+                (healLastTurn ? "2.00x\n\n" : "1.00x\n\n") +
+                "Multiplies damage dealt by 2.00x if this wifey healed the previous turn.";
+        return desc;
     }
 }

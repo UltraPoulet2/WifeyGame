@@ -46,11 +46,10 @@ public class PoliceSkill extends AbsSkill{
 
     @Override
     public String getDescription(BattleCharacter enemy){
-        StringBuilder desc = new StringBuilder();
-        desc.append("Current Enemy Bonus Gold: " + enemyBonusGold(enemy) + "\n");
-        desc.append("Current Total Bonus Gold: " + totalBonusGold + "\n\n");
-        desc.append("Gives bonus gold by defeating an enemy with a criminal skill.");
-        return desc.toString();
+        String desc = "Current Enemy Bonus Gold: " + enemyBonusGold(enemy) + "\n" +
+                "Current Total Bonus Gold: " + totalBonusGold + "\n\n" +
+                "Gives bonus gold by defeating an enemy with a criminal skill.";
+        return desc;
     }
 
     private void setUpMap(){

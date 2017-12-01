@@ -6,8 +6,14 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
+import ultrapoulet.androidgame.framework.Game;
 import ultrapoulet.wifeygame.character.Element;
 import ultrapoulet.wifeygame.character.SkillsEnum;
 import ultrapoulet.wifeygame.character.TransformWifey;
@@ -44,6 +50,40 @@ public class CharacterParser extends DefaultHandler{
                              String localName,
                              String qName,
                              Attributes attributes) throws SAXException {
+        /*
+        if (qName.equalsIgnoreCase("include")) {
+            InputStream in = null;
+            String file = "config/" + attributes.getValue("file");
+            try {
+                in = game.openConfig(file);
+                SAXParserFactory factory = SAXParserFactory.newInstance();
+                SAXParser saxParser = factory.newSAXParser();
+                CharacterParser charParser = new CharacterParser(this.game);
+                saxParser.parse(in, charParser);
+                error = charParser.getNumberErrors() > 0;
+                if(error){
+                    errorKeys.addAll(charParser.getErrors());
+                    Log.e("CharacterParsing", "Incomplete parsing of file: " + file + ". Number errors: " + charParser.getNumberErrors());
+                }
+                else {
+                    Log.i("CharacterParsing", "Complete parsing of file: " + file);
+                }
+            }
+            catch (Exception e){
+                e.printStackTrace();
+                //Do better error handling
+            }
+            finally{
+                if(in != null){
+                    try {
+                        in.close();
+                    }
+                    catch(IOException e){
+                    }
+                }
+            }
+        }
+        */
         if (qName.equalsIgnoreCase("character")) {
             error = false;
             charKey = attributes.getValue("key");
@@ -368,7 +408,7 @@ public class CharacterParser extends DefaultHandler{
 
     private boolean validate(){
 
-        if(error == true){
+        if(error){
             return false;
         }
         return charBuilder.validate();
@@ -385,5 +425,9 @@ public class CharacterParser extends DefaultHandler{
             builder.append("\n" + key);
         }
         return builder.toString();
+    }
+
+    private ArrayList<String> getErrors() {
+        return errorKeys;
     }
 }

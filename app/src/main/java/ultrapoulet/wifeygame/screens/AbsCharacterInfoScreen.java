@@ -192,7 +192,6 @@ public abstract class AbsCharacterInfoScreen extends Screen {
                             bDisplayWeaponSkill = !bDisplayWeaponSkill;
                             break;
                         default:
-                            //System.out.println("AbsCharacterInfoScreen:update(): Invalid button selection: " + basicPressed.getName());
                             Log.e("AbsChar...InfoScreen", "Invalid button selection: " + basicPressed.getName());
                     }
                 }

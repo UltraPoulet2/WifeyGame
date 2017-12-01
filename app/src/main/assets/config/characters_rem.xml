@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<characters>
+    <character key="TEST-RREM">
+        <name>Rem</name>
+        <strength>90</strength>
+        <magic>110</magic>
+        <weapon>BALL</weapon>
+        <uniqueSkill>REM</uniqueSkill>
+        <skills>
+            <skill>MAID</skill>
+        </skills>
+        <elements>
+            <atkElement>AIR</atkElement>
+            <stgElement>AIR</stgElement>
+            <wkElement>DARK</wkElement>
+        </elements>
+        <transformations>
+            <transformation>
+                <name>Rem Transformed</name>
+                <strength>150</strength>
+                <magic>150</magic>
+                <weapon>TANK</weapon>
+                <skills mode="add">
+                    <skill>KILLER</skill>
+                </skills>
+                <skills mode="remove">
+                    <skill>MAID</skill>
+                </skills>
+                <elements>
+                    <atkElement>FIRE</atkElement>
+                    <stgElement>FIRE</stgElement>
+                    <wkElement>LIGHT</wkElement>
+                </elements>
+            </transformation>
+        </transformations>
+    </character>
+</characters>

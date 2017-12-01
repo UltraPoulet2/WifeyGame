@@ -1207,6 +1207,7 @@
             <wkElement>FIRE</wkElement>
         </elements>
     </character>
+    <!--
     <character key="TEST-RREM">
         <name>Rem</name>
         <strength>90</strength>
@@ -1221,7 +1222,6 @@
             <stgElement>AIR</stgElement>
             <wkElement>DARK</wkElement>
         </elements>
-        <!-- Commented out test transformation -->
         <transformations>
             <transformation>
                 <name>Rem Transformed</name>
@@ -1241,6 +1241,6 @@
                 </elements>
             </transformation>
         </transformations>
-        <!---->
     </character>
+    -->
 </characters>

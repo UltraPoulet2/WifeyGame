@@ -1,12 +1,9 @@
 package ultrapoulet.wifeygame.character;
 
-import android.util.Log;
-
 import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Graphics.ImageFormat;
 import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.androidgame.framework.helpers.AnimationImages;
-import ultrapoulet.wifeygame.AnimationAssets;
 
 /**
  * Created by John on 6/25/2016.

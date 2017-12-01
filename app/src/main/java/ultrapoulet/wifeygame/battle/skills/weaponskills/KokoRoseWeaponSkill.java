@@ -95,9 +95,8 @@ public class KokoRoseWeaponSkill extends AbsWeaponSkill {
 
     @Override
     public String getDescription(BattleCharacter enemy) {
-        StringBuilder desc = new StringBuilder();
-        desc.append("Defense Multiplier: " +  String.format("%1$.2f", getDefense(enemy)) + "x\n\n");
-        desc.append("Decreases physical, magical, and special damage taken multiplier by " + String.format("%1$.2f", perAttack) + "x from an enemy for each round that it has been attacked, to a minimum of 0.50x.");
-        return desc.toString();
+        String desc = "Defense Multiplier: " + String.format("%1$.2f", getDefense(enemy)) + "x\n\n" +
+                "Decreases physical, magical, and special damage taken multiplier by " + String.format("%1$.2f", perAttack) + "x from an enemy for each round that it has been attacked, to a minimum of 0.50x.";
+        return desc;
     }
 }
