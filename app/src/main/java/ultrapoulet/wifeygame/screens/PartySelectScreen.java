@@ -49,7 +49,9 @@ public class PartySelectScreen extends Screen {
 
     private int currentPage = 0;
     private int maxPage;
-    private final static int COLUMN_SIZE = 8;
+    //Number of Columns
+    private final static int COLUMN_SIZE = 6;
+    //Number of Rows
     private final static int ROW_SIZE = 8;
     private final static int PER_PAGE = COLUMN_SIZE * ROW_SIZE;
 
@@ -73,15 +75,15 @@ public class PartySelectScreen extends Screen {
     private Button prevButton;
     private static final int PREV_BUTTON_LEFT_X = 45;
     private static final int PREV_BUTTON_RIGHT_X = 215;
-    private static final int PREV_BUTTON_TOP_Y = 338;
-    private static final int PREV_BUTTON_BOT_Y = 388;
+    private static final int PREV_BUTTON_TOP_Y = 539;
+    private static final int PREV_BUTTON_BOT_Y = 589;
     private static final String PREV_BUTTON_STRING = "Prev";
 
     private Button nextButton;
     private static final int NEXT_BUTTON_LEFT_X = 315;
     private static final int NEXT_BUTTON_RIGHT_X = 485;
-    private static final int NEXT_BUTTON_TOP_Y = 338;
-    private static final int NEXT_BUTTON_BOT_Y = 388;
+    private static final int NEXT_BUTTON_TOP_Y = 539;
+    private static final int NEXT_BUTTON_BOT_Y = 589;
     private static final String NEXT_BUTTON_STRING = "Next";
 
     private DropdownMenu sortDropdown;
@@ -89,8 +91,8 @@ public class PartySelectScreen extends Screen {
     private List<String> sortingList;
     private static final int SORT_BUTTON_LEFT_X = 510;
     private static final int SORT_BUTTON_RIGHT_X = 755;
-    private static final int SORT_BUTTON_TOP_Y = 338;
-    private static final int SORT_BUTTON_BOT_Y = 388;
+    private static final int SORT_BUTTON_TOP_Y = 462;
+    private static final int SORT_BUTTON_BOT_Y = 512;
     private static final String ALPHA_SORT_STRING = "A -> Z";
     private static final String STR_SORT_STRING = "Strength";
     private static final String MAG_SORT_STRING = "Magic";
@@ -112,17 +114,19 @@ public class PartySelectScreen extends Screen {
 
     private static final int CUR_PAGE_X = 255;
     private static final int MAX_PAGE_X = 265;
-    private static final int PAGE_Y = 355;
+    private static final int PAGE_Y = 556;
     private static final int PAGE_WIDTH = 20;
     private static final int PAGE_HEIGHT = 40;
 
     private ButtonList partyList;
 
-    private static final int PARTY_IMAGE_BASE_LEFT_X = 55;
-    private static final int PARTY_IMAGE_BASE_RIGHT_X = 145;
-    private static final int PARTY_IMAGE_OFFSET_X = 100;
-    private static final int PARTY_IMAGE_TOP_Y = 180;
-    private static final int PARTY_IMAGE_BOT_Y = 270;
+    private static final int PARTY_IMAGE_BASE_ROW_1_LEFT_X = 205;
+    private static final int PARTY_IMAGE_BASE_ROW_1_RIGHT_X = 295;
+    private static final int PARTY_IMAGE_BASE_ROW_2_LEFT_X = 255;
+    private static final int PARTY_IMAGE_BASE_ROW_2_RIGHT_X = 345;
+    private static final int PARTY_IMAGE_OFFSET = 100;
+    private static final int PARTY_IMAGE_BASE_TOP_Y = 225;
+    private static final int PARTY_IMAGE_BASE_BOT_Y = 315;
 
     private ButtonList recruitList;
 
@@ -131,9 +135,9 @@ public class PartySelectScreen extends Screen {
     private static final int CHAR_IMAGE_BASE_LEFT_X = 45;
     private static final int CHAR_IMAGE_BASE_RIGHT_X = CHAR_IMAGE_BASE_LEFT_X + CHAR_IMAGE_WIDTH;
     private static final int CHAR_IMAGE_OFFSET_X = 90;
-    private static final int CHAR_IMAGE_BASE_TOP_Y = 400;
+    private static final int CHAR_IMAGE_BASE_TOP_Y = 600;
     private static final int CHAR_IMAGE_BASE_BOT_Y = CHAR_IMAGE_BASE_TOP_Y + CHAR_IMAGE_HEIGHT;
-    private static final int CHAR_IMAGE_OFFSET_Y = 90;
+    private static final int CHAR_IMAGE_OFFSET_Y = 86;
     private static final int CHAR_FAVORITE_SIZE = 30;
 
     private static final int CHAR_REQUIRED_HOLDER_BASE_X = CHAR_IMAGE_BASE_LEFT_X - 3;
@@ -305,10 +309,22 @@ public class PartySelectScreen extends Screen {
 
         partyList = new ButtonList();
         for(int i = 0; i < 7; i++){
-            int leftX = PARTY_IMAGE_BASE_LEFT_X + PARTY_IMAGE_OFFSET_X * i;
-            int rightX = PARTY_IMAGE_BASE_RIGHT_X + PARTY_IMAGE_OFFSET_X * i;
-            int topY = PARTY_IMAGE_TOP_Y;
-            int botY = PARTY_IMAGE_BOT_Y;
+            int leftX;
+            int rightX;
+            int topY;
+            int botY;
+            if(i < 4) {
+                leftX = PARTY_IMAGE_BASE_ROW_1_LEFT_X + PARTY_IMAGE_OFFSET * i;
+                rightX = PARTY_IMAGE_BASE_ROW_1_RIGHT_X + PARTY_IMAGE_OFFSET * i;
+                topY = PARTY_IMAGE_BASE_TOP_Y;
+                botY = PARTY_IMAGE_BASE_BOT_Y;
+            }
+            else {
+                leftX = PARTY_IMAGE_BASE_ROW_2_LEFT_X + PARTY_IMAGE_OFFSET * (i - 4);
+                rightX = PARTY_IMAGE_BASE_ROW_2_RIGHT_X + PARTY_IMAGE_OFFSET * (i - 4);
+                topY = PARTY_IMAGE_BASE_TOP_Y + PARTY_IMAGE_OFFSET;
+                botY = PARTY_IMAGE_BASE_BOT_Y + PARTY_IMAGE_OFFSET;
+            }
             partyList.addButton(new Button(leftX, rightX, topY, botY, false, "PARTY_" + i));
         }
 
@@ -316,8 +332,8 @@ public class PartySelectScreen extends Screen {
         for(int i = 0; i < PER_PAGE; i++){
             int leftX = CHAR_IMAGE_BASE_LEFT_X + CHAR_IMAGE_OFFSET_X * (i % ROW_SIZE);
             int rightX = CHAR_IMAGE_BASE_RIGHT_X + CHAR_IMAGE_OFFSET_X * (i % ROW_SIZE);
-            int topY = CHAR_IMAGE_BASE_TOP_Y + CHAR_IMAGE_OFFSET_Y * ((i % PER_PAGE) / COLUMN_SIZE);
-            int botY = CHAR_IMAGE_BASE_BOT_Y + CHAR_IMAGE_OFFSET_Y * ((i % PER_PAGE) / COLUMN_SIZE);
+            int topY = CHAR_IMAGE_BASE_TOP_Y + CHAR_IMAGE_OFFSET_Y * ((i % PER_PAGE) / ROW_SIZE);
+            int botY = CHAR_IMAGE_BASE_BOT_Y + CHAR_IMAGE_OFFSET_Y * ((i % PER_PAGE) / ROW_SIZE);
             recruitList.addButton(new Button(leftX, rightX, topY, botY, false, "RECRUIT_" + i));
         }
     }
@@ -653,17 +669,21 @@ public class PartySelectScreen extends Screen {
         basicButtonList.drawImage(g);
         for(int i = 0; i < currentParty.size(); i++){
             if(!dragging || i != draggingPartyIndex) {
-                g.drawPercentageImage(partyImages.get(i), PARTY_IMAGE_OFFSET_X * i + PARTY_IMAGE_BASE_LEFT_X, PARTY_IMAGE_TOP_Y, PARTY_SCALE, PARTY_SCALE);
+                int x = (i < 4) ?  PARTY_IMAGE_OFFSET * i + PARTY_IMAGE_BASE_ROW_1_LEFT_X : PARTY_IMAGE_OFFSET * (i - 4) + PARTY_IMAGE_BASE_ROW_2_LEFT_X;
+                int y = (i < 4) ? PARTY_IMAGE_BASE_TOP_Y : PARTY_IMAGE_BASE_TOP_Y + PARTY_IMAGE_OFFSET;
+                g.drawPercentageImage(partyImages.get(i), x, y, PARTY_SCALE, PARTY_SCALE);
                 if(currentParty.get(i).isFavorite()) {
-                    g.drawScaledImage(Assets.Favorite,  PARTY_IMAGE_OFFSET_X * i + PARTY_IMAGE_BASE_LEFT_X, PARTY_IMAGE_TOP_Y, CHAR_FAVORITE_SIZE, CHAR_FAVORITE_SIZE);
+                    g.drawScaledImage(Assets.Favorite,  x, y, CHAR_FAVORITE_SIZE, CHAR_FAVORITE_SIZE);
                 }
                 if(battleInfo != null && !battleInfo.allowCharacter(currentParty.get(i))){
-                    g.drawPercentageImage(Assets.InvalidChar, PARTY_IMAGE_OFFSET_X * i + PARTY_IMAGE_BASE_LEFT_X, PARTY_IMAGE_TOP_Y, PARTY_SCALE, PARTY_SCALE);
+                    g.drawPercentageImage(Assets.InvalidChar, x, y, PARTY_SCALE, PARTY_SCALE);
                 }
             }
         }
         for(int i = maxPartySize; i < 7; i++){
-            g.drawImage(Assets.LockSelection, PARTY_IMAGE_OFFSET_X * i + PARTY_IMAGE_BASE_LEFT_X, PARTY_IMAGE_TOP_Y);
+            int x = (i < 4) ?  PARTY_IMAGE_OFFSET * i + PARTY_IMAGE_BASE_ROW_1_LEFT_X : PARTY_IMAGE_OFFSET * (i - 4) + PARTY_IMAGE_BASE_ROW_2_LEFT_X;
+            int y = (i < 4) ? PARTY_IMAGE_BASE_TOP_Y : PARTY_IMAGE_BASE_TOP_Y + PARTY_IMAGE_OFFSET;
+            g.drawImage(Assets.LockSelection, x, y);
         }
 
         //If the dropdown is not activated, draw it on a lower layer than the characters
@@ -681,19 +701,19 @@ public class PartySelectScreen extends Screen {
             if(!dragging || i != draggingRecruitIndex) {
                 g.drawPercentageImage(recruitImages.get(i - minIndex),
                         CHAR_IMAGE_OFFSET_X * (i % ROW_SIZE) + CHAR_IMAGE_BASE_LEFT_X,
-                        CHAR_IMAGE_BASE_TOP_Y + CHAR_IMAGE_OFFSET_Y * ((i % PER_PAGE) / COLUMN_SIZE),
+                        CHAR_IMAGE_BASE_TOP_Y + CHAR_IMAGE_OFFSET_Y * ((i % PER_PAGE) / ROW_SIZE),
                         HALF_SCALE, HALF_SCALE);
                 if(validCharacters.get(i).isFavorite()) {
                     g.drawScaledImage(Assets.Favorite,
                             CHAR_IMAGE_OFFSET_X * (i % ROW_SIZE) + CHAR_IMAGE_BASE_LEFT_X,
-                            CHAR_IMAGE_BASE_TOP_Y + CHAR_IMAGE_OFFSET_Y * ((i % PER_PAGE) / COLUMN_SIZE),
+                            CHAR_IMAGE_BASE_TOP_Y + CHAR_IMAGE_OFFSET_Y * ((i % PER_PAGE) / ROW_SIZE),
                             CHAR_FAVORITE_SIZE, CHAR_FAVORITE_SIZE);
                 }
             }
             if(!validCharacters.get(i).isRecruited()){
                 g.drawPercentageImage(Assets.InvalidChar,
                         CHAR_IMAGE_OFFSET_X * (i % ROW_SIZE) + CHAR_IMAGE_BASE_LEFT_X,
-                        CHAR_IMAGE_BASE_TOP_Y + CHAR_IMAGE_OFFSET_Y * ((i % PER_PAGE) / COLUMN_SIZE), HALF_SCALE, HALF_SCALE);
+                        CHAR_IMAGE_BASE_TOP_Y + CHAR_IMAGE_OFFSET_Y * ((i % PER_PAGE) / ROW_SIZE), HALF_SCALE, HALF_SCALE);
             }
         }
         if(dragging && draggingRecruitIndex != -1){
