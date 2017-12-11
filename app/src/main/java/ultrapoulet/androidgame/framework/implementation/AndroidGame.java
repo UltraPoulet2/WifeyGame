@@ -32,7 +32,7 @@ public abstract class AndroidGame extends Activity implements Game {
     Screen screen;
 
     @Override
-    public void onCreate(Bundle savedInstanceState){
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -40,8 +40,8 @@ public abstract class AndroidGame extends Activity implements Game {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         boolean isPortrait = getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT;
-        int frameBufferWidth = isPortrait ? 800: 1280;
-        int frameBufferHeight = isPortrait ? 1280: 800;
+        int frameBufferWidth = isPortrait ? 800 : 1280;
+        int frameBufferHeight = isPortrait ? 1280 : 800;
         Bitmap frameBuffer = Bitmap.createBitmap(frameBufferWidth,
                 frameBufferHeight, Config.RGB_565);
 
@@ -114,19 +114,18 @@ public abstract class AndroidGame extends Activity implements Game {
         return screen;
     }
 
-    public InputStream openConfig(String filename){
+    public InputStream openConfig(String filename) {
         InputStream in = null;
-        try{
+        try {
             in = getAssets().open(filename);
             return in;
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             throw new RuntimeException("Couldn't load config from asset '"
                     + filename + "'");
         }
     }
 
-    public SharedPreferences getGamePreferences(String name, int mode){
+    public SharedPreferences getGamePreferences(String name, int mode) {
         return this.getSharedPreferences(name, mode);
     }
 }
