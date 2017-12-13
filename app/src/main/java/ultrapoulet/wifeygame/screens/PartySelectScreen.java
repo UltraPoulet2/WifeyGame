@@ -118,6 +118,25 @@ public class PartySelectScreen extends Screen {
     private static final int PAGE_WIDTH = 20;
     private static final int PAGE_HEIGHT = 40;
 
+    private int partyNum = 0;
+    private static final int MAX_PARTY_NUM = 9;
+    private static final int PARTY_NUM_CENTER_X = 250;
+    private static final int PARTY_NUM_TOP_Y = 185;
+    private static final int PARTY_NUM_HEIGHT = 60;
+    private static final int PARTY_NUM_WIDTH = 30;
+    private static final int PARTY_NUM_SPACING = 0;
+
+    private Button prevPartyButton;
+    private Button nextPartyButton;
+    private static final int PREV_PARTY_BUTTON_LEFT_X = 144;
+    private static final int PREV_PARTY_BUTTON_RIGHT_X = 190;
+    private static final int NEXT_PARTY_BUTTON_LEFT_X = 610;
+    private static final int NEXT_PARTY_BUTTON_RIGHT_X = 656;
+    private static final int PARTY_BUTTON_TOP_Y = 164;
+    private static final int PARTY_BUTTON_BOT_Y = 364;
+    private static final String PREV_PARTY_BUTTON_STRING = "Prev Party";
+    private static final String NEXT_PARTY_BUTTON_STRING = "Next Party";
+
     private ButtonList partyList;
 
     private static final int PARTY_NUM_TOP_ROW = 3;
@@ -308,6 +327,11 @@ public class PartySelectScreen extends Screen {
         acceptButton = new Button(ACCEPT_BUTTON_LEFT_X, ACCEPT_BUTTON_RIGHT_X, ACCEPT_BUTTON_TOP_Y, ACCEPT_BUTTON_BOT_Y, false, ACCEPT_BUTTON_STRING, Assets.AcceptEnable, Assets.AcceptDisable);
         basicButtonList.addButton(acceptButton);
 
+        prevPartyButton = new Button(PREV_PARTY_BUTTON_LEFT_X, PREV_PARTY_BUTTON_RIGHT_X, PARTY_BUTTON_TOP_Y, PARTY_BUTTON_BOT_Y, true, PREV_BUTTON_STRING);
+        basicButtonList.addButton(prevPartyButton);
+        nextPartyButton = new Button(NEXT_PARTY_BUTTON_LEFT_X, NEXT_PARTY_BUTTON_RIGHT_X, PARTY_BUTTON_TOP_Y, PARTY_BUTTON_BOT_Y, true, NEXT_PARTY_BUTTON_STRING);
+        basicButtonList.addButton(nextPartyButton);
+
         partyList = new ButtonList();
         for(int i = 0; i < 7; i++){
             int leftX;
@@ -438,6 +462,10 @@ public class PartySelectScreen extends Screen {
         }
     }
 
+    private void updatePartyNum() {
+        //For now do nothing, but this will be updated in a bit
+    }
+
     private void setPreviousScreen(Screen previousScreen){
         this.previousScreen = previousScreen;
     }
@@ -543,6 +571,17 @@ public class PartySelectScreen extends Screen {
                             updateButtons();
                             updateRecruitButtons();
                             updateRecruitImages();
+                        }
+                        //PREV PARTY BUTTON PRESSED
+                        else if(lastPressed == prevPartyButton) {
+                            //Modulus does not work for negative numbers
+                            partyNum = (partyNum == 0) ? MAX_PARTY_NUM - 1 : partyNum - 1;
+                            updatePartyNum();
+                        }
+                        //NEXT PARTY BUTTON PRESSED
+                        else if (lastPressed == nextPartyButton) {
+                            partyNum = (partyNum + 1) % MAX_PARTY_NUM;
+                            updatePartyNum();
                         }
                     }
                     //RECRUIT CHARACTER PRESSED
@@ -660,6 +699,8 @@ public class PartySelectScreen extends Screen {
         Graphics g = game.getGraphics();
         g.clearScreen(0xFFFFFFFF);
         g.drawImage(background, 0, 0);
+
+        NumberPrinter.drawNumber(g, (partyNum + 1), PARTY_NUM_CENTER_X, PARTY_NUM_TOP_Y, PARTY_NUM_WIDTH, PARTY_NUM_HEIGHT, PARTY_NUM_SPACING, Assets.WhiteNumbers, NumberPrinter.Align.CENTER);
 
         int displayPage = currentPage + 1;
         int displayMaxPage = maxPage + 1;
