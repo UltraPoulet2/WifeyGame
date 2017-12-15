@@ -3,6 +3,7 @@ package ultrapoulet.wifeygame.screens;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -118,9 +119,9 @@ public class PartySelectScreen extends Screen {
     private static final int PAGE_WIDTH = 20;
     private static final int PAGE_HEIGHT = 40;
 
-    private int partyNum = 0;
+    private int partyNum = Party.getActivePartyNumber();
     private static final int MAX_PARTY_NUM = 9;
-    private static final int PARTY_NUM_CENTER_X = 250;
+    private static final int PARTY_NUM_CENTER_X = 146;
     private static final int PARTY_NUM_TOP_Y = 185;
     private static final int PARTY_NUM_HEIGHT = 60;
     private static final int PARTY_NUM_WIDTH = 30;
@@ -128,22 +129,29 @@ public class PartySelectScreen extends Screen {
 
     private Button prevPartyButton;
     private Button nextPartyButton;
-    private static final int PREV_PARTY_BUTTON_LEFT_X = 144;
-    private static final int PREV_PARTY_BUTTON_RIGHT_X = 190;
-    private static final int NEXT_PARTY_BUTTON_LEFT_X = 610;
-    private static final int NEXT_PARTY_BUTTON_RIGHT_X = 656;
+    private static final int PREV_PARTY_BUTTON_LEFT_X = 40;
+    private static final int PREV_PARTY_BUTTON_RIGHT_X = 86;
+    private static final int NEXT_PARTY_BUTTON_LEFT_X = 506;
+    private static final int NEXT_PARTY_BUTTON_RIGHT_X = 552;
     private static final int PARTY_BUTTON_TOP_Y = 164;
     private static final int PARTY_BUTTON_BOT_Y = 364;
     private static final String PREV_PARTY_BUTTON_STRING = "Prev Party";
     private static final String NEXT_PARTY_BUTTON_STRING = "Next Party";
 
+    private Button activePartyButton;
+    private static final int ACTIVE_PARTY_BUTTON_LEFT_X = 575;
+    private static final int ACTIVE_PARTY_BUTTON_RIGHT_X = 775;
+    private static final int ACTIVE_PARTY_BUTTON_TOP_Y = 280;
+    private static final int ACTIVE_PARTY_BUTTON_BOT_Y = 380;
+    private static final String ACTIVE_PARTY_BUTTON_STRING = "Set Active Party";
+
     private ButtonList partyList;
 
     private static final int PARTY_NUM_TOP_ROW = 3;
-    private static final int PARTY_IMAGE_BASE_ROW_1_LEFT_X = 305;
-    private static final int PARTY_IMAGE_BASE_ROW_1_RIGHT_X = 395;
-    private static final int PARTY_IMAGE_BASE_ROW_2_LEFT_X = 205;
-    private static final int PARTY_IMAGE_BASE_ROW_2_RIGHT_X = 295;
+    private static final int PARTY_IMAGE_BASE_ROW_1_LEFT_X = 201;
+    private static final int PARTY_IMAGE_BASE_ROW_1_RIGHT_X = 291;
+    private static final int PARTY_IMAGE_BASE_ROW_2_LEFT_X = 101;
+    private static final int PARTY_IMAGE_BASE_ROW_2_RIGHT_X = 191;
     private static final int PARTY_IMAGE_OFFSET = 100;
     private static final int PARTY_IMAGE_BASE_TOP_Y = 170;
     private static final int PARTY_IMAGE_BASE_BOT_Y = 260;
@@ -327,10 +335,13 @@ public class PartySelectScreen extends Screen {
         acceptButton = new Button(ACCEPT_BUTTON_LEFT_X, ACCEPT_BUTTON_RIGHT_X, ACCEPT_BUTTON_TOP_Y, ACCEPT_BUTTON_BOT_Y, false, ACCEPT_BUTTON_STRING, Assets.AcceptEnable, Assets.AcceptDisable);
         basicButtonList.addButton(acceptButton);
 
-        prevPartyButton = new Button(PREV_PARTY_BUTTON_LEFT_X, PREV_PARTY_BUTTON_RIGHT_X, PARTY_BUTTON_TOP_Y, PARTY_BUTTON_BOT_Y, true, PREV_BUTTON_STRING);
+        prevPartyButton = new Button(PREV_PARTY_BUTTON_LEFT_X, PREV_PARTY_BUTTON_RIGHT_X, PARTY_BUTTON_TOP_Y, PARTY_BUTTON_BOT_Y, true, PREV_PARTY_BUTTON_STRING);
         basicButtonList.addButton(prevPartyButton);
         nextPartyButton = new Button(NEXT_PARTY_BUTTON_LEFT_X, NEXT_PARTY_BUTTON_RIGHT_X, PARTY_BUTTON_TOP_Y, PARTY_BUTTON_BOT_Y, true, NEXT_PARTY_BUTTON_STRING);
         basicButtonList.addButton(nextPartyButton);
+
+        activePartyButton = new Button(ACTIVE_PARTY_BUTTON_LEFT_X, ACTIVE_PARTY_BUTTON_RIGHT_X, ACTIVE_PARTY_BUTTON_TOP_Y, ACTIVE_PARTY_BUTTON_BOT_Y, false, ACTIVE_PARTY_BUTTON_STRING, null, null);
+        basicButtonList.addButton(activePartyButton);
 
         partyList = new ButtonList();
         for(int i = 0; i < 7; i++){
@@ -456,7 +467,7 @@ public class PartySelectScreen extends Screen {
     private void updateParty(){
         maxPartySize = battleInfo != null ? battleInfo.getPartyMax() : 7;
         currentParty = new ArrayList<>();
-        for(int i = 0; i < Party.partySize() && i < maxPartySize; i++){
+        for(int i = 0; i < Party.getCurrentPartySize() && i < maxPartySize; i++){
             currentParty.add(Party.getIndex(i));
             partyImages.add(currentParty.get(i).getImage(game.getGraphics()));
         }
@@ -464,6 +475,14 @@ public class PartySelectScreen extends Screen {
 
     private void updatePartyNum() {
         //For now do nothing, but this will be updated in a bit
+        activePartyButton.setActive(partyNum != Party.getActivePartyNumber());
+    }
+
+    private void saveParty() { }
+
+    private void saveActivePartyNum() {
+        Party.setActivePartyNumber(partyNum);
+        Log.d("PartySelect", "Changed active party num");
     }
 
     private void setPreviousScreen(Screen previousScreen){
@@ -582,6 +601,10 @@ public class PartySelectScreen extends Screen {
                         else if (lastPressed == nextPartyButton) {
                             partyNum = (partyNum + 1) % MAX_PARTY_NUM;
                             updatePartyNum();
+                        }
+                        //SET ACTIVE PARTY BUTTON PRESSED
+                        else if (lastPressed == activePartyButton) {
+                            saveActivePartyNum();
                         }
                     }
                     //RECRUIT CHARACTER PRESSED

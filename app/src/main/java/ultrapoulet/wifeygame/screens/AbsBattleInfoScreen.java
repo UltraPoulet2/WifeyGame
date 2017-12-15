@@ -332,7 +332,7 @@ public abstract class AbsBattleInfoScreen extends Screen {
 
     @Override
     public void resume() {
-        party = Party.getParty(battleInfo.getPartyMax());
+        party = Party.getCurrentParty(battleInfo.getPartyMax());
         startButton.setActive(canStartBattle());
         for(int i = 0; i < battleInfo.getPartyMax(); i++){
             //Set the button to active if the party member exists

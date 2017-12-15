@@ -280,6 +280,9 @@ public class LoadingScreen extends Screen {
         party.add(RecruitedCharacters.get(prefs.getString("party_6", "TEST-PERI")));
 
         Party.setParty(party);
+
+        int partyNumber = prefs.getInt("currentParty", 0);
+        Party.setActivePartyNumber(partyNumber);
     }
 
     private void createEnemies(){

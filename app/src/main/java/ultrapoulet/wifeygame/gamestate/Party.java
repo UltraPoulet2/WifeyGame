@@ -15,6 +15,8 @@ import ultrapoulet.wifeygame.character.WifeyCharacter;
  */
 public class Party {
 
+    private static int partyNumber;
+
     private static ArrayList<WifeyCharacter> party = new ArrayList<>(Collections.nCopies(7, (WifeyCharacter) null));
 
     private static SharedPreferences prefs;
@@ -23,6 +25,7 @@ public class Party {
         prefs = inPrefs;
     }
 
+    @Deprecated
     public static void setParty(List<WifeyCharacter> input){
         for(int i = 0; i < input.size(); i++){
             party.set(i, input.get(i));
@@ -33,11 +36,16 @@ public class Party {
         saveParty();
     }
 
+    public static void setParty(int num, List<WifeyCharacter> input) {
+        //Fill in tomorrow
+    }
+
     public static boolean inParty(WifeyCharacter inputChar){
         //Returns true if in party, false otherwise
         return party.contains(inputChar);
     }
 
+    /*
     public static void setIndex(int index, WifeyCharacter inputChar){
         if(inParty(inputChar) || index < 0 || index >= 7){
             return;
@@ -45,7 +53,9 @@ public class Party {
         party.set(index, inputChar);
         saveParty();
     }
+    */
 
+    /*
     public static void swapIndex(int index1, int index2){
         if(index1 == index2){
             return;
@@ -55,29 +65,36 @@ public class Party {
         party.set(index1, temp);
         saveParty();
     }
+    */
 
     public static WifeyCharacter getIndex(int index){
         return party.get(index);
     }
 
+    /*
     public static int getWifeyIndex(WifeyCharacter input){
         return party.indexOf(input);
     }
+    */
 
+    /*
     public static void removeIndex(int index){
         party.remove(index);
         party.add(null);
         saveParty();
     }
+    */
 
+    /*
     public static void clearParty(){
         for(int i = 0; i < party.size(); i++){
             party.set(i, null);
         }
         saveParty();
     }
+    */
 
-    public static int partySize(){
+    public static int getCurrentPartySize(){
         int size = 0;
         while(size < 7 && party.get(size) != null){
             size++;
@@ -85,9 +102,9 @@ public class Party {
         return size;
     }
 
-    public static List<WifeyCharacter> getParty(int size){
+    public static List<WifeyCharacter> getCurrentParty(int size){
         List<WifeyCharacter> temp = new ArrayList<>();
-        int end = size > partySize() ? partySize() : size;
+        int end = size > getCurrentPartySize() ? getCurrentPartySize() : size;
         for(int i = 0; i < end; i++){
             temp.add(party.get(i));
         }
@@ -97,14 +114,20 @@ public class Party {
         return temp;
     }
 
-    public static List<BattleCharacter> getBattleParty(int size, Graphics g){
+    public static List<WifeyCharacter> getParty(int num, int size) {
+        //Fill later
+        return null;
+    }
+
+    public static List<BattleCharacter> getCurrentBattleParty(int size, Graphics g){
         List<BattleCharacter> battleParty = new ArrayList<>();
-        for(int i = 0; i < partySize() && i < size; i++){
+        for(int i = 0; i < getCurrentPartySize() && i < size; i++){
             battleParty.add(party.get(i).getBattleCharacter(g));
         }
         return battleParty;
     }
 
+    @Deprecated
     private static void saveParty(){
         SharedPreferences.Editor editor = prefs.edit();
         for(int i = 0; i < 7; i++){
@@ -118,11 +141,27 @@ public class Party {
         editor.apply();
     }
 
+    private static void saveParty(int partyNum) {
+        //Fill later
+    }
+
+    public static void setActivePartyNumber(int num) {
+        partyNumber = num;
+
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt("currentParty", partyNumber);
+        editor.apply();
+    }
+
+    public static int getActivePartyNumber() {
+        return partyNumber;
+    }
+
     //For debugging purposes
     public static String getString(){
         StringBuilder val = new StringBuilder();
-        val.append("Party of size: " + partySize() + "\n");
-        for(int i = 0; i < partySize(); i++){
+        val.append("Party of size: " + getCurrentPartySize() + "\n");
+        for(int i = 0; i < getCurrentPartySize(); i++){
             val.append("Party member" + i + ":"  + party.get(i).getName() + "\n");
         }
         return val.toString();

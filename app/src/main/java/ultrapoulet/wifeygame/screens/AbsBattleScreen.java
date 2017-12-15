@@ -373,7 +373,7 @@ public abstract class AbsBattleScreen extends Screen {
         this.enemies = battleInfo.getBattleEnemies(game.getGraphics());
         this.background = battleInfo.getBackground(game.getGraphics());
 
-        setParty(Party.getBattleParty(battleInfo.getPartyMax(), game.getGraphics()));
+        setParty(Party.getCurrentBattleParty(battleInfo.getPartyMax(), game.getGraphics()));
     }
 
     private void updateButtons(){
