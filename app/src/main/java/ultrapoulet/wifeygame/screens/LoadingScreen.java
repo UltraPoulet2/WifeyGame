@@ -9,6 +9,7 @@ import android.util.Log;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.xml.parsers.SAXParser;
@@ -270,14 +271,11 @@ public class LoadingScreen extends Screen {
         Party.init(prefs);
 
         //This will get cleaned up later
+        String[] partyArray = prefs.getString("party_0", ",,,,,,").split(",");
         ArrayList<WifeyCharacter> party = new ArrayList<>();
-        party.add(RecruitedCharacters.get(prefs.getString("party_0", "TEST-YUNO")));
-        party.add(RecruitedCharacters.get(prefs.getString("party_1", "TEST-RENA")));
-        party.add(RecruitedCharacters.get(prefs.getString("party_2", "TEST-KTNH")));
-        party.add(RecruitedCharacters.get(prefs.getString("party_3", "TEST-ANNA")));
-        party.add(RecruitedCharacters.get(prefs.getString("party_4", "TEST-SJGH")));
-        party.add(RecruitedCharacters.get(prefs.getString("party_5", "TEST-YNDR")));
-        party.add(RecruitedCharacters.get(prefs.getString("party_6", "TEST-PERI")));
+        for(int i = 0; i < partyArray.length; i++) {
+            party.add(RecruitedCharacters.get(partyArray[i]));
+        }
 
         Party.setParty(party);
 

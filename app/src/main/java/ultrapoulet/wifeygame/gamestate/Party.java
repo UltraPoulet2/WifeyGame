@@ -129,15 +129,20 @@ public class Party {
 
     @Deprecated
     private static void saveParty(){
+        String partyString = "";
         SharedPreferences.Editor editor = prefs.edit();
         for(int i = 0; i < 7; i++){
+            if(i > 0) {
+                partyString += ",";
+            }
             if(party.get(i) == null){
-                editor.putString("party_" + i, "");
+                partyString += "";
             }
             else{
-                editor.putString("party_" + i, party.get(i).getHashKey());
+                partyString += party.get(i).getHashKey();
             }
         }
+        editor.putString("party_0", partyString);
         editor.apply();
     }
 
