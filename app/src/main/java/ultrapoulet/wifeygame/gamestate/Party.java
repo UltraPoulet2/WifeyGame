@@ -15,9 +15,13 @@ import ultrapoulet.wifeygame.character.WifeyCharacter;
  */
 public class Party {
 
-    private static int partyNumber;
+    private static int currentPartyNum;
 
-    private static ArrayList<WifeyCharacter> party = new ArrayList<>(Collections.nCopies(7, (WifeyCharacter) null));
+    public static final int MAX_PARTIES = 9;
+
+    private static List<List<WifeyCharacter>> parties = new ArrayList<>(Collections.nCopies(MAX_PARTIES, (List<WifeyCharacter>) null));
+
+    //private static ArrayList<WifeyCharacter> party = new ArrayList<>(Collections.nCopies(7, (WifeyCharacter) null));
 
     private static SharedPreferences prefs;
 
@@ -25,7 +29,8 @@ public class Party {
         prefs = inPrefs;
     }
 
-    @Deprecated
+    //@Deprecated
+    /*
     public static void setParty(List<WifeyCharacter> input){
         for(int i = 0; i < input.size(); i++){
             party.set(i, input.get(i));
@@ -35,15 +40,27 @@ public class Party {
         }
         saveParty();
     }
+    */
 
-    public static void setParty(int num, List<WifeyCharacter> input) {
+    public static void setParty(int index, List<WifeyCharacter> input) {
         //Fill in tomorrow
+        List<WifeyCharacter> newParty = new ArrayList<>();
+        for(int i = 0; i < input.size(); i++) {
+            newParty.add(input.get(i));
+        }
+        for(int i = input.size(); i < 7; i++) {
+            newParty.add(null);
+        }
+        parties.set(index, newParty);
+        saveParty(index);
     }
 
+    /*
     public static boolean inParty(WifeyCharacter inputChar){
         //Returns true if in party, false otherwise
         return party.contains(inputChar);
     }
+    */
 
     /*
     public static void setIndex(int index, WifeyCharacter inputChar){
@@ -67,8 +84,13 @@ public class Party {
     }
     */
 
-    public static WifeyCharacter getIndex(int index){
+    /*public static WifeyCharacter getIndex(int index){
         return party.get(index);
+    }*/
+
+    //Get the character at index of Party[party]
+    public static WifeyCharacter getIndex(int party, int index) {
+        return parties.get(party).get(index);
     }
 
     /*
@@ -95,15 +117,35 @@ public class Party {
     */
 
     public static int getCurrentPartySize(){
+        return getPartySize(currentPartyNum);
+    }
+
+    public static int getPartySize(int index) {
         int size = 0;
-        while(size < 7 && party.get(size) != null){
+        while(size < 7 && parties.get(index).get(size) != null) {
             size++;
         }
         return size;
     }
 
     public static List<WifeyCharacter> getCurrentParty(int size){
+        return getParty(currentPartyNum, size);
+        /*
         List<WifeyCharacter> temp = new ArrayList<>();
+        int end = size > getCurrentPartySize() ? getCurrentPartySize() : size;
+        for(int i = 0; i < end; i++){
+            temp.add(parties.get(currentPartyNum).get(i));
+        }
+        for(int i = end; i < 7; i++){
+            temp.add(null);
+        }
+        return temp;
+        */
+    }
+
+    public static List<WifeyCharacter> getParty(int num, int size) {
+        List<WifeyCharacter> temp = new ArrayList<>();
+        List<WifeyCharacter> party = parties.get(num);
         int end = size > getCurrentPartySize() ? getCurrentPartySize() : size;
         for(int i = 0; i < end; i++){
             temp.add(party.get(i));
@@ -114,21 +156,17 @@ public class Party {
         return temp;
     }
 
-    public static List<WifeyCharacter> getParty(int num, int size) {
-        //Fill later
-        return null;
-    }
-
     public static List<BattleCharacter> getCurrentBattleParty(int size, Graphics g){
         List<BattleCharacter> battleParty = new ArrayList<>();
         for(int i = 0; i < getCurrentPartySize() && i < size; i++){
-            battleParty.add(party.get(i).getBattleCharacter(g));
+            battleParty.add(parties.get(currentPartyNum).get(i).getBattleCharacter(g));
         }
         return battleParty;
     }
 
     @Deprecated
     private static void saveParty(){
+        /*
         String partyString = "";
         SharedPreferences.Editor editor = prefs.edit();
         for(int i = 0; i < 7; i++){
@@ -144,25 +182,42 @@ public class Party {
         }
         editor.putString("party_0", partyString);
         editor.apply();
+        */
     }
 
     private static void saveParty(int partyNum) {
         //Fill later
+        String partyString = "";
+        SharedPreferences.Editor editor = prefs.edit();
+        for(int i = 0; i < 7; i++){
+            if(i > 0) {
+                partyString += ",";
+            }
+            if(parties.get(partyNum).get(i) == null){
+                partyString += "";
+            }
+            else{
+                partyString += parties.get(partyNum).get(i).getHashKey();
+            }
+        }
+        editor.putString("party_" + partyNum, partyString);
+        editor.apply();
     }
 
     public static void setActivePartyNumber(int num) {
-        partyNumber = num;
+        currentPartyNum = num;
 
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putInt("currentParty", partyNumber);
+        editor.putInt("currentParty", currentPartyNum);
         editor.apply();
     }
 
     public static int getActivePartyNumber() {
-        return partyNumber;
+        return currentPartyNum;
     }
 
     //For debugging purposes
+    /*
     public static String getString(){
         StringBuilder val = new StringBuilder();
         val.append("Party of size: " + getCurrentPartySize() + "\n");
@@ -171,4 +226,5 @@ public class Party {
         }
         return val.toString();
     }
+    */
 }

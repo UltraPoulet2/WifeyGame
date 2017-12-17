@@ -270,14 +270,15 @@ public class LoadingScreen extends Screen {
         SharedPreferences prefs = game.getGamePreferences("ultrapoulet.wifeygame.PREFERENCE_FILE_KEY", Context.MODE_PRIVATE);
         Party.init(prefs);
 
-        //This will get cleaned up later
-        String[] partyArray = prefs.getString("party_0", ",,,,,,").split(",");
-        ArrayList<WifeyCharacter> party = new ArrayList<>();
-        for(int i = 0; i < partyArray.length; i++) {
-            party.add(RecruitedCharacters.get(partyArray[i]));
+        for(int i = 0; i < Party.MAX_PARTIES; i++) {
+            Log.d("LoadingScreen", prefs.getString("party_" + i, ",,,,,,"));
+            String[] partyArray = prefs.getString("party_" + i, ",,,,,,").split(",");
+            ArrayList<WifeyCharacter> party = new ArrayList<>();
+            for(int j = 0; j < partyArray.length; j++) {
+                party.add(RecruitedCharacters.get(partyArray[j]));
+            }
+            Party.setParty(i, party);
         }
-
-        Party.setParty(party);
 
         int partyNumber = prefs.getInt("currentParty", 0);
         Party.setActivePartyNumber(partyNumber);
