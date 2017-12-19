@@ -68,6 +68,8 @@ public class Assets {
     public static Image RequiredCharHolder;
     public static Image DropdownMenuTop;
     public static Image DropdownMenuOption;
+    public static Image SaveChangesEnable, SaveChangesDisable;
+    public static Image SetActivePartyEnable, SetActivePartyDisable;
 
     //CharacterInfoScreen Stuff
     public static Image CharacterInfoScreen;
@@ -233,6 +235,11 @@ public class Assets {
         DropdownMenuTop = g.newImage("buttons/DropdownMenuTop.png", ImageFormat.ARGB8888);
         DropdownMenuOption = g.newImage("buttons/DropdownMenuOption.png", ImageFormat.ARGB8888);
         Favorite = g.newImage("buttons/FavoriteButton.png", ImageFormat.ARGB8888);
+        SaveChangesEnable = g.newImage("buttons/SaveChangesEnabled.png", ImageFormat.ARGB8888);
+        SaveChangesDisable = g.newImage("buttons/SaveChangesDisabled.png", ImageFormat.ARGB8888);
+        SetActivePartyEnable = g.newImage("buttons/SetActivePartyEnabled.png", ImageFormat.ARGB8888);
+        SetActivePartyDisable = g.newImage("buttons/SetActivePartyDisabled.png", ImageFormat.ARGB8888);
+
 
         NumberHits = new ArrayList<>();
         for(int i = 2; i <= 10; i++){

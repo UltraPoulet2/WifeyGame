@@ -138,6 +138,14 @@ public class PartySelectScreen extends Screen {
     private static final String PREV_PARTY_BUTTON_STRING = "Prev Party";
     private static final String NEXT_PARTY_BUTTON_STRING = "Next Party";
 
+    private boolean changesMade = false;
+    private Button saveButton;
+    private static final int SAVE_CHANGES_BUTTON_LEFT_X = 575;
+    private static final int SAVE_CHANGES_BUTTON_RIGHT_X = 775;
+    private static final int SAVE_CHANGES_BUTTON_TOP_Y = 150;
+    private static final int SAVE_CHANGES_BUTTON_BOT_Y = 250;
+    private static final String SAVE_CHANGES_BUTTON_STRING = "Save Changes";
+
     private Button activePartyButton;
     private static final int ACTIVE_PARTY_BUTTON_LEFT_X = 575;
     private static final int ACTIVE_PARTY_BUTTON_RIGHT_X = 775;
@@ -349,7 +357,9 @@ public class PartySelectScreen extends Screen {
         nextPartyButton = new Button(NEXT_PARTY_BUTTON_LEFT_X, NEXT_PARTY_BUTTON_RIGHT_X, PARTY_BUTTON_TOP_Y, PARTY_BUTTON_BOT_Y, true, NEXT_PARTY_BUTTON_STRING);
         basicButtonList.addButton(nextPartyButton);
 
-        activePartyButton = new Button(ACTIVE_PARTY_BUTTON_LEFT_X, ACTIVE_PARTY_BUTTON_RIGHT_X, ACTIVE_PARTY_BUTTON_TOP_Y, ACTIVE_PARTY_BUTTON_BOT_Y, false, ACTIVE_PARTY_BUTTON_STRING, null, null);
+        saveButton = new Button(SAVE_CHANGES_BUTTON_LEFT_X, SAVE_CHANGES_BUTTON_RIGHT_X, SAVE_CHANGES_BUTTON_TOP_Y, SAVE_CHANGES_BUTTON_BOT_Y, false, SAVE_CHANGES_BUTTON_STRING, Assets.SaveChangesEnable, Assets.SaveChangesDisable);
+        basicButtonList.addButton(saveButton);
+        activePartyButton = new Button(ACTIVE_PARTY_BUTTON_LEFT_X, ACTIVE_PARTY_BUTTON_RIGHT_X, ACTIVE_PARTY_BUTTON_TOP_Y, ACTIVE_PARTY_BUTTON_BOT_Y, false, ACTIVE_PARTY_BUTTON_STRING, Assets.SetActivePartyEnable, Assets.SetActivePartyDisable);
         basicButtonList.addButton(activePartyButton);
 
         partyList = new ButtonList();
@@ -425,6 +435,10 @@ public class PartySelectScreen extends Screen {
                 recruitImages.set(i, null);
             }
         }
+    }
+
+    private void updateSaveButton(){
+        saveButton.setActive(changesMade);
     }
 
     public boolean validParty(){
@@ -622,6 +636,12 @@ public class PartySelectScreen extends Screen {
                             updatePartyNum();
                             updatePartyImages();
                         }
+                        //SAVE CHANGES BUTTON PRESSED
+                        else if (lastPressed == saveButton){
+                            saveParty();
+                            changesMade = false;
+                            updateSaveButton();
+                        }
                         //SET ACTIVE PARTY BUTTON PRESSED
                         else if (lastPressed == activePartyButton) {
                             saveActivePartyNum();
@@ -653,6 +673,9 @@ public class PartySelectScreen extends Screen {
                                 Image temp = partyImages.get(inPartyIndex);
                                 partyImages.remove(inPartyIndex);
                                 partyImages.add(temp);
+
+                                changesMade = true;
+                                updateSaveButton();
                             }
                             else{
                                 WifeyCharacter temp = parties.get(partyNum).get(inPartyIndex);
@@ -662,16 +685,25 @@ public class PartySelectScreen extends Screen {
                                 Image tempImage = partyImages.get(inPartyIndex);
                                 partyImages.set(inPartyIndex, partyImages.get(partyIndex));
                                 partyImages.set(partyIndex, tempImage);
+
+                                changesMade = true;
+                                updateSaveButton();
                             }
                         }
                         else{
                             if(parties.get(partyNum).size() <= partyIndex) {
                                 parties.get(partyNum).add(validCharacters.get(draggingRecruitIndex));
                                 partyImages.add(validCharacters.get(draggingRecruitIndex).getImage(game.getGraphics()));
+
+                                changesMade = true;
+                                updateSaveButton();
                             }
                             else{
                                 parties.get(partyNum).set(partyIndex, validCharacters.get(draggingRecruitIndex));
                                 partyImages.set(partyIndex, validCharacters.get(draggingRecruitIndex).getImage(game.getGraphics()));
+
+                                changesMade = true;
+                                updateSaveButton();
                             }
                         }
                     }
@@ -689,6 +721,9 @@ public class PartySelectScreen extends Screen {
                             Image tempImage = partyImages.get(draggingPartyIndex);
                             partyImages.remove(draggingPartyIndex);
                             partyImages.add(tempImage);
+
+                            changesMade = true;
+                            updateSaveButton();
                         }
                         else{
                             parties.get(partyNum).set(draggingPartyIndex, parties.get(partyNum).get(partyIndex));
@@ -697,12 +732,18 @@ public class PartySelectScreen extends Screen {
                             Image tempImage = partyImages.get(draggingPartyIndex);
                             partyImages.set(draggingPartyIndex, partyImages.get(partyIndex));
                             partyImages.set(partyIndex, tempImage);
+
+                            changesMade = true;
+                            updateSaveButton();
                         }
                     }
                     if(partyIndex == -1){
                         parties.get(partyNum).remove(draggingPartyIndex);
 
                         partyImages.remove(draggingPartyIndex);
+
+                        changesMade = true;
+                        updateSaveButton();
                     }
                     updateButtons();
                 }
