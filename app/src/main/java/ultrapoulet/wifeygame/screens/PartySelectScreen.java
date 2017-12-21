@@ -25,6 +25,7 @@ import ultrapoulet.wifeygame.character.WifeyCharacter;
 import ultrapoulet.wifeygame.battle.BattleInfo;
 import ultrapoulet.wifeygame.gamestate.Party;
 import ultrapoulet.wifeygame.gamestate.RecruitedCharacters;
+import ultrapoulet.wifeygame.screens.dialogs.PartySelectYesNoDialog;
 
 /**
  * Created by John on 5/6/2016.
@@ -105,13 +106,6 @@ public class PartySelectScreen extends Screen {
     private static final int BACK_BUTTON_TOP_Y = 1150;
     private static final int BACK_BUTTON_BOT_Y = 1250;
     private static final String BACK_BUTTON_STRING = "Back";
-
-    private Button acceptButton;
-    private static final int ACCEPT_BUTTON_LEFT_X = 585;
-    private static final int ACCEPT_BUTTON_RIGHT_X = 755;
-    private static final int ACCEPT_BUTTON_TOP_Y = 1150;
-    private static final int ACCEPT_BUTTON_BOT_Y = 1250;
-    private static final String ACCEPT_BUTTON_STRING = "Accept";
 
     private static final int CUR_PAGE_X = 255;
     private static final int MAX_PAGE_X = 265;
@@ -349,8 +343,6 @@ public class PartySelectScreen extends Screen {
         //Back button does not have an image associated with it
         backButton = new Button(BACK_BUTTON_LEFT_X, BACK_BUTTON_RIGHT_X, BACK_BUTTON_TOP_Y, BACK_BUTTON_BOT_Y, true, BACK_BUTTON_STRING);
         basicButtonList.addButton(backButton);
-        acceptButton = new Button(ACCEPT_BUTTON_LEFT_X, ACCEPT_BUTTON_RIGHT_X, ACCEPT_BUTTON_TOP_Y, ACCEPT_BUTTON_BOT_Y, false, ACCEPT_BUTTON_STRING, Assets.AcceptEnable, Assets.AcceptDisable);
-        basicButtonList.addButton(acceptButton);
 
         prevPartyButton = new Button(PREV_PARTY_BUTTON_LEFT_X, PREV_PARTY_BUTTON_RIGHT_X, PARTY_BUTTON_TOP_Y, PARTY_BUTTON_BOT_Y, true, PREV_PARTY_BUTTON_STRING);
         basicButtonList.addButton(prevPartyButton);
@@ -406,7 +398,6 @@ public class PartySelectScreen extends Screen {
     public void updateButtons(){
         prevButton.setActive(currentPage > 0);
         nextButton.setActive(currentPage < maxPage);
-        acceptButton.setActive(validParty());
     }
 
     public void updatePartyButtons(){
@@ -439,15 +430,6 @@ public class PartySelectScreen extends Screen {
 
     private void updateSaveButton(){
         saveButton.setActive(changesMade);
-    }
-
-    public boolean validParty(){
-        if(parties.get(partyNum).size() > 0){
-            if(battleInfo == null || battleInfo.validParty(parties.get(partyNum))){
-                return true;
-            }
-        }
-        return false;
     }
 
     public void setValidCharacters(List<WifeyCharacter> inputCharacters){
@@ -601,12 +583,6 @@ public class PartySelectScreen extends Screen {
                     if(lastPressed == pressed && lastPressed != null) {
                         //BACK BUTTON PRESSED
                         if(lastPressed == backButton){
-                            backButton();
-                        }
-                        //ACCEPT BUTTON PRESSED
-                        else if(lastPressed == acceptButton){
-                            //For now, make it the save button
-                            saveParty();
                             backButton();
                         }
                         //PREV PAGE BUTTON PRESSED
@@ -883,6 +859,12 @@ public class PartySelectScreen extends Screen {
 
     @Override
     public void backButton() {
-        game.setScreen(previousScreen);
+
+        if(changesMade) {
+            game.setScreen(new PartySelectYesNoDialog(game, this, previousScreen));
+        }
+        else {
+            game.setScreen(previousScreen);
+        }
     }
 }
