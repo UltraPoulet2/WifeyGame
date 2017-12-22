@@ -188,6 +188,14 @@ public class PartySelectScreen extends Screen {
             else if(requiredCharacters.contains(b)){
                 return 1;
             }
+            else if(battleInfo != null) {
+                if(battleInfo.allowCharacter(a) && !battleInfo.allowCharacter(b)) {
+                    return -1;
+                }
+                else if(!battleInfo.allowCharacter(a) && battleInfo.allowCharacter(b)){
+                    return 1;
+                }
+            }
             return a.compareName(b);
         }
     };
@@ -203,6 +211,14 @@ public class PartySelectScreen extends Screen {
             }
             else if(requiredCharacters.contains(b)){
                 return 1;
+            }
+            else if(battleInfo != null) {
+                if(battleInfo.allowCharacter(a) && !battleInfo.allowCharacter(b)) {
+                    return -1;
+                }
+                else if(!battleInfo.allowCharacter(a) && battleInfo.allowCharacter(b)){
+                    return 1;
+                }
             }
             return a.compareStrength(b);
         }
@@ -220,6 +236,14 @@ public class PartySelectScreen extends Screen {
             else if(requiredCharacters.contains(b)){
                 return 1;
             }
+            else if(battleInfo != null) {
+                if(battleInfo.allowCharacter(a) && !battleInfo.allowCharacter(b)) {
+                    return -1;
+                }
+                else if(!battleInfo.allowCharacter(a) && battleInfo.allowCharacter(b)){
+                    return 1;
+                }
+            }
             return a.compareMagic(b);
         }
     };
@@ -235,6 +259,14 @@ public class PartySelectScreen extends Screen {
             }
             else if(requiredCharacters.contains(b)){
                 return 1;
+            }
+            else if(battleInfo != null) {
+                if(battleInfo.allowCharacter(a) && !battleInfo.allowCharacter(b)) {
+                    return -1;
+                }
+                else if(!battleInfo.allowCharacter(a) && battleInfo.allowCharacter(b)){
+                    return 1;
+                }
             }
             return a.compareFavorite(b);
         }
@@ -436,9 +468,9 @@ public class PartySelectScreen extends Screen {
         validCharacters = new ArrayList<>();
         for(int i = 0; i < inputCharacters.size(); i++){
             //Do a check to make sure the character is valid for this battle
-            if(battleInfo == null || battleInfo.allowCharacter(inputCharacters.get(i))){
+            //if(battleInfo == null || battleInfo.allowCharacter(inputCharacters.get(i))){
                 validCharacters.add(inputCharacters.get(i));
-            }
+            //}
         }
         requiredCharacters = new ArrayList<>();
         if(battleInfo != null){
@@ -813,17 +845,26 @@ public class PartySelectScreen extends Screen {
                             CHAR_IMAGE_BASE_TOP_Y + CHAR_IMAGE_OFFSET_Y * ((i % PER_PAGE) / COLUMN_SIZE),
                             CHAR_FAVORITE_SIZE, CHAR_FAVORITE_SIZE);
                 }
+                if(battleInfo != null && !battleInfo.allowCharacter(validCharacters.get(i))) {
+                    g.drawPercentageImage(Assets.InvalidChar,
+                            CHAR_IMAGE_OFFSET_X * (i % COLUMN_SIZE) + CHAR_IMAGE_BASE_LEFT_X,
+                            CHAR_IMAGE_BASE_TOP_Y + CHAR_IMAGE_OFFSET_Y * ((i % PER_PAGE) / COLUMN_SIZE), HALF_SCALE, HALF_SCALE);
+                }
             }
             if(!validCharacters.get(i).isRecruited()){
                 g.drawPercentageImage(Assets.InvalidChar,
                         CHAR_IMAGE_OFFSET_X * (i % COLUMN_SIZE) + CHAR_IMAGE_BASE_LEFT_X,
                         CHAR_IMAGE_BASE_TOP_Y + CHAR_IMAGE_OFFSET_Y * ((i % PER_PAGE) / COLUMN_SIZE), HALF_SCALE, HALF_SCALE);
             }
+
         }
         if(dragging && draggingRecruitIndex != -1){
             g.drawPercentageImage(recruitImages.get(draggingRecruitIndex - minIndex), draggingX - DRAGGING_OFFSET, draggingY - DRAGGING_OFFSET, DRAGGING_SCALE, DRAGGING_SCALE);
             if(validCharacters.get(draggingRecruitIndex).isFavorite()){
                 g.drawScaledImage(Assets.Favorite, draggingX - DRAGGING_OFFSET, draggingY - DRAGGING_OFFSET, CHAR_FAVORITE_SIZE, CHAR_FAVORITE_SIZE);
+            }
+            if(battleInfo != null && !battleInfo.allowCharacter(parties.get(partyNum).get(draggingPartyIndex))){
+                g.drawPercentageImage(Assets.InvalidChar, draggingX - DRAGGING_OFFSET, draggingY - DRAGGING_OFFSET, DRAGGING_SCALE, DRAGGING_SCALE);
             }
         }
         if(dragging && draggingPartyIndex != -1){
