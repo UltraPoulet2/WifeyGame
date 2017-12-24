@@ -65,6 +65,7 @@ public class Assets {
     public static Image PrevPageEnable, PrevPageDisable;
     public static Image LockSelection;
     public static Image InvalidChar;
+    public static Image LockedChar;
     public static Image RequiredCharHolder;
     public static Image DropdownMenuTop;
     public static Image DropdownMenuOption;
@@ -251,6 +252,7 @@ public class Assets {
         WeaponTypeRight = g.newImage("CharacterInfo/WeaponTypeRight.png", ImageFormat.ARGB8888);
 
         InvalidChar = g.newImage("objects/holders/InvalidChar.png", ImageFormat.ARGB8888);
+        LockedChar = g.newImage("objects/holders/LockedChar.png", ImageFormat.ARGB8888);
         RequiredCharHolder = g.newImage("objects/holders/RequiredCharHolder.png", ImageFormat.ARGB8888);
 
         CharacterInfoScreen = g.newImage("screens/CharacterInfoScreen.png", ImageFormat.RGB565);

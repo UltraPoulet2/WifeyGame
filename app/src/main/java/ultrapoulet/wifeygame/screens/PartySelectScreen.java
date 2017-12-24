@@ -852,7 +852,7 @@ public class PartySelectScreen extends Screen {
                 }
             }
             if(!validCharacters.get(i).isRecruited()){
-                g.drawPercentageImage(Assets.InvalidChar,
+                g.drawPercentageImage(Assets.LockedChar,
                         CHAR_IMAGE_OFFSET_X * (i % COLUMN_SIZE) + CHAR_IMAGE_BASE_LEFT_X,
                         CHAR_IMAGE_BASE_TOP_Y + CHAR_IMAGE_OFFSET_Y * ((i % PER_PAGE) / COLUMN_SIZE), HALF_SCALE, HALF_SCALE);
             }
@@ -863,7 +863,7 @@ public class PartySelectScreen extends Screen {
             if(validCharacters.get(draggingRecruitIndex).isFavorite()){
                 g.drawScaledImage(Assets.Favorite, draggingX - DRAGGING_OFFSET, draggingY - DRAGGING_OFFSET, CHAR_FAVORITE_SIZE, CHAR_FAVORITE_SIZE);
             }
-            if(battleInfo != null && !battleInfo.allowCharacter(parties.get(partyNum).get(draggingPartyIndex))){
+            if(battleInfo != null && !battleInfo.allowCharacter(parties.get(partyNum).get(draggingRecruitIndex))){
                 g.drawPercentageImage(Assets.InvalidChar, draggingX - DRAGGING_OFFSET, draggingY - DRAGGING_OFFSET, DRAGGING_SCALE, DRAGGING_SCALE);
             }
         }
