@@ -3,6 +3,7 @@ package ultrapoulet.wifeygame.screens;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.text.TextPaint;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -152,7 +153,7 @@ public abstract class AbsBattleInfoScreen extends Screen {
         this.battleInfo = info;
 
         partyList = new ButtonList();
-        for(int i = 0; i < battleInfo.getPartyMax(); i++){
+        for(int i = 0; i < Party.MAX_PARTY_SIZE; i++){
             int xLeft = PARTY_IMAGE_BASE_LEFT_X + PARTY_IMAGE_OFFSET_X * i;
             int xRight = PARTY_IMAGE_BASE_RIGHT_X + PARTY_IMAGE_OFFSET_X * i;
             int yTop = PARTY_IMAGE_TOP_Y;
@@ -311,7 +312,7 @@ public abstract class AbsBattleInfoScreen extends Screen {
         }
 
         partyList.drawImage(g);
-        for(int i = 0; i < battleInfo.getPartyMax() && party.get(i) != null; i++){
+        for(int i = 0; i < Party.MAX_PARTY_SIZE && party.get(i) != null; i++){
             if(!battleInfo.allowCharacter(party.get(i))){
                 g.drawPercentageImage(Assets.InvalidChar, PARTY_IMAGE_OFFSET_X * i + PARTY_IMAGE_BASE_LEFT_X, PARTY_IMAGE_TOP_Y, PARTY_SCALE, PARTY_SCALE);
             }
@@ -332,9 +333,9 @@ public abstract class AbsBattleInfoScreen extends Screen {
 
     @Override
     public void resume() {
-        party = Party.getCurrentParty(battleInfo.getPartyMax());
+        party = Party.getCurrentParty();
         startButton.setActive(canStartBattle());
-        for(int i = 0; i < battleInfo.getPartyMax(); i++){
+        for(int i = 0; i < Party.MAX_PARTY_SIZE; i++){
             //Set the button to active if the party member exists
             partyList.get(i).setActive(party.get(i) != null);
             if(party.get(i) != null){

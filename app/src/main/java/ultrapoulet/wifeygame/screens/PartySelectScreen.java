@@ -38,8 +38,9 @@ public class PartySelectScreen extends Screen {
     private ArrayList<Image> partyImages;
     private ArrayList<Image> recruitImages;
 
-    private int maxPartySize;
+    //private static final int MAX_PARTY_SIZE = 7;
     private BattleInfo battleInfo;
+    private int battleMaxParty;
 
     private Screen previousScreen;
 
@@ -433,7 +434,7 @@ public class PartySelectScreen extends Screen {
     }
 
     public void updatePartyButtons(){
-        for(int i = 0; i < maxPartySize; i++){
+        for(int i = 0; i < Party.MAX_PARTY_SIZE; i++){
             partyList.get(i).setActive(true);
         }
     }
@@ -490,16 +491,15 @@ public class PartySelectScreen extends Screen {
 
     private void setBattleInfo(BattleInfo info){
         this.battleInfo = info;
+        battleMaxParty = battleInfo != null ? battleInfo.getPartyMax() : Party.MAX_PARTY_SIZE;
     }
 
     private void getParties(){
-        maxPartySize = battleInfo != null ? battleInfo.getPartyMax() : 7;
         List<WifeyCharacter> party;
         for(int i = 0; i < Party.MAX_PARTIES; i++) {
             party = new ArrayList<>();
-            for(int j = 0; j < Party.getPartySize(i) && j < maxPartySize; j++) {
+            for(int j = 0; j < Party.getPartySize(i) && j < Party.MAX_PARTY_SIZE; j++) {
                 party.add(Party.getIndex(i, j));
-                Log.d("PartySelect", "Adding " + Party.getIndex(i, j).getName());
             }
             parties.add(party);
         }
@@ -509,7 +509,6 @@ public class PartySelectScreen extends Screen {
         partyImages = new ArrayList<>();
         List<WifeyCharacter> curParty = parties.get(partyNum);
         for(int i = 0; i < curParty.size(); i++){
-            Log.d("PartySelect", "Getting image: " + parties.get(partyNum).get(i).getName());
             partyImages.add(parties.get(partyNum).get(i).getImage(game.getGraphics()));
         }
     }
@@ -527,7 +526,6 @@ public class PartySelectScreen extends Screen {
 
     private void saveActivePartyNum() {
         Party.setActivePartyNumber(partyNum);
-        Log.d("PartySelect", "Changed active party num");
     }
 
     private void setPreviousScreen(Screen previousScreen){
@@ -816,7 +814,7 @@ public class PartySelectScreen extends Screen {
                 }
             }
         }
-        for(int i = maxPartySize; i < 7; i++){
+        for(int i = battleMaxParty; i < Party.MAX_PARTY_SIZE; i++){
             int x = (i < PARTY_NUM_TOP_ROW) ?  PARTY_IMAGE_OFFSET * i + PARTY_IMAGE_BASE_ROW_1_LEFT_X : PARTY_IMAGE_OFFSET * (i - PARTY_NUM_TOP_ROW) + PARTY_IMAGE_BASE_ROW_2_LEFT_X;
             int y = (i < PARTY_NUM_TOP_ROW) ? PARTY_IMAGE_BASE_TOP_Y : PARTY_IMAGE_BASE_TOP_Y + PARTY_IMAGE_OFFSET;
             g.drawImage(Assets.LockSelection, x, y);

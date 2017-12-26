@@ -18,6 +18,7 @@ public class Party {
     private static int currentPartyNum;
 
     public static final int MAX_PARTIES = 9;
+    public static final int MAX_PARTY_SIZE = 7;
 
     private static List<List<WifeyCharacter>> parties = new ArrayList<>(Collections.nCopies(MAX_PARTIES, (List<WifeyCharacter>) null));
 
@@ -128,6 +129,20 @@ public class Party {
         return size;
     }
 
+    public static List<WifeyCharacter> getCurrentParty() {
+        return getParty(currentPartyNum);
+    }
+
+    public static List<WifeyCharacter> getParty(int index) {
+        List<WifeyCharacter> temp = new ArrayList<>();
+        List<WifeyCharacter> party = parties.get(index);
+        for(int i = 0; i < MAX_PARTY_SIZE; i++){
+            temp.add(party.get(i));
+        }
+        return temp;
+    }
+
+    @Deprecated
     public static List<WifeyCharacter> getCurrentParty(int size){
         return getParty(currentPartyNum, size);
         /*
@@ -143,6 +158,7 @@ public class Party {
         */
     }
 
+    @Deprecated
     public static List<WifeyCharacter> getParty(int num, int size) {
         List<WifeyCharacter> temp = new ArrayList<>();
         List<WifeyCharacter> party = parties.get(num);
