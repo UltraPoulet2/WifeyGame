@@ -3,7 +3,6 @@ package ultrapoulet.wifeygame.screens;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -175,12 +174,26 @@ public class PartySelectScreen extends Screen {
     private static final int CHAR_REQUIRED_HOLDER_BASE_Y = CHAR_IMAGE_BASE_TOP_Y - 12;
     private static final int CHAR_REQUIRED_OFFSET = 90;
 
+    private static final int CHAR_SORT_VALUE_RECRUIT_X_OFFSET = CHAR_IMAGE_WIDTH / 2;
+    private static final int CHAR_SORT_VALUE_RECRUIT_Y_OFFSET = 55;
+    private static final int CHAR_SORT_VALUE_PARTY_X_OFFSET = 45;
+    private static final int CHAR_SORT_VALUE_PARTY_Y_OFFSET = 65;
+    private static final int CHAR_SORT_VALUE_HEIGHT = 30;
+    private static final int CHAR_SORT_VALUE_WIDTH = 15;
+    private static final int CHAR_SORT_VALUE_SPACING = 0;
+
     private static final int DRAGGING_OFFSET = 60;
 
     private Comparator<WifeyCharacter> nameComp = new Comparator<WifeyCharacter>(){
         @Override
         public int compare(WifeyCharacter a, WifeyCharacter b){
-            if(requiredCharacters.contains(a) && requiredCharacters.contains(b)){
+            if(!a.isRecruited() && b.isRecruited() ) {
+                return -1;
+            }
+            else if(a.isRecruited() && !b.isRecruited()) {
+                return 1;
+            }
+            else if(requiredCharacters.contains(a) && requiredCharacters.contains(b)){
                 return a.compareName(b);
             }
             else if(requiredCharacters.contains(a)){
@@ -204,7 +217,13 @@ public class PartySelectScreen extends Screen {
     private Comparator<WifeyCharacter> strengthComp = new Comparator<WifeyCharacter>() {
         @Override
         public int compare(WifeyCharacter a, WifeyCharacter b) {
-            if(requiredCharacters.contains(a) && requiredCharacters.contains(b)){
+            if(!a.isRecruited() && b.isRecruited() ) {
+                return -1;
+            }
+            else if(a.isRecruited() && !b.isRecruited()) {
+                return 1;
+            }
+            else if(requiredCharacters.contains(a) && requiredCharacters.contains(b)){
                 return a.compareStrength(b);
             }
             else if(requiredCharacters.contains(a)){
@@ -228,7 +247,13 @@ public class PartySelectScreen extends Screen {
     private Comparator<WifeyCharacter> magicComp = new Comparator<WifeyCharacter>() {
         @Override
         public int compare(WifeyCharacter a, WifeyCharacter b) {
-            if(requiredCharacters.contains(a) && requiredCharacters.contains(b)){
+            if(!a.isRecruited() && b.isRecruited() ) {
+                return -1;
+            }
+            else if(a.isRecruited() && !b.isRecruited()) {
+                return 1;
+            }
+            else if(requiredCharacters.contains(a) && requiredCharacters.contains(b)){
                 return a.compareMagic(b);
             }
             else if(requiredCharacters.contains(a)){
@@ -252,7 +277,13 @@ public class PartySelectScreen extends Screen {
     private Comparator<WifeyCharacter> favComp = new Comparator<WifeyCharacter>(){
         @Override
         public int compare(WifeyCharacter a, WifeyCharacter b){
-            if(requiredCharacters.contains(a) && requiredCharacters.contains(b)){
+            if(!a.isRecruited() && b.isRecruited() ) {
+                return -1;
+            }
+            else if(a.isRecruited() && !b.isRecruited()) {
+                return 1;
+            }
+            else if(requiredCharacters.contains(a) && requiredCharacters.contains(b)){
                 return a.compareFavorite(b);
             }
             else if(requiredCharacters.contains(a)){
@@ -279,11 +310,20 @@ public class PartySelectScreen extends Screen {
             protected String getSortTitle() {
                 return ALPHA_SORT_STRING;
             }
+            @Override
+            protected Integer getSortValue(WifeyCharacter input) {
+                //We do not want to return a value for name
+                return null;
+            }
         },
         STRENGTH {
             @Override
             protected String getSortTitle() {
                 return STR_SORT_STRING;
+            }
+            @Override
+            protected Integer getSortValue(WifeyCharacter input) {
+                return input.getStrength();
             }
         },
         MAGIC {
@@ -291,15 +331,25 @@ public class PartySelectScreen extends Screen {
             protected String getSortTitle() {
                 return MAG_SORT_STRING;
             }
+            @Override
+            protected Integer getSortValue(WifeyCharacter input) {
+                return input.getMagic();
+            }
         },
         FAVORITE {
             @Override
             protected String getSortTitle() {
                 return FAV_SORT_STRING;
             }
+            @Override
+            protected Integer getSortValue(WifeyCharacter input) {
+                //We do not want to return a value for favorite
+                return null;
+            }
         };
 
         protected abstract String getSortTitle();
+        protected abstract Integer getSortValue(WifeyCharacter input);
     }
 
     private static SortMethod currentSort = SortMethod.ALPHA;
@@ -468,10 +518,7 @@ public class PartySelectScreen extends Screen {
     public void setValidCharacters(List<WifeyCharacter> inputCharacters){
         validCharacters = new ArrayList<>();
         for(int i = 0; i < inputCharacters.size(); i++){
-            //Do a check to make sure the character is valid for this battle
-            //if(battleInfo == null || battleInfo.allowCharacter(inputCharacters.get(i))){
-                validCharacters.add(inputCharacters.get(i));
-            //}
+            validCharacters.add(inputCharacters.get(i));
         }
         requiredCharacters = new ArrayList<>();
         if(battleInfo != null){
@@ -812,12 +859,25 @@ public class PartySelectScreen extends Screen {
                 if(battleInfo != null && !battleInfo.allowCharacter(parties.get(partyNum).get(i))){
                     g.drawPercentageImage(Assets.InvalidChar, x, y, PARTY_SCALE, PARTY_SCALE);
                 }
+
             }
         }
         for(int i = battleMaxParty; i < Party.MAX_PARTY_SIZE; i++){
             int x = (i < PARTY_NUM_TOP_ROW) ?  PARTY_IMAGE_OFFSET * i + PARTY_IMAGE_BASE_ROW_1_LEFT_X : PARTY_IMAGE_OFFSET * (i - PARTY_NUM_TOP_ROW) + PARTY_IMAGE_BASE_ROW_2_LEFT_X;
             int y = (i < PARTY_NUM_TOP_ROW) ? PARTY_IMAGE_BASE_TOP_Y : PARTY_IMAGE_BASE_TOP_Y + PARTY_IMAGE_OFFSET;
             g.drawImage(Assets.LockSelection, x, y);
+        }
+        for(int i = 0; i < parties.get(partyNum).size(); i++) {
+            if(!dragging || i != draggingPartyIndex) {
+                int x = (i < PARTY_NUM_TOP_ROW) ?  PARTY_IMAGE_OFFSET * i + PARTY_IMAGE_BASE_ROW_1_LEFT_X : PARTY_IMAGE_OFFSET * (i - PARTY_NUM_TOP_ROW) + PARTY_IMAGE_BASE_ROW_2_LEFT_X;
+                int y = (i < PARTY_NUM_TOP_ROW) ? PARTY_IMAGE_BASE_TOP_Y : PARTY_IMAGE_BASE_TOP_Y + PARTY_IMAGE_OFFSET;
+                if(currentSort.getSortValue(parties.get(partyNum).get(i)) != null) {
+                    NumberPrinter.drawNumber(g, currentSort.getSortValue(parties.get(partyNum).get(i)).intValue(),
+                            x + CHAR_SORT_VALUE_PARTY_X_OFFSET, y + CHAR_SORT_VALUE_PARTY_Y_OFFSET,
+                            CHAR_SORT_VALUE_WIDTH, CHAR_SORT_VALUE_HEIGHT, CHAR_SORT_VALUE_SPACING,
+                            Assets.WhiteNumbers, NumberPrinter.Align.CENTER);
+                }
+            }
         }
 
         //If the dropdown is not activated, draw it on a lower layer than the characters
@@ -833,20 +893,20 @@ public class PartySelectScreen extends Screen {
                 g.drawImage(Assets.RequiredCharHolder, (i % COLUMN_SIZE) * CHAR_REQUIRED_OFFSET + CHAR_REQUIRED_HOLDER_BASE_X, CHAR_REQUIRED_HOLDER_BASE_Y);
             }
             if(!dragging || i != draggingRecruitIndex) {
-                g.drawPercentageImage(recruitImages.get(i - minIndex),
-                        CHAR_IMAGE_OFFSET_X * (i % COLUMN_SIZE) + CHAR_IMAGE_BASE_LEFT_X,
-                        CHAR_IMAGE_BASE_TOP_Y + CHAR_IMAGE_OFFSET_Y * ((i % PER_PAGE) / COLUMN_SIZE),
-                        HALF_SCALE, HALF_SCALE);
+                int x = CHAR_IMAGE_OFFSET_X * (i % COLUMN_SIZE) + CHAR_IMAGE_BASE_LEFT_X;
+                int y = CHAR_IMAGE_BASE_TOP_Y + CHAR_IMAGE_OFFSET_Y * ((i % PER_PAGE) / COLUMN_SIZE);
+                g.drawPercentageImage(recruitImages.get(i - minIndex), x, y, HALF_SCALE, HALF_SCALE);
                 if(validCharacters.get(i).isFavorite()) {
-                    g.drawScaledImage(Assets.Favorite,
-                            CHAR_IMAGE_OFFSET_X * (i % COLUMN_SIZE) + CHAR_IMAGE_BASE_LEFT_X,
-                            CHAR_IMAGE_BASE_TOP_Y + CHAR_IMAGE_OFFSET_Y * ((i % PER_PAGE) / COLUMN_SIZE),
-                            CHAR_FAVORITE_SIZE, CHAR_FAVORITE_SIZE);
+                    g.drawScaledImage(Assets.Favorite, x, y, CHAR_FAVORITE_SIZE, CHAR_FAVORITE_SIZE);
                 }
                 if(battleInfo != null && !battleInfo.allowCharacter(validCharacters.get(i))) {
-                    g.drawPercentageImage(Assets.InvalidChar,
-                            CHAR_IMAGE_OFFSET_X * (i % COLUMN_SIZE) + CHAR_IMAGE_BASE_LEFT_X,
-                            CHAR_IMAGE_BASE_TOP_Y + CHAR_IMAGE_OFFSET_Y * ((i % PER_PAGE) / COLUMN_SIZE), HALF_SCALE, HALF_SCALE);
+                    g.drawPercentageImage(Assets.InvalidChar, x, y, HALF_SCALE, HALF_SCALE);
+                }
+                if(validCharacters.get(i).isRecruited() && currentSort.getSortValue(validCharacters.get(i)) != null) {
+                    NumberPrinter.drawNumber(g, currentSort.getSortValue(validCharacters.get(i)).intValue(),
+                            x + CHAR_SORT_VALUE_RECRUIT_X_OFFSET, y + CHAR_SORT_VALUE_RECRUIT_Y_OFFSET,
+                            CHAR_SORT_VALUE_WIDTH, CHAR_SORT_VALUE_HEIGHT, CHAR_SORT_VALUE_SPACING,
+                            Assets.WhiteNumbers, NumberPrinter.Align.CENTER);
                 }
             }
             if(!validCharacters.get(i).isRecruited()){
