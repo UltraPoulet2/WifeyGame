@@ -100,7 +100,7 @@ public class BattleWifey extends BattleCharacter{
     public int MagicAttackDamage(BattleCharacter enemy){
         int baseDamage = this.magic * 5;
         //Do checks on skills to determine bonus damage
-        double multiplier = skills.physicalAttackPercentage(enemy) * getElementDamage(enemy);
+        double multiplier = skills.magicalAttackPercentage(enemy) * getElementDamage(enemy);
         int modDamage = (int) (baseDamage * multiplier);
         //System.out.println("Multiplying damage by: " + skills.magicalAttackPercentage(enemy) * getElementDamage(enemy));
         Log.i("MagicAttackDamage", "Multiplying magical damage from: " + this.getName() + " by: " + multiplier);
