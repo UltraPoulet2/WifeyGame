@@ -542,8 +542,8 @@ public class BattleSelectScreen extends Screen {
     @Override
     public void resume() {
         //Do stuff to get the current party
-        party = Party.getCurrentParty(7);
-        for(int i = 0; i < 7; i++){
+        party = Party.getCurrentParty();
+        for(int i = 0; i < Party.MAX_PARTY_SIZE; i++){
             //Set the button to active if the party member exists
             partyList.get(i).setActive(party.get(i) != null);
             if(party.get(i) != null){

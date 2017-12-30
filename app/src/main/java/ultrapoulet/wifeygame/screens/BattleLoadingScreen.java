@@ -70,12 +70,13 @@ public class BattleLoadingScreen extends Screen {
         super(game);
         this.nextScreen = nextScreen;
 
-        List<WifeyCharacter> party = Party.getCurrentParty(battleInfo.getPartyMax());
+        List<WifeyCharacter> party = Party.getCurrentParty();
         List<EnemyCharacter> enemies = battleInfo.getCharacterEnemies();
         loadingWeapons = new ArrayList<>();
         loadingElements = new ArrayList<>();
 
-        for(WifeyCharacter wifey : party){
+        for(int i = 0; i < battleInfo.getPartyMax(); i++){
+            WifeyCharacter wifey = party.get(i);
             if(wifey != null) {
                 loadingWeapons.add(wifey.getWeapon());
                 loadingElements.add(wifey.getAttackElement());

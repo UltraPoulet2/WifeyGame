@@ -407,7 +407,7 @@ public class PartySelectScreen extends Screen {
         updatePartyImages();
 
         setValidCharacters(RecruitedCharacters.getArray());
-        updateButtons();
+        updatePageButtons();
         updatePartyButtons();
         updateRecruitButtons();
         updateRecruitImages();
@@ -438,7 +438,7 @@ public class PartySelectScreen extends Screen {
         basicButtonList.addButton(activePartyButton);
 
         partyList = new ButtonList();
-        for(int i = 0; i < 7; i++){
+        for(int i = 0; i < Party.MAX_PARTY_SIZE; i++){
             int leftX;
             int rightX;
             int topY;
@@ -469,7 +469,7 @@ public class PartySelectScreen extends Screen {
     }
 
     private void createImageLists() {
-        partyImages = new ArrayList<>(7);
+        partyImages = new ArrayList<>();
 
         recruitImages = new ArrayList<>(PER_PAGE);
         for(int i = 0; i < PER_PAGE; i++){
@@ -478,7 +478,7 @@ public class PartySelectScreen extends Screen {
     }
 
 
-    public void updateButtons(){
+    public void updatePageButtons(){
         prevButton.setActive(currentPage > 0);
         nextButton.setActive(currentPage < maxPage);
     }
@@ -561,7 +561,6 @@ public class PartySelectScreen extends Screen {
     }
 
     private void updatePartyNum() {
-        //For now do nothing, but this will be updated in a bit
         activePartyButton.setActive(partyNum != Party.getActivePartyNumber());
     }
 
@@ -665,14 +664,14 @@ public class PartySelectScreen extends Screen {
                         //PREV PAGE BUTTON PRESSED
                         else if(lastPressed == prevButton){
                             currentPage--;
-                            updateButtons();
+                            updatePageButtons();
                             updateRecruitButtons();
                             updateRecruitImages();
                         }
                         //NEXT PAGE BUTTON PRESSED
                         else if(lastPressed == nextButton){
                             currentPage++;
-                            updateButtons();
+                            updatePageButtons();
                             updateRecruitButtons();
                             updateRecruitImages();
                         }
@@ -698,8 +697,7 @@ public class PartySelectScreen extends Screen {
                         //SET ACTIVE PARTY BUTTON PRESSED
                         else if (lastPressed == activePartyButton) {
                             saveActivePartyNum();
-                            //This is to do validation stuff
-                            updateButtons();
+                            updatePartyNum();
                         }
                     }
                     //RECRUIT CHARACTER PRESSED
@@ -760,7 +758,7 @@ public class PartySelectScreen extends Screen {
                             }
                         }
                     }
-                    updateButtons();
+                    updatePageButtons();
                 }
                 //DRAGGING A PARTY MEMBER
                 else if(dragging && draggingPartyIndex != -1){
@@ -798,7 +796,7 @@ public class PartySelectScreen extends Screen {
                         changesMade = true;
                         updateSaveButton();
                     }
-                    updateButtons();
+                    updatePageButtons();
                 }
                 dragging = false;
                 holdTime = 0;
