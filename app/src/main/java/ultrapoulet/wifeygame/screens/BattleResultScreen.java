@@ -141,7 +141,7 @@ public class BattleResultScreen extends Screen{
             gains.add(new BonusGains(gold, exp));
         }
         playerLevelUp  = PlayerInfo.addExperience(baseExp + bonusExp);
-        List<WifeyCharacter> wifeyList = Party.getParty(party.size());
+        List<WifeyCharacter> wifeyList = Party.getCurrentParty();
         for(int i = 0; i < party.size(); i++){
             //This will be replaced with a boolean list later
             wifeyLevelUp[i] = wifeyList.get(i).addExperience(baseExp + bonusExp);
@@ -260,7 +260,7 @@ public class BattleResultScreen extends Screen{
     }
 
     private void drawPartyMember(Graphics g, int partyMember, int baseX, int baseY){
-        List<WifeyCharacter> wifeyList = Party.getParty(party.size());
+        List<WifeyCharacter> wifeyList = Party.getCurrentParty();
         g.drawScaledImage(party.get(partyMember).getImage(), baseX, baseY, PARTY_WIDTH, PARTY_HEIGHT);
         g.drawImage(Assets.BattleResultCharHolder, baseX + PARTY_HOLDER_OFFSET_X, baseY + PARTY_HOLDER_OFFSET_Y);
         if(wifeyLevelUp[partyMember]){

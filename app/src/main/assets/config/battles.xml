@@ -56,6 +56,8 @@
                     <value>TEST-NYRK</value>
                 </requirement>
             </requirements>
+            <!-- We'll just be leaving this unlocked for now -->
+            <startUnlocked />
         </battle>
         <battle key="TEST-PHYS">
             <name>Athletes Test</name>
