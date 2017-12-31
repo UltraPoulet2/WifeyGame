@@ -33,7 +33,7 @@ public class Party {
         for(int i = 0; i < input.size(); i++) {
             newParty.add(input.get(i));
         }
-        for(int i = input.size(); i < 7; i++) {
+        for(int i = input.size(); i < MAX_PARTY_SIZE; i++) {
             newParty.add(null);
         }
         parties.set(index, newParty);
@@ -80,7 +80,7 @@ public class Party {
     private static void saveParty(int partyNum) {
         String partyString = "";
         SharedPreferences.Editor editor = prefs.edit();
-        for(int i = 0; i < 7; i++){
+        for(int i = 0; i < MAX_PARTY_SIZE; i++){
             if(i > 0) {
                 partyString += ",";
             }

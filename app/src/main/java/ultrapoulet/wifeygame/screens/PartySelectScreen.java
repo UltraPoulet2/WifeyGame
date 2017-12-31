@@ -37,7 +37,6 @@ public class PartySelectScreen extends Screen {
     private ArrayList<Image> partyImages;
     private ArrayList<Image> recruitImages;
 
-    //private static final int MAX_PARTY_SIZE = 7;
     private BattleInfo battleInfo;
     private int battleMaxParty;
 

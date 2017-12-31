@@ -194,7 +194,7 @@ public class BattleSelectScreen extends Screen {
         cis = new CharacterInfoScreen(game, this);
 
         partyList = new ButtonList();
-        for(int i = 0; i < 7; i++){
+        for(int i = 0; i < Party.MAX_PARTY_SIZE; i++){
             int leftX = PARTY_IMAGE_BASE_LEFT_X + PARTY_IMAGE_OFFSET_X * i;
             int rightX = PARTY_IMAGE_BASE_RIGHT_X + PARTY_IMAGE_OFFSET_X * i;
             int topY = PARTY_IMAGE_TOP_Y;

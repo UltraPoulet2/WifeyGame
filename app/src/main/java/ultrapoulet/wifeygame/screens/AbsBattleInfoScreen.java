@@ -317,7 +317,7 @@ public abstract class AbsBattleInfoScreen extends Screen {
                 g.drawPercentageImage(Assets.InvalidChar, PARTY_IMAGE_OFFSET_X * i + PARTY_IMAGE_BASE_LEFT_X, PARTY_IMAGE_TOP_Y, PARTY_SCALE, PARTY_SCALE);
             }
         }
-        for(int i = battleInfo.getPartyMax(); i < 7; i++){
+        for(int i = battleInfo.getPartyMax(); i < Party.MAX_PARTY_SIZE; i++){
             g.drawImage(Assets.LockSelection, PARTY_IMAGE_OFFSET_X * i + PARTY_IMAGE_BASE_LEFT_X, PARTY_IMAGE_TOP_Y);
         }
 
