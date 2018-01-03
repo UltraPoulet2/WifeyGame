@@ -40,7 +40,7 @@ public class TrapSkill extends AbsSkill {
     @Override
     public String getDescription(BattleCharacter enemy) {
         String desc = "Defense Multiplier: 0.15x\n\n" +
-                "Multiplies physical, magical, and special damage taken by 0.15x.";
+                "Increases physical, magical, and special defense by 0.15x.";
         return desc;
     }
 }

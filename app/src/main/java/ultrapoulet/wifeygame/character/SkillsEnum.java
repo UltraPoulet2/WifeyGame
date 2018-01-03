@@ -80,7 +80,7 @@ public enum SkillsEnum {
             return new FujoshiSkill(owner);
         }
     },
-    GHOST("Ghost", "Multiplies physical attack damage taken by 0.50x"){
+    GHOST("Ghost", "Increases physical attack defense by 0.50x."){
         @Override
         public AbsSkill getBattleSkill(BattleCharacter owner) {
             return new GhostSkill(owner);
@@ -134,7 +134,7 @@ public enum SkillsEnum {
             return new MechanicSkill(owner);
         }
     },
-    MEDIUM("Medium", "Multiplies magical and special damage dealt by 2.00x against Ghosts.") {
+    MEDIUM("Medium", "Multiplies magical and special damage dealt to Ghosts by 2.00x.") {
         @Override
         public AbsSkill getBattleSkill(BattleCharacter owner) {
             return new MediumSkill(owner);
@@ -152,7 +152,7 @@ public enum SkillsEnum {
             return new NurseSkill(owner);
         }
     },
-    PILOT("Pilot", "Multiplies magical and special damage taken from AIR sources by 0.50x") {
+    PILOT("Pilot", "Increases magical and special defense against AIR sources by 0.50x.") {
         @Override
         public AbsSkill getBattleSkill(BattleCharacter owner) {
             return new PilotSkill(owner);
@@ -194,7 +194,7 @@ public enum SkillsEnum {
             return new RacerSkill(owner);
         }
     },
-    ROBOT("Robot", "Multiplies physical damage taken by 0.80x. Multiplies magical and special damage taken from WATER sources by 1.50x.") {
+    ROBOT("Robot", "Increases physical damage taken by 0.20x. Decreases magical and special defense against WATER sources by 0.50x.") {
         @Override
         public AbsSkill getBattleSkill(BattleCharacter owner) {
             return new RobotSkill(owner);
@@ -218,13 +218,13 @@ public enum SkillsEnum {
             return new SportsManagerSkill(owner);
         }
     },
-    SURVIVAL("Sabagebu", "Decreases physical, magical, and special damage taken multiplier by 0.01x each turn.") {
+    SURVIVAL("Sabagebu", "Increases physical, magical, and special defense by 0.01x each turn.") {
         @Override
         public AbsSkill getBattleSkill(BattleCharacter owner) {
             return new SurvivalSkill(owner, false);
         }
     },
-    SURVIVALPRES("Sabagebu President", "Decreases physical, magical, and special damage taken multiplier by 0.02x each turn.") {
+    SURVIVALPRES("Sabagebu President", "Increases physical, magical, and special defense by 0.02x each turn.") {
         @Override
         public AbsSkill getBattleSkill(BattleCharacter owner) {
             return new SurvivalSkill(owner, true);
@@ -242,7 +242,7 @@ public enum SkillsEnum {
             return new TimeTravelerSkill(owner);
         }
     },
-    TRAP("Trap", "Multiplies physical, magical, and special damage taken by 0.15x.") {
+    TRAP("Trap", "Increases physical, magical, and special defense by 0.15x.") {
         @Override
         public AbsSkill getBattleSkill(BattleCharacter owner) {
             return new TrapSkill(owner);

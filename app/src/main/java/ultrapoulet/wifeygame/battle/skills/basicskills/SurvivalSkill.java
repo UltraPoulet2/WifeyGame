@@ -56,7 +56,7 @@ public class SurvivalSkill extends AbsSkill {
     @Override
     public String getDescription(BattleCharacter enemy) {
         String desc = "Defense Multiplier: " + String.format("%1$.2f", defense) + "x\n\n" +
-                "Decreases physical, magical, and special damage taken multiplier by " + String.format("%1$.2f", perTurn) + "x each turn.";
+                "Increases physical, magical, and special defense by " + String.format("%1$.2f", perTurn) + "x each turn.";
         return desc;
     }
 }

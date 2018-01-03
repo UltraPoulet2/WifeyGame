@@ -68,7 +68,7 @@ public class PilotSkill extends AbsSkill {
         }
         String desc = "Magical Defense Multiplier: " + String.format("%1$.2f", defense) + "x\n" +
                 "Special Defense Multiplier: " + String.format("%1$.2f", defense) + "x\n\n" +
-                "Multiplies magical and special damage taken from AIR sources by 0.50x";
+                "Increases magical and special defense against AIR sources by 0.50x.";
         return desc;
     }
 
