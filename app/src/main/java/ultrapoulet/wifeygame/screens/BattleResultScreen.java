@@ -240,18 +240,29 @@ public class BattleResultScreen extends Screen{
         }
 
         //Draw drops
-        for(int i = 0; i < drops.size(); i++){
-            g.drawScaledImage(drops.get(i), DROP_BASE_X + ((DROP_WIDTH + DROP_OFFSET) * (i % DROPS_PER_ROW)), DROP_BASE_Y + ((DROP_HEIGHT + DROP_OFFSET) * (i / DROPS_PER_ROW)), DROP_WIDTH, DROP_HEIGHT);
+        int topRowSize = drops.size() < DROPS_PER_ROW ? drops.size() : DROPS_PER_ROW;
+        int botRowSize = drops.size() > DROPS_PER_ROW ? drops.size() - DROPS_PER_ROW : 0;
+        int baseX = CENTER_X - ((DROP_WIDTH * topRowSize) + (DROP_OFFSET * (topRowSize - 1))) / 2;
+        for(int i = 0; i < topRowSize; i++) {
+            int x = baseX + ((DROP_WIDTH + DROP_OFFSET) * (i % DROPS_PER_ROW));
+            int y = botRowSize == 0 ? DROP_BASE_Y + ((DROP_HEIGHT + DROP_OFFSET) / 2) : DROP_BASE_Y;
+            g.drawScaledImage(drops.get(i), x, y, DROP_WIDTH, DROP_HEIGHT);
+        }
+        baseX = CENTER_X - ((DROP_WIDTH * botRowSize) + (DROP_OFFSET * (botRowSize - 1))) / 2;
+        for(int i = topRowSize; i < drops.size(); i++) {
+            int x = baseX + ((DROP_WIDTH + DROP_OFFSET) * (i % DROPS_PER_ROW));
+            int y = DROP_BASE_Y + DROP_HEIGHT + DROP_OFFSET;
+            g.drawScaledImage(drops.get(i), x, y, DROP_WIDTH, DROP_HEIGHT);
         }
 
         //Draw Party Images
-        int topRowSize = party.size() - (party.size() / 2);
-        int baseX = CENTER_X - ((PARTY_WIDTH * topRowSize) + (PARTY_SPACING * (topRowSize - 1))) / 2;
+        topRowSize = party.size() - (party.size() / 2);
+        baseX = CENTER_X - ((PARTY_WIDTH * topRowSize) + (PARTY_SPACING * (topRowSize - 1))) / 2;
         for(int i = 0; i < topRowSize; i++){
             int x = baseX + (PARTY_WIDTH + PARTY_SPACING) * i;
             drawPartyMember(g, i, x, PARTY_ROW_1_Y);
         }
-        int botRowSize = party.size() / 2;
+        botRowSize = party.size() / 2;
         baseX = CENTER_X - ((PARTY_WIDTH * botRowSize) + (PARTY_SPACING * (botRowSize - 1))) / 2;
         for(int i = topRowSize; i < party.size(); i++){
             int x = baseX + (PARTY_WIDTH + PARTY_SPACING) * (i - topRowSize);
