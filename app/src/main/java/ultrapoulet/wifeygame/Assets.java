@@ -104,6 +104,7 @@ public class Assets {
     public static Image BattleResultGold;
     public static Image LevelUp;
     public static Image BattleResultCharHolder;
+    public static Image NoneFound;
 
     //RecruitingScreen stuff
     public static Image RecruitingScreen;
@@ -270,6 +271,7 @@ public class Assets {
         BattleResultGold = g.newImage("objects/battleResult/BattleResultGold.png", ImageFormat.ARGB8888);
         LevelUp = g.newImage("BattleResult/LevelUpImage.png", ImageFormat.ARGB8888);
         BattleResultCharHolder = g.newImage("BattleResult/BattleResultCharHolder.png", ImageFormat.ARGB8888);
+        NoneFound = g.newImage("BattleResult/NoneFound.png", ImageFormat.ARGB8888);
 
         RecruitingScreen = g.newImage("screens/RecruitingScreen.png", ImageFormat.ARGB8888);
         RecruitingButtonEnable = g.newImage("Recruiting/RecruitButtonEnabled.png", ImageFormat.ARGB8888);

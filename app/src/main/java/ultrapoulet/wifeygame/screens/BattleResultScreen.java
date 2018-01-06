@@ -38,11 +38,13 @@ public class BattleResultScreen extends Screen{
     private static final int TEXT_OFFSET = 0;
     private static final int LEVEL_WIDTH = 60;
 
-    private static final int DROP_BASE_X = 90;
     private static final int DROP_BASE_Y = 425;
     private static final int DROP_WIDTH = 120;
     private static final int DROP_HEIGHT = 120;
     private static final int DROP_OFFSET = 5;
+
+    private static final int NONE_FOUND_X = 319;
+    private static final int NONE_FOUND_Y = 489;
 
     private static final int PARTY_HEIGHT = 160;
     private static final int PARTY_WIDTH = 160;
@@ -253,6 +255,9 @@ public class BattleResultScreen extends Screen{
             int x = baseX + ((DROP_WIDTH + DROP_OFFSET) * (i % DROPS_PER_ROW));
             int y = DROP_BASE_Y + DROP_HEIGHT + DROP_OFFSET;
             g.drawScaledImage(drops.get(i), x, y, DROP_WIDTH, DROP_HEIGHT);
+        }
+        if(drops.size() == 0) {
+            g.drawImage(Assets.NoneFound, NONE_FOUND_X, NONE_FOUND_Y);
         }
 
         //Draw Party Images
