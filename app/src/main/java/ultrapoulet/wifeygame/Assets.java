@@ -83,7 +83,6 @@ public class Assets {
     public static Image Favorite;
     public static List<Image> NumberHits;
     public static Image WeaponTypeLeft, WeaponTypeCenter, WeaponTypeRight;
-    public static Image HighlightedSkill, HighlightedWeaponSkill;
 
     //EnemyInfoScreen
     public static Image EnemyInfoScreenTop;
@@ -252,8 +251,6 @@ public class Assets {
         WeaponTypeLeft = g.newImage("CharacterInfo/WeaponTypeLeft.png", ImageFormat.ARGB8888);
         WeaponTypeCenter = g.newImage("CharacterInfo/WeaponTypeCenter.png", ImageFormat.ARGB8888);
         WeaponTypeRight = g.newImage("CharacterInfo/WeaponTypeRight.png", ImageFormat.ARGB8888);
-        HighlightedSkill = g.newImage("CharacterInfo/HighlightedSkill.png", ImageFormat.ARGB8888);
-        HighlightedWeaponSkill = g.newImage("CharacterInfo/HighlightedWeaponSkill.png", ImageFormat.ARGB8888);
 
         InvalidChar = g.newImage("objects/holders/InvalidChar.png", ImageFormat.ARGB8888);
         LockedChar = g.newImage("objects/holders/LockedChar.png", ImageFormat.ARGB8888);

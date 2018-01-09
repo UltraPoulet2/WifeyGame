@@ -145,7 +145,7 @@ public class BattleCharacterInfoScreen extends AbsCharacterInfoScreen {
     protected void drawSkills(Graphics g){
         if(displayChar.getSkills().getUniqueSkill() != null){
             if(bDisplayUnique && displayChar.getSkills().getUniqueSkill() != null){
-                g.drawImage(Assets.HighlightedSkill, UNIQUE_SKILL_LEFT_X, TOP_SKILLS_TOP_Y);
+                g.drawRect(UNIQUE_SKILL_LEFT_X, TOP_SKILLS_TOP_Y, UNIQUE_SKILL_RIGHT_X - UNIQUE_SKILL_LEFT_X, TOP_SKILLS_BOT_Y - TOP_SKILLS_TOP_Y, SKILL_HIGHLIGHT_COLOR);
             }
             g.drawString(displayChar.getSkills().getUniqueSkill().getSkillName(), UNIQUE_X, MAX_WEAPON_Y, weaponPaint, MAX_UNIQUE_SIZE, MAX_WEAPON_FONT);
         }
@@ -158,7 +158,7 @@ public class BattleCharacterInfoScreen extends AbsCharacterInfoScreen {
         //Draw string for weapon name
         if(displayChar.getSkills().getWeaponSkill() != null){
             if(bDisplayWeaponSkill && displayChar.getSkills().getWeaponSkill() != null){
-                g.drawImage(Assets.HighlightedWeaponSkill, WEAPON_SKILL_LEFT_X, TOP_SKILLS_TOP_Y);
+                g.drawRect(WEAPON_SKILL_LEFT_X, TOP_SKILLS_TOP_Y, WEAPON_SKILL_RIGHT_X - WEAPON_SKILL_LEFT_X, TOP_SKILLS_BOT_Y - TOP_SKILLS_TOP_Y, SKILL_HIGHLIGHT_COLOR);
             }
             g.drawString(displayChar.getSkills().getWeaponSkill().getSkillName(), WEAPON_X, MAX_WEAPON_Y, weaponPaint, MAX_WEAPON_SIZE, MAX_WEAPON_FONT);
         }
@@ -177,7 +177,7 @@ public class BattleCharacterInfoScreen extends AbsCharacterInfoScreen {
             if(displayText == i && displayChar.getSkills().size() > displayText){
                 int highlightX = displayText % 2 == 0 ? SKILLS_BUTTON_LEFT_X : SKILLS_BUTTON_LEFT_X + (SKILLS_BUTTON_WIDTH +SKILLS_BUTTON_OFFSET_X);
                 int highlightY = displayText / 2 == 0 ? SKILLS_BUTTON_TOP_Y : SKILLS_BUTTON_TOP_Y + (SKILLS_BUTTON_HEIGHT + SKILLS_BUTTON_OFFSET_Y);
-                g.drawImage(Assets.HighlightedSkill, highlightX, highlightY);
+                g.drawRect(highlightX, highlightY, SKILLS_BUTTON_WIDTH, SKILLS_BUTTON_HEIGHT, SKILL_HIGHLIGHT_COLOR);
             }
             AbsSkill skill = displayChar.getSkills().get(i);
             int xOffset;

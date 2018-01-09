@@ -74,7 +74,7 @@ public abstract class AbsCharacterInfoScreen extends Screen {
     protected static final int UNIQUE_SKILL_LEFT_X = BG_X + 40;
     protected static final int UNIQUE_SKILL_RIGHT_X = UNIQUE_SKILL_LEFT_X + 307;
     protected static final int WEAPON_SKILL_LEFT_X = BG_X + 353;
-    protected static final int WEAPON_SKILL_RIGHT_X = BG_X + 540;
+    protected static final int WEAPON_SKILL_RIGHT_X = BG_X + 550;
     protected static final int TOP_SKILLS_TOP_Y = BG_Y + 455;
     protected static final int TOP_SKILLS_BOT_Y = TOP_SKILLS_TOP_Y + 50;
     protected static final String UNIQUE_STRING = "Unique";
@@ -89,6 +89,8 @@ public abstract class AbsCharacterInfoScreen extends Screen {
     protected static final int SKILLS_BUTTON_HEIGHT = 50;
     protected static final int SKILLS_BUTTON_BOT_Y = SKILLS_BUTTON_TOP_Y + SKILLS_BUTTON_HEIGHT;
     protected static final int SKILLS_BUTTON_OFFSET_Y = 5;
+
+    protected static final int SKILL_HIGHLIGHT_COLOR = 0xfff6f0ab;
 
     protected Paint weaponPaint;
     protected static final int MAX_WEAPON_FONT = 40;
