@@ -71,6 +71,8 @@ public class EnemyInfoScreen extends Screen {
     private static final int SKILLS_BUTTON_BOT_Y = SKILLS_BUTTON_TOP_Y + SKILLS_BUTTON_HEIGHT; //topY will need to be added
     private static final int SKILLS_BUTTON_OFFSET_Y = 5;
 
+    protected static final int SKILL_HIGHLIGHT_COLOR = 0xfff6f0ab;
+
     private TextPaint namePaint;
     private static final int MAX_NAME_FONT = 40;
     private static final int MIN_NAME_FONT = 20;
@@ -258,6 +260,9 @@ public class EnemyInfoScreen extends Screen {
         NumberPrinter.drawNumber(g, displayEnemy.getMaxHP(), MAX_HEALTH_X, topY + HEALTH_Y, HEALTH_NUMBER_WIDTH, HEALTH_NUMBER_HEIGHT, HEALTH_OFFSET_X, Assets.WhiteNumbers, NumberPrinter.Align.LEFT);
 
         if(displayEnemy.getSkills().getUniqueSkill() != null){
+            if(bDisplayUnique){
+                g.drawRect(UNIQUE_SKILL_LEFT_X, skillsY + TOP_SKILLS_TOP_Y, UNIQUE_SKILL_RIGHT_X - UNIQUE_SKILL_LEFT_X, TOP_SKILLS_BOT_Y - TOP_SKILLS_TOP_Y, SKILL_HIGHLIGHT_COLOR);
+            }
             g.drawString(displayEnemy.getSkills().getUniqueSkill().getSkillName(), UNIQUE_X, skillsY + MAX_WEAPON_Y, weaponPaint, MAX_UNIQUE_SIZE, MAX_WEAPON_FONT);
         }
         else {
@@ -266,6 +271,9 @@ public class EnemyInfoScreen extends Screen {
 
         //Draw string for weapon name
         if(displayEnemy.getSkills().getWeaponSkill() != null){
+            if(bDisplayWeaponSkill){
+                g.drawRect(WEAPON_SKILL_LEFT_X, skillsY + TOP_SKILLS_TOP_Y, WEAPON_SKILL_RIGHT_X - WEAPON_SKILL_LEFT_X, TOP_SKILLS_BOT_Y - TOP_SKILLS_TOP_Y, SKILL_HIGHLIGHT_COLOR);
+            }
             g.drawString(displayEnemy.getSkills().getWeaponSkill().getSkillName(), WEAPON_X, skillsY + MAX_WEAPON_Y, weaponPaint, MAX_WEAPON_SIZE, MAX_WEAPON_FONT);
         }
         else {
@@ -274,6 +282,11 @@ public class EnemyInfoScreen extends Screen {
 
         //List out names for the skills
         for(int i = 0; i < 4 && i < displayEnemy.getSkills().size(); i++){
+            if(displayText == i){
+                int highlightX = displayText % 2 == 0 ? SKILLS_BUTTON_LEFT_X : SKILLS_BUTTON_LEFT_X + (SKILLS_BUTTON_WIDTH +SKILLS_BUTTON_OFFSET_X);
+                int highlightY = displayText / 2 == 0 ? skillsY + SKILLS_BUTTON_TOP_Y : skillsY + SKILLS_BUTTON_TOP_Y + (SKILLS_BUTTON_HEIGHT + SKILLS_BUTTON_OFFSET_Y);
+                g.drawRect(highlightX, highlightY, SKILLS_BUTTON_WIDTH, SKILLS_BUTTON_HEIGHT, SKILL_HIGHLIGHT_COLOR);
+            }
             AbsSkill skill = displayEnemy.getSkills().get(i);
             int xOffset;
             int yOffset = skillsY + (SKILLS_TEXT_BASE_Y + (i / 2) * SKILLS_TEXT_OFFSET_Y);

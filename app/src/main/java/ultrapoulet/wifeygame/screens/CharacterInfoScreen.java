@@ -333,7 +333,7 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
 
     protected void drawSkills(Graphics g){
         if(displayUniqueSkill != null){
-            if(bDisplayUnique && displayUniqueSkill != null){
+            if(bDisplayUnique){
                 g.drawRect(UNIQUE_SKILL_LEFT_X, TOP_SKILLS_TOP_Y, UNIQUE_SKILL_RIGHT_X - UNIQUE_SKILL_LEFT_X, TOP_SKILLS_BOT_Y - TOP_SKILLS_TOP_Y, SKILL_HIGHLIGHT_COLOR);
             }
             g.drawString(displayUniqueSkill.getSkillName(), UNIQUE_X, MAX_WEAPON_Y, weaponPaint, MAX_UNIQUE_SIZE, MAX_WEAPON_FONT);
@@ -345,7 +345,7 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
 
         //Draw string for weapon name
         if(displayWeaponSkill != null){
-            if(bDisplayWeaponSkill && displayWeaponSkill != null){
+            if(bDisplayWeaponSkill){
                 g.drawRect(WEAPON_SKILL_LEFT_X, TOP_SKILLS_TOP_Y, WEAPON_SKILL_RIGHT_X - WEAPON_SKILL_LEFT_X, TOP_SKILLS_BOT_Y - TOP_SKILLS_TOP_Y, SKILL_HIGHLIGHT_COLOR);
             }
             g.drawString(displayWeaponSkill.getSkillName(), WEAPON_X, MAX_WEAPON_Y, weaponPaint, MAX_WEAPON_SIZE, MAX_WEAPON_FONT);
@@ -362,7 +362,7 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
 
         //List out names for the skills
         for(int i = 0; i < 4 && i < displaySkills.size(); i++){
-            if(displayText == i && displaySkills.size() > displayText){
+            if(displayText == i){
                 int highlightX = displayText % 2 == 0 ? SKILLS_BUTTON_LEFT_X : SKILLS_BUTTON_LEFT_X + (SKILLS_BUTTON_WIDTH +SKILLS_BUTTON_OFFSET_X);
                 int highlightY = displayText / 2 == 0 ? SKILLS_BUTTON_TOP_Y : SKILLS_BUTTON_TOP_Y + (SKILLS_BUTTON_HEIGHT + SKILLS_BUTTON_OFFSET_Y);
                 g.drawRect(highlightX, highlightY, SKILLS_BUTTON_WIDTH, SKILLS_BUTTON_HEIGHT, SKILL_HIGHLIGHT_COLOR);

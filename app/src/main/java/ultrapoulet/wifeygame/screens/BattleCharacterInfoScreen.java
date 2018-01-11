@@ -144,7 +144,7 @@ public class BattleCharacterInfoScreen extends AbsCharacterInfoScreen {
 
     protected void drawSkills(Graphics g){
         if(displayChar.getSkills().getUniqueSkill() != null){
-            if(bDisplayUnique && displayChar.getSkills().getUniqueSkill() != null){
+            if(bDisplayUnique){
                 g.drawRect(UNIQUE_SKILL_LEFT_X, TOP_SKILLS_TOP_Y, UNIQUE_SKILL_RIGHT_X - UNIQUE_SKILL_LEFT_X, TOP_SKILLS_BOT_Y - TOP_SKILLS_TOP_Y, SKILL_HIGHLIGHT_COLOR);
             }
             g.drawString(displayChar.getSkills().getUniqueSkill().getSkillName(), UNIQUE_X, MAX_WEAPON_Y, weaponPaint, MAX_UNIQUE_SIZE, MAX_WEAPON_FONT);
@@ -157,7 +157,7 @@ public class BattleCharacterInfoScreen extends AbsCharacterInfoScreen {
 
         //Draw string for weapon name
         if(displayChar.getSkills().getWeaponSkill() != null){
-            if(bDisplayWeaponSkill && displayChar.getSkills().getWeaponSkill() != null){
+            if(bDisplayWeaponSkill){
                 g.drawRect(WEAPON_SKILL_LEFT_X, TOP_SKILLS_TOP_Y, WEAPON_SKILL_RIGHT_X - WEAPON_SKILL_LEFT_X, TOP_SKILLS_BOT_Y - TOP_SKILLS_TOP_Y, SKILL_HIGHLIGHT_COLOR);
             }
             g.drawString(displayChar.getSkills().getWeaponSkill().getSkillName(), WEAPON_X, MAX_WEAPON_Y, weaponPaint, MAX_WEAPON_SIZE, MAX_WEAPON_FONT);
