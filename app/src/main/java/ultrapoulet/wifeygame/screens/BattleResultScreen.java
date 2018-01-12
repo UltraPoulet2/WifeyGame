@@ -115,6 +115,41 @@ public class BattleResultScreen extends Screen{
     }
     private List<BonusGains> gains;
 
+    private class ExperienceBar {
+        private double originalPercentage;
+        private double gainedPercentage;
+
+        private double currentDrawPercentage = 0.0;
+        private static final double PERCENTAGE_PER_SECOND = 25.0;
+
+        protected ExperienceBar(double orig, double gained) {
+            this.originalPercentage = orig;
+            this.gainedPercentage = gained;
+        }
+
+        protected void update(float deltaTime) {
+            if(currentDrawPercentage < gainedPercentage) {
+                currentDrawPercentage += deltaTime / 100 * PERCENTAGE_PER_SECOND;
+            }
+        }
+
+        protected void drawBar(Graphics g, int baseX, int baseY){
+            int originalExpWidth = (int) (EXP_BAR_MAX_WIDTH * originalPercentage);
+            int gainedExpWidth = (int) (EXP_BAR_MAX_WIDTH * (1.0 * (currentDrawPercentage % 100)));
+            if(originalPercentage + currentDrawPercentage < 100) {
+                g.drawScaledImage(Assets.SmallGreenBar, baseX, baseY + PARTY_EXP_OFFSET_Y, originalExpWidth, EXP_BAR_HEIGHT);
+            }
+            g.drawScaledImage(Assets.SmallYellowBar, baseX + originalExpWidth, baseY + PARTY_EXP_OFFSET_Y, gainedExpWidth, EXP_BAR_HEIGHT);
+        }
+
+        protected void drawLevelUp(Graphics g, int baseX, int baseY) {
+            if(originalPercentage + currentDrawPercentage >= 100) {
+                g.drawImage(Assets.LevelUp, baseX + WIFEY_LEVEL_OFFSET_X, baseY + WIFEY_LEVEL_OFFSET_Y);
+            }
+        }
+
+    }
+
     public BattleResultScreen(Game game, BattleInfo info, List<BattleCharacter> party, List<BattleCharacter> enemies){
         super(game);
         this.info = info;
