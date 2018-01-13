@@ -54,7 +54,7 @@ public class BattleResultScreen extends Screen{
     private static final int PARTY_HOLDER_OFFSET_X = -5;
     private static final int PARTY_HOLDER_OFFSET_Y = -2;
     private static final int PARTY_EXP_OFFSET_Y = 162;
-    private static final int EXP_BAR_MAX_WIDTH = 195;
+    private static final int EXP_BAR_MAX_WIDTH = 160;
     private static final int EXP_BAR_HEIGHT = 20;
 
     private static final int BONUS_EXP_OFFSET_Y = 0;
@@ -92,7 +92,7 @@ public class BattleResultScreen extends Screen{
     private boolean printed = false;
 
     private boolean playerLevelUp = false;
-    private boolean[] wifeyLevelUp = new boolean[7];
+    private List<ExperienceBar> wifeyExperience = new ArrayList<>();
 
     private ArrayList<Image> drops = new ArrayList<>();
 
@@ -120,7 +120,7 @@ public class BattleResultScreen extends Screen{
         private double gainedPercentage;
 
         private double currentDrawPercentage = 0.0;
-        private static final double PERCENTAGE_PER_SECOND = 25.0;
+        private static final double PERCENTAGE_PER_SECOND = 5.0;
 
         protected ExperienceBar(double orig, double gained) {
             this.originalPercentage = orig;
@@ -129,21 +129,31 @@ public class BattleResultScreen extends Screen{
 
         protected void update(float deltaTime) {
             if(currentDrawPercentage < gainedPercentage) {
-                currentDrawPercentage += deltaTime / 100 * PERCENTAGE_PER_SECOND;
+                currentDrawPercentage += deltaTime / 1000 * PERCENTAGE_PER_SECOND;
             }
         }
 
         protected void drawBar(Graphics g, int baseX, int baseY){
-            int originalExpWidth = (int) (EXP_BAR_MAX_WIDTH * originalPercentage);
-            int gainedExpWidth = (int) (EXP_BAR_MAX_WIDTH * (1.0 * (currentDrawPercentage % 100)));
-            if(originalPercentage + currentDrawPercentage < 100) {
+
+            if(originalPercentage + currentDrawPercentage < 1.0) {
+                int originalExpWidth = (int) (EXP_BAR_MAX_WIDTH * originalPercentage);
+                int gainedExpWidth = (int) (EXP_BAR_MAX_WIDTH * currentDrawPercentage);
                 g.drawScaledImage(Assets.SmallGreenBar, baseX, baseY + PARTY_EXP_OFFSET_Y, originalExpWidth, EXP_BAR_HEIGHT);
+                g.drawScaledImage(Assets.SmallYellowBar, baseX + originalExpWidth, baseY + PARTY_EXP_OFFSET_Y, gainedExpWidth, EXP_BAR_HEIGHT);
             }
-            g.drawScaledImage(Assets.SmallYellowBar, baseX + originalExpWidth, baseY + PARTY_EXP_OFFSET_Y, gainedExpWidth, EXP_BAR_HEIGHT);
+            else {
+                double displayPercentage = (currentDrawPercentage - (1.0 - originalPercentage));
+                while(displayPercentage > 1.0) {
+                    displayPercentage -= 1.0;
+                }
+                int gainedExpWidth = (int) (EXP_BAR_MAX_WIDTH * displayPercentage);
+                g.drawScaledImage(Assets.SmallYellowBar, baseX, baseY + PARTY_EXP_OFFSET_Y, gainedExpWidth, EXP_BAR_HEIGHT);
+            }
+
         }
 
         protected void drawLevelUp(Graphics g, int baseX, int baseY) {
-            if(originalPercentage + currentDrawPercentage >= 100) {
+            if(originalPercentage + currentDrawPercentage >= 1.0) {
                 g.drawImage(Assets.LevelUp, baseX + WIFEY_LEVEL_OFFSET_X, baseY + WIFEY_LEVEL_OFFSET_Y);
             }
         }
@@ -180,8 +190,14 @@ public class BattleResultScreen extends Screen{
         playerLevelUp  = PlayerInfo.addExperience(baseExp + bonusExp);
         List<WifeyCharacter> wifeyList = Party.getCurrentParty();
         for(int i = 0; i < party.size(); i++){
-            //This will be replaced with a boolean list later
-            wifeyLevelUp[i] = wifeyList.get(i).addExperience(baseExp + bonusExp);
+            double originalPercentage = wifeyList.get(i).getExperiencePercent();
+            int originalLevel = wifeyList.get(i).getLevel();
+            //I don't think we need to know if we level up anymore from adding experience
+            boolean levelUp = wifeyList.get(i).addExperience(baseExp + bonusExp);
+            double finalPercentage = wifeyList.get(i).getExperiencePercent();
+            int finalLevel = wifeyList.get(i).getLevel();
+            double gainedPercentage = ((finalLevel - originalLevel)) + (finalPercentage - originalPercentage);
+            wifeyExperience.add(new ExperienceBar(originalPercentage,  gainedPercentage));
         }
         PlayerInfo.addGold(baseGold + bonusGold);
 
@@ -210,6 +226,9 @@ public class BattleResultScreen extends Screen{
                     }
                 }
             }
+        }
+        for(ExperienceBar exp : wifeyExperience) {
+            exp.update(deltaTime);
         }
     }
 
@@ -314,18 +333,8 @@ public class BattleResultScreen extends Screen{
         List<WifeyCharacter> wifeyList = Party.getCurrentParty();
         g.drawScaledImage(party.get(partyMember).getImage(), baseX, baseY, PARTY_WIDTH, PARTY_HEIGHT);
         g.drawImage(Assets.BattleResultCharHolder, baseX + PARTY_HOLDER_OFFSET_X, baseY + PARTY_HOLDER_OFFSET_Y);
-        if(wifeyLevelUp[partyMember]){
-            int wifeyExpWidth = (int) (EXP_BAR_MAX_WIDTH * wifeyList.get(partyMember).getExperiencePercent());
-            g.drawScaledImage(Assets.SmallYellowBar, baseX, baseY + PARTY_EXP_OFFSET_Y, wifeyExpWidth, EXP_BAR_HEIGHT);
-        }
-        else{
-            int originalExp = wifeyList.get(partyMember).getExp() - (baseExp + bonusExp);
-            int nextExp = wifeyList.get(partyMember).getNextLevelExp();
-            int originalExpWidth = (int) (EXP_BAR_MAX_WIDTH * (1.0 * originalExp / nextExp));
-            int gainedExpWidth = (int) (EXP_BAR_MAX_WIDTH * (1.0 * (baseExp + bonusExp) / nextExp));
-            g.drawScaledImage(Assets.SmallGreenBar, baseX, baseY + PARTY_EXP_OFFSET_Y, originalExpWidth, EXP_BAR_HEIGHT);
-            g.drawScaledImage(Assets.SmallYellowBar, baseX + originalExpWidth, baseY + PARTY_EXP_OFFSET_Y, gainedExpWidth, EXP_BAR_HEIGHT);
-        }
+        wifeyExperience.get(partyMember).drawBar(g, baseX, baseY);
+        wifeyExperience.get(partyMember).drawLevelUp(g, baseX, baseY);
         if(gains.get(partyMember).getExp() > 0){
             int exp = gains.get(partyMember).getExp();
             int numDigits = Integer.toString(exp).length();
@@ -341,9 +350,6 @@ public class BattleResultScreen extends Screen{
             int plusX = baseX + ((PARTY_WIDTH - totalWidth) / 2);
             g.drawScaledImage(Assets.YellowPlus, plusX, baseY + BONUS_GOLD_OFFSET_Y, BONUS_TEXT_WIDTH, BONUS_TEXT_HEIGHT);
             NumberPrinter.drawNumber(g, gold, plusX + BONUS_TEXT_WIDTH, baseY + BONUS_GOLD_OFFSET_Y, BONUS_TEXT_WIDTH, BONUS_TEXT_HEIGHT, BONUS_TEXT_OFFSET, Assets.YellowNumbers, Align.LEFT);
-        }
-        if(wifeyLevelUp[partyMember]){
-            g.drawImage(Assets.LevelUp, baseX + WIFEY_LEVEL_OFFSET_X, baseY + WIFEY_LEVEL_OFFSET_Y);
         }
     }
 
