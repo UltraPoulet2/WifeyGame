@@ -23,6 +23,7 @@ import ultrapoulet.wifeygame.character.WifeyCharacter;
 import ultrapoulet.wifeygame.gamestate.Party;
 import ultrapoulet.wifeygame.gamestate.PlayerInfo;
 import ultrapoulet.wifeygame.gamestate.PlayerInfo.HeaderBar;
+import ultrapoulet.wifeygame.parsers.ConfigParser;
 
 /**
  * Created by John on 5/23/2017.
@@ -166,9 +167,9 @@ public abstract class AbsBattleInfoScreen extends Screen {
         for(int i = 0; i < tempList.size(); i++){
             int xLeft = REQUIREMENT_LEFT_X;
             int xRight = REQUIREMENT_RIGHT_X;
-            int yTop = REQUIREMENT_BASE_TOP_Y + REQUIREMENT_OFFSET_Y * i;
-            int yBot = REQUIREMENT_BASE_BOT_Y + REQUIREMENT_OFFSET_Y * i;
-            requirementList.addButton(new Button(xLeft, xRight, yTop, yBot, true, "REQ_" + i));
+            int yTop = REQUIREMENT_BASE_TOP_Y + REQUIREMENT_OFFSET_Y * (i + 1);
+            int yBot = REQUIREMENT_BASE_BOT_Y + REQUIREMENT_OFFSET_Y * (i + 1);
+            requirementList.addButton(new Button(xLeft, xRight, yTop, yBot, tempList.get(i) != null, "REQ_" + i));
         }
 
         goldGain = 0;
@@ -295,21 +296,11 @@ public abstract class AbsBattleInfoScreen extends Screen {
 
         drawInfo(g);
 
-        for(int i = 0; i < battleInfo.getRequirements().size(); i++){
-            String desc = battleInfo.getRequirements().get(i).getTitle();
-            if(battleInfo.getRequirements().get(i).validateParty(party)){
-                requirementPaint.setColor(Color.GREEN);
-            }
-            else {
-                requirementPaint.setColor(Color.RED);
-            }
-            if(requirementPaint.breakText(desc, true, REQUIREMENT_WIDTH, null) == desc.length() ){
-                g.drawString(desc, REQUIREMENT_CENTER_X, REQUIREMENT_BASE_TEXT_Y + i * REQUIREMENT_OFFSET_Y, requirementPaint);
-            }
-            else {
-                g.drawMultiLineString(desc, REQUIREMENT_CENTER_X, REQUIREMENT_BASE_TOP_Y + i * REQUIREMENT_OFFSET_Y, REQUIREMENT_WIDTH, requirementPaint);
-            }
-        }
+        drawMaxPartySize(g, battleInfo.getPartyMax());
+        drawRequirement(g, battleInfo.getCharacterRestrictions(), "No Banned Wifeys", 1);
+        drawRequirement(g, battleInfo.getCharacterRequirements(), "No Required Wifeys", 2);
+        drawRequirement(g, battleInfo.getSkillRestrictions(), "No Restricted Skills", 3);
+        drawRequirement(g, battleInfo.getSkillRequirements(), "No Required Skills", 4);
 
         partyList.drawImage(g);
         for(int i = 0; i < Party.MAX_PARTY_SIZE && party.get(i) != null; i++){
@@ -324,6 +315,27 @@ public abstract class AbsBattleInfoScreen extends Screen {
         buttonList.drawImage(g);
 
         header.draw(g);
+    }
+
+    private void drawMaxPartySize(Graphics g, int maxPartySize) {
+        requirementPaint.setColor(Color.GREEN);
+        g.drawString("Max Party Size: " + maxPartySize, REQUIREMENT_CENTER_X, REQUIREMENT_BASE_TEXT_Y, requirementPaint);
+    }
+
+    private void drawRequirement(Graphics g, AbsRequirement req, String defaultTitle, int index) {
+        String desc = req != null ? req.getTitle() : defaultTitle;
+        if(req == null || req.validateParty(party)){
+            requirementPaint.setColor(Color.GREEN);
+        }
+        else {
+            requirementPaint.setColor(Color.RED);
+        }
+        if(requirementPaint.breakText(desc, true, REQUIREMENT_WIDTH, null) == desc.length() ){
+            g.drawString(desc, REQUIREMENT_CENTER_X, REQUIREMENT_BASE_TEXT_Y + index * REQUIREMENT_OFFSET_Y, requirementPaint);
+        }
+        else {
+            g.drawMultiLineString(desc, REQUIREMENT_CENTER_X, REQUIREMENT_BASE_TOP_Y + index * REQUIREMENT_OFFSET_Y, REQUIREMENT_WIDTH, requirementPaint);
+        }
     }
 
     @Override

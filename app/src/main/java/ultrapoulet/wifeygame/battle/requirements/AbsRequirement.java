@@ -1,5 +1,6 @@
 package ultrapoulet.wifeygame.battle.requirements;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ultrapoulet.androidgame.framework.Game;
