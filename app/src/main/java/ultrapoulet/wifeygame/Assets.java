@@ -110,6 +110,7 @@ public class Assets {
     public static Image RecruitingScreen;
     public static Image RecruitingButtonEnable, RecruitingButtonDisable;
     public static Image CheckboxComplete, CheckboxIncomplete;
+    public static Image RecruitingHolder;
 
     //Dialog Stuff
     public static Image AbsAdjustableDialogTop;
@@ -278,6 +279,7 @@ public class Assets {
         RecruitingButtonDisable = g.newImage("Recruiting/RecruitButtonDisabled.png", ImageFormat.ARGB8888);
         CheckboxComplete = g.newImage("Recruiting/CheckboxComplete.png", ImageFormat.ARGB8888);
         CheckboxIncomplete = g.newImage("Recruiting/CheckboxIncomplete.png", ImageFormat.ARGB8888);
+        RecruitingHolder = g.newImage("Recruiting/RecruitingHolder.png", ImageFormat.ARGB8888);
 
         AbsAdjustableDialogTop = g.newImage("Dialogs/AbsAdjustableDialogTop.png", ImageFormat.ARGB8888);
         AbsAdjustableDialogMid = g.newImage("Dialogs/AbsAdjustableDialogMid.png", ImageFormat.ARGB8888);
