@@ -305,7 +305,7 @@ public abstract class AbsBattleScreen extends Screen {
 
     }
 
-    private BattlePhase currentPhase = BattlePhase.BATTLE_START;
+    private BattlePhase currentPhase;
 
     public AbsBattleScreen(Game game, BattleInfo info){
         super(game);
@@ -582,6 +582,9 @@ public abstract class AbsBattleScreen extends Screen {
     }
 
     public BattlePhase getNextPhase() {
+        if(currentPhase == null) {
+            return BattlePhase.BATTLE_START;
+        }
         switch(currentPhase) {
             case BATTLE_START:
                 return BattlePhase.WAVE_START;
@@ -642,6 +645,7 @@ public abstract class AbsBattleScreen extends Screen {
     public void enterPhase() {
         switch(currentPhase) {
             case BATTLE_START:
+                Log.d("Battle", "Battle info should be incremented");
                 battleInfo.incrementNumAttempts();
                 for(int i = 0; i < party.size(); i++){
                     if(party.get(i).getCurrentHP() != 0) {
@@ -1091,7 +1095,7 @@ public abstract class AbsBattleScreen extends Screen {
 
     @Override
     public void update(float deltaTime) {
-        if(shouldGoToNextPhase()) {
+        if(currentPhase == null || shouldGoToNextPhase()) {
             currentPhase = getNextPhase();
             phaseTime = 0;
             enterPhase();
