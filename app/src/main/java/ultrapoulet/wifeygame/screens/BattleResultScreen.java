@@ -62,8 +62,13 @@ public class BattleResultScreen extends Screen{
     private static final int BONUS_TEXT_WIDTH = 15;
     private static final int BONUS_TEXT_HEIGHT = 30;
     private static final int BONUS_TEXT_OFFSET = 0;
-    private static final int WIFEY_LEVEL_OFFSET_X = 50;
+    private static final int WIFEY_LEVEL_OFFSET_X = 25;
     private static final int WIFEY_LEVEL_OFFSET_Y = 100;
+    private static final int WIFEY_LEVEL_NUMBER_OFFSET_X = 85;
+    private static final int WIFEY_LEVEL_NUMBER_OFFSET_Y = 110;
+    private static final int WIFEY_LEVEL_NUMBER_WIDTH = 20;
+    private static final int WIFEY_LEVEL_NUMBER_HEIGHT = 40;
+    private static final int WIFEY_LEVEL_NUMBER_OFFSET = 0;
 
     private static final int CONTINUE_LEFT_X = 500;
     private static final int CONTINUE_RIGHT_X = 750;
@@ -154,7 +159,11 @@ public class BattleResultScreen extends Screen{
 
         protected void drawLevelUp(Graphics g, int baseX, int baseY) {
             if(originalPercentage + currentDrawPercentage >= 1.0) {
+                int numLevels = (int) (originalPercentage + currentDrawPercentage);
                 g.drawImage(Assets.LevelUp, baseX + WIFEY_LEVEL_OFFSET_X, baseY + WIFEY_LEVEL_OFFSET_Y);
+                if(numLevels > 1) {
+                    NumberPrinter.drawNumber(g, numLevels, baseX + WIFEY_LEVEL_NUMBER_OFFSET_X, baseY + WIFEY_LEVEL_NUMBER_OFFSET_Y, WIFEY_LEVEL_NUMBER_WIDTH, WIFEY_LEVEL_NUMBER_HEIGHT, WIFEY_LEVEL_NUMBER_OFFSET, Assets.GreenNumbers, Align.LEFT);
+                }
             }
         }
 
