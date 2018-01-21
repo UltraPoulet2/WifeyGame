@@ -210,6 +210,7 @@ public class BattleWifey extends BattleCharacter{
         this.magic = form.getMagic();
         if(form.getWeapon() != null){
             this.weapon = form.getWeapon();
+            this.numHits = this.weapon.getNumHits();
         }
         if(form.getAttackElement() != null){
             this.attackElement = form.getAttackElement();

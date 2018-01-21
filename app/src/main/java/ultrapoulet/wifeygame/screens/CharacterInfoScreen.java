@@ -132,7 +132,7 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
     }
 
     protected String getWeaponType(){
-        return displayChar.getWeapon().getWeaponType();
+        return displayWeapon.getWeaponType();
     }
 
     public void createUniqueButtons(){
@@ -149,9 +149,7 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
         displayChar = input;
         transformations = displayChar.getTransformations();
 
-        displayText = -1;
-        bDisplayUnique = false;
-        bDisplayWeaponSkill = false;
+        resetSkillDisplay();
 
         displayExp = displayChar.getExperienceString();
 
@@ -172,8 +170,14 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
         }
         else {
             favoriteButton.setHidden(true);
+        }
     }
-}
+
+    private void resetSkillDisplay() {
+        displayText = -1;
+        bDisplayUnique = false;
+        bDisplayWeaponSkill = false;
+    }
 
     private void setDefaultDisplayInfo() {
         displayName = displayChar.getName();
@@ -223,6 +227,7 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
             displayWeaponSkill = displayForm.getWeaponSkill();
         }
         Collections.sort(displaySkills, SkillsEnum.SKILLS_ENUM_COMPARATOR);
+        resetSkillDisplay();
     }
 
     private void decrementDisplayInfo() {
@@ -289,6 +294,7 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
             displaySkills.addAll(prevForm.getRemoveSkills());
             Collections.sort(displaySkills, SkillsEnum.SKILLS_ENUM_COMPARATOR);
         }
+        resetSkillDisplay();
     }
 
     protected void drawPortrait(Graphics g){
@@ -341,7 +347,6 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
         else {
             g.drawString("--NONE--", UNIQUE_X, MAX_WEAPON_Y, weaponPaint, MAX_UNIQUE_SIZE, MAX_WEAPON_FONT);
         }
-        //Draw image for weapon category
 
         //Draw string for weapon name
         if(displayWeaponSkill != null){
@@ -355,7 +360,7 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
             g.drawString("--Default Weapon--", WEAPON_X, MAX_WEAPON_Y, weaponPaint, MAX_WEAPON_SIZE, MAX_WEAPON_FONT);
         }
         //Draw image for weapon
-        g.drawImage(displayChar.getWeapon().getImage(), WEAPONS_IMAGE_LEFT_X, WEAPONS_IMAGE_TOP_Y);
+        g.drawImage(displayWeapon.getImage(), WEAPONS_IMAGE_LEFT_X, WEAPONS_IMAGE_TOP_Y);
 
         //Draw image for number hits
         g.drawImage(getHitsImage(displayWeapon.getNumHits()), HITS_X, HITS_Y);
