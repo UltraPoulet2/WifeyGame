@@ -84,6 +84,16 @@ public class BattleCharacterInfoScreen extends AbsCharacterInfoScreen {
         bDisplayUnique = false;
         bDisplayWeaponSkill = false;
         multipliers = displayChar.getMultipliers(enemy);
+
+        updateSkillButtons();
+    }
+
+    private void updateSkillButtons() {
+        for(int i = 0; i < 4; i++) {
+            skillsButtonList.get(i).setActive(displayChar.getSkills().size() > i);
+        }
+        uniqueSkillButton.setActive(displayChar.getSkills().getUniqueSkill() != null);
+        weaponSkillButton.setActive(displayChar.getSkills().getWeaponSkill() != null);
     }
 
     private Image getPlayerHealthBar(int currentHealth, int maxHealth){

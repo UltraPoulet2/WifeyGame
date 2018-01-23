@@ -162,6 +162,7 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
 
         setDefaultDisplayInfo();
         updateFavoriteButton();
+        updateSkillButtons();
     }
 
     private void updateFavoriteButton(){
@@ -200,6 +201,14 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
         displayWeaponSkill = displayChar.getWeaponSkill();
     }
 
+    private void updateSkillButtons() {
+        for(int i = 0; i < 4; i++) {
+            skillsButtonList.get(i).setActive(displaySkills.size() > i);
+        }
+        uniqueSkillButton.setActive(displayUniqueSkill != null);
+        weaponSkillButton.setActive(displayWeaponSkill != null);
+    }
+
     private void incrementDisplayInfo() {
         TransformWifey displayForm = transformations.get(transformPage - 1);
         displayName = displayForm.getName();
@@ -228,6 +237,7 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
         }
         Collections.sort(displaySkills, SkillsEnum.SKILLS_ENUM_COMPARATOR);
         resetSkillDisplay();
+        updateSkillButtons();
     }
 
     private void decrementDisplayInfo() {
@@ -295,6 +305,7 @@ public class CharacterInfoScreen extends AbsCharacterInfoScreen {
             Collections.sort(displaySkills, SkillsEnum.SKILLS_ENUM_COMPARATOR);
         }
         resetSkillDisplay();
+        updateSkillButtons();
     }
 
     protected void drawPortrait(Graphics g){
