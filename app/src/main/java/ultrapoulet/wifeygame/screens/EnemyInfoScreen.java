@@ -52,6 +52,8 @@ public class EnemyInfoScreen extends Screen {
     private static final int CLOSE_BOT_Y = CLOSE_TOP_Y + 75; //topY will need to be added
     private static final String CLOSE_STRING = "Close";
 
+    private Button uniqueSkillButton;
+    private Button weaponSkillButton;
     private static final int UNIQUE_SKILL_LEFT_X = BG_X + 40;
     private static final int UNIQUE_SKILL_RIGHT_X = UNIQUE_SKILL_LEFT_X + 307;
     private static final int WEAPON_SKILL_LEFT_X = BG_X + 353;
@@ -144,8 +146,10 @@ public class EnemyInfoScreen extends Screen {
 
         basicButtonList = new ButtonList();
         basicButtonList.addButton(new Button(CLOSE_LEFT_X, CLOSE_RIGHT_X, topY + CLOSE_TOP_Y, topY + CLOSE_BOT_Y, true, CLOSE_STRING));
-        basicButtonList.addButton(new Button(UNIQUE_SKILL_LEFT_X, UNIQUE_SKILL_RIGHT_X, skillsY + TOP_SKILLS_TOP_Y, skillsY + TOP_SKILLS_BOT_Y, true, UNIQUE_STRING));
-        basicButtonList.addButton(new Button(WEAPON_SKILL_LEFT_X, WEAPON_SKILL_RIGHT_X, skillsY + TOP_SKILLS_TOP_Y, skillsY + TOP_SKILLS_BOT_Y, true, WEAPON_STRING));
+        uniqueSkillButton = new Button(UNIQUE_SKILL_LEFT_X, UNIQUE_SKILL_RIGHT_X, skillsY + TOP_SKILLS_TOP_Y, skillsY + TOP_SKILLS_BOT_Y, true, UNIQUE_STRING);
+        basicButtonList.addButton(uniqueSkillButton);
+        weaponSkillButton = new Button(WEAPON_SKILL_LEFT_X, WEAPON_SKILL_RIGHT_X, skillsY + TOP_SKILLS_TOP_Y, skillsY + TOP_SKILLS_BOT_Y, true, WEAPON_STRING);
+        basicButtonList.addButton(weaponSkillButton);
 
         skillsButtonList = new ButtonList();
         for(int i = 0; i < 4; i++) {
@@ -185,6 +189,16 @@ public class EnemyInfoScreen extends Screen {
         displayText = -1;
         bDisplayUnique = false;
         bDisplayWeaponSkill = false;
+
+        updateSkillButtons();
+    }
+
+    private void updateSkillButtons() {
+        for(int i = 0; i < 4; i++) {
+            skillsButtonList.get(i).setActive(displayEnemy.getSkills().size() > i);
+        }
+        uniqueSkillButton.setActive(displayEnemy.getSkills().getUniqueSkill() != null);
+        weaponSkillButton.setActive(displayEnemy.getSkills().getWeaponSkill() != null);
     }
 
     @Override
