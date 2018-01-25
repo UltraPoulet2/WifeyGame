@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ultrapoulet.wifeygame.battle.BattleCharacter;
+import ultrapoulet.wifeygame.battle.BattleCharacter.EnemyAction;
+import ultrapoulet.wifeygame.battle.BattleCharacter.PlayerAction;
 import ultrapoulet.wifeygame.battle.skills.AbsSkill.Multipliers;
 import ultrapoulet.wifeygame.character.SkillsEnum;
 import ultrapoulet.wifeygame.character.UniqueSkillsEnum;
@@ -359,6 +361,32 @@ public class SkillList {
             multiplier *= uniqueSkill.receiveHealPercentage(partyMember);
         }
         return multiplier;
+    }
+
+    public void onActionSelect(PlayerAction playerAction) {
+        //Do things when a player selects an action
+        for(int i = 0; i < skills.size(); i++) {
+            skills.get(i).onActionSelect(playerAction);
+        }
+        if(weaponSkill != null) {
+            weaponSkill.onActionSelect(playerAction);
+        }
+        if(uniqueSkill != null) {
+            uniqueSkill.onActionSelect(playerAction);
+        }
+    }
+
+    public void onActionSelect(EnemyAction enemyAction) {
+        //Do things when an enemy selects an action
+        for(int i = 0; i < skills.size(); i++) {
+            skills.get(i).onActionSelect(enemyAction);
+        }
+        if(weaponSkill != null) {
+            weaponSkill.onActionSelect(enemyAction);
+        }
+        if(uniqueSkill != null) {
+            uniqueSkill.onActionSelect(enemyAction);
+        }
     }
 
     public void onDamageDealt(int damage){

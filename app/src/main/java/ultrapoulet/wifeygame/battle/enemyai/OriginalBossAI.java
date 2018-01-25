@@ -1,5 +1,7 @@
 package ultrapoulet.wifeygame.battle.enemyai;
 
+import ultrapoulet.wifeygame.battle.BattleCharacter.EnemyAction;
+
 /**
  * Created by John on 4/21/2016.
  */

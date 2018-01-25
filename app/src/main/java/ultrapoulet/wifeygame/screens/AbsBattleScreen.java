@@ -19,10 +19,11 @@ import ultrapoulet.androidgame.framework.helpers.NumberPrinter;
 import ultrapoulet.wifeygame.Assets;
 import ultrapoulet.wifeygame.BattleAssets;
 import ultrapoulet.wifeygame.battle.BattleCharacter;
+import ultrapoulet.wifeygame.battle.BattleCharacter.PlayerAction;
+import ultrapoulet.wifeygame.battle.BattleCharacter.EnemyAction;
 import ultrapoulet.wifeygame.battle.BattleEnemy;
 import ultrapoulet.wifeygame.battle.BattleInfo;
 import ultrapoulet.wifeygame.battle.BattleWifey;
-import ultrapoulet.wifeygame.battle.enemyai.EnemyAI;
 import ultrapoulet.wifeygame.character.Element;
 import ultrapoulet.wifeygame.character.Weapon;
 import ultrapoulet.wifeygame.gamestate.Party;
@@ -810,7 +811,7 @@ public abstract class AbsBattleScreen extends Screen {
                 break;
             case ANIMATE_ENEMY_ACTION:
                 clearAnimations();
-                EnemyAI.EnemyAction action = ((BattleEnemy) enemies.get(enemyIndex)).getAction();
+                EnemyAction action = ((BattleEnemy) enemies.get(enemyIndex)).getAction();
                 int charIndex;
                 int enemyBaseDamage;
                 int enemyDisplayDamage;

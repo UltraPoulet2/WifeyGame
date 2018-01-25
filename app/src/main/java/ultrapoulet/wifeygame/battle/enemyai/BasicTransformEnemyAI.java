@@ -1,6 +1,7 @@
 package ultrapoulet.wifeygame.battle.enemyai;
 
 import android.util.Log;
+import ultrapoulet.wifeygame.battle.BattleCharacter.EnemyAction;
 
 /**
  * Created by John on 9/22/2016.

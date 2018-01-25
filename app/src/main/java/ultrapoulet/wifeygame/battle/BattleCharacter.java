@@ -30,6 +30,30 @@ public abstract class BattleCharacter {
 
     protected int transformNumber = 0;
 
+    public enum PlayerAction {
+        POWER_ATTACK,
+        COMBO_ATTACK,
+        MAGIC_ATTACK,
+        SPECIAL_ATTACK,
+        HEALING_MAGIC,
+        DEFEND,
+        TRANSFORM
+    }
+
+    public enum EnemyAction {
+        POWER_ATTACK,
+        COMBO_ATTACK,
+        MAGIC_ATTACK,
+        HEALING_MAGIC,
+        POWER_UP,
+        POWER_DOWN,
+        DEFEND,
+        WEAKEN,
+        TRANSFORM,
+        SPECIAL_ATTACK,
+        WAIT
+    }
+
     public String getName(){ return this.name; }
 
     public int getMaxHP(){ return this.maxHP; }
@@ -108,6 +132,14 @@ public abstract class BattleCharacter {
     public abstract int takeMagicalDamage(int damage, BattleCharacter enemy);
     public abstract int takeSpecialDamage(int damage, BattleCharacter enemy);
     public abstract int healDamage(int heal, BattleCharacter healer);
+
+    public void onActionSelect(PlayerAction playerAction) {
+        skills.onActionSelect(playerAction);
+    }
+
+    public void onActionSelect(EnemyAction enemyAction) {
+        skills.onActionSelect(enemyAction);
+    }
 
     public void startWave() { skills.startWave(); }
 
