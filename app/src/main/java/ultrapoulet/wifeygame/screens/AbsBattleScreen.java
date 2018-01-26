@@ -713,6 +713,7 @@ public abstract class AbsBattleScreen extends Screen {
                 AnimationImages playerActionHealingAnimation = null;
                 switch (commandSelected.getName()) {
                     case POWER_STRING:
+                        party.get(partyIndex).onActionSelect(PlayerAction.POWER_ATTACK);
                         playerBaseDamage = party.get(partyIndex).PowerAttackDamage(enemies.get(enemyIndex));
                         playerDisplayDamage = enemies.get(enemyIndex).takePhysicalDamage(playerBaseDamage, party.get(partyIndex));
                         enemies.get(enemyIndex).setDisplayDamage(playerDisplayDamage);
@@ -723,6 +724,7 @@ public abstract class AbsBattleScreen extends Screen {
                         playerActionAnimation = party.get(partyIndex).getBattleAnimation();
                         break;
                     case COMBO_STRING:
+                        party.get(partyIndex).onActionSelect(PlayerAction.COMBO_ATTACK);
                         playerBaseDamage = party.get(partyIndex).ComboAttackDamage(enemies.get(enemyIndex));
                         playerDisplayDamage = enemies.get(enemyIndex).takePhysicalDamage(playerBaseDamage, party.get(partyIndex));
                         enemies.get(enemyIndex).setDisplayDamage(playerDisplayDamage);
@@ -734,6 +736,7 @@ public abstract class AbsBattleScreen extends Screen {
                         playerActionAnimation = party.get(partyIndex).getBattleAnimation();
                         break;
                     case MAGIC_STRING:
+                        party.get(partyIndex).onActionSelect(PlayerAction.MAGIC_ATTACK);
                         playerBaseDamage = party.get(partyIndex).MagicAttackDamage(enemies.get(enemyIndex));
                         playerDisplayDamage = enemies.get(enemyIndex).takeMagicalDamage(playerBaseDamage, party.get(partyIndex));
                         enemies.get(enemyIndex).setDisplayDamage(playerDisplayDamage);
@@ -744,6 +747,7 @@ public abstract class AbsBattleScreen extends Screen {
                         playerActionAnimation = party.get(partyIndex).getAttackElement().getBattleAnimation();
                         break;
                     case HEAL_STRING:
+                        party.get(partyIndex).onActionSelect(PlayerAction.HEALING_MAGIC);
                         for (int j = 0; j < party.size(); j++) {
                             if (party.get(j).getCurrentHP() > 0) {
                                 playerBaseDamage = party.get(partyIndex).HealAmount(party.get(j));
@@ -757,6 +761,7 @@ public abstract class AbsBattleScreen extends Screen {
                         playerActionHealingAnimation = BattleAssets.HealAnimation;
                         break;
                     case SPECIAL_STRING:
+                        party.get(partyIndex).onActionSelect(PlayerAction.SPECIAL_ATTACK);
                         playerBaseDamage = party.get(partyIndex).SpecialAttackDamage(enemies.get(enemyIndex));
                         playerDisplayDamage = enemies.get(enemyIndex).takeSpecialDamage(playerBaseDamage, party.get(partyIndex));
                         enemies.get(enemyIndex).setDisplayDamage(playerDisplayDamage);
@@ -767,6 +772,7 @@ public abstract class AbsBattleScreen extends Screen {
                         playerActionAnimation = party.get(partyIndex).getBattleAnimation();
                         break;
                     case TRANSFORM_STRING:
+                        party.get(partyIndex).onActionSelect(PlayerAction.TRANSFORM);
                         party.get(partyIndex).transform(game.getGraphics());
                         for(int i = 0; i < party.size(); i++){
                             party.get(i).resetSkills();
@@ -776,6 +782,7 @@ public abstract class AbsBattleScreen extends Screen {
                         }
                         break;
                     case DEFEND_STRING:
+                        party.get(partyIndex).onActionSelect(PlayerAction.DEFEND);
                         ((BattleWifey) party.get(partyIndex)).Defend();
                         enemies.get(enemyIndex).setDisplayDamage(0);
                         break;
@@ -812,6 +819,7 @@ public abstract class AbsBattleScreen extends Screen {
             case ANIMATE_ENEMY_ACTION:
                 clearAnimations();
                 EnemyAction action = ((BattleEnemy) enemies.get(enemyIndex)).getAction();
+                enemies.get(enemyIndex).onActionSelect(action);
                 int charIndex;
                 int enemyBaseDamage;
                 int enemyDisplayDamage;
