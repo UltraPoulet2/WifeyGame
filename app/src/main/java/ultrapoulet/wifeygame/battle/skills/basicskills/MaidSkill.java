@@ -1,6 +1,8 @@
 package ultrapoulet.wifeygame.battle.skills.basicskills;
 
 import ultrapoulet.wifeygame.battle.BattleCharacter;
+import ultrapoulet.wifeygame.battle.BattleCharacter.EnemyAction;
+import ultrapoulet.wifeygame.battle.BattleCharacter.PlayerAction;
 import ultrapoulet.wifeygame.battle.skills.AbsSkill;
 
 /**
@@ -25,7 +27,6 @@ public class MaidSkill extends AbsSkill {
 
     @Override
     public double healPercentage(BattleCharacter partyMember) {
-        healCurrentTurn = true;
         return 1.0;
     }
 
@@ -57,6 +58,16 @@ public class MaidSkill extends AbsSkill {
         else {
             return 1.0;
         }
+    }
+
+    @Override
+    public void onActionSelect(PlayerAction action) {
+        healCurrentTurn = action == PlayerAction.HEALING_MAGIC;
+    }
+
+    @Override
+    public void onActionSelect(EnemyAction action) {
+        healCurrentTurn = action == EnemyAction.HEALING_MAGIC;
     }
 
 

@@ -62,6 +62,7 @@ public class ProgrammerSkill extends AbsSkill {
         }
     }
 
+    //onActionSelect is not done here since enemy information is needed
     @Override
     public double physicalAttackPercentage(BattleCharacter enemy) {
         attackCharacter(enemy);

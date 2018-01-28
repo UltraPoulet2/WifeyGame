@@ -1,6 +1,8 @@
 package ultrapoulet.wifeygame.battle.skills.basicskills;
 
 import ultrapoulet.wifeygame.battle.BattleCharacter;
+import ultrapoulet.wifeygame.battle.BattleCharacter.EnemyAction;
+import ultrapoulet.wifeygame.battle.BattleCharacter.PlayerAction;
 import ultrapoulet.wifeygame.battle.skills.AbsSkill;
 
 /**
@@ -38,8 +40,17 @@ public class MagicianSkill extends AbsSkill {
     }
 
     @Override
+    public void onActionSelect(PlayerAction action) {
+        magicUsed = action == PlayerAction.MAGIC_ATTACK;
+    }
+
+    @Override
+    public void onActionSelect(EnemyAction action) {
+        magicUsed = action == EnemyAction.MAGIC_ATTACK;
+    }
+
+    @Override
     public double magicalAttackPercentage(BattleCharacter enemy) {
-        magicUsed = true;
         return multiplier;
     }
 

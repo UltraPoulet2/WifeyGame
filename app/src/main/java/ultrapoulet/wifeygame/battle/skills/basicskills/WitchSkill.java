@@ -1,6 +1,8 @@
 package ultrapoulet.wifeygame.battle.skills.basicskills;
 
 import ultrapoulet.wifeygame.battle.BattleCharacter;
+import ultrapoulet.wifeygame.battle.BattleCharacter.EnemyAction;
+import ultrapoulet.wifeygame.battle.BattleCharacter.PlayerAction;
 import ultrapoulet.wifeygame.battle.skills.AbsSkill;
 
 /**
@@ -30,6 +32,16 @@ public class WitchSkill extends AbsSkill {
         }
         magicCurrentTurn = false;
         return 0;
+    }
+
+    @Override
+    public void onActionSelect(PlayerAction action) {
+        magicCurrentTurn = action == PlayerAction.MAGIC_ATTACK;
+    }
+
+    @Override
+    public void onActionSelect(EnemyAction action) {
+        magicCurrentTurn = action == EnemyAction.MAGIC_ATTACK;
     }
 
     @Override
