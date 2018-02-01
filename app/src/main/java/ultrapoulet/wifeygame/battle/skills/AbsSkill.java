@@ -5,6 +5,8 @@ import android.util.Log;
 import java.util.List;
 
 import ultrapoulet.wifeygame.battle.BattleCharacter;
+import ultrapoulet.wifeygame.battle.BattleCharacter.EnemyAction;
+import ultrapoulet.wifeygame.battle.BattleCharacter.PlayerAction;
 
 /**
  * Created by John on 7/10/2016.
@@ -78,7 +80,6 @@ public abstract class AbsSkill {
 
     public String getSkillName(){
         if(this.skillName == null){
-            //System.out.println("Skill name has not been set");
             Log.e("AbsSkill", "Skill name has not been set");
             return "";
         }
@@ -181,6 +182,14 @@ public abstract class AbsSkill {
         //The amount to increase healing from a party member
         //Returned multiplier is additive
         return 1.0;
+    }
+
+    public void onActionSelect(PlayerAction playerAction) {
+        //Do things when a player selects an action
+    }
+
+    public void onActionSelect(EnemyAction enemyAction) {
+        //Do things when an enemy selects an action
     }
 
     public void onDamageDealt(int damage){

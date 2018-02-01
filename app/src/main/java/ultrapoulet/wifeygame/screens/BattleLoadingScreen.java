@@ -15,6 +15,8 @@ import ultrapoulet.wifeygame.BattleAssets;
 import ultrapoulet.wifeygame.battle.BattleInfo;
 import ultrapoulet.wifeygame.character.Element;
 import ultrapoulet.wifeygame.character.EnemyCharacter;
+import ultrapoulet.wifeygame.character.TransformEnemy;
+import ultrapoulet.wifeygame.character.TransformWifey;
 import ultrapoulet.wifeygame.character.Weapon;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
 import ultrapoulet.wifeygame.gamestate.Party;
@@ -80,11 +82,31 @@ public class BattleLoadingScreen extends Screen {
             if(wifey != null) {
                 loadingWeapons.add(wifey.getWeapon());
                 loadingElements.add(wifey.getAttackElement());
+                for(TransformWifey transformation: wifey.getTransformations()) {
+                    Weapon transWeapon = transformation.getWeapon();
+                    Element transElement = transformation.getAttackElement();
+                    if(transWeapon != null) {
+                        loadingWeapons.add(transWeapon);
+                    }
+                    if(transElement != null) {
+                        loadingElements.add(transElement);
+                    }
+                }
             }
         }
         for(EnemyCharacter enemy : enemies) {
             loadingWeapons.add(enemy.getWeapon());
             loadingElements.add(enemy.getAttackElement());
+            for(TransformEnemy transformation : enemy.getTransformations()) {
+                Weapon transWeapon = transformation.getWeapon();
+                Element transElement = transformation.getAttackElement();
+                if(transWeapon != null) {
+                    loadingWeapons.add(transWeapon);
+                }
+                if(transElement != null) {
+                    loadingElements.add(transElement);
+                }
+            }
         }
 
         statusPaint = new Paint();

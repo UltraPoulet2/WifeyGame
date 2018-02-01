@@ -111,6 +111,7 @@ public class BattleSelectScreen extends Screen {
     private Button battlePageDownButton;
     private Paint buttonPaint;
     private List<StoryArea> unlockedAreas;
+    private List<BattleInfo> unlockedBattles;
     private static int selectedArea = -1;
     private static int selectedAreaPage = 0;
     private static int selectedBattlePage = 0;
@@ -223,6 +224,8 @@ public class BattleSelectScreen extends Screen {
            }
         }
 
+        unlockedBattles = new ArrayList<>();
+
         createBattleButtons();
         createRecruitButtons();
         changeTab();
@@ -301,17 +304,13 @@ public class BattleSelectScreen extends Screen {
         if(selectedArea != -1 && selectedArea < unlockedAreas.size()){
             StoryArea area = unlockedAreas.get(selectedArea);
             selectedBattlePage = 0;
-            int unlockedBattles = 0;
-            for(int i = 0; i < area.getBattles().size(); i++){
-                //An additional check later will need to be added to make sure the battle is unlocked
-                if(area.getBattle(i).isUnlocked()) {
-                    int leftX = STORY_BATTLE_LEFT_X;
-                    int rightX = STORY_BATTLE_RIGHT_X;
-                    int topY = BATTLES_TOP_Y + BATTLES_OFFSET_Y * (unlockedBattles % AREA_PAGE_SIZE);
-                    int botY = BATTLES_BOT_Y + BATTLES_OFFSET_Y * (unlockedBattles % AREA_PAGE_SIZE);
-                    storyBattleList.addButton(new Button(leftX, rightX, topY, botY, true, area.getBattle(i).getName(), Assets.StoryBattleEnabled));
-                    unlockedBattles++;
-                }
+            unlockedBattles = area.getUnlockedBattles();
+            for(int i = 0; i < unlockedBattles.size(); i++){
+                int leftX = STORY_BATTLE_LEFT_X;
+                int rightX = STORY_BATTLE_RIGHT_X;
+                int topY = BATTLES_TOP_Y + BATTLES_OFFSET_Y * (i % AREA_PAGE_SIZE);
+                int botY = BATTLES_BOT_Y + BATTLES_OFFSET_Y * (i % AREA_PAGE_SIZE);
+                storyBattleList.addButton(new Button(leftX, rightX, topY, botY, true, unlockedBattles.get(i).getName(), Assets.StoryBattleEnabled));
             }
         }
     }
@@ -451,7 +450,7 @@ public class BattleSelectScreen extends Screen {
                     }
                 }
                 else if(lastPressedBattle == storyBattleList.getIndexPressed(t.x, t.y) && lastPressedBattle != -1){
-                    BattleInfo battle = unlockedAreas.get(selectedArea).getBattle(lastPressedBattle);
+                    BattleInfo battle = unlockedBattles.get(lastPressedBattle);
                     game.setScreen(new BattleInfoScreen(game, this, battle));
                 }
                 else if(selectedChar == partyList.getIndexPressed(t.x, t.y) && selectedChar != -1){
@@ -504,7 +503,7 @@ public class BattleSelectScreen extends Screen {
                         int imageY = BATTLES_TOP_Y + BATTLES_OFFSET_Y * (i % AREA_PAGE_SIZE) + BATTLE_ENERGY_OFFSET_Y;
                         g.drawImage(Assets.EnergyImage, imageX, imageY);
                         List<Image> numberList;
-                        BattleInfo battle = unlockedAreas.get(selectedArea).getBattle(i);
+                        BattleInfo battle = unlockedBattles.get(i);
                         if (PlayerInfo.getCurrentEnergy() >= battle.getEnergyRequirement()) {
                             numberList = Assets.WhiteNumbers;
                         } else {

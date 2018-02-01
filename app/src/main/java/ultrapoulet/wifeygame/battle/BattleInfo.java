@@ -10,7 +10,11 @@ import ultrapoulet.androidgame.framework.Graphics;
 import ultrapoulet.androidgame.framework.Graphics.ImageFormat;
 import ultrapoulet.androidgame.framework.Image;
 import ultrapoulet.wifeygame.battle.requirements.AbsRequirement;
+import ultrapoulet.wifeygame.battle.requirements.AllowedCharacterRequirement;
+import ultrapoulet.wifeygame.battle.requirements.BannedCharacterRequirement;
+import ultrapoulet.wifeygame.battle.requirements.BannedSkillRequirement;
 import ultrapoulet.wifeygame.battle.requirements.RequiredCharacterRequirement;
+import ultrapoulet.wifeygame.battle.requirements.RequiredSkillRequirement;
 import ultrapoulet.wifeygame.character.EnemyCharacter;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
 import ultrapoulet.wifeygame.gamestate.StoryBattles;
@@ -24,9 +28,14 @@ public class BattleInfo {
     private String key;
     private int partyMax = 7;
     private ArrayList<EnemyCharacter> enemyList = new ArrayList<>();
-    private ArrayList<AbsRequirement> restrictionList = new ArrayList<>();
+    private ArrayList<AbsRequirement> restrictionList;
 
     private ArrayList<WifeyCharacter> requiredList = new ArrayList<>();
+
+    private AbsRequirement characterRestrictions;
+    private AbsRequirement characterRequirements;
+    private AbsRequirement skillRestrictions;
+    private AbsRequirement skillRequirements;
 
     private ArrayList<WifeyDrop> dropList = new ArrayList<>();
 
@@ -128,9 +137,18 @@ public class BattleInfo {
 
     public void addRequirement(AbsRequirement r) {
         if(r != null){
-            restrictionList.add(r);
-            if(r instanceof RequiredCharacterRequirement){
-                requiredList = ((RequiredCharacterRequirement) r).getRequiredList();
+            if(r instanceof AllowedCharacterRequirement || r instanceof BannedCharacterRequirement) {
+                characterRestrictions = r;
+            }
+            else if(r instanceof RequiredCharacterRequirement){
+                characterRequirements = r;
+                requiredList = ((RequiredCharacterRequirement) characterRequirements).getRequiredList();
+            }
+            else if(r instanceof BannedSkillRequirement) {
+                skillRestrictions = r;
+            }
+            else if(r instanceof RequiredSkillRequirement) {
+                skillRequirements = r;
             }
         }
     }
@@ -144,7 +162,6 @@ public class BattleInfo {
         }
         if(addWifey) {
             dropList.add(new WifeyDrop(input, dropChance));
-            //System.out.println("Added a drop: " + input.getHashKey());
             Log.i("BattleInfo", "Added a drop: " + input.getHashKey() + " to battle: " + this.getName());
         }
     }
@@ -240,9 +257,35 @@ public class BattleInfo {
         }
     }
 
+    private void generateRestrictionList() {
+        if(restrictionList == null) {
+            restrictionList = new ArrayList<>();
+            restrictionList.add(characterRestrictions);
+            restrictionList.add(characterRequirements);
+            restrictionList.add(skillRestrictions);
+            restrictionList.add(skillRequirements);
+        }
+    }
 
     public ArrayList<AbsRequirement> getRequirements(){
+        generateRestrictionList();
         return restrictionList;
+    }
+
+    public AbsRequirement getCharacterRestrictions() {
+        return characterRestrictions;
+    }
+
+    public AbsRequirement getCharacterRequirements() {
+        return characterRequirements;
+    }
+
+    public AbsRequirement getSkillRestrictions() {
+        return skillRestrictions;
+    }
+
+    public AbsRequirement getSkillRequirements() {
+        return skillRequirements;
     }
 
     public ArrayList<WifeyCharacter> getRequiredList(){
@@ -250,8 +293,9 @@ public class BattleInfo {
     }
 
     public boolean allowCharacter(WifeyCharacter c){
-        for(int i = 0; i < restrictionList.size(); i++){
-            if(!restrictionList.get(i).validateCharacter(c)){
+        generateRestrictionList();
+        for(AbsRequirement r : restrictionList){
+            if(r != null && !r.validateCharacter(c)){
                 return false;
             }
         }
@@ -259,8 +303,9 @@ public class BattleInfo {
     }
 
     public boolean validParty(List<WifeyCharacter> party){
-        for(int i = 0; i < restrictionList.size(); i++){
-            if(!restrictionList.get(i).validateParty(party)){
+        generateRestrictionList();
+        for(AbsRequirement r : restrictionList){
+            if(r != null && !r.validateParty(party)){
                 return false;
             }
         }

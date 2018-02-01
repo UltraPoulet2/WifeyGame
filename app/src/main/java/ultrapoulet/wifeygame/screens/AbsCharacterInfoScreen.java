@@ -71,10 +71,12 @@ public abstract class AbsCharacterInfoScreen extends Screen {
     protected static final int CLOSE_BOT_Y = CLOSE_TOP_Y + 75;
     protected static final String CLOSE_STRING = "Close";
 
+    protected Button uniqueSkillButton;
+    protected Button weaponSkillButton;
     protected static final int UNIQUE_SKILL_LEFT_X = BG_X + 40;
     protected static final int UNIQUE_SKILL_RIGHT_X = UNIQUE_SKILL_LEFT_X + 307;
     protected static final int WEAPON_SKILL_LEFT_X = BG_X + 353;
-    protected static final int WEAPON_SKILL_RIGHT_X = BG_X + 540;
+    protected static final int WEAPON_SKILL_RIGHT_X = BG_X + 550;
     protected static final int TOP_SKILLS_TOP_Y = BG_Y + 455;
     protected static final int TOP_SKILLS_BOT_Y = TOP_SKILLS_TOP_Y + 50;
     protected static final String UNIQUE_STRING = "Unique";
@@ -89,6 +91,8 @@ public abstract class AbsCharacterInfoScreen extends Screen {
     protected static final int SKILLS_BUTTON_HEIGHT = 50;
     protected static final int SKILLS_BUTTON_BOT_Y = SKILLS_BUTTON_TOP_Y + SKILLS_BUTTON_HEIGHT;
     protected static final int SKILLS_BUTTON_OFFSET_Y = 5;
+
+    protected static final int SKILL_HIGHLIGHT_COLOR = 0xfff6f0ab;
 
     protected Paint weaponPaint;
     protected static final int MAX_WEAPON_FONT = 40;
@@ -147,8 +151,10 @@ public abstract class AbsCharacterInfoScreen extends Screen {
     protected void createButtons(){
         basicButtonList = new ButtonList();
         basicButtonList.addButton(new Button(CLOSE_LEFT_X, CLOSE_RIGHT_X, CLOSE_TOP_Y, CLOSE_BOT_Y, true, CLOSE_STRING));
-        basicButtonList.addButton(new Button(UNIQUE_SKILL_LEFT_X, UNIQUE_SKILL_RIGHT_X, TOP_SKILLS_TOP_Y, TOP_SKILLS_BOT_Y, true, UNIQUE_STRING));
-        basicButtonList.addButton(new Button(WEAPON_SKILL_LEFT_X, WEAPON_SKILL_RIGHT_X, TOP_SKILLS_TOP_Y, TOP_SKILLS_BOT_Y, true, WEAPON_STRING));
+        uniqueSkillButton = new Button(UNIQUE_SKILL_LEFT_X, UNIQUE_SKILL_RIGHT_X, TOP_SKILLS_TOP_Y, TOP_SKILLS_BOT_Y, true, UNIQUE_STRING);
+        basicButtonList.addButton(uniqueSkillButton);
+        weaponSkillButton = new Button(WEAPON_SKILL_LEFT_X, WEAPON_SKILL_RIGHT_X, TOP_SKILLS_TOP_Y, TOP_SKILLS_BOT_Y, true, WEAPON_STRING);
+        basicButtonList.addButton(weaponSkillButton);
 
         skillsButtonList = new ButtonList();
         for(int i = 0; i < 4; i++) {

@@ -34,6 +34,16 @@ public class StoryArea {
         return battles.get(index);
     }
 
+    public List<BattleInfo> getUnlockedBattles() {
+        List<BattleInfo> result = new ArrayList<>();
+        for(BattleInfo battle: battles) {
+            if(battle.isUnlocked()) {
+                result.add(battle);
+            }
+        }
+        return result;
+    }
+
     public boolean isUnlocked() {
         for(BattleInfo battle : battles){
             if(battle.isUnlocked()){

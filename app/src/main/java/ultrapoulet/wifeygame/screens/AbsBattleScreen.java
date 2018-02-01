@@ -19,10 +19,11 @@ import ultrapoulet.androidgame.framework.helpers.NumberPrinter;
 import ultrapoulet.wifeygame.Assets;
 import ultrapoulet.wifeygame.BattleAssets;
 import ultrapoulet.wifeygame.battle.BattleCharacter;
+import ultrapoulet.wifeygame.battle.BattleCharacter.PlayerAction;
+import ultrapoulet.wifeygame.battle.BattleCharacter.EnemyAction;
 import ultrapoulet.wifeygame.battle.BattleEnemy;
 import ultrapoulet.wifeygame.battle.BattleInfo;
 import ultrapoulet.wifeygame.battle.BattleWifey;
-import ultrapoulet.wifeygame.battle.enemyai.EnemyAI;
 import ultrapoulet.wifeygame.character.Element;
 import ultrapoulet.wifeygame.character.Weapon;
 import ultrapoulet.wifeygame.gamestate.Party;
@@ -58,6 +59,7 @@ public abstract class AbsBattleScreen extends Screen {
     private int battleAnimationOffsetX = 0;
     private int battleAnimationOffsetY = 0;
     private Animation healAnimation = null;
+    private Animation defendAnimation = null;
 
     private static final int ENEMY_IMAGE_X = 200;
     private static final int ENEMY_IMAGE_Y = 100;
@@ -305,7 +307,7 @@ public abstract class AbsBattleScreen extends Screen {
 
     }
 
-    private BattlePhase currentPhase = BattlePhase.BATTLE_START;
+    private BattlePhase currentPhase;
 
     public AbsBattleScreen(Game game, BattleInfo info){
         super(game);
@@ -538,6 +540,7 @@ public abstract class AbsBattleScreen extends Screen {
     private void clearAnimations() {
         battleAnimation = null;
         healAnimation = null;
+        defendAnimation = null;
     }
 
     private boolean shouldGoToNextPhase() {
@@ -582,6 +585,9 @@ public abstract class AbsBattleScreen extends Screen {
     }
 
     public BattlePhase getNextPhase() {
+        if(currentPhase == null) {
+            return BattlePhase.BATTLE_START;
+        }
         switch(currentPhase) {
             case BATTLE_START:
                 return BattlePhase.WAVE_START;
@@ -642,6 +648,7 @@ public abstract class AbsBattleScreen extends Screen {
     public void enterPhase() {
         switch(currentPhase) {
             case BATTLE_START:
+                Log.d("Battle", "Battle info should be incremented");
                 battleInfo.incrementNumAttempts();
                 for(int i = 0; i < party.size(); i++){
                     if(party.get(i).getCurrentHP() != 0) {
@@ -705,9 +712,11 @@ public abstract class AbsBattleScreen extends Screen {
                 int playerBaseDamage;
                 int playerDisplayDamage;
                 AnimationImages playerActionAnimation = null;
-                AnimationImages playerActionHealingAnimation = null;
+                AnimationImages playerHealAnimation = null;
+                AnimationImages playerDefendAnimation = null;
                 switch (commandSelected.getName()) {
                     case POWER_STRING:
+                        party.get(partyIndex).onActionSelect(PlayerAction.POWER_ATTACK);
                         playerBaseDamage = party.get(partyIndex).PowerAttackDamage(enemies.get(enemyIndex));
                         playerDisplayDamage = enemies.get(enemyIndex).takePhysicalDamage(playerBaseDamage, party.get(partyIndex));
                         enemies.get(enemyIndex).setDisplayDamage(playerDisplayDamage);
@@ -718,6 +727,7 @@ public abstract class AbsBattleScreen extends Screen {
                         playerActionAnimation = party.get(partyIndex).getBattleAnimation();
                         break;
                     case COMBO_STRING:
+                        party.get(partyIndex).onActionSelect(PlayerAction.COMBO_ATTACK);
                         playerBaseDamage = party.get(partyIndex).ComboAttackDamage(enemies.get(enemyIndex));
                         playerDisplayDamage = enemies.get(enemyIndex).takePhysicalDamage(playerBaseDamage, party.get(partyIndex));
                         enemies.get(enemyIndex).setDisplayDamage(playerDisplayDamage);
@@ -729,6 +739,7 @@ public abstract class AbsBattleScreen extends Screen {
                         playerActionAnimation = party.get(partyIndex).getBattleAnimation();
                         break;
                     case MAGIC_STRING:
+                        party.get(partyIndex).onActionSelect(PlayerAction.MAGIC_ATTACK);
                         playerBaseDamage = party.get(partyIndex).MagicAttackDamage(enemies.get(enemyIndex));
                         playerDisplayDamage = enemies.get(enemyIndex).takeMagicalDamage(playerBaseDamage, party.get(partyIndex));
                         enemies.get(enemyIndex).setDisplayDamage(playerDisplayDamage);
@@ -739,6 +750,7 @@ public abstract class AbsBattleScreen extends Screen {
                         playerActionAnimation = party.get(partyIndex).getAttackElement().getBattleAnimation();
                         break;
                     case HEAL_STRING:
+                        party.get(partyIndex).onActionSelect(PlayerAction.HEALING_MAGIC);
                         for (int j = 0; j < party.size(); j++) {
                             if (party.get(j).getCurrentHP() > 0) {
                                 playerBaseDamage = party.get(partyIndex).HealAmount(party.get(j));
@@ -749,9 +761,10 @@ public abstract class AbsBattleScreen extends Screen {
                                 party.get(j).setDisplayDamage(0);
                             }
                         }
-                        playerActionHealingAnimation = BattleAssets.HealAnimation;
+                        playerHealAnimation = BattleAssets.HealAnimation;
                         break;
                     case SPECIAL_STRING:
+                        party.get(partyIndex).onActionSelect(PlayerAction.SPECIAL_ATTACK);
                         playerBaseDamage = party.get(partyIndex).SpecialAttackDamage(enemies.get(enemyIndex));
                         playerDisplayDamage = enemies.get(enemyIndex).takeSpecialDamage(playerBaseDamage, party.get(partyIndex));
                         enemies.get(enemyIndex).setDisplayDamage(playerDisplayDamage);
@@ -762,6 +775,7 @@ public abstract class AbsBattleScreen extends Screen {
                         playerActionAnimation = party.get(partyIndex).getBattleAnimation();
                         break;
                     case TRANSFORM_STRING:
+                        party.get(partyIndex).onActionSelect(PlayerAction.TRANSFORM);
                         party.get(partyIndex).transform(game.getGraphics());
                         for(int i = 0; i < party.size(); i++){
                             party.get(i).resetSkills();
@@ -771,8 +785,10 @@ public abstract class AbsBattleScreen extends Screen {
                         }
                         break;
                     case DEFEND_STRING:
+                        party.get(partyIndex).onActionSelect(PlayerAction.DEFEND);
                         ((BattleWifey) party.get(partyIndex)).Defend();
                         enemies.get(enemyIndex).setDisplayDamage(0);
+                        playerDefendAnimation = BattleAssets.DefendAnimation;
                         break;
                     default:
                 }
@@ -783,8 +799,11 @@ public abstract class AbsBattleScreen extends Screen {
                     multiplier = Math.random() > 0.5 ? 1 : -1;
                     battleAnimationOffsetY = (int) (multiplier * Math.random() * ENEMY_BATTLE_ANIMATION_MAX_OFFSET);
                 }
-                if(playerActionHealingAnimation != null){
-                    healAnimation = new Animation(playerActionHealingAnimation, getPlayerPhaseWait(), false);
+                if(playerHealAnimation != null){
+                    healAnimation = new Animation(playerHealAnimation, getPlayerPhaseWait(), false);
+                }
+                if(playerDefendAnimation != null) {
+                    defendAnimation = new Animation(playerDefendAnimation, getPlayerPhaseWait(), false);
                 }
                 break;
             case PREVENT_ENEMY_DEFEAT:
@@ -806,12 +825,14 @@ public abstract class AbsBattleScreen extends Screen {
                 break;
             case ANIMATE_ENEMY_ACTION:
                 clearAnimations();
-                EnemyAI.EnemyAction action = ((BattleEnemy) enemies.get(enemyIndex)).getAction();
+                EnemyAction action = ((BattleEnemy) enemies.get(enemyIndex)).getAction();
+                enemies.get(enemyIndex).onActionSelect(action);
                 int charIndex;
                 int enemyBaseDamage;
                 int enemyDisplayDamage;
                 AnimationImages enemyActionAnimation = null;
                 AnimationImages enemyActionHealingAnimation = null;
+                AnimationImages enemyActionDefendAnimation = null;
                 switch(action){
                     case POWER_ATTACK:
                         charIndex = chooseRandomChar();
@@ -930,6 +951,7 @@ public abstract class AbsBattleScreen extends Screen {
                     case DEFEND:
                         ((BattleEnemy) enemies.get(enemyIndex)).defend();
                         hitsPerformed++;
+                        enemyActionDefendAnimation = BattleAssets.DefendAnimation;
                         break;
                     case WEAKEN:
                         ((BattleEnemy) enemies.get(enemyIndex)).weaken();
@@ -952,6 +974,9 @@ public abstract class AbsBattleScreen extends Screen {
                 }
                 if(enemyActionHealingAnimation != null){
                     healAnimation = new Animation(enemyActionHealingAnimation, getEnemyPhaseWait(), false);
+                }
+                if(enemyActionDefendAnimation != null) {
+                    defendAnimation = new Animation(enemyActionDefendAnimation, getEnemyPhaseWait(), false);
                 }
                 break;
             case PREVENT_PLAYER_DEFEAT:
@@ -1054,6 +1079,9 @@ public abstract class AbsBattleScreen extends Screen {
                 if(healAnimation != null) {
                     healAnimation.update(deltaTime);
                 }
+                if(defendAnimation != null) {
+                    defendAnimation.update(deltaTime);
+                }
                 break;
             case PREVENT_ENEMY_DEFEAT:
                 phaseTime += deltaTime;
@@ -1069,6 +1097,9 @@ public abstract class AbsBattleScreen extends Screen {
                 }
                 if(healAnimation != null) {
                     healAnimation.update(deltaTime);
+                }
+                if(defendAnimation != null) {
+                    defendAnimation.update(deltaTime);
                 }
                 break;
             case PREVENT_PLAYER_DEFEAT:
@@ -1091,7 +1122,7 @@ public abstract class AbsBattleScreen extends Screen {
 
     @Override
     public void update(float deltaTime) {
-        if(shouldGoToNextPhase()) {
+        if(currentPhase == null || shouldGoToNextPhase()) {
             currentPhase = getNextPhase();
             phaseTime = 0;
             enterPhase();
@@ -1444,6 +1475,14 @@ public abstract class AbsBattleScreen extends Screen {
                 }
             }
         }
+        if(defendAnimation != null && partyIndex != -1) {
+            int index = partyIndex;
+
+            int x = CHAR_INTERIOR_LARGE_X + CHAR_BATTLE_ANIMATION_BASE_OFFSET_X + (CHAR_HOLDER_X_DISTANCE * index);
+            int y = CHAR_IMAGE_LARGE_Y + CHAR_BATTLE_ANIMATION_BASE_OFFSET_Y;
+
+            g.drawScaledImage(defendAnimation.getFrame(), x, y, CHAR_BATTLE_LARGE_ANIMATION_SIZE, CHAR_BATTLE_LARGE_ANIMATION_SIZE);
+        }
     }
 
     private void drawEnemyDamage() {
@@ -1485,6 +1524,12 @@ public abstract class AbsBattleScreen extends Screen {
             int x = ENEMY_IMAGE_X + ENEMY_BATTLE_ANIMATION_BASE_OFFSET_X;
             int y = ENEMY_IMAGE_Y + ENEMY_BATTLE_ANIMATION_BASE_OFFSET_Y;
             g.drawScaledImage(healAnimation.getFrame(), x, y, ENEMY_BATTLE_ANIMATION_SIZE, ENEMY_BATTLE_ANIMATION_SIZE);
+        }
+        //Only draw the defend animation on enemy turn
+        if(defendAnimation != null && partyIndex == -1) {
+            int x = ENEMY_IMAGE_X + ENEMY_BATTLE_ANIMATION_BASE_OFFSET_X;
+            int y = ENEMY_IMAGE_Y + ENEMY_BATTLE_ANIMATION_BASE_OFFSET_Y;
+            g.drawScaledImage(defendAnimation.getFrame(), x, y, ENEMY_BATTLE_ANIMATION_SIZE, ENEMY_BATTLE_ANIMATION_SIZE);
         }
     }
 

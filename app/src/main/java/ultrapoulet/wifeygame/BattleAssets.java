@@ -27,6 +27,7 @@ public class BattleAssets {
 
     public static AnimationImages HealAnimation = new AnimationImages();
     public static AnimationImages ReviveAnimation = new AnimationImages();
+    public static AnimationImages DefendAnimation = new AnimationImages();
 
     public static void load(Graphics g) {
         WaveText = g.newImage("objects/battleMisc/WaveText.png", ImageFormat.RGB565);
@@ -55,9 +56,11 @@ public class BattleAssets {
 
         HealAnimation = new AnimationImages();
         ReviveAnimation = new AnimationImages();
+        DefendAnimation = new AnimationImages();
         for(int i = 0 ; i < 10; i++){
-            HealAnimation.addFrame(g.newImage("BattleAnimations/HEAL/HEAL" + i + ".png", Graphics.ImageFormat.ARGB8888));
-            ReviveAnimation.addFrame(g.newImage("BattleAnimations/REVIVE/REVIVE" + i + ".png", Graphics.ImageFormat.ARGB8888));
+            HealAnimation.addFrame(g.newImage("BattleAnimations/HEAL/HEAL" + i + ".png", ImageFormat.ARGB8888));
+            ReviveAnimation.addFrame(g.newImage("BattleAnimations/REVIVE/REVIVE" + i + ".png", ImageFormat.ARGB8888));
+            DefendAnimation.addFrame(g.newImage("BattleAnimations/DEFEND/DEFEND" + i + ".png", ImageFormat.ARGB8888));
         }
     }
 
@@ -83,5 +86,6 @@ public class BattleAssets {
         KOImages = null;
         HealAnimation = null;
         ReviveAnimation = null;
+        DefendAnimation = null;
     }
 }
