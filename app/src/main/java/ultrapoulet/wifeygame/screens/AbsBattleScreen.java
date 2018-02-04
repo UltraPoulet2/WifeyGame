@@ -761,8 +761,6 @@ public abstract class AbsBattleScreen extends Screen {
                             if (party.get(j).getCurrentHP() > 0) {
                                 playerBaseDamage = party.get(partyIndex).HealAmount(party.get(j));
                                 playerDisplayDamage = party.get(j).healDamage(playerBaseDamage, party.get(partyIndex));
-                                //Always heal at least 1 damage
-                                playerDisplayDamage = playerDisplayDamage > 0 ? playerDisplayDamage : 1;
                                 party.get(j).setDisplayDamage(HEAL_DAMAGE * playerDisplayDamage);
                             }
                             else{
@@ -919,8 +917,6 @@ public abstract class AbsBattleScreen extends Screen {
                     case HEALING_MAGIC:
                         enemyBaseDamage = (int) (enemies.get(enemyIndex).HealAmount(enemies.get(enemyIndex)) * enemyMultiplier);
                         enemyDisplayDamage = HEAL_DAMAGE * enemies.get(enemyIndex).healDamage(enemyBaseDamage, enemies.get(enemyIndex));
-                        //Always heal at least 1 damage
-                        enemyDisplayDamage = enemyDisplayDamage > 0 ? enemyDisplayDamage : 1;
                         enemies.get(enemyIndex).setDisplayDamage(enemyDisplayDamage);
                         hitsPerformed++;
                         //Change to heal animation
