@@ -719,6 +719,8 @@ public abstract class AbsBattleScreen extends Screen {
                         party.get(partyIndex).onActionSelect(PlayerAction.POWER_ATTACK);
                         playerBaseDamage = party.get(partyIndex).PowerAttackDamage(enemies.get(enemyIndex));
                         playerDisplayDamage = enemies.get(enemyIndex).takePhysicalDamage(playerBaseDamage, party.get(partyIndex));
+                        //Always do at least 1 damage
+                        playerDisplayDamage = playerDisplayDamage > 0 ? playerDisplayDamage : 1;
                         enemies.get(enemyIndex).setDisplayDamage(playerDisplayDamage);
                         party.get(partyIndex).onDamageDealt(playerDisplayDamage);
                         incrementHits();
@@ -730,6 +732,8 @@ public abstract class AbsBattleScreen extends Screen {
                         party.get(partyIndex).onActionSelect(PlayerAction.COMBO_ATTACK);
                         playerBaseDamage = party.get(partyIndex).ComboAttackDamage(enemies.get(enemyIndex));
                         playerDisplayDamage = enemies.get(enemyIndex).takePhysicalDamage(playerBaseDamage, party.get(partyIndex));
+                        //Always do at least 1 damage
+                        playerDisplayDamage = playerDisplayDamage > 0 ? playerDisplayDamage : 1;
                         enemies.get(enemyIndex).setDisplayDamage(playerDisplayDamage);
                         party.get(partyIndex).onDamageDealt(playerDisplayDamage);
                         incrementHits();
@@ -742,6 +746,8 @@ public abstract class AbsBattleScreen extends Screen {
                         party.get(partyIndex).onActionSelect(PlayerAction.MAGIC_ATTACK);
                         playerBaseDamage = party.get(partyIndex).MagicAttackDamage(enemies.get(enemyIndex));
                         playerDisplayDamage = enemies.get(enemyIndex).takeMagicalDamage(playerBaseDamage, party.get(partyIndex));
+                        //Always do at least 1 damage
+                        playerDisplayDamage = playerDisplayDamage > 0 ? playerDisplayDamage : 1;
                         enemies.get(enemyIndex).setDisplayDamage(playerDisplayDamage);
                         party.get(partyIndex).onDamageDealt(playerDisplayDamage);
                         incrementHits();
@@ -755,6 +761,8 @@ public abstract class AbsBattleScreen extends Screen {
                             if (party.get(j).getCurrentHP() > 0) {
                                 playerBaseDamage = party.get(partyIndex).HealAmount(party.get(j));
                                 playerDisplayDamage = party.get(j).healDamage(playerBaseDamage, party.get(partyIndex));
+                                //Always heal at least 1 damage
+                                playerDisplayDamage = playerDisplayDamage > 0 ? playerDisplayDamage : 1;
                                 party.get(j).setDisplayDamage(HEAL_DAMAGE * playerDisplayDamage);
                             }
                             else{
@@ -767,6 +775,8 @@ public abstract class AbsBattleScreen extends Screen {
                         party.get(partyIndex).onActionSelect(PlayerAction.SPECIAL_ATTACK);
                         playerBaseDamage = party.get(partyIndex).SpecialAttackDamage(enemies.get(enemyIndex));
                         playerDisplayDamage = enemies.get(enemyIndex).takeSpecialDamage(playerBaseDamage, party.get(partyIndex));
+                        //Always do at least 1 damage
+                        playerDisplayDamage = playerDisplayDamage > 0 ? playerDisplayDamage : 1;
                         enemies.get(enemyIndex).setDisplayDamage(playerDisplayDamage);
                         party.get(partyIndex).onDamageDealt(playerDisplayDamage);
                         incrementHits();
@@ -838,6 +848,8 @@ public abstract class AbsBattleScreen extends Screen {
                         charIndex = chooseRandomChar();
                         enemyBaseDamage = (int) (enemies.get(enemyIndex).PowerAttackDamage(party.get(charIndex)) * enemyMultiplier);
                         enemyDisplayDamage = party.get(charIndex).takePhysicalDamage(enemyBaseDamage, enemies.get(enemyIndex));
+                        //Always do at least 1 damage
+                        enemyDisplayDamage = enemyDisplayDamage > 0 ? enemyDisplayDamage : 1;
                         for(int i = 0; i < party.size(); i++){
                             if(i == charIndex){
                                 party.get(i).setDisplayDamage(enemyDisplayDamage);
@@ -859,6 +871,8 @@ public abstract class AbsBattleScreen extends Screen {
                         charIndex = chooseRandomChar();
                         enemyBaseDamage = (int) (enemies.get(enemyIndex).ComboAttackDamage(party.get(charIndex)) * enemyMultiplier);
                         enemyDisplayDamage = party.get(charIndex).takePhysicalDamage(enemyBaseDamage, enemies.get(enemyIndex));
+                        //Always do at least 1 damage
+                        enemyDisplayDamage = enemyDisplayDamage > 0 ? enemyDisplayDamage : 1;
                         for(int i = 0; i < party.size(); i++){
                             if(i == charIndex){
                                 party.get(i).setDisplayDamage(enemyDisplayDamage);
@@ -881,6 +895,8 @@ public abstract class AbsBattleScreen extends Screen {
                             if(party.get(i).getCurrentHP() > 0){
                                 enemyBaseDamage = (int) (enemies.get(enemyIndex).MagicAttackDamage(party.get(i)) * enemyMultiplier);
                                 enemyDisplayDamage = party.get(i).takeMagicalDamage(enemyBaseDamage, enemies.get(enemyIndex));
+                                //Always do at least 1 damage
+                                enemyDisplayDamage = enemyDisplayDamage > 0 ? enemyDisplayDamage : 1;
                                 party.get(i).setDisplayDamage(enemyDisplayDamage);
                             }
                             else{
@@ -902,7 +918,10 @@ public abstract class AbsBattleScreen extends Screen {
                         break;
                     case HEALING_MAGIC:
                         enemyBaseDamage = (int) (enemies.get(enemyIndex).HealAmount(enemies.get(enemyIndex)) * enemyMultiplier);
-                        enemies.get(enemyIndex).setDisplayDamage(HEAL_DAMAGE * enemies.get(enemyIndex).healDamage(enemyBaseDamage, enemies.get(enemyIndex)));
+                        enemyDisplayDamage = HEAL_DAMAGE * enemies.get(enemyIndex).healDamage(enemyBaseDamage, enemies.get(enemyIndex));
+                        //Always heal at least 1 damage
+                        enemyDisplayDamage = enemyDisplayDamage > 0 ? enemyDisplayDamage : 1;
+                        enemies.get(enemyIndex).setDisplayDamage(enemyDisplayDamage);
                         hitsPerformed++;
                         //Change to heal animation
                         enemyActionHealingAnimation = BattleAssets.HealAnimation;
@@ -911,7 +930,10 @@ public abstract class AbsBattleScreen extends Screen {
                         for(int i = 0; i < party.size(); i++){
                             if(party.get(i).getCurrentHP() > 0){
                                 enemyBaseDamage = (int) (enemies.get(enemyIndex).SpecialAttackDamage(party.get(i)) * enemyMultiplier);
-                                party.get(i).setDisplayDamage(party.get(i).takeSpecialDamage(enemyBaseDamage, enemies.get(enemyIndex)));
+                                enemyDisplayDamage = party.get(i).takeSpecialDamage(enemyBaseDamage, enemies.get(enemyIndex));
+                                //Always do at least 1 damage
+                                enemyDisplayDamage = enemyDisplayDamage > 0 ? enemyDisplayDamage : 1;
+                                party.get(i).setDisplayDamage(enemyDisplayDamage);
                             }
                             else{
                                 party.get(i).setDisplayDamage(0);
