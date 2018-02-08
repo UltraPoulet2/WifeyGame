@@ -6,14 +6,8 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-
-import ultrapoulet.androidgame.framework.Game;
 import ultrapoulet.wifeygame.character.Element;
 import ultrapoulet.wifeygame.character.SkillsEnum;
 import ultrapoulet.wifeygame.character.TransformWifey;
@@ -21,6 +15,7 @@ import ultrapoulet.wifeygame.character.UniqueSkillsEnum;
 import ultrapoulet.wifeygame.character.Weapon;
 import ultrapoulet.wifeygame.character.WeaponSkillsEnum;
 import ultrapoulet.wifeygame.character.WifeyCharacter;
+import ultrapoulet.wifeygame.character.WifeyCharacter.ExpGainRate;
 import ultrapoulet.wifeygame.gamestate.Characters;
 
 /**
@@ -50,40 +45,6 @@ public class CharacterParser extends DefaultHandler{
                              String localName,
                              String qName,
                              Attributes attributes) throws SAXException {
-        /*
-        if (qName.equalsIgnoreCase("include")) {
-            InputStream in = null;
-            String file = "config/" + attributes.getValue("file");
-            try {
-                in = game.openConfig(file);
-                SAXParserFactory factory = SAXParserFactory.newInstance();
-                SAXParser saxParser = factory.newSAXParser();
-                CharacterParser charParser = new CharacterParser(this.game);
-                saxParser.parse(in, charParser);
-                error = charParser.getNumberErrors() > 0;
-                if(error){
-                    errorKeys.addAll(charParser.getErrors());
-                    Log.e("CharacterParsing", "Incomplete parsing of file: " + file + ". Number errors: " + charParser.getNumberErrors());
-                }
-                else {
-                    Log.i("CharacterParsing", "Complete parsing of file: " + file);
-                }
-            }
-            catch (Exception e){
-                e.printStackTrace();
-                //Do better error handling
-            }
-            finally{
-                if(in != null){
-                    try {
-                        in.close();
-                    }
-                    catch(IOException e){
-                    }
-                }
-            }
-        }
-        */
         if (qName.equalsIgnoreCase("character")) {
             error = false;
             charKey = attributes.getValue("key");
@@ -93,7 +54,6 @@ public class CharacterParser extends DefaultHandler{
                 charBuilder.setHashKey(charKey);
             }
             else{
-                //System.out.println("CharacterParser:startElement(): Error parsing character key #" + charNumber);
                 Log.e("CharacterParser", "Error parsing character key #" + charNumber);
                 charBuilder = new WifeyCharacter();
                 error = true;
@@ -137,7 +97,6 @@ public class CharacterParser extends DefaultHandler{
                 }
                 else{
                     error = true;
-                    //System.out.println("CharacterParser:startElement(): Invalid skill mode: " + mode + " for key " + charKey);
                     Log.e("CharacterParser", "Invalid skill mode: " + mode + " for key " + charKey);
                 }
             }
@@ -157,6 +116,9 @@ public class CharacterParser extends DefaultHandler{
         else if(qName.equalsIgnoreCase("wkElement")){
             currentText = new StringBuffer();
         }
+        else if(qName.equalsIgnoreCase("expGainRate")){
+            currentText = new StringBuffer();
+        }
         else if(qName.equalsIgnoreCase("transformations")){
             bTransformSec = true;
             currentText = new StringBuffer();
@@ -166,7 +128,6 @@ public class CharacterParser extends DefaultHandler{
             transformBuilder.setImage(charKey + "-T" + tNumber);
         }
         else{
-            //System.out.println("CharacterParser:startElement(): Invalid qName: " + qName + " for key " + charKey);
             Log.e("CharacterParser", "Invalid qName: " + qName + " for key " + charKey);
         }
 
@@ -179,24 +140,20 @@ public class CharacterParser extends DefaultHandler{
         if (qName.equalsIgnoreCase("character")) {
             if(validate()) {
                 Characters.put(charKey, charBuilder);
-                //System.out.println("CharacterParser:endElement(): Adding character: " + charKey);
                 Log.i("CharacterParser", "Adding character: " + charKey);
             }
             else{
-                //System.out.println("CharacterParser:endElement(): Error parsing for key: " + charKey);
                 Log.e("CharacterParser", "Error parsing for key: " + charKey);
                 errorKeys.add(charKey != null ? charKey : "INV-KEY");
             }
         }
         else if(qName.equalsIgnoreCase("transformation")){
-            //Do things for validating a transformation
             if(transformBuilder.validate()) {
                 charBuilder.addTransformation(transformBuilder);
                 tNumber++;
             }
             else{
                 error = true;
-                //System.out.println("CharacterParser:endElement(): Error adding transformation: " + tNumber);
                 Log.e("CharacterParser", "Error adding transformation: " + tNumber);
                 errorKeys.add(charKey != null ? charKey : "INV-KEY");
             }
@@ -229,7 +186,6 @@ public class CharacterParser extends DefaultHandler{
                 }
             }
             catch(NumberFormatException e){
-                //System.out.println("CharacterParser:endElement(): NumberFormatException for key: " + charKey);
                 Log.e("CharacterParser", "NumberFormatException for key: " + charKey);
                 error = true;
             }
@@ -243,7 +199,6 @@ public class CharacterParser extends DefaultHandler{
                 }
             }
             catch(NumberFormatException e){
-                //System.out.println("CharacterParser:endElement(): NumberFormatException for key: " + charKey);
                 Log.e("CharacterParser", "NumberFormatException for key: " + charKey);
                 error = true;
             }
@@ -257,7 +212,6 @@ public class CharacterParser extends DefaultHandler{
                 weap = null;
             }
             if(weap == null){
-                //System.out.println("CharacterParser:endElement(): Could not find weapon: " + currentText.toString());
                 Log.e("CharacterParser", "Could not find weapon: " + currentText.toString());
                 error = true;
             }
@@ -278,7 +232,6 @@ public class CharacterParser extends DefaultHandler{
                 skill = null;
             }
             if (skill == null) {
-                //System.out.println("CharacterParser:endElement(): Could not find skill: " + currentText.toString());
                 Log.e("CharacterParser", "Could not find skill: " + currentText.toString());
                 error = true;
             } else {
@@ -298,7 +251,6 @@ public class CharacterParser extends DefaultHandler{
                 skill = null;
             }
             if(skill == null){
-                //System.out.println("CharacterParser:endElement(): Could not find skill: " + currentText.toString());
                 Log.e("CharacterParser", "Could not find skill: " + currentText.toString());
                 error = true;
             } else {
@@ -319,7 +271,6 @@ public class CharacterParser extends DefaultHandler{
                 skill = null;
             }
             if (skill == null) {
-                //System.out.println("CharacterParser:endElement(): Could not find skill: " + currentText.toString());
                 Log.e("CharacterParser", "Could not find skill: " + currentText.toString());
                 error = true;
             } else {
@@ -345,7 +296,6 @@ public class CharacterParser extends DefaultHandler{
                 elm = null;
             }
             if (elm == null) {
-                //System.out.println("CharacterParser:endElement(): Could not find Attack element: " + currentText.toString());
                 Log.e("CharacterParser", "Could not find Attack element: " + currentText.toString());
                 error = true;
             } else {
@@ -365,7 +315,6 @@ public class CharacterParser extends DefaultHandler{
                 elm = null;
             }
             if (elm == null) {
-                //System.out.println("CharacterParser:endElement(): Could not find Strong element: " + currentText.toString());
                 Log.e("CharacterParser", "Could not find Strong element: " + currentText.toString());
                 error = true;
             } else {
@@ -385,7 +334,6 @@ public class CharacterParser extends DefaultHandler{
                 elm = null;
             }
             if (elm == null) {
-                //System.out.println("CharacterParser:endElement(): Could not find  Weak element: " + currentText.toString());
                 Log.e("CharacterParser", "Could not find Weak element: " + currentText.toString());
                 error = true;
             } else {
@@ -395,6 +343,15 @@ public class CharacterParser extends DefaultHandler{
                 else {
                     transformBuilder.setWeakElement(elm);
                 }
+            }
+        }
+        else if (qName.equalsIgnoreCase("expGainRate")) {
+            try {
+                charBuilder.setGainRate(ExpGainRate.valueOf(currentText.toString()));
+            }
+            catch(IllegalArgumentException e) {
+                Log.e("CharacterParser", "Could not find EXP Gain Rate: " + currentText.toString());
+                error = true;
             }
         }
     }

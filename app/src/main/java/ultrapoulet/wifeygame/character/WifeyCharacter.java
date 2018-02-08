@@ -27,11 +27,8 @@ public class WifeyCharacter {
 
     private int level = 1;
     private int experience = 0;
-    /*
-    private int nextLevelExp = 1000;
-    private static final double NEXT_LEVEL_MULT = 1.25;
-    */
-    private ExpGainRate gainRate = ExpGainRate.VERYFAST;
+
+    private ExpGainRate gainRate;
     private static final int STAT_INCREASE = 2;
 
     private Weapon weapon;
@@ -68,8 +65,6 @@ public class WifeyCharacter {
             this.baseExp = baseExp;
             this.expRate = expRate;
         }
-        public int getBaseExp() { return baseExp; }
-        public int getExpRate() { return expRate; }
         public int getNextLevelExp(int currentLevel) {
             //I've got math showing this
             return (expRate / 2 * currentLevel * currentLevel) + ((baseExp - (expRate / 2)) * currentLevel);
@@ -139,6 +134,10 @@ public class WifeyCharacter {
 
     public int getNextLevelExp() {
         return gainRate.getNextLevelExp(level);
+    }
+
+    public ExpGainRate getGainRate() {
+        return gainRate;
     }
 
     public ArrayList<TransformWifey> getTransformations(){
@@ -230,6 +229,10 @@ public class WifeyCharacter {
         this.transformations.add(t);
     }
 
+    public void setGainRate(ExpGainRate gainRate) {
+        this.gainRate = gainRate;
+    }
+
     public void toggleFavorite(){
         this.favorite = !this.favorite;
     }
@@ -292,6 +295,9 @@ public class WifeyCharacter {
             return false;
         }
         if(attackElement == null || strongElement == null | weakElement == null){
+            return false;
+        }
+        if(gainRate == null) {
             return false;
         }
         return true;
