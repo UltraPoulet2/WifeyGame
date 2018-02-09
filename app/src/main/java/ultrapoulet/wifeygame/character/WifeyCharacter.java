@@ -27,6 +27,7 @@ public class WifeyCharacter {
 
     private int level = 1;
     private int experience = 0;
+    private static final int MAX_LEVEL = 100;
 
     private ExpGainRate gainRate;
     private static final int STAT_INCREASE = 2;
@@ -121,11 +122,22 @@ public class WifeyCharacter {
     public int getLevel() { return this.level; }
 
     public String getExperienceString(){
-        return experience + "/" + gainRate.getNextLevelExp(level);
+        if(level < MAX_LEVEL) {
+            return experience + "/" + gainRate.getNextLevelExp(level);
+        }
+        else {
+            return "-MAX-";
+        }
+
     }
 
     public double getExperiencePercent(){
-        return 1.0 * experience / gainRate.getNextLevelExp(level);
+        if(level < MAX_LEVEL) {
+            return 1.0 * experience / gainRate.getNextLevelExp(level);
+        }
+        else {
+            return 0.0;
+        }
     }
 
     public int getExp() {
@@ -306,17 +318,19 @@ public class WifeyCharacter {
     //Return true if level increased
     public boolean addExperience(int addedExperience){
         boolean leveled = false;
-        experience += addedExperience;
-        while(experience > gainRate.getNextLevelExp(level)){
-            leveled = true;
-            experience -= gainRate.getNextLevelExp(level);
-            level++;
-            strength += STAT_INCREASE;
-            magic += STAT_INCREASE;
-            Log.i("WifeyCharacter", name + " Level " + level + " Next exp: " + gainRate.getNextLevelExp(level));
-            for(int i = 0; i < transformations.size(); i++){
-                TransformWifey transformation = transformations.get(i);
-                transformation.levelUp();
+        if(level < MAX_LEVEL) {
+            experience += addedExperience;
+            while (experience > gainRate.getNextLevelExp(level)) {
+                leveled = true;
+                experience -= gainRate.getNextLevelExp(level);
+                level++;
+                strength += STAT_INCREASE;
+                magic += STAT_INCREASE;
+                Log.i("WifeyCharacter", name + " Level " + level + " Next exp: " + gainRate.getNextLevelExp(level));
+                for (int i = 0; i < transformations.size(); i++) {
+                    TransformWifey transformation = transformations.get(i);
+                    transformation.levelUp();
+                }
             }
         }
         return leveled;
