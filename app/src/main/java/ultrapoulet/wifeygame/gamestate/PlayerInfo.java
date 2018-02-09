@@ -22,8 +22,8 @@ public class PlayerInfo {
     private static int currentEnergy = 5;
     private static int maxEnergy = 5;
 
-    private static int nextLevelExp = 100;
-    private static final double NEXT_LEVEL_MULT = 1.25;
+    private static int nextLevelExp = 1000;
+    private static final int NEXT_LEVEL_RATE = 1000;
 
     //This is the time (in milliseconds) that the player will get their next energy
     private static long nextEnergyTime;
@@ -83,10 +83,10 @@ public class PlayerInfo {
         while(experience > nextLevelExp){
             leveled = true;
             level++;
-            //System.out.println("Level " + level + " Next exp: " + nextLevelExp);
             Log.i("PlayerInfo", "Player Level Up. Level " + level + " Next exp: " + nextLevelExp);
             experience -= nextLevelExp;
-            nextLevelExp *= NEXT_LEVEL_MULT;
+            //I've got math for this as well
+            nextLevelExp = (NEXT_LEVEL_RATE / 2 * level * level) + ((NEXT_LEVEL_RATE / 2) * level);
         }
         return leveled;
     }
