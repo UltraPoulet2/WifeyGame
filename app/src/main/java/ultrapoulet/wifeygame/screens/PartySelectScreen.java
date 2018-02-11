@@ -918,7 +918,7 @@ public class PartySelectScreen extends Screen {
             if(validCharacters.get(draggingRecruitIndex).isFavorite()){
                 g.drawScaledImage(Assets.Favorite, draggingX - DRAGGING_OFFSET, draggingY - DRAGGING_OFFSET, CHAR_FAVORITE_SIZE, CHAR_FAVORITE_SIZE);
             }
-            if(battleInfo != null && !battleInfo.allowCharacter(parties.get(partyNum).get(draggingRecruitIndex))){
+            if(battleInfo != null && !battleInfo.allowCharacter(validCharacters.get(draggingRecruitIndex))){
                 g.drawPercentageImage(Assets.InvalidChar, draggingX - DRAGGING_OFFSET, draggingY - DRAGGING_OFFSET, DRAGGING_SCALE, DRAGGING_SCALE);
             }
         }

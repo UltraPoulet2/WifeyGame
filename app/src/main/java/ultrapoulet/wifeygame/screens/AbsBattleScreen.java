@@ -42,8 +42,11 @@ public abstract class AbsBattleScreen extends Screen {
     public int enemyIndex = 0;
 
     private int numHits = 0;
-    private static final int SPECIAL_HITS = 60;
-    private static final int MAX_HITS = SPECIAL_HITS * 5;
+    private static final int BASE_SPECIAL_HITS = 60;
+    private static final int BASE_SPECIAL_DECREMENT = 8;
+    private static final int MAX_HITS_MULTIPLIER = 5;
+    private int hitsPerSpecial;
+    private int maxHits;
 
     private double enemyMultiplier = 1.00;
     private final double roundMultiplier = 0.025;
@@ -376,10 +379,13 @@ public abstract class AbsBattleScreen extends Screen {
         this.background = battleInfo.getBackground(game.getGraphics());
 
         setParty(Party.getCurrentBattleParty(battleInfo.getPartyMax(), game.getGraphics()));
+
+        this.hitsPerSpecial = BASE_SPECIAL_HITS - ((Party.MAX_PARTY_SIZE - party.size()) * BASE_SPECIAL_DECREMENT);
+        this.maxHits = hitsPerSpecial * MAX_HITS_MULTIPLIER;
     }
 
     private void updateButtons(){
-        if(numHits >= SPECIAL_HITS){
+        if(numHits >= this.hitsPerSpecial){
             specialAttackButton.setActive(true);
             if(partyIndex != party.size() && party.get(partyIndex).canTransform()){
                 transformButton.setActive(true);
@@ -418,7 +424,7 @@ public abstract class AbsBattleScreen extends Screen {
     }
 
     private void incrementHits(){
-        numHits = (numHits < MAX_HITS) ? numHits + 1 : numHits;
+        numHits = (numHits < maxHits) ? numHits + 1 : numHits;
     }
 
     private void resetPartyIndex(){
@@ -1076,7 +1082,7 @@ public abstract class AbsBattleScreen extends Screen {
                     switch (command.getName()) {
                         case TRANSFORM_STRING:
                         case SPECIAL_STRING:
-                            numHits -= SPECIAL_HITS;
+                            numHits -= this.hitsPerSpecial;
                         case POWER_STRING:
                         case COMBO_STRING:
                         case MAGIC_STRING:
@@ -1360,9 +1366,9 @@ public abstract class AbsBattleScreen extends Screen {
     private void drawSpecial(){
         Graphics g = game.getGraphics();
         g.drawImage(BattleAssets.SpecialBarBase, SPECIAL_BAR_BASE_X, SPECIAL_BAR_BASE_Y);
-        g.drawPercentageImage(BattleAssets.SpecialBar, SPECIAL_BAR_X, SPECIAL_BAR_Y, (int) ((numHits * 100.0) / MAX_HITS) , FULL_SCALE);
+        g.drawPercentageImage(BattleAssets.SpecialBar, SPECIAL_BAR_X, SPECIAL_BAR_Y, (int) ((numHits * 100.0) / maxHits) , FULL_SCALE);
         g.drawImage(BattleAssets.SpecialBarTop, SPECIAL_BAR_X, SPECIAL_BAR_TOP_Y);
-        int specialCount = numHits / SPECIAL_HITS;
+        int specialCount = numHits / BASE_SPECIAL_HITS;
         NumberPrinter.drawNumber(g, specialCount, SPECIAL_BAR_NUMBER_X, SPECIAL_BAR_NUMBER_Y, SPECIAL_NUMBER_WIDTH, SPECIAL_NUMBER_HEIGHT, SPECIAL_NUMBER_OFFSET, Assets.WhiteNumbers, NumberPrinter.Align.LEFT);
     }
 
