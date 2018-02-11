@@ -27,7 +27,7 @@ public class WifeyCharacter {
 
     private int level = 1;
     private int experience = 0;
-    private static final int MAX_LEVEL = 100;
+    public static final int MAX_LEVEL = 1;
 
     private ExpGainRate gainRate;
     private static final int STAT_INCREASE = 1;
@@ -136,7 +136,7 @@ public class WifeyCharacter {
             return 1.0 * experience / gainRate.getNextLevelExp(level);
         }
         else {
-            return 0.0;
+            return 1.0;
         }
     }
 
