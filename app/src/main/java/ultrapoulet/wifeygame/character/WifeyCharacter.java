@@ -30,7 +30,7 @@ public class WifeyCharacter {
     private static final int MAX_LEVEL = 100;
 
     private ExpGainRate gainRate;
-    private static final int STAT_INCREASE = 2;
+    private static final int STAT_INCREASE = 1;
 
     private Weapon weapon;
     private WeaponSkillsEnum weaponSkill;
