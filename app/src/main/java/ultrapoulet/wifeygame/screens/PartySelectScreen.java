@@ -120,6 +120,9 @@ public class PartySelectScreen extends Screen {
     private static final int PARTY_NUM_WIDTH = 30;
     private static final int PARTY_NUM_SPACING = 0;
 
+    private static final int PARTY_ACTIVE_X = 166;
+    private static final int PARTY_ACTIVE_Y = 170;
+
     private Button prevPartyButton;
     private Button nextPartyButton;
     private static final int PREV_PARTY_BUTTON_LEFT_X = 40;
@@ -837,6 +840,8 @@ public class PartySelectScreen extends Screen {
         g.drawImage(background, 0, 0);
 
         NumberPrinter.drawNumber(g, (partyNum + 1), PARTY_NUM_CENTER_X, PARTY_NUM_TOP_Y, PARTY_NUM_WIDTH, PARTY_NUM_HEIGHT, PARTY_NUM_SPACING, Assets.WhiteNumbers, NumberPrinter.Align.CENTER);
+        Image partyActive = partyNum == Party.getActivePartyNumber() ? Assets.PartyActive : Assets.PartyInactive;
+        g.drawImage(partyActive, PARTY_ACTIVE_X, PARTY_ACTIVE_Y);
 
         int displayPage = currentPage + 1;
         int displayMaxPage = maxPage + 1;
