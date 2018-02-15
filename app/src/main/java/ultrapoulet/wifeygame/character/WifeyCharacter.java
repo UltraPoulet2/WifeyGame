@@ -27,7 +27,7 @@ public class WifeyCharacter {
 
     private int level = 1;
     private int experience = 0;
-    public static final int MAX_LEVEL = 1;
+    public static final int MAX_LEVEL = 100;
 
     private ExpGainRate gainRate;
     private static final int STAT_INCREASE = 1;

@@ -26,6 +26,7 @@ import ultrapoulet.wifeygame.gamestate.PlayerInfo.HeaderBar;
 import ultrapoulet.wifeygame.gamestate.RecruitableCharacters;
 import ultrapoulet.wifeygame.gamestate.StoryArea;
 import ultrapoulet.wifeygame.gamestate.StoryBattles;
+import ultrapoulet.wifeygame.screens.dialogs.PartySelectYesNoDialog;
 
 /**
  * Created by John on 4/26/2016.
@@ -159,6 +160,9 @@ public class BattleSelectScreen extends Screen {
     private static final int PARTY_IMAGE_OFFSET_X = 100;
     private static final int PARTY_IMAGE_TOP_Y = 1010;
     private static final int PARTY_IMAGE_BOT_Y = 1100;
+
+    //specialScreen is used to hide the header before displaying a screen with a transparency
+    private Screen specialScreen = null;
 
     public BattleSelectScreen(Game game){
         super(game);
@@ -378,86 +382,88 @@ public class BattleSelectScreen extends Screen {
     public void update(float deltaTime){
 
         List<TouchEvent> touchEvents = game.getInput().getTouchEvents();
-        for(int i = 0; i < touchEvents.size(); i++){
-            TouchEvent t = touchEvents.get(i);
-            //Perform update for HeaderBar
-            header.update(t);
+        if(specialScreen != null) {
+            game.setScreen(specialScreen);
+            specialScreen = null;
+        }
+        else {
+            for (int i = 0; i < touchEvents.size(); i++) {
+                TouchEvent t = touchEvents.get(i);
+                //Perform update for HeaderBar
+                header.update(t);
 
-            if(t.type == TouchEvent.TOUCH_DOWN){
-                lastPressedGeneral = buttonList.getButtonPressed(t.x, t.y);
-                lastPressedArea = storyAreaList.getIndexPressed(t.x, t.y);
-                lastPressedBattle = storyBattleList.getIndexPressed(t.x, t.y);
-                lastPressedRecruit = recruitButtonList.getIndexPressed(t.x, t.y);
-                selectedChar = partyList.getIndexPressed(t.x, t.y);
-                continue;
-            }
-            else if(t.type == TouchEvent.TOUCH_UP) {
-                if(lastPressedGeneral != null && lastPressedGeneral == buttonList.getButtonPressed(t.x, t.y)){
-                    switch(lastPressedGeneral.getName()){
-                        case STORY_BUTTON_STRING:
-                            selectedTab = STORY_BUTTON_STRING;
-                            changeTab();
-                            break;
-                        case RECRUIT_BUTTON_STRING:
-                            selectedTab = RECRUIT_BUTTON_STRING;
-                            changeTab();
-                            break;
-                        case SPECIAL_BUTTON_STRING:
-                            selectedTab = SPECIAL_BUTTON_STRING;
-                            changeTab();
-                            break;
-                        case PARTY_BUTTON_STRING:
-                            game.setScreen(new PartySelectScreen(game, this));
-                            break;
-                        case AREA_UP_STRING:
-                            selectedAreaPage--;
-                            activatePageAndBattleButtons();
-                            break;
-                        case AREA_DOWN_STRING:
-                            selectedAreaPage++;
-                            activatePageAndBattleButtons();
-                            break;
-                        case BATTLE_UP_STRING:
-                            selectedBattlePage--;
-                            activatePageAndBattleButtons();
-                            break;
-                        case BATTLE_DOWN_STRING:
-                            selectedBattlePage++;
-                            activatePageAndBattleButtons();
-                            break;
-                        case RECRUIT_UP_STRING:
-                            selectedRecruitPage--;
-                            activateRecruitButtons();
-                            break;
-                        case RECRUIT_DOWN_STRING:
-                            selectedRecruitPage++;
-                            activateRecruitButtons();
-                            break;
-                        default:
-                            Log.e("BattleSelectScreen", "Unimplemented button pressed");
+                if (t.type == TouchEvent.TOUCH_DOWN) {
+                    lastPressedGeneral = buttonList.getButtonPressed(t.x, t.y);
+                    lastPressedArea = storyAreaList.getIndexPressed(t.x, t.y);
+                    lastPressedBattle = storyBattleList.getIndexPressed(t.x, t.y);
+                    lastPressedRecruit = recruitButtonList.getIndexPressed(t.x, t.y);
+                    selectedChar = partyList.getIndexPressed(t.x, t.y);
+                    continue;
+                } else if (t.type == TouchEvent.TOUCH_UP) {
+                    if (lastPressedGeneral != null && lastPressedGeneral == buttonList.getButtonPressed(t.x, t.y)) {
+                        switch (lastPressedGeneral.getName()) {
+                            case STORY_BUTTON_STRING:
+                                selectedTab = STORY_BUTTON_STRING;
+                                changeTab();
+                                break;
+                            case RECRUIT_BUTTON_STRING:
+                                selectedTab = RECRUIT_BUTTON_STRING;
+                                changeTab();
+                                break;
+                            case SPECIAL_BUTTON_STRING:
+                                selectedTab = SPECIAL_BUTTON_STRING;
+                                changeTab();
+                                break;
+                            case PARTY_BUTTON_STRING:
+                                game.setScreen(new PartySelectScreen(game, this));
+                                break;
+                            case AREA_UP_STRING:
+                                selectedAreaPage--;
+                                activatePageAndBattleButtons();
+                                break;
+                            case AREA_DOWN_STRING:
+                                selectedAreaPage++;
+                                activatePageAndBattleButtons();
+                                break;
+                            case BATTLE_UP_STRING:
+                                selectedBattlePage--;
+                                activatePageAndBattleButtons();
+                                break;
+                            case BATTLE_DOWN_STRING:
+                                selectedBattlePage++;
+                                activatePageAndBattleButtons();
+                                break;
+                            case RECRUIT_UP_STRING:
+                                selectedRecruitPage--;
+                                activateRecruitButtons();
+                                break;
+                            case RECRUIT_DOWN_STRING:
+                                selectedRecruitPage++;
+                                activateRecruitButtons();
+                                break;
+                            default:
+                                Log.e("BattleSelectScreen", "Unimplemented button pressed");
+                        }
+                    } else if (lastPressedArea == storyAreaList.getIndexPressed(t.x, t.y) && lastPressedArea != -1) {
+                        if (selectedArea != -1) {
+                            storyAreaList.get(selectedArea).setActiveImage(Assets.StoryBattleEnabled);
+                        }
+                        selectedArea = (selectedArea == lastPressedArea) ? -1 : lastPressedArea;
+                        createBattleButtons();
+                        setBattlePageVisible(selectedArea != -1);
+                        activatePageAndBattleButtons();
+                        if (selectedArea != -1) {
+                            storyAreaList.get(selectedArea).setActiveImage(Assets.StoryBattleSelected);
+                        }
+                    } else if (lastPressedBattle == storyBattleList.getIndexPressed(t.x, t.y) && lastPressedBattle != -1) {
+                        BattleInfo battle = unlockedBattles.get(lastPressedBattle);
+                        game.setScreen(new BattleInfoScreen(game, this, battle));
+                    } else if (selectedChar == partyList.getIndexPressed(t.x, t.y) && selectedChar != -1) {
+                        cis.setChar(party.get(selectedChar));
+                        specialScreen = cis;
+                    } else if (lastPressedRecruit == recruitButtonList.getIndexPressed(t.x, t.y) && lastPressedRecruit != -1) {
+                        game.setScreen(new RecruitingScreen(game, this, recruitableWifeys.get(lastPressedRecruit)));
                     }
-                }
-                else if(lastPressedArea == storyAreaList.getIndexPressed(t.x, t.y) && lastPressedArea != -1){
-                    if(selectedArea != -1) {
-                        storyAreaList.get(selectedArea).setActiveImage(Assets.StoryBattleEnabled);
-                    }
-                    selectedArea = (selectedArea == lastPressedArea) ? -1 : lastPressedArea;
-                    createBattleButtons();
-                    setBattlePageVisible(selectedArea != -1);
-                    activatePageAndBattleButtons();
-                    if(selectedArea != -1) {
-                        storyAreaList.get(selectedArea).setActiveImage(Assets.StoryBattleSelected);
-                    }
-                }
-                else if(lastPressedBattle == storyBattleList.getIndexPressed(t.x, t.y) && lastPressedBattle != -1){
-                    BattleInfo battle = unlockedBattles.get(lastPressedBattle);
-                    game.setScreen(new BattleInfoScreen(game, this, battle));
-                }
-                else if(selectedChar == partyList.getIndexPressed(t.x, t.y) && selectedChar != -1){
-                    cis.setChar(party.get(selectedChar));
-                    game.setScreen(cis);
-                } else if (lastPressedRecruit == recruitButtonList.getIndexPressed(t.x, t.y) && lastPressedRecruit != -1){
-                    game.setScreen(new RecruitingScreen(game, this, recruitableWifeys.get(lastPressedRecruit)));
                 }
             }
         }

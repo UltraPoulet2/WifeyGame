@@ -111,6 +111,9 @@ public abstract class AbsBattleInfoScreen extends Screen {
 
     private ButtonList requirementList;
 
+    //specialScreen is used to hide the header before displaying a screen with a transparency
+    private Screen specialScreen = null;
+
     public AbsBattleInfoScreen(Game game, Screen previousScreen, BattleInfo info){
         super(game);
 
@@ -200,54 +203,58 @@ public abstract class AbsBattleInfoScreen extends Screen {
     @Override
     public void update(float deltaTime) {
         List<Input.TouchEvent> touchEvents = game.getInput().getTouchEvents();
-        for(int i = 0; i < touchEvents.size(); i++) {
-            Input.TouchEvent t = touchEvents.get(i);
-            //Perform update for HeaderBar
-            header.update(t);
+        if(specialScreen != null) {
+            game.setScreen(specialScreen);
+            specialScreen = null;
+        }
+        else {
+            for (int i = 0; i < touchEvents.size(); i++) {
+                Input.TouchEvent t = touchEvents.get(i);
+                //Perform update for HeaderBar
+                header.update(t);
 
-            if(t.type == Input.TouchEvent.TOUCH_DOWN){
-                lastPressed = buttonList.getButtonPressed(t.x, t.y);
-                selectedChar = partyList.getIndexPressed(t.x, t.y);
-                selectedReq = requirementList.getIndexPressed(t.x, t.y);
-                continue;
-            }
-            else if(t.type == Input.TouchEvent.TOUCH_UP){
-                if(lastPressed == buttonList.getButtonPressed(t.x, t.y) && lastPressed != null){
-                    switch(lastPressed.getName()){
-                        case BACK_BUTTON_STRING:
-                            backButton();
-                            break;
-                        case PARTY_BUTTON_STRING:
-                            PartySelectScreen partySelect = new PartySelectScreen(game, this, battleInfo);
-                            game.setScreen(partySelect);
-                            break;
-                        case START_BUTTON_STRING:
-                            PlayerInfo.decrementEnergy(battleInfo.getEnergyRequirement());
-                            AbsBattleScreen abs = getBattleScreen();
-                            BattleLoadingScreen bls = new BattleLoadingScreen(this.game, battleInfo, abs);
-                            game.setScreen(bls);
-                            break;
+                if (t.type == Input.TouchEvent.TOUCH_DOWN) {
+                    lastPressed = buttonList.getButtonPressed(t.x, t.y);
+                    selectedChar = partyList.getIndexPressed(t.x, t.y);
+                    selectedReq = requirementList.getIndexPressed(t.x, t.y);
+                    continue;
+                } else if (t.type == Input.TouchEvent.TOUCH_UP) {
+                    if (lastPressed == buttonList.getButtonPressed(t.x, t.y) && lastPressed != null) {
+                        switch (lastPressed.getName()) {
+                            case BACK_BUTTON_STRING:
+                                backButton();
+                                break;
+                            case PARTY_BUTTON_STRING:
+                                PartySelectScreen partySelect = new PartySelectScreen(game, this, battleInfo);
+                                game.setScreen(partySelect);
+                                break;
+                            case START_BUTTON_STRING:
+                                PlayerInfo.decrementEnergy(battleInfo.getEnergyRequirement());
+                                AbsBattleScreen abs = getBattleScreen();
+                                BattleLoadingScreen bls = new BattleLoadingScreen(this.game, battleInfo, abs);
+                                game.setScreen(bls);
+                                break;
+                        }
+                    } else if (selectedChar == partyList.getIndexPressed(t.x, t.y) && selectedChar != -1) {
+                        charInfo.setChar(party.get(selectedChar));
+                        //game.setScreen(charInfo);
+                        specialScreen = charInfo;
+                    } else if (selectedReq == requirementList.getIndexPressed(t.x, t.y) && selectedReq != -1) {
+                        Screen reqDialog = battleInfo.getRequirements().get(selectedReq).getRequirementDialog(game, this);
+                        if (reqDialog != null) {
+                            //game.setScreen(reqDialog);
+                            specialScreen = reqDialog;
+                        }
                     }
                 }
-                else if(selectedChar == partyList.getIndexPressed(t.x, t.y) && selectedChar != -1){
-                    charInfo.setChar(party.get(selectedChar));
-                    game.setScreen(charInfo);
-                }
-                else if(selectedReq == requirementList.getIndexPressed(t.x, t.y) && selectedReq != -1){
-                    Screen reqDialog = battleInfo.getRequirements().get(selectedReq).getRequirementDialog(game, this);
-                    if(reqDialog != null) {
-                        game.setScreen(reqDialog);
-                    }
-                }
             }
+            if (hasEnoughEnergy()) {
+                energyPaint.setColor(Color.BLACK);
+            } else {
+                energyPaint.setColor(Color.RED);
+            }
+            startButton.setActive(canStartBattle());
         }
-        if(hasEnoughEnergy()){
-            energyPaint.setColor(Color.BLACK);
-        }
-        else{
-            energyPaint.setColor(Color.RED);
-        }
-        startButton.setActive(canStartBattle());
     }
 
     protected abstract AbsBattleScreen getBattleScreen();
