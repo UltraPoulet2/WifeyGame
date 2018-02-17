@@ -49,6 +49,8 @@ public class BattleInfo {
     private boolean unlocked = false;
     private ArrayList<String> unlockList = new ArrayList<>();
 
+    private int recommendedPower = 0;
+
     private class WifeyDrop{
         private WifeyCharacter wifey;
         private int dropChance;
@@ -248,6 +250,14 @@ public class BattleInfo {
 
     public void setNumComplete(int input){
         numComplete = input;
+    }
+
+    public void setRecommendedPower(int input) {
+        this.recommendedPower = input;
+    }
+
+    public int getRecommendedPower() {
+        return recommendedPower;
     }
 
     public void incrementNumComplete(){

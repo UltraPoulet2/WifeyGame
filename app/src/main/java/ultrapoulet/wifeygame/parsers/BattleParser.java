@@ -47,7 +47,6 @@ public class BattleParser extends DefaultHandler {
         else if(qName.equalsIgnoreCase("area")){
             String temp = attributes.getValue("name");
             if(temp == null || temp.length() == 0){
-                //System.out.println("BattleParser:startElement(): No area name provided");
                 Log.e("BattleParser", "No area name provided.");
                 temp = "Invalid name";
             }
@@ -77,7 +76,6 @@ public class BattleParser extends DefaultHandler {
             //Create a new requirement
             reqBuilder = RequirementFactory.getRequirement(attributes.getValue("type"));
             if(reqBuilder == null){
-                //System.out.println("BattleParser:startElement(): Invalid Requirement: " + attributes.getValue("type"));
                 Log.e("BattleParser", "Invalid Requirement: " + attributes.getValue("type"));
                 error = true;
             }
@@ -116,8 +114,10 @@ public class BattleParser extends DefaultHandler {
         else if(qName.equalsIgnoreCase("startUnlocked")){
             battleBuilder.unlock();
         }
+        else if(qName.equalsIgnoreCase("recPower")){
+            currentText = new StringBuffer();
+        }
         else{
-            //System.out.println("BattleParser:startElement(): Invalid qName: " + qName + " for key " + battleKey);
             Log.e("BattleParser", "Invalid qName: " + qName + " for key " + battleKey);
         }
     }
@@ -128,17 +128,14 @@ public class BattleParser extends DefaultHandler {
                            String qName) throws SAXException {
         if(qName.equalsIgnoreCase("area")){
             StoryBattles.addArea(areaBuilder);
-            //System.out.println("BattleParser:endElement(): Adding area: " + areaBuilder.getAreaName());
             Log.i("BattleParser", "Adding area: " + areaBuilder.getAreaName());
         }
         else if(qName.equalsIgnoreCase("battle")){
             if(validate()){
                 areaBuilder.addBattle(battleBuilder);
-                //System.out.println("BattleParser:endElement(): Adding battle: " + battleKey);
                 Log.i("BattleParser", "Adding battle: " + battleKey);
             }
             else{
-                //System.out.println("BattleParser:endElement(): Error parsing for key: " + battleKey);
                 Log.e("BattleParser", "Error parsing for key: " + battleKey);
                 errorKeys.add(battleKey != null ? battleKey : "INV-KEY");
             }
@@ -151,7 +148,6 @@ public class BattleParser extends DefaultHandler {
         }
         else if(qName.equalsIgnoreCase("drop")){
             if(wifeyDrop == null || Characters.get(wifeyDrop) == null || chanceDrop <= 0 || chanceDrop > 100){
-                //System.out.println("BattleParser:endElement(): Invalid wifey drop provided. Ignoring");
                 Log.e("BattleParser", "Invalid wifey drop provided.");
                 error = true;
             }
@@ -165,7 +161,6 @@ public class BattleParser extends DefaultHandler {
         else if(qName.equalsIgnoreCase("enemy")){
             EnemyCharacter tempEn = Enemies.get(currentText.toString());
             if(tempEn == null){
-                //System.out.println("BattleParser:endElement(): BattleEnemy not found: " + currentText.toString());
                 Log.e("BattleParser", "BattleEnemy not found: " + currentText.toString());
                 error = true;
             }
@@ -178,7 +173,6 @@ public class BattleParser extends DefaultHandler {
                 battleBuilder.setPartyMax(Integer.parseInt(currentText.toString()));
             }
             catch(NumberFormatException e){
-                //System.out.println("BattleParser:endElement(): NumberFormatException for key: " + battleKey);
                 Log.e("BattleParser", "NumberFormatException for key: " + battleKey);
                 error = true;
             }
@@ -196,7 +190,6 @@ public class BattleParser extends DefaultHandler {
                 battleBuilder.setEnergyRequirement(Integer.parseInt(currentText.toString()));
             }
             catch(NumberFormatException e){
-                //System.out.println("BattleParser:endElement(): NumberFormatException for key: " + battleKey);
                 Log.e("BattleParser", "NumberFormatException for key: " + battleKey);
                 error = true;
             }
@@ -209,13 +202,21 @@ public class BattleParser extends DefaultHandler {
                 chanceDrop = Integer.parseInt(currentText.toString());
             }
             catch(NumberFormatException e){
-                //System.out.println("BattleParser:endElement(): NumberFormatException for key: " + battleKey);
                 Log.e("BattleParser", "NumberFormatException for key: " + battleKey);
                 error = true;
             }
         }
         else if(qName.equalsIgnoreCase("unlock")){
             battleBuilder.addUnlock(currentText.toString());
+        }
+        else if(qName.equalsIgnoreCase("recPower")){
+            try{
+                battleBuilder.setRecommendedPower(Integer.parseInt(currentText.toString()));
+            }
+            catch(NumberFormatException e){
+                Log.e("RecruitingBattleParser", "NumberFormatException for key: " + battleKey);
+                error = true;
+            }
         }
     }
 
@@ -243,6 +244,9 @@ public class BattleParser extends DefaultHandler {
             return false;
         }
         if(battleBuilder.getEnergyRequirement() <= 0){
+            return false;
+        }
+        if(battleBuilder.getRecommendedPower() <= 0) {
             return false;
         }
         return true;

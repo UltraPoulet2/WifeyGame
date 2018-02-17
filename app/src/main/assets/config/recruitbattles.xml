@@ -4,6 +4,7 @@
         <name>Recruit Battle</name>
         <background>lastation</background>
         <energy>1</energy>
+        <recPower>10</recPower>
         <enemies>
             <enemy>TEST-NME1</enemy>
         </enemies>
