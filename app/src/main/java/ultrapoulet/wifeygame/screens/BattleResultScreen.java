@@ -198,16 +198,22 @@ public class BattleResultScreen extends Screen{
 
         victory = enemies.get(enemies.size() - 1).getCurrentHP() == 0;
 
+        double partyExpMult = (1.0 * (Party.MAX_PARTY_SIZE - party.size())) / party.size();
+
         for(int i = 0; i < enemies.size(); i++){
             BattleCharacter enemy = enemies.get(i);
             double healthPer = (enemy.getMaxHP() - enemy.getCurrentHP()) / (1.0 * enemy.getMaxHP());
             baseGold += (int) (enemy.getGold() * healthPer);
             baseExp += (int) (enemy.getExperience() * healthPer);
         }
+        //Give extra experience for smaller parties
+        baseExp += baseExp * partyExpMult;
         gains = new ArrayList<>();
         for(int i = 0; i < party.size(); i++){
             int gold = party.get(i).getGold();
             int exp = party.get(i).getExperience();
+            //Give extra experience for smaller parties
+            exp += exp * partyExpMult;
             bonusGold += gold;
             bonusExp += exp;
             bonusRecruit += party.get(i).getBonusRecruiting();
