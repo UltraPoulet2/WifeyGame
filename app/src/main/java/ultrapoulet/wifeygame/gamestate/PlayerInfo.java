@@ -19,8 +19,8 @@ public class PlayerInfo {
     private static int gold = 0;
     private static int level = 1;
     private static int experience;
-    private static int currentEnergy = 5;
-    private static int maxEnergy = 5;
+    private static int currentEnergy = 10;
+    private static int maxEnergy = 10;
 
     private static int nextLevelExp = 1000;
     private static final int NEXT_LEVEL_RATE = 1000;
@@ -52,7 +52,6 @@ public class PlayerInfo {
     public static void payGold(int paidGold){
         if(paidGold > gold){
             gold = 0;
-            //System.out.println("PlayerInfo:payGold(): Spent too much gold.");
             Log.e("PlayerInfo", "Gold became negative. Setting to 0.");
         }
         else {
@@ -80,13 +79,19 @@ public class PlayerInfo {
     public static boolean addExperience(int addedExperience){
         boolean leveled = false;
         experience += addedExperience;
-        while(experience > nextLevelExp){
+        while(experience >= nextLevelExp){
             leveled = true;
             level++;
-            Log.i("PlayerInfo", "Player Level Up. Level " + level + " Next exp: " + nextLevelExp);
             experience -= nextLevelExp;
             //I've got math for this as well
             nextLevelExp = (NEXT_LEVEL_RATE / 2 * level * level) + ((NEXT_LEVEL_RATE / 2) * level);
+            Log.i("PlayerInfo", "Player Level Up. Level " + level + " Next exp: " + nextLevelExp);
+
+            //Increase max energy on level up
+            maxEnergy++;
+            //Refill energy
+            currentEnergy = maxEnergy;
+            nextEnergyTime = 0;
         }
         return leveled;
     }
@@ -98,6 +103,13 @@ public class PlayerInfo {
 
     public static void setCurrentEnergy(int energy){
         currentEnergy = energy;
+    }
+
+    public static void setLevel(int newLevel) {
+        level = newLevel;
+        nextLevelExp = (NEXT_LEVEL_RATE / 2 * level * level) + ((NEXT_LEVEL_RATE / 2) * level);
+        //10 at level 1, 11 at level 2, etc.
+        maxEnergy = level + 9;
     }
 
     public static void decrementEnergy(int decrementedEnergy){
