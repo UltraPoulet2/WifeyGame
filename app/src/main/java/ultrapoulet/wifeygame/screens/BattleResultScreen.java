@@ -347,13 +347,13 @@ public class BattleResultScreen extends Screen{
         }
 
         //Draw Party Images
-        topRowSize = party.size() - (party.size() / 2);
+        topRowSize = party.size() > 4 ? party.size() - (party.size() / 2) : party.size();
         baseX = CENTER_X - ((PARTY_WIDTH * topRowSize) + (PARTY_SPACING * (topRowSize - 1))) / 2;
         for(int i = 0; i < topRowSize; i++){
             int x = baseX + (PARTY_WIDTH + PARTY_SPACING) * i;
             drawPartyMember(g, i, x, PARTY_ROW_1_Y);
         }
-        botRowSize = party.size() / 2;
+        botRowSize = party.size() > 4 ? party.size() / 2 : 0;
         baseX = CENTER_X - ((PARTY_WIDTH * botRowSize) + (PARTY_SPACING * (botRowSize - 1))) / 2;
         for(int i = topRowSize; i < party.size(); i++){
             int x = baseX + (PARTY_WIDTH + PARTY_SPACING) * (i - topRowSize);
