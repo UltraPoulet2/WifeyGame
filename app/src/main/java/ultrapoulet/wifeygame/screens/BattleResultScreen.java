@@ -82,9 +82,9 @@ public class BattleResultScreen extends Screen{
     private static final int DROPS_PER_ROW = 5;
 
     private Paint expPaint;
-    private static final int EXP_TEXT_FONT_SIZE = 34;
+    private static final int EXP_TEXT_FONT_SIZE = 28;
     private static final int EXP_TEXT_OFFSET_X = 80;
-    private static final int EXP_TEXT_OFFSET_Y = 22;
+    private static final int EXP_TEXT_OFFSET_Y = 20;
 
     private BattleInfo info;
     private List<BattleCharacter> party;
@@ -157,6 +157,7 @@ public class BattleResultScreen extends Screen{
                 int gainedExpWidth = (int) (EXP_BAR_MAX_WIDTH * currentDrawPercentage);
                 g.drawScaledImage(Assets.SmallGreenBar, baseX, baseY + PARTY_EXP_OFFSET_Y, originalExpWidth, EXP_BAR_HEIGHT);
                 g.drawScaledImage(Assets.SmallYellowBar, baseX + originalExpWidth, baseY + PARTY_EXP_OFFSET_Y, gainedExpWidth, EXP_BAR_HEIGHT);
+                g.drawString("+" + String.valueOf(baseExp + bonusExp), baseX + EXP_TEXT_OFFSET_X, baseY + PARTY_EXP_OFFSET_Y + EXP_TEXT_OFFSET_Y, expPaint);
             }
             else {
                 double displayPercentage = (currentDrawPercentage - (1.0 - originalPercentage));
@@ -165,6 +166,7 @@ public class BattleResultScreen extends Screen{
                 }
                 int gainedExpWidth = (int) (EXP_BAR_MAX_WIDTH * displayPercentage);
                 g.drawScaledImage(Assets.SmallYellowBar, baseX, baseY + PARTY_EXP_OFFSET_Y, gainedExpWidth, EXP_BAR_HEIGHT);
+                g.drawString("+" + String.valueOf(baseExp + bonusExp), baseX + EXP_TEXT_OFFSET_X, baseY + PARTY_EXP_OFFSET_Y + EXP_TEXT_OFFSET_Y, expPaint);
             }
 
         }
@@ -190,7 +192,7 @@ public class BattleResultScreen extends Screen{
         expPaint = new Paint();
         expPaint.setTextSize(EXP_TEXT_FONT_SIZE);
         expPaint.setTextAlign(Paint.Align.CENTER);
-        expPaint.setColor(Color.BLACK);
+        expPaint.setColor(Color.WHITE);
 
         buttons = new ButtonList();
         continueButton = new Button(CONTINUE_LEFT_X, CONTINUE_RIGHT_X, CONTINUE_TOP_Y, CONTINUE_BOTTOM_Y, true, CONTINUE_STRING);
