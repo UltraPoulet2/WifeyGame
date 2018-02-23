@@ -99,6 +99,7 @@ public class BattleResultScreen extends Screen{
     private int bonusExp;
     private int baseGold;
     private int bonusGold;
+    private double partySizeBonus;
 
     private int bonusRecruit;
 
@@ -157,7 +158,7 @@ public class BattleResultScreen extends Screen{
                 int gainedExpWidth = (int) (EXP_BAR_MAX_WIDTH * currentDrawPercentage);
                 g.drawScaledImage(Assets.SmallGreenBar, baseX, baseY + PARTY_EXP_OFFSET_Y, originalExpWidth, EXP_BAR_HEIGHT);
                 g.drawScaledImage(Assets.SmallYellowBar, baseX + originalExpWidth, baseY + PARTY_EXP_OFFSET_Y, gainedExpWidth, EXP_BAR_HEIGHT);
-                g.drawString("+" + String.valueOf(baseExp + bonusExp), baseX + EXP_TEXT_OFFSET_X, baseY + PARTY_EXP_OFFSET_Y + EXP_TEXT_OFFSET_Y, expPaint);
+                g.drawString("+" + String.valueOf((int) ((baseExp + bonusExp) * partySizeBonus)), baseX + EXP_TEXT_OFFSET_X, baseY + PARTY_EXP_OFFSET_Y + EXP_TEXT_OFFSET_Y, expPaint);
             }
             else {
                 double displayPercentage = (currentDrawPercentage - (1.0 - originalPercentage));
@@ -166,7 +167,7 @@ public class BattleResultScreen extends Screen{
                 }
                 int gainedExpWidth = (int) (EXP_BAR_MAX_WIDTH * displayPercentage);
                 g.drawScaledImage(Assets.SmallYellowBar, baseX, baseY + PARTY_EXP_OFFSET_Y, gainedExpWidth, EXP_BAR_HEIGHT);
-                g.drawString("+" + String.valueOf(baseExp + bonusExp), baseX + EXP_TEXT_OFFSET_X, baseY + PARTY_EXP_OFFSET_Y + EXP_TEXT_OFFSET_Y, expPaint);
+                g.drawString("+" + String.valueOf((int) ((baseExp + bonusExp) * partySizeBonus)), baseX + EXP_TEXT_OFFSET_X, baseY + PARTY_EXP_OFFSET_Y + EXP_TEXT_OFFSET_Y, expPaint);
             }
 
         }
@@ -200,7 +201,7 @@ public class BattleResultScreen extends Screen{
 
         victory = enemies.get(enemies.size() - 1).getCurrentHP() == 0;
 
-        double partyExpMult = (1.0 * (Party.MAX_PARTY_SIZE - party.size())) / party.size();
+        partySizeBonus = 1.0 + ((1.0 * Party.MAX_PARTY_SIZE - party.size()) / party.size());
 
         for(int i = 0; i < enemies.size(); i++){
             BattleCharacter enemy = enemies.get(i);
@@ -208,14 +209,10 @@ public class BattleResultScreen extends Screen{
             baseGold += (int) (enemy.getGold() * healthPer);
             baseExp += (int) (enemy.getExperience() * healthPer);
         }
-        //Give extra experience for smaller parties
-        baseExp += baseExp * partyExpMult;
         gains = new ArrayList<>();
         for(int i = 0; i < party.size(); i++){
             int gold = party.get(i).getGold();
             int exp = party.get(i).getExperience();
-            //Give extra experience for smaller parties
-            exp += exp * partyExpMult;
             bonusGold += gold;
             bonusExp += exp;
             bonusRecruit += party.get(i).getBonusRecruiting();
@@ -227,7 +224,7 @@ public class BattleResultScreen extends Screen{
             double originalPercentage = wifeyList.get(i).getExperiencePercent();
             int originalLevel = wifeyList.get(i).getLevel();
             //I don't think we need to know if we level up anymore from adding experience
-            boolean levelUp = wifeyList.get(i).addExperience(baseExp + bonusExp);
+            boolean levelUp = wifeyList.get(i).addExperience((int) ((baseExp + bonusExp) * partySizeBonus));
             double finalPercentage = wifeyList.get(i).getExperiencePercent();
             int finalLevel = wifeyList.get(i).getLevel();
             double gainedPercentage = ((finalLevel - originalLevel)) + (finalPercentage - originalPercentage);
