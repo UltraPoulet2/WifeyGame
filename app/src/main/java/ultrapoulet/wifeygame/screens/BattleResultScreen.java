@@ -99,6 +99,11 @@ public class BattleResultScreen extends Screen{
     private int bonusExp;
     private int baseGold;
     private int bonusGold;
+
+    private Paint bonusPaint;
+    private static final int BONUS_TEXT_FONT_SIZE = 30;
+    private static final int BONUS_TEXT_X = 400;
+    private static final int BONUS_TEXT_Y = 715;
     private double partySizeBonus;
 
     private int bonusRecruit;
@@ -194,6 +199,11 @@ public class BattleResultScreen extends Screen{
         expPaint.setTextSize(EXP_TEXT_FONT_SIZE);
         expPaint.setTextAlign(Paint.Align.CENTER);
         expPaint.setColor(Color.WHITE);
+
+        bonusPaint = new Paint();
+        bonusPaint.setTextSize(BONUS_TEXT_FONT_SIZE);
+        bonusPaint.setTextAlign(Paint.Align.CENTER);
+        bonusPaint.setColor(Color.YELLOW);
 
         buttons = new ButtonList();
         continueButton = new Button(CONTINUE_LEFT_X, CONTINUE_RIGHT_X, CONTINUE_TOP_Y, CONTINUE_BOTTOM_Y, true, CONTINUE_STRING);
@@ -343,6 +353,11 @@ public class BattleResultScreen extends Screen{
         }
         if(drops.size() == 0) {
             g.drawImage(Assets.NoneFound, NONE_FOUND_X, NONE_FOUND_Y);
+        }
+
+        if(partySizeBonus > 1.0) {
+            //The math is done to prevent rounding
+            g.drawString("Party Size Bonus: x" + String.format("%.2f", Math.floor(partySizeBonus * 100)/ 100), BONUS_TEXT_X, BONUS_TEXT_Y, bonusPaint);
         }
 
         //Draw Party Images
