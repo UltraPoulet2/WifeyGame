@@ -108,6 +108,16 @@ public class BattleWifey extends BattleCharacter{
         return modDamage;
     }
 
+    public int HealAmount() {
+        int baseHeal = (int) (20 * Math.pow(4, this.magic / 100.0 ));
+        //Do checks on skills to determine bonus healing
+        double multiplier = skills.healPercentage();
+        int modHeal = (int) (baseHeal * multiplier);
+        Log.i("HealAmount", "Heal to everyone from " + this.getName() + " multiplied by: " + multiplier);
+        modHeal = modHeal + (int) ((modHeal / 10) * Math.random());
+        return modHeal;
+    }
+
     public int HealAmount(BattleCharacter target){
         //int baseHeal = this.magic * 2;
         int baseHeal = (int) (20 * Math.pow(4, this.magic / 100.0 ));
@@ -181,6 +191,19 @@ public class BattleWifey extends BattleCharacter{
         return displayDamage;
     }
 
+    public int healDamage(int heal) {
+        //Check skills for anything to increase healing
+        int displayHeal = heal;
+        double multiplier = skills.receiveHealPercentage();
+        displayHeal = (int) (displayHeal * multiplier);
+        this.currentHP = this.currentHP + displayHeal;
+        Log.i("healDamage", this.getName() + " multiplying heal received from party by: " + multiplier);
+        if(this.currentHP > this.maxHP){
+            displayHeal = displayHeal - (this.currentHP - this.maxHP);
+            this.currentHP = this.maxHP;
+        }
+        return displayHeal;
+    }
 
     public int healDamage(int heal, BattleCharacter healer){
         //Check skills for anything to increase healing

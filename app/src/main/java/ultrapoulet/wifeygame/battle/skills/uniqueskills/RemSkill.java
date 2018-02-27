@@ -31,6 +31,11 @@ public class RemSkill extends AbsUniqueSkill {
     }
 
     @Override
+    public double healPercentage() {
+        return multiplier;
+    }
+
+    @Override
     public double healPercentage(BattleCharacter partyMember) {
         return multiplier;
     }

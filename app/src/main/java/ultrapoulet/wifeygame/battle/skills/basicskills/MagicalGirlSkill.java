@@ -45,6 +45,11 @@ public class MagicalGirlSkill extends AbsSkill {
     }
 
     @Override
+    public double healPercentage() {
+        return multiplier;
+    }
+
+    @Override
     public double healPercentage(BattleCharacter partyMember) {
         return multiplier;
     }

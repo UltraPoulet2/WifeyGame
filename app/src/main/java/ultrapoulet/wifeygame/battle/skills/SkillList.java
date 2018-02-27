@@ -65,7 +65,6 @@ public class SkillList {
 
     public void giveSkillBonus(double multiplier, Class givingSkill, Class receivingSkill){
         if(!AbsSkill.class.isAssignableFrom(givingSkill) || !AbsSkill.class.isAssignableFrom(receivingSkill)){
-            //System.out.println("SkillList:giveSkillBonus: input " + givingSkill + " and/or " + receivingSkill + " are not AbsSkills");
             Log.e("SkillList", "GiveSkillBonus Input: " + givingSkill + " and/or " + receivingSkill + " are not AbsSkills");
             return;
         }
@@ -148,6 +147,22 @@ public class SkillList {
             displayDamage += uniqueSkill.startRound();
         }
         return displayDamage;
+    }
+
+    public double startRoundPartyRegenPercentage() {
+        //The percentage of healing to be performed to the entire party at the start of a round
+        //Most skills will not party regen
+        double multiplier = 0.0;
+        for(int i =0; i < skills.size(); i++) {
+            multiplier += skills.get(i).startRoundPartyRegenPercentage();
+        }
+        if(weaponSkill != null) {
+            multiplier += weaponSkill.startRoundPartyRegenPercentage();
+        }
+        if(uniqueSkill != null) {
+            multiplier += uniqueSkill.startRoundPartyRegenPercentage();
+        }
+        return multiplier;
     }
 
     public void endRound() {
@@ -271,6 +286,22 @@ public class SkillList {
         return multiplier;
     }
 
+    public double healPercentage(){
+        //The amount to increase healing where the party member does not matter
+        //Returned multiplier is multiplicative.
+        double multiplier = 1.0;
+        for(int i = 0; i < skills.size(); i++){
+            multiplier *= skills.get(i).healPercentage();
+        }
+        if(weaponSkill != null) {
+            multiplier *= weaponSkill.healPercentage();
+        }
+        if(uniqueSkill != null) {
+            multiplier *= uniqueSkill.healPercentage();
+        }
+        return multiplier;
+    }
+
     public double healPercentage(BattleCharacter partyMember){
         //The amount to increase healing to a party member
         //Returned multiplier is multiplicative.
@@ -343,6 +374,22 @@ public class SkillList {
         double multiplier = 1.0 - resistance;
         if(multiplier <= 0.10){
             multiplier = 0.10;
+        }
+        return multiplier;
+    }
+
+    public double receiveHealPercentage(){
+        //The amount to increase healing where the party member does not matter
+        //Returned multiplier is multiplicative
+        double multiplier = 1.0;
+        for(int i = 0; i < skills.size(); i++){
+            multiplier *= skills.get(i).receiveHealPercentage();
+        }
+        if(weaponSkill != null) {
+            multiplier *= weaponSkill.receiveHealPercentage();
+        }
+        if(uniqueSkill != null) {
+            multiplier *= uniqueSkill.receiveHealPercentage();
         }
         return multiplier;
     }

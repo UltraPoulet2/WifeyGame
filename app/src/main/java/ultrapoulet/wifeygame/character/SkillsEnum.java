@@ -146,7 +146,7 @@ public enum SkillsEnum {
             return new MusicianSkill(owner);
         }
     },
-    NURSE("Nurse", "Multiplies healing by 2.00x. Gains health at the start of every round.") {
+    NURSE("Nurse", "Multiplies healing by 2.00x.Heals the party slightly at the start of the round.") {
         @Override
         public AbsSkill getBattleSkill(BattleCharacter owner) {
             return new NurseSkill(owner);

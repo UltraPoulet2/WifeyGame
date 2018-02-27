@@ -679,12 +679,29 @@ public abstract class AbsBattleScreen extends Screen {
             case ROUND_START:
                 resetPartyIndex();
                 clearAnimations();
+                int partyHeal = 0;
                 for(int i = 0; i < party.size(); i++){
                     if(party.get(i).getCurrentHP() != 0) {
                         party.get(i).setDisplayDamage(party.get(i).startRound());
+                        double regenMultiplier = party.get(i).startRoundPartyRegenPercentage();
+                        if(regenMultiplier > 0.0) {
+                            partyHeal += (int) (party.get(i).HealAmount() * regenMultiplier);
+                        }
                     }
                 }
-                enemies.get(enemyIndex).setDisplayDamage(enemies.get(enemyIndex).startRound());
+                if(partyHeal > 0) {
+                    Log.d("AbsBattleScreen", "Full Party regen: " + partyHeal);
+                    for(int i = 0; i < party.size(); i++) {
+                        if(party.get(i).getCurrentHP() != 0) {
+                            int healDisplay = party.get(i).healDamage(partyHeal);
+                            party.get(i).setDisplayDamage(party.get(i).getDisplayDamage() + (HEAL_DAMAGE * healDisplay));
+                        }
+                    }
+                }
+                int totalEnemyHeal = enemies.get(enemyIndex).startRound();
+                int regenHeal = enemies.get(enemyIndex).healDamage((int) (enemies.get(enemyIndex).HealAmount() * enemies.get(enemyIndex).startRoundPartyRegenPercentage()));
+                totalEnemyHeal += HEAL_DAMAGE * regenHeal;
+                enemies.get(enemyIndex).setDisplayDamage(totalEnemyHeal);
                 AnimationImages roundStartAnimation = null;
                 for(int i = 0; i < party.size(); i++){
                     if(party.get(i).getDisplayDamage() != 0) {
