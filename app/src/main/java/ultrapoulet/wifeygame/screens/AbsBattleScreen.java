@@ -1043,6 +1043,11 @@ public abstract class AbsBattleScreen extends Screen {
                 break;
             case WAVE_END:
                 resetDamage();
+                for(int i = 0; i < party.size(); i++){
+                    if(party.get(i).getCurrentHP() != 0){
+                        party.get(i).endWave(enemies.get(enemyIndex));
+                    }
+                }
                 break;
             case BATTLE_END:
                 if(!isGameOver()){
