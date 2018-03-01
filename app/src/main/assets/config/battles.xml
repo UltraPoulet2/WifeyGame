@@ -5,6 +5,7 @@
             <name>Test Battle</name>
             <background>testbg</background>
             <energy>1</energy>
+            <recPower>10</recPower>
             <enemies>
                 <enemy>TEST-NME1</enemy>
                 <!-- We're making this easier for testing
@@ -36,6 +37,7 @@
             <background>lastation</background>
             <partySize>4</partySize>
             <energy>1</energy>
+            <recPower>10</recPower>
             <enemies>
                 <enemy>TEST-NME2</enemy>
                 <enemy>TEST-NME2</enemy>
@@ -63,6 +65,7 @@
             <name>Athletes Test</name>
             <background>testbg</background>
             <energy>1</energy>
+            <recPower>10</recPower>
             <enemies>
                 <enemy>TEST-NME5</enemy>
                 <enemy>TEST-NME4</enemy>
@@ -74,6 +77,7 @@
             <name>Magic Test</name>
             <background>testbg</background>
             <energy>1</energy>
+            <recPower>10</recPower>
             <enemies>
                 <enemy>TEST-NME6</enemy>
                 <enemy>TEST-NME6</enemy>

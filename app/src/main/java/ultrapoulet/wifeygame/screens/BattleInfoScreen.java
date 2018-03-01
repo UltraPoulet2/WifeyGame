@@ -29,9 +29,10 @@ public class BattleInfoScreen extends AbsBattleInfoScreen{
     @Override
     protected void drawInfo(Graphics g) {
         g.drawString(String.valueOf(battleInfo.getEnergyRequirement()), COLUMN_1_X, ROW_1_Y, energyPaint);
+        g.drawString(String.valueOf(battleInfo.getRecommendedPower()), COLUMN_2_X, ROW_1_Y - GAINS_Y_OFFSET, gainsPaint);
+        g.drawString(String.valueOf(battleInfo.getCharacterEnemies().size()), COLUMN_3_X, ROW_1_Y, infoPaint);
         g.drawString(shortGoldGain, COLUMN_1_X, ROW_2_Y - GAINS_Y_OFFSET, gainsPaint);
         g.drawString(shortExpGain, COLUMN_2_X, ROW_2_Y - GAINS_Y_OFFSET, gainsPaint);
-        g.drawString(String.valueOf(battleInfo.getCharacterEnemies().size()), COLUMN_3_X, ROW_1_Y, infoPaint);
         String dropString = (battleInfo.getMaxDrops() == 0) ? "--" : battleInfo.getFoundDrops() + "/" + battleInfo.getMaxDrops();
         g.drawString(dropString, COLUMN_3_X, ROW_2_Y - GAINS_Y_OFFSET, gainsPaint);
     }

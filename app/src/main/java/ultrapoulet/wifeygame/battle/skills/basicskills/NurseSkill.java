@@ -14,21 +14,24 @@ public class NurseSkill extends AbsSkill {
     }
 
     @Override
+    public double healPercentage() {
+        return 2.0;
+    }
+
+    @Override
     public double healPercentage(BattleCharacter partyMember) {
         return 2.0;
     }
 
     @Override
-    public int startRound() {
-        int baseHeal = owner.HealAmount(owner) / 10;
-        //Multiply by -1 to indicate heal
-        return -1 * owner.healDamage(baseHeal, owner);
+    public double startRoundPartyRegenPercentage() {
+        return 0.1;
     }
 
     @Override
     public String getDescription(BattleCharacter enemy) {
         String desc = "Healing Multiplier: 2.00x\n\n" +
-                "Multiplies healing by 2.00x. Gains health at the start of every round.";
+                "Multiplies healing by 2.00x. Heals the party slightly at the start of the round.";
         return desc;
     }
 }

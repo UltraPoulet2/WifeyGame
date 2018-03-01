@@ -27,9 +27,10 @@ public class WifeyCharacter {
 
     private int level = 1;
     private int experience = 0;
-    private int nextLevelExp = 1000;
-    private static final double NEXT_LEVEL_MULT = 1.25;
-    private static final int STAT_INCREASE = 2;
+    public static final int MAX_LEVEL = 100;
+
+    private ExpGainRate gainRate;
+    private static final int STAT_INCREASE = 1;
 
     private Weapon weapon;
     private WeaponSkillsEnum weaponSkill;
@@ -49,6 +50,27 @@ public class WifeyCharacter {
     private boolean recruited = false;
 
     private RecruitInfo recruitingInfo = new RecruitInfo();
+
+    public enum ExpGainRate {
+
+        VERYFAST(500, 14),
+        FAST(750, 16),
+        NORMAL(1500, 22),
+        SLOW(3000, 30),
+        VERYSLOW(6000, 42);
+
+        private int baseExp;
+        private int expRate;
+
+        ExpGainRate(int baseExp, int expRate) {
+            this.baseExp = baseExp;
+            this.expRate = expRate;
+        }
+        public int getNextLevelExp(int currentLevel) {
+            //I've got math showing this
+            return (expRate / 2 * currentLevel * currentLevel) + ((baseExp - (expRate / 2)) * currentLevel);
+        }
+    };
 
     public WifeyCharacter(){
         skills = new ArrayList<>();
@@ -100,11 +122,22 @@ public class WifeyCharacter {
     public int getLevel() { return this.level; }
 
     public String getExperienceString(){
-        return experience + "/" + nextLevelExp;
+        if(level < MAX_LEVEL) {
+            return experience + "/" + gainRate.getNextLevelExp(level);
+        }
+        else {
+            return "-MAX-";
+        }
+
     }
 
     public double getExperiencePercent(){
-        return 1.0 * experience / nextLevelExp;
+        if(level < MAX_LEVEL) {
+            return 1.0 * experience / gainRate.getNextLevelExp(level);
+        }
+        else {
+            return 1.0;
+        }
     }
 
     public int getExp() {
@@ -112,7 +145,11 @@ public class WifeyCharacter {
     }
 
     public int getNextLevelExp() {
-        return nextLevelExp;
+        return gainRate.getNextLevelExp(level);
+    }
+
+    public ExpGainRate getGainRate() {
+        return gainRate;
     }
 
     public ArrayList<TransformWifey> getTransformations(){
@@ -204,6 +241,10 @@ public class WifeyCharacter {
         this.transformations.add(t);
     }
 
+    public void setGainRate(ExpGainRate gainRate) {
+        this.gainRate = gainRate;
+    }
+
     public void toggleFavorite(){
         this.favorite = !this.favorite;
     }
@@ -268,25 +309,28 @@ public class WifeyCharacter {
         if(attackElement == null || strongElement == null | weakElement == null){
             return false;
         }
+        if(gainRate == null) {
+            return false;
+        }
         return true;
     }
 
     //Return true if level increased
     public boolean addExperience(int addedExperience){
         boolean leveled = false;
-        experience += addedExperience;
-        while(experience > nextLevelExp){
-            leveled = true;
-            level++;
-            experience -= nextLevelExp;
-            nextLevelExp *= NEXT_LEVEL_MULT;
-            strength += STAT_INCREASE;
-            magic += STAT_INCREASE;
-            //System.out.println(name + " Level " + level + " Next exp: " + nextLevelExp);
-            Log.i("WifeyCharacter", name + " Level " + level + " Next exp: " + nextLevelExp);
-            for(int i = 0; i < transformations.size(); i++){
-                TransformWifey transformation = transformations.get(i);
-                transformation.levelUp();
+        if(level < MAX_LEVEL) {
+            experience += addedExperience;
+            while (experience > gainRate.getNextLevelExp(level)) {
+                leveled = true;
+                experience -= gainRate.getNextLevelExp(level);
+                level++;
+                strength += STAT_INCREASE;
+                magic += STAT_INCREASE;
+                Log.i("WifeyCharacter", name + " Level " + level + " Next exp: " + gainRate.getNextLevelExp(level));
+                for (int i = 0; i < transformations.size(); i++) {
+                    TransformWifey transformation = transformations.get(i);
+                    transformation.levelUp();
+                }
             }
         }
         return leveled;

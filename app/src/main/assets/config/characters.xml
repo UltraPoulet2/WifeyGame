@@ -5,6 +5,7 @@
         <strength>70</strength>
         <magic>60</magic>
         <weapon>MECHA</weapon>
+        <expGainRate>VERYFAST</expGainRate>
         <skills>
             <skill>PROTAGONIST</skill>
             <skill>PILOT</skill>
@@ -21,6 +22,7 @@
         <strength>80</strength>
         <magic>50</magic>
         <weapon>BOOK</weapon>
+        <expGainRate>FAST</expGainRate>
         <skills>
             <skill>WITCH</skill>
         </skills>
@@ -36,6 +38,7 @@
         <strength>120</strength>
         <magic>10</magic>
         <weapon>FISTS</weapon>
+        <expGainRate>NORMAL</expGainRate>
         <elements>
             <atkElement>WATER</atkElement>
             <stgElement>WATER</stgElement>
@@ -47,6 +50,7 @@
         <strength>100</strength>
         <magic>25</magic>
         <weapon>FISTS</weapon>
+        <expGainRate>SLOW</expGainRate>
         <elements>
             <atkElement>EARTH</atkElement>
             <stgElement>FIRE</stgElement>
@@ -59,6 +63,7 @@
         <strength>25</strength>
         <magic>100</magic>
         <weapon>MECHA</weapon>
+        <expGainRate>VERYSLOW</expGainRate>
         <skills>
             <skill>PILOT</skill>
         </skills>
@@ -73,6 +78,7 @@
         <strength>50</strength>
         <magic>75</magic>
         <weapon>MECHA</weapon>
+        <expGainRate>FAST</expGainRate>
         <skills>
             <skill>PILOT</skill>
         </skills>
@@ -87,6 +93,7 @@
         <strength>40</strength>
         <magic>90</magic>
         <weapon>SCYTHE</weapon>
+        <expGainRate>FAST</expGainRate>
         <skills>
             <skill>DULLAHAN</skill>
             <skill>BIKER</skill>
@@ -103,6 +110,7 @@
         <strength>25</strength>
         <magic>100</magic>
         <weapon>MEDICINE</weapon>
+        <expGainRate>FAST</expGainRate>
         <skills>
             <skill>NURSE</skill>
         </skills>
@@ -117,6 +125,7 @@
         <strength>20</strength>
         <magic>110</magic>
         <weapon>INSTRUMENT</weapon>
+        <expGainRate>FAST</expGainRate>
         <skills>
             <skill>MUSICIAN</skill>
         </skills>
@@ -132,6 +141,7 @@
         <strength>70</strength>
         <magic>90</magic>
         <weapon>CLUB</weapon>
+        <expGainRate>FAST</expGainRate>
         <elements>
             <atkElement>LIGHT</atkElement>
             <stgElement>LIGHT</stgElement>
@@ -143,6 +153,7 @@
         <strength>60</strength>
         <magic>70</magic>
         <weapon>COMPUTER</weapon>
+        <expGainRate>FAST</expGainRate>
         <skills>
             <skill>HYPER</skill>
             <skill>PROGRAMMER</skill>
@@ -158,6 +169,7 @@
         <strength>90</strength>
         <magic>60</magic>
         <weapon>SWORD</weapon>
+        <expGainRate>FAST</expGainRate>
         <skills>
             <skill>TSUNDERE</skill>
         </skills>
@@ -172,6 +184,7 @@
         <strength>70</strength>
         <magic>60</magic>
         <weapon>GUN</weapon>
+        <expGainRate>FAST</expGainRate>
         <skills>
             <skill>HYPER</skill>
         </skills>
@@ -186,6 +199,7 @@
         <strength>40</strength>
         <magic>40</magic>
         <weapon>FISTS</weapon>
+        <expGainRate>FAST</expGainRate>
         <skills>
             <skill>SPORTSMANAGER</skill>
         </skills>
@@ -200,6 +214,7 @@
         <strength>60</strength>
         <magic>70</magic>
         <weapon>INSTRUMENT</weapon>
+        <expGainRate>FAST</expGainRate>
         <skills>
             <skill>HYPER</skill>
         </skills>
@@ -214,6 +229,7 @@
         <strength>30</strength>
         <magic>30</magic>
         <weapon>FISTS</weapon>
+        <expGainRate>FAST</expGainRate>
         <skills>
             <skill>TRAP</skill>
         </skills>
@@ -228,6 +244,7 @@
         <strength>20</strength>
         <magic>60</magic>
         <weapon>FOOD</weapon>
+        <expGainRate>FAST</expGainRate>
         <elements>
             <atkElement>EARTH</atkElement>
             <stgElement>EARTH</stgElement>
@@ -240,6 +257,7 @@
         <strength>40</strength>
         <magic>120</magic>
         <weapon>GUN</weapon>
+        <expGainRate>FAST</expGainRate>
         <skills>
             <skill>MAGICALGIRL</skill>
             <skill>TIMETRAVELER</skill>
@@ -255,6 +273,7 @@
         <strength>30</strength>
         <magic>50</magic>
         <weapon>ANIMAL</weapon>
+        <expGainRate>FAST</expGainRate>
         <elements>
             <atkElement>WATER</atkElement>
             <stgElement>WATER</stgElement>
@@ -267,6 +286,7 @@
         <strength>70</strength>
         <magic>60</magic>
         <weapon>CLAW</weapon>
+        <expGainRate>FAST</expGainRate>
         <elements>
             <atkElement>EARTH</atkElement>
             <stgElement>EARTH</stgElement>
@@ -278,6 +298,7 @@
         <strength>50</strength>
         <magic>30</magic>
         <weapon>FISTS</weapon>
+        <expGainRate>FAST</expGainRate>
         <elements>
             <atkElement>AIR</atkElement>
             <stgElement>AIR</stgElement>
@@ -289,6 +310,7 @@
         <strength>70</strength>
         <magic>30</magic>
         <weapon>FISTS</weapon>
+        <expGainRate>FAST</expGainRate>
         <elements>
             <atkElement>FIRE</atkElement>
             <stgElement>FIRE</stgElement>
@@ -300,6 +322,7 @@
         <strength>80</strength>
         <magic>20</magic>
         <weapon>TOY</weapon>
+        <expGainRate>FAST</expGainRate>
         <elements>
             <atkElement>FIRE</atkElement>
             <stgElement>FIRE</stgElement>
@@ -312,6 +335,7 @@
         <strength>60</strength>
         <magic>40</magic>
         <weapon>FOOD</weapon>
+        <expGainRate>FAST</expGainRate>
         <skills>
             <skill>HYPER</skill>
         </skills>
@@ -327,6 +351,7 @@
         <strength>50</strength>
         <magic>100</magic>
         <weapon>MAGIC</weapon>
+        <expGainRate>FAST</expGainRate>
         <elements>
             <atkElement>DARK</atkElement>
             <stgElement>DARK</stgElement>
@@ -338,6 +363,7 @@
         <strength>40</strength>
         <magic>40</magic>
         <weapon>PLANT</weapon>
+        <expGainRate>FAST</expGainRate>
         <weaponSkill>KOKOROSE</weaponSkill>
         <elements>
             <atkElement>EARTH</atkElement>
@@ -351,6 +377,7 @@
         <strength>40</strength>
         <magic>50</magic>
         <weapon>COMPUTER</weapon>
+        <expGainRate>FAST</expGainRate>
         <skills>
             <skill>TSUNDERE</skill>
             <skill>TIMETRAVELER</skill>
@@ -367,6 +394,7 @@
         <strength>20</strength>
         <magic>20</magic>
         <weapon>FOOD</weapon>
+        <expGainRate>FAST</expGainRate>
         <skills>
             <skill>SLUGABED</skill>
         </skills>
@@ -381,6 +409,7 @@
         <strength>70</strength>
         <magic>25</magic>
         <weapon>KNIFE</weapon>
+        <expGainRate>FAST</expGainRate>
         <skills>
             <skill>KILLER</skill>
         </skills>
@@ -395,6 +424,7 @@
         <strength>30</strength>
         <magic>70</magic>
         <weapon>MAGIC</weapon>
+        <expGainRate>FAST</expGainRate>
         <skills>
             <skill>TRAP</skill>
         </skills>
@@ -409,6 +439,7 @@
         <strength>60</strength>
         <magic>30</magic>
         <weapon>TANK</weapon>
+        <expGainRate>FAST</expGainRate>
         <skills>
             <skill>PRAVDAPRES</skill>
         </skills>
@@ -424,6 +455,7 @@
         <strength>50</strength>
         <magic>90</magic>
         <weapon>FISTS</weapon>
+        <expGainRate>FAST</expGainRate>
         <skills>
             <skill>DETECTIVE</skill>
         </skills>
@@ -438,6 +470,7 @@
         <strength>70</strength>
         <magic>70</magic>
         <weapon>GUN</weapon>
+        <expGainRate>FAST</expGainRate>
         <skills>
             <skill>PROTAGONIST</skill>
         </skills>
@@ -452,6 +485,7 @@
         <strength>40</strength>
         <magic>40</magic>
         <weapon>PLUSH</weapon>
+        <expGainRate>FAST</expGainRate>
         <elements>
             <atkElement>EARTH</atkElement>
             <stgElement>EARTH</stgElement>
@@ -463,6 +497,7 @@
         <strength>60</strength>
         <magic>20</magic>
         <weapon>FISTS</weapon>
+        <expGainRate>FAST</expGainRate>
         <skills>
             <skill>HYPER</skill>
         </skills>
@@ -477,6 +512,7 @@
         <strength>60</strength>
         <magic>100</magic>
         <weapon>MAGIC</weapon>
+        <expGainRate>FAST</expGainRate>
         <elements>
             <atkElement>DARK</atkElement>
             <stgElement>DARK</stgElement>
@@ -488,6 +524,7 @@
         <strength>200</strength>
         <magic>20</magic>
         <weapon>FISTS</weapon>
+        <expGainRate>FAST</expGainRate>
         <skills>
             <skill>PROTAGONIST</skill>
         </skills>
@@ -502,6 +539,7 @@
         <strength>30</strength>
         <magic>50</magic>
         <weapon>COOKING</weapon>
+        <expGainRate>FAST</expGainRate>
         <elements>
             <atkElement>AIR</atkElement>
             <stgElement>AIR</stgElement>
@@ -514,6 +552,7 @@
         <strength>40</strength>
         <magic>70</magic>
         <weapon>BOOK</weapon>
+        <expGainRate>FAST</expGainRate>
         <skills>
             <skill>GHOST</skill>
             <skill>TEACHER</skill>
@@ -531,6 +570,7 @@
         <magic>30</magic>
         <!-- <weapon>TAIL</weapon> -->
         <weapon>FISTS</weapon>
+        <expGainRate>FAST</expGainRate>
         <elements>
             <atkElement>EARTH</atkElement>
             <stgElement>FIRE</stgElement>
@@ -542,6 +582,7 @@
         <strength>40</strength>
         <magic>70</magic>
         <weapon>LASER</weapon>
+        <expGainRate>FAST</expGainRate>
         <skills>
             <skill>MAGICALGIRL</skill>
             <skill>TIMETRAVELER</skill>
@@ -557,6 +598,7 @@
         <strength>140</strength>
         <magic>20</magic>
         <weapon>SWORD</weapon>
+        <expGainRate>FAST</expGainRate>
         <elements>
             <atkElement>AIR</atkElement>
             <stgElement>AIR</stgElement>
@@ -568,6 +610,7 @@
         <strength>70</strength>
         <magic>40</magic>
         <weapon>AIRSOFT</weapon>
+        <expGainRate>FAST</expGainRate>
         <skills>
             <skill>SADIST</skill>
             <skill>SURVIVAL</skill>
@@ -583,6 +626,7 @@
         <strength>40</strength>
         <magic>60</magic>
         <weapon>PLANT</weapon>
+        <expGainRate>FAST</expGainRate>
         <skills>
             <skill>GHOST</skill>
         </skills>
@@ -597,6 +641,7 @@
         <strength>60</strength>
         <magic>30</magic>
         <weapon>CLUB</weapon>
+        <expGainRate>FAST</expGainRate>
         <elements>
             <atkElement>FIRE</atkElement>
             <stgElement>WATER</stgElement>
@@ -608,6 +653,7 @@
         <strength>30</strength>
         <magic>40</magic>
         <weapon>BOOK</weapon>
+        <expGainRate>FAST</expGainRate>
         <elements>
             <atkElement>AIR</atkElement>
             <stgElement>AIR</stgElement>
@@ -619,6 +665,7 @@
         <strength>60</strength>
         <magic>30</magic>
         <weapon>BOOK</weapon>
+        <expGainRate>FAST</expGainRate>
         <elements>
             <atkElement>WATER</atkElement>
             <stgElement>WATER</stgElement>
@@ -630,6 +677,7 @@
         <strength>60</strength>
         <magic>80</magic>
         <weapon>COOKING</weapon>
+        <expGainRate>FAST</expGainRate>
         <elements>
             <atkElement>EARTH</atkElement>
             <stgElement>EARTH</stgElement>
@@ -641,6 +689,7 @@
         <strength>30</strength>
         <magic>50</magic>
         <weapon>TOY</weapon>
+        <expGainRate>FAST</expGainRate>
         <skills>
             <skill>TEACHER</skill>
         </skills>
@@ -655,6 +704,7 @@
         <strength>80</strength>
         <magic>90</magic>
         <weapon>GUN</weapon>
+        <expGainRate>FAST</expGainRate>
         <skills>
             <skill>POLICE</skill>
         </skills>
@@ -670,6 +720,7 @@
         <strength>90</strength>
         <magic>60</magic>
         <weapon>TOOL</weapon>
+        <expGainRate>FAST</expGainRate>
         <skills>
             <skill>MAGICALGIRL</skill>
             <skill>POLICE</skill>
@@ -685,6 +736,7 @@
         <strength>90</strength>
         <magic>20</magic>
         <weapon>SWORD</weapon>
+        <expGainRate>FAST</expGainRate>
         <skills>
             <skill>KILLER</skill>
         </skills>
@@ -699,6 +751,7 @@
         <strength>80</strength>
         <magic>40</magic>
         <weapon>VEHICLE</weapon>
+        <expGainRate>FAST</expGainRate>
         <skills>
             <skill>RACER</skill>
             <skill>BIKER</skill>
@@ -714,6 +767,7 @@
         <strength>70</strength>
         <magic>50</magic>
         <weapon>KNIFE</weapon>
+        <expGainRate>FAST</expGainRate>
         <skills>
             <skill>KILLER</skill>
         </skills>
@@ -728,6 +782,7 @@
         <strength>100</strength>
         <magic>20</magic>
         <weapon>GUN</weapon>
+        <expGainRate>FAST</expGainRate>
         <skills>
             <skill>KILLER</skill>
         </skills>
@@ -742,6 +797,7 @@
         <strength>40</strength>
         <magic>50</magic>
         <weapon>COOKING</weapon>
+        <expGainRate>FAST</expGainRate>
         <skills>
             <skill>SPORTSMANAGER</skill>
         </skills>
@@ -756,6 +812,7 @@
         <strength>40</strength>
         <magic>60</magic>
         <weapon>MEDICINE</weapon>
+        <expGainRate>FAST</expGainRate>
         <skills>
             <skill>NURSE</skill>
         </skills>
@@ -770,6 +827,7 @@
         <strength>30</strength>
         <magic>70</magic>
         <weapon>CARD</weapon>
+        <expGainRate>FAST</expGainRate>
         <elements>
             <atkElement>LIGHT</atkElement>
             <stgElement>LIGHT</stgElement>
@@ -781,6 +839,7 @@
         <strength>60</strength>
         <magic>40</magic>
         <weapon>SPORT</weapon>
+        <expGainRate>FAST</expGainRate>
         <skills>
             <skill>ATHLETE</skill>
             <skill>TRAP</skill>
@@ -796,6 +855,7 @@
         <strength>80</strength>
         <magic>90</magic>
         <weapon>GUN</weapon>
+        <expGainRate>FAST</expGainRate>
         <elements>
             <atkElement>FIRE</atkElement>
             <stgElement>FIRE</stgElement>
@@ -807,6 +867,7 @@
         <strength>90</strength>
         <magic>30</magic>
         <weapon>FISTS</weapon>
+        <expGainRate>FAST</expGainRate>
         <elements>
             <atkElement>WATER</atkElement>
             <stgElement>WATER</stgElement>
@@ -818,6 +879,7 @@
         <strength>70</strength>
         <magic>40</magic>
         <weapon>TOOL</weapon>
+        <expGainRate>FAST</expGainRate>
         <skills>
             <skill>ATHLETE</skill>
         </skills>
@@ -832,6 +894,7 @@
         <strength>40</strength>
         <magic>40</magic>
         <weapon>SPORT</weapon>
+        <expGainRate>FAST</expGainRate>
         <skills>
             <skill>SPORTSMANAGER</skill>
         </skills>
@@ -846,6 +909,7 @@
         <strength>80</strength>
         <magic>30</magic>
         <weapon>VEHICLE</weapon>
+        <expGainRate>FAST</expGainRate>
         <skills>
             <skill>MECHANIC</skill>
         </skills>
@@ -861,6 +925,7 @@
         <strength>40</strength>
         <magic>60</magic>
         <weapon>CARD</weapon>
+        <expGainRate>FAST</expGainRate>
         <elements>
             <atkElement>AIR</atkElement>
             <stgElement>WATER</stgElement>
@@ -872,6 +937,7 @@
         <strength>30</strength>
         <magic>60</magic>
         <weapon>FISTS</weapon>
+        <expGainRate>FAST</expGainRate>
         <elements>
             <atkElement>AIR</atkElement>
             <stgElement>AIR</stgElement>
@@ -884,6 +950,7 @@
         <strength>40</strength>
         <magic>80</magic>
         <weapon>MECHA</weapon>
+        <expGainRate>FAST</expGainRate>
         <elements>
             <atkElement>WATER</atkElement>
             <stgElement>WATER</stgElement>
@@ -895,6 +962,7 @@
         <strength>40</strength>
         <magic>70</magic>
         <weapon>MAGIC</weapon>
+        <expGainRate>FAST</expGainRate>
         <skills>
             <skill>MAGICIAN</skill>
         </skills>
@@ -909,6 +977,7 @@
         <strength>40</strength>
         <magic>40</magic>
         <weapon>CLAW</weapon>
+        <expGainRate>FAST</expGainRate>
         <skills>
             <skill>TSUNDERE</skill>
         </skills>
@@ -923,6 +992,7 @@
         <strength>40</strength>
         <magic>130</magic>
         <weapon>MAGIC</weapon>
+        <expGainRate>FAST</expGainRate>
         <skills>
             <skill>MAGICALGIRL</skill>
         </skills>
@@ -937,6 +1007,7 @@
         <strength>50</strength>
         <magic>50</magic>
         <weapon>TOOL</weapon>
+        <expGainRate>FAST</expGainRate>
         <skills>
             <skill>MECHANIC</skill>
         </skills>
@@ -951,6 +1022,7 @@
         <strength>40</strength>
         <magic>50</magic>
         <weapon>BOOK</weapon>
+        <expGainRate>FAST</expGainRate>
         <skills>
             <skill>CHUUNI</skill>
         </skills>
@@ -965,6 +1037,7 @@
         <strength>60</strength>
         <magic>100</magic>
         <weapon>FAN</weapon>
+        <expGainRate>FAST</expGainRate>
         <elements>
             <atkElement>FIRE</atkElement>
             <stgElement>FIRE</stgElement>
@@ -976,6 +1049,7 @@
         <strength>70</strength>
         <magic>60</magic>
         <weapon>KNIFE</weapon>
+        <expGainRate>FAST</expGainRate>
         <skills>
             <skill>KILLER</skill>
         </skills>
@@ -990,6 +1064,7 @@
         <strength>40</strength>
         <magic>40</magic>
         <weapon>FISTS</weapon>
+        <expGainRate>FAST</expGainRate>
         <elements>
             <atkElement>FIRE</atkElement>
             <stgElement>AIR</stgElement>
@@ -1001,6 +1076,7 @@
         <strength>50</strength>
         <magic>80</magic>
         <weapon>MAGIC</weapon>
+        <expGainRate>FAST</expGainRate>
         <elements>
             <atkElement>WATER</atkElement>
             <stgElement>WATER</stgElement>
@@ -1012,6 +1088,7 @@
         <strength>80</strength>
         <magic>70</magic>
         <weapon>FISTS</weapon>
+        <expGainRate>FAST</expGainRate>
         <skills>
             <skill>PROTAGONIST</skill>
             <skill>MAGICALGIRL</skill>
@@ -1027,6 +1104,7 @@
         <strength>70</strength>
         <magic>70</magic>
         <weapon>KNIFE</weapon>
+        <expGainRate>FAST</expGainRate>
         <skills>
             <skill>KILLER</skill>
             <skill>TIMETRAVELER</skill>
@@ -1042,6 +1120,7 @@
         <strength>40</strength>
         <magic>40</magic>
         <weapon>AIRSOFT</weapon>
+        <expGainRate>FAST</expGainRate>
         <skills>
             <skill>SURVIVAL</skill>
         </skills>
@@ -1056,6 +1135,7 @@
         <strength>180</strength>
         <magic>60</magic>
         <weapon>GUN</weapon>
+        <expGainRate>FAST</expGainRate>
         <skills>
             <skill>ROBOT</skill>
             <skill>PROTAGONIST</skill>
@@ -1071,6 +1151,7 @@
         <strength>90</strength>
         <magic>40</magic>
         <weapon>SWORD</weapon>
+        <expGainRate>FAST</expGainRate>
         <skills>
             <skill>FUJOSHI</skill>
         </skills>
@@ -1085,6 +1166,7 @@
         <strength>60</strength>
         <magic>90</magic>
         <weapon>COOKING</weapon>
+        <expGainRate>FAST</expGainRate>
         <skills>
             <skill>MAID</skill>
         </skills>
@@ -1099,6 +1181,7 @@
         <strength>180</strength>
         <magic>20</magic>
         <weapon>AIRSOFT</weapon>
+        <expGainRate>FAST</expGainRate>
         <skills>
             <skill>MASOCHIST</skill>
             <skill>SURVIVAL</skill>
@@ -1114,6 +1197,7 @@
         <strength>40</strength>
         <magic>80</magic>
         <weapon>PLUSH</weapon>
+        <expGainRate>FAST</expGainRate>
         <skills>
             <skill>SLUGABED</skill>
         </skills>
@@ -1128,6 +1212,7 @@
         <strength>100</strength>
         <magic>80</magic>
         <weapon>SWORD</weapon>
+        <expGainRate>FAST</expGainRate>
         <skills>
             <skill>TIMETRAVELER</skill>
             <skill>VAMPIRE</skill>
@@ -1143,6 +1228,7 @@
         <strength>50</strength>
         <magic>120</magic>
         <weapon>FISTS</weapon>
+        <expGainRate>FAST</expGainRate>
         <skills>
             <skill>MEDIUM</skill>
         </skills>
@@ -1157,6 +1243,7 @@
         <strength>40</strength>
         <magic>70</magic>
         <weapon>COMPUTER</weapon>
+        <expGainRate>FAST</expGainRate>
         <skills>
             <skill>PROGRAMMER</skill>
         </skills>
@@ -1172,6 +1259,7 @@
         <strength>180</strength>
         <magic>60</magic>
         <weapon>SWORD</weapon>
+        <expGainRate>FAST</expGainRate>
         <skills>
             <skill>TSUNDERE</skill>
             <skill>IDOL</skill>
@@ -1187,6 +1275,7 @@
         <strength>110</strength>
         <magic>50</magic>
         <weapon>SWORD</weapon>
+        <expGainRate>FAST</expGainRate>
         <elements>
             <atkElement>DARK</atkElement>
             <stgElement>DARK</stgElement>
@@ -1198,6 +1287,7 @@
         <strength>80</strength>
         <magic>30</magic>
         <weapon>TANK</weapon>
+        <expGainRate>FAST</expGainRate>
         <skills>
             <skill>PRAVDA</skill>
         </skills>

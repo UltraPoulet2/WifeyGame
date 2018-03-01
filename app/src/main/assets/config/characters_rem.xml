@@ -5,6 +5,7 @@
         <strength>90</strength>
         <magic>110</magic>
         <weapon>BALL</weapon>
+        <expGainRate>FAST</expGainRate>
         <uniqueSkill>REM</uniqueSkill>
         <skills>
             <skill>MAID</skill>

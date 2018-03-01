@@ -5,7 +5,7 @@
         <ai>BasicPhysicalEnemyAI</ai>
         <gold>100</gold>
         <exp>100</exp>
-        <maxHP>10000</maxHP>
+        <maxHP>2500</maxHP>
         <powerDamage>50</powerDamage>
         <powerHits>3</powerHits>
         <comboDamage>35</comboDamage>
@@ -29,7 +29,7 @@
         <ai>BasicMagicEnemyAI</ai>
         <gold>200</gold>
         <exp>200</exp>
-        <maxHP>20000</maxHP>
+        <maxHP>5000</maxHP>
         <magicDamage>50</magicDamage>
         <healAmount>1000</healAmount>
         <weapon>MAGIC</weapon>
@@ -44,7 +44,7 @@
         <ai>OriginalBossAI</ai>
         <gold>1000</gold>
         <exp>1000</exp>
-        <maxHP>50000</maxHP>
+        <maxHP>12500</maxHP>
         <powerDamage>20</powerDamage>
         <powerHits>4</powerHits>
         <powerUp>1.0</powerUp>
@@ -66,7 +66,7 @@
         <ai>BasicPhysicalEnemyAI</ai>
         <gold>400</gold>
         <exp>400</exp>
-        <maxHP>10000</maxHP>
+        <maxHP>2500</maxHP>
         <powerDamage>20</powerDamage>
         <powerHits>4</powerHits>
         <comboDamage>10</comboDamage>
@@ -89,7 +89,7 @@
         <ai>BasicPhysicalEnemyAI</ai>
         <gold>500</gold>
         <exp>500</exp>
-        <maxHP>8000</maxHP>
+        <maxHP>2000</maxHP>
         <powerDamage>30</powerDamage>
         <powerHits>3</powerHits>
         <comboDamage>20</comboDamage>
@@ -109,7 +109,7 @@
         <ai>BasicTransformEnemyAI</ai>
         <gold>600</gold>
         <exp>600</exp>
-        <maxHP>8000</maxHP>
+        <maxHP>2000</maxHP>
         <magicDamage>10</magicDamage>
         <healAmount>1500</healAmount>
         <skills>
@@ -129,7 +129,7 @@
             <transformation>
                 <name>Enemy 6.5</name>
                 <ai>BasicMagicEnemyAI</ai>
-                <maxHP>12000</maxHP>
+                <maxHP>3000</maxHP>
                 <powerDamage>0</powerDamage>
                 <powerHits>0</powerHits>
                 <comboDamage>0</comboDamage>

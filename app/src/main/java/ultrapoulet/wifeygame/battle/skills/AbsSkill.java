@@ -107,6 +107,12 @@ public abstract class AbsSkill {
         return 0;
     }
 
+    public double startRoundPartyRegenPercentage(){
+        //The percentage of healing to be performed to the entire party at the start of a round
+        //Most skills will not party regen
+        return 0.0;
+    }
+
     public void endRound() {
         //Do anything that needs to be done at the end of a round
     }
@@ -154,6 +160,12 @@ public abstract class AbsSkill {
         return 1.0;
     }
 
+    public double healPercentage() {
+        //Return the amount to increase healing where the party member does not matter
+        //Returned multiplier is multiplicative.
+        return 1.0;
+    }
+
     public double healPercentage(BattleCharacter partyMember){
         //The amount to increase healing to a party member
         //Returned multiplier is multiplicative.
@@ -176,6 +188,12 @@ public abstract class AbsSkill {
         //The amount to decrease special damage.
         //This will be capped, so as not to hit 0 or below
         return 0.0;
+    }
+
+    public double receiveHealPercentage() {
+        //The amount to increase healing where the party member does not matter
+        //Returned multiplier is additive
+        return 1.0;
     }
 
     public double receiveHealPercentage(BattleCharacter partyMember){

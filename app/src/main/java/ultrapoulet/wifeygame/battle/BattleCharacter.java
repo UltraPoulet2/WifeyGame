@@ -116,6 +116,7 @@ public abstract class BattleCharacter {
     public abstract int PowerAttackDamage(BattleCharacter enemy);
     public abstract int ComboAttackDamage(BattleCharacter enemy);
     public abstract int MagicAttackDamage(BattleCharacter enemy);
+    public abstract int HealAmount();
     public abstract int HealAmount(BattleCharacter target);
     public abstract int SpecialAttackDamage(BattleCharacter enemy);
     public abstract int getNumHits();
@@ -131,6 +132,7 @@ public abstract class BattleCharacter {
     public abstract int takePhysicalDamage(int damage, BattleCharacter enemy);
     public abstract int takeMagicalDamage(int damage, BattleCharacter enemy);
     public abstract int takeSpecialDamage(int damage, BattleCharacter enemy);
+    public abstract int healDamage(int heal);
     public abstract int healDamage(int heal, BattleCharacter healer);
 
     public void onActionSelect(PlayerAction playerAction) {
@@ -144,6 +146,10 @@ public abstract class BattleCharacter {
     public void startWave() { skills.startWave(); }
 
     public int startRound(){ return skills.startRound(); }
+
+    public double startRoundPartyRegenPercentage() {
+        return skills.startRoundPartyRegenPercentage();
+    }
 
     public abstract void endRound();
 

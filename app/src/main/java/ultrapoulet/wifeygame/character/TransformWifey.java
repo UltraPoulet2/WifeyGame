@@ -25,7 +25,7 @@ public class TransformWifey {
     private Element strongElement;
     private Element weakElement;
     private String image;
-    private static final int STAT_INCREASE = 2;
+    private static final int STAT_INCREASE = 1;
 
     public TransformWifey(){
         addSkills = new ArrayList<>();

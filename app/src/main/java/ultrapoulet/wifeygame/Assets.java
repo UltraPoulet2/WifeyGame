@@ -71,6 +71,7 @@ public class Assets {
     public static Image DropdownMenuOption;
     public static Image SaveChangesEnable, SaveChangesDisable;
     public static Image SetActivePartyEnable, SetActivePartyDisable;
+    public static Image PartyActive, PartyInactive;
 
     //CharacterInfoScreen Stuff
     public static Image CharacterInfoScreen;
@@ -242,6 +243,8 @@ public class Assets {
         SaveChangesDisable = g.newImage("buttons/SaveChangesDisabled.png", ImageFormat.ARGB8888);
         SetActivePartyEnable = g.newImage("buttons/SetActivePartyEnabled.png", ImageFormat.ARGB8888);
         SetActivePartyDisable = g.newImage("buttons/SetActivePartyDisabled.png", ImageFormat.ARGB8888);
+        PartyActive = g.newImage("PartySelect/PartyActive.png", ImageFormat.ARGB8888);
+        PartyInactive = g.newImage("PartySelect/PartyInactive.png", ImageFormat.ARGB8888);
 
 
         NumberHits = new ArrayList<>();

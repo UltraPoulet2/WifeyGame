@@ -66,6 +66,7 @@ public class RecruitingBattleInfoScreen extends AbsBattleInfoScreen {
             g.drawMultiLineString(recruitInfo, NAME_TEXT_X, TWO_LINE_NAME_Y, MAX_NAME_WIDTH, namePaint);
         }
         g.drawString(String.valueOf(battleInfo.getEnergyRequirement()), COLUMN_1_X, ROW_2_Y, energyPaint);
+        g.drawString(String.valueOf(battleInfo.getRecommendedPower()), COLUMN_2_X, ROW_2_Y - GAINS_Y_OFFSET, gainsPaint);
         g.drawString(String.valueOf(battleInfo.getCharacterEnemies().size()), COLUMN_3_X, ROW_2_Y, infoPaint);
     }
 }

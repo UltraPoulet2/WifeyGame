@@ -31,6 +31,12 @@ public class MasochistSkill extends AbsSkill {
     }
 
     @Override
+    public double receiveHealPercentage() {
+        //Lose 50% of heal
+        return 0.5;
+    }
+
+    @Override
     public double receiveHealPercentage(BattleCharacter partyMember) {
         //Lose 50% of heal
         return 0.5;

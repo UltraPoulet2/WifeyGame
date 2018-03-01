@@ -26,11 +26,6 @@ public class MaidSkill extends AbsSkill {
     }
 
     @Override
-    public double healPercentage(BattleCharacter partyMember) {
-        return 1.0;
-    }
-
-    @Override
     public double physicalAttackPercentage(BattleCharacter enemy) {
         if(healLastTurn) {
             return 2.0;
